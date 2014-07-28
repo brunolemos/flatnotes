@@ -1,0 +1,29 @@
+﻿<Application
+    x:Class="Keep.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Keep">
+
+    <Application.Resources>
+        <SolidColorBrush x:Key="KeepBrandBackgroundBrush" Color="#FFFFCD35"/>
+        <SolidColorBrush x:Key="KeepBrandForegroundBrush" Color="#665215"/>
+        <SolidColorBrush x:Key="KeepBackgroundBrush" Color="#FFEEEEEE"/>
+        <SolidColorBrush x:Key="KeepForegroundBrush" Color="#A0000000"/>
+        <SolidColorBrush x:Key="KeepAppBarBackgroundBrush" Color="#FF313B44"/>
+        <SolidColorBrush x:Key="KeepAppBarForegroundBrush" Color="#FFFFFFFE"/>
+
+        <SolidColorBrush x:Key="KeepNoteDefaultBrush" Color="#FFFFFFFF"/>
+        <SolidColorBrush x:Key="KeepNoteRedBrush" Color="#FFF56545"/>
+        <SolidColorBrush x:Key="KeepNoteOrangeBrush" Color="#FFFFBB22"/>
+        <SolidColorBrush x:Key="KeepNoteYellowBrush" Color="#FFEEEE22"/>
+        <SolidColorBrush x:Key="KeepNoteGreenBrush" Color="#FFBBE535"/>
+        <SolidColorBrush x:Key="KeepNoteTealBrush" Color="#FF77DDBB"/>
+        <SolidColorBrush x:Key="KeepNoteBlueBrush" Color="#FF66CCDD"/>
+        <SolidColorBrush x:Key="KeepNoteGrayBrush" Color="#FFB5C5C5"/>
+
+        <Style TargetType="TextBlock">
+        	<Setter Property="FontSize" Value="{StaticResource TextStyleLargeFontSize}"/>
+        </Style>
+    </Application.Resources>
+
+</Application>

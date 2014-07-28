@@ -1,0 +1,40 @@
+﻿<Page
+    x:Class="Keep.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Keep"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mycontrols="using:Keep.Controls"
+    mc:Ignorable="d"
+    RequestedTheme="Dark" 
+    Background="{StaticResource KeepBrandBackgroundBrush}" 
+    Foreground="{StaticResource KeepForegroundBrush}">
+    
+    <Page.BottomAppBar>
+        <CommandBar Background="{StaticResource KeepAppBarBackgroundBrush}" Foreground="{StaticResource KeepAppBarForegroundBrush}">
+            <AppBarButton x:Uid="NoteTextType" Label="Text"  Icon="Page2"/>
+            <AppBarButton x:Uid="NoteChecklistType" Label="Checklist" Icon="List"/>
+        </CommandBar>
+    </Page.BottomAppBar>
+    
+    <Grid Background="{StaticResource KeepBackgroundBrush}">
+    	<ScrollViewer VerticalScrollMode="Enabled">
+            <ListView Margin="6" AllowDrop="True" CanDragItems="True" Holding="GridView_Holding" Tapped="ListView_Tapped" Loaded="ListView_Loaded">
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <ItemsWrapGrid Orientation="Horizontal" ItemWidth="194" ItemHeight="100"/>
+                        <!--<mycontrols:FluidGrid AllowDrop="True" Columns="2" Drop="FluidGrid_Drop" />-->
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+                
+                
+                <ListViewItem Margin="3" Background="{StaticResource KeepNoteBlueBrush}" VerticalAlignment="Stretch"/>
+                <ListViewItem Margin="3" Background="{StaticResource KeepNoteGreenBrush}" VerticalAlignment="Stretch"/>
+                <ListViewItem Margin="3" Background="{StaticResource KeepNoteRedBrush}" VerticalAlignment="Stretch"/>
+                <ListViewItem Margin="3" Background="{StaticResource KeepNoteOrangeBrush}" VerticalAlignment="Stretch"/>
+                <ListViewItem Margin="3" Background="{StaticResource KeepNoteGrayBrush}" VerticalAlignment="Stretch"/>
+            </ListView>
+    	</ScrollViewer>
+	</Grid>
+</Page>
