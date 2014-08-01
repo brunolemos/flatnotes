@@ -20,6 +20,7 @@ using Windows.UI.Xaml.Navigation;
 
 using Keep.Commands;
 using Keep.Controls;
+using Keep.ViewModels;
 
 namespace Keep
 {
@@ -28,6 +29,8 @@ namespace Keep
         private SendMessageCommand sendMessageCommand = new SendMessageCommand();
         public SendMessageCommand SendMessageCommand { get { return sendMessageCommand; } }
 
+        protected MainPageViewModel viewModel;
+
         public MainPage()
         {
             this.InitializeComponent();
@@ -35,8 +38,8 @@ namespace Keep
 #if WINDOWS_PHONE_APP
             StatusBar statusBar = StatusBar.GetForCurrentView();
             statusBar.BackgroundOpacity = 1;
-            statusBar.BackgroundColor = ((SolidColorBrush)(App.Current.Resources["KeepBrandBackgroundBrush"])).Color;
-            statusBar.ForegroundColor = ((SolidColorBrush)(App.Current.Resources["KeepBrandForegroundBrush"])).Color;
+            statusBar.BackgroundColor = ((SolidColorBrush)(App.Current.Resources["KeepStatusBarBackgroundBrush"])).Color;
+            statusBar.ForegroundColor = ((SolidColorBrush)(App.Current.Resources["KeepStatusBarForegroundBrush"])).Color;
 
             //ApplicationView.GetForCurrentView().SetDesiredBoundsMode(ApplicationViewBoundsMode.UseCoreWindow);
 #endif
@@ -60,21 +63,16 @@ namespace Keep
             // If you are using the NavigationHelper provided by some templates,
             // this event is handled for you.
             this.Background = (SolidColorBrush)App.Current.Resources["KeepBackgroundBrush"];
+
+            //data context
+            viewModel = new MainPageViewModel();
+            this.NotesListView.DataContext = viewModel.Notes;
         }
 
         private void GridView_Holding(object sender, HoldingRoutedEventArgs e)
         {
 #if WINDOWS_PHONE_APP
             (sender as ListView).ReorderMode = ListViewReorderMode.Enabled;
-#endif
-        }
-
-        private void ListView_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-#if WINDOWS_PHONE_APP
-            if (e.OriginalSource is Grid) {
-                (sender as ListView).ReorderMode = ListViewReorderMode.Disabled;
-            }
 #endif
         }
 

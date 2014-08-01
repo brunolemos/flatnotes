@@ -1,0 +1,13 @@
+﻿<Models:Notes xmlns:Models="using:Keep.Models">
+    <Models:Note IsChecklist="False" Title="Title" Text="Hi">
+        <Models:Note.Color>
+            <Models:NoteColor Key="BLUE" Color="#FF66CCDD"/>
+        </Models:Note.Color>
+    </Models:Note>
+
+    <Models:Note IsChecklist="False" Title="Title" Text="Hi">
+        <Models:Note.Color>
+            <Models:NoteColor Key="GREEN" Color="#FFBBE535"/>
+        </Models:Note.Color>
+    </Models:Note>
+</Models:Notes>
