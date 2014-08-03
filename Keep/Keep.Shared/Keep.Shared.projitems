@@ -16,7 +16,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Commands\OpenNoteCommand.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Commands\ListViewReorderCommand.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\BooleanNegationConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\BooleanToVisibilityConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\NavigationHelper.cs" />

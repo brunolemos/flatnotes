@@ -5,6 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:mycontrols="using:Keep.Controls"
+    xmlns:Interactivity="using:Microsoft.Xaml.Interactivity" xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
     x:Name="Root"
     x:Class="Keep.MainPage"
     mc:Ignorable="d"
@@ -13,18 +14,25 @@
 
     <Page.Resources>
         <ItemsPanelTemplate x:Key="FluidItemsPanelTemplate" x:Name="FluidItemsPanelTemplate">
-            <mycontrols:FluidGrid Columns="2" ItemMinWidth="100"/>
+        	<mycontrols:FluidGrid x:Name="NotesFluidGrid" Columns="2" ItemMinWidth="100"/>
         </ItemsPanelTemplate>
 
         <ItemsPanelTemplate x:Key="ReordableItemsPanelTemplate" x:Name="ReordableItemsPanelTemplate">
-            <ItemsWrapGrid Orientation="Horizontal" ItemWidth="195.8" ItemHeight="130" />
+            <ItemsWrapGrid x:Name="NotesItemsWrapGrid" Orientation="Horizontal" ItemHeight="130" ItemWidth="195" />
         </ItemsPanelTemplate>
 
+        <MenuFlyout x:Key="NoteMenuFlyout">
+        	<MenuFlyoutItem Text="share..."/>
+        	<MenuFlyoutItem Text="pin to start"/>
+            <MenuFlyoutSeparator/>
+            <MenuFlyoutItem Text="delete"/>
+        </MenuFlyout>
+
         <DataTemplate x:Key="NotePreviewListViewControlTemplate">
-        	<Grid x:Name="NoteContainer" Background="{Binding Color.Color}" Margin="2">
+        	<Grid x:Name="NoteContainer" Background="{Binding Color.Color}" Margin="2" Holding="NoteContainer_Holding" FlyoutBase.AttachedFlyout="{StaticResource NoteMenuFlyout}">
         		<StackPanel Margin="12">
-        			<TextBlock Text="{Binding Title}" FontSize="18" Margin="0,0,0,6" Foreground="{StaticResource KeepNoteForegroundBrush}" FontWeight="Bold" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" MaxLines="2"/>
-        			<TextBlock Text="{Binding Text}" FontSize="16" Margin="0,0,0,6" Foreground="{StaticResource KeepNoteForegroundBrush}" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" MaxLines="4"/>
+        			<TextBlock Text="{Binding Title}" FontSize="18" Margin="0,0,0,6" Foreground="{StaticResource KeepNoteForegroundBrush}" FontWeight="Bold" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" MaxLines="1"/>
+        			<TextBlock Text="{Binding Text}" FontSize="16" Margin="0,0,0,6" Foreground="{StaticResource KeepNoteForegroundBrush}" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" MaxLines="5"/>
         		</StackPanel>
         	</Grid>
         </DataTemplate>
@@ -34,12 +42,26 @@
         <CommandBar>
             <AppBarButton x:Uid="NoteTextType" Label="Text"  Icon="Page2"/>
             <AppBarButton x:Uid="NoteChecklistType" Label="Checklist" Icon="List"/>
+            
+        	<CommandBar.SecondaryCommands>
+                <AppBarButton x:Name="ReorderAppBarButton" Icon="Sort" Label="reorder" Click="ReorderAppBarButton_Click"/>
+        		<AppBarToggleButton Icon="Pin" Label="pin to start"/>
+        	</CommandBar.SecondaryCommands>
         </CommandBar>
     </Page.BottomAppBar>
 
-    <Grid x:Name="LayoutRoot">
-        <ScrollViewer VerticalScrollMode="Enabled">
-            <ListView x:Name="NotesListView" Margin="4" AllowDrop="True" CanDragItems="True" IsItemClickEnabled="True" Loaded="ListView_Loaded" Holding="GridView_Holding" ItemsSource="{Binding Notes}" ItemTemplate="{StaticResource NotePreviewListViewControlTemplate}" ItemClick="NotesListView_ItemClick" ItemsPanel="{StaticResource FluidItemsPanelTemplate}"/>
+	<Grid x:Name="LayoutRoot">
+		<ScrollViewer VerticalScrollMode="Enabled">
+			<ListView x:Name="NotesListView" Margin="4" AllowDrop="True" CanDragItems="True" IsItemClickEnabled="True" ItemsSource="{Binding Notes}" ItemTemplate="{StaticResource NotePreviewListViewControlTemplate}" ItemClick="NotesListView_ItemClick" ItemsPanel="{StaticResource FluidItemsPanelTemplate}">
+				<Interactivity:Interaction.Behaviors>
+					<Core:DataTriggerBehavior Binding="{Binding ReorderMode, ElementName=NotesListView, Mode=OneWay}" Value="Enabled">
+						<Core:ChangePropertyAction PropertyName="ItemsPanel" Value="{StaticResource ReordableItemsPanelTemplate}"/>
+					</Core:DataTriggerBehavior>
+					<Core:DataTriggerBehavior Binding="{Binding ReorderMode, ElementName=NotesListView, Mode=OneWay}" Value="Enabled" ComparisonCondition="NotEqual">
+						<Core:ChangePropertyAction PropertyName="ItemsPanel" Value="{StaticResource FluidItemsPanelTemplate}"/>
+					</Core:DataTriggerBehavior>
+				</Interactivity:Interaction.Behaviors>
+			</ListView>
 		</ScrollViewer>
 	</Grid>
 </Page>

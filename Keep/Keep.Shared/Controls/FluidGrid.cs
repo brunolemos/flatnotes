@@ -12,6 +12,9 @@ namespace Keep.Controls
 {
     public class FluidGrid : Panel
     {
+        public Double CellWidth { get { return cellWidth; } private set { cellWidth = value; } }
+        private Double cellWidth = 100;
+
         protected override Size MeasureOverride( Size totalSize )
         {
             //Debug.WriteLine( "Called MeasureOverride " + totalSize );
@@ -21,7 +24,7 @@ namespace Keep.Controls
                 columns = (int)Math.Floor( totalSize.Width / ItemMinWidth );
 
             int i, columnWithlastY = 0;
-            double cellWidth = totalSize.Width / columns;
+            CellWidth = totalSize.Width / columns;
             double[] lastYInColumn = new double[columns];
             Size resultSize = new Size( totalSize.Width, 0 );
 
@@ -34,8 +37,8 @@ namespace Keep.Controls
                     if ( lastYInColumn[i] <= lastYInColumn[columnWithlastY] )
                         columnWithlastY = i;
 
-                child.Measure( new Size( cellWidth, totalSize.Height ) );
-                Size cellSize = new Size( cellWidth, child.DesiredSize.Height );
+                child.Measure( new Size( CellWidth, totalSize.Height ) );
+                Size cellSize = new Size( CellWidth, child.DesiredSize.Height );
                 Point startPoint = new Point( cellSize.Width * columnWithlastY, lastYInColumn[columnWithlastY] );
                 lastYInColumn[columnWithlastY] = startPoint.Y + cellSize.Height;
             }
@@ -59,7 +62,7 @@ namespace Keep.Controls
                 columns = (int)Math.Floor( totalSize.Width / ItemMinWidth );
 
             int i, columnWithlastY = 0;
-            double cellWidth = totalSize.Width / columns;
+            CellWidth = totalSize.Width / columns;
             double[] lastYInColumn = new double[columns];
 
             for ( i = 0; i < columns; i++ )
@@ -71,7 +74,7 @@ namespace Keep.Controls
                     if ( lastYInColumn[i] <= lastYInColumn[columnWithlastY] )
                         columnWithlastY = i;
 
-                Size cellSize = new Size( cellWidth, child.DesiredSize.Height );
+                Size cellSize = new Size( CellWidth, child.DesiredSize.Height );
                 Point startPoint = new Point( cellSize.Width * columnWithlastY, lastYInColumn[columnWithlastY] );
                 lastYInColumn[columnWithlastY] = startPoint.Y + cellSize.Height;
 

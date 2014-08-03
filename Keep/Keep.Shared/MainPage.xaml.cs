@@ -64,32 +64,10 @@ namespace Keep
 
         #endregion
 
-        private void ListView_Loaded(object sender, RoutedEventArgs e)
+        
+        private void NoteContainer_Holding(object sender, HoldingRoutedEventArgs e)
         {
-            //int columns = 2;
-            //var listView = sender as ListView;
-            //var listViewPanel = listView.ItemsPanelRoot as ItemsWrapGrid;
-            
-            //listViewPanel.ItemWidth = listView.ActualWidth / columns;
-
-            //if (listViewPanel.Children.Count < 1) return;
-            //double height = listViewPanel.Children[0].DesiredSize.Height;
-
-            //int i = 0;
-            //foreach (var child in listViewPanel.Children)
-            //{
-            //    i++;
-
-            //    //...
-            //}
-        }
-
-        private void GridView_Holding(object sender, HoldingRoutedEventArgs e)
-        {
-#if WINDOWS_PHONE_APP
-            NotesListView.ItemsPanel = ReordableItemsPanelTemplate;
-            (sender as ListView).ReorderMode = ListViewReorderMode.Enabled;
-#endif
+            FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);
         }
 
         private void NotesListView_ItemClick(object sender, ItemClickEventArgs e)
@@ -101,6 +79,13 @@ namespace Keep
 
             object parameter = e.ClickedItem;
             Frame.Navigate(typeof(NoteEditPage), parameter);
+        }
+
+        private void ReorderAppBarButton_Click(object sender, RoutedEventArgs e)
+        {
+#if WINDOWS_PHONE_APP
+            NotesListView.ReorderMode = ListViewReorderMode.Enabled;
+#endif
         }
     }
 }

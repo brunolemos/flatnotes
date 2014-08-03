@@ -9,9 +9,8 @@ namespace Keep.ViewModels
 {
     public class MainPageViewModel
     {
-
-        private OpenNoteCommand openNoteCommand = new OpenNoteCommand();
-        public OpenNoteCommand OpenNoteCommand { get { return openNoteCommand; } }
+        public ListViewReorderCommand ListViewReorderCommand { get { return listViewReorderCommand; } }
+        private ListViewReorderCommand listViewReorderCommand = new ListViewReorderCommand();
 
         public Notes Notes { get { return notes; } }
         private Notes notes = new Notes() {
