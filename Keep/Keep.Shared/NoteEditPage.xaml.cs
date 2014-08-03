@@ -6,6 +6,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Graphics.Display;
+using Windows.UI;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -27,6 +28,7 @@ namespace Keep
         private NavigationHelper navigationHelper;
 
         NoteEditViewModel viewModel;
+        Color? lastStatusBarForegroundColor;
 
         public NoteEditPage()
         {
@@ -39,9 +41,17 @@ namespace Keep
 
         private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
-//#if WINDOWS_PHONE_APP
-//            ApplicationView.GetForCurrentView().SetDesiredBoundsMode(ApplicationViewBoundsMode.UseCoreWindow);
-//#endif
+#if WINDOWS_PHONE_APP
+            StatusBar statusBar = StatusBar.GetForCurrentView();
+            lastStatusBarForegroundColor = statusBar.ForegroundColor;
+
+            if (Application.Current.RequestedTheme != ApplicationTheme.Light)
+            {
+                statusBar.ForegroundColor = Colors.Black;
+            }
+
+            //ApplicationView.GetForCurrentView().SetDesiredBoundsMode(ApplicationViewBoundsMode.UseCoreWindow);
+#endif
 
             viewModel = new NoteEditViewModel();
 
@@ -53,9 +63,15 @@ namespace Keep
 
         private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
         {
-//#if WINDOWS_PHONE_APP
-//            ApplicationView.GetForCurrentView().SetDesiredBoundsMode(ApplicationViewBoundsMode.UseVisible);
-//#endif
+#if WINDOWS_PHONE_APP
+            if (Application.Current.RequestedTheme != ApplicationTheme.Light)
+            {
+                StatusBar statusBar = StatusBar.GetForCurrentView();
+                statusBar.ForegroundColor = lastStatusBarForegroundColor;
+            }
+
+            //ApplicationView.GetForCurrentView().SetDesiredBoundsMode(ApplicationViewBoundsMode.UseVisible);
+#endif
         }
 
         #region NavigationHelper registration

@@ -103,7 +103,7 @@ namespace Keep
                 }
             }
 
-            //rootFrame.Background = (SolidColorBrush)App.Current.Resources["ApplicationPageBackgroundThemeBrush"];
+            rootFrame.Background = (SolidColorBrush)App.Current.Resources["ApplicationPageBackgroundThemeBrush"];
 
             // Ensure the current window is active
             Window.Current.Activate();

@@ -31,15 +31,6 @@ namespace Keep
         {
             this.InitializeComponent();
 
-//#if WINDOWS_PHONE_APP
-//            StatusBar statusBar = StatusBar.GetForCurrentView();
-//            statusBar.BackgroundOpacity = 1;
-//            statusBar.BackgroundColor = ((SolidColorBrush)(App.Current.Resources["KeepStatusBarBackgroundBrush"])).Color;
-//            statusBar.ForegroundColor = ((SolidColorBrush)(App.Current.Resources["KeepStatusBarForegroundBrush"])).Color;
-
-//            //ApplicationView.GetForCurrentView().SetDesiredBoundsMode(ApplicationViewBoundsMode.UseCoreWindow);
-//#endif
-
             this.NavigationCacheMode = NavigationCacheMode.Required;
         }
         
