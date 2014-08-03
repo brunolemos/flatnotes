@@ -1,0 +1,17 @@
+﻿<ViewModels:MainPageViewModel xmlns:ViewModels="using:Keep.ViewModels" xmlns:Models="using:Keep.Models">
+    <ViewModels:MainPageViewModel.Notes>
+        <Models:Notes>
+            <Models:Note IsChecklist="False" Title="Title" Text="Hi">
+                <Models:Note.Color>
+                    <Models:NoteColor Key="BLUE" Color="#FF66CCDD"/>
+                </Models:Note.Color>
+            </Models:Note>
+
+            <Models:Note IsChecklist="False" Title="Title" Text="Hi">
+                <Models:Note.Color>
+                    <Models:NoteColor Key="GREEN" Color="#FFBBE535"/>
+                </Models:Note.Color>
+            </Models:Note>
+        </Models:Notes>
+    </ViewModels:MainPageViewModel.Notes>
+</ViewModels:MainPageViewModel>

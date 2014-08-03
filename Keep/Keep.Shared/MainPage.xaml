@@ -1,32 +1,43 @@
 ﻿<Page
-    x:Class="Keep.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Keep"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:mycontrols="using:Keep.Controls"
+    x:Name="Root"
+    x:Class="Keep.MainPage"
     mc:Ignorable="d"
-    RequestedTheme="Light" 
-    Background="{StaticResource KeepStatusBarBackgroundBrush}"
-    Foreground="{StaticResource KeepForegroundBrush}">
-    
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    d:DataContext="{d:DesignData /SampleData/MainPageViewModelSampleData.xaml}">
+
+    <Page.Resources>
+        <DataTemplate x:Key="NotePreviewListViewControlTemplate">
+        	<Grid x:Name="NoteContainer" Background="{Binding Color.Color}" Margin="2">
+        		<StackPanel Margin="12">
+        			<TextBlock Text="{Binding Title}" FontSize="18" Margin="0,0,0,6"/>
+        			<TextBlock Text="{Binding Text}" FontSize="16" Margin="0,0,0,6"/>
+        		</StackPanel>
+        	</Grid>
+        </DataTemplate>
+    </Page.Resources>
+
     <Page.BottomAppBar>
-        <CommandBar Background="{StaticResource KeepAppBarBackgroundBrush}" Foreground="{StaticResource KeepAppBarForegroundBrush}">
+        <CommandBar>
             <AppBarButton x:Uid="NoteTextType" Label="Text"  Icon="Page2"/>
             <AppBarButton x:Uid="NoteChecklistType" Label="Checklist" Icon="List"/>
         </CommandBar>
     </Page.BottomAppBar>
 
-    <Grid Background="{StaticResource KeepBackgroundBrush}">
-    	<ScrollViewer VerticalScrollMode="Enabled">
-            <ListView x:Name="NotesListView" Margin="4" AllowDrop="True" CanDragItems="True" Holding="GridView_Holding" Loaded="ListView_Loaded" ItemsSource="{Binding}" d:DataContext="{d:DesignData /SampleData/NotesSampleData.xaml}" ItemTemplate="{StaticResource NotePreviewListViewControlTemplate}">
-                <ListView.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <ItemsWrapGrid Orientation="Horizontal" ItemWidth="195.8" ItemHeight="100"/>
-                    </ItemsPanelTemplate>
-                </ListView.ItemsPanel>
-            </ListView>
-        </ScrollViewer>
+	<Grid>
+		<ScrollViewer VerticalScrollMode="Enabled">
+            <ListView x:Name="NotesListView" Margin="4" AllowDrop="True" CanDragItems="True" IsItemClickEnabled="True" Loaded="ListView_Loaded" Holding="GridView_Holding" ItemsSource="{Binding Notes}" ItemTemplate="{StaticResource NotePreviewListViewControlTemplate}" ItemClick="NotesListView_ItemClick">
+				<ListView.ItemsPanel>
+					<ItemsPanelTemplate>
+						<ItemsWrapGrid Orientation="Horizontal" ItemWidth="195.8" ItemHeight="100"/>
+					</ItemsPanelTemplate>
+				</ListView.ItemsPanel>
+			</ListView>
+		</ScrollViewer>
 	</Grid>
 </Page>

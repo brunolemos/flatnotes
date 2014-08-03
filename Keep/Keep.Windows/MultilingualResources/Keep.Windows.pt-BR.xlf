@@ -8,7 +8,7 @@
       <group id="Resources">
         <trans-unit id="Resources\SendMessageButton\Content" translate="yes" xml:space="preserve">
           <source>Send message</source>
-          <target state="needs-review-translation">Enviar mensagem</target><note from="MultilingualUpdate" priority="2" annotates="source">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
+          <target state="translated">Enviar mensagem</target>
         </trans-unit>
         <trans-unit id="Resources\NoteTextType\Label" translate="yes" xml:space="preserve">
           <source>Text</source>

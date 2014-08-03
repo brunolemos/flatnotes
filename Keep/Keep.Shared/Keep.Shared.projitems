@@ -16,7 +16,11 @@
     <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Commands\SendMessageCommand.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Commands\OpenNoteCommand.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\NavigationHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\ObservableDictionary.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\RelayCommand.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\SuspensionManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controllers\DeviceController.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\FluidGrid.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MainPage.xaml.cs">
@@ -36,6 +40,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\User.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\UserPreferences.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Users.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)NoteEditPage.xaml.cs">
+      <DependentUpon>NoteEditPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Utils\AppSettings.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\Extensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\Firebase\StringCleaner.cs" />
@@ -43,6 +50,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Utils\Firebase\TokenOptions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\GenerateRandomID.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\JWT\JWT.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\NoteEditViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MainPageViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -50,8 +58,25 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="$(MSBuildThisFileDirectory)NoteEditPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Resources\DarkThemeResources.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Resources\LightThemeResources.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Resources\DefaultThemeResources.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <PRIResource Include="$(MSBuildThisFileDirectory)Strings\en-US\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Strings\pt-BR\Resources.resw" />
   </ItemGroup>
 </Project>

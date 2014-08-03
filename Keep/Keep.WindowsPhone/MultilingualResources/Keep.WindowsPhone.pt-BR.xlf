@@ -8,14 +8,15 @@
       <group id="Resources">
         <trans-unit id="Resources\SendMessageButton\Content" translate="yes" xml:space="preserve">
           <source>Send message</source>
-          <target state="translated">Enviar mensagem</target></trans-unit>
+          <target state="new">Send message</target>
+        </trans-unit>
         <trans-unit id="Resources\NoteTextType\Label" translate="yes" xml:space="preserve">
           <source>Text</source>
-          <target state="translated">Texto</target>
+          <target state="new">Text</target>
         </trans-unit>
         <trans-unit id="Resources\NoteChecklistType" translate="yes" xml:space="preserve">
           <source>Checklist</source>
-          <target state="translated">Checklist</target>
+          <target state="new">Checklist</target>
         </trans-unit>
       </group>
     </body>

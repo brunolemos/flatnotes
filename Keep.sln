@@ -5,11 +5,11 @@ VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Keep", "Keep", "{755F04C6-89E7-4A8A-B29A-C768151688F3}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Keep.Shared", "Keep\Keep.Shared\Keep.Shared.shproj", "{580949D5-3AB6-4D11-A3B9-101259C6A315}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Keep.Windows", "Keep\Keep.Windows\Keep.Windows.csproj", "{3505049E-EDFD-4CD7-B35A-B0F98CEDDB64}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Keep.WindowsPhone", "Keep\Keep.WindowsPhone\Keep.WindowsPhone.csproj", "{25E4BA9D-07CC-4825-A71B-F0771E19664E}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Keep.Shared", "Keep\Keep.Shared\Keep.Shared.shproj", "{580949D5-3AB6-4D11-A3B9-101259C6A315}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
@@ -77,8 +77,8 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{580949D5-3AB6-4D11-A3B9-101259C6A315} = {755F04C6-89E7-4A8A-B29A-C768151688F3}
 		{3505049E-EDFD-4CD7-B35A-B0F98CEDDB64} = {755F04C6-89E7-4A8A-B29A-C768151688F3}
 		{25E4BA9D-07CC-4825-A71B-F0771E19664E} = {755F04C6-89E7-4A8A-B29A-C768151688F3}
+		{580949D5-3AB6-4D11-A3B9-101259C6A315} = {755F04C6-89E7-4A8A-B29A-C768151688F3}
 	EndGlobalSection
 EndGlobal

@@ -5,39 +5,20 @@
     xmlns:local="using:Keep">
 
     <Application.Resources>
-        <SolidColorBrush x:Key="KeepBrandBackgroundBrush" Color="#FFFFCD35"/>
-        <SolidColorBrush x:Key="KeepBrandForegroundBrush" Color="#A0FFFFFF"/>
-        <SolidColorBrush x:Key="KeepStatusBarBackgroundBrush" Color="#FFFFCD35"/>
-        <SolidColorBrush x:Key="KeepStatusBarForegroundBrush" Color="#665215"/><!-- from gray: 5f5f5f -->
-        <SolidColorBrush x:Key="KeepBackgroundBrush" Color="#FFEEEEEE"/>
-        <SolidColorBrush x:Key="KeepForegroundBrush" Color="#A0000000"/>
-        <SolidColorBrush x:Key="KeepAppBarBackgroundBrush" Color="#FF313B44"/>
-        <SolidColorBrush x:Key="KeepAppBarForegroundBrush" Color="#FFFFFF"/>
+    	<ResourceDictionary>
+    		<ResourceDictionary.MergedDictionaries>
+    			<ResourceDictionary Source="ms-appx:///Resources/LightThemeResources.xaml"/>
+    			<ResourceDictionary Source="ms-appx:///Resources/DarkThemeResources.xaml"/>
+    			<ResourceDictionary Source="ms-appx:///Resources/DefaultThemeResources.xaml"/>
+    		</ResourceDictionary.MergedDictionaries>
 
-        <SolidColorBrush x:Key="KeepNoteDefaultBrush" Color="#FFFFFFFF"/>
-        <SolidColorBrush x:Key="KeepNoteRedBrush" Color="#FFF56545"/>
-        <SolidColorBrush x:Key="KeepNoteOrangeBrush" Color="#FFFFBB22"/>
-        <SolidColorBrush x:Key="KeepNoteYellowBrush" Color="#FFEEEE22"/>
-        <SolidColorBrush x:Key="KeepNoteGreenBrush" Color="#FFBBE535"/>
-        <SolidColorBrush x:Key="KeepNoteTealBrush" Color="#FF77DDBB"/>
-        <SolidColorBrush x:Key="KeepNoteBlueBrush" Color="#FF66CCDD"/>
-        <SolidColorBrush x:Key="KeepNoteGrayBrush" Color="#FFB5C5C5"/>
-
-        <Style TargetType="TextBlock">
-        	<Setter Property="FontSize" Value="{StaticResource TextStyleLargeFontSize}"/>
-        </Style>
+    		<Style TargetType="TextBlock">
+    			<Setter Property="FontSize" Value="18"/>
+    		</Style>
         
-        <Style TargetType="ListViewItem">
-            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-        </Style>
-
-        <DataTemplate x:Key="NotePreviewListViewControlTemplate">
-            <Grid Background="{Binding Color.Color}" Margin="2">
-        		<StackPanel Margin="12">
-        			<TextBlock Text="{Binding Title}" FontSize="{StaticResource TextStyleLargeFontSize}" Margin="0,0,0,6"/>
-        			<TextBlock Text="{Binding Text}" FontSize="{StaticResource TextStyleMediumFontSize}" Margin="0,0,0,6"/>
-        		</StackPanel>
-        	</Grid>
-        </DataTemplate>
+    		<Style TargetType="ListViewItem">
+    			<Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+    		</Style>
+    	</ResourceDictionary>
     </Application.Resources>
 </Application>

@@ -4,20 +4,24 @@ using System.Text;
 using System.Windows.Input;
 using Windows.UI.Popups;
 
+using Keep.Models;
+
 namespace Keep.Commands
 {
-    public class SendMessageCommand : ICommand
+    public class OpenNoteCommand : ICommand
     {
         public event EventHandler CanExecuteChanged;
 
         public bool CanExecute(object parameter)
         {
-            return !( parameter == null || String.IsNullOrEmpty( parameter.ToString() ) );
+            return (parameter is Note);
         }
 
         public async void Execute(object parameter)
         {
-            var dialog = new MessageDialog(parameter.ToString());
+            Note note = parameter as Note;
+
+            var dialog = new MessageDialog(note.Title);
             await dialog.ShowAsync();
         }
     }
