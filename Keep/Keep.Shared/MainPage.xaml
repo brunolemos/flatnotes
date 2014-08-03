@@ -12,11 +12,19 @@
     d:DataContext="{d:DesignData /SampleData/MainPageViewModelSampleData.xaml}">
 
     <Page.Resources>
+        <ItemsPanelTemplate x:Key="FluidItemsPanelTemplate" x:Name="FluidItemsPanelTemplate">
+            <mycontrols:FluidGrid Columns="2" ItemMinWidth="100"/>
+        </ItemsPanelTemplate>
+
+        <ItemsPanelTemplate x:Key="ReordableItemsPanelTemplate" x:Name="ReordableItemsPanelTemplate">
+            <ItemsWrapGrid Orientation="Horizontal" ItemWidth="195.8" ItemHeight="130" />
+        </ItemsPanelTemplate>
+
         <DataTemplate x:Key="NotePreviewListViewControlTemplate">
         	<Grid x:Name="NoteContainer" Background="{Binding Color.Color}" Margin="2">
         		<StackPanel Margin="12">
-        			<TextBlock Text="{Binding Title}" FontSize="18" Margin="0,0,0,6" Foreground="{StaticResource KeepNoteForegroundBrush}" FontWeight="Bold" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" MaxLines="1"/>
-        			<TextBlock Text="{Binding Text}" FontSize="16" Margin="0,0,0,6" Foreground="{StaticResource KeepNoteForegroundBrush}" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" MaxLines="3"/>
+        			<TextBlock Text="{Binding Title}" FontSize="18" Margin="0,0,0,6" Foreground="{StaticResource KeepNoteForegroundBrush}" FontWeight="Bold" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" MaxLines="2"/>
+        			<TextBlock Text="{Binding Text}" FontSize="16" Margin="0,0,0,6" Foreground="{StaticResource KeepNoteForegroundBrush}" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" MaxLines="4"/>
         		</StackPanel>
         	</Grid>
         </DataTemplate>
@@ -29,15 +37,9 @@
         </CommandBar>
     </Page.BottomAppBar>
 
-	<Grid x:Name="LayoutRoot">
-		<ScrollViewer VerticalScrollMode="Enabled">
-            <ListView x:Name="NotesListView" Margin="4" AllowDrop="True" CanDragItems="True" IsItemClickEnabled="True" Loaded="ListView_Loaded" Holding="GridView_Holding" ItemsSource="{Binding Notes}" ItemTemplate="{StaticResource NotePreviewListViewControlTemplate}" ItemClick="NotesListView_ItemClick">
-				<ListView.ItemsPanel>
-					<ItemsPanelTemplate>
-						<ItemsWrapGrid Orientation="Horizontal" ItemWidth="195.8" ItemHeight="130" />
-					</ItemsPanelTemplate>
-				</ListView.ItemsPanel>
-			</ListView>
+    <Grid x:Name="LayoutRoot">
+        <ScrollViewer VerticalScrollMode="Enabled">
+            <ListView x:Name="NotesListView" Margin="4" AllowDrop="True" CanDragItems="True" IsItemClickEnabled="True" Loaded="ListView_Loaded" Holding="GridView_Holding" ItemsSource="{Binding Notes}" ItemTemplate="{StaticResource NotePreviewListViewControlTemplate}" ItemClick="NotesListView_ItemClick" ItemsPanel="{StaticResource FluidItemsPanelTemplate}"/>
 		</ScrollViewer>
 	</Grid>
 </Page>

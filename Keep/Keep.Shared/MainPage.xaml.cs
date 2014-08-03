@@ -18,6 +18,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
+using Keep.Common;
 using Keep.Controls;
 using Keep.ViewModels;
 
@@ -26,29 +27,50 @@ namespace Keep
     public sealed partial class MainPage : Page
     {
         private MainPageViewModel viewModel = new MainPageViewModel();
+        public NavigationHelper NavigationHelper { get { return this.navigationHelper; } }
+        private NavigationHelper navigationHelper;
 
         public MainPage()
         {
             this.InitializeComponent();
 
             this.NavigationCacheMode = NavigationCacheMode.Required;
-        }
-        
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            //this.Background = (SolidColorBrush)App.Current.Resources["ApplicationPageBackgroundThemeBrush"];
 
-            //view model - data context
+            this.navigationHelper = new NavigationHelper(this);
+            this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
+            this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
+        }
+
+        private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
+        {
             this.DataContext = viewModel;
         }
 
+        private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
+        {
+        }
+
+        #region NavigationHelper registration
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            this.navigationHelper.OnNavigatedTo(e);
+        }
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            this.navigationHelper.OnNavigatedFrom(e);
+        }
+
+        #endregion
+
         private void ListView_Loaded(object sender, RoutedEventArgs e)
         {
-            int columns = 2;
-            var listView = sender as ListView;
-            var listViewPanel = listView.ItemsPanelRoot as ItemsWrapGrid;
-
-            listViewPanel.ItemWidth = listView.ActualWidth / columns;
+            //int columns = 2;
+            //var listView = sender as ListView;
+            //var listViewPanel = listView.ItemsPanelRoot as ItemsWrapGrid;
+            
+            //listViewPanel.ItemWidth = listView.ActualWidth / columns;
 
             //if (listViewPanel.Children.Count < 1) return;
             //double height = listViewPanel.Children[0].DesiredSize.Height;
@@ -65,6 +87,7 @@ namespace Keep
         private void GridView_Holding(object sender, HoldingRoutedEventArgs e)
         {
 #if WINDOWS_PHONE_APP
+            NotesListView.ItemsPanel = ReordableItemsPanelTemplate;
             (sender as ListView).ReorderMode = ListViewReorderMode.Enabled;
 #endif
         }
