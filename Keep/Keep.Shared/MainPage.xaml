@@ -14,7 +14,7 @@
 
     <Page.Resources>
         <ItemsPanelTemplate x:Key="FluidItemsPanelTemplate" x:Name="FluidItemsPanelTemplate">
-        	<mycontrols:FluidGrid x:Name="NotesFluidGrid" Columns="2" ItemMinWidth="100"/>
+        	<mycontrols:FluidGrid x:Name="NotesFluidGrid" Columns="-1" ItemMinWidth="150"/>
         </ItemsPanelTemplate>
 
         <ItemsPanelTemplate x:Key="ReordableItemsPanelTemplate" x:Name="ReordableItemsPanelTemplate">
@@ -22,8 +22,9 @@
         </ItemsPanelTemplate>
 
         <MenuFlyout x:Key="NoteMenuFlyout">
-        	<MenuFlyoutItem Text="share..."/>
-        	<MenuFlyoutItem Text="pin to start"/>
+            <MenuFlyoutItem Text="share..."/>
+            <MenuFlyoutItem Text="reorder"/>
+            <MenuFlyoutItem Text="pin to start"/>
             <MenuFlyoutSeparator/>
             <MenuFlyoutItem Text="delete"/>
         </MenuFlyout>
@@ -40,12 +41,17 @@
 
     <Page.BottomAppBar>
         <CommandBar>
-            <AppBarButton x:Uid="NoteTextType" Label="Text"  Icon="Page2"/>
+            <AppBarButton x:Uid="NoteTextType" Label="Text">
+                <AppBarButton.Icon>
+                    <BitmapIcon UriSource="Assets/appbar.text.serif.png"/>
+                </AppBarButton.Icon>
+            </AppBarButton>
             <AppBarButton x:Uid="NoteChecklistType" Label="Checklist" Icon="List"/>
-            
-        	<CommandBar.SecondaryCommands>
+
+            <CommandBar.SecondaryCommands>
                 <AppBarButton x:Name="ReorderAppBarButton" Icon="Sort" Label="reorder" Click="ReorderAppBarButton_Click"/>
-        		<AppBarToggleButton Icon="Pin" Label="pin to start"/>
+                <AppBarButton Icon="Like" Label="send feedback"/>
+                <AppBarButton Icon="Setting" Label="settings"/>
         	</CommandBar.SecondaryCommands>
         </CommandBar>
     </Page.BottomAppBar>

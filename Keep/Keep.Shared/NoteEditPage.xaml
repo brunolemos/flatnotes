@@ -9,14 +9,41 @@
     RequestedTheme="Light"
     Background="{Binding Note.Color.Color}" 
     d:DataContext="{d:DesignData /SampleData/NoteEditViewModelSampleData.xaml}">
-    
-    <StackPanel>
-		<Grid Height="200" Visibility="Collapsed">
+
+
+    <Page.BottomAppBar>
+        <CommandBar Background="#A0000000" Foreground="White">
+            <AppBarButton Label="color">
+                <AppBarButton.Icon>
+                    <BitmapIcon UriSource="Assets/appbar.water.droplet.png"/>
+                </AppBarButton.Icon>
+            </AppBarButton>
+            <AppBarButton Icon="Camera" Label="photo"/>
+            <AppBarButton Icon="Microphone" Label="audio"/>
+            <AppBarToggleButton Icon="Pin" Label="pin to start"/>
+
+            <CommandBar.SecondaryCommands>
+                <AppBarButton Label="share..." Icon="World"/>
+                <AppBarToggleButton Icon="List" Label="convert to checklist"/>
+                <AppBarButton  Icon="Delete" Label="delete"/>
+            </CommandBar.SecondaryCommands>
+        </CommandBar>
+    </Page.BottomAppBar>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Height="200" Visibility="Collapsed">
             <Grid.Background>
                 <SolidColorBrush Color="{StaticResource MediaControlPanelVideoThemeColor}"/>
             </Grid.Background>
         </Grid>
-        <TextBox PlaceholderText="Title" Text="{Binding Note.Title, Mode=TwoWay}" InputScope="Default" Background="{x:Null}" BorderThickness="0" FontWeight="Bold" Padding="24,12" Margin="0,12,0,0" Foreground="{StaticResource KeepNoteForegroundBrush}" TextWrapping="Wrap"/>
-        <TextBox PlaceholderText="Text" Text="{Binding Note.Text, Mode=TwoWay}" InputScope="Default" Background="{x:Null}" BorderThickness="0" Margin="0" Padding="24,6" AcceptsReturn="True" Foreground="{StaticResource KeepNoteForegroundBrush}" TextWrapping="Wrap"/>
-	</StackPanel>
+
+        <TextBox Grid.Row="1" PlaceholderText="Title" Text="{Binding Note.Title, Mode=TwoWay}" InputScope="Default" Background="{x:Null}" BorderThickness="0" FontWeight="Bold" Padding="24,12" Margin="0,12,0,0" Foreground="{StaticResource KeepNoteForegroundBrush}" TextWrapping="Wrap"/>
+        <TextBox Grid.Row="2" PlaceholderText="Text" Text="{Binding Note.Text, Mode=TwoWay}" InputScope="Default" Background="{x:Null}" BorderThickness="0" Margin="0,0,0,24" Padding="24,6" AcceptsReturn="True" Foreground="{StaticResource KeepNoteForegroundBrush}" TextWrapping="Wrap" VerticalAlignment="Top"/>
+    </Grid>
 </Page>
