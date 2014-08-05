@@ -27,6 +27,7 @@ namespace Keep
     public sealed partial class MainPage : Page
     {
         private MainPageViewModel viewModel = new MainPageViewModel();
+
         public NavigationHelper NavigationHelper { get { return this.navigationHelper; } }
         private NavigationHelper navigationHelper;
 

@@ -10,7 +10,6 @@
     Background="{Binding Note.Color.Color}" 
     d:DataContext="{d:DesignData /SampleData/NoteEditViewModelSampleData.xaml}">
 
-
     <Page.BottomAppBar>
         <CommandBar Background="#A0000000" Foreground="White">
             <AppBarButton Label="color">
@@ -43,7 +42,7 @@
             </Grid.Background>
         </Grid>
 
-        <TextBox Grid.Row="1" PlaceholderText="Title" Text="{Binding Note.Title, Mode=TwoWay}" InputScope="Default" Background="{x:Null}" BorderThickness="0" FontWeight="Bold" Padding="24,12" Margin="0,12,0,0" Foreground="{StaticResource KeepNoteForegroundBrush}" TextWrapping="Wrap"/>
-        <TextBox Grid.Row="2" PlaceholderText="Text" Text="{Binding Note.Text, Mode=TwoWay}" InputScope="Default" Background="{x:Null}" BorderThickness="0" Margin="0,0,0,24" Padding="24,6" AcceptsReturn="True" Foreground="{StaticResource KeepNoteForegroundBrush}" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <TextBox Grid.Row="1" PlaceholderText="Title" Text="{Binding Note.Title, Mode=TwoWay}" InputScope="Default" Background="{x:Null}" BorderThickness="0" FontWeight="Bold" Padding="24,12" Margin="0,12,0,0" TextWrapping="Wrap" FontSize="22"/>
+        <TextBox Grid.Row="2" PlaceholderText="Text" Text="{Binding Note.Text, Mode=TwoWay}" InputScope="Default" Background="{x:Null}" BorderThickness="0" Margin="0,0,0,24" Padding="24,6" AcceptsReturn="True" TextWrapping="Wrap" VerticalAlignment="Stretch"/>
     </Grid>
 </Page>

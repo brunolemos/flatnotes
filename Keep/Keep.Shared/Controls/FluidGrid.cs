@@ -12,9 +12,6 @@ namespace Keep.Controls
 {
     public class FluidGrid : Panel
     {
-        public Double CellWidth { get { return cellWidth; } private set { cellWidth = value; } }
-        private Double cellWidth = 100;
-
         protected override Size MeasureOverride( Size totalSize )
         {
             //Debug.WriteLine( "Called MeasureOverride " + totalSize );
@@ -24,7 +21,7 @@ namespace Keep.Controls
                 columns = (int)Math.Floor( totalSize.Width / ItemMinWidth );
 
             int i, columnWithlastY = 0;
-            CellWidth = totalSize.Width / columns;
+            LastCellWidth = totalSize.Width / columns;
             double[] lastYInColumn = new double[columns];
             Size resultSize = new Size( totalSize.Width, 0 );
 
@@ -37,8 +34,8 @@ namespace Keep.Controls
                     if ( lastYInColumn[i] <= lastYInColumn[columnWithlastY] )
                         columnWithlastY = i;
 
-                child.Measure( new Size( CellWidth, totalSize.Height ) );
-                Size cellSize = new Size( CellWidth, child.DesiredSize.Height );
+                child.Measure( new Size( LastCellWidth, totalSize.Height ) );
+                Size cellSize = new Size( LastCellWidth, child.DesiredSize.Height );
                 Point startPoint = new Point( cellSize.Width * columnWithlastY, lastYInColumn[columnWithlastY] );
                 lastYInColumn[columnWithlastY] = startPoint.Y + cellSize.Height;
             }
@@ -62,7 +59,7 @@ namespace Keep.Controls
                 columns = (int)Math.Floor( totalSize.Width / ItemMinWidth );
 
             int i, columnWithlastY = 0;
-            CellWidth = totalSize.Width / columns;
+            LastCellWidth = totalSize.Width / columns;
             double[] lastYInColumn = new double[columns];
 
             for ( i = 0; i < columns; i++ )
@@ -74,7 +71,7 @@ namespace Keep.Controls
                     if ( lastYInColumn[i] <= lastYInColumn[columnWithlastY] )
                         columnWithlastY = i;
 
-                Size cellSize = new Size( CellWidth, child.DesiredSize.Height );
+                Size cellSize = new Size( LastCellWidth, child.DesiredSize.Height );
                 Point startPoint = new Point( cellSize.Width * columnWithlastY, lastYInColumn[columnWithlastY] );
                 lastYInColumn[columnWithlastY] = startPoint.Y + cellSize.Height;
 
@@ -84,24 +81,29 @@ namespace Keep.Controls
             return totalSize;
         }
 
-        public int Columns
+        public static readonly DependencyProperty LastCellWidthProperty = DependencyProperty.Register("LastCellWidth", typeof(Double), typeof(FluidGrid), new PropertyMetadata(194.0));
+        public Double LastCellWidth
         {
-            get { return (int)GetValue( ColumnsProperty ); }
-            set { SetValue( ColumnsProperty, value ); }
+            get { return (Double)GetValue(LastCellWidthProperty); }
+            set { SetValue(LastCellWidthProperty, value); }
         }
 
+        public static readonly DependencyProperty ColumnsProperty = DependencyProperty.Register("Columns", typeof(int), typeof(FluidGrid), new PropertyMetadata(1, OnColumnsChanged));
+        public int Columns
+        {
+            get { return (int)GetValue(ColumnsProperty); }
+            set { SetValue(ColumnsProperty, value); }
+        }
+
+        public static readonly DependencyProperty ItemMinWidthProperty = DependencyProperty.Register("ItemMinWidth", typeof(int), typeof(FluidGrid), new PropertyMetadata(0, OnItemMinWidthChanged));
         public int ItemMinWidth
         {
             get { return (int)GetValue( ItemMinWidthProperty ); }
             set { SetValue( ItemMinWidthProperty, value ); }
         }
 
-        public static readonly DependencyProperty ColumnsProperty =
-			 DependencyProperty.Register( "Columns", typeof( int ), typeof( FluidGrid ), new PropertyMetadata( 1, OnColumnsChanged ) );
 
 
-        public static readonly DependencyProperty ItemMinWidthProperty =
-			 DependencyProperty.Register( "ItemMinWidth", typeof( int ), typeof( FluidGrid ), new PropertyMetadata( 0, OnItemMinWidthChanged ) );
 
         static void OnColumnsChanged( DependencyObject obj, DependencyPropertyChangedEventArgs e )
         {

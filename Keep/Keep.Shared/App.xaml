@@ -2,23 +2,30 @@
     x:Class="Keep.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:Keep">
+    xmlns:local="using:Keep"
+    xmlns:common="using:Keep.Common">
 
     <Application.Resources>
     	<ResourceDictionary>
     		<ResourceDictionary.MergedDictionaries>
-    			<ResourceDictionary Source="ms-appx:///Resources/LightThemeResources.xaml"/>
-    			<ResourceDictionary Source="ms-appx:///Resources/DarkThemeResources.xaml"/>
-    			<ResourceDictionary Source="ms-appx:///Resources/DefaultThemeResources.xaml"/>
-    		</ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="ms-appx:///Resources/DarkThemeResources.xaml"/>
+                <ResourceDictionary Source="ms-appx:///Resources/LightThemeResources.xaml"/>
+                <ResourceDictionary Source="ms-appx:///Resources/DefaultThemeResources.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
 
-    		<Style TargetType="TextBlock">
-    			<Setter Property="FontSize" Value="18"/>
-    		</Style>
-        
-    		<Style TargetType="ListViewItem">
+            <common:NullableToVisibilityConverter x:Key="NullableToVisibilityConverter"/>
+
+            <Style TargetType="TextBlock">
+                <Setter Property="FontSize" Value="18"/>
+            </Style>
+
+            <Style TargetType="TextBox">
+                <Setter Property="Opacity" Value="0.63"/>
+            </Style>
+
+            <Style TargetType="ListViewItem">
                 <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+                <!--<Setter Property="VerticalContentAlignment" Value="Stretch"/>-->
             </Style>
     	</ResourceDictionary>
     </Application.Resources>
