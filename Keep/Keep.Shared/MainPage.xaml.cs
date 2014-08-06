@@ -19,14 +19,17 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 using Keep.Common;
+using Keep.Commands;
 using Keep.Controls;
 using Keep.ViewModels;
+using Keep.Models;
 
 namespace Keep
 {
     public sealed partial class MainPage : Page
     {
         private MainPageViewModel viewModel = new MainPageViewModel();
+        public DeleteNoteCommand DeleteNoteCommand { get { return viewModel.DeleteNoteCommand; } }
 
         public NavigationHelper NavigationHelper { get { return this.navigationHelper; } }
         private NavigationHelper navigationHelper;
@@ -34,7 +37,7 @@ namespace Keep
         public MainPage()
         {
             this.InitializeComponent();
-
+            
             this.NavigationCacheMode = NavigationCacheMode.Required;
 
             this.navigationHelper = new NavigationHelper(this);
@@ -87,6 +90,12 @@ namespace Keep
 #if WINDOWS_PHONE_APP
             NotesListView.ReorderMode = ListViewReorderMode.Enabled;
 #endif
+        }
+
+        private void NewTextNoteAppBarButton_Click(object sender, RoutedEventArgs e)
+        {
+            object parameter = new Note();
+            Frame.Navigate(typeof(NoteEditPage), parameter);
         }
     }
 }

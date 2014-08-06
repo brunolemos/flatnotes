@@ -26,7 +26,7 @@
             <MenuFlyoutItem Text="reorder"/>
             <MenuFlyoutItem Text="pin to start"/>
             <MenuFlyoutSeparator/>
-            <MenuFlyoutItem Text="delete"/>
+            <MenuFlyoutItem Text="delete" Command="{Binding DeleteNoteCommand, ElementName=Root}" CommandParameter="{Binding}" />
         </MenuFlyout>
 
         <DataTemplate x:Key="NotePreviewListViewControlTemplate">
@@ -41,7 +41,7 @@
 
     <Page.BottomAppBar>
         <CommandBar>
-            <AppBarButton x:Uid="NoteTextType" Label="Text">
+            <AppBarButton x:Uid="NoteTextType" Label="Text" Click="NewTextNoteAppBarButton_Click">
                 <AppBarButton.Icon>
                     <BitmapIcon UriSource="Assets/appbar.text.serif.png"/>
                 </AppBarButton.Icon>

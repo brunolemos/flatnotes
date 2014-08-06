@@ -4,9 +4,10 @@ using System.Diagnostics;
 using System.Text;
 using System.Windows;
 using System.Runtime.Serialization;
-using Keep.Models.Interfaces;
+using Windows.UI.StartScreen;
 
 using Keep.Utils;
+using Keep.Models.Interfaces;
 
 namespace Keep.Models
 {
@@ -17,6 +18,10 @@ namespace Keep.Models
         public String GetID() { return ID; }
         public DateTime GetCreatedAt() { return CreatedAt; }
         public DateTime GetUpdatedAt() { return UpdatedAt; }
+
+        public bool IsPinned { get { isPinned = SecondaryTile.Exists(this.ID); return isPinned; } set { if (isPinned != value) { isPinned = value; NotifyPropertyChanged("IsPinned"); } } }
+        private bool isPinned { get { return isPinned_value; } set { if (isPinned_value != value) { isPinned_value = value; NotifyPropertyChanged("IsPinned"); } } }
+        private bool isPinned_value;
 
         [DataMember]
         public String ID { get { return id; } private set { id = value; } }
@@ -140,6 +145,11 @@ namespace Keep.Models
         public String GetContent()
         {
             return IsChecklist ? GetTextFromChecklist() : Text;
+        }
+
+        public bool IsEmpty()
+        {
+            return String.IsNullOrEmpty(Title) && ((!IsChecklist && String.IsNullOrEmpty(Text)) || (IsChecklist && Checklist.Count <= 0)) && Images.Count <= 0;
         }
 
         public String GetTextFromChecklist()

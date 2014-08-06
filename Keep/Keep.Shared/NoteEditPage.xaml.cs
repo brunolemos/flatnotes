@@ -18,6 +18,7 @@ using Windows.UI.Xaml.Navigation;
 
 using Keep.Common;
 using Keep.Models;
+using Keep.Utils;
 using Keep.ViewModels;
 
 namespace Keep
@@ -60,10 +61,20 @@ namespace Keep
 #endif
 
             viewModel = new NoteEditViewModel();
+            Note note = null;
 
             if (e.NavigationParameter != null && e.NavigationParameter is Note)
-                viewModel.Note = e.NavigationParameter as Note;
+            {
+                Notes notes = AppSettings.Instance.LoggedUser.Notes;
+                note = notes.Where<Note>(x => x.ID == ((Note)e.NavigationParameter).ID).FirstOrDefault<Note>();
+            }
+            else if (e.NavigationParameter != null && e.NavigationParameter is string)
+            {
+                Notes notes = AppSettings.Instance.LoggedUser.Notes;
+                note = notes.Where<Note>(x => x.ID == e.NavigationParameter.ToString()).FirstOrDefault<Note>();
+            }
 
+            viewModel.Note = (note != null ? note : new Note());
             this.DataContext = viewModel;
         }
 
@@ -80,6 +91,23 @@ namespace Keep
 
             //ApplicationView.GetForCurrentView().SetDesiredBoundsMode(ApplicationViewBoundsMode.UseVisible);
 #endif
+
+            if (viewModel.Note == null) return;
+
+            Notes notes = AppSettings.Instance.LoggedUser.Notes;
+            Note note = notes.Where<Note>(x => x.ID == viewModel.Note.ID).FirstOrDefault<Note>();
+
+            if (note == null)
+            {
+                if (!(viewModel.Note == null || viewModel.Note.IsEmpty()))
+                    AppSettings.Instance.LoggedUser.Notes.Insert(0, viewModel.Note);
+            }
+            else
+            {
+                if ((viewModel.Note == null || viewModel.Note.IsEmpty()))
+                    if (viewModel.DeleteNoteCommand.CanExecute(viewModel.Note))
+                        viewModel.DeleteNoteCommand.Execute(viewModel.Note);
+            }
         }
 
         #region NavigationHelper registration
@@ -95,5 +123,16 @@ namespace Keep
         }
 
         #endregion
+
+        private void DeleteNoteAppBarButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (viewModel.DeleteNoteCommand.CanExecute(viewModel.Note))
+            {
+                viewModel.DeleteNoteCommand.Execute(viewModel.Note);
+                viewModel.Note = null;
+
+                navigationHelper.GoBack();
+            }
+        }
     }
 }

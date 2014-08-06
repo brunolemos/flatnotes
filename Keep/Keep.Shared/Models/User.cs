@@ -56,6 +56,9 @@ namespace Keep.Models
 
         public User() {
             PropertyChanged += User_PropertyChanged;
+
+            Notes.CollectionChanged += (s, e) => NotifyPropertyChanged("Notes");
+            ArchivedNotes.CollectionChanged += (s, e) => NotifyPropertyChanged("ArchivedNotes");
         }
 
         void User_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -93,7 +96,7 @@ namespace Keep.Models
             foreach (var item in list)
                 notes.Add(item);
 
-            NotifyPropertyChanged("Notes"); 
+            NotifyPropertyChanged("Notes");
 
             return;
         }

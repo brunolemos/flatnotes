@@ -16,6 +16,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Commands\DeleteNoteCommand.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Commands\NoteTogglePinCommand.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Commands\SendFeedbackCommand.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\BooleanNegationConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\NullableToVisibilityConverter.cs" />
@@ -53,6 +55,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Utils\Firebase\TokenOptions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\GenerateRandomID.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\JWT\JWT.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\TrullyObservableCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\NoteEditViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MainPageViewModel.cs" />
   </ItemGroup>

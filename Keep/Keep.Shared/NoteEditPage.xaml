@@ -12,19 +12,19 @@
 
     <Page.BottomAppBar>
         <CommandBar Background="#A0000000" Foreground="White">
-            <AppBarButton Label="color">
+            <AppBarButton x:Name="ColorPickerAppBarButton" Label="color">
                 <AppBarButton.Icon>
                     <BitmapIcon UriSource="Assets/appbar.water.droplet.png"/>
                 </AppBarButton.Icon>
             </AppBarButton>
             <AppBarButton Icon="Camera" Label="photo"/>
             <AppBarButton Icon="Microphone" Label="audio"/>
-            <AppBarToggleButton Icon="Pin" Label="pin to start"/>
+            <AppBarToggleButton Icon="Pin" Label="pin to start" IsChecked="{Binding Note.IsPinned, Mode=OneWay}" Command="{Binding NoteTogglePinCommand}" CommandParameter="{Binding Note}"/>
 
             <CommandBar.SecondaryCommands>
                 <AppBarButton Label="share..." Icon="World"/>
                 <AppBarToggleButton Icon="List" Label="convert to checklist"/>
-                <AppBarButton  Icon="Delete" Label="delete"/>
+                <AppBarButton  Icon="Delete" Label="delete" Click="DeleteNoteAppBarButton_Click" />
             </CommandBar.SecondaryCommands>
         </CommandBar>
     </Page.BottomAppBar>

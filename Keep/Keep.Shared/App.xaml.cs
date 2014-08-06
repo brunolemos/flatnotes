@@ -137,5 +137,7 @@ namespace Keep
             // TODO: Save application state and stop any background activity
             deferral.Complete();
         }
+
+        public static bool IsDesignMode { get { return Windows.ApplicationModel.DesignMode.DesignModeEnabled; } }
     }
 }
