@@ -20,6 +20,7 @@ using Keep.Common;
 using Keep.Models;
 using Keep.Utils;
 using Keep.ViewModels;
+using System.Diagnostics;
 
 namespace Keep
 {
@@ -93,6 +94,9 @@ namespace Keep
 #endif
 
             if (viewModel.Note == null) return;
+            
+            //update binding (fix problem when creating a note and press back button while textbox is focused)
+            ForceTextBoxBindingUpdate();
 
             Notes notes = AppSettings.Instance.LoggedUser.Notes;
             Note note = notes.Where<Note>(x => x.ID == viewModel.Note.ID).FirstOrDefault<Note>();
@@ -124,6 +128,15 @@ namespace Keep
 
         #endregion
 
+
+
+        public void ForceTextBoxBindingUpdate()
+        {
+            //force binding update (fix problem when editing textbox before click appbar)
+            NoteTitleTextBox.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+            NoteTextTextBox.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+        }
+        
         private void DeleteNoteAppBarButton_Click(object sender, RoutedEventArgs e)
         {
             if (viewModel.DeleteNoteCommand.CanExecute(viewModel.Note))
@@ -133,6 +146,35 @@ namespace Keep
 
                 navigationHelper.GoBack();
             }
+        }
+
+        private void ColorPickerAppBarToggleButton_Checked(object sender, RoutedEventArgs e)
+        {
+            FlyoutBase.ShowAttachedFlyout(this);
+        }
+
+        private void ColorPickerAppBarToggleButton_Unchecked(object sender, RoutedEventArgs e)
+        {
+            FlyoutBase.GetAttachedFlyout(this).Hide();
+        }
+
+        private void ColorPickerFlyout_Opened(object sender, object e)
+        {
+            ColorPickerAppBarToggleButton.IsChecked = true;
+        }
+
+        private void ColorPickerFlyout_Closed(object sender, object e)
+        {
+            ColorPickerAppBarToggleButton.IsChecked = false;
+        }
+
+        private void NoteColorPicker_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.AddedItems.Count < 0)
+                return;
+            
+            NoteColor newColor = e.AddedItems[0] as NoteColor;
+            viewModel.Note.Color = newColor;
         }
     }
 }

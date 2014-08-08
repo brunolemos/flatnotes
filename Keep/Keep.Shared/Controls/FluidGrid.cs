@@ -12,70 +12,69 @@ namespace Keep.Controls
 {
     public class FluidGrid : Panel
     {
-        protected override Size MeasureOverride( Size totalSize )
-        {
-            //Debug.WriteLine( "Called MeasureOverride " + totalSize );
-            int columns = Columns ;
+        int[] childrenColumns;
+        Size[] childrenSizes;
 
-            if ( columns < 1 )
-                columns = (int)Math.Floor( totalSize.Width / ItemMinWidth );
+        protected override Size MeasureOverride(Size totalSize)
+        {
+            int columns = Columns;
+            if (columns < 1) columns = (int)Math.Floor(totalSize.Width / ItemMinWidth);
 
             int i, columnWithlastY = 0;
             LastCellWidth = totalSize.Width / columns;
+            Size resultSize = new Size(totalSize.Width, 0);
+
             double[] lastYInColumn = new double[columns];
-            Size resultSize = new Size( totalSize.Width, 0 );
+            for (i = 0; i < columns; i++) lastYInColumn[i] = 0;
 
-            for ( i = 0; i < columns; i++ )
-                lastYInColumn[i] = 0;
-
-            foreach ( UIElement child in Children )
+            childrenColumns = new int[Children.Count];
+            childrenSizes = new Size[Children.Count];
+            for (int pos = 0; pos < Children.Count; pos++)
             {
-                for ( i = columns - 1; i >= 0; i-- )
-                    if ( lastYInColumn[i] <= lastYInColumn[columnWithlastY] )
+                for (i = columns - 1; i >= 0; i--)
+                    if (lastYInColumn[i] <= lastYInColumn[columnWithlastY])
                         columnWithlastY = i;
 
-                child.Measure( new Size( LastCellWidth, totalSize.Height ) );
-                Size cellSize = new Size( LastCellWidth, child.DesiredSize.Height );
-                Point startPoint = new Point( cellSize.Width * columnWithlastY, lastYInColumn[columnWithlastY] );
+                Children[pos].Measure(new Size(LastCellWidth, totalSize.Height));
+                Size cellSize = new Size(LastCellWidth, Children[pos].DesiredSize.Height);
+                if (Double.IsPositiveInfinity(cellSize.Width)) cellSize.Width = 0;
+                if (Double.IsPositiveInfinity(cellSize.Height)) cellSize.Height = 0;
+
+                Point startPoint = new Point(cellSize.Width * columnWithlastY, lastYInColumn[columnWithlastY]);
                 lastYInColumn[columnWithlastY] = startPoint.Y + cellSize.Height;
+
+                childrenColumns[pos] = columnWithlastY;
+                childrenSizes[pos] = cellSize;
             }
 
-            if ( Double.IsPositiveInfinity( totalSize.Width ) ) totalSize.Width = 0;
-            if ( Double.IsPositiveInfinity( totalSize.Height ) ) totalSize.Height = 0;
+            if (Double.IsPositiveInfinity(resultSize.Width)) resultSize.Width = 0;
+            if (Double.IsPositiveInfinity(resultSize.Height)) resultSize.Height = 0;
 
-            for ( i = 0; i < columns; i++ )
-                resultSize.Height = Math.Max( resultSize.Height, lastYInColumn[i] );
+            for (i = 0; i < columns; i++)
+                resultSize.Height = Math.Max(resultSize.Height, lastYInColumn[i]);
 
-            //Debug.WriteLine( "Returned " + resultSize );
             return resultSize;
         }
 
         protected override Size ArrangeOverride( Size totalSize )
         {
-            //Debug.WriteLine( "Called ArrangeOverride" + totalSize );
+            if (childrenColumns.Length != Children.Count || childrenSizes.Length != Children.Count) return totalSize;
+
             int columns = Columns;
+            if (columns < 1) columns = (int)Math.Floor(totalSize.Width / ItemMinWidth);
 
-            if ( columns < 1 )
-                columns = (int)Math.Floor( totalSize.Width / ItemMinWidth );
-
-            int i, columnWithlastY = 0;
-            LastCellWidth = totalSize.Width / columns;
             double[] lastYInColumn = new double[columns];
+            for (int i = 0; i < columns; i++) lastYInColumn[i] = 0;
 
-            for ( i = 0; i < columns; i++ )
-                lastYInColumn[i] = 0;
-
-            foreach ( UIElement child in Children )
+            for (int pos = 0; pos < Children.Count; pos++)
             {
-                for ( i = columns - 1; i >= 0; i-- )
-                    if ( lastYInColumn[i] <= lastYInColumn[columnWithlastY] )
-                        columnWithlastY = i;
+                Size childSize = childrenSizes[pos];
+                int childColumn = childrenColumns[pos];
 
-                Size cellSize = new Size( LastCellWidth, child.DesiredSize.Height );
-                Point startPoint = new Point( cellSize.Width * columnWithlastY, lastYInColumn[columnWithlastY] );
-                lastYInColumn[columnWithlastY] = startPoint.Y + cellSize.Height;
+                Point startPoint = new Point(childSize.Width * childColumn, lastYInColumn[childColumn]);
+                Children[pos].Arrange(new Rect(startPoint, childSize));
 
-                child.Arrange( new Rect( startPoint, cellSize ) );
+                lastYInColumn[childColumn] += childSize.Height;
             }
 
             return totalSize;

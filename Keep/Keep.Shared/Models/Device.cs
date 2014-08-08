@@ -15,6 +15,8 @@ using Keep.Controllers;
 
 namespace Keep.Models
 {
+    public class Devices : List<Device> { }
+
     public class Device : BaseModel, IIdentifiableModelInterface
     {
         public String GetID() { return DeviceUniqueId; }

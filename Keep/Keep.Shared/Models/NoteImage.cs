@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Text;
 using System.Windows;
@@ -10,6 +11,8 @@ using Keep.Utils;
 
 namespace Keep.Models
 {
+    public class NoteImages : ObservableCollection<NoteImage> { }
+
     [DataContract]
     public class NoteImage : BaseModel
     {

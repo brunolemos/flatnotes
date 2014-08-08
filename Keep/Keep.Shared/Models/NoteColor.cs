@@ -6,6 +6,8 @@ using Windows.UI.Xaml.Media;
 
 namespace Keep.Models
 {
+    public class NoteColors : List<NoteColor> { }
+
     [DataContract]
     public sealed class NoteColor
     {

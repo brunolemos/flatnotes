@@ -10,6 +10,8 @@ using Keep.Models.Interfaces;
 
 namespace Keep.Models
 {
+    public class Users : List<User> { }
+
     [DataContract]
     public class User : BaseModel, IIdentifiableModelInterface
     {
@@ -55,16 +57,16 @@ namespace Keep.Models
         public DateTime LastSeenAt = DateTime.Now;
 
         public User() {
-            PropertyChanged += User_PropertyChanged;
+            //PropertyChanged += User_PropertyChanged;
 
             Notes.CollectionChanged += (s, e) => NotifyPropertyChanged("Notes");
             ArchivedNotes.CollectionChanged += (s, e) => NotifyPropertyChanged("ArchivedNotes");
         }
 
-        void User_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            Debug.WriteLine(String.Format("User {0} changed", e.PropertyName));
-        }
+        //void User_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        //{
+        //    Debug.WriteLine(String.Format("User {0} changed", e.PropertyName));
+        //}
 
         public void Touch()
         {

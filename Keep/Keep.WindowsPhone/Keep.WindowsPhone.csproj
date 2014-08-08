@@ -113,6 +113,7 @@
     </SDKReference>
   </ItemGroup>
   <ItemGroup>
+    <DesignData Include="SampleData\NoteColorsSampleData.xaml" />
     <DesignData Include="SampleData\NoteEditViewModelSampleData.xaml" />
   </ItemGroup>
   <ItemGroup>

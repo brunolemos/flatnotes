@@ -1,0 +1,32 @@
+﻿<UserControl
+    x:Name="Root"
+    x:Class="Keep.Controls.NoteColorPicker"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Keep.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="200"
+    d:DesignWidth="500">
+
+    <UserControl.Resources>
+        <DataTemplate x:Key="NoteColorTemplate">
+            <Grid Margin="12,6">
+                <Ellipse Width="48"  Height="48" Fill="{Binding Color}" VerticalAlignment="Center" HorizontalAlignment="Center" StrokeThickness="0"/>
+            </Grid>
+        </DataTemplate>
+    </UserControl.Resources>
+
+    <Grid Background="Transparent">
+        <Grid Background="Transparent" VerticalAlignment="Bottom">
+            <ListView x:Name="ColorPickerListView" Margin="24" SelectionMode="Single" ItemTemplate="{StaticResource NoteColorTemplate}" ItemsSource="{Binding}" SelectionChanged="ColorPickerListView_SelectionChanged" d:DataContext="{d:DesignData /SampleData/NoteColorsSampleData.xaml}">
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <local:FluidGrid Columns="4"/>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+            </ListView>
+        </Grid>
+    </Grid>
+</UserControl>

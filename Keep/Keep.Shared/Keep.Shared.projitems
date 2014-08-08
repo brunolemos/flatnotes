@@ -28,23 +28,21 @@
     <Compile Include="$(MSBuildThisFileDirectory)Common\SuspensionManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controllers\DeviceController.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\FluidGrid.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\NoteColorPicker.xaml.cs">
+      <DependentUpon>NoteColorPicker.xaml</DependentUpon>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Models\BaseModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Checklist.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\ChecklistItem.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Device.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\Devices.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Interfaces\IIdentifiableModelInterface.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Note.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\NoteColor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\NoteImage.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\NoteImages.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\Notes.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\User.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\UserPreferences.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\Users.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)NoteEditPage.xaml.cs">
       <DependentUpon>NoteEditPage.xaml</DependentUpon>
     </Compile>
@@ -60,6 +58,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MainPageViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="$(MSBuildThisFileDirectory)Controls\NoteColorPicker.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="$(MSBuildThisFileDirectory)MainPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -139,16 +139,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="..\Keep.WindowsPhone\SampleData\MainPageViewModelSampleData.xaml">
-      <Link>SampleData\MainPageViewModelSampleData.xaml</Link>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="..\Keep.WindowsPhone\SampleData\NoteEditViewModelSampleData.xaml">
-      <Link>SampleData\NoteEditViewModelSampleData.xaml</Link>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
+    <Folder Include="SampleData\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">
     <VisualStudioVersion>12.0</VisualStudioVersion>

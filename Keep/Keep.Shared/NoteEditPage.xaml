@@ -2,7 +2,7 @@
     x:Class="Keep.NoteEditPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:Keep"
+    xmlns:local="using:Keep.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
@@ -10,13 +10,25 @@
     Background="{Binding Note.Color.Color}" 
     d:DataContext="{d:DesignData /SampleData/NoteEditViewModelSampleData.xaml}">
 
+    <FlyoutBase.AttachedFlyout>
+        <Flyout x:Name="ColorPickerFlyout" Placement="Bottom" Opened="ColorPickerFlyout_Opened" Closed="ColorPickerFlyout_Closed">
+            <Flyout.FlyoutPresenterStyle>
+                <Style TargetType="FlyoutPresenter">
+                    <Setter Property="Background" Value="#A0000000"/>
+                </Style>
+            </Flyout.FlyoutPresenterStyle>
+
+            <local:NoteColorPicker SelectionChanged="NoteColorPicker_SelectionChanged" />
+        </Flyout>
+    </FlyoutBase.AttachedFlyout>
+
     <Page.BottomAppBar>
         <CommandBar Background="#A0000000" Foreground="White">
-            <AppBarButton x:Name="ColorPickerAppBarButton" Label="color">
-                <AppBarButton.Icon>
+            <AppBarToggleButton x:Name="ColorPickerAppBarToggleButton" Label="color" Checked="ColorPickerAppBarToggleButton_Checked" Unchecked="ColorPickerAppBarToggleButton_Unchecked">
+                <AppBarToggleButton.Icon>
                     <BitmapIcon UriSource="Assets/appbar.water.droplet.png"/>
-                </AppBarButton.Icon>
-            </AppBarButton>
+                </AppBarToggleButton.Icon>
+            </AppBarToggleButton>
             <AppBarButton Icon="Camera" Label="photo"/>
             <AppBarButton Icon="Microphone" Label="audio"/>
             <AppBarToggleButton Icon="Pin" Label="pin to start" IsChecked="{Binding Note.IsPinned, Mode=OneWay}" Command="{Binding NoteTogglePinCommand}" CommandParameter="{Binding Note}"/>
@@ -29,20 +41,14 @@
         </CommandBar>
     </Page.BottomAppBar>
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-
-        <Grid Grid.Row="0" Height="200" Visibility="Collapsed">
+    <StackPanel x:Name="LayoutRoot">
+        <Grid Height="200" Visibility="Collapsed">
             <Grid.Background>
                 <SolidColorBrush Color="{StaticResource MediaControlPanelVideoThemeColor}"/>
             </Grid.Background>
         </Grid>
 
-        <TextBox Grid.Row="1" PlaceholderText="Title" Text="{Binding Note.Title, Mode=TwoWay}" InputScope="Default" Background="{x:Null}" BorderThickness="0" FontWeight="Bold" Padding="24,12" Margin="0,12,0,0" TextWrapping="Wrap" FontSize="22"/>
-        <TextBox Grid.Row="2" PlaceholderText="Text" Text="{Binding Note.Text, Mode=TwoWay}" InputScope="Default" Background="{x:Null}" BorderThickness="0" Margin="0,0,0,24" Padding="24,6" AcceptsReturn="True" TextWrapping="Wrap" VerticalAlignment="Stretch"/>
-    </Grid>
+        <TextBox x:Name="NoteTitleTextBox" PlaceholderText="Title" Text="{Binding Note.Title, Mode=TwoWay}" InputScope="Default" Background="{x:Null}" BorderThickness="0" FontWeight="Bold" Padding="24,12" Margin="0,12,0,0" TextWrapping="Wrap" FontSize="22"/>
+        <TextBox x:Name="NoteTextTextBox" PlaceholderText="Text" Text="{Binding Note.Text, Mode=TwoWay}" InputScope="Default" Background="{x:Null}" BorderThickness="0" Margin="0,0,0,24" Padding="24,6" AcceptsReturn="True" TextWrapping="Wrap" VerticalAlignment="Top"/>
+    </StackPanel>
 </Page>

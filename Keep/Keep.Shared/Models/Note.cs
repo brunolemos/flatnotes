@@ -11,6 +11,8 @@ using Keep.Models.Interfaces;
 
 namespace Keep.Models
 {
+    public class Notes : TrulyObservableCollection<Note> { }
+
     [DataContract]
     public class Note : BaseModel, IIdentifiableModelInterface
     {
