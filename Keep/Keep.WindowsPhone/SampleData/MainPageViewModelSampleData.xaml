@@ -28,7 +28,7 @@
 
         <Models:Note IsChecklist="False" Title="Title" Text="Hi">
             <Models:Note.Color>
-                <Models:NoteColor Key="GRAY" Color="#FFB5C5C5"/>
+                <Models:NoteColor Key="DEFAULT" Color="#FFFFFFFF"/>
             </Models:Note.Color>
         </Models:Note>
 

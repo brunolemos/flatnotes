@@ -48,6 +48,10 @@ namespace Keep
         private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
             this.DataContext = viewModel;
+
+#if WINDOWS_PHONE_APP
+            NotesListView.ReorderMode = ListViewReorderMode.Disabled;
+#endif
         }
 
         private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
@@ -85,17 +89,41 @@ namespace Keep
             Frame.Navigate(typeof(NoteEditPage), parameter);
         }
 
-        private void ReorderAppBarButton_Click(object sender, RoutedEventArgs e)
+        private void NewTextNoteAppBarButton_Click(object sender, RoutedEventArgs e)
+        {
+            object parameter = new Note();
+            Frame.Navigate(typeof(NoteEditPage), parameter);
+        }
+
+//        private void ReorderAppBarButton_Click(object sender, RoutedEventArgs e)
+//        {
+//#if WINDOWS_PHONE_APP
+//            NotesListView.ReorderMode = ListViewReorderMode.Enabled;
+//#endif
+//        }
+
+        private void ReorderAppBarToggleButton_Checked(object sender, RoutedEventArgs e)
         {
 #if WINDOWS_PHONE_APP
             NotesListView.ReorderMode = ListViewReorderMode.Enabled;
 #endif
         }
 
-        private void NewTextNoteAppBarButton_Click(object sender, RoutedEventArgs e)
+        private void ReorderAppBarToggleButton_Unchecked(object sender, RoutedEventArgs e)
         {
-            object parameter = new Note();
-            Frame.Navigate(typeof(NoteEditPage), parameter);
+#if WINDOWS_PHONE_APP
+            NotesListView.ReorderMode = ListViewReorderMode.Disabled;
+#endif
+        }
+
+        public void OnReorderModeEnabled()
+        {
+            ReorderAppBarToggleButton.IsChecked = true;
+        }
+
+        public void OnReorderModeDisabled()
+        {
+            ReorderAppBarToggleButton.IsChecked = false;
         }
     }
 }

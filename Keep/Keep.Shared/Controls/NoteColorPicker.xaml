@@ -12,8 +12,8 @@
 
     <UserControl.Resources>
         <DataTemplate x:Key="NoteColorTemplate">
-            <Grid Margin="12,6">
-                <Ellipse Width="48"  Height="48" Fill="{Binding Color}" VerticalAlignment="Center" HorizontalAlignment="Center" StrokeThickness="0"/>
+            <Grid Margin="10">
+                <Ellipse Width="42"  Height="42" Fill="{Binding Color}" VerticalAlignment="Center" HorizontalAlignment="Center" StrokeThickness="0"/>
             </Grid>
         </DataTemplate>
     </UserControl.Resources>

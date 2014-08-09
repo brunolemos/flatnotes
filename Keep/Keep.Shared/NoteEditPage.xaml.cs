@@ -30,8 +30,8 @@ namespace Keep
         private NavigationHelper navigationHelper;
 
         NoteEditViewModel viewModel;
-        //double lastStatusBarBackgroundOpacity;
-        //Color? lastStatusBarBackgroundColor;
+        double lastStatusBarBackgroundOpacity;
+        Color? lastStatusBarBackgroundColor;
         Color? lastStatusBarForegroundColor;
 
         public NoteEditPage()
@@ -47,15 +47,15 @@ namespace Keep
         {
 #if WINDOWS_PHONE_APP
             StatusBar statusBar = StatusBar.GetForCurrentView();
-            //lastStatusBarBackgroundOpacity = statusBar.BackgroundOpacity;
-            //lastStatusBarBackgroundColor = statusBar.BackgroundColor;
+            lastStatusBarBackgroundOpacity = statusBar.BackgroundOpacity;
+            lastStatusBarBackgroundColor = statusBar.BackgroundColor;
             lastStatusBarForegroundColor = statusBar.ForegroundColor;
 
             if (Application.Current.RequestedTheme != ApplicationTheme.Light)
             {
-                //statusBar.BackgroundColor = Colors.Black;
-                //statusBar.BackgroundOpacity = 0.33;
-                statusBar.ForegroundColor = Color.FromArgb(0xFF, 0x44, 0x44, 0x44);
+                statusBar.BackgroundColor = Colors.Black;
+                statusBar.BackgroundOpacity = 0.16;
+                //statusBar.ForegroundColor = Color.FromArgb(0xFF, 0x54, 0x54, 0x54);
             }
 
             //ApplicationView.GetForCurrentView().SetDesiredBoundsMode(ApplicationViewBoundsMode.UseCoreWindow);
@@ -85,8 +85,8 @@ namespace Keep
             if (Application.Current.RequestedTheme != ApplicationTheme.Light)
             {
                 StatusBar statusBar = StatusBar.GetForCurrentView();
-                //statusBar.BackgroundOpacity = lastStatusBarBackgroundOpacity;
-                //statusBar.BackgroundColor = lastStatusBarBackgroundColor;
+                statusBar.BackgroundOpacity = lastStatusBarBackgroundOpacity;
+                statusBar.BackgroundColor = lastStatusBarBackgroundColor;
                 statusBar.ForegroundColor = lastStatusBarForegroundColor;
             }
 

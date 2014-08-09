@@ -6,7 +6,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    RequestedTheme="Light"
     Background="{Binding Note.Color.Color}" 
     d:DataContext="{d:DesignData /SampleData/NoteEditViewModelSampleData.xaml}">
 
@@ -14,7 +13,7 @@
         <Flyout x:Name="ColorPickerFlyout" Placement="Bottom" Opened="ColorPickerFlyout_Opened" Closed="ColorPickerFlyout_Closed">
             <Flyout.FlyoutPresenterStyle>
                 <Style TargetType="FlyoutPresenter">
-                    <Setter Property="Background" Value="#A0000000"/>
+                    <Setter Property="Background" Value="{ThemeResource ApplicationPageBackgroundThemeBrush}"/>
                 </Style>
             </Flyout.FlyoutPresenterStyle>
 
@@ -23,19 +22,19 @@
     </FlyoutBase.AttachedFlyout>
 
     <Page.BottomAppBar>
-        <CommandBar Background="#A0000000" Foreground="White">
+        <CommandBar Background="#70000000" Foreground="White">
             <AppBarToggleButton x:Name="ColorPickerAppBarToggleButton" Label="color" Checked="ColorPickerAppBarToggleButton_Checked" Unchecked="ColorPickerAppBarToggleButton_Unchecked">
                 <AppBarToggleButton.Icon>
                     <BitmapIcon UriSource="Assets/appbar.water.droplet.png"/>
                 </AppBarToggleButton.Icon>
             </AppBarToggleButton>
-            <AppBarButton Icon="Camera" Label="photo"/>
-            <AppBarButton Icon="Microphone" Label="audio"/>
+            <AppBarButton Icon="Camera" Label="photo" IsEnabled="False"/>
+            <AppBarButton Icon="Microphone" Label="audio" IsEnabled="False"/>
             <AppBarToggleButton Icon="Pin" Label="pin to start" IsChecked="{Binding Note.IsPinned, Mode=OneWay}" Command="{Binding NoteTogglePinCommand}" CommandParameter="{Binding Note}"/>
 
             <CommandBar.SecondaryCommands>
                 <AppBarButton Label="share..." Icon="World"/>
-                <AppBarToggleButton Icon="List" Label="convert to checklist"/>
+                <AppBarToggleButton Icon="List" Label="convert to checklist" IsEnabled="False"/>
                 <AppBarButton  Icon="Delete" Label="delete" Click="DeleteNoteAppBarButton_Click" />
             </CommandBar.SecondaryCommands>
         </CommandBar>
