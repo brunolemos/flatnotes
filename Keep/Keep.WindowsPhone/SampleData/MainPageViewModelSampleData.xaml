@@ -2,37 +2,43 @@
     <ViewModels:MainPageViewModel.CellWidth>194.0</ViewModels:MainPageViewModel.CellWidth>
     
     <ViewModels:MainPageViewModel.Notes>
-        <Models:Note IsChecklist="False" Title="Big text" Text="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.">
+        <Models:Note IsText="True"  IsChecklist="False" Title="Big text" Text="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.">
                 <Models:Note.Color>
                     <Models:NoteColor Key="BLUE" Color="#FF66CCDD"/>
                 </Models:Note.Color>
         </Models:Note>
 
-        <Models:Note IsChecklist="False" Title="Title" Text="Hi">
+        <Models:Note IsText="False" IsChecklist="True" Title="Title" Text="Hi">
             <Models:Note.Color>
                 <Models:NoteColor Key="ORANGE" Color="#FFFFBB22"/>
             </Models:Note.Color>
+
+            <Models:Note.Checklist>
+                <Models:ChecklistItem IsChecked="True" Text="Item 1" />
+                <Models:ChecklistItem IsChecked="False" Text="Item 2" />
+                <Models:ChecklistItem IsChecked="False" Text="Item 3" />
+            </Models:Note.Checklist>
         </Models:Note>
-        
-        <Models:Note IsChecklist="False" Title="Big text" Text="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.">
+
+        <Models:Note IsText="True" IsChecklist="False" Title="Big text" Text="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.">
             <Models:Note.Color>
                 <Models:NoteColor Key="GREEN" Color="#FFBBE535"/>
             </Models:Note.Color>
         </Models:Note>
 
-        <Models:Note IsChecklist="False" Title="Title" Text="Hi">
+        <Models:Note IsText="True" IsChecklist="False" Title="Title" Text="Hi">
             <Models:Note.Color>
                 <Models:NoteColor Key="TEAL" Color="#FF77DDBB"/>
             </Models:Note.Color>
         </Models:Note>
 
-        <Models:Note IsChecklist="False" Title="Title" Text="Hi">
+        <Models:Note IsText="True" IsChecklist="False" Title="Title" Text="Hi">
             <Models:Note.Color>
                 <Models:NoteColor Key="DEFAULT" Color="#FFFFFFFF"/>
             </Models:Note.Color>
         </Models:Note>
 
-        <Models:Note IsChecklist="False" Title="Title" Text="Hi">
+        <Models:Note IsText="True" IsChecklist="False" Title="Title" Text="Hi">
             <Models:Note.Color>
                 <Models:NoteColor Key="RED" Color="#FFF56545"/>
             </Models:Note.Color>

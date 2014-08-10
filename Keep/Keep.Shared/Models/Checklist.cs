@@ -5,9 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Runtime.Serialization;
 
+using Keep.Utils;
+
 namespace Keep.Models
 {
-    public class Checklist : ObservableCollection<ChecklistItem> { }
+    public class Checklist : TrulyObservableCollection<ChecklistItem> { }
 
     [DataContract]
     public class ChecklistItem : BaseModel

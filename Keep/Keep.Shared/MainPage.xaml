@@ -12,9 +12,26 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     d:DataContext="{d:DesignData /SampleData/MainPageViewModelSampleData.xaml}">
 
+    <Page.BottomAppBar>
+        <CommandBar>
+            <AppBarButton x:Uid="NoteTextType" Label="text" Click="NewTextNoteAppBarButton_Click">
+                <AppBarButton.Icon>
+                    <BitmapIcon UriSource="Assets/appbar.text.serif.png"/>
+                </AppBarButton.Icon>
+            </AppBarButton>
+            <AppBarButton x:Uid="NoteChecklistType" Label="checklist" Icon="List" Click="NewChecklistNoteAppBarButton_Click"/>
+            <AppBarToggleButton x:Name="ReorderAppBarToggleButton" Label="reorder" Icon="Sort" Checked="ReorderAppBarToggleButton_Checked" Unchecked="ReorderAppBarToggleButton_Unchecked"/>
+
+            <CommandBar.SecondaryCommands>
+                <AppBarButton Icon="Like" Label="send feedback" Command="{Binding SendFeedbackCommand}"/>
+                <AppBarButton Icon="Setting" Label="settings" IsEnabled="False"/>
+        	</CommandBar.SecondaryCommands>
+        </CommandBar>
+    </Page.BottomAppBar>
+
     <Page.Resources>
         <ItemsPanelTemplate x:Key="FluidItemsPanelTemplate" x:Name="FluidItemsPanelTemplate">
-        	<mycontrols:FluidGrid x:Name="NotesFluidGrid" Columns="-1" ItemMinWidth="150" LastCellWidth="{Binding CellWidth, Mode=TwoWay}"/>
+            <mycontrols:FluidGrid x:Name="NotesFluidGrid" Columns="-1" ItemMinWidth="150" LastCellWidth="{Binding CellWidth, Mode=TwoWay}"/>
         </ItemsPanelTemplate>
 
         <ItemsPanelTemplate x:Key="ReordableItemsPanelTemplate" x:Name="ReordableItemsPanelTemplate">
@@ -25,37 +42,45 @@
             <MenuFlyoutItem Text="share..." IsEnabled="False"/>
             <MenuFlyoutItem Text="pin to start" IsEnabled="False"/>
             <MenuFlyoutSeparator/>
-            <MenuFlyoutItem Text="delete" Command="{Binding DeleteNoteCommand, ElementName=Root}" CommandParameter="{Binding}" />
+            <MenuFlyoutItem Text="delete" Click="NoteDeleteMenuFlyoutItem_Click" />
         </MenuFlyout>
 
+        <DataTemplate x:Key="NoteChecklistListViewControlTemplate">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Viewbox Grid.Column="0" Height="40">
+                    <Grid Width="40">
+                        <CheckBox IsChecked="{Binding IsChecked, Mode=TwoWay}" HorizontalAlignment="Left" Foreground="{StaticResource KeepNoteForegroundBrush}" BorderBrush="{StaticResource KeepNoteForegroundBrush}" RequestedTheme="Light"/>
+                    </Grid>
+                </Viewbox>
+
+                <TextBlock Grid.Column="1" Text="{Binding Text, Mode=OneTime}" FontSize="17" Foreground="{StaticResource KeepNoteForegroundBrush}" TextWrapping="Wrap" Margin="0,6,0,0" />
+            </Grid>
+        </DataTemplate>
+
         <DataTemplate x:Key="NotePreviewListViewControlTemplate">
-        	<Grid x:Name="NoteContainer" Background="{Binding Color.Color}" Margin="4" Holding="NoteContainer_Holding" FlyoutBase.AttachedFlyout="{StaticResource NoteMenuFlyout}">
-        		<StackPanel Margin="12">
-        			<TextBlock Text="{Binding Title}" FontSize="19" Margin="0,0,0,6" Foreground="{StaticResource KeepNoteForegroundBrush}" FontWeight="Bold" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" MaxLines="1" Visibility="{Binding Title, Converter={StaticResource NullableToVisibilityConverter}}"/>
-        			<TextBlock Text="{Binding Text}" FontSize="17" Margin="0,0,0,6" Foreground="{StaticResource KeepNoteForegroundBrush}" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" MaxLines="5" Visibility="{Binding Text, Converter={StaticResource NullableToVisibilityConverter}}"/>
-        		</StackPanel>
-        	</Grid>
+            <Grid x:Name="NoteContainer" Background="{Binding Color.Color}" Margin="4" Holding="NoteContainer_Holding" FlyoutBase.AttachedFlyout="{StaticResource NoteMenuFlyout}">
+                <StackPanel Margin="12">
+                    <TextBlock Text="{Binding Title}" FontSize="19" Margin="0,0,0,12" Foreground="{StaticResource KeepNoteForegroundBrush}" FontWeight="Bold" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" MaxLines="1" Visibility="{Binding Title, Converter={StaticResource NullableToVisibilityConverter}}"/>
+
+                    <Grid Visibility="{Binding IsText, Converter={StaticResource BooleanToVisibilityConverter}}">
+                        <TextBlock Text="{Binding Text}" FontSize="17" Margin="0,0,0,12" Foreground="{StaticResource KeepNoteForegroundBrush}" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" MaxLines="5" Visibility="{Binding Text, Converter={StaticResource NullableToVisibilityConverter}}" />
+                    </Grid>
+
+                    <Grid Visibility="{Binding IsChecklist, Converter={StaticResource BooleanToVisibilityConverter}}">
+                        <ListView x:Name="NoteChecklistListView" CanDragItems="False" IsItemClickEnabled="False" IsTapEnabled="False" IsActiveView="False" ItemTemplate="{StaticResource NoteChecklistListViewControlTemplate}" ItemsSource="{Binding}" DataContext="{Binding Checklist}" SelectionMode="None" />
+                        <Grid  Background="Transparent"/>
+                    </Grid>
+                </StackPanel>
+            </Grid>
         </DataTemplate>
     </Page.Resources>
 
-    <Page.BottomAppBar>
-        <CommandBar>
-            <AppBarButton x:Uid="NoteTextType" Label="text" Click="NewTextNoteAppBarButton_Click">
-                <AppBarButton.Icon>
-                    <BitmapIcon UriSource="Assets/appbar.text.serif.png"/>
-                </AppBarButton.Icon>
-            </AppBarButton>
-            <AppBarButton x:Uid="NoteChecklistType" Label="checklist" Icon="List" IsEnabled="False"/>
-            <AppBarToggleButton x:Name="ReorderAppBarToggleButton" Label="reorder" Icon="Sort" Checked="ReorderAppBarToggleButton_Checked" Unchecked="ReorderAppBarToggleButton_Unchecked"/>
-
-            <CommandBar.SecondaryCommands>
-                <AppBarButton Icon="Like" Label="send feedback" Command="{Binding SendFeedbackCommand}"/>
-                <AppBarButton Icon="Setting" Label="settings" IsEnabled="False"/>
-        	</CommandBar.SecondaryCommands>
-        </CommandBar>
-    </Page.BottomAppBar>
-
-	<Grid x:Name="LayoutRoot">
+    <Grid x:Name="LayoutRoot">
 		<ScrollViewer VerticalScrollMode="Enabled">
 			<ListView x:Name="NotesListView" Margin="6" AllowDrop="True" CanDragItems="True" IsItemClickEnabled="True" ItemsSource="{Binding Notes}" ItemTemplate="{StaticResource NotePreviewListViewControlTemplate}" ItemClick="NotesListView_ItemClick" ItemsPanel="{StaticResource FluidItemsPanelTemplate}">
 				<Interactivity:Interaction.Behaviors>

@@ -9,18 +9,6 @@
     Background="{Binding Note.Color.Color}" 
     d:DataContext="{d:DesignData /SampleData/NoteEditViewModelSampleData.xaml}">
 
-    <FlyoutBase.AttachedFlyout>
-        <Flyout x:Name="ColorPickerFlyout" Placement="Bottom" Opened="ColorPickerFlyout_Opened" Closed="ColorPickerFlyout_Closed">
-            <Flyout.FlyoutPresenterStyle>
-                <Style TargetType="FlyoutPresenter">
-                    <Setter Property="Background" Value="{ThemeResource ApplicationPageBackgroundThemeBrush}"/>
-                </Style>
-            </Flyout.FlyoutPresenterStyle>
-
-            <local:NoteColorPicker SelectionChanged="NoteColorPicker_SelectionChanged" />
-        </Flyout>
-    </FlyoutBase.AttachedFlyout>
-
     <Page.BottomAppBar>
         <CommandBar Background="#70000000" Foreground="White">
             <AppBarToggleButton x:Name="ColorPickerAppBarToggleButton" Label="color" Checked="ColorPickerAppBarToggleButton_Checked" Unchecked="ColorPickerAppBarToggleButton_Unchecked">
@@ -34,20 +22,62 @@
 
             <CommandBar.SecondaryCommands>
                 <AppBarButton Label="share..." Icon="World"/>
-                <AppBarToggleButton Icon="List" Label="convert to checklist" IsEnabled="False"/>
                 <AppBarButton  Icon="Delete" Label="delete" Click="DeleteNoteAppBarButton_Click" />
             </CommandBar.SecondaryCommands>
         </CommandBar>
     </Page.BottomAppBar>
 
-    <StackPanel x:Name="LayoutRoot">
-        <Grid Height="200" Visibility="Collapsed">
-            <Grid.Background>
-                <SolidColorBrush Color="{StaticResource MediaControlPanelVideoThemeColor}"/>
-            </Grid.Background>
-        </Grid>
+    <Page.Resources>
+        <DataTemplate x:Key="NoteChecklistListViewControlTemplate">
+            <Grid Margin="24,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="30"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
 
-        <TextBox x:Name="NoteTitleTextBox" PlaceholderText="Title" Text="{Binding Note.Title, Mode=TwoWay}" InputScope="Default" Background="{x:Null}" BorderThickness="0" FontWeight="Bold" Padding="24,12" Margin="0,12,0,0" TextWrapping="Wrap" FontSize="22"/>
-        <TextBox x:Name="NoteTextTextBox" PlaceholderText="Text" Text="{Binding Note.Text, Mode=TwoWay}" InputScope="Default" Background="{x:Null}" BorderThickness="0" Margin="0,0,0,24" Padding="24,6" AcceptsReturn="True" TextWrapping="Wrap" VerticalAlignment="Top"/>
-    </StackPanel>
+                <CheckBox Grid.Column="0" IsChecked="{Binding IsChecked, Mode=TwoWay}" HorizontalAlignment="Left" Foreground="{StaticResource KeepNoteForegroundBrush}" BorderBrush="{StaticResource KeepNoteForegroundBrush}" RequestedTheme="Light"/>
+                <TextBox Grid.Column="1" PlaceholderText="New item" Text="{Binding Text, Mode=TwoWay}" Foreground="{StaticResource KeepNoteForegroundBrush}" TextWrapping="Wrap" Margin="0,12,0,0" Background="{x:Null}" BorderThickness="0" AcceptsReturn="False" KeyDown="NoteChecklistItemTextBox_KeyDown"  />
+            </Grid>
+        </DataTemplate>
+    </Page.Resources>
+
+    <ScrollViewer x:Name="LayoutRoot" VerticalScrollMode="Enabled">
+        <FlyoutBase.AttachedFlyout>
+            <Flyout x:Name="ColorPickerFlyout" Placement="Bottom" Opened="ColorPickerFlyout_Opened" Closed="ColorPickerFlyout_Closed">
+                <Flyout.FlyoutPresenterStyle>
+                    <Style TargetType="FlyoutPresenter">
+                        <Setter Property="Background" Value="{ThemeResource ApplicationPageBackgroundThemeBrush}"/>
+                    </Style>
+                </Flyout.FlyoutPresenterStyle>
+
+                <local:NoteColorPicker SelectionChanged="NoteColorPicker_SelectionChanged" />
+            </Flyout>
+        </FlyoutBase.AttachedFlyout>
+
+        <StackPanel>
+            <Grid Height="200" Visibility="Collapsed">
+                <Grid.Background>
+                    <SolidColorBrush Color="{StaticResource MediaControlPanelVideoThemeColor}"/>
+                </Grid.Background>
+            </Grid>
+
+            <TextBox x:Name="NoteTitleTextBox" PlaceholderText="Title" Text="{Binding Note.Title, Mode=TwoWay}" InputScope="Default" Background="{x:Null}" BorderThickness="0" FontWeight="Bold" Padding="24,12" Margin="0,12,0,0" TextWrapping="Wrap" FontSize="22"/>
+            <TextBox x:Name="NoteTextTextBox" PlaceholderText="Text" Text="{Binding Note.Text, Mode=TwoWay}" InputScope="Default" Background="{x:Null}" BorderThickness="0" Padding="24,6" AcceptsReturn="True" TextWrapping="Wrap" VerticalAlignment="Top" Visibility="{Binding Note.IsText, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+
+            <StackPanel Visibility="{Binding Note.IsChecklist, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <ListView x:Name="NoteChecklistListView" AllowDrop="True" CanDragItems="True" ItemTemplate="{StaticResource NoteChecklistListViewControlTemplate}" ItemsSource="{Binding}" DataContext="{Binding Note.Checklist}" SelectionMode="None" Holding="NoteChecklistListView_Holding" />
+
+                <Grid Margin="24,0" RequestedTheme="Default">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="30"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <CheckBox x:Name="NewChecklistItemCheckbox" Grid.Column="0" IsChecked="False" HorizontalAlignment="Left" Foreground="{StaticResource KeepNoteForegroundBrush}" BorderBrush="{StaticResource KeepNoteForegroundBrush}" RequestedTheme="Light"/>
+                    <TextBox x:Name="NewChecklistItemTextBox" Grid.Column="1" PlaceholderText="New item" Text="" Foreground="{StaticResource KeepNoteForegroundBrush}" TextWrapping="Wrap" Margin="0,12,0,0" Background="{x:Null}" BorderThickness="0" AcceptsReturn="False" KeyDown="NewChecklistItemTextBox_KeyDown"  />
+                </Grid>
+            </StackPanel>
+            <Grid Height="24"/>
+        </StackPanel>
+    </ScrollViewer>
 </Page>

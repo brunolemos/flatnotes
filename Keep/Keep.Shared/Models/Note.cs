@@ -30,8 +30,11 @@ namespace Keep.Models
         private String id = GenerateRandomID.Generate();
 
         [DataMember]
-        public bool IsChecklist { get { return isChecklist; } set { if ( isChecklist != value ) { isChecklist = value; if ( value ) EnableChecklist(); else DisableChecklist(); NotifyPropertyChanged( "IsChecklist" ); } } }
+        public bool IsChecklist { get { return isChecklist; } set { if (isChecklist != value) { isChecklist = value; if (value) EnableChecklist(); else DisableChecklist(); NotifyPropertyChanged("IsChecklist"); NotifyPropertyChanged("IsText"); } } }
         private bool isChecklist;
+
+        [IgnoreDataMember]
+        public bool IsText { get { return !IsChecklist; } }
 
         [DataMember]
         public String Title { get { return title; } set { if ( title != value ) { title = value; NotifyPropertyChanged( "Title" ); } } }
@@ -67,35 +70,30 @@ namespace Keep.Models
         
         public Note() {
             PropertyChanged += Note_PropertyChanged;
-            Checklist.CollectionChanged += Checklist_CollectionChanged;
+            Checklist.CollectionChanged += (s, e) => NotifyPropertyChanged("Checklist");
         }
 
         public Note( string title = "", string text = "", NoteColor color = null ) : base()
         {
-            this.IsChecklist = false;
             this.Title = title;
             this.Text = text;
             this.Color = color;
+            this.IsChecklist = false;
         }
 
         public Note( string title, Checklist checklist, NoteColor color = null ) : base()
         {
-            this.IsChecklist = true;
-            this.Checklist = checklist;
-
             this.Title = title;
             this.Text = "";
             this.Color = color;
+
+            this.IsChecklist = true;
+            this.Checklist = checklist;
         }
 
         void Note_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             Changed = true;
-        }
-
-        void Checklist_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
-        {
-            Debug.WriteLine("Checklist collection changed");
         }
 
         public void Touch()
@@ -144,14 +142,29 @@ namespace Keep.Models
             Checklist.Clear();
         }
 
+        public bool IsEmpty()
+        {
+            return String.IsNullOrEmpty(Title) && ((!IsChecklist && String.IsNullOrEmpty(Text)) || (IsChecklist && Checklist.Count <= 0)) && Images.Count <= 0;
+        }
+
         public String GetContent()
         {
             return IsChecklist ? GetTextFromChecklist() : Text;
         }
 
-        public bool IsEmpty()
+        public void Trim()
         {
-            return String.IsNullOrEmpty(Title) && ((!IsChecklist && String.IsNullOrEmpty(Text)) || (IsChecklist && Checklist.Count <= 0)) && Images.Count <= 0;
+            if (!String.IsNullOrEmpty(Title)) Title = Title.Trim();
+            if(!String.IsNullOrEmpty(Text)) Text = Text.Trim();
+
+            if (IsChecklist && Checklist != null)
+                for (int i = Checklist.Count - 1; i >= 0; i--)
+                {
+                    if (!String.IsNullOrEmpty(Checklist[i].Text)) Checklist[i].Text = Checklist[i].Text.Trim();
+
+                    if (String.IsNullOrEmpty(Checklist[i].Text))
+                        Checklist.RemoveAt(i);
+                }
         }
 
         public String GetTextFromChecklist()

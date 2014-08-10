@@ -29,7 +29,6 @@ namespace Keep
     public sealed partial class MainPage : Page
     {
         private MainPageViewModel viewModel = new MainPageViewModel();
-        public DeleteNoteCommand DeleteNoteCommand { get { return viewModel.DeleteNoteCommand; } }
 
         public NavigationHelper NavigationHelper { get { return this.navigationHelper; } }
         private NavigationHelper navigationHelper;
@@ -95,6 +94,12 @@ namespace Keep
             Frame.Navigate(typeof(NoteEditPage), parameter);
         }
 
+        private void NewChecklistNoteAppBarButton_Click(object sender, RoutedEventArgs e)
+        {
+            object parameter = new Note(String.Empty, new Checklist());
+            Frame.Navigate(typeof(NoteEditPage), parameter);
+        }
+
 //        private void ReorderAppBarButton_Click(object sender, RoutedEventArgs e)
 //        {
 //#if WINDOWS_PHONE_APP
@@ -124,6 +129,17 @@ namespace Keep
         public void OnReorderModeDisabled()
         {
             ReorderAppBarToggleButton.IsChecked = false;
+        }
+
+        private void NoteDeleteMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        {
+            if(!(((FrameworkElement)sender).DataContext is Note))
+                return;
+
+            Note note = ((FrameworkElement)sender).DataContext as Note;
+
+            if(viewModel.DeleteNoteCommand.CanExecute(note)) 
+                viewModel.DeleteNoteCommand.Execute(note);
         }
     }
 }

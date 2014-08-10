@@ -17,6 +17,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Commands\DeleteNoteCommand.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Commands\NoteToggleTypeCommand.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Commands\NoteTogglePinCommand.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Commands\SendFeedbackCommand.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\BooleanNegationConverter.cs" />

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Windows.Input;
 using Windows.UI;
@@ -10,29 +9,22 @@ using Windows.UI.Xaml.Controls;
 
 using Keep.Models;
 using Keep.Utils;
-using System.Diagnostics;
 
 namespace Keep.Commands
 {
-    public class DeleteNoteCommand : ICommand
+    public class NoteToggleTypeCommand : ICommand
     {
         public event EventHandler CanExecuteChanged;
 
         public bool CanExecute(object parameter)
         {
-            Debug.WriteLine("DeleteNoteCommand CanExecute");
-            return true;// (parameter != null && parameter is Note);
+            return (parameter != null && parameter is Note);
         }
 
         public void Execute(object parameter)
         {
-            Debug.WriteLine("DeleteNoteCommand Execute");
             Note note = parameter as Note;
-
-            Notes notes = AppSettings.Instance.LoggedUser.Notes;
-            note = notes.Where<Note>(x => x.ID == note.ID).FirstOrDefault<Note>();
-
-            if (note != null) notes.Remove(note);
+            note.IsChecklist = !note.IsChecklist;
         }
     }
 }

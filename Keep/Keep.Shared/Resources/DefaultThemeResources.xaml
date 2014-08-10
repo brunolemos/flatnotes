@@ -6,6 +6,7 @@
     <SolidColorBrush x:Key="KeepNoteForegroundBrush" Color="#A0000000"/>
     <SolidColorBrush x:Key="TextBoxForegroundThemeBrush" Color="#FF000000"/>
     <SolidColorBrush x:Key="TextBoxFocusedBackgroundThemeBrush" Color="Transparent"/>
+    <SolidColorBrush x:Key="TextBoxPlaceholderTextThemeBrush" Color="#70000000"/>
 
     <SolidColorBrush x:Key="KeepBrandBackgroundBrush" Color="#FFFFCD35"/>
     <SolidColorBrush x:Key="KeepBrandForegroundBrush" Color="#A0FFFFFF"/><!-- 665215 -->

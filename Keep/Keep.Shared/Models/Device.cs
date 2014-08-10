@@ -6,12 +6,10 @@ using System.Windows;
 using System.Runtime.Serialization;
 //using Microsoft.Phone.Info;
 using Windows.Foundation;
-
 using Firebase;
 
-using Keep.Models.Interfaces;
-
 using Keep.Controllers;
+using Keep.Models.Interfaces;
 
 namespace Keep.Models
 {

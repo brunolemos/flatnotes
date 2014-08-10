@@ -53,9 +53,9 @@ namespace Keep
 
             if (Application.Current.RequestedTheme != ApplicationTheme.Light)
             {
-                statusBar.BackgroundColor = Colors.Black;
-                statusBar.BackgroundOpacity = 0.16;
-                //statusBar.ForegroundColor = Color.FromArgb(0xFF, 0x54, 0x54, 0x54);
+                //statusBar.BackgroundColor = Colors.Black;
+                //statusBar.BackgroundOpacity = 0.33;
+                statusBar.ForegroundColor = Color.FromArgb(0xFF, 0x54, 0x54, 0x54);
             }
 
             //ApplicationView.GetForCurrentView().SetDesiredBoundsMode(ApplicationViewBoundsMode.UseCoreWindow);
@@ -63,19 +63,29 @@ namespace Keep
 
             viewModel = new NoteEditViewModel();
             Note note = null;
+            bool isAlreadyAdded = false;
 
             if (e.NavigationParameter != null && e.NavigationParameter is Note)
             {
                 Notes notes = AppSettings.Instance.LoggedUser.Notes;
                 note = notes.Where<Note>(x => x.ID == ((Note)e.NavigationParameter).ID).FirstOrDefault<Note>();
+                isAlreadyAdded = (note != null);
+                if(note == null) note = e.NavigationParameter as Note;
             }
             else if (e.NavigationParameter != null && e.NavigationParameter is string)
             {
                 Notes notes = AppSettings.Instance.LoggedUser.Notes;
                 note = notes.Where<Note>(x => x.ID == e.NavigationParameter.ToString()).FirstOrDefault<Note>();
+                isAlreadyAdded = (note != null);
             }
 
-            viewModel.Note = (note != null ? note : new Note());
+            if (note == null)
+                note = new Note();
+
+            //if (!isAlreadyAdded)
+            //    AppSettings.Instance.LoggedUser.Notes.Insert(0, note);
+
+            viewModel.Note = note;
             this.DataContext = viewModel;
         }
 
@@ -94,6 +104,7 @@ namespace Keep
 #endif
 
             if (viewModel.Note == null) return;
+            viewModel.Note.Trim();
             
             //update binding (fix problem when creating a note and press back button while textbox is focused)
             ForceTextBoxBindingUpdate();
@@ -150,12 +161,12 @@ namespace Keep
 
         private void ColorPickerAppBarToggleButton_Checked(object sender, RoutedEventArgs e)
         {
-            FlyoutBase.ShowAttachedFlyout(this);
+            FlyoutBase.ShowAttachedFlyout(LayoutRoot);
         }
 
         private void ColorPickerAppBarToggleButton_Unchecked(object sender, RoutedEventArgs e)
         {
-            FlyoutBase.GetAttachedFlyout(this).Hide();
+            FlyoutBase.GetAttachedFlyout(LayoutRoot).Hide();
         }
 
         private void ColorPickerFlyout_Opened(object sender, object e)
@@ -175,6 +186,147 @@ namespace Keep
             
             NoteColor newColor = e.AddedItems[0] as NoteColor;
             viewModel.Note.Color = newColor;
+        }
+
+        //private void NoteChecklistListView_DataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args)
+        //{
+        //    Debug.WriteLine("NoteChecklistListView_DataContextChanged");
+        //    if (!(args.NewValue is Checklist))
+        //        return;
+
+        //    Checklist checklist = args.NewValue as Checklist;
+        //    if(checklist.Count <= 0 ||  !String.IsNullOrEmpty(checklist[checklist.Count-1].Text))
+        //        checklist.Add(new ChecklistItem());
+        //}
+
+        private void NoteChecklistItemTextBox_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            ChecklistItem item = (sender as TextBox).DataContext as ChecklistItem;
+            int position = (NoteChecklistListView.ItemsSource as Checklist).IndexOf(item);
+            int count = NoteChecklistListView.Items.Count;
+
+            if ((sender as TextBox).Text == "")
+            {
+                if (e.Key == Windows.System.VirtualKey.Back)
+                {
+                    if (count > 1)
+                    {
+                        int new_position = position > 0 ? position - 1 : position + 1;
+                        FrameworkElement listViewItem = NoteChecklistListView.ContainerFromIndex(new_position) as FrameworkElement;
+                        TextBox textBox = FindFirstElementInVisualTree<TextBox>(listViewItem);
+                        if (textBox != null)
+                        {
+                            textBox.Select(textBox.Text.Length, 0);
+                            textBox.Focus(Windows.UI.Xaml.FocusState.Programmatic);
+                        }
+
+                        (NoteChecklistListView.ItemsSource as Checklist).Remove(item);
+                    }
+                }
+                //else if ( e.Key == System.Windows.Input.Key.Enter && position == count - 1 )
+                //{
+                //    ( NoteChecklistListView.ItemsSource as Checklist ).Remove( item );
+                //    NoteNewItemText.Focus();
+                //}
+            }
+            else
+            {
+                if (e.Key == Windows.System.VirtualKey.Enter)
+                {
+                    (NoteChecklistListView.ItemsSource as Checklist).Insert(position + 1, new ChecklistItem());
+                    NoteChecklistListView.UpdateLayout();
+
+                    FrameworkElement listViewItem = NoteChecklistListView.ContainerFromIndex(position) as FrameworkElement;
+                    TextBox textBox = FindFirstElementInVisualTree<TextBox>(listViewItem);
+                    if (textBox != null)
+                    {
+                        e.Handled = true;
+
+                        string text1 = textBox.Text.Substring(0, textBox.SelectionStart);
+                        string text2 = textBox.Text.Substring(textBox.SelectionStart, textBox.Text.Length - textBox.SelectionStart);
+
+                        FrameworkElement listViewItem2 = NoteChecklistListView.ContainerFromIndex(position + 1) as FrameworkElement;
+                        TextBox textBox2 = FindFirstElementInVisualTree<TextBox>(listViewItem2);
+                        if (textBox2 != null)
+                        {
+                            textBox.Text = text1;
+                            textBox2.Text = text2;
+
+                            textBox2.Focus(Windows.UI.Xaml.FocusState.Programmatic);
+                        }
+                    }
+                }
+                else if (e.Key == Windows.System.VirtualKey.Back)
+                {
+                    if (position <= 0) return;
+
+                    FrameworkElement listViewItem = NoteChecklistListView.ContainerFromIndex(position) as FrameworkElement;
+                    TextBox textBox = FindFirstElementInVisualTree<TextBox>(listViewItem);
+                    if (textBox != null)
+                    {
+                        if (textBox.SelectionStart > 0) return;
+
+                        FrameworkElement listViewItem2 = NoteChecklistListView.ContainerFromIndex(position - 1) as FrameworkElement;
+                        TextBox textBox2 = FindFirstElementInVisualTree<TextBox>(listViewItem2);
+                        if (textBox2 != null)
+                        {
+                            int pos = textBox2.Text.Length;
+
+                            textBox2.Text += textBox.Text;
+                            textBox2.Select(pos, 0);
+                            textBox2.Focus(Windows.UI.Xaml.FocusState.Programmatic);
+
+                            (NoteChecklistListView.ItemsSource as Checklist).Remove(item);
+                        }
+                    }
+                }
+            }
+        }
+        private T FindFirstElementInVisualTree<T>(DependencyObject parentElement) where T : DependencyObject
+        {
+            var count = VisualTreeHelper.GetChildrenCount(parentElement);
+            if (count == 0)
+                return null;
+
+            for (int i = 0; i < count; i++)
+            {
+                var child = VisualTreeHelper.GetChild(parentElement, i);
+
+                if (child != null && child is T)
+                {
+                    return (T)child;
+                }
+                else
+                {
+                    var result = FindFirstElementInVisualTree<T>(child);
+                    if (result != null)
+                        return result;
+
+                }
+            }
+            return null;
+        }
+
+        private void NoteChecklistListView_Holding(object sender, HoldingRoutedEventArgs e)
+        {
+#if WINDOWS_PHONE_APP
+            (sender as ListView).ReorderMode = ListViewReorderMode.Enabled;
+#endif
+        }
+
+        private void NewChecklistItemTextBox_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            bool isChecked = NewChecklistItemCheckbox.IsChecked == true;
+            string text = NewChecklistItemTextBox.Text;
+
+
+            if (e.Key == Windows.System.VirtualKey.Enter && !String.IsNullOrEmpty(text))
+            {
+                viewModel.Note.Checklist.Add(new ChecklistItem(text, isChecked));
+
+                NewChecklistItemCheckbox.IsChecked = false;
+                NewChecklistItemTextBox.Text = String.Empty;
+            }
         }
     }
 }
