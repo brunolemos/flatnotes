@@ -20,13 +20,11 @@ namespace Keep.Commands
 
         public bool CanExecute(object parameter)
         {
-            Debug.WriteLine("DeleteNoteCommand CanExecute");
-            return true;// (parameter != null && parameter is Note);
+            return parameter != null && parameter is Note;
         }
 
         public void Execute(object parameter)
         {
-            Debug.WriteLine("DeleteNoteCommand Execute");
             Note note = parameter as Note;
 
             Notes notes = AppSettings.Instance.LoggedUser.Notes;

@@ -20,30 +20,30 @@
                 </AppBarButton.Icon>
             </AppBarButton>
             <AppBarButton x:Uid="NoteChecklistType" Label="checklist" Icon="List" Click="NewChecklistNoteAppBarButton_Click"/>
-            <AppBarToggleButton x:Name="ReorderAppBarToggleButton" Label="reorder" Icon="Sort" Checked="ReorderAppBarToggleButton_Checked" Unchecked="ReorderAppBarToggleButton_Unchecked"/>
+            <!--<AppBarToggleButton x:Name="ReorderAppBarToggleButton" Label="reorder" Icon="Sort" Checked="ReorderAppBarToggleButton_Checked" Unchecked="ReorderAppBarToggleButton_Unchecked"/>-->
 
             <CommandBar.SecondaryCommands>
                 <AppBarButton Icon="Like" Label="send feedback" Command="{Binding SendFeedbackCommand}"/>
                 <AppBarButton Icon="Setting" Label="settings" IsEnabled="False"/>
-        	</CommandBar.SecondaryCommands>
+            </CommandBar.SecondaryCommands>
         </CommandBar>
     </Page.BottomAppBar>
 
     <Page.Resources>
         <ItemsPanelTemplate x:Key="FluidItemsPanelTemplate" x:Name="FluidItemsPanelTemplate">
-            <mycontrols:FluidGrid x:Name="NotesFluidGrid" Columns="-1" ItemMinWidth="150" LastCellWidth="{Binding CellWidth, Mode=TwoWay}"/>
+            <mycontrols:FluidGrid x:Name="NotesFluidGrid" Columns="-1" ItemMinWidth="150" LastCellWidth="{Binding CellWidth, Mode=TwoWay}" BiggerCellHeight="{Binding BiggerCellHeight, Mode=TwoWay}" />
         </ItemsPanelTemplate>
 
         <ItemsPanelTemplate x:Key="ReordableItemsPanelTemplate" x:Name="ReordableItemsPanelTemplate">
-            <ItemsWrapGrid x:Name="NotesItemsWrapGrid" Orientation="Horizontal" ItemWidth="{Binding CellWidth, Mode=OneWay}" ItemHeight="130" />
+            <ItemsWrapGrid x:Name="NotesItemsWrapGrid" Orientation="Horizontal" ItemWidth="{Binding CellWidth, Mode=OneWay}" ItemHeight="{Binding BiggerCellHeight, Mode=OneWay}" />
         </ItemsPanelTemplate>
 
-        <MenuFlyout x:Key="NoteMenuFlyout">
+        <!--<MenuFlyout x:Key="NoteMenuFlyout">
             <MenuFlyoutItem Text="share..." IsEnabled="False"/>
             <MenuFlyoutItem Text="pin to start" IsEnabled="False"/>
             <MenuFlyoutSeparator/>
             <MenuFlyoutItem Text="delete" Click="NoteDeleteMenuFlyoutItem_Click" />
-        </MenuFlyout>
+        </MenuFlyout>-->
 
         <DataTemplate x:Key="NoteChecklistListViewControlTemplate">
             <Grid>
@@ -63,7 +63,7 @@
         </DataTemplate>
 
         <DataTemplate x:Key="NotePreviewListViewControlTemplate">
-            <Grid x:Name="NoteContainer" Background="{Binding Color.Color}" Margin="4" Holding="NoteContainer_Holding" FlyoutBase.AttachedFlyout="{StaticResource NoteMenuFlyout}">
+            <Grid x:Name="NoteContainer" Background="{Binding Color.Color}" Margin="4" Holding="NoteContainer_Holding" PointerPressed="NoteContainer_PointerPressed">
                 <StackPanel Margin="12">
                     <TextBlock Text="{Binding Title}" FontSize="19" Margin="0,0,0,12" Foreground="{StaticResource KeepNoteForegroundBrush}" FontWeight="Bold" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" MaxLines="1" Visibility="{Binding Title, Converter={StaticResource NullableToVisibilityConverter}}"/>
 
@@ -81,19 +81,50 @@
     </Page.Resources>
 
     <Grid x:Name="LayoutRoot">
-		<ScrollViewer VerticalScrollMode="Enabled">
-			<ListView x:Name="NotesListView" Margin="6" AllowDrop="True" CanDragItems="True" IsItemClickEnabled="True" ItemsSource="{Binding Notes}" ItemTemplate="{StaticResource NotePreviewListViewControlTemplate}" ItemClick="NotesListView_ItemClick" ItemsPanel="{StaticResource FluidItemsPanelTemplate}" >
-				<Interactivity:Interaction.Behaviors>
-					<Core:DataTriggerBehavior Binding="{Binding ReorderMode, ElementName=NotesListView, Mode=OneWay}" Value="Enabled">
-                        <Core:ChangePropertyAction PropertyName="ItemsPanel" Value="{StaticResource ReordableItemsPanelTemplate}"/>
-                        <Core:CallMethodAction TargetObject="{Binding ElementName=Root}" MethodName="OnReorderModeEnabled"/>
+    	<VisualStateManager.VisualStateGroups>
+    		<VisualStateGroup x:Name="ReorderVisualStateGroup">
+    			<VisualState x:Name="ReorderEnableVisualState">
+    				<Storyboard>
+    					<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="DeleteDropArea">
+    						<DiscreteObjectKeyFrame KeyTime="0">
+    							<DiscreteObjectKeyFrame.Value>
+    								<Visibility>Visible</Visibility>
+    							</DiscreteObjectKeyFrame.Value>
+    						</DiscreteObjectKeyFrame>
+    					</ObjectAnimationUsingKeyFrames>
+    					<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(ListViewBase.ItemsPanel)" Storyboard.TargetName="NotesListView">
+    						<DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource ReordableItemsPanelTemplate}"/>
+    					</ObjectAnimationUsingKeyFrames>
+    				</Storyboard>
+    			</VisualState>
+    			<VisualState x:Name="ReorderDisabledVisualState">
+    				<Storyboard>
+    					<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="DeleteDropArea">
+    						<DiscreteObjectKeyFrame KeyTime="0">
+    							<DiscreteObjectKeyFrame.Value>
+    								<Visibility>Collapsed</Visibility>
+    							</DiscreteObjectKeyFrame.Value>
+    						</DiscreteObjectKeyFrame>
+    					</ObjectAnimationUsingKeyFrames>
+    				</Storyboard>
+    			</VisualState>
+    		</VisualStateGroup>
+    	</VisualStateManager.VisualStateGroups>
+        <ScrollViewer VerticalScrollMode="Enabled">
+            <ListView x:Name="NotesListView" Margin="6" AllowDrop="True" CanDragItems="True" IsItemClickEnabled="True" ItemsSource="{Binding Notes}" ItemTemplate="{StaticResource NotePreviewListViewControlTemplate}" ItemClick="NotesListView_ItemClick" ItemsPanel="{StaticResource FluidItemsPanelTemplate}" >
+                <Interactivity:Interaction.Behaviors>
+                    <Core:DataTriggerBehavior Binding="{Binding ReorderMode, ElementName=NotesListView, Mode=OneWay}" Value="Enabled">
+                        <Core:GoToStateAction StateName="ReorderEnableVisualState"/>
                     </Core:DataTriggerBehavior>
                     <Core:DataTriggerBehavior Binding="{Binding ReorderMode, ElementName=NotesListView, Mode=OneWay}" Value="Enabled" ComparisonCondition="NotEqual">
-						<Core:ChangePropertyAction PropertyName="ItemsPanel" Value="{StaticResource FluidItemsPanelTemplate}"/>
-                        <Core:CallMethodAction TargetObject="{Binding ElementName=Root}" MethodName="OnReorderModeDisabled"/>
+                    	<Core:GoToStateAction StateName="ReorderDisabledVisualState"/>
                     </Core:DataTriggerBehavior>
                 </Interactivity:Interaction.Behaviors>
-			</ListView>
-		</ScrollViewer>
-	</Grid>
+            </ListView>
+        </ScrollViewer>
+
+        <Grid x:Name="DeleteDropArea" AllowDrop="True" VerticalAlignment="Bottom" Background="{ThemeResource PhoneChromeBrush}" DragEnter="DeleteDropArea_DragEnter" Drop="DeleteDropArea_Drop" DragLeave="DeleteDropArea_DragLeave">
+            <TextBlock x:Name="DeleteDropIcon" Text="" FontFamily="Segoe UI Symbol" FontSize="36" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="12,6" Foreground="{ThemeResource ApplicationForegroundThemeBrush}" />
+        </Grid>
+    </Grid>
 </Page>

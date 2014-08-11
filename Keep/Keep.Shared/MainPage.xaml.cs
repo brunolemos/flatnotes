@@ -33,6 +33,8 @@ namespace Keep
         public NavigationHelper NavigationHelper { get { return this.navigationHelper; } }
         private NavigationHelper navigationHelper;
 
+        Note noteToDelete = null;
+
         public MainPage()
         {
             this.InitializeComponent();
@@ -71,10 +73,14 @@ namespace Keep
 
         #endregion
 
-        
+
         private void NoteContainer_Holding(object sender, HoldingRoutedEventArgs e)
         {
-            FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);
+#if WINDOWS_PHONE_APP
+            if(NotesListView.ReorderMode != ListViewReorderMode.Enabled)
+                NotesListView.ReorderMode = ListViewReorderMode.Enabled;
+#endif
+            //FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);
         }
 
         private void NotesListView_ItemClick(object sender, ItemClickEventArgs e)
@@ -107,39 +113,63 @@ namespace Keep
 //#endif
 //        }
 
-        private void ReorderAppBarToggleButton_Checked(object sender, RoutedEventArgs e)
+//        private void ReorderAppBarToggleButton_Checked(object sender, RoutedEventArgs e)
+//        {
+//#if WINDOWS_PHONE_APP
+//            NotesListView.ReorderMode = ListViewReorderMode.Enabled;
+//#endif
+//        }
+
+//        private void ReorderAppBarToggleButton_Unchecked(object sender, RoutedEventArgs e)
+//        {
+//#if WINDOWS_PHONE_APP
+//            NotesListView.ReorderMode = ListViewReorderMode.Disabled;
+//#endif
+//        }
+
+        //public void OnReorderModeEnabled()
+        //{
+        //    ReorderAppBarToggleButton.IsChecked = true;
+        //}
+
+        //public void OnReorderModeDisabled()
+        //{
+        //    ReorderAppBarToggleButton.IsChecked = false;
+        //}
+
+        //private void NoteDeleteMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        //{
+        //    if(!(((FrameworkElement)sender).DataContext is Note))
+        //        return;
+
+        //    Note note = ((FrameworkElement)sender).DataContext as Note;
+
+        //    if(viewModel.DeleteNoteCommand.CanExecute(note)) 
+        //        viewModel.DeleteNoteCommand.Execute(note);
+        //}
+
+        private void NoteContainer_PointerPressed(object sender, PointerRoutedEventArgs e)
         {
-#if WINDOWS_PHONE_APP
-            NotesListView.ReorderMode = ListViewReorderMode.Enabled;
-#endif
+            noteToDelete = (sender as FrameworkElement).DataContext as Note;
         }
 
-        private void ReorderAppBarToggleButton_Unchecked(object sender, RoutedEventArgs e)
+        private void DeleteDropArea_DragEnter(object sender, DragEventArgs e)
         {
-#if WINDOWS_PHONE_APP
-            NotesListView.ReorderMode = ListViewReorderMode.Disabled;
-#endif
+
+            (sender as Grid).Background = new SolidColorBrush(Color.FromArgb(0xF2, 0xC0, 0x39, 0x2B));
         }
 
-        public void OnReorderModeEnabled()
+        private void DeleteDropArea_DragLeave(object sender, DragEventArgs e)
         {
-            ReorderAppBarToggleButton.IsChecked = true;
+            (sender as Grid).Background = (SolidColorBrush)App.Current.Resources["PhoneChromeBrush"];
         }
 
-        public void OnReorderModeDisabled()
+        private void DeleteDropArea_Drop(object sender, DragEventArgs e)
         {
-            ReorderAppBarToggleButton.IsChecked = false;
-        }
+            (sender as Grid).Background = (SolidColorBrush)App.Current.Resources["PhoneChromeBrush"];
 
-        private void NoteDeleteMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
-        {
-            if(!(((FrameworkElement)sender).DataContext is Note))
-                return;
-
-            Note note = ((FrameworkElement)sender).DataContext as Note;
-
-            if(viewModel.DeleteNoteCommand.CanExecute(note)) 
-                viewModel.DeleteNoteCommand.Execute(note);
+            if (viewModel.DeleteNoteCommand.CanExecute(noteToDelete))
+                viewModel.DeleteNoteCommand.Execute(noteToDelete);
         }
     }
 }

@@ -31,6 +31,7 @@ namespace Keep
         private NavigationHelper navigationHelper;
 
         NoteEditViewModel viewModel;
+        ChecklistItem checklistItemToDelete = null;
 
         public SolidColorBrush AnimatedColor { get { return (SolidColorBrush)GetValue(AnimatedColorProperty); } protected set { SetValue(AnimatedColorProperty, value); } }
         public readonly DependencyProperty AnimatedColorProperty = DependencyProperty.Register("AnimatedColor", typeof(SolidColorBrush), typeof(Page), null);
@@ -52,7 +53,7 @@ namespace Keep
                 StatusBar statusBar = StatusBar.GetForCurrentView();
                 statusBar.BackgroundColor = Colors.Black;
                 statusBar.BackgroundOpacity = 0.20;
-                statusBar.ForegroundColor = Color.FromArgb(0xFF, 0xFF, 0xFF, 0xFE);
+                //statusBar.ForegroundColor = Color.FromArgb(0xFF, 0xFF, 0xFF, 0xFE);
             }
 #endif
 
@@ -330,6 +331,29 @@ namespace Keep
                 NewChecklistItemCheckbox.IsChecked = false;
                 NewChecklistItemTextBox.Text = String.Empty;
             }
+        }
+        private void NoteChecklistItem_PointerPressed(object sender, PointerRoutedEventArgs e)
+        {
+            checklistItemToDelete = (sender as Grid).DataContext as ChecklistItem;
+        }
+
+        private void DeleteDropArea_DragEnter(object sender, DragEventArgs e)
+        {
+
+            (sender as Grid).Background = new SolidColorBrush(Color.FromArgb(0xF2, 0xC0, 0x39, 0x2B));
+        }
+
+        private void DeleteDropArea_DragLeave(object sender, DragEventArgs e)
+        {
+            (sender as Grid).Background = (SolidColorBrush)App.Current.Resources["ApplicationPageBackgroundThemeBrush"];
+        }
+
+        private void DeleteDropArea_Drop(object sender, DragEventArgs e)
+        {
+            (sender as Grid).Background = (SolidColorBrush)App.Current.Resources["ApplicationPageBackgroundThemeBrush"];
+
+            if (viewModel.Note.Checklist != null && checklistItemToDelete is ChecklistItem)
+                viewModel.Note.Checklist.Remove(checklistItemToDelete);
         }
     }
 }

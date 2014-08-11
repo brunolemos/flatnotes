@@ -17,6 +17,7 @@ namespace Keep.ViewModels
         private SendFeedbackCommand sendFeedbackCommand = new SendFeedbackCommand();
 
         public Double CellWidth { get; set; }
+        public Double BiggerCellHeight { get; set; }
 
         public Notes Notes { get { return notes; } }
         private Notes notes = AppSettings.Instance.LoggedUser.Notes;

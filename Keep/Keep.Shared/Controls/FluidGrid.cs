@@ -23,6 +23,7 @@ namespace Keep.Controls
             int i, columnWithlastY = 0;
             LastCellWidth = totalSize.Width / columns;
             Size resultSize = new Size(totalSize.Width, 0);
+            BiggerCellHeight= 0;
 
             double[] lastYInColumn = new double[columns];
             for (i = 0; i < columns; i++) lastYInColumn[i] = 0;
@@ -45,6 +46,7 @@ namespace Keep.Controls
 
                 childrenColumns[pos] = columnWithlastY;
                 childrenSizes[pos] = cellSize;
+                BiggerCellHeight = Math.Max(BiggerCellHeight, cellSize.Height);
             }
 
             if (Double.IsPositiveInfinity(resultSize.Width)) resultSize.Width = 0;
@@ -80,6 +82,13 @@ namespace Keep.Controls
             return totalSize;
         }
 
+        public static readonly DependencyProperty BiggerCellHeightProperty = DependencyProperty.Register("BiggerCellHeight", typeof(Double), typeof(FluidGrid), new PropertyMetadata(0));
+        public Double BiggerCellHeight
+        {
+            get { return (Double)GetValue(BiggerCellHeightProperty); }
+            set { SetValue(BiggerCellHeightProperty, value); }
+        }
+
         public static readonly DependencyProperty LastCellWidthProperty = DependencyProperty.Register("LastCellWidth", typeof(Double), typeof(FluidGrid), new PropertyMetadata(194.0));
         public Double LastCellWidth
         {
@@ -101,23 +110,14 @@ namespace Keep.Controls
             set { SetValue( ItemMinWidthProperty, value ); }
         }
 
-
-
-
         static void OnColumnsChanged( DependencyObject obj, DependencyPropertyChangedEventArgs e )
         {
             ( obj as FrameworkElement ).InvalidateMeasure();
-            //if ( (int)e.NewValue < 1 )
-            //    ( obj as FluidGrid ).Columns = 1;
         }
 
         static void OnItemMinWidthChanged( DependencyObject obj, DependencyPropertyChangedEventArgs e )
         {
-            //Debug.WriteLine( "Attention: 'ItemMinWidth' property is ignored when 'Columns' > 0." );
             ( obj as FrameworkElement ).InvalidateMeasure();
-
-            //if ( (int)e.NewValue < 0 )
-            //    ( obj as FluidGrid ).ItemMinWidth = 0;
         }
     }
 }
