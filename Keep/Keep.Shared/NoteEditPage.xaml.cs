@@ -21,6 +21,7 @@ using Keep.Models;
 using Keep.Utils;
 using Keep.ViewModels;
 using System.Diagnostics;
+using Windows.UI.Xaml.Media.Animation;
 
 namespace Keep
 {
@@ -30,9 +31,9 @@ namespace Keep
         private NavigationHelper navigationHelper;
 
         NoteEditViewModel viewModel;
-        double lastStatusBarBackgroundOpacity;
-        Color? lastStatusBarBackgroundColor;
-        Color? lastStatusBarForegroundColor;
+
+        public SolidColorBrush AnimatedColor { get { return (SolidColorBrush)GetValue(AnimatedColorProperty); } protected set { SetValue(AnimatedColorProperty, value); } }
+        public readonly DependencyProperty AnimatedColorProperty = DependencyProperty.Register("AnimatedColor", typeof(SolidColorBrush), typeof(Page), null);
 
         public NoteEditPage()
         {
@@ -46,19 +47,13 @@ namespace Keep
         private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
 #if WINDOWS_PHONE_APP
-            StatusBar statusBar = StatusBar.GetForCurrentView();
-            lastStatusBarBackgroundOpacity = statusBar.BackgroundOpacity;
-            lastStatusBarBackgroundColor = statusBar.BackgroundColor;
-            lastStatusBarForegroundColor = statusBar.ForegroundColor;
-
-            if (Application.Current.RequestedTheme != ApplicationTheme.Light)
+            if (Application.Current.RequestedTheme == ApplicationTheme.Dark)
             {
-                //statusBar.BackgroundColor = Colors.Black;
-                //statusBar.BackgroundOpacity = 0.33;
-                statusBar.ForegroundColor = Color.FromArgb(0xFF, 0x54, 0x54, 0x54);
+                StatusBar statusBar = StatusBar.GetForCurrentView();
+                statusBar.BackgroundColor = Colors.Black;
+                statusBar.BackgroundOpacity = 0.20;
+                statusBar.ForegroundColor = Color.FromArgb(0xFF, 0xFF, 0xFF, 0xFE);
             }
-
-            //ApplicationView.GetForCurrentView().SetDesiredBoundsMode(ApplicationViewBoundsMode.UseCoreWindow);
 #endif
 
             viewModel = new NoteEditViewModel();
@@ -87,20 +82,20 @@ namespace Keep
 
             viewModel.Note = note;
             this.DataContext = viewModel;
+
+            //AnimatedColor = new SolidColorBrush(new Color().FromHex(viewModel.Note.Color.Color));
+            //this.SetBinding(BackgroundProperty, new Binding() { Path = new PropertyPath("AnimatedColor"), Source = this });
         }
 
         private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
         {
 #if WINDOWS_PHONE_APP
-            if (Application.Current.RequestedTheme != ApplicationTheme.Light)
+            if (Application.Current.RequestedTheme == ApplicationTheme.Dark)
             {
                 StatusBar statusBar = StatusBar.GetForCurrentView();
-                statusBar.BackgroundOpacity = lastStatusBarBackgroundOpacity;
-                statusBar.BackgroundColor = lastStatusBarBackgroundColor;
-                statusBar.ForegroundColor = lastStatusBarForegroundColor;
+                statusBar.BackgroundOpacity = 0;
+                statusBar.ForegroundColor = null;
             }
-
-            //ApplicationView.GetForCurrentView().SetDesiredBoundsMode(ApplicationViewBoundsMode.UseVisible);
 #endif
 
             if (viewModel.Note == null) return;
@@ -147,6 +142,12 @@ namespace Keep
             NoteTitleTextBox.GetBindingExpression(TextBox.TextProperty).UpdateSource();
             NoteTextTextBox.GetBindingExpression(TextBox.TextProperty).UpdateSource();
         }
+
+        public void AnimateColorTo(Color color)
+        {
+            //NoteColorAnimation.To = color;
+            //NoteColorAnimationStoryboard.Begin();
+        }
         
         private void DeleteNoteAppBarButton_Click(object sender, RoutedEventArgs e)
         {
@@ -186,6 +187,8 @@ namespace Keep
             
             NoteColor newColor = e.AddedItems[0] as NoteColor;
             viewModel.Note.Color = newColor;
+
+            AnimateColorTo(new Color().FromHex(newColor.Color));
         }
 
         //private void NoteChecklistListView_DataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args)

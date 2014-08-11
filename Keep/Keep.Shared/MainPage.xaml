@@ -13,7 +13,7 @@
     d:DataContext="{d:DesignData /SampleData/MainPageViewModelSampleData.xaml}">
 
     <Page.BottomAppBar>
-        <CommandBar>
+        <CommandBar Background="{ThemeResource KeepBrandBackgroundBrush}" Foreground="{ThemeResource KeepBrandForegroundBrush}">
             <AppBarButton x:Uid="NoteTextType" Label="text" Click="NewTextNoteAppBarButton_Click">
                 <AppBarButton.Icon>
                     <BitmapIcon UriSource="Assets/appbar.text.serif.png"/>
@@ -82,7 +82,7 @@
 
     <Grid x:Name="LayoutRoot">
 		<ScrollViewer VerticalScrollMode="Enabled">
-			<ListView x:Name="NotesListView" Margin="6" AllowDrop="True" CanDragItems="True" IsItemClickEnabled="True" ItemsSource="{Binding Notes}" ItemTemplate="{StaticResource NotePreviewListViewControlTemplate}" ItemClick="NotesListView_ItemClick" ItemsPanel="{StaticResource FluidItemsPanelTemplate}">
+			<ListView x:Name="NotesListView" Margin="6" AllowDrop="True" CanDragItems="True" IsItemClickEnabled="True" ItemsSource="{Binding Notes}" ItemTemplate="{StaticResource NotePreviewListViewControlTemplate}" ItemClick="NotesListView_ItemClick" ItemsPanel="{StaticResource FluidItemsPanelTemplate}" >
 				<Interactivity:Interaction.Behaviors>
 					<Core:DataTriggerBehavior Binding="{Binding ReorderMode, ElementName=NotesListView, Mode=OneWay}" Value="Enabled">
                         <Core:ChangePropertyAction PropertyName="ItemsPanel" Value="{StaticResource ReordableItemsPanelTemplate}"/>

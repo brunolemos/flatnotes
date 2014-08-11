@@ -1,4 +1,5 @@
 ﻿<Page
+    x:Name="Root"
     x:Class="Keep.NoteEditPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -10,7 +11,7 @@
     d:DataContext="{d:DesignData /SampleData/NoteEditViewModelSampleData.xaml}">
 
     <Page.BottomAppBar>
-        <CommandBar Background="#70000000" Foreground="White">
+        <CommandBar>
             <AppBarToggleButton x:Name="ColorPickerAppBarToggleButton" Label="color" Checked="ColorPickerAppBarToggleButton_Checked" Unchecked="ColorPickerAppBarToggleButton_Unchecked">
                 <AppBarToggleButton.Icon>
                     <BitmapIcon UriSource="Assets/appbar.water.droplet.png"/>
@@ -28,6 +29,14 @@
     </Page.BottomAppBar>
 
     <Page.Resources>
+        <Storyboard x:Name="NoteColorAnimationStoryboard">
+            <ColorAnimation x:Name="NoteColorAnimation" Duration="0:0:0.3" Storyboard.TargetName="Root" Storyboard.TargetProperty="(Page.AnimatedColor).(SolidColorBrush.Color)">
+                <ColorAnimation.EasingFunction>
+                    <BackEase EasingMode="EaseOut" Amplitude="0"/>
+                </ColorAnimation.EasingFunction>
+            </ColorAnimation>
+        </Storyboard>
+
         <DataTemplate x:Key="NoteChecklistListViewControlTemplate">
             <Grid Margin="24,0">
                 <Grid.ColumnDefinitions>
@@ -41,15 +50,9 @@
         </DataTemplate>
     </Page.Resources>
 
-    <ScrollViewer x:Name="LayoutRoot" VerticalScrollMode="Enabled">
+    <ScrollViewer x:Name="LayoutRoot" HorizontalScrollMode="Disabled" VerticalScrollMode="Enabled">
         <FlyoutBase.AttachedFlyout>
             <Flyout x:Name="ColorPickerFlyout" Placement="Bottom" Opened="ColorPickerFlyout_Opened" Closed="ColorPickerFlyout_Closed">
-                <Flyout.FlyoutPresenterStyle>
-                    <Style TargetType="FlyoutPresenter">
-                        <Setter Property="Background" Value="{ThemeResource ApplicationPageBackgroundThemeBrush}"/>
-                    </Style>
-                </Flyout.FlyoutPresenterStyle>
-
                 <local:NoteColorPicker SelectionChanged="NoteColorPicker_SelectionChanged" />
             </Flyout>
         </FlyoutBase.AttachedFlyout>
@@ -67,7 +70,7 @@
             <StackPanel Visibility="{Binding Note.IsChecklist, Converter={StaticResource BooleanToVisibilityConverter}}">
                 <ListView x:Name="NoteChecklistListView" AllowDrop="True" CanDragItems="True" ItemTemplate="{StaticResource NoteChecklistListViewControlTemplate}" ItemsSource="{Binding}" DataContext="{Binding Note.Checklist}" SelectionMode="None" Holding="NoteChecklistListView_Holding" />
 
-                <Grid Margin="24,0" RequestedTheme="Default">
+                <Grid Margin="24,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="30"/>
                         <ColumnDefinition Width="*"/>

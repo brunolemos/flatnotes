@@ -7,9 +7,12 @@
     <SolidColorBrush x:Key="TextBoxForegroundThemeBrush" Color="#FF000000"/>
     <SolidColorBrush x:Key="TextBoxFocusedBackgroundThemeBrush" Color="Transparent"/>
     <SolidColorBrush x:Key="TextBoxPlaceholderTextThemeBrush" Color="#70000000"/>
+    
+    <SolidColorBrush x:Key="CommandBarBackgroundThemeBrush" Color="#313B44"/>
+    <SolidColorBrush x:Key="CommandBarForegroundThemeBrush" Color="#FFFFFE"/>
 
-    <SolidColorBrush x:Key="KeepBrandBackgroundBrush" Color="#FFFFCD35"/>
-    <SolidColorBrush x:Key="KeepBrandForegroundBrush" Color="#A0FFFFFF"/><!-- 665215 -->
+    <SolidColorBrush x:Key="KeepBrandBackgroundBrush" Color="#FFCD35"/>
+    <SolidColorBrush x:Key="KeepBrandForegroundBrush" Color="#665215"/><!-- 665215 -->
 	<!--<SolidColorBrush x:Key="KeepStatusBarBackgroundBrush" Color="Transparent"/>
 	<SolidColorBrush x:Key="KeepStatusBarForegroundBrush" Color="#665215"/>--><!-- from gray: 5f5f5f -->
 

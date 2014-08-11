@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.Serialization;
 using Windows.UI;
 using Windows.UI.Xaml.Media;
@@ -25,16 +26,28 @@ namespace Keep.Models
         public static readonly NoteColor BLUE = new NoteColor("BLUE", ((SolidColorBrush)App.Current.Resources["KeepNoteBlueBrush"]).Color.ToString());
         public static readonly NoteColor GRAY = new NoteColor("GRAY", ((SolidColorBrush)App.Current.Resources["KeepNoteGrayBrush"]).Color.ToString());
 
+        private static readonly List<NoteColor> ColorsList = new List<NoteColor>()
+        {
+            { NoteColor.DEFAULT },
+            { NoteColor.RED },
+            { NoteColor.ORANGE },
+            { NoteColor.YELLOW },
+            { NoteColor.GRAY },
+            { NoteColor.BLUE },
+            { NoteColor.TEAL },
+            { NoteColor.GREEN },
+        };
+
         private static readonly Dictionary<string, NoteColor> Colors = new Dictionary<string, NoteColor>()
         {
-            { NoteColor.DEFAULT.Key, NoteColor.DEFAULT },
-            { NoteColor.RED.Key, NoteColor.RED },
-            { NoteColor.ORANGE.Key, NoteColor.ORANGE },
-            { NoteColor.YELLOW.Key, NoteColor.YELLOW },
-            { NoteColor.GREEN.Key, NoteColor.GREEN },
-            { NoteColor.TEAL.Key, NoteColor.TEAL },
-            { NoteColor.BLUE.Key, NoteColor.BLUE },
-            { NoteColor.GRAY.Key, NoteColor.GRAY },
+            { ColorsList[0].Key, ColorsList[0]},
+            { ColorsList[1].Key, ColorsList[1]},
+            { ColorsList[2].Key, ColorsList[2]},
+            { ColorsList[3].Key, ColorsList[3]},
+            { ColorsList[4].Key, ColorsList[4]},
+            { ColorsList[5].Key, ColorsList[5]},
+            { ColorsList[6].Key, ColorsList[6]},
+            { ColorsList[7].Key, ColorsList[7]},
         };
 
         public NoteColor()
@@ -76,6 +89,22 @@ namespace Keep.Models
             }
 
             return NoteColor.DEFAULT;
+        }
+
+        public NoteColor Next()
+        {
+            int pos = ColorsList.FindIndex(n => n.Key == this.Key);
+            int nextPos = pos >= ColorsList.Count - 1 ? 0 : pos + 1;
+
+            return ColorsList[nextPos];
+        }
+
+        public NoteColor Previous()
+        {
+            int pos = ColorsList.FindIndex(n => n.Key == this.Key);
+            int previousPos = pos <= 1 ? 0 : pos - 1;
+
+            return ColorsList[previousPos];
         }
 
         public override string ToString()
