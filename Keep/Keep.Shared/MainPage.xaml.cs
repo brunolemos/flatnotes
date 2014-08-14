@@ -23,6 +23,8 @@ using Keep.Commands;
 using Keep.Controls;
 using Keep.ViewModels;
 using Keep.Models;
+using Keep.Utils;
+using Windows.UI.Xaml.Media.Imaging;
 
 namespace Keep
 {
@@ -48,11 +50,19 @@ namespace Keep
 
         private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
-            this.DataContext = viewModel;
-
 #if WINDOWS_PHONE_APP
             NotesListView.ReorderMode = ListViewReorderMode.Disabled;
 #endif
+
+            this.DataContext = viewModel;
+
+            if (viewModel.Notes.Count > 0)
+                VisualStateManager.GoToState(this, HasNotesVisualState.Name, false);
+            else
+                VisualStateManager.GoToState(this, EmptyNoteVisualState.Name, false);
+
+            if (e.NavigationParameter != null)
+                Debug.WriteLine("MainPage NavigationParameter: " + e.NavigationParameter.ToString());
         }
 
         private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
@@ -73,11 +83,10 @@ namespace Keep
 
         #endregion
 
-
         private void NoteContainer_Holding(object sender, HoldingRoutedEventArgs e)
         {
 #if WINDOWS_PHONE_APP
-            if(NotesListView.ReorderMode != ListViewReorderMode.Enabled)
+            if (NotesListView.ReorderMode != ListViewReorderMode.Enabled)
                 NotesListView.ReorderMode = ListViewReorderMode.Enabled;
 #endif
             //FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);
@@ -170,6 +179,18 @@ namespace Keep
 
             if (viewModel.DeleteNoteCommand.CanExecute(noteToDelete))
                 viewModel.DeleteNoteCommand.Execute(noteToDelete);
+        }
+
+        private void NotesListView_DataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args)
+        {
+            Debug.WriteLine("NotesListView_DataContextChanged");
+            if (!(args.NewValue is MainPageViewModel))
+                return;
+
+            if ((args.NewValue as MainPageViewModel).Notes.Count <= 0)
+                VisualStateManager.GoToState(this, "EmptyNoteVisualState", true);
+            else
+                VisualStateManager.GoToState(this, "HasNotesVisualState", true);
         }
     }
 }

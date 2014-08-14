@@ -90,6 +90,7 @@ namespace Keep.Models
 
         private void replaceNotes(Notes list)
         {
+            Debug.WriteLine("REPLACE NOTES");
             notes.Clear();
 
             if (list == null || list.Count <= 0)

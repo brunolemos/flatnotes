@@ -1,11 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using System.Windows.Input;
 using Windows.UI.Popups;
 using Windows.UI.Xaml.Controls;
-
+using Windows.Storage.Streams;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Media.Imaging;
+using Windows.Graphics.Imaging;
+using System.Runtime.InteropServices.WindowsRuntime;
+using System.Linq;
+using System.Threading.Tasks;
+using Windows.UI;
 using Keep.Models;
+using Keep.Utils;
+using System.Diagnostics;
 
 namespace Keep.Commands
 {
@@ -25,9 +35,21 @@ namespace Keep.Commands
         public async void Execute(object parameter)
         {
 #if WINDOWS_PHONE_APP
+            Debug.WriteLine(parameter.ToString());
             Windows.ApplicationModel.Email.EmailMessage mail = new Windows.ApplicationModel.Email.EmailMessage();
 
-            //mail.Attachments.Add(new Windows.ApplicationModel.Email.EmailAttachment());
+            //if (parameter is FrameworkElement)
+            //{
+            //    RenderTargetBitmap renderTargetBitmap = await (parameter as FrameworkElement).ToBitmap();
+            //    IBuffer pixels = await renderTargetBitmap.GetPixelsAsync();
+
+            //    InMemoryRandomAccessStream msras = new InMemoryRandomAccessStream();
+            //    await msras.WriteAsync(pixels);
+
+            //    mail.Attachments.Add(new Windows.ApplicationModel.Email.EmailAttachment("print.jpg", RandomAccessStreamReference.CreateFromStream(msras)));
+            //    Debug.WriteLine("Added attached");
+            //}
+
             mail.To.Add(new Windows.ApplicationModel.Email.EmailRecipient("keep@brunolemos.org"));
             mail.Subject = "Feedback - #Keep Beta";
             mail.Body = "";

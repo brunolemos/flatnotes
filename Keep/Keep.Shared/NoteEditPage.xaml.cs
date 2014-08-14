@@ -30,7 +30,7 @@ namespace Keep
         public NavigationHelper NavigationHelper { get { return this.navigationHelper; } }
         private NavigationHelper navigationHelper;
 
-        NoteEditViewModel viewModel;
+        public NoteEditViewModel viewModel;
         ChecklistItem checklistItemToDelete = null;
 
         public SolidColorBrush AnimatedColor { get { return (SolidColorBrush)GetValue(AnimatedColorProperty); } protected set { SetValue(AnimatedColorProperty, value); } }
@@ -58,34 +58,49 @@ namespace Keep
 #endif
 
             viewModel = new NoteEditViewModel();
-            Note note = null;
             bool isAlreadyAdded = false;
 
             if (e.NavigationParameter != null && e.NavigationParameter is Note)
             {
                 Notes notes = AppSettings.Instance.LoggedUser.Notes;
-                note = notes.Where<Note>(x => x.ID == ((Note)e.NavigationParameter).ID).FirstOrDefault<Note>();
-                isAlreadyAdded = (note != null);
-                if(note == null) note = e.NavigationParameter as Note;
+                viewModel.Note = notes.Where<Note>(x => x.ID == ((Note)e.NavigationParameter).ID).FirstOrDefault<Note>();
+                isAlreadyAdded = (viewModel.Note != null);
+                if (viewModel.Note == null) viewModel.Note = e.NavigationParameter as Note;
             }
             else if (e.NavigationParameter != null && e.NavigationParameter is string)
             {
                 Notes notes = AppSettings.Instance.LoggedUser.Notes;
-                note = notes.Where<Note>(x => x.ID == e.NavigationParameter.ToString()).FirstOrDefault<Note>();
-                isAlreadyAdded = (note != null);
+                viewModel.Note = notes.Where<Note>(x => x.ID == e.NavigationParameter.ToString()).FirstOrDefault<Note>();
+                isAlreadyAdded = (viewModel.Note != null);
             }
 
-            if (note == null)
-                note = new Note();
+            if (viewModel.Note == null)
+                viewModel.Note = new Note();
+
 
             //if (!isAlreadyAdded)
-            //    AppSettings.Instance.LoggedUser.Notes.Insert(0, note);
+            //    AppSettings.Instance.LoggedUser.Notes.Insert(0, viewModel.Note);
 
-            viewModel.Note = note;
             this.DataContext = viewModel;
+            viewModel.Note.PropertyChanged += Note_PropertyChanged;
 
             //AnimatedColor = new SolidColorBrush(new Color().FromHex(viewModel.Note.Color.Color));
             //this.SetBinding(BackgroundProperty, new Binding() { Path = new PropertyPath("AnimatedColor"), Source = this });
+        }
+
+        void Note_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (viewModel.Note.IsEmpty())
+                return;
+
+            Notes notes = AppSettings.Instance.LoggedUser.Notes;
+            Note note = notes.Where<Note>(x => x.ID == viewModel.Note.ID).FirstOrDefault<Note>();
+
+            if (note == null)
+            {
+                AppSettings.Instance.LoggedUser.Notes.Insert(0, viewModel.Note);
+                viewModel.Note.PropertyChanged -= Note_PropertyChanged;
+            }
         }
 
         private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
@@ -100,10 +115,16 @@ namespace Keep
 #endif
 
             if (viewModel.Note == null) return;
-            viewModel.Note.Trim();
             
             //update binding (fix problem when creating a note and press back button while textbox is focused)
             ForceTextBoxBindingUpdate();
+
+            if (!String.IsNullOrEmpty(NewChecklistItemTextBox.Text))
+                viewModel.Note.Checklist.Add(new ChecklistItem(NewChecklistItemTextBox.Text, NewChecklistItemCheckbox.IsChecked == true));
+
+            //trim
+            viewModel.Note.Trim();
+
 
             Notes notes = AppSettings.Instance.LoggedUser.Notes;
             Note note = notes.Where<Note>(x => x.ID == viewModel.Note.ID).FirstOrDefault<Note>();

@@ -1,8 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
+using System.Threading.Tasks;
 using Windows.UI;
+
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Media.Imaging;
+using Windows.Graphics.Imaging;
+using Windows.Storage.Streams;
 
 using Keep.Models;
 
@@ -72,6 +80,26 @@ namespace Keep.Utils
             }
 
             return notes;
+        }
+
+        public static async Task<RenderTargetBitmap> ToBitmap(this FrameworkElement element)
+        {
+            int width = (int)element.ActualWidth;
+            int height = (int)element.ActualHeight;
+            
+            RenderTargetBitmap renderTargetBitmap = new RenderTargetBitmap();
+            await renderTargetBitmap.RenderAsync(element, width, height);
+            return renderTargetBitmap;
+            //IBuffer pixels = await renderTargetBitmap.GetPixelsAsync();
+            //IRandomAccessStream stream = pixels.AsStream().AsRandomAccessStream();
+
+            //var encoder = await BitmapEncoder.CreateAsync(BitmapEncoder.JpegEncoderId, stream);
+            //byte[] bytes = pixels.ToArray();
+            //encoder.SetPixelData(BitmapPixelFormat.Bgra8, BitmapAlphaMode.Ignore, (uint)width, (uint)height, 96, 96, bytes);
+            //stream.Seek(0);
+
+            ////await encoder.FlushAsync();
+            //return stream;
         }
     }
 }

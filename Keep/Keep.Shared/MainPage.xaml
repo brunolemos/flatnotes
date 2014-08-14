@@ -5,7 +5,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:mycontrols="using:Keep.Controls"
-    xmlns:Interactivity="using:Microsoft.Xaml.Interactivity" xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:Interactivity="using:Microsoft.Xaml.Interactivity" 
+    xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
     x:Name="Root"
     x:Class="Keep.MainPage"
     mc:Ignorable="d"
@@ -23,7 +24,7 @@
             <!--<AppBarToggleButton x:Name="ReorderAppBarToggleButton" Label="reorder" Icon="Sort" Checked="ReorderAppBarToggleButton_Checked" Unchecked="ReorderAppBarToggleButton_Unchecked"/>-->
 
             <CommandBar.SecondaryCommands>
-                <AppBarButton Icon="Like" Label="send feedback" Command="{Binding SendFeedbackCommand}"/>
+                <AppBarButton Icon="Like" Label="send feedback" CommandParameter="{Binding ElementName=LayoutRoot}" Command="{Binding SendFeedbackCommand}"/>
                 <AppBarButton Icon="Setting" Label="settings" IsEnabled="False"/>
             </CommandBar.SecondaryCommands>
         </CommandBar>
@@ -52,13 +53,13 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <Viewbox Grid.Column="0" Height="40">
+                <Viewbox Grid.Column="0" Height="40" VerticalAlignment="Top">
                     <Grid Width="40">
                         <CheckBox IsChecked="{Binding IsChecked, Mode=TwoWay}" HorizontalAlignment="Left" Foreground="{StaticResource KeepNoteForegroundBrush}" BorderBrush="{StaticResource KeepNoteForegroundBrush}" RequestedTheme="Light"/>
                     </Grid>
                 </Viewbox>
 
-                <TextBlock Grid.Column="1" Text="{Binding Text, Mode=OneTime}" FontSize="17" Foreground="{StaticResource KeepNoteForegroundBrush}" TextWrapping="Wrap" Margin="0,6,0,0" />
+                <TextBlock Grid.Column="1" Text="{Binding Text, Mode=OneTime}" FontSize="17" Foreground="{StaticResource KeepNoteForegroundBrush}" TextWrapping="Wrap" Margin="0,6,0,0" MaxLines="3" TextTrimming="CharacterEllipsis" />
             </Grid>
         </DataTemplate>
 
@@ -81,49 +82,91 @@
     </Page.Resources>
 
     <Grid x:Name="LayoutRoot">
-    	<VisualStateManager.VisualStateGroups>
-    		<VisualStateGroup x:Name="ReorderVisualStateGroup">
-    			<VisualState x:Name="ReorderEnableVisualState">
-    				<Storyboard>
-    					<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="DeleteDropArea">
-    						<DiscreteObjectKeyFrame KeyTime="0">
-    							<DiscreteObjectKeyFrame.Value>
-    								<Visibility>Visible</Visibility>
-    							</DiscreteObjectKeyFrame.Value>
-    						</DiscreteObjectKeyFrame>
-    					</ObjectAnimationUsingKeyFrames>
-    					<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(ListViewBase.ItemsPanel)" Storyboard.TargetName="NotesListView">
-    						<DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource ReordableItemsPanelTemplate}"/>
-    					</ObjectAnimationUsingKeyFrames>
-    				</Storyboard>
-    			</VisualState>
-    			<VisualState x:Name="ReorderDisabledVisualState">
-    				<Storyboard>
-    					<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="DeleteDropArea">
-    						<DiscreteObjectKeyFrame KeyTime="0">
-    							<DiscreteObjectKeyFrame.Value>
-    								<Visibility>Collapsed</Visibility>
-    							</DiscreteObjectKeyFrame.Value>
-    						</DiscreteObjectKeyFrame>
-    					</ObjectAnimationUsingKeyFrames>
-    				</Storyboard>
-    			</VisualState>
-    		</VisualStateGroup>
-    	</VisualStateManager.VisualStateGroups>
-        <ScrollViewer VerticalScrollMode="Enabled">
-            <ListView x:Name="NotesListView" Margin="6" AllowDrop="True" CanDragItems="True" IsItemClickEnabled="True" ItemsSource="{Binding Notes}" ItemTemplate="{StaticResource NotePreviewListViewControlTemplate}" ItemClick="NotesListView_ItemClick" ItemsPanel="{StaticResource FluidItemsPanelTemplate}" >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="ReorderVisualStateGroup">
+                <VisualState x:Name="ReorderEnableVisualState">
+                    <Storyboard>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="DeleteDropArea">
+                            <DiscreteObjectKeyFrame KeyTime="0">
+                                <DiscreteObjectKeyFrame.Value>
+                                    <Visibility>Visible</Visibility>
+                                </DiscreteObjectKeyFrame.Value>
+                            </DiscreteObjectKeyFrame>
+                        </ObjectAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(ListViewBase.ItemsPanel)" Storyboard.TargetName="NotesListView">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource ReordableItemsPanelTemplate}"/>
+                        </ObjectAnimationUsingKeyFrames>
+                    </Storyboard>
+                </VisualState>
+                <VisualState x:Name="ReorderDisabledVisualState">
+                    <Storyboard>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="DeleteDropArea">
+                            <DiscreteObjectKeyFrame KeyTime="0">
+                                <DiscreteObjectKeyFrame.Value>
+                                    <Visibility>Collapsed</Visibility>
+                                </DiscreteObjectKeyFrame.Value>
+                            </DiscreteObjectKeyFrame>
+                        </ObjectAnimationUsingKeyFrames>
+                    </Storyboard>
+                </VisualState>
+            </VisualStateGroup>
+            <VisualStateGroup x:Name="NotesVisualStateGroup">
+            	<VisualState x:Name="EmptyNoteVisualState">
+            		<Storyboard>
+            			<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="EmptyNotesArea">
+            				<DiscreteObjectKeyFrame KeyTime="0">
+            					<DiscreteObjectKeyFrame.Value>
+            						<Visibility>Visible</Visibility>
+            					</DiscreteObjectKeyFrame.Value>
+            				</DiscreteObjectKeyFrame>
+            			</ObjectAnimationUsingKeyFrames>
+            		</Storyboard>
+            	</VisualState>
+            	<VisualState x:Name="HasNotesVisualState">
+            		<Storyboard>
+            			<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="EmptyNotesArea">
+            				<DiscreteObjectKeyFrame KeyTime="0">
+            					<DiscreteObjectKeyFrame.Value>
+            						<Visibility>Collapsed</Visibility>
+            					</DiscreteObjectKeyFrame.Value>
+            				</DiscreteObjectKeyFrame>
+            			</ObjectAnimationUsingKeyFrames>
+            		</Storyboard>
+            	</VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
+        <ScrollViewer x:Name="ContentRoot" Grid.Row="0" VerticalScrollMode="Enabled">
+            <ListView x:Name="NotesListView" Margin="6" AllowDrop="True" CanDragItems="True" IsItemClickEnabled="True" ItemsSource="{Binding Notes}" ItemTemplate="{StaticResource NotePreviewListViewControlTemplate}" ItemClick="NotesListView_ItemClick" ItemsPanel="{StaticResource FluidItemsPanelTemplate}">
                 <Interactivity:Interaction.Behaviors>
+					<Core:DataTriggerBehavior Binding="{Binding ItemsSource.Count, ElementName=NotesListView, Mode=OneWay}" Value="0" ComparisonCondition="Equal">
+						<Core:GoToStateAction StateName="EmptyNoteVisualState"/>
+						<Core:GoToStateAction StateName="ReorderDisabledVisualState"/>
+					</Core:DataTriggerBehavior>
+					<Core:DataTriggerBehavior Binding="{Binding ItemsSource.Count, ElementName=NotesListView, Mode=OneWay}" Value="0" ComparisonCondition="NotEqual">
+						<Core:GoToStateAction StateName="HasNotesVisualState"/>
+					</Core:DataTriggerBehavior>
+
                     <Core:DataTriggerBehavior Binding="{Binding ReorderMode, ElementName=NotesListView, Mode=OneWay}" Value="Enabled">
                         <Core:GoToStateAction StateName="ReorderEnableVisualState"/>
                     </Core:DataTriggerBehavior>
                     <Core:DataTriggerBehavior Binding="{Binding ReorderMode, ElementName=NotesListView, Mode=OneWay}" Value="Enabled" ComparisonCondition="NotEqual">
-                    	<Core:GoToStateAction StateName="ReorderDisabledVisualState"/>
+                        <Core:GoToStateAction StateName="ReorderDisabledVisualState"/>
                     </Core:DataTriggerBehavior>
                 </Interactivity:Interaction.Behaviors>
             </ListView>
         </ScrollViewer>
 
-        <Grid x:Name="DeleteDropArea" AllowDrop="True" VerticalAlignment="Bottom" Background="{ThemeResource PhoneChromeBrush}" DragEnter="DeleteDropArea_DragEnter" Drop="DeleteDropArea_Drop" DragLeave="DeleteDropArea_DragLeave">
+        <Grid Grid.Row="0" x:Name="EmptyNotesArea" AllowDrop="True" DragEnter="DeleteDropArea_DragEnter" Drop="DeleteDropArea_Drop" DragLeave="DeleteDropArea_DragLeave" Visibility="Collapsed">
+            <HyperlinkButton Content="" FontFamily="Segoe UI Symbol" FontSize="100" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="12,6" Foreground="{ThemeResource PhoneLowBrush}" Click="NewTextNoteAppBarButton_Click" />
+        </Grid>
+
+        <Grid Grid.Row="1" x:Name="DeleteDropArea" AllowDrop="True" VerticalAlignment="Bottom" Background="{ThemeResource PhoneChromeBrush}" DragEnter="DeleteDropArea_DragEnter" Drop="DeleteDropArea_Drop" DragLeave="DeleteDropArea_DragLeave" Visibility="Collapsed">
             <TextBlock x:Name="DeleteDropIcon" Text="" FontFamily="Segoe UI Symbol" FontSize="36" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="12,6" Foreground="{ThemeResource ApplicationForegroundThemeBrush}" />
         </Grid>
     </Grid>
