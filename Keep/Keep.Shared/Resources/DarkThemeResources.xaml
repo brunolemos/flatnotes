@@ -1,0 +1,19 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Keep">
+
+    <ResourceDictionary.ThemeDictionaries>
+        <ResourceDictionary x:Key="Dark">
+            <SolidColorBrush x:Key="ApplicationPageBackgroundThemeBrush" Color="#303030"/>
+            <SolidColorBrush x:Key="PhoneBackgroundBrush" Color="#303030"/>
+            <SolidColorBrush x:Key="FlyoutBackgroundThemeBrush" Color="#303030"/>
+
+            <SolidColorBrush x:Key="ApplicationForegroundThemeBrush" Color="#A0FFFFFF"/>
+            <SolidColorBrush x:Key="PhoneForegroundBrush" Color="#A0FFFFFF"/>
+
+            <SolidColorBrush x:Key="PhoneChromeBrush" Color="#FF1F1F1F"/>
+            <SolidColorBrush x:Key="PhoneLowBrush" Color="#73FFFFFF"/>
+        </ResourceDictionary>
+    </ResourceDictionary.ThemeDictionaries>
+</ResourceDictionary>

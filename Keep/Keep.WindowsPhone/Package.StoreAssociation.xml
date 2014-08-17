@@ -188,12 +188,16 @@
     <ReservedNames>
       <ReservedName>#Keep Beta</ReservedName>
       <ReservedName>Google Keep Beta</ReservedName>
-      <ReservedName>GKeep</ReservedName>
       <ReservedName>Keep Notes Beta</ReservedName>
+      <ReservedName>Keep Beta</ReservedName>
+      <ReservedName>Flat Notes Beta</ReservedName>
     </ReservedNames>
   </ProductReservedInfo>
   <AccountPackageIdentityNames>
     <MainPackageIdentityName>29428BrunoLemos.Keep</MainPackageIdentityName>
+    <MainPackageIdentityName>29428BrunoLemos.Stellar</MainPackageIdentityName>
+    <MainPackageIdentityName>29428BrunoLemos.StellarLite</MainPackageIdentityName>
+    <MainPackageIdentityName>29428BrunoLemos.5123029690F68</MainPackageIdentityName>
   </AccountPackageIdentityNames>
   <PackageInfoList LandingUrl="https://dev.windowsphone.com/AppSubmission/AssociationLanding?windowsProductId=5ce343c3-5530-455c-bfcf-998a516b50ad" />
 </StoreAssociation>
