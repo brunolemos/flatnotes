@@ -63,15 +63,17 @@ namespace Keep
             if (e.NavigationParameter != null && e.NavigationParameter is Note)
             {
                 Notes notes = AppSettings.Instance.LoggedUser.Notes;
-                viewModel.Note = notes.Where<Note>(x => x.ID == ((Note)e.NavigationParameter).ID).FirstOrDefault<Note>();
-                isAlreadyAdded = (viewModel.Note != null);
-                if (viewModel.Note == null) viewModel.Note = e.NavigationParameter as Note;
+                Note note = notes.Where<Note>(x => x.ID == ((Note)e.NavigationParameter).ID).FirstOrDefault<Note>();
+
+                isAlreadyAdded = (note != null && note.ID == ((Note)e.NavigationParameter).ID);
+                viewModel.Note = isAlreadyAdded ? note : e.NavigationParameter as Note;
             }
             else if (e.NavigationParameter != null && e.NavigationParameter is string)
             {
                 Notes notes = AppSettings.Instance.LoggedUser.Notes;
                 viewModel.Note = notes.Where<Note>(x => x.ID == e.NavigationParameter.ToString()).FirstOrDefault<Note>();
-                isAlreadyAdded = (viewModel.Note != null);
+
+                isAlreadyAdded = (viewModel.Note != null && viewModel.Note.ID == e.NavigationParameter.ToString());
             }
 
             if (viewModel.Note == null)
