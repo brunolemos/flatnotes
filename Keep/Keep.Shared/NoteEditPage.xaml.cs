@@ -88,6 +88,7 @@ namespace Keep
 
             //AnimatedColor = new SolidColorBrush(new Color().FromHex(viewModel.Note.Color.Color));
             //this.SetBinding(BackgroundProperty, new Binding() { Path = new PropertyPath("AnimatedColor"), Source = this });
+            LayoutRoot.Background = new SolidColorBrush(new Color().FromHex(viewModel.Note.Color.Color));
         }
 
         void Note_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -169,8 +170,8 @@ namespace Keep
 
         public void AnimateColorTo(Color color)
         {
-            //NoteColorAnimation.To = color;
-            //NoteColorAnimationStoryboard.Begin();
+            NoteColorAnimation.To = color;
+            NoteColorAnimationStoryboard.Begin();
         }
         
         private void DeleteNoteAppBarButton_Click(object sender, RoutedEventArgs e)
@@ -210,9 +211,9 @@ namespace Keep
                 return;
             
             NoteColor newColor = e.AddedItems[0] as NoteColor;
-            viewModel.Note.Color = newColor;
-
             AnimateColorTo(new Color().FromHex(newColor.Color));
+
+            viewModel.Note.Color = newColor;
         }
 
         //private void NoteChecklistListView_DataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args)

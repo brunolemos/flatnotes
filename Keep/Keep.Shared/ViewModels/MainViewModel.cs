@@ -8,7 +8,7 @@ using Keep.Utils;
 
 namespace Keep.ViewModels
 {
-    public class MainPageViewModel
+    public class MainViewModel
     {
         public DeleteNoteCommand DeleteNoteCommand { get { return deleteNoteCommand; } }
         private DeleteNoteCommand deleteNoteCommand = new DeleteNoteCommand();

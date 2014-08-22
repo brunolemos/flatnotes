@@ -47,6 +47,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)NoteEditPage.xaml.cs">
       <DependentUpon>NoteEditPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)SettingsPage.xaml.cs">
+      <DependentUpon>SettingsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Utils\AppSettings.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\Extensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\Firebase\StringCleaner.cs" />
@@ -55,8 +58,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Utils\GenerateRandomID.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\JWT\JWT.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\TrullyObservableCollection.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\SettingsViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\NoteEditViewModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MainPageViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MainViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="$(MSBuildThisFileDirectory)Controls\NoteColorPicker.xaml">
@@ -82,6 +86,10 @@
     <Page Include="$(MSBuildThisFileDirectory)Resources\DefaultThemeResources.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)SettingsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>

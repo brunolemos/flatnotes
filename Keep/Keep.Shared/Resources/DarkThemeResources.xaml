@@ -5,9 +5,9 @@
 
     <ResourceDictionary.ThemeDictionaries>
         <ResourceDictionary x:Key="Dark">
-            <SolidColorBrush x:Key="ApplicationPageBackgroundThemeBrush" Color="#303030"/>
-            <SolidColorBrush x:Key="PhoneBackgroundBrush" Color="#303030"/>
-            <SolidColorBrush x:Key="FlyoutBackgroundThemeBrush" Color="#303030"/>
+            <SolidColorBrush x:Key="ApplicationPageBackgroundThemeBrush" Color="#313B44"/>
+            <SolidColorBrush x:Key="PhoneBackgroundBrush" Color="#313B44"/>
+            <SolidColorBrush x:Key="FlyoutBackgroundThemeBrush" Color="#313B44"/>
 
             <SolidColorBrush x:Key="ApplicationForegroundThemeBrush" Color="#A0FFFFFF"/>
             <SolidColorBrush x:Key="PhoneForegroundBrush" Color="#A0FFFFFF"/>

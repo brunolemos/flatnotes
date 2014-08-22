@@ -16,6 +16,7 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 
 using Keep.Common;
@@ -24,13 +25,12 @@ using Keep.Controls;
 using Keep.ViewModels;
 using Keep.Models;
 using Keep.Utils;
-using Windows.UI.Xaml.Media.Imaging;
 
 namespace Keep
 {
     public sealed partial class MainPage : Page
     {
-        private MainPageViewModel viewModel = new MainPageViewModel();
+        private MainViewModel viewModel = new MainViewModel();
 
         public NavigationHelper NavigationHelper { get { return this.navigationHelper; } }
         private NavigationHelper navigationHelper;
@@ -61,7 +61,7 @@ namespace Keep
             else
                 VisualStateManager.GoToState(this, EmptyNoteVisualState.Name, false);
 
-            if (e.NavigationParameter != null)
+            if (!String.IsNullOrEmpty(e.NavigationParameter.ToString()))
                 Debug.WriteLine("MainPage NavigationParameter: " + e.NavigationParameter.ToString());
         }
 
@@ -184,13 +184,18 @@ namespace Keep
         private void NotesListView_DataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args)
         {
             Debug.WriteLine("NotesListView_DataContextChanged");
-            if (!(args.NewValue is MainPageViewModel))
+            if (!(args.NewValue is MainViewModel))
                 return;
 
-            if ((args.NewValue as MainPageViewModel).Notes.Count <= 0)
+            if ((args.NewValue as MainViewModel).Notes.Count <= 0)
                 VisualStateManager.GoToState(this, "EmptyNoteVisualState", true);
             else
                 VisualStateManager.GoToState(this, "HasNotesVisualState", true);
+        }
+
+        private void SettingsAppBarButton_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(SettingsPage));
         }
     }
 }

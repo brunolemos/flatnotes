@@ -13,11 +13,11 @@
 
     <Page.Resources>
         <Storyboard x:Name="NoteColorAnimationStoryboard">
-        	<ColorAnimation x:Name="NoteColorAnimation" Duration="0:0:0.3" Storyboard.TargetName="Root" Storyboard.TargetProperty="(Page.AnimatedColor).(SolidColorBrush.Color)">
-        		<ColorAnimation.EasingFunction>
-        			<BackEase EasingMode="EaseOut" Amplitude="0"/>
-        		</ColorAnimation.EasingFunction>
-        	</ColorAnimation>
+            <ColorAnimation x:Name="NoteColorAnimation" Duration="0:0:0.4" Storyboard.TargetName="LayoutRoot" Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)">
+                <ColorAnimation.EasingFunction>
+                    <BackEase EasingMode="EaseOut" Amplitude="0"/>
+                </ColorAnimation.EasingFunction>
+            </ColorAnimation>
         </Storyboard>
 
         <DataTemplate x:Key="NoteChecklistListViewControlTemplate">
@@ -52,8 +52,8 @@
         </CommandBar>
     </Page.BottomAppBar>
 
-	<Grid x:Name="LayoutRoot">
-		<VisualStateManager.VisualStateGroups>
+    <Grid x:Name="LayoutRoot">
+        <VisualStateManager.VisualStateGroups>
 			<VisualStateGroup x:Name="ReorderVisualStateGroup">
 				<VisualState x:Name="ReorderEnabledVisualState">
 					<Storyboard>
