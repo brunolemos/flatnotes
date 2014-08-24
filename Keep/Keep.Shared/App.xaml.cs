@@ -104,6 +104,8 @@ namespace Keep
             }
 
             //rootFrame.Background = (SolidColorBrush)App.Current.Resources["ApplicationPageBackgroundThemeBrush"];
+            GoogleAnalytics.EasyTracker.GetTracker().SendEvent("app", "open", "", 0);
+
 
             // Ensure the current window is active
             Window.Current.Activate();

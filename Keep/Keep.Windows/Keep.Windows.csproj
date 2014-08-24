@@ -110,15 +110,25 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
+    <None Include="analytics.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Keep.Windows_TemporaryKey.pfx" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="GoogleAnalytics">
+      <HintPath>..\..\packages\GoogleAnalyticsSDK.1.2.10\lib\windows81\GoogleAnalytics.winmd</HintPath>
+    </Reference>
+    <Reference Include="GoogleAnalytics.Core">
+      <HintPath>..\..\packages\GoogleAnalyticsSDK.1.2.10\lib\windows81\GoogleAnalytics.Core.winmd</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\..\packages\Newtonsoft.Json.6.0.3\lib\netcore45\Newtonsoft.Json.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="analytics.xml" />
     <Content Include="Assets\Logo.scale-180.png" />
     <Content Include="Assets\SmallLogo.scale-180.png" />
     <Content Include="Assets\SplashScreen.scale-180.png" />

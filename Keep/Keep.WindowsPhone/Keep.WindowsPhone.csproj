@@ -89,17 +89,27 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="GoogleAnalytics">
+      <HintPath>..\..\packages\GoogleAnalyticsSDK.1.2.10\lib\wpa81\GoogleAnalytics.winmd</HintPath>
+    </Reference>
+    <Reference Include="GoogleAnalytics.Core">
+      <HintPath>..\..\packages\GoogleAnalyticsSDK.1.2.10\lib\wpa81\GoogleAnalytics.Core.winmd</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\..\packages\Newtonsoft.Json.6.0.3\lib\portable-net45+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="analytics.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Package.StoreAssociation.xml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="analytics.xml" />
     <Content Include="Assets\Logo.scale-240.png" />
     <Content Include="Assets\SmallLogo.scale-240.png" />
     <Content Include="Assets\SplashScreen.scale-240.png" />
