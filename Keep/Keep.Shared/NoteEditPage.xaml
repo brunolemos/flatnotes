@@ -37,7 +37,7 @@
         <CommandBar>
 
             <CommandBar.SecondaryCommands>
-                <AppBarButton Label="share..." Icon="World"/>
+                <!--<AppBarButton Label="share..." Icon="World"/>-->
                 <AppBarButton  Icon="Delete" Label="delete" Click="DeleteNoteAppBarButton_Click" />
             </CommandBar.SecondaryCommands>
             <AppBarToggleButton x:Name="ColorPickerAppBarToggleButton" Label="color" Checked="ColorPickerAppBarToggleButton_Checked" Unchecked="ColorPickerAppBarToggleButton_Unchecked">
@@ -45,9 +45,9 @@
                     <BitmapIcon UriSource="Assets/appbar.water.droplet.png"/>
                 </AppBarToggleButton.Icon>
             </AppBarToggleButton>
-            <AppBarButton Icon="Camera" Label="photo" IsEnabled="False"/>
+            <!--<AppBarButton Icon="Camera" Label="photo" IsEnabled="False"/>
             <AppBarButton Icon="Microphone" Label="audio" IsEnabled="False"/>
-            <AppBarToggleButton Icon="Pin" Label="pin to start" IsChecked="{Binding Note.IsPinned, Mode=OneWay}" Command="{Binding NoteTogglePinCommand}" CommandParameter="{Binding Note}"/>
+            <AppBarToggleButton Icon="Pin" Label="pin to start" IsEnabled="False" IsChecked="{Binding Note.IsPinned, Mode=OneWay}" Command="{Binding NoteTogglePinCommand}" CommandParameter="{Binding Note}"/>-->
 
         </CommandBar>
     </Page.BottomAppBar>

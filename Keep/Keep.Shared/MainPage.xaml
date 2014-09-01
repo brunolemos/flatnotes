@@ -25,7 +25,7 @@
 
             <CommandBar.SecondaryCommands>
                 <AppBarButton Icon="Like" Label="send feedback" CommandParameter="{Binding ElementName=LayoutRoot}" Command="{Binding SendFeedbackCommand}"/>
-                <AppBarButton Icon="Setting" Label="settings" Click="SettingsAppBarButton_Click"/>
+                <!--<AppBarButton Icon="Setting" Label="settings" IsEnabled="False" Click="SettingsAppBarButton_Click"/>-->
             </CommandBar.SecondaryCommands>
         </CommandBar>
     </Page.BottomAppBar>
@@ -66,14 +66,42 @@
         <DataTemplate x:Key="NotePreviewListViewControlTemplate">
             <Grid x:Name="NoteContainer" Background="{Binding Color.Color}" Margin="4" Holding="NoteContainer_Holding" PointerPressed="NoteContainer_PointerPressed">
                 <StackPanel Margin="12">
-                    <TextBlock Text="{Binding Title}" FontSize="19" Margin="0,0,0,12" Foreground="{StaticResource KeepNoteForegroundBrush}" FontWeight="Bold" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" MaxLines="1" Visibility="{Binding Title, Converter={StaticResource NullableToVisibilityConverter}}"/>
+                    <TextBlock Text="{Binding Title}" FontSize="19" Margin="0,0,0,6" Foreground="{StaticResource KeepNoteForegroundBrush}" FontWeight="Bold" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" MaxLines="1" Visibility="{Binding Title, Converter={StaticResource NullableToVisibilityConverter}}"/>
 
                     <Grid Visibility="{Binding IsText, Converter={StaticResource BooleanToVisibilityConverter}}">
                         <TextBlock Text="{Binding Text}" FontSize="17" Margin="0,0,0,12" Foreground="{StaticResource KeepNoteForegroundBrush}" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" MaxLines="5" Visibility="{Binding Text, Converter={StaticResource NullableToVisibilityConverter}}" />
                     </Grid>
 
                     <Grid Visibility="{Binding IsChecklist, Converter={StaticResource BooleanToVisibilityConverter}}">
-                        <ListView x:Name="NoteChecklistListView" CanDragItems="False" IsItemClickEnabled="False" IsTapEnabled="False" IsActiveView="False" ItemTemplate="{StaticResource NoteChecklistListViewControlTemplate}" ItemsSource="{Binding}" DataContext="{Binding Checklist}" SelectionMode="None" />
+                        <StackPanel>
+                            <ListView x:Name="NoteChecklistListView" CanDragItems="False" IsItemClickEnabled="False" IsTapEnabled="False" IsActiveView="False" ItemTemplate="{StaticResource NoteChecklistListViewControlTemplate}" ItemsSource="{Binding}" DataContext="{Binding Checklist}" SelectionMode="None" Loaded="NoteChecklistListView_Loaded" >
+                            	<Interactivity:Interaction.Behaviors>
+                            		<Core:DataTriggerBehavior Binding="{Binding Count, Mode=OneWay}" ComparisonCondition="GreaterThan" Value="5">
+                            			<Core:ChangePropertyAction TargetObject="{Binding ElementName=TrimIndicator}" PropertyName="Visibility">
+                            				<Core:ChangePropertyAction.Value>
+                            					<Visibility>Visible</Visibility>
+                            				</Core:ChangePropertyAction.Value>
+                            			</Core:ChangePropertyAction>
+                            		</Core:DataTriggerBehavior>
+                            	</Interactivity:Interaction.Behaviors>
+                            </ListView>
+
+                            <Grid x:Name="TrimIndicator" Margin="0,-6,0,0" Visibility="Collapsed">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Viewbox Grid.Column="0" Height="40" VerticalAlignment="Top" Opacity="0">
+                                    <Grid Width="40">
+                                        <CheckBox HorizontalAlignment="Left" IsEnabled="False"/>
+                                    </Grid>
+                                </Viewbox>
+
+                                <TextBlock Grid.Column="1" Text="..." FontSize="17" Foreground="{StaticResource KeepNoteForegroundBrush}" TextWrapping="Wrap" Margin="0,6,0,0" MaxLines="3" TextTrimming="CharacterEllipsis" />
+                            </Grid>
+                        </StackPanel>
+
                         <Grid  Background="Transparent"/>
                     </Grid>
                 </StackPanel>

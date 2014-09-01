@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest" xmlns:m3="http://schemas.microsoft.com/appx/2014/manifest" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest">
-  <Identity Name="29428BrunoLemos.KeepBeta" Publisher="CN=0B66D0B0-F691-4768-B3EE-FC3873EB0D73" Version="1.1.0.0" />
-  <mp:PhoneIdentity PhoneProductId="774e6197-a184-427e-a654-be5e79dbe284" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
+  <Identity Name="29428BrunoLemos.Keep" Publisher="CN=0B66D0B0-F691-4768-B3EE-FC3873EB0D73" Version="1.0.0.0" />
+  <mp:PhoneIdentity PhoneProductId="084ad194-bd94-4d1b-9c0b-48eceac0c84a" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
-    <DisplayName>#Keep Beta</DisplayName>
+    <DisplayName>Keep Beta</DisplayName>
     <PublisherDisplayName>Bruno Lemos</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
@@ -16,7 +16,7 @@
   </Resources>
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="Keep.WindowsPhone.App">
-      <m3:VisualElements DisplayName="#Keep Beta" Square150x150Logo="Assets\Logo.png" Square44x44Logo="Assets\SmallLogo.png" Description="The most beautiful and smooth notes app." ForegroundText="light" BackgroundColor="transparent">
+      <m3:VisualElements DisplayName="Keep Beta" Square150x150Logo="Assets\Logo.png" Square44x44Logo="Assets\SmallLogo.png" Description="The most beautiful and cool to use notes app!" ForegroundText="light" BackgroundColor="transparent">
         <m3:DefaultTile Wide310x150Logo="Assets\WideLogo.png" Square71x71Logo="Assets\Square71x71Logo.png">
         </m3:DefaultTile>
         <m3:SplashScreen Image="Assets\SplashScreen.png" BackgroundColor="#FFCD35" />

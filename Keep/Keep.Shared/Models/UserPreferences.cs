@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Runtime.Serialization;
+using Windows.UI.Xaml;
 
 namespace Keep.Models
 {
@@ -13,7 +14,6 @@ namespace Keep.Models
         public const Double ITEM_MIN_WIDTH_MAX_VALUE = 600;
         public const Double ITEM_MIN_WIDTH_DEFAULT_VALUE = 200;
 
-
         [DataMember]
         public int Columns { get { return columns; } set { if ( columns != value ) { columns = value; NotifyPropertyChanged( "Columns" ); } } }
         private int columns = -1;
@@ -21,6 +21,10 @@ namespace Keep.Models
         [DataMember]
         public Double ItemMinWidth { get { return itemMinWidth; } set { double new_value = Math.Min( Math.Max( value, ITEM_MIN_WIDTH_MIN_VALUE ), ITEM_MIN_WIDTH_MAX_VALUE ); if ( itemMinWidth != new_value ) { itemMinWidth = new_value; NotifyPropertyChanged( "ItemMinWidth" ); } } }
         private Double itemMinWidth = ITEM_MIN_WIDTH_DEFAULT_VALUE;
+
+        [DataMember]
+        public ApplicationTheme? Theme { get { return theme; } set { if (theme != value) { theme = value; NotifyPropertyChanged("Theme"); } } }
+        private ApplicationTheme? theme = ApplicationTheme.Light;
 
         //[DataMember]
         //public string Language { get { return language; } }

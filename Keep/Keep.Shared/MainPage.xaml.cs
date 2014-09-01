@@ -31,6 +31,7 @@ namespace Keep
     public sealed partial class MainPage : Page
     {
         private MainViewModel viewModel = new MainViewModel();
+        public static ChecklistMaxItemsConverter checklistMaxItemsConverter = new ChecklistMaxItemsConverter();
 
         public NavigationHelper NavigationHelper { get { return this.navigationHelper; } }
         private NavigationHelper navigationHelper;
@@ -82,6 +83,12 @@ namespace Keep
         }
 
         #endregion
+
+        private void NoteChecklistListView_Loaded(object sender, RoutedEventArgs e)
+        {
+            int maxItems = 5;
+            (sender as FrameworkElement).SetBinding(ListBox.ItemsSourceProperty, new Binding() { Path = new PropertyPath(""), Converter = checklistMaxItemsConverter, ConverterParameter = maxItems, Mode = BindingMode.OneWay });
+        }
 
         private void NoteContainer_Holding(object sender, HoldingRoutedEventArgs e)
         {

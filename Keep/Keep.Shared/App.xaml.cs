@@ -37,6 +37,8 @@ namespace Keep
         /// </summary>
         public App()
         {
+            //if (AppSettings.Instance.LoggedUser.Preferences.Theme != null) this.RequestedTheme = (ApplicationTheme)AppSettings.Instance.LoggedUser.Preferences.Theme;
+
             this.InitializeComponent();
             this.Suspending += this.OnSuspending;
         }
