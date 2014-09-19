@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Runtime.Serialization;
 using Windows.UI.Xaml;
+using System.Diagnostics;
 
 namespace Keep.Models
 {
@@ -23,8 +24,8 @@ namespace Keep.Models
         private Double itemMinWidth = ITEM_MIN_WIDTH_DEFAULT_VALUE;
 
         [DataMember]
-        public ApplicationTheme? Theme { get { return theme; } set { if (theme != value) { theme = value; NotifyPropertyChanged("Theme"); } } }
-        private ApplicationTheme? theme = ApplicationTheme.Light;
+        public ElementTheme Theme { get { return theme; } set { theme = value; NotifyPropertyChanged("Theme"); } }
+        private ElementTheme theme = ElementTheme.Light;
 
         //[DataMember]
         //public string Language { get { return language; } }

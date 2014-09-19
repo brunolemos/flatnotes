@@ -1,0 +1,5 @@
+﻿<ViewModels:SettingsViewModel xmlns:ViewModels="using:Keep.ViewModels" xmlns:Models="using:Keep.Models">
+	<ViewModels:SettingsViewModel.UserPreferences>
+        <Models:UserPreferences ItemMinWidth="220"/>
+    </ViewModels:SettingsViewModel.UserPreferences>
+</ViewModels:SettingsViewModel>

@@ -15,7 +15,7 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{76F1466A-8B6D-4E39-A767-685A06062A39};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <SynthesizeLinkMetadata>true</SynthesizeLinkMetadata>
-    <ExpressionBlendVersion>12.0.50429.0</ExpressionBlendVersion>
+    <ExpressionBlendVersion>12.0.50716.0</ExpressionBlendVersion>
     <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
     <AppxBundlePlatforms>neutral</AppxBundlePlatforms>
   </PropertyGroup>
@@ -125,8 +125,8 @@
     </SDKReference>
   </ItemGroup>
   <ItemGroup>
-    <DesignData Include="SampleData\NoteColorsSampleData.xaml" />
     <DesignData Include="SampleData\NoteEditViewModelSampleData.xaml" />
+    <DesignData Include="SampleData\SettingsViewModelSampleData.xaml" />
   </ItemGroup>
   <ItemGroup>
     <DesignData Include="SampleData\MainPageViewModelSampleData.xaml">

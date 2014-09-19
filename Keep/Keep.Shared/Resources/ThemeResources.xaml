@@ -15,5 +15,17 @@
             <SolidColorBrush x:Key="PhoneChromeBrush" Color="#FF1F1F1F"/>
             <SolidColorBrush x:Key="PhoneLowBrush" Color="#73FFFFFF"/>
         </ResourceDictionary>
+        
+        <ResourceDictionary x:Key="Light">
+            <SolidColorBrush x:Key="ApplicationPageBackgroundThemeBrush" Color="#ECECEC"/>
+            <SolidColorBrush x:Key="PhoneBackgroundBrush" Color="#ECECEC"/>
+            <SolidColorBrush x:Key="FlyoutBackgroundThemeBrush" Color="#ECECEC"/>
+
+            <SolidColorBrush x:Key="ApplicationForegroundThemeBrush" Color="#A0000000"/>
+            <SolidColorBrush x:Key="PhoneForegroundBrush" Color="#A0000000"/>
+
+            <SolidColorBrush x:Key="PhoneChromeBrush" Color="#FFDDDDDD"/>
+            <SolidColorBrush x:Key="PhoneLowBrush" Color="#40000000"/>
+        </ResourceDictionary>
     </ResourceDictionary.ThemeDictionaries>
 </ResourceDictionary>

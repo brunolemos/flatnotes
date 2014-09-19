@@ -32,6 +32,7 @@ namespace Keep
 
         public NoteEditViewModel viewModel;
         ChecklistItem checklistItemToDelete = null;
+        Color? statusBarForegroundColor = null;
 
         public SolidColorBrush AnimatedColor { get { return (SolidColorBrush)GetValue(AnimatedColorProperty); } protected set { SetValue(AnimatedColorProperty, value); } }
         public readonly DependencyProperty AnimatedColorProperty = DependencyProperty.Register("AnimatedColor", typeof(SolidColorBrush), typeof(Page), null);
@@ -48,12 +49,14 @@ namespace Keep
         private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
 #if WINDOWS_PHONE_APP
-            if (Application.Current.RequestedTheme == ApplicationTheme.Dark)
+            StatusBar statusBar = StatusBar.GetForCurrentView();
+            statusBarForegroundColor = statusBar.ForegroundColor;
+
+            if (App.RootFrame.RequestedTheme != ElementTheme.Light)
             {
-                StatusBar statusBar = StatusBar.GetForCurrentView();
-                statusBar.BackgroundColor = Colors.Black;
-                statusBar.BackgroundOpacity = 0.20;
-                //statusBar.ForegroundColor = Color.FromArgb(0xFF, 0xFF, 0xFF, 0xFE);
+                //statusBar.BackgroundColor = Colors.Black;
+                //statusBar.BackgroundOpacity = 0.20;
+                statusBar.ForegroundColor = Color.FromArgb(0xFF, 0x38, 0x38, 0x38);
             }
 #endif
 
@@ -109,11 +112,10 @@ namespace Keep
         private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
         {
 #if WINDOWS_PHONE_APP
-            if (Application.Current.RequestedTheme == ApplicationTheme.Dark)
+            if (App.RootFrame.RequestedTheme != ElementTheme.Light)
             {
                 StatusBar statusBar = StatusBar.GetForCurrentView();
-                statusBar.BackgroundOpacity = 0;
-                statusBar.ForegroundColor = null;
+                statusBar.ForegroundColor = statusBarForegroundColor;
             }
 #endif
 

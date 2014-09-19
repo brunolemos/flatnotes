@@ -8,8 +8,7 @@
     <Application.Resources>
     	<ResourceDictionary>
     		<ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="ms-appx:///Resources/LightThemeResources.xaml"/>
-                <ResourceDictionary Source="ms-appx:///Resources/DarkThemeResources.xaml"/>
+                <ResourceDictionary Source="ms-appx:///Resources/ThemeResources.xaml"/>
                 <ResourceDictionary Source="ms-appx:///Resources/DefaultThemeResources.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 

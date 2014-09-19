@@ -15,6 +15,10 @@ using Windows.UI.Xaml.Navigation;
 
 using Keep.ViewModels;
 using Keep.Common;
+using System.Diagnostics;
+using Keep.Utils;
+using Windows.UI;
+using Windows.UI.ViewManagement;
 
 namespace Keep
 {
@@ -58,5 +62,24 @@ namespace Keep
         }
 
         #endregion
+
+        private void ThemeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ElementTheme theme = ElementTheme.Default;
+
+            switch ((e.AddedItems[0] as ComboBoxItem).Tag.ToString())
+            {
+                case "light":
+                    theme = ElementTheme.Light;
+                    break;
+
+                case "dark":
+                    theme = ElementTheme.Dark;
+                    break;
+            }
+
+            //apply theme and save to user preferences
+            App.ForceTheme(theme);
+        }
     }
 }

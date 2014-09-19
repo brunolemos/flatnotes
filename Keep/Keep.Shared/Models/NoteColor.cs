@@ -17,14 +17,14 @@ namespace Keep.Models
 
         public string Color { get; private set; }
 
-        public static readonly NoteColor DEFAULT = new NoteColor("DEFAULT", ((SolidColorBrush)App.Current.Resources["KeepNoteDefaultBrush"]).Color.ToString());
-        public static readonly NoteColor RED = new NoteColor("RED", ((SolidColorBrush)App.Current.Resources["KeepNoteRedBrush"]).Color.ToString());
-        public static readonly NoteColor ORANGE = new NoteColor("ORANGE", ((SolidColorBrush)App.Current.Resources["KeepNoteOrangeBrush"]).Color.ToString());
-        public static readonly NoteColor YELLOW = new NoteColor("YELLOW", ((SolidColorBrush)App.Current.Resources["KeepNoteYellowBrush"]).Color.ToString());
-        public static readonly NoteColor GREEN = new NoteColor("GREEN", ((SolidColorBrush)App.Current.Resources["KeepNoteGreenBrush"]).Color.ToString());
-        public static readonly NoteColor TEAL = new NoteColor("TEAL", ((SolidColorBrush)App.Current.Resources["KeepNoteTealBrush"]).Color.ToString());
-        public static readonly NoteColor BLUE = new NoteColor("BLUE", ((SolidColorBrush)App.Current.Resources["KeepNoteBlueBrush"]).Color.ToString());
-        public static readonly NoteColor GRAY = new NoteColor("GRAY", ((SolidColorBrush)App.Current.Resources["KeepNoteGrayBrush"]).Color.ToString());
+        public static readonly NoteColor DEFAULT = new NoteColor("DEFAULT", "#FFFFFFFF");// ((SolidColorBrush)App.Current.Resources["KeepNoteDefaultBrush"]).Color.ToString());
+        public static readonly NoteColor RED = new NoteColor("RED", "#FFF56545");// ((SolidColorBrush)App.Current.Resources["KeepNoteRedBrush"]).Color.ToString());
+        public static readonly NoteColor ORANGE = new NoteColor("ORANGE", "#FFFFBB22");// ((SolidColorBrush)App.Current.Resources["KeepNoteOrangeBrush"]).Color.ToString());
+        public static readonly NoteColor YELLOW = new NoteColor("YELLOW", "#FFEEEE22");// ((SolidColorBrush)App.Current.Resources["KeepNoteYellowBrush"]).Color.ToString());
+        public static readonly NoteColor GREEN = new NoteColor("GREEN", "#FFBBE535");// ((SolidColorBrush)App.Current.Resources["KeepNoteGreenBrush"]).Color.ToString());
+        public static readonly NoteColor TEAL = new NoteColor("TEAL", "#FF77DDBB");// ((SolidColorBrush)App.Current.Resources["KeepNoteTealBrush"]).Color.ToString());
+        public static readonly NoteColor BLUE = new NoteColor("BLUE", "#FF66CCDD");// ((SolidColorBrush)App.Current.Resources["KeepNoteBlueBrush"]).Color.ToString());
+        public static readonly NoteColor GRAY = new NoteColor("GRAY", "#FFB5C5C5");// ((SolidColorBrush)App.Current.Resources["KeepNoteGrayBrush"]).Color.ToString());
 
         private static readonly List<NoteColor> ColorsList = new List<NoteColor>()
         {

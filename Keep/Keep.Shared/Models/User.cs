@@ -61,6 +61,7 @@ namespace Keep.Models
 
             Notes.CollectionChanged += (s, e) => NotifyPropertyChanged("Notes");
             ArchivedNotes.CollectionChanged += (s, e) => NotifyPropertyChanged("ArchivedNotes");
+            Preferences.PropertyChanged += (s, e) => NotifyPropertyChanged("Theme");
         }
 
         //void User_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)

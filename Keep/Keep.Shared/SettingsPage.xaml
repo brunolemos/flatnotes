@@ -6,14 +6,14 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    d:DataContext="{d:DesignData /SampleData/SettingsViewModelSampleData.xaml}">
 
     <StackPanel Margin="24">
-        <TextBlock Text="Theme"/>
-        <ListBox>
-            <TextBlock Text="Default"/>
-            <TextBlock Text="Light"/>
-            <TextBlock Text="Dark"/>
-        </ListBox>
+        <TextBlock Text="Theme" Style="{StaticResource TitleTextBlockStyle}"/>
+        <ComboBox x:Name="ThemeComboBox" SelectionChanged="ThemeComboBox_SelectionChanged" SelectedValue="{Binding UserPreferences.Theme}">
+            <ComboBoxItem Tag="light" Content="Light" />
+            <ComboBoxItem Tag="dark" Content="Dark"/>
+        </ComboBox>
     </StackPanel>
 </Page>

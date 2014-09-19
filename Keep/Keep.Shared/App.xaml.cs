@@ -19,6 +19,7 @@ using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 
 using Keep.Utils;
+using System.Diagnostics;
 
 namespace Keep
 {
@@ -31,13 +32,18 @@ namespace Keep
         private TransitionCollection transitions;
 #endif
 
+        public static Frame RootFrame { get { return Window.Current.Content as Frame; } }
+
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
         /// </summary>
         public App()
         {
-            //if (AppSettings.Instance.LoggedUser.Preferences.Theme != null) this.RequestedTheme = (ApplicationTheme)AppSettings.Instance.LoggedUser.Preferences.Theme;
+            //if (AppSettings.Instance.LoggedUser.Preferences.Theme == ElementTheme.Light)
+            //    this.RequestedTheme = ApplicationTheme.Light;
+            //else
+            //    this.RequestedTheme = ApplicationTheme.Dark;
 
             this.InitializeComponent();
             this.Suspending += this.OnSuspending;
@@ -105,7 +111,8 @@ namespace Keep
                 }
             }
 
-            //rootFrame.Background = (SolidColorBrush)App.Current.Resources["ApplicationPageBackgroundThemeBrush"];
+
+            ForceTheme(AppSettings.Instance.LoggedUser.Preferences.Theme);
             GoogleAnalytics.EasyTracker.GetTracker().SendEvent("app", "open", "", 0);
 
 
@@ -143,5 +150,20 @@ namespace Keep
         }
 
         public static bool IsDesignMode { get { return Windows.ApplicationModel.DesignMode.DesignModeEnabled; } }
+
+        public static void ForceTheme(ElementTheme theme) {
+            App.RootFrame.RequestedTheme = theme;
+            App.RootFrame.Background = (SolidColorBrush)App.Current.Resources["ApplicationPageBackgroundThemeBrush"];
+            AppSettings.Instance.LoggedUser.Preferences.Theme = theme;
+
+#if WINDOWS_PHONE_APP
+            StatusBar statusBar = StatusBar.GetForCurrentView();
+
+            if (theme == ElementTheme.Light) //App.Current.RequestedTheme != ApplicationTheme.Light && 
+                statusBar.ForegroundColor = Color.FromArgb(0xFF, 0x5E, 0x5E, 0x5E);
+            else //if (App.Current.RequestedTheme == ApplicationTheme.Light && theme != ElementTheme.Light)
+                statusBar.ForegroundColor = Color.FromArgb(0xFF, 0xCB, 0xCE, 0xD0);
+#endif
+        }
     }
 }
