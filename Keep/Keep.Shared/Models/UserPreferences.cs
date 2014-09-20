@@ -17,7 +17,7 @@ namespace Keep.Models
 
         [DataMember]
         public int Columns { get { return columns; } set { Debug.WriteLine("Changed columns to: " + value); if (columns != value) { columns = value; NotifyPropertyChanged("Columns"); } } }
-        private int columns = -1;
+        private int columns = 2;
 
         [DataMember]
         public Double ItemMinWidth { get { return itemMinWidth; } set { double new_value = Math.Min( Math.Max( value, ITEM_MIN_WIDTH_MIN_VALUE ), ITEM_MIN_WIDTH_MAX_VALUE ); if ( itemMinWidth != new_value ) { itemMinWidth = new_value; NotifyPropertyChanged( "ItemMinWidth" ); } } }

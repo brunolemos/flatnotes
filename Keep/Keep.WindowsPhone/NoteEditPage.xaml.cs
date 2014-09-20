@@ -52,11 +52,11 @@ namespace Keep
             StatusBar statusBar = StatusBar.GetForCurrentView();
             statusBarForegroundColor = statusBar.ForegroundColor;
 
-            if (App.RootFrame.RequestedTheme != ElementTheme.Light)
+            if (App.Current.RequestedTheme != ApplicationTheme.Light)
             {
                 //statusBar.BackgroundColor = Colors.Black;
                 //statusBar.BackgroundOpacity = 0.20;
-                statusBar.ForegroundColor = Color.FromArgb(0xFF, 0x38, 0x38, 0x38);
+                statusBar.ForegroundColor = Color.FromArgb(0xFF, 0x5F, 0x5F, 0x5F);
             }
 #endif
 
@@ -112,7 +112,7 @@ namespace Keep
         private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
         {
 #if WINDOWS_PHONE_APP
-            if (App.RootFrame.RequestedTheme != ElementTheme.Light)
+            if (App.Current.RequestedTheme != ApplicationTheme.Light)
             {
                 StatusBar statusBar = StatusBar.GetForCurrentView();
                 statusBar.ForegroundColor = statusBarForegroundColor;

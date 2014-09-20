@@ -117,13 +117,52 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="NoteChecklistType" xml:space="preserve">
-    <value>Checklist</value>
+  <data name="AudioAppBarButton.Label" xml:space="preserve">
+    <value>audio</value>
+  </data>
+  <data name="ColorAppBarButton.Label" xml:space="preserve">
+    <value>color</value>
+  </data>
+  <data name="ColumnsTextBlock.Text" xml:space="preserve">
+    <value>Columns</value>
+  </data>
+  <data name="DeleteAppBarButton.Label" xml:space="preserve">
+    <value>delete</value>
+  </data>
+  <data name="FeedbackAppBarButton.Label" xml:space="preserve">
+    <value>send feedback</value>
+  </data>
+  <data name="NewItemTextBox.PlaceholderText" xml:space="preserve">
+    <value>New item</value>
+  </data>
+  <data name="NoteChecklistType.Label" xml:space="preserve">
+    <value>checklist</value>
   </data>
   <data name="NoteTextType.Label" xml:space="preserve">
+    <value>text</value>
+  </data>
+  <data name="PhotoAppBarButton.Label" xml:space="preserve">
+    <value>photo</value>
+  </data>
+  <data name="PinToStartAppBarButton.Label" xml:space="preserve">
+    <value>pin to start</value>
+  </data>
+  <data name="SettingsAppBarButton.Label" xml:space="preserve">
+    <value>settings</value>
+  </data>
+  <data name="SettingsTextBlock.Text" xml:space="preserve">
+    <value>settings</value>
+  </data>
+  <data name="ShareAppBarButton.Label" xml:space="preserve">
+    <value>share...</value>
+  </data>
+  <data name="TextTextBox.PlaceholderText" xml:space="preserve">
     <value>Text</value>
   </data>
-  <data name="SendMessageButton.Content" xml:space="preserve">
-    <value>Send message</value>
+  <data name="ThemeTextBlock.Text" xml:space="preserve">
+    <value>Theme</value>
+  </data>
+  <data name="TitleTextBox.PlaceholderText" xml:space="preserve">
+    <value>Title</value>
   </data>
 </root>

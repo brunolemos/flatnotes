@@ -24,8 +24,8 @@
             <!--<AppBarToggleButton x:Name="ReorderAppBarToggleButton" Label="reorder" Icon="Sort" Checked="ReorderAppBarToggleButton_Checked" Unchecked="ReorderAppBarToggleButton_Unchecked"/>-->
 
             <CommandBar.SecondaryCommands>
-                <AppBarButton Icon="Like" Label="send feedback" CommandParameter="{Binding ElementName=LayoutRoot}" Command="{Binding SendFeedbackCommand}"/>
-                <AppBarButton Icon="Setting" Label="settings" Click="SettingsAppBarButton_Click"/>
+                <AppBarButton x:Uid="FeedbackAppBarButton" Icon="Like" Label="send feedback" CommandParameter="{Binding ElementName=LayoutRoot}" Command="{Binding SendFeedbackCommand}"/>
+                <AppBarButton x:Uid="SettingsAppBarButton" Icon="Setting" Label="settings" Click="SettingsAppBarButton_Click"/>
             </CommandBar.SecondaryCommands>
         </CommandBar>
     </Page.BottomAppBar>
@@ -40,10 +40,10 @@
         </ItemsPanelTemplate>
 
         <!--<MenuFlyout x:Key="NoteMenuFlyout">
-            <MenuFlyoutItem Text="share..." IsEnabled="False"/>
-            <MenuFlyoutItem Text="pin to start" IsEnabled="False"/>
+            <MenuFlyoutItem x:Uid="ShareAppBarButton"  Text="share..." IsEnabled="False"/>
+            <MenuFlyoutItem x:Uid="PinToStartAppBarButton" Text="pin to start" IsEnabled="False"/>
             <MenuFlyoutSeparator/>
-            <MenuFlyoutItem Text="delete" Click="NoteDeleteMenuFlyoutItem_Click" />
+            <MenuFlyoutItem x:Uid="DeleteAppBarButton" Text="delete" Click="NoteDeleteMenuFlyoutItem_Click" />
         </MenuFlyout>-->
 
         <DataTemplate x:Key="NoteChecklistListViewControlTemplate">

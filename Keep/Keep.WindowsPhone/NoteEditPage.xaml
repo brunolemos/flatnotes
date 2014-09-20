@@ -44,16 +44,16 @@
 
             <CommandBar.SecondaryCommands>
                 <!--<AppBarButton Label="share..." Icon="World"/>-->
-                <AppBarButton  Icon="Delete" Label="delete" Click="DeleteNoteAppBarButton_Click" />
+                <AppBarButton x:Uid="DeleteAppBarButton"  Icon="Delete" Label="delete" Click="DeleteNoteAppBarButton_Click" />
             </CommandBar.SecondaryCommands>
-            <AppBarToggleButton x:Name="ColorPickerAppBarToggleButton" Label="color" Checked="ColorPickerAppBarToggleButton_Checked" Unchecked="ColorPickerAppBarToggleButton_Unchecked">
+            <AppBarToggleButton x:Uid="ColorAppBarButton" x:Name="ColorPickerAppBarToggleButton" Label="color" Checked="ColorPickerAppBarToggleButton_Checked" Unchecked="ColorPickerAppBarToggleButton_Unchecked">
                 <AppBarToggleButton.Icon>
                     <BitmapIcon UriSource="Assets/appbar.water.droplet.png"/>
                 </AppBarToggleButton.Icon>
             </AppBarToggleButton>
-            <!--<AppBarButton Icon="Camera" Label="photo" IsEnabled="False"/>
-            <AppBarButton Icon="Microphone" Label="audio" IsEnabled="False"/>
-            <AppBarToggleButton Icon="Pin" Label="pin to start" IsEnabled="False" IsChecked="{Binding Note.IsPinned, Mode=OneWay}" Command="{Binding NoteTogglePinCommand}" CommandParameter="{Binding Note}"/>-->
+            <!--<AppBarButton x:Uid="PhotoAppBarButton" Icon="Camera" Label="photo" IsEnabled="False"/>
+            <AppBarButton x:Uid="AudioAppBarButton" Icon="Microphone" Label="audio" IsEnabled="False"/>
+            <AppBarToggleButton x:Uid="PinToStartAppBarButton" Icon="Pin" Label="pin to start" IsEnabled="False" IsChecked="{Binding Note.IsPinned, Mode=OneWay}" Command="{Binding NoteTogglePinCommand}" CommandParameter="{Binding Note}"/>-->
 
         </CommandBar>
     </Page.BottomAppBar>
@@ -96,8 +96,8 @@
             <StackPanel>
                 <Grid Height="200" Visibility="Collapsed" Background="#4D000000" />
 
-                <TextBox x:Name="NoteTitleTextBox" PlaceholderText="Title" Text="{Binding Note.Title, Mode=TwoWay}" InputScope="Default" Background="{x:Null}" BorderThickness="0" FontWeight="Bold" Padding="24,12" Margin="0,12,0,0" TextWrapping="Wrap" FontSize="22"/>
-				<TextBox x:Name="NoteTextTextBox" PlaceholderText="Text" Text="{Binding Note.Text, Mode=TwoWay}" InputScope="Default" Background="{x:Null}" BorderThickness="0" Padding="24,6" AcceptsReturn="True" TextWrapping="Wrap" VerticalAlignment="Top" Visibility="{Binding Note.IsText, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                <TextBox x:Uid="TitleTextBox" x:Name="NoteTitleTextBox" PlaceholderText="Title" Text="{Binding Note.Title, Mode=TwoWay}" InputScope="Default" Background="{x:Null}" BorderThickness="0" FontWeight="Bold" Padding="24,12" Margin="0,12,0,0" TextWrapping="Wrap" FontSize="22"/>
+				<TextBox x:Uid="TextTextBox" x:Name="NoteTextTextBox" PlaceholderText="Text" Text="{Binding Note.Text, Mode=TwoWay}" InputScope="Default" Background="{x:Null}" BorderThickness="0" Padding="24,6" AcceptsReturn="True" TextWrapping="Wrap" VerticalAlignment="Top" Visibility="{Binding Note.IsText, Converter={StaticResource BooleanToVisibilityConverter}}"/>
 
 				<StackPanel Visibility="{Binding Note.IsChecklist, Converter={StaticResource BooleanToVisibilityConverter}}">
 					<ListView x:Name="NoteChecklistListView" AllowDrop="True" CanDragItems="True" ItemTemplate="{StaticResource NoteChecklistListViewControlTemplate}" ItemsSource="{Binding}" DataContext="{Binding Note.Checklist}" SelectionMode="None" Holding="NoteChecklistListView_Holding" >
@@ -118,7 +118,7 @@
 						</Grid.ColumnDefinitions>
 
 						<CheckBox x:Name="NewChecklistItemCheckbox" Grid.Column="0" IsChecked="False" HorizontalAlignment="Left" Foreground="{StaticResource KeepNoteForegroundBrush}" BorderBrush="{StaticResource KeepNoteForegroundBrush}" RequestedTheme="Light"/>
-						<TextBox x:Name="NewChecklistItemTextBox" Grid.Column="1" PlaceholderText="New item" Text="" Foreground="{StaticResource KeepNoteForegroundBrush}" TextWrapping="Wrap" Margin="0,12,0,0" Background="{x:Null}" BorderThickness="0" AcceptsReturn="False" KeyDown="NewChecklistItemTextBox_KeyDown"  />
+						<TextBox x:Uid="NewItemTextBox" x:Name="NewChecklistItemTextBox" Grid.Column="1" PlaceholderText="New item" Text="" Foreground="{StaticResource KeepNoteForegroundBrush}" TextWrapping="Wrap" Margin="0,12,0,0" Background="{x:Null}" BorderThickness="0" AcceptsReturn="False" KeyDown="NewChecklistItemTextBox_KeyDown"  />
 					</Grid>
 				</StackPanel>
 				<Grid Height="24"/>

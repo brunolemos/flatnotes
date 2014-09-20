@@ -117,13 +117,52 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="NoteChecklistType" xml:space="preserve">
-    <value>Checklist</value>
+  <data name="AudioAppBarButton.Label" xml:space="preserve">
+    <value>áudio</value>
+  </data>
+  <data name="ColorAppBarButton.Label" xml:space="preserve">
+    <value>cor</value>
+  </data>
+  <data name="ColumnsTextBlock.Text" xml:space="preserve">
+    <value>Colunas</value>
+  </data>
+  <data name="DeleteAppBarButton.Label" xml:space="preserve">
+    <value>excluir</value>
+  </data>
+  <data name="FeedbackAppBarButton.Label" xml:space="preserve">
+    <value>enviar feedback</value>
+  </data>
+  <data name="NewItemTextBox.PlaceholderText" xml:space="preserve">
+    <value>Novo item</value>
+  </data>
+  <data name="NoteChecklistType.Label" xml:space="preserve">
+    <value>checklist</value>
   </data>
   <data name="NoteTextType.Label" xml:space="preserve">
+    <value>texto</value>
+  </data>
+  <data name="PhotoAppBarButton.Label" xml:space="preserve">
+    <value>foto</value>
+  </data>
+  <data name="PinToStartAppBarButton.Label" xml:space="preserve">
+    <value>fixar na tela inicial</value>
+  </data>
+  <data name="SettingsAppBarButton.Label" xml:space="preserve">
+    <value>configurações</value>
+  </data>
+  <data name="SettingsTextBlock.Text" xml:space="preserve">
+    <value>configurações</value>
+  </data>
+  <data name="ShareAppBarButton.Label" xml:space="preserve">
+    <value>compartilhar...</value>
+  </data>
+  <data name="TextTextBox.PlaceholderText" xml:space="preserve">
     <value>Texto</value>
   </data>
-  <data name="SendMessageButton.Content" xml:space="preserve">
-    <value>Enviar mensagem</value>
+  <data name="ThemeTextBlock.Text" xml:space="preserve">
+    <value>Tema</value>
+  </data>
+  <data name="TitleTextBox.PlaceholderText" xml:space="preserve">
+    <value>Título</value>
   </data>
 </root>
