@@ -32,7 +32,7 @@
 
     <Page.Resources>
         <ItemsPanelTemplate x:Key="FluidItemsPanelTemplate" x:Name="FluidItemsPanelTemplate">
-            <mycontrols:FluidGrid x:Name="NotesFluidGrid" Columns="-1" ItemMinWidth="150" LastCellWidth="{Binding CellWidth, Mode=TwoWay}" BiggerCellHeight="{Binding BiggerCellHeight, Mode=TwoWay}" />
+            <mycontrols:FluidGrid x:Name="NotesFluidGrid" Columns="{Binding UserPreferences.Columns, FallbackValue=-1}" ItemMinWidth="{Binding UserPreferences.ItemMinWidth}" LastCellWidth="{Binding CellWidth, Mode=TwoWay}" BiggerCellHeight="{Binding BiggerCellHeight, Mode=TwoWay}" />
         </ItemsPanelTemplate>
 
         <ItemsPanelTemplate x:Key="ReordableItemsPanelTemplate" x:Name="ReordableItemsPanelTemplate">
@@ -53,18 +53,18 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <Viewbox Grid.Column="0" Height="40" VerticalAlignment="Top">
+                <Viewbox Grid.Column="0" Height="36" VerticalAlignment="Top">
                     <Grid Width="40">
                         <CheckBox IsChecked="{Binding IsChecked, Mode=TwoWay}" HorizontalAlignment="Left" Foreground="{StaticResource KeepNoteForegroundBrush}" BorderBrush="{StaticResource KeepNoteForegroundBrush}" RequestedTheme="Light"/>
                     </Grid>
                 </Viewbox>
 
-                <TextBlock Grid.Column="1" Text="{Binding Text, Mode=OneTime}" FontSize="17" Foreground="{StaticResource KeepNoteForegroundBrush}" TextWrapping="Wrap" Margin="0,6,0,0" MaxLines="3" TextTrimming="CharacterEllipsis" />
+                <TextBlock Grid.Column="1" Text="{Binding Text, Mode=OneTime}" FontSize="17" Foreground="{StaticResource KeepNoteForegroundBrush}" TextWrapping="Wrap" Margin="0,4,0,0" MaxLines="3" TextTrimming="CharacterEllipsis" />
             </Grid>
         </DataTemplate>
 
         <DataTemplate x:Key="NotePreviewListViewControlTemplate">
-            <Grid x:Name="NoteContainer" Background="{Binding Color.Color}" Margin="4" Holding="NoteContainer_Holding" PointerPressed="NoteContainer_PointerPressed">
+            <Border x:Name="NoteContainer" Background="{Binding Color.Color}" Margin="4" CornerRadius="2" Holding="NoteContainer_Holding" PointerPressed="NoteContainer_PointerPressed">
                 <StackPanel Margin="12">
                     <TextBlock Text="{Binding Title}" FontSize="19" Margin="0,0,0,6" Foreground="{StaticResource KeepNoteForegroundBrush}" FontWeight="Bold" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" MaxLines="1" Visibility="{Binding Title, Converter={StaticResource NullableToVisibilityConverter}}"/>
 
@@ -105,7 +105,7 @@
                         <Grid  Background="Transparent"/>
                     </Grid>
                 </StackPanel>
-            </Grid>
+            </Border>
         </DataTemplate>
     </Page.Resources>
 

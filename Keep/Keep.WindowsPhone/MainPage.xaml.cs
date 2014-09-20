@@ -32,6 +32,7 @@ namespace Keep
     {
         private MainViewModel viewModel = new MainViewModel();
         public static ChecklistMaxItemsConverter checklistMaxItemsConverter = new ChecklistMaxItemsConverter();
+        Color? statusBarForegroundColor = null;
 
         public NavigationHelper NavigationHelper { get { return this.navigationHelper; } }
         private NavigationHelper navigationHelper;
@@ -64,10 +65,27 @@ namespace Keep
 
             if (!String.IsNullOrEmpty(e.NavigationParameter.ToString()))
                 Debug.WriteLine("MainPage NavigationParameter: " + e.NavigationParameter.ToString());
+
+            //here to fix a bug --color not updating when trying to get the resource by its key
+            App.RootFrame.Background = this.Background;
+
+#if WINDOWS_PHONE_APP
+            StatusBar statusBar = StatusBar.GetForCurrentView();
+            statusBarForegroundColor = statusBar.ForegroundColor;
+
+            if (AppSettings.Instance.LoggedUser.Preferences.Theme == ElementTheme.Light)
+                statusBar.ForegroundColor = Color.FromArgb(0xFF, 0x5E, 0x5E, 0x5E);
+            else
+                statusBar.ForegroundColor = Color.FromArgb(0xFF, 0xCB, 0xCE, 0xD0);
+#endif
         }
 
         private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
         {
+#if WINDOWS_PHONE_APP
+            StatusBar statusBar = StatusBar.GetForCurrentView();
+            statusBar.ForegroundColor = statusBarForegroundColor;
+#endif
         }
 
         #region NavigationHelper registration

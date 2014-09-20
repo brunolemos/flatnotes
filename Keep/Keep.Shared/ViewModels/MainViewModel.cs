@@ -21,5 +21,8 @@ namespace Keep.ViewModels
 
         public Notes Notes { get { return notes; } }
         private Notes notes = AppSettings.Instance.LoggedUser.Notes;
+
+        public UserPreferences UserPreferences { get { return userPreferences; } set { userPreferences = value; } }
+        private UserPreferences userPreferences = AppSettings.Instance.LoggedUser.Preferences;
     }
 }

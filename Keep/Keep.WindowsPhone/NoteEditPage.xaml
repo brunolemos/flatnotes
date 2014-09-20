@@ -10,6 +10,12 @@
     mc:Ignorable="d"
     Background="{Binding Note.Color.Color}" 
     d:DataContext="{d:DesignData /SampleData/NoteEditViewModelSampleData.xaml}">
+    
+    <Page.Transitions>
+        <TransitionCollection>
+            <ContentThemeTransition HorizontalOffset="0"/>
+        </TransitionCollection>
+    </Page.Transitions>
 
     <Page.Resources>
         <Storyboard x:Name="NoteColorAnimationStoryboard">

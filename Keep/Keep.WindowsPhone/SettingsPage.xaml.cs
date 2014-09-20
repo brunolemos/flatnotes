@@ -28,6 +28,8 @@ namespace Keep
     public sealed partial class SettingsPage : Page
     {
         private SettingsViewModel viewModel = new SettingsViewModel();
+        ElementTheme theme = AppSettings.Instance.LoggedUser.Preferences.Theme;
+        Color? statusBarForegroundColor = null;
 
         public NavigationHelper NavigationHelper { get { return this.navigationHelper; } }
         private NavigationHelper navigationHelper;
@@ -43,10 +45,26 @@ namespace Keep
 
         private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
+            this.DataContext = viewModel;
+
+            ThemeComboBox.SelectedIndex = (AppSettings.Instance.LoggedUser.Preferences.Theme == ElementTheme.Light) ? 0 : 1;
+
+#if WINDOWS_PHONE_APP
+            StatusBar statusBar = StatusBar.GetForCurrentView();
+            statusBarForegroundColor = statusBar.ForegroundColor;
+            statusBar.ForegroundColor = ((SolidColorBrush)App.Current.Resources["KeepBrandForegroundBrush"]).Color;
+#endif
         }
 
         private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
         {
+            //apply theme and save to user preferences
+            //if(theme != AppSettings.Instance.LoggedUser.Preferences.Theme) App.ForceTheme(theme);
+
+#if WINDOWS_PHONE_APP
+            StatusBar statusBar = StatusBar.GetForCurrentView();
+            statusBar.ForegroundColor = statusBarForegroundColor;
+#endif
         }
 
         #region NavigationHelper registration
@@ -65,8 +83,6 @@ namespace Keep
 
         private void ThemeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ElementTheme theme = ElementTheme.Default;
-
             switch ((e.AddedItems[0] as ComboBoxItem).Tag.ToString())
             {
                 case "light":
@@ -80,6 +96,10 @@ namespace Keep
 
             //apply theme and save to user preferences
             App.ForceTheme(theme);
+
+            //fix
+            ThemeComboBox.BorderBrush = this.Foreground;
+            ThemeComboBox.Foreground = this.Foreground;
         }
     }
 }

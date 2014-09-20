@@ -34,9 +34,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\NoteColorPicker.xaml.cs">
       <DependentUpon>NoteColorPicker.xaml</DependentUpon>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)MainPage.xaml.cs">
-      <DependentUpon>MainPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Models\BaseModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Checklist.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Device.cs" />
@@ -46,12 +43,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\NoteImage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\User.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\UserPreferences.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)NoteEditPage.xaml.cs">
-      <DependentUpon>NoteEditPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)SettingsPage.xaml.cs">
-      <DependentUpon>SettingsPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Utils\AppSettings.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\Extensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\Firebase\StringCleaner.cs" />
@@ -69,14 +60,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="$(MSBuildThisFileDirectory)MainPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="$(MSBuildThisFileDirectory)NoteEditPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="$(MSBuildThisFileDirectory)Resources\ThemeResources.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -84,10 +67,6 @@
     <Page Include="$(MSBuildThisFileDirectory)Resources\DefaultThemeResources.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="$(MSBuildThisFileDirectory)SettingsPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>

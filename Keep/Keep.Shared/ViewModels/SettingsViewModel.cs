@@ -11,7 +11,8 @@ namespace Keep.ViewModels
 {
     public class SettingsViewModel
     {
-        public UserPreferences UserPreferences { get { return userPreferences; }  set { userPreferences = value; } }
+        public UserPreferences Preferences { get { return userPreferences; } set { userPreferences = value; } }
+        public UserPreferences UserPreferences { get { return userPreferences; } set { userPreferences = value; } }
         private UserPreferences userPreferences = AppSettings.Instance.LoggedUser.Preferences;
     }
 }

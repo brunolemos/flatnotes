@@ -16,7 +16,7 @@ namespace Keep.Models
         public const Double ITEM_MIN_WIDTH_DEFAULT_VALUE = 200;
 
         [DataMember]
-        public int Columns { get { return columns; } set { if ( columns != value ) { columns = value; NotifyPropertyChanged( "Columns" ); } } }
+        public int Columns { get { return columns; } set { Debug.WriteLine("Changed columns to: " + value); if (columns != value) { columns = value; NotifyPropertyChanged("Columns"); } } }
         private int columns = -1;
 
         [DataMember]

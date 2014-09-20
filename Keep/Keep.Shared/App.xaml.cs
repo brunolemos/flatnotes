@@ -111,10 +111,11 @@ namespace Keep
                 }
             }
 
+            //disable default page transitions
+            //rootFrame.ContentTransitions = null;
 
             ForceTheme(AppSettings.Instance.LoggedUser.Preferences.Theme);
             GoogleAnalytics.EasyTracker.GetTracker().SendEvent("app", "open", "", 0);
-
 
             // Ensure the current window is active
             Window.Current.Activate();
@@ -153,17 +154,7 @@ namespace Keep
 
         public static void ForceTheme(ElementTheme theme) {
             App.RootFrame.RequestedTheme = theme;
-            App.RootFrame.Background = (SolidColorBrush)App.Current.Resources["ApplicationPageBackgroundThemeBrush"];
             AppSettings.Instance.LoggedUser.Preferences.Theme = theme;
-
-#if WINDOWS_PHONE_APP
-            StatusBar statusBar = StatusBar.GetForCurrentView();
-
-            if (theme == ElementTheme.Light) //App.Current.RequestedTheme != ApplicationTheme.Light && 
-                statusBar.ForegroundColor = Color.FromArgb(0xFF, 0x5E, 0x5E, 0x5E);
-            else //if (App.Current.RequestedTheme == ApplicationTheme.Light && theme != ElementTheme.Light)
-                statusBar.ForegroundColor = Color.FromArgb(0xFF, 0xCB, 0xCE, 0xD0);
-#endif
         }
     }
 }

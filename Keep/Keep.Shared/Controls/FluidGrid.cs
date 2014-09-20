@@ -18,7 +18,7 @@ namespace Keep.Controls
         protected override Size MeasureOverride(Size totalSize)
         {
             int columns = Columns;
-            if (columns < 1) columns = (int)Math.Floor(totalSize.Width / ItemMinWidth);
+            if (columns < 1) columns = Math.Max( (int)Math.Floor(totalSize.Width / ItemMinWidth), 1);
 
             int i, columnWithlastY = 0;
             LastCellWidth = totalSize.Width / columns;
@@ -63,7 +63,7 @@ namespace Keep.Controls
             if (childrenColumns.Length != Children.Count || childrenSizes.Length != Children.Count) return totalSize;
 
             int columns = Columns;
-            if (columns < 1) columns = (int)Math.Floor(totalSize.Width / ItemMinWidth);
+            if (columns < 1) columns = Math.Max( (int)Math.Floor(totalSize.Width / ItemMinWidth), 1);
 
             double[] lastYInColumn = new double[columns];
             for (int i = 0; i < columns; i++) lastYInColumn[i] = 0;
