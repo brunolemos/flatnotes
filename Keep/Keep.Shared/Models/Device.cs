@@ -29,12 +29,12 @@ namespace Keep.Models
         public string DeviceHardwareVersion { get { return ""/*DeviceStatus.DeviceHardwareVersion*/; } }
         public Size PhysicalScreenResolution { get { return DeviceController.PhysicalScreenResolution; } }
 
-        [DataMember]
         public DateTime CreatedAt { get { return createdAt; } private set { createdAt = value; } }
+        [DataMember(Name = "CreatedAt")]
         private DateTime createdAt = DateTime.Now;
 
-        [DataMember]
         public DateTime UpdatedAt { get { return updatedAt; } set { updatedAt = value; } }
+        [DataMember(Name = "UpdatedAt")]
         private DateTime updatedAt = DateTime.Now;
 
         public void Touch()

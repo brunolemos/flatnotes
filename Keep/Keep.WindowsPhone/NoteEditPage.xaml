@@ -51,7 +51,7 @@
                     <BitmapIcon UriSource="Assets/appbar.water.droplet.png"/>
                 </AppBarToggleButton.Icon>
             </AppBarToggleButton>
-            <!--<AppBarButton x:Uid="PhotoAppBarButton" Icon="Camera" Label="photo" IsEnabled="False"/>
+            <!--<AppBarButton x:Uid="CameraAppBarButton" Icon="Camera" Label="camera" IsEnabled="False"/>
             <AppBarButton x:Uid="AudioAppBarButton" Icon="Microphone" Label="audio" IsEnabled="False"/>
             <AppBarToggleButton x:Uid="PinToStartAppBarButton" Icon="Pin" Label="pin to start" IsEnabled="False" IsChecked="{Binding Note.IsPinned, Mode=OneWay}" Command="{Binding NoteTogglePinCommand}" CommandParameter="{Binding Note}"/>-->
 

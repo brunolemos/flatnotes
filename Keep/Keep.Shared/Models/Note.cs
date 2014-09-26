@@ -12,7 +12,7 @@ using Keep.Models.Interfaces;
 
 namespace Keep.Models
 {
-    public class Notes : TrulyObservableCollection<Note> { }
+    public class Notes : ObservableCollection<Note> { }
 
     [DataContract]
     public class Note : BaseModel, IIdentifiableModelInterface
@@ -26,31 +26,31 @@ namespace Keep.Models
         private bool isPinned { get { return isPinned_value; } set { if (isPinned_value != value) { isPinned_value = value; NotifyPropertyChanged("IsPinned"); } } }
         private bool isPinned_value;
 
-        [DataMember]
         public String ID { get { return id; } private set { id = value; } }
+        [DataMember(Name = "ID")]
         private String id = GenerateRandomID.Generate();
 
-        [DataMember]
         public bool IsChecklist { get { return isChecklist; } set { if (isChecklist != value) { isChecklist = value; if (value) EnableChecklist(); else DisableChecklist(); NotifyPropertyChanged("IsChecklist"); NotifyPropertyChanged("IsText"); } } }
+        [DataMember(Name = "IsChecklist")]
         private bool isChecklist;
 
         [IgnoreDataMember]
         public bool IsText { get { return !IsChecklist; } }
 
-        [DataMember]
         public String Title { get { return title; } set { if ( title != value ) { title = value; NotifyPropertyChanged( "Title" ); } } }
+        [DataMember(Name = "Title")]
         private String title;
 
-        [DataMember]
         public String Text { get { return text; } set { if (text != value) { text = value; NotifyPropertyChanged("Text"); } } }
+        [DataMember(Name = "Text")]
         private String text;
 
-        [DataMember]
         public NoteImages Images { get { return images; } set { replaceNoteImages(value); NotifyPropertyChanged("Images"); } }
+        [DataMember(Name = "Images")]
         private NoteImages images = new NoteImages();
 
-        [DataMember]
         public Checklist Checklist { get { return checklist; } set { replaceChecklist(value); NotifyPropertyChanged("Checklist"); } }
+        [DataMember(Name = "Checklist")]
         private Checklist checklist = new Checklist();
 
         [IgnoreDataMember]
@@ -58,20 +58,20 @@ namespace Keep.Models
         private NoteColor color = NoteColor.DEFAULT;
         private NoteColor _colortmp = NoteColor.DEFAULT;
 
-        [DataMember( Name="Color" )]
+        [DataMember(Name = "Color")]
         private string _color { get { return Color.Key; } set { color = new NoteColor(value); } }
 
-        [DataMember]
         public DateTime CreatedAt { get { return createdAt; } private set { createdAt = value; } }
+        [DataMember(Name = "CreatedAt")]
         private DateTime createdAt = DateTime.Now;
 
-        [DataMember]
         public DateTime UpdatedAt { get { return updatedAt; } set { updatedAt = value; } }
+        [DataMember(Name = "UpdatedAt")]
         private DateTime updatedAt = DateTime.Now;
         
         public Note() {
             PropertyChanged += Note_PropertyChanged;
-            Checklist.CollectionChanged += (s, e) => NotifyPropertyChanged("Checklist");
+            //Checklist.CollectionChanged += (s, e) => NotifyPropertyChanged("Checklist");
         }
 
         public Note( string title = "", string text = "", NoteColor color = null ) : base()
@@ -94,6 +94,7 @@ namespace Keep.Models
 
         void Note_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
+            //Debug.WriteLine("Note_PropertyChanged " + e.PropertyName);
             Changed = true;
         }
 

@@ -118,54 +118,54 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AudioAppBarButton.Label" xml:space="preserve">
-    <value>áudio</value>
+    <value>ऑडियो</value>
   </data>
   <data name="CameraAppBarButton.Label" xml:space="preserve">
-    <value>câmera</value>
+    <value>कैमरा</value>
   </data>
   <data name="ColorAppBarButton.Label" xml:space="preserve">
-    <value>cor</value>
+    <value>रंग</value>
   </data>
   <data name="ColumnsTextBlock.Text" xml:space="preserve">
-    <value>Colunas</value>
+    <value>कॉलम</value>
   </data>
   <data name="DeleteAppBarButton.Label" xml:space="preserve">
-    <value>excluir</value>
+    <value>मिटाएँ</value>
   </data>
   <data name="FeedbackAppBarButton.Label" xml:space="preserve">
-    <value>enviar feedback</value>
+    <value>प्रतिक्रिया भेजें</value>
   </data>
   <data name="NewItemTextBox.PlaceholderText" xml:space="preserve">
-    <value>Novo item</value>
+    <value>नए आइटम</value>
   </data>
   <data name="NoGoogleKeepIntegrationMessageTextBox.Text" xml:space="preserve">
-    <value>Este aplicativo não é integrado com o Google Keep devido à uma limitação do Google.</value>
+    <value>आधिकारिक गूगल के साथ एकीकृत नहीं करता इस app गूगल सीमा के कारण रखें.</value>
   </data>
   <data name="NoteChecklistType.Label" xml:space="preserve">
-    <value>checklist</value>
+    <value>चेकलिस्ट</value>
   </data>
   <data name="NoteTextType.Label" xml:space="preserve">
-    <value>texto</value>
+    <value>पाठ</value>
   </data>
   <data name="PinToStartAppBarButton.Label" xml:space="preserve">
-    <value>fixar na tela inicial</value>
+    <value>पिन</value>
   </data>
   <data name="SettingsAppBarButton.Label" xml:space="preserve">
-    <value>configurações</value>
+    <value>सेटिंग्स</value>
   </data>
   <data name="SettingsTextBlock.Text" xml:space="preserve">
-    <value>configurações</value>
+    <value>सेटिंग्स</value>
   </data>
   <data name="ShareAppBarButton.Label" xml:space="preserve">
-    <value>compartilhar...</value>
+    <value>साझा...</value>
   </data>
   <data name="TextTextBox.PlaceholderText" xml:space="preserve">
-    <value>Texto</value>
+    <value>पाठ</value>
   </data>
   <data name="ThemeTextBlock.Text" xml:space="preserve">
-    <value>Tema</value>
+    <value>थीम</value>
   </data>
   <data name="TitleTextBox.PlaceholderText" xml:space="preserve">
-    <value>Título</value>
+    <value>शीर्षक</value>
   </data>
 </root>

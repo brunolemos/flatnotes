@@ -99,14 +99,14 @@ namespace Keep
             if (viewModel.Note.IsEmpty())
                 return;
 
+            Debug.WriteLine("Checking if note is already on notes list");
             Notes notes = AppSettings.Instance.LoggedUser.Notes;
             Note note = notes.Where<Note>(x => x.ID == viewModel.Note.ID).FirstOrDefault<Note>();
 
             if (note == null)
-            {
                 AppSettings.Instance.LoggedUser.Notes.Insert(0, viewModel.Note);
-                viewModel.Note.PropertyChanged -= Note_PropertyChanged;
-            }
+
+            viewModel.Note.PropertyChanged -= Note_PropertyChanged;
         }
 
         private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
@@ -121,8 +121,9 @@ namespace Keep
 
             if (viewModel.Note == null) return;
             
-            //update binding (fix problem when creating a note and press back button while textbox is focused)
-            ForceTextBoxBindingUpdate();
+            //update bindings
+            ForceTextBoxBindingUpdate(); //fix problem when creating a note and press back button while textbox is focused
+            if(viewModel.Note.IsChecklist) viewModel.Note.NotifyPropertyChanged("Checklist");
 
             if (!String.IsNullOrEmpty(NewChecklistItemTextBox.Text))
                 viewModel.Note.Checklist.Add(new ChecklistItem(NewChecklistItemTextBox.Text, NewChecklistItemCheckbox.IsChecked == true));
@@ -145,6 +146,9 @@ namespace Keep
                     if (viewModel.DeleteNoteCommand.CanExecute(viewModel.Note))
                         viewModel.DeleteNoteCommand.Execute(viewModel.Note);
             }
+
+            ////save to local storage
+            //AppSettings.Instance.SaveLoggedUser();
         }
 
         #region NavigationHelper registration

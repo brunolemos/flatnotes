@@ -6,23 +6,24 @@ using System.Text;
 using System.Runtime.Serialization;
 
 using Keep.Utils;
+using System.Diagnostics;
 
 namespace Keep.Models
 {
-    public class Checklist : TrulyObservableCollection<ChecklistItem> { }
+    public class Checklist : ObservableCollection<ChecklistItem> {}
 
     [DataContract]
     public class ChecklistItem : BaseModel
     {
-        [DataMember]
         public String Text { get { return text; } set { if (text != value) { text = value; NotifyPropertyChanged("Text"); } } }
-        private String text;
+        [DataMember(Name = "Text")]
+        private String text = String.Empty;
 
-        [DataMember]
         public bool IsChecked { get { return isChecked; } set { if (isChecked != value) { isChecked = value; NotifyPropertyChanged("IsChecked"); } } }
-        private bool isChecked;
+        [DataMember(Name = "IsChecked")]
+        private bool isChecked = false;
 
-        public ChecklistItem(String text = "", bool isChecked = false)
+        public ChecklistItem(String text = "", bool isChecked = false) : base()
         {
             this.Text = text;
             this.IsChecked = isChecked;

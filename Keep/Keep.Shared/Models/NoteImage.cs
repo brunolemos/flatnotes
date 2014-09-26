@@ -19,19 +19,19 @@ namespace Keep.Models
         public bool Show { get { return show; } set { if (value != show) { show = value; NotifyPropertyChanged("Show"); } } }
         private bool show = true;
 
-        [DataMember]
         public String URL { get { return url; } set { if ( value != url ) { Show = true; url = value; NotifyPropertyChanged( "URL" ); } } }
+        [DataMember(Name = "URL")]
         private String url;
 
-        [DataMember]
         public Size Size { get { return size; } set { size = value; } }
+        [DataMember(Name = "Size")]
         private Size size;
 
         [DataMember]
         public Double Proportion { get { return Size.Height / Size.Width; } }
 
-        [DataMember]
         public DateTime CreatedAt { get { return createdAt; } private set { createdAt = value; } }
+        [DataMember(Name = "CreatedAt")]
         private DateTime createdAt = DateTime.Now;
 
         public NoteImage() { }

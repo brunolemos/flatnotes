@@ -5,6 +5,7 @@ using Windows.Storage;
 
 using Newtonsoft.Json;
 using Keep.Models;
+using System.Threading.Tasks;
 
 namespace Keep.Utils
 {
@@ -31,31 +32,35 @@ namespace Keep.Utils
             LoggedUser = (String.IsNullOrEmpty(json)) ? LOGGEDUSER_DEFAULT : JsonConvert.DeserializeObject<User>(json);
         }
 
-        public bool AddOrUpdateValue( string Key, Object value )
+        public async Task<bool> AddOrUpdateValue( string Key, Object value )
         {
-            bool valueChanged = false;
-
-            // If the key exists
-            if (localSettings.Values.ContainsKey(Key))
+            Debug.WriteLine("Saving");
+            return await Task.Run<bool>(() =>
             {
-                // If the value has changed
-                if (localSettings.Values[Key] != value)
-                {
-                    valueChanged = true;
+                bool valueChanged = false;
 
-                    // Store the new value
-                    localSettings.Values[Key] = value;
+                // If the key exists
+                if (localSettings.Values.ContainsKey(Key))
+                {
+                    // If the value has changed
+                    if (localSettings.Values[Key] != value)
+                    {
+                        valueChanged = true;
+
+                        // Store the new value
+                        localSettings.Values[Key] = value;
+                    }
+
+                }
+                // Otherwise create the key.
+                else
+                {
+                    localSettings.Values.Add(Key, value);
+                    valueChanged = true;
                 }
 
-            }
-            // Otherwise create the key.
-            else
-            {
-                localSettings.Values.Add(Key, value);
-                valueChanged = true;
-            }
-
-            return valueChanged;
+                return valueChanged;
+            });
         }
 
         public T GetValueOrDefault<T>( string Key, T defaultValue )
@@ -73,11 +78,11 @@ namespace Keep.Utils
         public User LoggedUser
         {
             get { return loggedUser; }
-            set { loggedUser = value; updateLoggedUser(); loggedUser.PropertyChanged += (s, e) => updateLoggedUser(); }
+            set { loggedUser = value; /*SaveLoggedUser(); loggedUser.PropertyChanged += (s, e) => SaveLoggedUser();*/ }
         }
         private User loggedUser;
 
-        private void updateLoggedUser()
+        public void SaveLoggedUser()
         {
             AddOrUpdateValue(LOGGEDUSER_KEY, (LoggedUser == null ? "{}" : JsonConvert.SerializeObject(LoggedUser)));
         }

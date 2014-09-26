@@ -144,6 +144,11 @@ namespace Keep
         /// <param name="e">Details about the suspend request.</param>
         private void OnSuspending(object sender, SuspendingEventArgs e)
         {
+            Debug.WriteLine("OnSuspending");
+
+            //save to local storage
+            AppSettings.Instance.SaveLoggedUser();
+
             var deferral = e.SuspendingOperation.GetDeferral();
 
             // TODO: Save application state and stop any background activity

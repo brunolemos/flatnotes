@@ -19,32 +19,32 @@ namespace Keep.Models
         public DateTime GetCreatedAt() { return CreatedAt; }
         public DateTime GetUpdatedAt() { return UpdatedAt; }
 
-        [DataMember]
         public string AnonymousID { get { return anonymousID; } }
+        [DataMember(Name = "AnonymousID")]
         private string anonymousID = DeviceController.UserAnonymousID;
 
-        [DataMember(Name="DevicesList")]
         public Devices Devices { get { return devices; } set { replaceDevices(value); } }
+        [DataMember(Name = "DevicesList")]
         private Devices devices = new Devices();
 
-        [DataMember]
         public String Name { get { return name; } set { if ( name != value ) { name = value; NotifyPropertyChanged( "Name" ); } } }
+        [DataMember(Name = "Name")]
         private String name;
 
-        [DataMember]
         public String Email { get { return email; } set { if ( email != value ) { email = value; NotifyPropertyChanged( "Email" ); } } }
+        [DataMember(Name = "Email")]
         private String email;
 
-        [DataMember]
         public Notes Notes { get { return notes; } set { replaceNotes(value); } }
+        [DataMember(Name = "Notes")]
         private Notes notes = new Notes();
 
-        [DataMember]
         public Notes ArchivedNotes { get { return archivedNotes; } set { replaceArchivedNotes(value); } }
+        [DataMember(Name = "ArchivedNotes")]
         private Notes archivedNotes = new Notes();
 
-        [DataMember]
         public UserPreferences Preferences { get { return preferences; } set { preferences = value; NotifyPropertyChanged( "Preferences" ); } }
+        [DataMember(Name = "Preferences")]
         private UserPreferences preferences = new UserPreferences();
 
         [DataMember]
@@ -57,17 +57,17 @@ namespace Keep.Models
         public DateTime LastSeenAt = DateTime.Now;
 
         public User() {
-            //PropertyChanged += User_PropertyChanged;
+            PropertyChanged += User_PropertyChanged;
 
             Notes.CollectionChanged += (s, e) => NotifyPropertyChanged("Notes");
             ArchivedNotes.CollectionChanged += (s, e) => NotifyPropertyChanged("ArchivedNotes");
             Preferences.PropertyChanged += (s, e) => NotifyPropertyChanged("Preferences");
         }
 
-        //void User_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-        //{
-        //    Debug.WriteLine(String.Format("User {0} changed", e.PropertyName));
-        //}
+        void User_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            Debug.WriteLine(String.Format("User {0} changed", e.PropertyName));
+        }
 
         public void Touch()
         {
