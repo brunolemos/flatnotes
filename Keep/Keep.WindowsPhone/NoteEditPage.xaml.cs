@@ -233,6 +233,37 @@ namespace Keep
         //        checklist.Add(new ChecklistItem());
         //}
 
+        private void NoteTitleTextBox_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+
+            if (e.Key == Windows.System.VirtualKey.Enter)
+            {
+                if (viewModel.Note.IsChecklist)
+                {
+                    int count = NoteChecklistListView.Items.Count;
+
+                    if (count > 0)
+                    {
+                        FrameworkElement listViewItem = NoteChecklistListView.ContainerFromIndex(0) as FrameworkElement;
+                        TextBox textBox = FindFirstElementInVisualTree<TextBox>(listViewItem);
+                        if (textBox != null)
+                        {
+                            textBox.Select(textBox.Text.Length, 0);
+                            textBox.Focus(Windows.UI.Xaml.FocusState.Programmatic);
+                        }
+                    }
+                    else
+                    {
+                        NewChecklistItemTextBox.Focus(Windows.UI.Xaml.FocusState.Programmatic);
+                    }
+                }
+                else
+                {
+                    NoteTextTextBox.Focus(Windows.UI.Xaml.FocusState.Programmatic);
+                }
+            }
+        }
+
         private void NoteChecklistItemTextBox_KeyDown(object sender, KeyRoutedEventArgs e)
         {
             ChecklistItem item = (sender as TextBox).DataContext as ChecklistItem;
