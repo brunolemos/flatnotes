@@ -59,7 +59,7 @@ namespace Keep
         private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
         {
             //apply theme and save to user preferences
-            //if(theme != AppSettings.Instance.LoggedUser.Preferences.Theme) App.ForceTheme(theme);
+            if(theme != AppSettings.Instance.LoggedUser.Preferences.Theme) App.ForceTheme(theme);
 
 #if WINDOWS_PHONE_APP
             StatusBar statusBar = StatusBar.GetForCurrentView();

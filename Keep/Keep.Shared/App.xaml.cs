@@ -20,6 +20,7 @@ using Windows.UI.Xaml.Navigation;
 
 using Keep.Utils;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace Keep
 {
@@ -117,6 +118,11 @@ namespace Keep
             ForceTheme(AppSettings.Instance.LoggedUser.Preferences.Theme);
             GoogleAnalytics.EasyTracker.GetTracker().SendEvent("app", "open", "", 0);
 
+#if WINDOWS_PHONE_APP
+            StatusBar statusBar = StatusBar.GetForCurrentView();
+            statusBar.BackgroundOpacity = 0;
+#endif
+
             // Ensure the current window is active
             Window.Current.Activate();
         }
@@ -160,6 +166,9 @@ namespace Keep
         public static void ForceTheme(ElementTheme theme) {
             App.RootFrame.RequestedTheme = theme;
             AppSettings.Instance.LoggedUser.Preferences.Theme = theme;
+
+            //hard fix --color not updating when trying to get the resource by its key
+            App.RootFrame.Background = (theme == ElementTheme.Light ? new SolidColorBrush(Color.FromArgb(0xFF, 0xEC, 0xEC, 0xEC)) : new SolidColorBrush(Color.FromArgb(0xFF, 0x31, 0x3B, 0x44)));
         }
     }
 }

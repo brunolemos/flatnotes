@@ -139,7 +139,7 @@
     <value>Novo item</value>
   </data>
   <data name="NoGoogleKeepIntegrationMessageTextBox.Text" xml:space="preserve">
-    <value>Este aplicativo não é integrado com o Google Keep devido à uma limitação do Google.</value>
+    <value>Este aplicativo não sincroniza com o Google Keep oficial devido à uma limitação do Google.</value>
   </data>
   <data name="NoteChecklistType.Label" xml:space="preserve">
     <value>checklist</value>

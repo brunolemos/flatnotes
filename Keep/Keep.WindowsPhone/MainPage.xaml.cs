@@ -66,9 +66,6 @@ namespace Keep
             if (!String.IsNullOrEmpty(e.NavigationParameter.ToString()))
                 Debug.WriteLine("MainPage NavigationParameter: " + e.NavigationParameter.ToString());
 
-            //here to fix a bug --color not updating when trying to get the resource by its key
-            App.RootFrame.Background = this.Background;
-
 #if WINDOWS_PHONE_APP
             StatusBar statusBar = StatusBar.GetForCurrentView();
             statusBarForegroundColor = statusBar.ForegroundColor;

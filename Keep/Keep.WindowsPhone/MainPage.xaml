@@ -36,7 +36,7 @@
         </ItemsPanelTemplate>
 
         <ItemsPanelTemplate x:Key="ReordableItemsPanelTemplate" x:Name="ReordableItemsPanelTemplate">
-            <ItemsWrapGrid x:Name="NotesItemsWrapGrid" Orientation="Horizontal" ItemWidth="{Binding CellWidth, Mode=OneWay}" ItemHeight="{Binding BiggerCellHeight, Mode=OneWay}" />
+            <ItemsWrapGrid x:Name="NotesItemsWrapGrid" Orientation="Horizontal" ItemWidth="{Binding CellWidth, Mode=OneWay}" ItemHeight="140" />
         </ItemsPanelTemplate>
 
         <!--<MenuFlyout x:Key="NoteMenuFlyout">
@@ -64,7 +64,7 @@
         </DataTemplate>
 
         <DataTemplate x:Key="NotePreviewListViewControlTemplate">
-            <Border x:Name="NoteContainer" Background="{Binding Color.Color}" Margin="4" CornerRadius="2" Holding="NoteContainer_Holding" PointerPressed="NoteContainer_PointerPressed">
+            <Border x:Name="NoteContainer" Background="{Binding Color.Color}" Margin="1" Holding="NoteContainer_Holding" PointerPressed="NoteContainer_PointerPressed"><!--  CornerRadius="2" -->
                 <StackPanel Margin="12">
                     <TextBlock Text="{Binding Title}" FontSize="19" Margin="0,0,0,6" Foreground="{StaticResource KeepNoteForegroundBrush}" FontWeight="Bold" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" MaxLines="1" Visibility="{Binding Title, Converter={StaticResource NullableToVisibilityConverter}}"/>
 
@@ -74,7 +74,7 @@
 
                     <Grid Visibility="{Binding IsChecklist, Converter={StaticResource BooleanToVisibilityConverter}}">
                         <StackPanel>
-                            <ListView x:Name="NoteChecklistListView" CanDragItems="False" IsItemClickEnabled="False" IsTapEnabled="False" IsActiveView="False" ItemTemplate="{StaticResource NoteChecklistListViewControlTemplate}" ItemsSource="{Binding}" DataContext="{Binding Checklist}" SelectionMode="None" Loaded="NoteChecklistListView_Loaded" >
+                            <ListView x:Name="NoteChecklistListView" CanDragItems="False" IsItemClickEnabled="False" IsTapEnabled="False" IsActiveView="False" ItemTemplate="{StaticResource NoteChecklistListViewControlTemplate}" ItemsSource="{Binding}" DataContext="{Binding Checklist}" SelectionMode="None" Loaded="NoteChecklistListView_Loaded">
                             	<Interactivity:Interaction.Behaviors>
                             		<Core:DataTriggerBehavior Binding="{Binding Count, Mode=OneWay}" ComparisonCondition="GreaterThan" Value="5">
                             			<Core:ChangePropertyAction TargetObject="{Binding ElementName=TrimIndicator}" PropertyName="Visibility">
@@ -170,7 +170,7 @@
         </VisualStateManager.VisualStateGroups>
 
         <ScrollViewer x:Name="ContentRoot" Grid.Row="0" VerticalScrollMode="Enabled">
-            <ListView x:Name="NotesListView" Margin="6" AllowDrop="True" CanDragItems="True" IsItemClickEnabled="True" ItemsSource="{Binding Notes}" ItemTemplate="{StaticResource NotePreviewListViewControlTemplate}" ItemClick="NotesListView_ItemClick" ItemsPanel="{StaticResource FluidItemsPanelTemplate}">
+            <ListView x:Name="NotesListView" Margin="6,24,6,6" AllowDrop="True" CanDragItems="True" IsItemClickEnabled="True" ItemsSource="{Binding Notes}" ItemTemplate="{StaticResource NotePreviewListViewControlTemplate}" ItemClick="NotesListView_ItemClick" ItemsPanel="{StaticResource FluidItemsPanelTemplate}">
                 <Interactivity:Interaction.Behaviors>
 					<Core:DataTriggerBehavior Binding="{Binding ItemsSource.Count, ElementName=NotesListView, Mode=OneWay}" Value="0" ComparisonCondition="Equal">
 						<Core:GoToStateAction StateName="EmptyNoteVisualState"/>
