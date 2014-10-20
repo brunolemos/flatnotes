@@ -1,4 +1,5 @@
-MainPackage=C:\Users\Bruno\Documents\Visual Studio 2013\Projects\Keep.Universal\Keep\Keep.WindowsPhone\bin\Release\Keep.WindowsPhone_1.2.0.0_Bundle\Keep.WindowsPhone_1.2.0.0_AnyCPU.appx
-SymbolPackage=C:\Users\Bruno\Documents\Visual Studio 2013\Projects\Keep.Universal\Keep\Keep.WindowsPhone\AppPackages\Keep.WindowsPhone_1.2.0.0_Test\Keep.WindowsPhone_1.2.0.0_AnyCPU.appxsym
-ResourcePack=C:\Users\Bruno\Documents\Visual Studio 2013\Projects\Keep.Universal\Keep\Keep.WindowsPhone\bin\Release\Keep.WindowsPhone_1.2.0.0_Bundle\Keep.WindowsPhone_1.2.0.0_language-hi.appx
-ResourcePack=C:\Users\Bruno\Documents\Visual Studio 2013\Projects\Keep.Universal\Keep\Keep.WindowsPhone\bin\Release\Keep.WindowsPhone_1.2.0.0_Bundle\Keep.WindowsPhone_1.2.0.0_language-pt.appx
+MainPackage=C:\Users\Bruno\Source\Repos\keep\Keep\Keep.WindowsPhone\bin\Release\Keep.WindowsPhone_1.3.0.0_Bundle\Keep.WindowsPhone_1.3.0.0_AnyCPU.appx
+SymbolPackage=C:\Users\Bruno\Source\Repos\keep\Keep\Keep.WindowsPhone\AppPackages\Keep.WindowsPhone_1.3.0.0_Test\Keep.WindowsPhone_1.3.0.0_AnyCPU.appxsym
+ResourcePack=C:\Users\Bruno\Source\Repos\keep\Keep\Keep.WindowsPhone\bin\Release\Keep.WindowsPhone_1.3.0.0_Bundle\Keep.WindowsPhone_1.3.0.0_language-es.appx
+ResourcePack=C:\Users\Bruno\Source\Repos\keep\Keep\Keep.WindowsPhone\bin\Release\Keep.WindowsPhone_1.3.0.0_Bundle\Keep.WindowsPhone_1.3.0.0_language-hi.appx
+ResourcePack=C:\Users\Bruno\Source\Repos\keep\Keep\Keep.WindowsPhone\bin\Release\Keep.WindowsPhone_1.3.0.0_Bundle\Keep.WindowsPhone_1.3.0.0_language-pt.appx
