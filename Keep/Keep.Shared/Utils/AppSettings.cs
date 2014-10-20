@@ -82,9 +82,9 @@ namespace Keep.Utils
         }
         private User loggedUser;
 
-        public void SaveLoggedUser()
+        public async void SaveLoggedUser()
         {
-            AddOrUpdateValue(LOGGEDUSER_KEY, (LoggedUser == null ? "{}" : JsonConvert.SerializeObject(LoggedUser)));
+            await AddOrUpdateValue(LOGGEDUSER_KEY, (LoggedUser == null ? "{}" : JsonConvert.SerializeObject(LoggedUser)));
         }
     }
 }

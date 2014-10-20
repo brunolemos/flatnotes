@@ -2,7 +2,7 @@
     <ViewModels:MainViewModel.CellWidth>194.0</ViewModels:MainViewModel.CellWidth>
 
     <ViewModels:MainViewModel.UserPreferences>
-        <Models:UserPreferences Columns="-1" ItemMinWidth="194.0"/>
+        <Models:UserPreferences Columns="-1" ItemMinWidth="180.0"/>
     </ViewModels:MainViewModel.UserPreferences>
 
     <ViewModels:MainViewModel.Notes>

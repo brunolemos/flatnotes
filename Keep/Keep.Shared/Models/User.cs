@@ -59,9 +59,9 @@ namespace Keep.Models
         public User() {
             PropertyChanged += User_PropertyChanged;
 
-            Notes.CollectionChanged += (s, e) => NotifyPropertyChanged("Notes");
-            ArchivedNotes.CollectionChanged += (s, e) => NotifyPropertyChanged("ArchivedNotes");
-            Preferences.PropertyChanged += (s, e) => NotifyPropertyChanged("Preferences");
+            //Notes.CollectionChanged += (s, e) => NotifyPropertyChanged("Notes");
+            //ArchivedNotes.CollectionChanged += (s, e) => NotifyPropertyChanged("ArchivedNotes");
+            //Preferences.PropertyChanged += (s, e) => NotifyPropertyChanged("Preferences");
         }
 
         void User_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)

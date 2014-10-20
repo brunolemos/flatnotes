@@ -132,6 +132,9 @@
   <data name="DeleteAppBarButton.Label" xml:space="preserve">
     <value>delete</value>
   </data>
+  <data name="DeleteMenuFlyoutItem.Text" xml:space="preserve">
+    <value>delete</value>
+  </data>
   <data name="FeedbackAppBarButton.Label" xml:space="preserve">
     <value>send feedback</value>
   </data>
@@ -153,8 +156,8 @@
   <data name="SettingsAppBarButton.Label" xml:space="preserve">
     <value>settings</value>
   </data>
-  <data name="SettingsTextBlock.Text" xml:space="preserve">
-    <value>settings</value>
+  <data name="SettingsContentDialog.Title" xml:space="preserve">
+    <value>SETTINGS</value>
   </data>
   <data name="ShareAppBarButton.Label" xml:space="preserve">
     <value>share...</value>

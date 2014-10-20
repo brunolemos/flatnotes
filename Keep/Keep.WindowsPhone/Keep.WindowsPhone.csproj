@@ -92,6 +92,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SettingsPage.xaml.cs">
+      <SubType>Code</SubType>
       <DependentUpon>SettingsPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>

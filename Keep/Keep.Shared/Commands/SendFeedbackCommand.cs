@@ -16,6 +16,7 @@ using Windows.UI;
 using Keep.Models;
 using Keep.Utils;
 using System.Diagnostics;
+using Windows.ApplicationModel;
 
 namespace Keep.Commands
 {
@@ -51,7 +52,7 @@ namespace Keep.Commands
             //}
 
             mail.To.Add(new Windows.ApplicationModel.Email.EmailRecipient("keep@brunolemos.org"));
-            mail.Subject = "Feedback - #Keep Beta";
+            mail.Subject = String.Format("Feedback - Keep v{0}.{1}", Package.Current.Id.Version.Major, Package.Current.Id.Version.Minor);
             mail.Body = "";
             await Windows.ApplicationModel.Email.EmailManager.ShowComposeNewEmailAsync(mail);
 #endif

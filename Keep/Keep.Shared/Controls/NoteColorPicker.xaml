@@ -8,7 +8,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     d:DesignHeight="200"
-    d:DesignWidth="500">
+    d:DesignWidth="500"
+    Background="Transparent">
 
     <UserControl.Resources>
         <DataTemplate x:Key="NoteColorTemplate">
@@ -18,7 +19,7 @@
         </DataTemplate>
     </UserControl.Resources>
 
-    <Grid Background="Transparent">
+    <Grid Background="{Binding Background, ElementName=Root}">
         <Grid Background="Transparent" VerticalAlignment="Bottom">
             <ListView x:Name="ColorPickerListView" Margin="24" SelectionMode="Single" ItemTemplate="{StaticResource NoteColorTemplate}" ItemsSource="{Binding}" SelectionChanged="ColorPickerListView_SelectionChanged" d:DataContext="{d:DesignData /SampleData/NoteColorsSampleData.xaml}">
                 <ListView.ItemsPanel>

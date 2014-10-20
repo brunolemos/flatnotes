@@ -15,6 +15,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Windows.Phone.UI.Input;
 
 using Keep.Common;
 using Keep.Models;
@@ -22,6 +23,7 @@ using Keep.Utils;
 using Keep.ViewModels;
 using System.Diagnostics;
 using Windows.UI.Xaml.Media.Animation;
+using System.Threading.Tasks;
 
 namespace Keep
 {
@@ -34,7 +36,7 @@ namespace Keep
         ChecklistItem checklistItemToDelete = null;
         Color? statusBarForegroundColor = null;
 
-        public SolidColorBrush AnimatedColor { get { return (SolidColorBrush)GetValue(AnimatedColorProperty); } protected set { SetValue(AnimatedColorProperty, value); } }
+        public SolidColorBrush AnimatedColor { get { return (SolidColorBrush)GetValue(AnimatedColorProperty); } private set { SetValue(AnimatedColorProperty, value); } }
         public readonly DependencyProperty AnimatedColorProperty = DependencyProperty.Register("AnimatedColor", typeof(SolidColorBrush), typeof(Page), null);
 
         public NoteEditPage()
@@ -48,18 +50,6 @@ namespace Keep
 
         private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
-#if WINDOWS_PHONE_APP
-            StatusBar statusBar = StatusBar.GetForCurrentView();
-            statusBarForegroundColor = statusBar.ForegroundColor;
-
-            if (App.Current.RequestedTheme != ApplicationTheme.Light)
-            {
-                //statusBar.BackgroundColor = Colors.Black;
-                //statusBar.BackgroundOpacity = 0.20;
-                statusBar.ForegroundColor = Color.FromArgb(0xFF, 0x5F, 0x5F, 0x5F);
-            }
-#endif
-
             viewModel = new NoteEditViewModel();
             bool isAlreadyAdded = false;
 
@@ -92,6 +82,18 @@ namespace Keep
             //AnimatedColor = new SolidColorBrush(new Color().FromHex(viewModel.Note.Color.Color));
             //this.SetBinding(BackgroundProperty, new Binding() { Path = new PropertyPath("AnimatedColor"), Source = this });
             LayoutRoot.Background = new SolidColorBrush(new Color().FromHex(viewModel.Note.Color.Color));
+
+#if WINDOWS_PHONE_APP
+            StatusBar statusBar = StatusBar.GetForCurrentView();
+            statusBarForegroundColor = statusBar.ForegroundColor;
+
+            if (App.Current.RequestedTheme != ApplicationTheme.Light)
+            {
+                //statusBar.BackgroundColor = Colors.Black;
+                //statusBar.BackgroundOpacity = 0.20;
+                updateDarkerColor();
+            }
+#endif
         }
 
         void Note_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -179,6 +181,28 @@ namespace Keep
             NoteColorAnimation.To = color;
             NoteColorAnimationStoryboard.Begin();
         }
+
+        private Color getDarkerColor(Color color, Double opacity = 0.55)
+        {
+            color.R = (byte)(color.R * opacity);
+            color.G = (byte)(color.G * opacity);
+            color.B = (byte)(color.B * opacity);
+
+            return color;
+        }
+
+        private async void updateDarkerColor() {
+            Color color = new Color().FromHex(viewModel.Note.Color.Color);
+
+#if WINDOWS_PHONE_APP
+                StatusBar statusBar = StatusBar.GetForCurrentView();
+                statusBar.ForegroundColor = getDarkerColor(color, 0.40);
+#endif
+
+                color = getDarkerColor(color);
+                CommandBar.Background = new SolidColorBrush(color);
+                NoteColorPicker.Background = new SolidColorBrush(color);
+        }
         
         private void DeleteNoteAppBarButton_Click(object sender, RoutedEventArgs e)
         {
@@ -193,26 +217,28 @@ namespace Keep
 
         private void ColorPickerAppBarToggleButton_Checked(object sender, RoutedEventArgs e)
         {
-            FlyoutBase.ShowAttachedFlyout(LayoutRoot);
+            VisualStateManager.GoToState(this, ShowColorPickerVisualState.Name, true);
         }
 
         private void ColorPickerAppBarToggleButton_Unchecked(object sender, RoutedEventArgs e)
         {
-            FlyoutBase.GetAttachedFlyout(LayoutRoot).Hide();
+            VisualStateManager.GoToState(this, HideColorPickerVisualState.Name, true);
         }
 
-        private void ColorPickerFlyout_Opened(object sender, object e)
-        {
-            ColorPickerAppBarToggleButton.IsChecked = true;
-        }
+        //private void ColorPickerFlyout_Opened(object sender, object e)
+        //{
+        //    ColorPickerAppBarToggleButton.IsChecked = true;
+        //}
 
-        private void ColorPickerFlyout_Closed(object sender, object e)
-        {
-            ColorPickerAppBarToggleButton.IsChecked = false;
-        }
+        //private void ColorPickerFlyout_Closed(object sender, object e)
+        //{
+        //    ColorPickerAppBarToggleButton.IsChecked = false;
+        //}
 
         private void NoteColorPicker_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            Debug.WriteLine("NoteColorPicker_SelectionChanged");
+
             if (e.AddedItems.Count < 0)
                 return;
             
@@ -220,6 +246,7 @@ namespace Keep
             AnimateColorTo(new Color().FromHex(newColor.Color));
 
             viewModel.Note.Color = newColor;
+            updateDarkerColor();
         }
 
         //private void NoteChecklistListView_DataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args)
@@ -406,15 +433,25 @@ namespace Keep
 
         private void DeleteDropArea_DragLeave(object sender, DragEventArgs e)
         {
-            (sender as Grid).Background = (SolidColorBrush)App.Current.Resources["ApplicationPageBackgroundThemeBrush"];
+            (sender as Grid).Background = (SolidColorBrush)App.Current.Resources["PhoneDarkMidBrush"];
         }
 
         private void DeleteDropArea_Drop(object sender, DragEventArgs e)
         {
-            (sender as Grid).Background = (SolidColorBrush)App.Current.Resources["ApplicationPageBackgroundThemeBrush"];
+            (sender as Grid).Background = (SolidColorBrush)App.Current.Resources["PhoneDarkMidBrush"];
 
             if (viewModel.Note.Checklist != null && checklistItemToDelete is ChecklistItem)
                 viewModel.Note.Checklist.Remove(checklistItemToDelete);
+        }
+
+        private void ToggleChecklistAppBarButton_Click(object sender, RoutedEventArgs e)
+        {
+            viewModel.Note.ToggleChecklist();
+        }
+
+        private void ShareAppBarButton_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

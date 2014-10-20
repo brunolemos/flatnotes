@@ -12,16 +12,22 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     d:DataContext="{d:DesignData /SampleData/MainPageViewModelSampleData.xaml}">
-
+    
+    <Page.Transitions>
+        <TransitionCollection>
+        	<ContentThemeTransition HorizontalOffset="0" VerticalOffset="200"/>
+        </TransitionCollection>
+    </Page.Transitions>
+    
     <Page.BottomAppBar>
-        <CommandBar Background="{ThemeResource KeepBrandBackgroundBrush}" Foreground="{ThemeResource KeepBrandForegroundBrush}">
+        <CommandBar x:Name="commandBar" Background="{ThemeResource KeepBrandBackgroundBrush}" Foreground="{ThemeResource KeepBrandForegroundBrush}">
             <AppBarButton x:Uid="NoteTextType" Label="text" Click="NewTextNoteAppBarButton_Click">
                 <AppBarButton.Icon>
                     <BitmapIcon UriSource="Assets/appbar.text.serif.png"/>
                 </AppBarButton.Icon>
             </AppBarButton>
             <AppBarButton x:Uid="NoteChecklistType" Label="checklist" Icon="List" Click="NewChecklistNoteAppBarButton_Click"/>
-            <!--<AppBarToggleButton x:Name="ReorderAppBarToggleButton" Label="reorder" Icon="Sort" Checked="ReorderAppBarToggleButton_Checked" Unchecked="ReorderAppBarToggleButton_Unchecked"/>-->
+            <AppBarToggleButton x:Name="ReorderAppBarToggleButton" Label="reorder" Icon="Sort" Checked="ReorderAppBarToggleButton_Checked" Unchecked="ReorderAppBarToggleButton_Unchecked"/>
 
             <CommandBar.SecondaryCommands>
                 <AppBarButton x:Uid="FeedbackAppBarButton" Icon="Like" Label="send feedback" CommandParameter="{Binding ElementName=LayoutRoot}" Command="{Binding SendFeedbackCommand}"/>
@@ -36,15 +42,8 @@
         </ItemsPanelTemplate>
 
         <ItemsPanelTemplate x:Key="ReordableItemsPanelTemplate" x:Name="ReordableItemsPanelTemplate">
-            <ItemsWrapGrid x:Name="NotesItemsWrapGrid" Orientation="Horizontal" ItemWidth="{Binding CellWidth, Mode=OneWay}" ItemHeight="140" />
+            <ItemsWrapGrid x:Name="NotesItemsWrapGrid" Orientation="Horizontal" ItemWidth="{Binding CellWidth, Mode=OneWay}" ItemHeight="125" />
         </ItemsPanelTemplate>
-
-        <!--<MenuFlyout x:Key="NoteMenuFlyout">
-            <MenuFlyoutItem x:Uid="ShareAppBarButton"  Text="share..." IsEnabled="False"/>
-            <MenuFlyoutItem x:Uid="PinToStartAppBarButton" Text="pin to start" IsEnabled="False"/>
-            <MenuFlyoutSeparator/>
-            <MenuFlyoutItem x:Uid="DeleteAppBarButton" Text="delete" Click="NoteDeleteMenuFlyoutItem_Click" />
-        </MenuFlyout>-->
 
         <DataTemplate x:Key="NoteChecklistListViewControlTemplate">
             <Grid>
@@ -62,10 +61,18 @@
                 <TextBlock Grid.Column="1" Text="{Binding Text, Mode=OneTime}" FontSize="17" Foreground="{StaticResource KeepNoteForegroundBrush}" TextWrapping="Wrap" Margin="0,4,0,0" MaxLines="3" TextTrimming="CharacterEllipsis" />
             </Grid>
         </DataTemplate>
+        
+        <MenuFlyout x:Key="NoteMenuFlyout">
+            <!--<MenuFlyoutItem x:Uid="ShareAppBarButton"  Text="share..." IsEnabled="False"/>
+            <MenuFlyoutItem x:Uid="PinToStartAppBarButton" Text="pin to start" IsEnabled="False"/>
+            <MenuFlyoutSeparator/>-->
+            <MenuFlyoutItem x:Uid="DeleteMenuFlyoutItem" Text="delete" Click="NoteDeleteMenuFlyoutItem_Click" />
+        </MenuFlyout>
 
         <DataTemplate x:Key="NotePreviewListViewControlTemplate">
-            <Border x:Name="NoteContainer" Background="{Binding Color.Color}" Margin="1" Holding="NoteContainer_Holding" PointerPressed="NoteContainer_PointerPressed"><!--  CornerRadius="2" -->
-                <StackPanel Margin="12">
+            <Border x:Name="NoteContainer" Background="{Binding Color.Color}" Margin="1.5" PointerPressed="NoteContainer_PointerPressed" Holding="NoteContainer_Holding" FlyoutBase.AttachedFlyout="{StaticResource NoteMenuFlyout}">
+                <!--  CornerRadius="2" Holding="NoteContainer_Holding"  -->
+                <StackPanel Margin="10">
                     <TextBlock Text="{Binding Title}" FontSize="19" Margin="0,0,0,6" Foreground="{StaticResource KeepNoteForegroundBrush}" FontWeight="Bold" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" MaxLines="1" Visibility="{Binding Title, Converter={StaticResource NullableToVisibilityConverter}}"/>
 
                     <Grid Visibility="{Binding IsText, Converter={StaticResource BooleanToVisibilityConverter}}">
@@ -129,6 +136,13 @@
                         <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(ListViewBase.ItemsPanel)" Storyboard.TargetName="NotesListView">
                             <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource ReordableItemsPanelTemplate}"/>
                         </ObjectAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(AppBar.ClosedDisplayMode)" Storyboard.TargetName="commandBar">
+                        	<DiscreteObjectKeyFrame KeyTime="0">
+                        		<DiscreteObjectKeyFrame.Value>
+                        			<AppBarClosedDisplayMode>Minimal</AppBarClosedDisplayMode>
+                        		</DiscreteObjectKeyFrame.Value>
+                        	</DiscreteObjectKeyFrame>
+                        </ObjectAnimationUsingKeyFrames>
                     </Storyboard>
                 </VisualState>
                 <VisualState x:Name="ReorderDisabledVisualState">
@@ -170,7 +184,7 @@
         </VisualStateManager.VisualStateGroups>
 
         <ScrollViewer x:Name="ContentRoot" Grid.Row="0" VerticalScrollMode="Enabled">
-            <ListView x:Name="NotesListView" Margin="6,24,6,6" AllowDrop="True" CanDragItems="True" IsItemClickEnabled="True" ItemsSource="{Binding Notes}" ItemTemplate="{StaticResource NotePreviewListViewControlTemplate}" ItemClick="NotesListView_ItemClick" ItemsPanel="{StaticResource FluidItemsPanelTemplate}">
+            <ListView x:Name="NotesListView" Margin="12,24,12,12" AllowDrop="True" CanDragItems="True" IsItemClickEnabled="True" ItemsSource="{Binding Notes}" ItemTemplate="{StaticResource NotePreviewListViewControlTemplate}" ItemClick="NotesListView_ItemClick" ItemsPanel="{StaticResource FluidItemsPanelTemplate}">
                 <Interactivity:Interaction.Behaviors>
 					<Core:DataTriggerBehavior Binding="{Binding ItemsSource.Count, ElementName=NotesListView, Mode=OneWay}" Value="0" ComparisonCondition="Equal">
 						<Core:GoToStateAction StateName="EmptyNoteVisualState"/>
@@ -182,9 +196,11 @@
 
                     <Core:DataTriggerBehavior Binding="{Binding ReorderMode, ElementName=NotesListView, Mode=OneWay}" Value="Enabled">
                         <Core:GoToStateAction StateName="ReorderEnableVisualState"/>
+                        <Core:CallMethodAction MethodName="OnReorderModeEnabled" TargetObject="{Binding ElementName=Root}"/>
                     </Core:DataTriggerBehavior>
                     <Core:DataTriggerBehavior Binding="{Binding ReorderMode, ElementName=NotesListView, Mode=OneWay}" Value="Enabled" ComparisonCondition="NotEqual">
                         <Core:GoToStateAction StateName="ReorderDisabledVisualState"/>
+                        <Core:CallMethodAction MethodName="OnReorderModeDisabled" TargetObject="{Binding ElementName=Root}"/>
                     </Core:DataTriggerBehavior>
                 </Interactivity:Interaction.Behaviors>
             </ListView>
@@ -194,8 +210,8 @@
             <HyperlinkButton Content="" FontFamily="Segoe UI Symbol" FontSize="100" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="12,6" Foreground="{ThemeResource PhoneLowBrush}" Click="NewTextNoteAppBarButton_Click" />
         </Grid>
 
-        <Grid Grid.Row="1" x:Name="DeleteDropArea" AllowDrop="True" VerticalAlignment="Bottom" Background="{ThemeResource PhoneChromeBrush}" DragEnter="DeleteDropArea_DragEnter" Drop="DeleteDropArea_Drop" DragLeave="DeleteDropArea_DragLeave" Visibility="Collapsed">
-            <TextBlock x:Name="DeleteDropIcon" Text="" FontFamily="Segoe UI Symbol" FontSize="36" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="12,6" Foreground="{ThemeResource ApplicationForegroundThemeBrush}" />
+        <Grid Grid.Row="1" x:Name="DeleteDropArea" AllowDrop="True" VerticalAlignment="Bottom" Background="{ThemeResource KeepBrandBackgroundBrush}" DragEnter="DeleteDropArea_DragEnter" Drop="DeleteDropArea_Drop" DragLeave="DeleteDropArea_DragLeave" Visibility="Collapsed">
+            <TextBlock x:Name="DeleteDropIcon" Text="" FontFamily="Segoe UI Symbol" FontSize="36" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="12,6" Foreground="{ThemeResource KeepBrandForegroundBrush}" />
         </Grid>
     </Grid>
 </Page>

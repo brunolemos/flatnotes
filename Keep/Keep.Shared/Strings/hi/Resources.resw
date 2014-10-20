@@ -132,6 +132,9 @@
   <data name="DeleteAppBarButton.Label" xml:space="preserve">
     <value>मिटाएँ</value>
   </data>
+  <data name="DeleteMenuFlyoutItem.Text" xml:space="preserve">
+    <value>मिटाएँ</value>
+  </data>
   <data name="FeedbackAppBarButton.Label" xml:space="preserve">
     <value>प्रतिक्रिया भेजें</value>
   </data>
@@ -153,7 +156,7 @@
   <data name="SettingsAppBarButton.Label" xml:space="preserve">
     <value>सेटिंग्स</value>
   </data>
-  <data name="SettingsTextBlock.Text" xml:space="preserve">
+  <data name="SettingsContentDialog.Title" xml:space="preserve">
     <value>सेटिंग्स</value>
   </data>
   <data name="ShareAppBarButton.Label" xml:space="preserve">

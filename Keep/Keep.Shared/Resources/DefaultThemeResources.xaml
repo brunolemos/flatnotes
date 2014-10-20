@@ -7,6 +7,8 @@
     <SolidColorBrush x:Key="TextBoxForegroundThemeBrush" Color="#FF000000"/>
     <SolidColorBrush x:Key="TextBoxFocusedBackgroundThemeBrush" Color="Transparent"/>
     <SolidColorBrush x:Key="TextBoxPlaceholderTextThemeBrush" Color="#70000000"/>
+    <SolidColorBrush x:Key="PhoneDarkLowBrush" Color="#40000000"/>
+    <SolidColorBrush x:Key="PhoneDarkMidBrush" Color="#73000000"/>
     
     <SolidColorBrush x:Key="CommandBarBackgroundThemeBrush" Color="#313B44"/>
     <SolidColorBrush x:Key="CommandBarForegroundThemeBrush" Color="#FFFFFE"/>

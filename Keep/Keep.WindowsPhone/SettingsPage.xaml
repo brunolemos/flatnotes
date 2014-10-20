@@ -10,6 +10,12 @@
     Foreground="{ThemeResource ApplicationForegroundThemeBrush}"
     d:DataContext="{d:DesignData /SampleData/SettingsViewModelSampleData.xaml}">
 
+    <Page.Transitions>
+        <TransitionCollection>
+            <EdgeUIThemeTransition Edge="Bottom"/>
+        </TransitionCollection>
+    </Page.Transitions>
+    
     <Grid x:Name="LayoutRoot" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>

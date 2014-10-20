@@ -30,6 +30,7 @@ namespace Keep
         private SettingsViewModel viewModel = new SettingsViewModel();
         ElementTheme theme = AppSettings.Instance.LoggedUser.Preferences.Theme;
         Color? statusBarForegroundColor = null;
+        SolidColorBrush defaultTextBoxFocusedBackgroundThemeBrush = null;
 
         public NavigationHelper NavigationHelper { get { return this.navigationHelper; } }
         private NavigationHelper navigationHelper;
@@ -48,6 +49,9 @@ namespace Keep
             this.DataContext = viewModel;
 
             ThemeComboBox.SelectedIndex = (AppSettings.Instance.LoggedUser.Preferences.Theme == ElementTheme.Light) ? 0 : 1;
+            defaultTextBoxFocusedBackgroundThemeBrush = App.Current.Resources["TextBoxFocusedBackgroundThemeBrush"] as SolidColorBrush;
+            App.Current.Resources["TextBoxFocusedBackgroundThemeBrush"] = new SolidColorBrush(Colors.White);
+            Debug.WriteLine("defaultTextBoxFocusedBackgroundThemeBrush: " + defaultTextBoxFocusedBackgroundThemeBrush.Color.ToString());
 
 #if WINDOWS_PHONE_APP
             StatusBar statusBar = StatusBar.GetForCurrentView();
@@ -60,6 +64,7 @@ namespace Keep
         {
             //apply theme and save to user preferences
             if(theme != AppSettings.Instance.LoggedUser.Preferences.Theme) App.ForceTheme(theme);
+            App.Current.Resources["TextBoxFocusedBackgroundThemeBrush"] = defaultTextBoxFocusedBackgroundThemeBrush;
 
 #if WINDOWS_PHONE_APP
             StatusBar statusBar = StatusBar.GetForCurrentView();

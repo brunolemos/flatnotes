@@ -10,16 +10,18 @@
     mc:Ignorable="d"
     Background="{Binding Note.Color.Color}" 
     d:DataContext="{d:DesignData /SampleData/NoteEditViewModelSampleData.xaml}">
-    
+
     <Page.Transitions>
         <TransitionCollection>
-            <ContentThemeTransition HorizontalOffset="0"/>
+            <NavigationThemeTransition>
+                <ContinuumNavigationTransitionInfo/>
+            </NavigationThemeTransition>
         </TransitionCollection>
     </Page.Transitions>
 
     <Page.Resources>
         <Storyboard x:Name="NoteColorAnimationStoryboard">
-            <ColorAnimation x:Name="NoteColorAnimation" Duration="0:0:0.4" Storyboard.TargetName="LayoutRoot" Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)">
+            <ColorAnimation x:Name="NoteColorAnimation" Duration="0:0:0.0" Storyboard.TargetName="LayoutRoot" Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)" d:Optimized="True">
                 <ColorAnimation.EasingFunction>
                     <BackEase EasingMode="EaseOut" Amplitude="0"/>
                 </ColorAnimation.EasingFunction>
@@ -27,28 +29,44 @@
         </Storyboard>
 
         <DataTemplate x:Key="NoteChecklistListViewControlTemplate">
-        	<Grid Margin="24,0" PointerPressed="NoteChecklistItem_PointerPressed">
-        		<Grid.ColumnDefinitions>
-        			<ColumnDefinition Width="30"/>
-        			<ColumnDefinition Width="*"/>
-        		</Grid.ColumnDefinitions>
+            <Grid Margin="24,0" PointerPressed="NoteChecklistItem_PointerPressed">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="30"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
 
-        		<CheckBox Grid.Column="0" IsChecked="{Binding IsChecked, Mode=TwoWay}" HorizontalAlignment="Left" Foreground="{StaticResource KeepNoteForegroundBrush}" BorderBrush="{StaticResource KeepNoteForegroundBrush}" RequestedTheme="Light"/>
-        		<TextBox Grid.Column="1" PlaceholderText="New item" Text="{Binding Text, Mode=TwoWay}" Foreground="{StaticResource KeepNoteForegroundBrush}" TextWrapping="Wrap" Margin="0,12,0,0" Background="{x:Null}" BorderThickness="0" AcceptsReturn="False" KeyDown="NoteChecklistItemTextBox_KeyDown"  />
-        	</Grid>
+                <CheckBox Grid.Column="0" IsChecked="{Binding IsChecked, Mode=TwoWay}" HorizontalAlignment="Left" Foreground="{StaticResource KeepNoteForegroundBrush}" BorderBrush="{StaticResource KeepNoteForegroundBrush}" RequestedTheme="Light"/>
+                <TextBox Grid.Column="1" PlaceholderText="New item" Text="{Binding Text, Mode=TwoWay}" Foreground="{StaticResource KeepNoteForegroundBrush}" TextWrapping="Wrap" Margin="0,12,0,0" Background="{x:Null}" BorderThickness="0" AcceptsReturn="False" KeyDown="NoteChecklistItemTextBox_KeyDown" IsReadOnly="{Binding ReorderMode, ElementName=NoteChecklistListView}" />
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Key="ReordableNoteChecklistListViewControlTemplate">
+            <Grid Margin="24,0" PointerPressed="NoteChecklistItem_PointerPressed">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="30"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <CheckBox Grid.Column="0" IsChecked="{Binding IsChecked, Mode=TwoWay}" HorizontalAlignment="Left" Foreground="{StaticResource KeepNoteForegroundBrush}" BorderBrush="{StaticResource KeepNoteForegroundBrush}" RequestedTheme="Light"/>
+                <TextBox Grid.Column="1" PlaceholderText="New item" Text="{Binding Text, Mode=TwoWay}" Foreground="{StaticResource KeepNoteForegroundBrush}" TextWrapping="Wrap" Margin="0,12,0,0" Background="{x:Null}" BorderThickness="0" AcceptsReturn="False" KeyDown="NoteChecklistItemTextBox_KeyDown" IsReadOnly="True" />
+            </Grid>
         </DataTemplate>
     </Page.Resources>
 
     <Page.BottomAppBar>
-        <CommandBar>
-
+        <CommandBar x:Name="CommandBar" Background="{ThemeResource PhoneDarkMidBrush}">
             <CommandBar.SecondaryCommands>
-                <!--<AppBarButton Label="share..." Icon="World"/>-->
+                <!--<AppBarButton Label="share..." Icon="World" Click="ShareAppBarButton_Click"/>-->
+                <AppBarButton x:Uid="ToggleChecklistAppBarButton"  Icon="List" Label="toggle checklist" Click="ToggleChecklistAppBarButton_Click" />
                 <AppBarButton x:Uid="DeleteAppBarButton"  Icon="Delete" Label="delete" Click="DeleteNoteAppBarButton_Click" />
             </CommandBar.SecondaryCommands>
             <AppBarToggleButton x:Uid="ColorAppBarButton" x:Name="ColorPickerAppBarToggleButton" Label="color" Checked="ColorPickerAppBarToggleButton_Checked" Unchecked="ColorPickerAppBarToggleButton_Unchecked">
                 <AppBarToggleButton.Icon>
-                    <BitmapIcon UriSource="Assets/appbar.water.droplet.png"/>
+                    <BitmapIcon UriSource="Assets/appbar.water.droplet.png">
+                        <BitmapIcon.Foreground>
+                            <ImageBrush Stretch="Fill"/>
+                        </BitmapIcon.Foreground>
+                    </BitmapIcon>
                 </AppBarToggleButton.Icon>
             </AppBarToggleButton>
             <!--<AppBarButton x:Uid="CameraAppBarButton" Icon="Camera" Label="camera" IsEnabled="False"/>
@@ -60,73 +78,160 @@
 
     <Grid x:Name="LayoutRoot">
         <VisualStateManager.VisualStateGroups>
-			<VisualStateGroup x:Name="ReorderVisualStateGroup">
-				<VisualState x:Name="ReorderEnabledVisualState">
-					<Storyboard>
-						<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="DeleteDropArea">
-							<DiscreteObjectKeyFrame KeyTime="0">
-								<DiscreteObjectKeyFrame.Value>
-									<Visibility>Visible</Visibility>
-								</DiscreteObjectKeyFrame.Value>
-							</DiscreteObjectKeyFrame>
-						</ObjectAnimationUsingKeyFrames>
-					</Storyboard>
-				</VisualState>
-				<VisualState x:Name="ReorderDisabledVisualState">
-					<Storyboard>
-						<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="DeleteDropArea">
-							<DiscreteObjectKeyFrame KeyTime="0">
-								<DiscreteObjectKeyFrame.Value>
-									<Visibility>Collapsed</Visibility>
-								</DiscreteObjectKeyFrame.Value>
-							</DiscreteObjectKeyFrame>
-						</ObjectAnimationUsingKeyFrames>
-					</Storyboard>
-				</VisualState>
-			</VisualStateGroup>
-		</VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="ReorderVisualStateGroup">
+                <VisualState x:Name="ReorderEnabledVisualState">
+                    <Storyboard>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="DeleteDropArea">
+                            <DiscreteObjectKeyFrame KeyTime="0">
+                                <DiscreteObjectKeyFrame.Value>
+                                    <Visibility>Visible</Visibility>
+                                </DiscreteObjectKeyFrame.Value>
+                            </DiscreteObjectKeyFrame>
+                        </ObjectAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(ListViewBase.ItemTemplate)" Storyboard.TargetName="NoteChecklistListView">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource ReordableNoteChecklistListViewControlTemplate}"/>
+                        </ObjectAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(AppBar.ClosedDisplayMode)" Storyboard.TargetName="CommandBar">
+                        	<DiscreteObjectKeyFrame KeyTime="0">
+                        		<DiscreteObjectKeyFrame.Value>
+                        			<AppBarClosedDisplayMode>Minimal</AppBarClosedDisplayMode>
+                        		</DiscreteObjectKeyFrame.Value>
+                        	</DiscreteObjectKeyFrame>
+                        </ObjectAnimationUsingKeyFrames>
+                    </Storyboard>
+                </VisualState>
+                <VisualState x:Name="ReorderDisabledVisualState">
+                    <Storyboard>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="DeleteDropArea">
+                            <DiscreteObjectKeyFrame KeyTime="0">
+                                <DiscreteObjectKeyFrame.Value>
+                                    <Visibility>Collapsed</Visibility>
+                                </DiscreteObjectKeyFrame.Value>
+                            </DiscreteObjectKeyFrame>
+                        </ObjectAnimationUsingKeyFrames>
+                    </Storyboard>
+                </VisualState>
+            </VisualStateGroup>
+            <VisualStateGroup x:Name="ColorPickerVisualStateGroup">
+                <VisualStateGroup.Transitions>
+                    <VisualTransition GeneratedDuration="0:0:0.3" To="ShowColorPickerVisualState">
+                        <Storyboard>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="NoteColorPicker">
+                                <DiscreteObjectKeyFrame KeyTime="0">
+                                    <DiscreteObjectKeyFrame.Value>
+                                        <Visibility>Visible</Visibility>
+                                    </DiscreteObjectKeyFrame.Value>
+                                </DiscreteObjectKeyFrame>
+                            </ObjectAnimationUsingKeyFrames>
+                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Projection).(PlaneProjection.GlobalOffsetY)" Storyboard.TargetName="NoteColorPicker">
+                                <EasingDoubleKeyFrame Value="250" KeyTime="0">
+                                    <EasingDoubleKeyFrame.EasingFunction>
+                                        <BackEase EasingMode="EaseOut" Amplitude="0"/>
+                                    </EasingDoubleKeyFrame.EasingFunction>
+                                </EasingDoubleKeyFrame>
+                                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="0">
+                                    <EasingDoubleKeyFrame.EasingFunction>
+                                        <BackEase EasingMode="EaseOut" Amplitude="0"/>
+                                    </EasingDoubleKeyFrame.EasingFunction>
+                                </EasingDoubleKeyFrame>
+                            </DoubleAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </VisualTransition>
+                    <VisualTransition From="ShowColorPickerVisualState" GeneratedDuration="0:0:0.15" To="HideColorPickerVisualState">
+                        <Storyboard>
+                    		<DoubleAnimation Duration="0:0:0.15" To="250" Storyboard.TargetProperty="(UIElement.Projection).(PlaneProjection.GlobalOffsetY)" Storyboard.TargetName="NoteColorPicker" d:IsOptimized="True">
+                    			<DoubleAnimation.EasingFunction>
+                    				<BackEase Amplitude="0" EasingMode="EaseIn"/>
+                    			</DoubleAnimation.EasingFunction>
+                    		</DoubleAnimation>
+                    		<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="NoteColorPicker">
+                    			<DiscreteObjectKeyFrame KeyTime="0">
+                    				<DiscreteObjectKeyFrame.Value>
+                    					<Visibility>Visible</Visibility>
+                    				</DiscreteObjectKeyFrame.Value>
+                    			</DiscreteObjectKeyFrame>
+                    			<DiscreteObjectKeyFrame KeyTime="0:0:0.15">
+                    				<DiscreteObjectKeyFrame.Value>
+                    					<Visibility>Collapsed</Visibility>
+                    				</DiscreteObjectKeyFrame.Value>
+                    			</DiscreteObjectKeyFrame>
+                    		</ObjectAnimationUsingKeyFrames>
+                    	</Storyboard>
+                    </VisualTransition>
+                	<VisualTransition GeneratedDuration="0"/>
+                </VisualStateGroup.Transitions>
+                <VisualState x:Name="ShowColorPickerVisualState">
+                    <Storyboard>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="NoteColorPicker">
+                            <DiscreteObjectKeyFrame KeyTime="0">
+                                <DiscreteObjectKeyFrame.Value>
+                                    <Visibility>Visible</Visibility>
+                                </DiscreteObjectKeyFrame.Value>
+                            </DiscreteObjectKeyFrame>
+                        </ObjectAnimationUsingKeyFrames>
+                    </Storyboard>
+                </VisualState>
+                <VisualState x:Name="HideColorPickerVisualState">
+                    <Storyboard>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="NoteColorPicker">
+                            <DiscreteObjectKeyFrame KeyTime="0">
+                                <DiscreteObjectKeyFrame.Value>
+                                    <Visibility>Collapsed</Visibility>
+                                </DiscreteObjectKeyFrame.Value>
+                            </DiscreteObjectKeyFrame>
+                        </ObjectAnimationUsingKeyFrames>
+                    </Storyboard>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
 
-        <FlyoutBase.AttachedFlyout>
-            <Flyout x:Name="ColorPickerFlyout" Placement="Bottom" Opened="ColorPickerFlyout_Opened" Closed="ColorPickerFlyout_Closed">
-                <local:NoteColorPicker SelectionChanged="NoteColorPicker_SelectionChanged" />
-            </Flyout>
-        </FlyoutBase.AttachedFlyout>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
 
-        <ScrollViewer HorizontalScrollMode="Disabled" VerticalScrollMode="Enabled">
+        <ScrollViewer Grid.Row="0" HorizontalScrollMode="Disabled" VerticalScrollMode="Enabled">
             <StackPanel>
                 <Grid Height="200" Visibility="Collapsed" Background="#4D000000" />
 
                 <TextBox x:Uid="TitleTextBox" x:Name="NoteTitleTextBox" PlaceholderText="Title" Text="{Binding Note.Title, Mode=TwoWay}" InputScope="Default" Background="{x:Null}" BorderThickness="0" FontWeight="Bold" Padding="24,12" Margin="0,12,0,0" TextWrapping="Wrap" FontSize="22" KeyDown="NoteTitleTextBox_KeyDown"/>
-				<TextBox x:Uid="TextTextBox" x:Name="NoteTextTextBox" PlaceholderText="Text" Text="{Binding Note.Text, Mode=TwoWay}" InputScope="Default" Background="{x:Null}" BorderThickness="0" Padding="24,6" AcceptsReturn="True" TextWrapping="Wrap" VerticalAlignment="Top" Visibility="{Binding Note.IsText, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                <TextBox x:Uid="TextTextBox" x:Name="NoteTextTextBox" PlaceholderText="Text" Text="{Binding Note.Text, Mode=TwoWay}" InputScope="Default" Background="{x:Null}" BorderThickness="0" Padding="24,6" AcceptsReturn="True" TextWrapping="Wrap" VerticalAlignment="Top" Visibility="{Binding Note.IsText, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
-				<StackPanel Visibility="{Binding Note.IsChecklist, Converter={StaticResource BooleanToVisibilityConverter}}">
-					<ListView x:Name="NoteChecklistListView" AllowDrop="True" CanDragItems="True" ItemTemplate="{StaticResource NoteChecklistListViewControlTemplate}" ItemsSource="{Binding}" DataContext="{Binding Note.Checklist}" SelectionMode="None" Holding="NoteChecklistListView_Holding" >
-						<Interactivity:Interaction.Behaviors>
-							<Core:DataTriggerBehavior Binding="{Binding ReorderMode, ElementName=NoteChecklistListView, Mode=OneWay}" Value="Enabled">
-								<Core:GoToStateAction StateName="ReorderEnabledVisualState"/>
-							</Core:DataTriggerBehavior>
-							<Core:DataTriggerBehavior Binding="{Binding ReorderMode, ElementName=NoteChecklistListView, Mode=OneWay}" ComparisonCondition="NotEqual" Value="Enabled">
-								<Core:GoToStateAction StateName="ReorderDisabledVisualState"/>
-							</Core:DataTriggerBehavior>
-						</Interactivity:Interaction.Behaviors>
-					</ListView>
+                <StackPanel Visibility="{Binding Note.IsChecklist, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <ListView x:Name="NoteChecklistListView" AllowDrop="True" CanDragItems="True" ItemTemplate="{StaticResource NoteChecklistListViewControlTemplate}" ItemsSource="{Binding}" DataContext="{Binding Note.Checklist}" SelectionMode="None" Holding="NoteChecklistListView_Holding">
+                        <Interactivity:Interaction.Behaviors>
+                            <Core:DataTriggerBehavior Binding="{Binding ReorderMode, ElementName=NoteChecklistListView, Mode=OneWay}" Value="Enabled">
+                                <Core:GoToStateAction StateName="ReorderEnabledVisualState"/>
+                            </Core:DataTriggerBehavior>
+                            <Core:DataTriggerBehavior Binding="{Binding ReorderMode, ElementName=NoteChecklistListView, Mode=OneWay}" ComparisonCondition="NotEqual" Value="Enabled">
+                                <Core:GoToStateAction StateName="ReorderDisabledVisualState"/>
+                            </Core:DataTriggerBehavior>
+                        </Interactivity:Interaction.Behaviors>
+                    </ListView>
 
-					<Grid Margin="24,0">
-						<Grid.ColumnDefinitions>
-							<ColumnDefinition Width="30"/>
-							<ColumnDefinition Width="*"/>
-						</Grid.ColumnDefinitions>
+                    <Grid Margin="24,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="30"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
 
-						<CheckBox x:Name="NewChecklistItemCheckbox" Grid.Column="0" IsChecked="False" HorizontalAlignment="Left" Foreground="{StaticResource KeepNoteForegroundBrush}" BorderBrush="{StaticResource KeepNoteForegroundBrush}" RequestedTheme="Light"/>
-						<TextBox x:Uid="NewItemTextBox" x:Name="NewChecklistItemTextBox" Grid.Column="1" PlaceholderText="New item" Text="" Foreground="{StaticResource KeepNoteForegroundBrush}" TextWrapping="Wrap" Margin="0,12,0,0" Background="{x:Null}" BorderThickness="0" AcceptsReturn="False" KeyDown="NewChecklistItemTextBox_KeyDown"  />
-					</Grid>
-				</StackPanel>
-				<Grid Height="24"/>
-			</StackPanel>
-		</ScrollViewer>
+                        <CheckBox x:Name="NewChecklistItemCheckbox" Grid.Column="0" IsChecked="False" HorizontalAlignment="Left" Foreground="{StaticResource KeepNoteForegroundBrush}" BorderBrush="{StaticResource KeepNoteForegroundBrush}" RequestedTheme="Light"/>
+                        <TextBox x:Uid="NewItemTextBox" x:Name="NewChecklistItemTextBox" Grid.Column="1" PlaceholderText="New item" Text="" Foreground="{StaticResource KeepNoteForegroundBrush}" TextWrapping="Wrap" Margin="0,12,0,0" Background="{x:Null}" BorderThickness="0" AcceptsReturn="False" KeyDown="NewChecklistItemTextBox_KeyDown"  />
+                    </Grid>
+                </StackPanel>
+                <Grid Height="24"/>
+            </StackPanel>
+        </ScrollViewer>
 
-		<Grid x:Name="DeleteDropArea" AllowDrop="True" VerticalAlignment="Bottom" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" DragEnter="DeleteDropArea_DragEnter" Drop="DeleteDropArea_Drop" DragLeave="DeleteDropArea_DragLeave">
-			<TextBlock x:Name="DeleteDropIcon" Text="&#xE107;" FontFamily="Segoe UI Symbol" FontSize="36" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="12,6" Foreground="{ThemeResource ApplicationForegroundThemeBrush}" />
-		</Grid>
-	</Grid>
+        <Grid Grid.Row="1" x:Name="DeleteDropArea" AllowDrop="True" VerticalAlignment="Bottom" DragEnter="DeleteDropArea_DragEnter" Drop="DeleteDropArea_Drop" DragLeave="DeleteDropArea_DragLeave" Visibility="Collapsed" Background="{ThemeResource PhoneDarkMidBrush}">
+            <TextBlock x:Name="DeleteDropIcon" Text="&#xE107;" FontFamily="Segoe UI Symbol" FontSize="36" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="12,6" Foreground="{ThemeResource CommandBarForegroundThemeBrush}" />
+        </Grid>
+
+        <local:NoteColorPicker x:Name="NoteColorPicker" Grid.Row="2" SelectionChanged="NoteColorPicker_SelectionChanged" Background="{ThemeResource PhoneDarkMidBrush}" Visibility="Collapsed">
+            <local:NoteColorPicker.Projection>
+                <PlaneProjection/>
+            </local:NoteColorPicker.Projection>
+        </local:NoteColorPicker>
+    </Grid>
 </Page>

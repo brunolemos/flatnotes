@@ -113,7 +113,7 @@ namespace Keep
             }
 
             //disable default page transitions
-            //rootFrame.ContentTransitions = null;
+            rootFrame.ContentTransitions = null;// new TransitionCollection() { new ContentThemeTransition() { HorizontalOffset = 0, VerticalOffset = 150 } };
 
             ForceTheme(AppSettings.Instance.LoggedUser.Preferences.Theme);
             GoogleAnalytics.EasyTracker.GetTracker().SendEvent("app", "open", "", 0);
@@ -163,12 +163,13 @@ namespace Keep
 
         public static bool IsDesignMode { get { return Windows.ApplicationModel.DesignMode.DesignModeEnabled; } }
 
-        public static void ForceTheme(ElementTheme theme) {
+        public static async void ForceTheme(ElementTheme theme) {
             App.RootFrame.RequestedTheme = theme;
-            AppSettings.Instance.LoggedUser.Preferences.Theme = theme;
 
             //hard fix --color not updating when trying to get the resource by its key
             App.RootFrame.Background = (theme == ElementTheme.Light ? new SolidColorBrush(Color.FromArgb(0xFF, 0xEC, 0xEC, 0xEC)) : new SolidColorBrush(Color.FromArgb(0xFF, 0x31, 0x3B, 0x44)));
+
+            AppSettings.Instance.LoggedUser.Preferences.Theme = theme;
         }
     }
 }

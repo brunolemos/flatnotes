@@ -13,7 +13,7 @@ namespace Keep.Models
     {
         public const Double ITEM_MIN_WIDTH_MIN_VALUE = 100;
         public const Double ITEM_MIN_WIDTH_MAX_VALUE = 600;
-        public const Double ITEM_MIN_WIDTH_DEFAULT_VALUE = 200;
+        public const Double ITEM_MIN_WIDTH_DEFAULT_VALUE = 150;
 
         public int Columns { get { return columns; } set { Debug.WriteLine("Changed columns to: " + value); if (columns != value) { columns = value; NotifyPropertyChanged("Columns"); } } }
         [DataMember(Name = "Columns")]
