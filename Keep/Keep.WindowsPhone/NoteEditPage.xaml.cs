@@ -182,7 +182,7 @@ namespace Keep
             NoteColorAnimationStoryboard.Begin();
         }
 
-        private Color getDarkerColor(Color color, Double opacity = 0.55)
+        private Color getDarkerColor(Color color, Double opacity = 0.65)
         {
             color.R = (byte)(color.R * opacity);
             color.G = (byte)(color.G * opacity);

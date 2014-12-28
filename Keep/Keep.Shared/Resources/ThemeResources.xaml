@@ -5,10 +5,10 @@
 
     <ResourceDictionary.ThemeDictionaries>
         <ResourceDictionary x:Key="Dark">
-            <SolidColorBrush x:Key="ApplicationPageBackgroundThemeBrush" Color="#313B44"/><!--313B44-->
-            <SolidColorBrush x:Key="PhoneBackgroundBrush" Color="#313B44"/>
-            <SolidColorBrush x:Key="FlyoutBackgroundThemeBrush" Color="#313B44"/>
-            <SolidColorBrush x:Key="ContentDialogBackgroundThemeBrush" Color="#313B44"/>
+            <SolidColorBrush x:Key="ApplicationPageBackgroundThemeBrush" Color="#1d2329"/><!--313B44-->
+            <SolidColorBrush x:Key="PhoneBackgroundBrush" Color="#1d2329"/>
+            <SolidColorBrush x:Key="FlyoutBackgroundThemeBrush" Color="#1d2329"/>
+            <SolidColorBrush x:Key="ContentDialogBackgroundThemeBrush" Color="#1d2329"/>
 
             <SolidColorBrush x:Key="ApplicationForegroundThemeBrush" Color="#A0FFFFFF"/>
             <SolidColorBrush x:Key="PhoneForegroundBrush" Color="#A0FFFFFF"/>
@@ -20,10 +20,10 @@
         </ResourceDictionary>
         
         <ResourceDictionary x:Key="Light">
-            <SolidColorBrush x:Key="ApplicationPageBackgroundThemeBrush" Color="#ECECEC"/>
-            <SolidColorBrush x:Key="PhoneBackgroundBrush" Color="#ECECEC"/>
-            <SolidColorBrush x:Key="FlyoutBackgroundThemeBrush" Color="#ECECEC"/>
-            <SolidColorBrush x:Key="ContentDialogBackgroundThemeBrush" Color="#ECECEC"/>
+            <SolidColorBrush x:Key="ApplicationPageBackgroundThemeBrush" Color="#e6e6e6"/><!-- old: ECECEC -->
+            <SolidColorBrush x:Key="PhoneBackgroundBrush" Color="#e6e6e6"/>
+            <SolidColorBrush x:Key="FlyoutBackgroundThemeBrush" Color="#e6e6e6"/>
+            <SolidColorBrush x:Key="ContentDialogBackgroundThemeBrush" Color="#e6e6e6"/>
 
             <SolidColorBrush x:Key="ApplicationForegroundThemeBrush" Color="#A0000000"/>
             <SolidColorBrush x:Key="PhoneForegroundBrush" Color="#A0000000"/>
