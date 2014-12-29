@@ -46,7 +46,7 @@
         </ItemsPanelTemplate>
 
         <DataTemplate x:Key="NoteChecklistListViewControlTemplate">
-            <Grid>
+            <Grid Margin="0,0,0,10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>

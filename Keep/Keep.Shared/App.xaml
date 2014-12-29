@@ -38,7 +38,6 @@
             </Style>
 
             <Style x:Key="NotePreviewChecklistItem" TargetType="ListViewItem">
-                <Setter Property="Padding" Value="0,0,0,10"/>
                 <Setter Property="Margin" Value="0,0,0,-10"/>
             </Style>
 
