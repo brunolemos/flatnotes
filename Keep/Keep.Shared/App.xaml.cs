@@ -167,7 +167,7 @@ namespace Keep
             App.RootFrame.RequestedTheme = theme;
 
             //hard fix --color not updating when trying to get the resource by its key
-            App.RootFrame.Background = (theme == ElementTheme.Light ? new SolidColorBrush(Color.FromArgb(0xFF, 0xEC, 0xEC, 0xEC)) : new SolidColorBrush(Color.FromArgb(0xFF, 0x31, 0x3B, 0x44)));
+            App.RootFrame.Background = (theme == ElementTheme.Light ? new SolidColorBrush(Color.FromArgb(0xFF, 0xE6, 0xE6, 0xE6)) : new SolidColorBrush(Color.FromArgb(0xFF, 0x1d, 0x23, 0x29)));
 
             AppSettings.Instance.LoggedUser.Preferences.Theme = theme;
         }

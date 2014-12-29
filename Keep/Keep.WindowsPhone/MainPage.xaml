@@ -52,13 +52,13 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <Viewbox Grid.Column="0" Height="36" VerticalAlignment="Top">
+                <Viewbox Grid.Column="0" Height="28" Margin="0,2,0,0" VerticalAlignment="Top">
                     <Grid Width="40">
                         <CheckBox IsChecked="{Binding IsChecked, Mode=TwoWay}" HorizontalAlignment="Left" Foreground="{StaticResource KeepNoteForegroundBrush}" BorderBrush="{StaticResource KeepNoteForegroundBrush}" RequestedTheme="Light"/>
                     </Grid>
                 </Viewbox>
 
-                <TextBlock Grid.Column="1" Text="{Binding Text, Mode=OneTime}" FontSize="17" Foreground="{StaticResource KeepNoteForegroundBrush}" TextWrapping="Wrap" Margin="0,4,0,0" MaxLines="3" TextTrimming="CharacterEllipsis" />
+                <TextBlock Grid.Column="1" Text="{Binding Text, Mode=OneTime}" FontSize="16" Foreground="{StaticResource KeepNoteForegroundBrush}" TextWrapping="Wrap" Margin="0,4,0,0" MaxLines="3" TextTrimming="CharacterEllipsis" />
             </Grid>
         </DataTemplate>
         
@@ -73,15 +73,15 @@
             <Border x:Name="NoteContainer" Background="{Binding Color.Color}" Margin="3" PointerPressed="NoteContainer_PointerPressed" Holding="NoteContainer_Holding" FlyoutBase.AttachedFlyout="{StaticResource NoteMenuFlyout}">
                 <!--  CornerRadius="2" Holding="NoteContainer_Holding"  -->
                 <StackPanel Margin="10">
-                    <TextBlock Text="{Binding Title}" FontSize="19" Margin="0,0,0,6" Foreground="{StaticResource KeepNoteForegroundBrush}" FontWeight="Bold" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" MaxLines="1" Visibility="{Binding Title, Converter={StaticResource NullableToVisibilityConverter}}"/>
+                    <TextBlock Text="{Binding Title}" FontSize="20" Margin="0,0,0,6" Foreground="{StaticResource KeepNoteForegroundBrush}" FontWeight="Bold" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" MaxLines="1" Visibility="{Binding Title, Converter={StaticResource NullableToVisibilityConverter}}"/>
 
                     <Grid Visibility="{Binding IsText, Converter={StaticResource BooleanToVisibilityConverter}}">
-                        <TextBlock Text="{Binding Text}" FontSize="17" Margin="0,0,0,12" Foreground="{StaticResource KeepNoteForegroundBrush}" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" MaxLines="5" Visibility="{Binding Text, Converter={StaticResource NullableToVisibilityConverter}}" />
+                        <TextBlock Text="{Binding Text}" FontSize="16" Margin="0,0,0,12" Foreground="{StaticResource KeepNoteForegroundBrush}" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" MaxLines="5" Visibility="{Binding Text, Converter={StaticResource NullableToVisibilityConverter}}" />
                     </Grid>
 
                     <Grid Visibility="{Binding IsChecklist, Converter={StaticResource BooleanToVisibilityConverter}}">
                         <StackPanel>
-                            <ListView x:Name="NoteChecklistListView" CanDragItems="False" IsItemClickEnabled="False" IsTapEnabled="False" IsActiveView="False" ItemTemplate="{StaticResource NoteChecklistListViewControlTemplate}" ItemsSource="{Binding}" DataContext="{Binding Checklist}" SelectionMode="None" Loaded="NoteChecklistListView_Loaded">
+                            <ListView x:Name="NoteChecklistListView" CanDragItems="False" IsItemClickEnabled="False" IsTapEnabled="False" IsActiveView="False" ItemTemplate="{StaticResource NoteChecklistListViewControlTemplate}" ItemsSource="{Binding}" DataContext="{Binding Checklist}" SelectionMode="None" Loaded="NoteChecklistListView_Loaded" ItemContainerStyle="{StaticResource NotePreviewChecklistItem}" Margin="0,0,0,10">
                             	<Interactivity:Interaction.Behaviors>
                             		<Core:DataTriggerBehavior Binding="{Binding Count, Mode=OneWay}" ComparisonCondition="GreaterThan" Value="5">
                             			<Core:ChangePropertyAction TargetObject="{Binding ElementName=TrimIndicator}" PropertyName="Visibility">
@@ -99,7 +99,7 @@
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
 
-                                <Viewbox Grid.Column="0" Height="40" VerticalAlignment="Top" Opacity="0">
+                                <Viewbox Grid.Column="0" Height="28" VerticalAlignment="Top" Opacity="0">
                                     <Grid Width="40">
                                         <CheckBox HorizontalAlignment="Left" IsEnabled="False"/>
                                     </Grid>
@@ -184,7 +184,7 @@
         </VisualStateManager.VisualStateGroups>
 
         <ScrollViewer x:Name="ContentRoot" Grid.Row="0" VerticalScrollMode="Enabled">
-            <Grid Margin="18,24,18,12">
+            <Grid Margin="10,24,10,12">
                 <ListView x:Name="NotesListView" Margin="-3" AllowDrop="True" CanDragItems="True" IsItemClickEnabled="True" ItemsSource="{Binding Notes}" ItemTemplate="{StaticResource NotePreviewListViewControlTemplate}" ItemClick="NotesListView_ItemClick" ItemsPanel="{StaticResource FluidItemsPanelTemplate}">
                     <Interactivity:Interaction.Behaviors>
 					    <Core:DataTriggerBehavior Binding="{Binding ItemsSource.Count, ElementName=NotesListView, Mode=OneWay}" Value="0" ComparisonCondition="Equal">
