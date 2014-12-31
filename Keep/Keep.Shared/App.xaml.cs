@@ -115,8 +115,8 @@ namespace Keep
             //disable default page transitions
             rootFrame.ContentTransitions = null;// new TransitionCollection() { new ContentThemeTransition() { HorizontalOffset = 0, VerticalOffset = 150 } };
 
-            ForceTheme(AppSettings.Instance.LoggedUser.Preferences.Theme);
-            GoogleAnalytics.EasyTracker.GetTracker().SendEvent("app", "open", "", 0);
+            //ForceTheme(AppSettings.Instance.LoggedUser.Preferences.Theme);
+            //GoogleAnalytics.EasyTracker.GetTracker().SendEvent("app", "open", "", 0);
 
 #if WINDOWS_PHONE_APP
             StatusBar statusBar = StatusBar.GetForCurrentView();

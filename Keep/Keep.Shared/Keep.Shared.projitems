@@ -50,6 +50,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)Utils\Firebase\TokenOptions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\GenerateRandomID.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\JWT\JWT.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\Migration\Migration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\Migration\MigrationInterface.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\Migration\MigrationV2.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\Migration\MigrationV1.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\TrullyObservableCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\SettingsViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\NoteEditViewModel.cs" />

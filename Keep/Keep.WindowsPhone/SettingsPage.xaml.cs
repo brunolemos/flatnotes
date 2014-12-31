@@ -56,7 +56,7 @@ namespace Keep
 #if WINDOWS_PHONE_APP
             StatusBar statusBar = StatusBar.GetForCurrentView();
             statusBarForegroundColor = statusBar.ForegroundColor;
-            statusBar.ForegroundColor = ((SolidColorBrush)App.Current.Resources["KeepBrandForegroundBrush"]).Color;
+            statusBar.ForegroundColor = ((SolidColorBrush)App.Current.Resources["KeepStatusBarForegroundBrush"]).Color;
 #endif
         }
 

@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Keep">
 
-    <SolidColorBrush x:Key="KeepNoteForegroundBrush" Color="#A0000000"/>
+    <SolidColorBrush x:Key="KeepNoteForegroundBrush" Color="#C0000000"/><!-- A0000000 -->
     <SolidColorBrush x:Key="TextBoxForegroundThemeBrush" Color="#FF000000"/>
     <SolidColorBrush x:Key="TextBoxFocusedBackgroundThemeBrush" Color="Transparent"/>
     <SolidColorBrush x:Key="TextBoxPlaceholderTextThemeBrush" Color="#70000000"/>
@@ -14,9 +14,9 @@
     <SolidColorBrush x:Key="CommandBarForegroundThemeBrush" Color="#FFFFFE"/>
     
     <SolidColorBrush x:Key="KeepBrandBackgroundBrush" Color="#f2b60c"/><!-- old: FFCD35 -->
-    <SolidColorBrush x:Key="KeepBrandForegroundBrush" Color="#665215"/><!-- 665215 -->
-    <SolidColorBrush x:Key="KeepStatusBarBackgroundBrush" Color="#f2b60c"/>
-	<SolidColorBrush x:Key="KeepStatusBarForegroundBrush" Color="#665215"/><!-- dark gray: 5f5f5f, light gray: cbc3d0 -->
+    <SolidColorBrush x:Key="KeepBrandForegroundBrush" Color="#fffffe"/><!-- 665215 -->
+    <SolidColorBrush x:Key="KeepStatusBarBackgroundBrush" Color="#f2b60c"/><!-- e59900 -->
+	<SolidColorBrush x:Key="KeepStatusBarForegroundBrush" Color="#fffffe"/><!-- dark gray: 5f5f5f, light gray: cbc3d0 -->
 
     <SolidColorBrush x:Key="KeepNoteDefaultBrush" Color="#f5f5f5"/><!-- old: FFFFFFFF -->
     <SolidColorBrush x:Key="KeepNoteRedBrush" Color="#ff6d3f"/><!-- old: FFF56545 -->

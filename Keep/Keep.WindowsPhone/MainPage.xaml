@@ -20,7 +20,7 @@
     </Page.Transitions>
     
     <Page.BottomAppBar>
-        <CommandBar x:Name="commandBar" Background="{ThemeResource KeepBrandBackgroundBrush}" Foreground="{ThemeResource KeepBrandForegroundBrush}">
+        <CommandBar x:Name="commandBar">
             <AppBarButton x:Uid="NoteTextType" Label="text" Click="NewTextNoteAppBarButton_Click">
                 <AppBarButton.Icon>
                     <BitmapIcon UriSource="Assets/appbar.text.serif.png"/>
@@ -46,7 +46,7 @@
         </ItemsPanelTemplate>
 
         <DataTemplate x:Key="NoteChecklistListViewControlTemplate">
-            <Grid Margin="0,0,0,10">
+            <Grid Margin="0,0,0,12">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
@@ -70,7 +70,7 @@
         </MenuFlyout>
 
         <DataTemplate x:Key="NotePreviewListViewControlTemplate">
-            <Border x:Name="NoteContainer" Background="{Binding Color.Color}" Margin="3" PointerPressed="NoteContainer_PointerPressed" Holding="NoteContainer_Holding" FlyoutBase.AttachedFlyout="{StaticResource NoteMenuFlyout}">
+            <Border x:Name="NoteContainer" Margin="5" Background="{Binding Color.Color}" PointerPressed="NoteContainer_PointerPressed" Holding="NoteContainer_Holding" FlyoutBase.AttachedFlyout="{StaticResource NoteMenuFlyout}">
                 <!--  CornerRadius="2" Holding="NoteContainer_Holding"  -->
                 <StackPanel Margin="10">
                     <TextBlock Text="{Binding Title}" FontSize="20" Margin="0,0,0,6" Foreground="{StaticResource KeepNoteForegroundBrush}" FontWeight="Bold" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" MaxLines="1" Visibility="{Binding Title, Converter={StaticResource NullableToVisibilityConverter}}"/>
@@ -93,7 +93,7 @@
                             	</Interactivity:Interaction.Behaviors>
                             </ListView>
 
-                            <Grid x:Name="TrimIndicator" Margin="0,-6,0,0" Visibility="Collapsed">
+                            <Grid x:Name="TrimIndicator" Margin="0,-18,0,0" Visibility="Collapsed">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="*"/>
@@ -184,8 +184,8 @@
         </VisualStateManager.VisualStateGroups>
 
         <ScrollViewer x:Name="ContentRoot" Grid.Row="0" VerticalScrollMode="Enabled">
-            <Grid Margin="10,24,10,12">
-                <ListView x:Name="NotesListView" Margin="-3" AllowDrop="True" CanDragItems="True" IsItemClickEnabled="True" ItemsSource="{Binding Notes}" ItemTemplate="{StaticResource NotePreviewListViewControlTemplate}" ItemClick="NotesListView_ItemClick" ItemsPanel="{StaticResource FluidItemsPanelTemplate}">
+            <Grid Margin="10,12,10,12">
+                <ListView x:Name="NotesListView" Margin="-5" AllowDrop="True" CanDragItems="True" IsItemClickEnabled="True" ItemsSource="{Binding Notes}" ItemTemplate="{StaticResource NotePreviewListViewControlTemplate}" ItemClick="NotesListView_ItemClick" ItemsPanel="{StaticResource FluidItemsPanelTemplate}">
                     <Interactivity:Interaction.Behaviors>
 					    <Core:DataTriggerBehavior Binding="{Binding ItemsSource.Count, ElementName=NotesListView, Mode=OneWay}" Value="0" ComparisonCondition="Equal">
 						    <Core:GoToStateAction StateName="EmptyNoteVisualState"/>

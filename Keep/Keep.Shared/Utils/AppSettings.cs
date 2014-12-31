@@ -4,8 +4,10 @@ using System.Collections.Generic;
 using Windows.Storage;
 
 using Newtonsoft.Json;
-using Keep.Models;
 using System.Threading.Tasks;
+
+using Keep.Models;
+using Keep.Utils.Migration;
 
 namespace Keep.Utils
 {
@@ -13,6 +15,7 @@ namespace Keep.Utils
     {
         public static readonly AppSettings Instance = new AppSettings();
         private ApplicationDataContainer localSettings;
+        private StorageFolder localFolder;
 
         // The key names of our settings
         private const string LOGGEDUSER_KEY = "KeepSetting_LoggedUser";
@@ -24,12 +27,30 @@ namespace Keep.Utils
         {
             // Get the settings for this application.
             if (!App.IsDesignMode)
+            {
                 localSettings = ApplicationData.Current.LocalSettings;
+                localFolder = ApplicationData.Current.LocalFolder;
+            }
 
+            // Structure version
+            Debug.WriteLine("Version: " + ApplicationData.Current.Version.ToString());
+            //Keep.Utils.Migration.Migration.Migrate(ApplicationData.Current.Version);
+
+            //String json = GetValueOrDefault<string>(LOGGEDUSER_KEY, "");
+            //LoggedUser = (String.IsNullOrEmpty(json)) ? LOGGEDUSER_DEFAULT : JsonConvert.DeserializeObject<User>(json);
+
+            LoggedUser = LOGGEDUSER_DEFAULT;
+            //loadData();
+        }
+
+        private async void loadData()
+        {
             //LoggedUser
-            string json = GetValueOrDefault<string>(LOGGEDUSER_KEY, ""); 
-            Debug.WriteLine(json); 
+            StorageFile dataFile = await localFolder.GetFileAsync("data.txt");
+            String json = await FileIO.ReadTextAsync(dataFile);
+            Debug.WriteLine("Read from data.txt: " + json);
             LoggedUser = (String.IsNullOrEmpty(json)) ? LOGGEDUSER_DEFAULT : JsonConvert.DeserializeObject<User>(json);
+            LoggedUser.NotifyChanges();
         }
 
         public async Task<bool> AddOrUpdateValue( string Key, Object value )
@@ -85,6 +106,9 @@ namespace Keep.Utils
         public async void SaveLoggedUser()
         {
             await AddOrUpdateValue(LOGGEDUSER_KEY, (LoggedUser == null ? "{}" : JsonConvert.SerializeObject(LoggedUser)));
+
+            //StorageFile dataFile = await localFolder.CreateFileAsync("data.txt", Windows.Storage.CreationCollisionOption.ReplaceExisting);
+            //await FileIO.WriteTextAsync(dataFile, JsonConvert.SerializeObject(LoggedUser));
         }
     }
 }

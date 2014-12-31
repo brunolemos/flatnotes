@@ -34,7 +34,9 @@ namespace Keep
 
         public NoteEditViewModel viewModel;
         ChecklistItem checklistItemToDelete = null;
+        Color? statusBarBackgroundColor = null;
         Color? statusBarForegroundColor = null;
+        double statusBarBackgroundOpacity = 0;
 
         public SolidColorBrush AnimatedColor { get { return (SolidColorBrush)GetValue(AnimatedColorProperty); } private set { SetValue(AnimatedColorProperty, value); } }
         public readonly DependencyProperty AnimatedColorProperty = DependencyProperty.Register("AnimatedColor", typeof(SolidColorBrush), typeof(Page), null);
@@ -86,13 +88,15 @@ namespace Keep
 #if WINDOWS_PHONE_APP
             StatusBar statusBar = StatusBar.GetForCurrentView();
             statusBarForegroundColor = statusBar.ForegroundColor;
+            statusBarBackgroundColor = statusBar.BackgroundColor;
+            statusBarBackgroundOpacity = statusBar.BackgroundOpacity;
 
-            if (App.Current.RequestedTheme != ApplicationTheme.Light)
-            {
+            //if (App.Current.RequestedTheme != ApplicationTheme.Light)
+            //{
                 //statusBar.BackgroundColor = Colors.Black;
                 //statusBar.BackgroundOpacity = 0.20;
                 updateDarkerColor();
-            }
+            //}
 #endif
         }
 
@@ -114,11 +118,13 @@ namespace Keep
         private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
         {
 #if WINDOWS_PHONE_APP
-            if (App.Current.RequestedTheme != ApplicationTheme.Light)
-            {
+            //if (App.Current.RequestedTheme != ApplicationTheme.Light)
+            //{
                 StatusBar statusBar = StatusBar.GetForCurrentView();
+                statusBar.BackgroundColor = statusBarBackgroundColor;
                 statusBar.ForegroundColor = statusBarForegroundColor;
-            }
+                statusBar.BackgroundOpacity = statusBarBackgroundOpacity;
+            //}
 #endif
 
             if (viewModel.Note == null) return;
@@ -191,15 +197,18 @@ namespace Keep
             return color;
         }
 
-        private async void updateDarkerColor() {
+        private void updateDarkerColor() {
             Color color = new Color().FromHex(viewModel.Note.Color.Color);
 
 #if WINDOWS_PHONE_APP
                 StatusBar statusBar = StatusBar.GetForCurrentView();
-                statusBar.ForegroundColor = getDarkerColor(color, 0.40);
+                statusBar.BackgroundOpacity = 1;
+                statusBar.BackgroundColor = new Color().FromHex(viewModel.Note.Color.DarkColor1);
+                statusBar.ForegroundColor = Color.FromArgb(0xFF, 0xFF, 0xFF, 0xFE);
+                //statusBar.ForegroundColor = getDarkerColor(color, 0.40);
 #endif
 
-                color = getDarkerColor(color);
+                color = new Color().FromHex(viewModel.Note.Color.DarkColor2); //getDarkerColor(color);
                 CommandBar.Background = new SolidColorBrush(color);
                 NoteColorPicker.Background = new SolidColorBrush(color);
         }

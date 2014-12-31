@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest" xmlns:m3="http://schemas.microsoft.com/appx/2014/manifest" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest">
-  <Identity Name="29428BrunoLemos.Keep" Publisher="CN=0B66D0B0-F691-4768-B3EE-FC3873EB0D73" Version="1.3.0.0" />
+  <Identity Name="29428BrunoLemos.Keep" Publisher="CN=0B66D0B0-F691-4768-B3EE-FC3873EB0D73" Version="1.4.0.0" />
   <mp:PhoneIdentity PhoneProductId="da41b87e-8eb3-4c5b-b3cd-d89ac037f4b6" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>Keep 8.1</DisplayName>
