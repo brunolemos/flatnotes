@@ -1,6 +1,6 @@
 ﻿<ViewModels:NoteEditViewModel xmlns:ViewModels="using:Keep.ViewModels" xmlns:Models="using:Keep.Models">
 	<ViewModels:NoteEditViewModel.Note>
-        <Models:Note Title="Sample note" Text="This is a text note" IsChecklist="True">
+        <Models:Note Title="Sample note" Text="" IsChecklist="True">
             <Models:Note.Color>
                 <Models:NoteColor Key="BLUE" Color="#FF66CCDD"/>
             </Models:Note.Color>

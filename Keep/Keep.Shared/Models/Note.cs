@@ -1,34 +1,24 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Text;
-using System.Windows;
 using System.Runtime.Serialization;
-using Windows.UI.StartScreen;
-
-using Keep.Utils;
-using Keep.Models.Interfaces;
 
 namespace Keep.Models
 {
     public class Notes : ObservableCollection<Note> { }
 
     [DataContract]
-    public class Note : BaseModel, IIdentifiableModelInterface
+    public class Note : ModelBase
     {
         public bool Changed = false;
-        public String GetID() { return ID; }
-        public DateTime GetCreatedAt() { return CreatedAt; }
-        public DateTime GetUpdatedAt() { return UpdatedAt; }
 
-        public bool IsPinned { get { isPinned = SecondaryTile.Exists(this.ID); return isPinned; } set { if (isPinned != value) { isPinned = value; NotifyPropertyChanged("IsPinned"); } } }
-        private bool isPinned { get { return isPinned_value; } set { if (isPinned_value != value) { isPinned_value = value; NotifyPropertyChanged("IsPinned"); } } }
-        private bool isPinned_value;
+        //public bool IsPinned { get { isPinned = SecondaryTile.Exists(this.ID); return isPinned; } set { if (isPinned != value) { isPinned = value; NotifyPropertyChanged("IsPinned"); } } }
+        //private bool isPinned { get { return isPinned_value; } set { if (isPinned_value != value) { isPinned_value = value; NotifyPropertyChanged("IsPinned"); } } }
+        //private bool isPinned_value;
 
-        public String ID { get { return id; } private set { id = value; } }
+        public string ID { get { return id; } private set { id = value; } }
         [DataMember(Name = "ID")]
-        private String id = GenerateRandomID.Generate();
+        private string id = Guid.NewGuid().ToString();
 
         public bool IsChecklist { get { return isChecklist; } set { if (isChecklist != value) { isChecklist = value; if (value) EnableChecklist(); else DisableChecklist(); NotifyPropertyChanged("IsChecklist"); NotifyPropertyChanged("IsText"); } } }
         [DataMember(Name = "IsChecklist")]
@@ -37,7 +27,7 @@ namespace Keep.Models
         [IgnoreDataMember]
         public bool IsText { get { return !IsChecklist; } }
 
-        public String Title { get { return title; } set { if ( title != value ) { title = value; NotifyPropertyChanged( "Title" ); } } }
+        public String Title { get { return title; } set { if (title != value) { title = value; NotifyPropertyChanged("Title"); } } }
         [DataMember(Name = "Title")]
         private String title;
 
@@ -45,18 +35,17 @@ namespace Keep.Models
         [DataMember(Name = "Text")]
         private String text;
 
-        public NoteImages Images { get { return images; } set { replaceNoteImages(value); NotifyPropertyChanged("Images"); } }
-        [DataMember(Name = "Images")]
-        private NoteImages images = new NoteImages();
+        //public NoteImages Images { get { return images; } set { replaceNoteImages(value); NotifyPropertyChanged("Images"); } }
+        //[DataMember(Name = "Images")]
+        //private NoteImages images = new NoteImages();
 
-        public Checklist Checklist { get { return checklist; } set { replaceChecklist(value); NotifyPropertyChanged("Checklist"); } }
+        public Checklist Checklist { get { return checklist; } private set { replaceChecklist(value); NotifyPropertyChanged("Checklist"); } }
         [DataMember(Name = "Checklist")]
         private Checklist checklist = new Checklist();
 
         [IgnoreDataMember]
-        public NoteColor Color { get { return color; } set { _colortmp = value is NoteColor ? value : NoteColor.DEFAULT; if ( color.Key != _colortmp.Key ) { color = _colortmp; NotifyPropertyChanged( "Color" ); } } }
+        public NoteColor Color { get { return color; } set { color = value is NoteColor ? value : NoteColor.DEFAULT; NotifyPropertyChanged("Color"); } }
         private NoteColor color = NoteColor.DEFAULT;
-        private NoteColor _colortmp = NoteColor.DEFAULT;
 
         [DataMember(Name = "Color")]
         private string _color { get { return Color.Key; } set { color = new NoteColor(value); } }
@@ -68,34 +57,41 @@ namespace Keep.Models
         public DateTime UpdatedAt { get { return updatedAt; } set { updatedAt = value; } }
         [DataMember(Name = "UpdatedAt")]
         private DateTime updatedAt = DateTime.Now;
-        
-        public Note() {
+
+        public Note()
+        {
             PropertyChanged += Note_PropertyChanged;
-            //Checklist.CollectionChanged += (s, e) => NotifyPropertyChanged("Checklist");
+            Checklist.CollectionChanged += (s, e) => NotifyPropertyChanged("Checklist");
         }
 
-        public Note( string title = "", string text = "", NoteColor color = null ) : base()
+        public Note(bool isChecklist = false) : this()
         {
-            this.Title = title;
-            this.Text = text;
-            this.Color = color;
-            this.IsChecklist = false;
+            this.isChecklist = isChecklist;
         }
 
-        public Note( string title, Checklist checklist, NoteColor color = null ) : base()
+        public Note(string title, string text = "", NoteColor color = null) : this()
         {
-            this.Title = title;
-            this.Text = "";
-            this.Color = color;
+            this.title = title;
+            this.text = text;
+            this.color = color is NoteColor ? color : NoteColor.DEFAULT;
+        }
 
-            this.IsChecklist = true;
-            this.Checklist = checklist;
+        public Note(string title, Checklist checklist, NoteColor color = null) : this()
+        {
+            this.title = title;
+            this.text = "";
+            this.color = color is NoteColor ? color : NoteColor.DEFAULT;
+
+            this.isChecklist = true;
+            this.checklist = checklist;
         }
 
         void Note_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            //Debug.WriteLine("Note_PropertyChanged " + e.PropertyName);
+            Debug.WriteLine("Note_PropertyChanged " + e.PropertyName);
             Changed = true;
+
+            Touch();
         }
 
         public void Touch()
@@ -106,7 +102,7 @@ namespace Keep.Models
 
         public bool ToggleChecklist()
         {
-            if ( !this.IsChecklist )
+            if (!this.IsChecklist)
             {
                 this.IsChecklist = true;
                 return true;
@@ -122,13 +118,13 @@ namespace Keep.Models
         {
             this.isChecklist = true;
 
-            if ( !( string.IsNullOrEmpty( Text ) ) )
+            if (!(string.IsNullOrEmpty(Text)))
             {
-                string[] lines = Text.Split( Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries );
+                string[] lines = Text.Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
 
-                this.Checklist = new Checklist();
-                foreach ( string line in lines )
-                    Checklist.Add ( new ChecklistItem( line ) );
+                Checklist.Clear();
+                foreach (string line in lines)
+                    Checklist.Add(new ChecklistItem(line));
             }
 
             Text = "";
@@ -136,7 +132,6 @@ namespace Keep.Models
 
         private void DisableChecklist()
         {
-            Debug.WriteLine("DisableChecklist " + Checklist.Count);
             this.isChecklist = false;
 
             Text = GetTextFromChecklist();
@@ -146,7 +141,7 @@ namespace Keep.Models
 
         public bool IsEmpty()
         {
-            return String.IsNullOrEmpty(Title) && ((!IsChecklist && String.IsNullOrEmpty(Text)) || (IsChecklist && Checklist.Count <= 0)) && Images.Count <= 0;
+            return String.IsNullOrEmpty(Title) && ((!IsChecklist && String.IsNullOrEmpty(Text)) || (IsChecklist && Checklist.Count <= 0));// && Images.Count <= 0;
         }
 
         public String GetContent()
@@ -157,7 +152,7 @@ namespace Keep.Models
         public void Trim()
         {
             if (!String.IsNullOrEmpty(Title)) Title = Title.Trim();
-            if(!String.IsNullOrEmpty(Text)) Text = Text.Trim();
+            if (!String.IsNullOrEmpty(Text)) Text = Text.Trim();
 
             if (IsChecklist && Checklist != null)
                 for (int i = Checklist.Count - 1; i >= 0; i--)
@@ -169,7 +164,7 @@ namespace Keep.Models
                 }
         }
 
-        public String GetTextFromChecklist()
+        protected String GetTextFromChecklist()
         {
             string txt = "";
 
@@ -179,18 +174,18 @@ namespace Keep.Models
             return txt.Trim();
         }
 
-        private void replaceNoteImages(NoteImages list)
-        {
-            Images.Clear();
+        //private void replaceNoteImages(NoteImages list)
+        //{
+        //    Images.Clear();
 
-            if (list == null || list.Count <= 0)
-                return;
+        //    if (list == null || list.Count <= 0)
+        //        return;
 
-            foreach (var item in list)
-                Images.Add(item);
+        //    foreach (var item in list)
+        //        Images.Add(item);
 
-            return;
-        }
+        //    return;
+        //}
 
         private void replaceChecklist(Checklist list)
         {

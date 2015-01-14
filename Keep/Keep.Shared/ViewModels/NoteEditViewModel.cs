@@ -1,29 +1,37 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Windows.UI.StartScreen;
-
-using Keep.Commands;
+using Keep.Common;
 using Keep.Models;
 using Keep.Utils;
+using Keep.Views;
 
 namespace Keep.ViewModels
 {
-    public class NoteEditViewModel
+    public class NoteEditViewModel : ViewModelBase
     {
-        public bool Changed { get { return changed; } set { changed = value; } }
-        private bool changed = false;
+        public RelayCommand ToggleChecklistCommand { get; private set; }
+        public RelayCommand DeleteNoteCommand { get; private set; }
 
-        public NoteToggleTypeCommand NoteToggleTypeCommand { get { return noteToggleTypeCommand; } }
-        private NoteToggleTypeCommand noteToggleTypeCommand = new NoteToggleTypeCommand();
+        public NoteEditViewModel()
+        {
+            ToggleChecklistCommand = new RelayCommand(ToggleChecklist);
+            DeleteNoteCommand = new RelayCommand(DeleteNote);
+        }
 
-        public DeleteNoteCommand DeleteNoteCommand { get { return deleteNoteCommand; } }
-        private DeleteNoteCommand deleteNoteCommand = new DeleteNoteCommand();
-
-        public NoteTogglePinCommand NoteTogglePinCommand { get { return noteTogglePinCommand; } }
-        private NoteTogglePinCommand noteTogglePinCommand = new NoteTogglePinCommand();
-
-        public Note Note { get { return note; } set { note = value == null ? new Note() : value; } }
+        public Note Note { get { return note; } set { note = value; NotifyPropertyChanged("Note"); } }
         private Note note = new Note();
+
+        #region COMMANDS_ACTIONS
+
+        private void ToggleChecklist()
+        {
+            Note.ToggleChecklist();
+        }
+
+        private async void DeleteNote()
+        {
+            await AppData.RemoveNote(Note);
+            App.RootFrame.Navigate(typeof(MainPage));
+        }
+
+        #endregion
     }
 }

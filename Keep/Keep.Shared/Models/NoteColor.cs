@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization;
 using Windows.UI;
 using Windows.UI.Xaml.Media;
@@ -13,120 +12,55 @@ namespace Keep.Models
     public sealed class NoteColor
     {
         [DataMember]
-        public string Key { get; private set; }
-        public string Color { get; private set; }
-        public string DarkColor1 { get; private set; }
-        public string DarkColor2 { get; private set; }
+        public string Key { get; internal set; }
+        public SolidColorBrush Color { get; internal set; }
+        public SolidColorBrush DarkColor1 { get; private set; }
+        public SolidColorBrush DarkColor2 { get; private set; }
 
-        public static readonly NoteColor DEFAULT    = new NoteColor("DEFAULT",  "#f5f5f5", "#aaaaaa", "#999999");// ((SolidColorBrush)App.Current.Resources["KeepNoteDefaultBrush"]).Color.ToString());
-        public static readonly NoteColor RED        = new NoteColor("RED",      "#ff6d3f", "#ff6d3f", "#ea5f39");// ((SolidColorBrush)App.Current.Resources["KeepNoteRedBrush"]).Color.ToString());
-        public static readonly NoteColor ORANGE     = new NoteColor("ORANGE",   "#ff9700", "#ff9700", "#f47b00");// ((SolidColorBrush)App.Current.Resources["KeepNoteOrangeBrush"]).Color.ToString());
-        public static readonly NoteColor YELLOW     = new NoteColor("YELLOW",   "#ffe900", "#ffc000", "#f4a800");// ((SolidColorBrush)App.Current.Resources["KeepNoteYellowBrush"]).Color.ToString());
-        public static readonly NoteColor GRAY       = new NoteColor("GRAY",     "#b8c4c9", "#9badb6", "#8fa3ad");// ((SolidColorBrush)App.Current.Resources["KeepNoteGrayBrush"]).Color.ToString());
-        public static readonly NoteColor BLUE       = new NoteColor("BLUE",     "#3fc3ff", "#3fc3ff", "#00afff");// ((SolidColorBrush)App.Current.Resources["KeepNoteBlueBrush"]).Color.ToString());
-        public static readonly NoteColor TEAL       = new NoteColor("TEAL",     "#1ce8b5", "#1ce8b5", "#11c19f");// ((SolidColorBrush)App.Current.Resources["KeepNoteTealBrush"]).Color.ToString());
-        public static readonly NoteColor GREEN      = new NoteColor("GREEN",    "#8ac249", "#8ac249", "#679e37");// ((SolidColorBrush)App.Current.Resources["KeepNoteGreenBrush"]).Color.ToString());
+        public static readonly NoteColor DEFAULT    = new NoteColor("DEFAULT",  Windows.UI.Color.FromArgb(0xFF, 0xF5, 0xF5, 0xF5));
+        public static readonly NoteColor RED        = new NoteColor("RED",      Windows.UI.Color.FromArgb(0xFF, 0xFF, 0x6D, 0x3F));
+        public static readonly NoteColor ORANGE     = new NoteColor("ORANGE",   Windows.UI.Color.FromArgb(0xFF, 0xFF, 0x97, 0x00));
+        public static readonly NoteColor YELLOW     = new NoteColor("YELLOW",   Windows.UI.Color.FromArgb(0xFF, 0xFF, 0xE9, 0x00));
+        public static readonly NoteColor GRAY       = new NoteColor("GRAY",     Windows.UI.Color.FromArgb(0xFF, 0xB8, 0xC4, 0xC9));
+        public static readonly NoteColor BLUE       = new NoteColor("BLUE",     Windows.UI.Color.FromArgb(0xFF, 0x3F, 0xC3, 0xFF));
+        public static readonly NoteColor TEAL       = new NoteColor("TEAL",     Windows.UI.Color.FromArgb(0xFF, 0x1C, 0xE8, 0xB5));
+        public static readonly NoteColor GREEN      = new NoteColor("GREEN",    Windows.UI.Color.FromArgb(0xFF, 0x8A, 0xC2, 0x49));
 
-        private static readonly List<NoteColor> ColorsList = new List<NoteColor>()
+        public static readonly Dictionary<string, NoteColor> Colors = new Dictionary<string, NoteColor>()
         {
-            { NoteColor.DEFAULT },
-            { NoteColor.RED },
-            { NoteColor.ORANGE },
-            { NoteColor.YELLOW },
-            { NoteColor.GRAY },
-            { NoteColor.BLUE },
-            { NoteColor.TEAL },
-            { NoteColor.GREEN },
-        };
-
-        private static readonly Dictionary<string, NoteColor> Colors = new Dictionary<string, NoteColor>()
-        {
-            { ColorsList[0].Key, ColorsList[0]},
-            { ColorsList[1].Key, ColorsList[1]},
-            { ColorsList[2].Key, ColorsList[2]},
-            { ColorsList[3].Key, ColorsList[3]},
-            { ColorsList[4].Key, ColorsList[4]},
-            { ColorsList[5].Key, ColorsList[5]},
-            { ColorsList[6].Key, ColorsList[6]},
-            { ColorsList[7].Key, ColorsList[7]},
+            { DEFAULT.Key, DEFAULT},
+            { RED.Key, RED},
+            { ORANGE.Key, ORANGE},
+            { YELLOW.Key, YELLOW},
+            { GRAY.Key, GRAY},
+            { BLUE.Key, BLUE},
+            { TEAL.Key, TEAL},
+            { GREEN.Key, GREEN},
         };
 
         public NoteColor()
         {
             this.Key = NoteColor.DEFAULT.Key;
             this.Color = NoteColor.DEFAULT.Color;
-            this.DarkColor1 = NoteColor.DEFAULT.DarkColor1;
-            this.DarkColor2 = NoteColor.DEFAULT.DarkColor2;
         }
 
         public NoteColor( string key )
         {
-            if ( Colors.ContainsKey( key ) )
-            {
-                this.Key = Colors[key].Key;
-                this.Color = Colors[key].Color;
-                this.DarkColor1 = Colors[key].DarkColor1;
-                this.DarkColor2 = Colors[key].DarkColor2;
-            }
-            else
-            {
-                this.Key = NoteColor.DEFAULT.Key;
-                this.Color = NoteColor.DEFAULT.Color;
-                this.DarkColor1 = NoteColor.DEFAULT.DarkColor1;
-                this.DarkColor2 = NoteColor.DEFAULT.DarkColor2;
-            }
+            if (!Colors.ContainsKey(key)) key = "DEFAULT";
+
+            this.Key = Colors[key].Key;
+            this.Color = Colors[key].Color;
         }
 
-        private NoteColor(string key, string color)
+        private NoteColor(string key, Color color)
         {
             this.Key = key;
-            this.Color = color;
-            this.DarkColor1 = color;
-            this.DarkColor2 = color;
-        }
-
-        private NoteColor(string key, string color, string darkColor1, string darkColor2)
-        {
-            this.Key = key;
-            this.Color = color;
-            this.DarkColor1 = darkColor1;
-            this.DarkColor2 = darkColor2;
-        }
-
-        public static NoteColor Random()
-        {
-            int index = new Random().Next( 1, Colors.Count );
-
-            int count = 0;
-            foreach ( KeyValuePair< string, NoteColor > item in Colors )
-            {
-                count++;
-                if ( count == index )
-                    return item.Value;
-            }
-
-            return NoteColor.DEFAULT;
-        }
-
-        public NoteColor Next()
-        {
-            int pos = ColorsList.FindIndex(n => n.Key == this.Key);
-            int nextPos = pos >= ColorsList.Count - 1 ? 0 : pos + 1;
-
-            return ColorsList[nextPos];
-        }
-
-        public NoteColor Previous()
-        {
-            int pos = ColorsList.FindIndex(n => n.Key == this.Key);
-            int previousPos = pos <= 1 ? 0 : pos - 1;
-
-            return ColorsList[previousPos];
+            this.Color = new SolidColorBrush(color);
         }
 
         public override string ToString()
         {
-            return this.Color;
+            return this.Color.Color.ToString();
         }
     }
 }
