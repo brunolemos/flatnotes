@@ -19,7 +19,6 @@ namespace Keep.ViewModels
         public RelayCommand DeleteNoteCommand { get; private set; }
 
         public Notes Notes { get { return AppData.Notes; } set { AppData.Notes = value; } }
-
         public int Columns { get { return AppSettings.Instance.Columns; } internal set { AppSettings.Instance.Columns = value; } }
 
         #region COMMANDS_ACTIONS
@@ -33,19 +32,16 @@ namespace Keep.ViewModels
             DeleteNoteCommand = new RelayCommand(DeleteNote, CanDeleteNote);
 
             AppData.NotesChanged += (s, e) => NotifyPropertyChanged("Notes");
+            AppSettings.Instance.ColumnsChanged += (s, e) => NotifyPropertyChanged("Columns");
         }
 
         private void CreateTextNote()
         {
-            App.Watch.Restart();
-
             App.RootFrame.Navigate(typeof(NoteEditPage), new Note());
         }
 
         private void CreateChecklistNote()
         {
-            App.Watch.Restart();
-
             App.RootFrame.Navigate(typeof(NoteEditPage), new Note(true));
         }
 

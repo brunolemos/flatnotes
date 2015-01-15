@@ -11,7 +11,8 @@ namespace Keep.Utils
     {
         public static readonly AppSettings Instance = new AppSettings();
 
-        public event EventHandler ThemeChanged;
+        public event EventHandler<ThemeEventArgs> ThemeChanged;
+        public event EventHandler ColumnsChanged;
 
         private const string NOTES_FILENAME = "notes.json";
         private static Notes NOTES_DEFAULT = new Notes();
@@ -30,7 +31,7 @@ namespace Keep.Utils
             set {
                 if (SetValue<ElementTheme>(THEME_KEY, value)) {
                     var handler = ThemeChanged;
-                    if (handler != null) handler(this, EventArgs.Empty);
+                    if (handler != null) handler(this, new ThemeEventArgs(value));
                 }
             }
         }
@@ -38,7 +39,14 @@ namespace Keep.Utils
         public int Columns
         {
             get { return GetValueOrDefault(COLUMNS_KEY, COLUMNS_DEFAULT); }
-            set { SetValue<int>(COLUMNS_KEY, value); }
+            set
+            {
+                if (SetValue<int>(COLUMNS_KEY, value))
+                {
+                    var handler = ColumnsChanged;
+                    if (handler != null) handler(this, EventArgs.Empty);
+                }
+            }
         }
 
         public async Task<Notes> LoadNotes() { return await ReadFileOrDefault(NOTES_FILENAME, NOTES_DEFAULT); }

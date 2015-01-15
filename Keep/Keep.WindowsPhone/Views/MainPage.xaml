@@ -7,8 +7,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:Controls="using:Keep.Controls"
     mc:Ignorable="d"
-    NavigationCacheMode="Required"
-    Background="{ThemeResource KeepStatusBarBackgroundBrush}"
+    NavigationCacheMode="Enabled"
+    Background="{ThemeResource AppStatusBarBackgroundBrush}"
     DataContext="{Binding Source={StaticResource MainViewModel}}"
     d:DataContext="{d:DesignData /SampleData/MainViewModelSampleData.xaml}">
     

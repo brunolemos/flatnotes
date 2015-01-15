@@ -32,7 +32,7 @@ namespace Keep.Common
                 if (typeof(T) != typeof(string)) return JsonConvert.DeserializeObject<T>(value.ToString());
                 return (T)value;
             }
-            catch (System.Exception)
+            catch (Exception)
             {
                 return defaultValue;
             }
@@ -48,7 +48,7 @@ namespace Keep.Common
 
                 return true;
             }
-            catch (System.Exception)
+            catch (Exception)
             {
                 return false;
             }

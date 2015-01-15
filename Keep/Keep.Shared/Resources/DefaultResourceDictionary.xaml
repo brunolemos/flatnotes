@@ -5,9 +5,11 @@
     
     <SolidColorBrush x:Key="KeepNoteForegroundBrush" Color="#C0000000"/>
     
-    <SolidColorBrush x:Key="KeepStatusBarBackgroundBrush" Color="#e59900"/>
-    <SolidColorBrush x:Key="KeepStatusBarForegroundBrush" Color="#403003"/>
-
+    <SolidColorBrush x:Key="AppStatusBarBackgroundBrush" Color="#E59900"/>
+    <SolidColorBrush x:Key="AppStatusBarForegroundBrush" Color="#403003"/>
+    
+    <SolidColorBrush x:Key="KeepNoteCommandBarForegroundThemeBrush" Color="Black"/>
+    
     <SolidColorBrush x:Key="PhoneDarkLowBrush" Color="#40000000"/>
     <SolidColorBrush x:Key="PhoneDarkMidBrush" Color="#70000000"/>
             
@@ -20,9 +22,5 @@
 
     <Style TargetType="ListViewItem">
         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-    </Style>
-    
-    <Style x:Key="NotePreviewChecklistItem" TargetType="ListViewItem">
-        <Setter Property="Margin" Value="0,0,0,-12"/>
     </Style>
 </ResourceDictionary>

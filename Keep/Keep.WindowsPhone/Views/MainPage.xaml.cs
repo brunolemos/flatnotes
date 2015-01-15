@@ -1,5 +1,6 @@
 ﻿using Keep.Common;
 using Keep.ViewModels;
+using System.Diagnostics;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
@@ -50,7 +51,6 @@ namespace Keep.Views
 
         private void NotesListView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            App.Watch.Restart();
             Frame.Navigate(typeof(NoteEditPage), e.ClickedItem);
         }
     }

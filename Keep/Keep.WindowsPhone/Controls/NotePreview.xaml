@@ -5,6 +5,7 @@
     xmlns:local="using:Keep.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:Converters="using:Keep.Converters"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400"
@@ -12,6 +13,13 @@
     
     <UserControl.Resources>
         <ResourceDictionary>
+            <Converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+            <Converters:NullableToVisibilityConverter x:Key="NullableToVisibilityConverter"/>
+            
+            <Style x:Key="NotePreviewChecklistItem" TargetType="ListViewItem">
+                <Setter Property="Margin" Value="0,0,0,-12"/>
+            </Style>
+            
             <DataTemplate x:Key="NoteChecklistListViewControlTemplate">
                 <Grid Margin="0,0,0,12">
                     <Grid.ColumnDefinitions>
@@ -44,7 +52,7 @@
             </Grid>
             
             <Grid Visibility="{Binding IsChecklist, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
-                 <ListView x:Name="NoteChecklistListView" IsTapEnabled="False" ItemTemplate="{StaticResource NoteChecklistListViewControlTemplate}" ItemsSource="{Binding Mode=OneWay}" DataContext="{Binding Checklist, Mode=OneTime}" ItemContainerStyle="{StaticResource NotePreviewChecklistItem}" Margin="0,0,0,10" /><!-- Loaded="NoteChecklistListView_Loaded"-->
+                 <ListView x:Name="NoteChecklistListView" IsTapEnabled="False" ItemTemplate="{StaticResource NoteChecklistListViewControlTemplate}" ItemsSource="{Binding Mode=OneWay}" DataContext="{Binding Checklist}" ItemContainerStyle="{StaticResource NotePreviewChecklistItem}" Margin="0,0,0,10" /><!-- Loaded="NoteChecklistListView_Loaded"-->
                 <Grid Background="Transparent"/>
             </Grid>
         </StackPanel>

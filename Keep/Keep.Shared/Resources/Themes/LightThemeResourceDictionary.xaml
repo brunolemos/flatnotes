@@ -5,6 +5,7 @@
     
     <Color x:Key="AppMainColor">#FFF2B60C</Color>
     <Color x:Key="AppMainDarkenColor">#FF403003</Color>
+    
     <Color x:Key="PhoneBackgroundColor">#FFE8E8E8</Color>
     <Color x:Key="PhoneForegroundColor">#C0000000</Color>
     <Color x:Key="PhoneChromeColor">#FFDDDDDD</Color>
@@ -19,7 +20,6 @@
     
     <SolidColorBrush x:Key="CommandBarBackgroundThemeBrush" Color="{ThemeResource AppMainColor}"/>
     <SolidColorBrush x:Key="CommandBarForegroundThemeBrush" Color="{ThemeResource AppMainDarkenColor}"/>
-    <SolidColorBrush x:Key="NoteCommandBarForegroundThemeBrush" Color="White"/>
 
     <SolidColorBrush x:Key="ApplicationForegroundThemeBrush" Color="{ThemeResource PhoneForegroundColor}"/>
     <SolidColorBrush x:Key="PhoneForegroundBrush" Color="{ThemeResource PhoneForegroundColor}"/>

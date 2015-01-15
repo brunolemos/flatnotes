@@ -3,6 +3,11 @@ using Windows.UI.Xaml.Navigation;
 using Keep.Common;
 using Keep.ViewModels;
 using Keep.Models;
+using Keep.Utils;
+using System.Diagnostics;
+using Windows.UI.Xaml.Media;
+using Windows.UI;
+using Windows.UI.Xaml;
 
 namespace Keep
 {
@@ -17,11 +22,13 @@ namespace Keep
         {
             this.InitializeComponent();
 
+            //Navigation Helper
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
-        }
 
+            AppSettings.Instance.ThemeChanged += FixComboBoxTheme;
+        }
 
         private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
@@ -45,5 +52,18 @@ namespace Keep
         }
 
         #endregion
+
+        private void FixComboBoxTheme(object sender, Events.ThemeEventArgs e)
+        {
+            if (e.Theme == ElementTheme.Light)
+            {
+                ThemeComboBox.BorderBrush = new SolidColorBrush(Color.FromArgb(0xC0, 0x00, 0x00, 0x00));
+                ThemeComboBox.Foreground = new SolidColorBrush(Color.FromArgb(0xC0, 0x00, 0x00, 0x00));
+            } else
+            {
+                ThemeComboBox.BorderBrush = new SolidColorBrush(Colors.White);
+                ThemeComboBox.Foreground = new SolidColorBrush(Colors.White);
+            }
+        }
     }
 }

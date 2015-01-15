@@ -21,7 +21,6 @@ namespace Keep
 #endif
 
         public static Frame RootFrame = Window.Current.Content as Frame;
-        public static Stopwatch Watch = new Stopwatch();
 
         public App()
         {
@@ -112,12 +111,13 @@ namespace Keep
         public void UpdateTheme()
         {
             RootFrame.RequestedTheme = AppSettings.Instance.Theme;
+            ChangeStatusBarColor();
         }
 
         public static void ChangeStatusBarColor(Color? foregroundColor = null)
         {
 #if WINDOWS_PHONE_APP
-            if(foregroundColor == null) foregroundColor = (App.Current.Resources["KeepStatusBarForegroundBrush"] as SolidColorBrush).Color;
+            if (foregroundColor == null) foregroundColor = (App.Current.Resources["AppStatusBarForegroundBrush"] as SolidColorBrush).Color;
             StatusBar.GetForCurrentView().ForegroundColor = foregroundColor;
 #endif
         }

@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     NavigationCacheMode="Enabled"
-    Background="{ThemeResource KeepStatusBarBackgroundBrush}"
+    Background="{ThemeResource AppStatusBarBackgroundBrush}"
     DataContext="{Binding Source={StaticResource SettingsViewModel}}"
     d:DataContext="{d:DesignData /SampleData/SettingsViewModelSampleData.xaml}">
 
@@ -30,7 +30,7 @@
 
         <StackPanel Grid.Row="1" x:Name="ContentRoot" Margin="19,9.5,19,0">
             <TextBlock x:Uid="ThemeTextBlock" Text="Theme" Style="{StaticResource TitleTextBlockStyle}" Margin="0,0,0,6"/>
-            <ComboBox x:Name="ThemeComboBox" Margin="0,0,0,24" ItemsSource="{Binding Themes}" SelectedValue="{Binding Theme, Mode=TwoWay}" DisplayMemberPath="Name"/>
+            <ComboBox x:Name="ThemeComboBox" Margin="0,0,0,24" ItemsSource="{Binding Themes}" SelectedValue="{Binding Theme, Mode=TwoWay}" DisplayMemberPath="Name" />
             
             <TextBlock x:Uid="ColumnsTextBlock" Text="Columns" Margin="0,0,0,6" Style="{StaticResource TitleTextBlockStyle}"/>
             <Slider Margin="0,0,0,24" Minimum="0" Maximum="4" LargeChange="1" TickFrequency="1" Value="{Binding Columns, Mode=TwoWay}" />

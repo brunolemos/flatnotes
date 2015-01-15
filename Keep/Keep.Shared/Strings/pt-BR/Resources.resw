@@ -217,10 +217,10 @@
     <value>Tema</value>
   </data>
   <data name="Theme_Dark" xml:space="preserve">
-    <value>Escuro</value>
+    <value>escuro</value>
   </data>
   <data name="Theme_Light" xml:space="preserve">
-    <value>Claro</value>
+    <value>claro</value>
   </data>
   <data name="TitleTextBox.PlaceholderText" xml:space="preserve">
     <value>Título</value>
