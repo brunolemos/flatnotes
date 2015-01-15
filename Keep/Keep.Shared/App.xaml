@@ -23,6 +23,7 @@
         
             <Converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
             <Converters:NullableToVisibilityConverter x:Key="NullableToVisibilityConverter"/>
+            <Converters:FriendlyTimeConverter x:Key="FriendlyTimeConverter"/>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

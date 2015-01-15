@@ -41,13 +41,7 @@
         </DataTemplate>
     
         <ItemsPanelTemplate x:Key="FluidItemsPanelTemplate" x:Name="FluidItemsPanelTemplate">
-            <Controls:FluidGrid x:Name="NotesFluidGrid" Margin="14" Columns="{Binding Columns, Mode=OneTime, TargetNullValue=2, FallbackValue=2}" ItemMinWidth="150">
-                <Controls:FluidGrid.ChildrenTransitions>
-                    <TransitionCollection>
-                        <EntranceThemeTransition FromVerticalOffset="300"/>
-                    </TransitionCollection>
-                </Controls:FluidGrid.ChildrenTransitions>
-            </Controls:FluidGrid>
+            <Controls:FluidGrid x:Name="NotesFluidGrid" Margin="14" Columns="{Binding Columns, Mode=OneWay, TargetNullValue=2, FallbackValue=2}" ItemMinWidth="150"/>
         </ItemsPanelTemplate>
 
         <ItemsPanelTemplate x:Key="ReordableItemsPanelTemplate" x:Name="ReordableItemsPanelTemplate">
@@ -57,7 +51,7 @@
     
     <Grid x:Name="LayoutRoot" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid x:Name="ContentRoot">
-            <ListView x:Name="NotesListView" ItemsSource="{Binding Notes}" ItemsPanel="{StaticResource FluidItemsPanelTemplate}" ItemTemplate="{StaticResource NotePreviewListViewControlTemplate}" IsItemClickEnabled="True" ItemClick="NotesListView_ItemClick" ScrollViewer.VerticalScrollMode="Enabled" VerticalAlignment="Stretch"/>
+            <ListView x:Name="NotesListView" ItemsSource="{Binding Notes, Mode=OneWay}" ItemsPanel="{StaticResource FluidItemsPanelTemplate}" ItemTemplate="{StaticResource NotePreviewListViewControlTemplate}" IsItemClickEnabled="True" ItemClick="NotesListView_ItemClick" ScrollViewer.VerticalScrollMode="Enabled" VerticalAlignment="Stretch"/>
         </Grid>
     </Grid>
 </Page>

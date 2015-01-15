@@ -35,27 +35,55 @@
     </Page.Resources>
     
     <Grid x:Name="LayoutRoot">
-        <ScrollViewer ScrollViewer.VerticalScrollMode="Enabled">
-            <StackPanel x:Name="ContentRoot" Margin="0,9.5,0,0">
-                <TextBox x:Uid="TitleTextBox" x:Name="NoteTitleTextBox" PlaceholderText="Title" Text="{Binding Note.Title, Mode=TwoWay}" MinHeight="60" InputScope="Default" Background="Transparent" BorderThickness="0" FontWeight="Bold" Padding="19,12" Margin="0,12,0,0" TextWrapping="NoWrap" MaxLength="30" FontSize="24" />
-                <TextBox x:Uid="TextTextBox" x:Name="NoteTextTextBox" PlaceholderText="Text" Text="{Binding Note.Text, Mode=TwoWay}" MinHeight="400" InputScope="Default" Background="Transparent" BorderThickness="0" Padding="19,6" AcceptsReturn="True" TextWrapping="Wrap" FontSize="20" Visibility="{Binding Note.IsText, Converter={StaticResource BooleanToVisibilityConverter}}" />
+        <Grid x:Name="ContentRoot">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
 
-                <StackPanel Visibility="{Binding Note.IsChecklist, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
-                    <ListView x:Name="NoteChecklistListView" AllowDrop="True" CanDragItems="True" ItemTemplate="{StaticResource NoteChecklistListViewControlTemplate}" ItemsSource="{Binding}" DataContext="{Binding Note.Checklist}" SelectionMode="None" ContinuumNavigationTransitionInfo.ExitElementContainer="True"/>
-                    
-                    <Grid Margin="18,0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="30"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
+            <ScrollViewer Grid.Row="0" ScrollViewer.VerticalScrollMode="Enabled">
+                <StackPanel Margin="0,9.5,0,0">
+                    <TextBox x:Uid="TitleTextBox" x:Name="NoteTitleTextBox" PlaceholderText="Title" Text="{Binding Note.Title, Mode=TwoWay}" MinHeight="60" InputScope="Default" Background="Transparent" BorderThickness="0" FontWeight="Bold" Padding="19,12" Margin="0,12,0,0" TextWrapping="NoWrap" MaxLength="30" FontSize="24" />
+                    <TextBox x:Uid="TextTextBox" x:Name="NoteTextTextBox" PlaceholderText="Text" Text="{Binding Note.Text, Mode=TwoWay}" MinHeight="400" InputScope="Default" Background="Transparent" BorderThickness="0" Padding="19,6" AcceptsReturn="True" TextWrapping="Wrap" FontSize="20" Visibility="{Binding Note.IsText, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
-                        <CheckBox x:Name="NewChecklistItemCheckbox" Grid.Column="0" IsChecked="False" HorizontalAlignment="Left" Foreground="{StaticResource KeepNoteForegroundBrush}" BorderBrush="{StaticResource KeepNoteForegroundBrush}" RequestedTheme="Light"/>
-                        <TextBox x:Uid="NewItemTextBox" x:Name="NewChecklistItemTextBox" Grid.Column="1" PlaceholderText="New item" Text="" Foreground="{StaticResource KeepNoteForegroundBrush}" TextWrapping="Wrap" Margin="0,12,0,0" Background="Transparent" BorderThickness="0" AcceptsReturn="False" KeyDown="NewChecklistItemTextBox_KeyDown" FontSize="20"  />
-                    </Grid>
+                    <StackPanel Visibility="{Binding Note.IsChecklist, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
+                        <ListView x:Name="NoteChecklistListView" ItemsSource="{Binding Note.Checklist}" AllowDrop="True" CanDragItems="True" ItemTemplate="{StaticResource NoteChecklistListViewControlTemplate}" SelectionMode="None" ContinuumNavigationTransitionInfo.ExitElementContainer="True"/>
+
+                        <Grid Margin="18,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="30"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <CheckBox x:Name="NewChecklistItemCheckbox" Grid.Column="0" IsChecked="False" HorizontalAlignment="Left" Foreground="{StaticResource KeepNoteForegroundBrush}" BorderBrush="{StaticResource KeepNoteForegroundBrush}" RequestedTheme="Light"/>
+                            <TextBox x:Uid="NewItemTextBox" x:Name="NewChecklistItemTextBox" Grid.Column="1" PlaceholderText="New item" Text="" Foreground="{StaticResource KeepNoteForegroundBrush}" TextWrapping="Wrap" Margin="0,12,0,0" Background="Transparent" BorderThickness="0" AcceptsReturn="False" KeyDown="NewChecklistItemTextBox_KeyDown" FontSize="20"  />
+                        </Grid>
+                    </StackPanel>
                 </StackPanel>
+            </ScrollViewer>
+
+            <StackPanel Grid.Row="1" Margin="24">
+                <StackPanel Margin="0,0,0,12" Orientation="Horizontal">
+                    <TextBlock Foreground="{ThemeResource PhoneMidBrush}">
+                        <Run Text="Updated"/>
+                        <Run Text="{Binding Note.UpdatedAt, Converter={StaticResource FriendlyTimeConverter}}"/>
+                    </TextBlock>
+                    
+                    <TextBlock Foreground="{ThemeResource PhoneMidBrush}" FontStyle="Italic" Visibility="{Binding Note.Changed, Converter={StaticResource BooleanToVisibilityConverter}}">
+                        <Run 
+                            Text=" ("/><Run 
+                            Text="exit to save"/><Run 
+                            Text=")"/>
+                    </TextBlock>
+                </StackPanel>
+                
+                <TextBlock Foreground="{ThemeResource PhoneMidBrush}">
+                    <Run Text="Created"/>
+                    <Run Text="{Binding Note.CreatedAt, Converter={StaticResource FriendlyTimeConverter}}"/>
+                </TextBlock>
             </StackPanel>
-        </ScrollViewer>
-        
+        </Grid>
+
         <Controls:NoteColorPicker x:Name="NoteColorPicker" Background="{Binding Note.Color.DarkColor2}" Visibility="Collapsed"/>
     </Grid>
     

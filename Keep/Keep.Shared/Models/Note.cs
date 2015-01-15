@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Runtime.Serialization;
+using Newtonsoft.Json;
 
 namespace Keep.Models
 {
@@ -10,7 +11,8 @@ namespace Keep.Models
     [DataContract]
     public class Note : ModelBase
     {
-        public bool Changed = false;
+        public bool Changed { get { return changed; } set { if (changed != value) { changed = value; NotifyPropertyChanged("Changed"); } } }
+        public bool changed = false;
 
         //public bool IsPinned { get { isPinned = SecondaryTile.Exists(this.ID); return isPinned; } set { if (isPinned != value) { isPinned = value; NotifyPropertyChanged("IsPinned"); } } }
         //private bool isPinned { get { return isPinned_value; } set { if (isPinned_value != value) { isPinned_value = value; NotifyPropertyChanged("IsPinned"); } } }
@@ -50,18 +52,17 @@ namespace Keep.Models
         [DataMember(Name = "Color")]
         private string _color { get { return Color.Key; } set { color = new NoteColor(value); } }
 
-        public DateTime CreatedAt { get { return createdAt; } private set { createdAt = value; } }
+        public DateTime CreatedAt { get { return createdAt; } private set { createdAt = value; NotifyPropertyChanged("CreatedAt"); } }
         [DataMember(Name = "CreatedAt")]
-        private DateTime createdAt = DateTime.Now;
+        private DateTime createdAt = DateTime.UtcNow;
 
-        public DateTime UpdatedAt { get { return updatedAt; } set { updatedAt = value; } }
+        public DateTime UpdatedAt { get { return updatedAt; } set { updatedAt = value; NotifyPropertyChanged("UpdatedAt"); } }
         [DataMember(Name = "UpdatedAt")]
-        private DateTime updatedAt = DateTime.Now;
+        private DateTime updatedAt = DateTime.UtcNow;
 
         public Note()
         {
             PropertyChanged += Note_PropertyChanged;
-            Checklist.CollectionChanged += (s, e) => NotifyPropertyChanged("Checklist");
         }
 
         public Note(bool isChecklist = false) : this()
@@ -88,15 +89,18 @@ namespace Keep.Models
 
         void Note_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            Debug.WriteLine("Note_PropertyChanged " + e.PropertyName);
+            if (e.PropertyName == "Changed") return;
             Changed = true;
 
+            Debug.WriteLine("Note_PropertyChanged " + e.PropertyName);
+
+            if (e.PropertyName == "UpdatedAt") return;
             Touch();
         }
 
         public void Touch()
         {
-            UpdatedAt = DateTime.Now;
+            UpdatedAt = DateTime.UtcNow;
         }
 
 
@@ -189,6 +193,9 @@ namespace Keep.Models
 
         private void replaceChecklist(Checklist list)
         {
+            if (Checklist.Count <= 0 && (list == null || list.Count <= 0))
+                return;
+
             Checklist.Clear();
 
             if (list == null || list.Count <= 0)

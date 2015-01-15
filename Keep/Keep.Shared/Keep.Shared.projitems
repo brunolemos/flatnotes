@@ -20,7 +20,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Common\Notifiable.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\RelayCommand.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\SuspensionManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\TrullyObservableCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\BooleanToVisibilityConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\FriendlyTimeConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\NullableToVisibilityConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Events\NoteEventArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\ModelBase.cs" />
@@ -52,5 +54,8 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <PRIResource Include="$(MSBuildThisFileDirectory)Strings\en-US\Resources.resw" />
   </ItemGroup>
 </Project>

@@ -1,9 +1,14 @@
 ﻿using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Runtime.Serialization;
+using Keep.Common;
 
 namespace Keep.Models
 {
-    public class Checklist : ObservableCollection<ChecklistItem> {}
+    public class Checklist : TrulyObservableCollection<ChecklistItem>
+    {
+        public Checklist() : base(false) { }
+    }
 
     [DataContract]
     public class ChecklistItem : ModelBase

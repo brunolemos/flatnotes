@@ -44,7 +44,7 @@
             </Grid>
             
             <Grid Visibility="{Binding IsChecklist, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
-                 <ListView x:Name="NoteChecklistListView" IsTapEnabled="False" ItemTemplate="{StaticResource NoteChecklistListViewControlTemplate}" ItemsSource="{Binding Mode=OneWay}" DataContext="{Binding Checklist, Mode=OneWay}" ItemContainerStyle="{StaticResource NotePreviewChecklistItem}" Margin="0,0,0,10" /><!-- Loaded="NoteChecklistListView_Loaded"-->
+                 <ListView x:Name="NoteChecklistListView" IsTapEnabled="False" ItemTemplate="{StaticResource NoteChecklistListViewControlTemplate}" ItemsSource="{Binding Mode=OneWay}" DataContext="{Binding Checklist, Mode=OneTime}" ItemContainerStyle="{StaticResource NotePreviewChecklistItem}" Margin="0,0,0,10" /><!-- Loaded="NoteChecklistListView_Loaded"-->
                 <Grid Background="Transparent"/>
             </Grid>
         </StackPanel>

@@ -44,10 +44,11 @@ namespace Keep.Views
                 viewModel.Note = e.NavigationParameter as Note;
 
             viewModel.Note.Changed = false;
+            viewModel.Note.Checklist.CollectionChanged += (s, _e) => viewModel.Note.Touch();
+            viewModel.Note.Checklist.CollectionItemChanged += (s, _e) => viewModel.Note.Touch();
 
             previousBackground = App.RootFrame.Background;
             App.RootFrame.Background = Background;
-
         }
 
         private async void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
