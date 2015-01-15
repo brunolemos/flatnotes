@@ -25,7 +25,7 @@
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0"  Margin="19,12,0,0">
-            <TextBlock Text="settings" Margin="0,-6.5,0,26.5" Style="{ThemeResource HeaderTextBlockStyle}"/>
+            <TextBlock x:Uid="SettingsTextBlock" Text="settings" Margin="0,-6.5,0,26.5" Style="{ThemeResource HeaderTextBlockStyle}"/>
         </Grid>
 
         <StackPanel Grid.Row="1" x:Name="ContentRoot" Margin="19,9.5,19,0">
@@ -37,7 +37,7 @@
         </StackPanel>
 
         <Grid Grid.Row="2" Margin="24">
-            <TextBlock x:Uid="NoGoogleKeepIntegrationMessageTextBox" Text="This app does not integrate with official Google Keep because there isn't an API for that." TextWrapping="Wrap" HorizontalAlignment="Center" TextAlignment="Center" Foreground="{ThemeResource PhoneMidBrush}"/>
+            <TextBlock x:Uid="NoGoogleKeepIntegrationMessageTextBox" Text="This app does not integrate with official Google Keep because unfortunately it's not possible" TextWrapping="Wrap" HorizontalAlignment="Center" TextAlignment="Center" Foreground="{ThemeResource PhoneMidBrush}"/>
         </Grid>
     </Grid>
 </Page>

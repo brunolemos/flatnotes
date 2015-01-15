@@ -21,17 +21,19 @@
     <Page.BottomAppBar>
         <CommandBar>
             <CommandBar.SecondaryCommands>
-                <AppBarButton Icon="Like" Label="send feedback" Command="{Binding SendFeedbackCommand}"/>
-                <AppBarButton Icon="Setting" Label="settings" Command="{Binding OpenSettingsCommand}"/>
+                <AppBarButton x:Uid="FeedbackAppBarButton" Icon="Like" Label="send feedback" Command="{Binding SendFeedbackCommand}"/>
+                <AppBarButton x:Uid="SettingsAppBarButton" Icon="Setting" Label="settings" Command="{Binding OpenSettingsCommand}"/>
             </CommandBar.SecondaryCommands>
             
-            <AppBarButton Label="text" Command="{Binding CreateTextNoteCommand}">
+            <AppBarButton x:Uid="NoteTextType" Label="text" Command="{Binding CreateTextNoteCommand}">
                 <AppBarButton.Icon>
                     <BitmapIcon UriSource="/Assets/appbar.text.serif.png"/>
                 </AppBarButton.Icon>
             </AppBarButton>
             
-            <AppBarButton Icon="List" Label="checklist" Command="{Binding CreateChecklistNoteCommand}"/>
+            <AppBarButton x:Uid="NoteChecklistType" Icon="List" Label="checklist" Command="{Binding CreateChecklistNoteCommand}"/>
+            <!--<AppBarButton x:Uid="CameraAppBarButton" Icon="Camera" Label="camera" IsEnabled="False"/>
+            <AppBarButton x:Uid="AudioAppBarButton" Icon="Microphone" Label="audio" IsEnabled="False"/>-->
         </CommandBar>
     </Page.BottomAppBar>
     

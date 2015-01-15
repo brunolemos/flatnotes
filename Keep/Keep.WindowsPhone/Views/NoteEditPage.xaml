@@ -9,6 +9,7 @@
     mc:Ignorable="d"
     NavigationCacheMode="Required"
     Background="{Binding Note.Color.Color}"
+    Foreground="{StaticResource KeepNoteForegroundBrush}"
     DataContext="{Binding Source={StaticResource NoteEditViewModel}}"
     d:DataContext="{d:DesignData /SampleData/NoteEditViewModelSampleData.xaml}">
     
@@ -27,8 +28,8 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
-                    <CheckBox Grid.Column="0" IsChecked="{Binding IsChecked, Mode=TwoWay}" HorizontalAlignment="Left" Foreground="{StaticResource KeepNoteForegroundBrush}" BorderBrush="{StaticResource KeepNoteForegroundBrush}" RequestedTheme="Light"/>
-                    <TextBox Grid.Column="1" PlaceholderText="New item" Text="{Binding Text, Mode=TwoWay}" Foreground="{StaticResource KeepNoteForegroundBrush}" TextWrapping="Wrap" Margin="0,10,0,0" Background="Transparent" BorderThickness="0" AcceptsReturn="False" FontSize="20" /> <!--  IsReadOnly="{Binding ReorderMode, ElementName=NoteChecklistListView}" KeyDown="NoteChecklistItemTextBox_KeyDown"-->
+                    <CheckBox Grid.Column="0" IsChecked="{Binding IsChecked, Mode=TwoWay}" HorizontalAlignment="Left" BorderBrush="{StaticResource KeepNoteForegroundBrush}" RequestedTheme="Light"/>
+                    <TextBox Grid.Column="1" Text="{Binding Text, Mode=TwoWay}" TextWrapping="Wrap" Margin="0,10,0,0" Background="Transparent" BorderThickness="0" AcceptsReturn="False" FontSize="20" /> <!--  IsReadOnly="{Binding ReorderMode, ElementName=NoteChecklistListView}" KeyDown="NoteChecklistItemTextBox_KeyDown"-->
                 </Grid>
             </DataTemplate>
         </ResourceDictionary>
@@ -44,7 +45,7 @@
             <ScrollViewer Grid.Row="0" ScrollViewer.VerticalScrollMode="Enabled">
                 <StackPanel Margin="0,9.5,0,0">
                     <TextBox x:Uid="TitleTextBox" x:Name="NoteTitleTextBox" PlaceholderText="Title" Text="{Binding Note.Title, Mode=TwoWay}" MinHeight="60" InputScope="Default" Background="Transparent" BorderThickness="0" FontWeight="Bold" Padding="19,12" Margin="0,12,0,0" TextWrapping="NoWrap" MaxLength="30" FontSize="24" />
-                    <TextBox x:Uid="TextTextBox" x:Name="NoteTextTextBox" PlaceholderText="Text" Text="{Binding Note.Text, Mode=TwoWay}" MinHeight="400" InputScope="Default" Background="Transparent" BorderThickness="0" Padding="19,6" AcceptsReturn="True" TextWrapping="Wrap" FontSize="20" Visibility="{Binding Note.IsText, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                    <TextBox x:Uid="TextTextBox" x:Name="NoteTextTextBox" PlaceholderText="Text" Text="{Binding Note.Text, Mode=TwoWay}" MinHeight="300" InputScope="Default" Background="Transparent" BorderThickness="0" Padding="19,6" AcceptsReturn="True" TextWrapping="Wrap" FontSize="20" Visibility="{Binding Note.IsText, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
                     <StackPanel Visibility="{Binding Note.IsChecklist, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
                         <ListView x:Name="NoteChecklistListView" ItemsSource="{Binding Note.Checklist}" AllowDrop="True" CanDragItems="True" ItemTemplate="{StaticResource NoteChecklistListViewControlTemplate}" SelectionMode="None" ContinuumNavigationTransitionInfo.ExitElementContainer="True"/>
@@ -64,21 +65,21 @@
 
             <StackPanel Grid.Row="1" Margin="24">
                 <StackPanel Margin="0,0,0,12" Orientation="Horizontal">
-                    <TextBlock Foreground="{ThemeResource PhoneMidBrush}">
-                        <Run Text="Updated"/>
+                    <TextBlock Foreground="{StaticResource PhoneDarkMidBrush}">
+                        <Run x:Uid="UpdatedTextBox" Text="Updated"/>
                         <Run Text="{Binding Note.UpdatedAt, Converter={StaticResource FriendlyTimeConverter}}"/>
                     </TextBlock>
                     
-                    <TextBlock Foreground="{ThemeResource PhoneMidBrush}" FontStyle="Italic" Visibility="{Binding Note.Changed, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <TextBlock FontStyle="Italic" Visibility="{Binding Note.Changed, Converter={StaticResource BooleanToVisibilityConverter}}" Foreground="{StaticResource PhoneDarkMidBrush}">
                         <Run 
-                            Text=" ("/><Run 
-                            Text="exit to save"/><Run 
+                            Text=" ("/><Run x:Uid="PendingChangesTextBox"
+                            Text="pending update"/><Run 
                             Text=")"/>
                     </TextBlock>
                 </StackPanel>
                 
-                <TextBlock Foreground="{ThemeResource PhoneMidBrush}">
-                    <Run Text="Created"/>
+                <TextBlock Foreground="{StaticResource PhoneDarkMidBrush}">
+                    <Run x:Uid="CreatedTextBox" Text="Created"/>
                     <Run Text="{Binding Note.CreatedAt, Converter={StaticResource FriendlyTimeConverter}}"/>
                 </TextBlock>
             </StackPanel>

@@ -36,17 +36,17 @@ namespace Keep.Converters
             if (delta < 24 * HOUR) return String.Format(GetGlobalizedString("NHoursAgo"), ts_delta.Hours);
             if (delta < 48 * HOUR) return GetGlobalizedString("Yesterday");
             if (delta < 7 * DAY) return String.Format(GetGlobalizedString("NDaysAgo"), ts_delta.Days);
-            if (delta < 14 * DAY) return GetGlobalizedString("OneWeekAgo");
+            if (delta < 14 * DAY) return GetGlobalizedString("AWeekAgo");
             if (delta < 30 * DAY) return String.Format(GetGlobalizedString("NWeeksAgo"), Math.Round((double)(ts_delta.Days / 7)));
             if (delta < 12 * MONTH)
             {
                 int months = System.Convert.ToInt32(Math.Floor((double)ts_delta.Days / 30));
-                return months <= 1 ? GetGlobalizedString("OneMonthAgo") : String.Format(GetGlobalizedString("NMonthsAgo"), months);
+                return months <= 1 ? GetGlobalizedString("AMonthAgo") : String.Format(GetGlobalizedString("NMonthsAgo"), months);
             }
             else
             {
                 int years = System.Convert.ToInt32(Math.Floor((double)ts_delta.Days / 365));
-                return years <= 1 ? GetGlobalizedString("OneYearAgo") : String.Format(GetGlobalizedString("NYearsAgo"), years);
+                return years <= 1 ? GetGlobalizedString("AYearAgo") : String.Format(GetGlobalizedString("NYearsAgo"), years);
             }
         }
 

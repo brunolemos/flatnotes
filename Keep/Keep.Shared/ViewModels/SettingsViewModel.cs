@@ -2,6 +2,7 @@
 using Keep.Utils;
 using System.Collections.ObjectModel;
 using Windows.UI.Xaml;
+using Windows.ApplicationModel.Resources;
 
 namespace Keep.ViewModels
 {
@@ -11,8 +12,8 @@ namespace Keep.ViewModels
         {
             Themes = new ObservableCollection<ThemeModel>()
             {
-                new ThemeModel() { Name = "Light", Theme = ElementTheme.Light },
-                new ThemeModel() { Name = "Dark", Theme = ElementTheme.Dark }
+                new ThemeModel() { Theme = ElementTheme.Light, Name = ResourceLoader.GetForCurrentView().GetString("Theme_Light") },
+                new ThemeModel() { Theme = ElementTheme.Dark, Name = ResourceLoader.GetForCurrentView().GetString("Theme_Dark") }
             };
         }
 

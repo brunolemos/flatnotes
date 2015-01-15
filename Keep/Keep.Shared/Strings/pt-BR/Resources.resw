@@ -118,117 +118,117 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AudioAppBarButton.Label" xml:space="preserve">
-    <value>audio</value>
+    <value>áudio</value>
   </data>
   <data name="CameraAppBarButton.Label" xml:space="preserve">
-    <value>camera</value>
+    <value>câmera</value>
   </data>
   <data name="ColorAppBarButton.Label" xml:space="preserve">
-    <value>color</value>
+    <value>cor</value>
   </data>
   <data name="ColumnsTextBlock.Text" xml:space="preserve">
-    <value>Columns</value>
+    <value>Colunas</value>
   </data>
   <data name="CreatedTextBox.Text" xml:space="preserve">
-    <value>Created</value>
+    <value>Criado</value>
   </data>
   <data name="DeleteAppBarButton.Label" xml:space="preserve">
-    <value>delete</value>
+    <value>deletar</value>
   </data>
   <data name="DeleteMenuFlyoutItem.Text" xml:space="preserve">
-    <value>delete</value>
+    <value>deletar</value>
   </data>
   <data name="PendingChangesTextBox.Text" xml:space="preserve">
-    <value>pending update</value>
+    <value>alterações pendentes</value>
   </data>
   <data name="FeedbackAppBarButton.Label" xml:space="preserve">
-    <value>send feedback</value>
+    <value>enviar feedback</value>
   </data>
   <data name="NewItemTextBox.PlaceholderText" xml:space="preserve">
-    <value>New item</value>
+    <value>Novo item</value>
   </data>
   <data name="NoGoogleKeepIntegrationMessageTextBox.Text" xml:space="preserve">
-    <value>This app does not integrate with official Google Keep because unfortunately it's not possible</value>
+    <value>Este app não sincroniza com o Google Keep porque, infelizmente, não é possível</value>
   </data>
   <data name="NoteChecklistType.Label" xml:space="preserve">
     <value>checklist</value>
   </data>
   <data name="NoteTextType.Label" xml:space="preserve">
-    <value>text</value>
+    <value>texto</value>
   </data>
   <data name="PinToStartAppBarButton.Label" xml:space="preserve">
-    <value>pin to start</value>
+    <value>fixar</value>
   </data>
   <data name="PrettyDate_AMinuteAgo" xml:space="preserve">
-    <value>a minute ago</value>
+    <value>há um minuto</value>
   </data>
   <data name="PrettyDate_AMonthAgo" xml:space="preserve">
-    <value>one month ago</value>
+    <value>há um mês</value>
   </data>
   <data name="PrettyDate_AnHourAgo" xml:space="preserve">
-    <value>an hour ago</value>
+    <value>há uma hora</value>
   </data>
   <data name="PrettyDate_AWeekAgo" xml:space="preserve">
-    <value>one week ago</value>
+    <value>há uma semana</value>
   </data>
   <data name="PrettyDate_AYearAgo" xml:space="preserve">
-    <value>one year ago</value>
+    <value>há um ano</value>
   </data>
   <data name="PrettyDate_JustNow" xml:space="preserve">
-    <value>just now</value>
+    <value>agora</value>
   </data>
   <data name="PrettyDate_NDaysAgo" xml:space="preserve">
-    <value>{0} days ago</value>
+    <value>há {0} dias</value>
   </data>
   <data name="PrettyDate_NHoursAgo" xml:space="preserve">
-    <value>{0} hours ago</value>
+    <value>há {0} horas</value>
   </data>
   <data name="PrettyDate_NMinutesAgo" xml:space="preserve">
-    <value>{0} minutes ago</value>
+    <value>há {0} minutos</value>
   </data>
   <data name="PrettyDate_NMonthsAgo" xml:space="preserve">
-    <value>{0} months ago</value>
+    <value>há {0} meses</value>
   </data>
   <data name="PrettyDate_NWeeksAgo" xml:space="preserve">
-    <value>{0} weeks ago</value>
+    <value>há {0} semanas</value>
   </data>
   <data name="PrettyDate_NYearsAgo" xml:space="preserve">
-    <value>{0} years ago</value>
+    <value>há {0} anos</value>
   </data>
   <data name="PrettyDate_Yesterday" xml:space="preserve">
-    <value>yesterday</value>
+    <value>ontem</value>
   </data>
   <data name="SettingsAppBarButton.Label" xml:space="preserve">
-    <value>settings</value>
+    <value>configurações</value>
   </data>
   <data name="SettingsContentDialog.Title" xml:space="preserve">
-    <value>SETTINGS</value>
+    <value>CONFIGURAÇÕES</value>
   </data>
   <data name="SettingsTextBlock.Text" xml:space="preserve">
-    <value>settings</value>
+    <value>configurações</value>
   </data>
   <data name="ShareAppBarButton.Label" xml:space="preserve">
-    <value>share...</value>
+    <value>compartilhar...</value>
   </data>
   <data name="TextTextBox.PlaceholderText" xml:space="preserve">
-    <value>Text</value>
+    <value>Texto</value>
   </data>
   <data name="ThemeTextBlock.Text" xml:space="preserve">
-    <value>Theme</value>
+    <value>Tema</value>
   </data>
   <data name="Theme_Dark" xml:space="preserve">
-    <value>Dark</value>
+    <value>Escuro</value>
   </data>
   <data name="Theme_Light" xml:space="preserve">
-    <value>Light</value>
+    <value>Claro</value>
   </data>
   <data name="TitleTextBox.PlaceholderText" xml:space="preserve">
-    <value>Title</value>
+    <value>Título</value>
   </data>
   <data name="ToggleChecklistAppBarButton.Label" xml:space="preserve">
-    <value>toggle checklist</value>
+    <value>mostrar/ocultar checklist</value>
   </data>
   <data name="UpdatedTextBox.Text" xml:space="preserve">
-    <value>Updated</value>
+    <value>Atualizado</value>
   </data>
 </root>
