@@ -42,9 +42,9 @@ namespace Keep.Common
         {
             try
             {
-                string json = JsonConvert.SerializeObject(value);
-                localSettings.Values[key] = json;
-                //Debug.WriteLine("SetValue of {0} to {1}", key, json);
+                string content = typeof(T) == typeof(string) ? value.ToString() :  JsonConvert.SerializeObject(value);
+                localSettings.Values[key] = content;
+                //Debug.WriteLine("SetValue of {0} to {1}", key, content);
 
                 return true;
             }

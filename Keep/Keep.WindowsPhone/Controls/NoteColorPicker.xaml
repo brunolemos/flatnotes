@@ -29,11 +29,6 @@
             <VisualStateGroup x:Name="ColorPickerVisualStateGroup">
                 <VisualState x:Name="OpenedVisualState">
                     <Storyboard>
-                        <DoubleAnimation Duration="0:0:0.25" To="0" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="ColorsGrid" d:IsOptimized="True">
-                            <DoubleAnimation.EasingFunction>
-                                <BackEase Amplitude="0" EasingMode="EaseOut"/>
-                            </DoubleAnimation.EasingFunction>
-                        </DoubleAnimation>
                         <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="Root">
                             <DiscreteObjectKeyFrame KeyTime="0">
                                 <DiscreteObjectKeyFrame.Value>
@@ -41,6 +36,11 @@
                                 </DiscreteObjectKeyFrame.Value>
                             </DiscreteObjectKeyFrame>
                         </ObjectAnimationUsingKeyFrames>
+                        <DoubleAnimation Duration="0:0:0.25" To="0" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="ColorsGrid" d:IsOptimized="True">
+                            <DoubleAnimation.EasingFunction>
+                                <BackEase Amplitude="0" EasingMode="EaseOut"/>
+                            </DoubleAnimation.EasingFunction>
+                        </DoubleAnimation>
                     </Storyboard>
                 </VisualState>
                 <VisualState x:Name="ClosedVisualState">

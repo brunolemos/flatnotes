@@ -29,6 +29,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\NoteColor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\AppData.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\AppSettings.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\Extensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\SettingsViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ViewModelBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\NoteEditViewModel.cs" />

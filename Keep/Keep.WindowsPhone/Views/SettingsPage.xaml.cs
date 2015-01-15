@@ -25,7 +25,7 @@ namespace Keep
 
         private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
-            //App.ChangeStatusBarColor();
+            App.ChangeStatusBarColor();
         }
 
         private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)

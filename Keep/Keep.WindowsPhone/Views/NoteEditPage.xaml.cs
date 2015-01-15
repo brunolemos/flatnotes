@@ -3,8 +3,10 @@ using Keep.Models;
 using Keep.Utils;
 using Keep.ViewModels;
 using System;
+using Windows.UI;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 namespace Keep.Views
@@ -15,6 +17,7 @@ namespace Keep.Views
         private NavigationHelper navigationHelper;
 
         public NoteEditViewModel viewModel { get { return (NoteEditViewModel)DataContext; } }
+        private Brush previousBackground;
 
         public NoteEditPage()
         {
@@ -25,10 +28,6 @@ namespace Keep.Views
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
 
-            //Watch
-            Windows.Phone.UI.Input.HardwareButtons.BackPressed += (s, e) => App.Watch.Restart();
-            this.Loaded += NoteEditPage_Loaded;
-
             //Color Picker
             ColorPickerAppBarToggleButton.Checked += (s, _e) => NoteColorPicker.Open();
             ColorPickerAppBarToggleButton.Unchecked += (s, _e) => NoteColorPicker.Close();
@@ -37,28 +36,26 @@ namespace Keep.Views
             NoteColorPicker.SelectionChanged += (s, _e) => { viewModel.Note.Color = _e.AddedItems[0] as NoteColor; };
         }
 
-        private void NoteEditPage_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
-        {
-            App.Watch.Stop();
-            LoadedEllapsedTime.Text = String.Format("content shown after {0}ms", App.Watch.ElapsedMilliseconds.ToString());
-        }
-
         private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
-            LoadStateEllapsedTime.Text = String.Format("navigated in {0}ms", App.Watch.ElapsedMilliseconds.ToString());
+            App.ChangeStatusBarColor(Colors.Black);
 
             if(e.NavigationParameter is Note)
                 viewModel.Note = e.NavigationParameter as Note;
 
             viewModel.Note.Changed = false;
+
+            previousBackground = App.RootFrame.Background;
+            App.RootFrame.Background = Background;
+
         }
 
         private async void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
         {
+            App.RootFrame.Background = previousBackground;
+
             if (viewModel.Note.Changed)
                 await AppData.CreateOrUpdateNote(viewModel.Note);
-
-            viewModel.Note = null;
         }
 
         #region NavigationHelper registration

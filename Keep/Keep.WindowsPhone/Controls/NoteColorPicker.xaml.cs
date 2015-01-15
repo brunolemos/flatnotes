@@ -48,9 +48,15 @@ namespace Keep.Controls
         public NoteColorPicker()
         {
             this.InitializeComponent();
-            Close(false);
 
+            this.Loaded += NoteColorPicker_Loaded;
             ColorPickerVisualStateGroup.CurrentStateChanged += ColorPickerVisualStateGroup_CurrentStateChanged;
+        }
+
+        private void NoteColorPicker_Loaded(object sender, RoutedEventArgs e)
+        {
+            Visibility = Visibility.Collapsed;
+            Close(false);
         }
 
         private void ColorPickerVisualStateGroup_CurrentStateChanged(object sender, VisualStateChangedEventArgs e)

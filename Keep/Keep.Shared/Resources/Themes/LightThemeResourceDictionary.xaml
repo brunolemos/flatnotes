@@ -5,7 +5,7 @@
     
     <Color x:Key="AppMainColor">#FFF2B60C</Color>
     <Color x:Key="AppMainDarkenColor">#FF403003</Color>
-    <Color x:Key="PhoneBackgroundColor">#FFE6E6E6</Color>
+    <Color x:Key="PhoneBackgroundColor">#FFE8E8E8</Color>
     <Color x:Key="PhoneForegroundColor">#C0000000</Color>
     <Color x:Key="PhoneChromeColor">#FFDDDDDD</Color>
     <Color x:Key="PhoneLowColor">#40000000</Color>
@@ -17,16 +17,17 @@
     <SolidColorBrush x:Key="FlyoutBackgroundThemeBrush" Color="{ThemeResource PhoneBackgroundColor}"/>
     <SolidColorBrush x:Key="ContentDialogBackgroundThemeBrush" Color="{ThemeResource PhoneBackgroundColor}"/>
     
-    <SolidColorBrush x:Key="CommandBarBackgroundThemeBrush" Color="{StaticResource AppMainColor}"/>
+    <SolidColorBrush x:Key="CommandBarBackgroundThemeBrush" Color="{ThemeResource AppMainColor}"/>
     <SolidColorBrush x:Key="CommandBarForegroundThemeBrush" Color="{ThemeResource AppMainDarkenColor}"/>
+    <SolidColorBrush x:Key="NoteCommandBarForegroundThemeBrush" Color="White"/>
 
     <SolidColorBrush x:Key="ApplicationForegroundThemeBrush" Color="{ThemeResource PhoneForegroundColor}"/>
     <SolidColorBrush x:Key="PhoneForegroundBrush" Color="{ThemeResource PhoneForegroundColor}"/>
     <SolidColorBrush x:Key="ComboBoxForegroundThemeBrush" Color="{ThemeResource PhoneForegroundColor}"/>
     <SolidColorBrush x:Key="ComboBoxBorderThemeBrush" Color="{ThemeResource PhoneForegroundColor}"/>
 
-    <SolidColorBrush x:Key="PhoneChromeBrush" Color="{StaticResource PhoneChromeColor}"/>
-    <SolidColorBrush x:Key="PhoneLowBrush" Color="{StaticResource PhoneLowColor}"/>
+    <SolidColorBrush x:Key="PhoneChromeBrush" Color="{ThemeResource PhoneChromeColor}"/>
+    <SolidColorBrush x:Key="PhoneLowBrush" Color="{ThemeResource PhoneLowColor}"/>
             
     <Style x:Key="LogoImage" TargetType="Image">
         <Setter Property="Source" Value="Assets/Light/LogoTransparent.png"/>

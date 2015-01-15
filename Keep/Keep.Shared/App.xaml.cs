@@ -9,6 +9,8 @@ using Windows.UI.Xaml.Navigation;
 using Keep.Views;
 using Windows.UI;
 using Windows.UI.ViewManagement;
+using Windows.UI.Xaml.Media;
+using Keep.Utils;
 
 namespace Keep
 {
@@ -24,6 +26,8 @@ namespace Keep
         public App()
         {
             this.InitializeComponent();
+
+            AppSettings.Instance.ThemeChanged += (s, e) => UpdateTheme();
             this.Suspending += this.OnSuspending;
         }
 
@@ -54,6 +58,9 @@ namespace Keep
                 // Place the frame in the current Window
                 Window.Current.Content = RootFrame;
             }
+
+            //user theme
+            UpdateTheme();
 
             if (RootFrame.Content == null)
             {
@@ -102,10 +109,15 @@ namespace Keep
             deferral.Complete();
         }
 
+        public void UpdateTheme()
+        {
+            RootFrame.RequestedTheme = AppSettings.Instance.Theme;
+        }
+
         public static void ChangeStatusBarColor(Color? foregroundColor = null)
         {
 #if WINDOWS_PHONE_APP
-            if (foregroundColor == null) foregroundColor = Color.FromArgb(0xFF, 0x40, 0x30, 0x03);
+            if(foregroundColor == null) foregroundColor = (App.Current.Resources["KeepStatusBarForegroundBrush"] as SolidColorBrush).Color;
             StatusBar.GetForCurrentView().ForegroundColor = foregroundColor;
 #endif
         }

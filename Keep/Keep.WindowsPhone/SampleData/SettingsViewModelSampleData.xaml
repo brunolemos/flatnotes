@@ -1,4 +1,3 @@
 ﻿<ViewModels:SettingsViewModel xmlns:ViewModels="using:Keep.ViewModels" xmlns:Models="using:Keep.Models">
-    <ViewModels:SettingsViewModel.Theme>Light</ViewModels:SettingsViewModel.Theme>
     <ViewModels:SettingsViewModel.Columns>2</ViewModels:SettingsViewModel.Columns>
 </ViewModels:SettingsViewModel>

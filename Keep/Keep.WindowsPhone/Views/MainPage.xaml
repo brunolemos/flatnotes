@@ -14,7 +14,7 @@
     
     <Page.Transitions>
         <TransitionCollection>
-            <NavigationThemeTransition/>
+            <EntranceThemeTransition/>
         </TransitionCollection>
     </Page.Transitions>
     
@@ -41,7 +41,13 @@
         </DataTemplate>
     
         <ItemsPanelTemplate x:Key="FluidItemsPanelTemplate" x:Name="FluidItemsPanelTemplate">
-            <Controls:FluidGrid x:Name="NotesFluidGrid" Margin="14" Columns="{Binding Columns, Mode=OneTime, TargetNullValue=2, FallbackValue=2}" ItemMinWidth="150" />
+            <Controls:FluidGrid x:Name="NotesFluidGrid" Margin="14" Columns="{Binding Columns, Mode=OneTime, TargetNullValue=2, FallbackValue=2}" ItemMinWidth="150">
+                <Controls:FluidGrid.ChildrenTransitions>
+                    <TransitionCollection>
+                        <EntranceThemeTransition FromVerticalOffset="300"/>
+                    </TransitionCollection>
+                </Controls:FluidGrid.ChildrenTransitions>
+            </Controls:FluidGrid>
         </ItemsPanelTemplate>
 
         <ItemsPanelTemplate x:Key="ReordableItemsPanelTemplate" x:Name="ReordableItemsPanelTemplate">
@@ -53,15 +59,5 @@
         <Grid x:Name="ContentRoot">
             <ListView x:Name="NotesListView" ItemsSource="{Binding Notes}" ItemsPanel="{StaticResource FluidItemsPanelTemplate}" ItemTemplate="{StaticResource NotePreviewListViewControlTemplate}" IsItemClickEnabled="True" ItemClick="NotesListView_ItemClick" ScrollViewer.VerticalScrollMode="Enabled" VerticalAlignment="Stretch"/>
         </Grid>
-        
-        <StackPanel Margin="19" VerticalAlignment="Bottom" HorizontalAlignment="Center">
-            <Grid Background="Black" Margin="0,3">
-                <TextBlock x:Name="LoadStateEllapsedTime" Margin="6" Foreground="White" />
-            </Grid>
-            
-            <Grid Background="Black" Margin="0,3">
-                <TextBlock x:Name="LoadedEllapsedTime" Margin="6" Foreground="Red" />
-            </Grid>
-        </StackPanel>
     </Grid>
 </Page>

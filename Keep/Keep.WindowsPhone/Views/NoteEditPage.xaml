@@ -7,14 +7,14 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:Controls="using:Keep.Controls"
     mc:Ignorable="d"
-    NavigationCacheMode="Disabled"
+    NavigationCacheMode="Required"
     Background="{Binding Note.Color.Color}"
     DataContext="{Binding Source={StaticResource NoteEditViewModel}}"
     d:DataContext="{d:DesignData /SampleData/NoteEditViewModelSampleData.xaml}">
     
     <Page.Transitions>
         <TransitionCollection>
-            <NavigationThemeTransition/>
+            <EntranceThemeTransition/>
         </TransitionCollection>
     </Page.Transitions>
     
@@ -37,11 +37,11 @@
     <Grid x:Name="LayoutRoot">
         <ScrollViewer ScrollViewer.VerticalScrollMode="Enabled">
             <StackPanel x:Name="ContentRoot" Margin="0,9.5,0,0">
-                <TextBox x:Uid="TitleTextBox" x:Name="NoteTitleTextBox" PlaceholderText="Title" Text="{Binding Note.Title, Mode=TwoWay}" MinHeight="60" InputScope="Default" Background="Transparent" BorderThickness="0" FontWeight="Bold" Padding="19,12" Margin="0,12,0,0" TextWrapping="NoWrap" MaxLength="30" FontSize="24"/>
+                <TextBox x:Uid="TitleTextBox" x:Name="NoteTitleTextBox" PlaceholderText="Title" Text="{Binding Note.Title, Mode=TwoWay}" MinHeight="60" InputScope="Default" Background="Transparent" BorderThickness="0" FontWeight="Bold" Padding="19,12" Margin="0,12,0,0" TextWrapping="NoWrap" MaxLength="30" FontSize="24" />
                 <TextBox x:Uid="TextTextBox" x:Name="NoteTextTextBox" PlaceholderText="Text" Text="{Binding Note.Text, Mode=TwoWay}" MinHeight="400" InputScope="Default" Background="Transparent" BorderThickness="0" Padding="19,6" AcceptsReturn="True" TextWrapping="Wrap" FontSize="20" Visibility="{Binding Note.IsText, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
                 <StackPanel Visibility="{Binding Note.IsChecklist, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
-                    <ListView x:Name="NoteChecklistListView" AllowDrop="True" CanDragItems="True" ItemTemplate="{StaticResource NoteChecklistListViewControlTemplate}" ItemsSource="{Binding}" DataContext="{Binding Note.Checklist}" SelectionMode="None"/>
+                    <ListView x:Name="NoteChecklistListView" AllowDrop="True" CanDragItems="True" ItemTemplate="{StaticResource NoteChecklistListViewControlTemplate}" ItemsSource="{Binding}" DataContext="{Binding Note.Checklist}" SelectionMode="None" ContinuumNavigationTransitionInfo.ExitElementContainer="True"/>
                     
                     <Grid Margin="18,0">
                         <Grid.ColumnDefinitions>
@@ -49,28 +49,18 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
-                        <CheckBox x:Name="NewChecklistItemCheckbox" Grid.Column="0" IsChecked="False" HorizontalAlignment="Left" Foreground="{StaticResource KeepNoteForegroundBrush}" BorderBrush="{StaticResource KeepNoteForegroundBrush}" RequestedTheme="Light" Opacity="0" IsEnabled="False"/>
+                        <CheckBox x:Name="NewChecklistItemCheckbox" Grid.Column="0" IsChecked="False" HorizontalAlignment="Left" Foreground="{StaticResource KeepNoteForegroundBrush}" BorderBrush="{StaticResource KeepNoteForegroundBrush}" RequestedTheme="Light"/>
                         <TextBox x:Uid="NewItemTextBox" x:Name="NewChecklistItemTextBox" Grid.Column="1" PlaceholderText="New item" Text="" Foreground="{StaticResource KeepNoteForegroundBrush}" TextWrapping="Wrap" Margin="0,12,0,0" Background="Transparent" BorderThickness="0" AcceptsReturn="False" KeyDown="NewChecklistItemTextBox_KeyDown" FontSize="20"  />
                     </Grid>
                 </StackPanel>
             </StackPanel>
         </ScrollViewer>
         
-        <StackPanel Margin="19" VerticalAlignment="Bottom" HorizontalAlignment="Center">
-            <Grid Background="Black" Margin="0,3">
-                <TextBlock x:Name="LoadStateEllapsedTime" Margin="6" Foreground="White" />
-            </Grid>
-
-            <Grid Background="Black" Margin="0,3">
-                <TextBlock x:Name="LoadedEllapsedTime" Margin="6" Foreground="Red" />
-            </Grid>
-        </StackPanel>
-        
-        <Controls:NoteColorPicker x:Name="NoteColorPicker" Background="{StaticResource CommandBarBackgroundThemeBrush}" Visibility="Collapsed"/>
+        <Controls:NoteColorPicker x:Name="NoteColorPicker" Background="{Binding Note.Color.DarkColor2}" Visibility="Collapsed"/>
     </Grid>
     
     <Page.BottomAppBar>
-        <CommandBar><!--Background="{ThemeResource PhoneDarkMidBrush}" Foreground="White"-->
+        <CommandBar Background="{Binding Note.Color.DarkColor2}" Foreground="{ThemeResource NoteCommandBarForegroundThemeBrush}">
             <CommandBar.SecondaryCommands>
                 <AppBarButton x:Uid="ToggleChecklistAppBarButton"  Icon="List" Label="toggle checklist" Command="{Binding ToggleChecklistCommand}" />
                 <AppBarButton x:Uid="DeleteAppBarButton"  Icon="Delete" Label="delete" Command="{Binding DeleteNoteCommand}" />

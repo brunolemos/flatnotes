@@ -13,7 +13,7 @@
 
     <Page.Transitions>
         <TransitionCollection>
-            <NavigationThemeTransition/>
+            <EntranceThemeTransition/>
         </TransitionCollection>
     </Page.Transitions>
     
@@ -21,13 +21,23 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0"  Margin="19,12,0,0">
             <TextBlock Text="settings" Margin="0,-6.5,0,26.5" Style="{ThemeResource HeaderTextBlockStyle}"/>
         </Grid>
 
-        <Grid Grid.Row="1" x:Name="ContentRoot" Margin="19,9.5,19,0">
+        <StackPanel Grid.Row="1" x:Name="ContentRoot" Margin="19,9.5,19,0">
+            <TextBlock x:Uid="ThemeTextBlock" Text="Theme" Style="{StaticResource TitleTextBlockStyle}" Margin="0,0,0,6"/>
+            <ComboBox x:Name="ThemeComboBox" Margin="0,0,0,24" ItemsSource="{Binding Themes}" SelectedValue="{Binding Theme, Mode=TwoWay}" DisplayMemberPath="Name"/>
+            
+            <TextBlock x:Uid="ColumnsTextBlock" Text="Columns" Margin="0,0,0,6" Style="{StaticResource TitleTextBlockStyle}"/>
+            <Slider Margin="0,0,0,24" Minimum="0" Maximum="4" LargeChange="1" TickFrequency="1" Value="{Binding Columns, Mode=TwoWay}" />
+        </StackPanel>
+
+        <Grid Grid.Row="2" Margin="24">
+            <TextBlock x:Uid="NoGoogleKeepIntegrationMessageTextBox" Text="This app does not integrate with official Google Keep because there isn't an API for that." TextWrapping="Wrap" HorizontalAlignment="Center" TextAlignment="Center" Foreground="{ThemeResource PhoneMidBrush}"/>
         </Grid>
     </Grid>
 </Page>

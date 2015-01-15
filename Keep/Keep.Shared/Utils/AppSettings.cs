@@ -1,5 +1,7 @@
 ﻿using Keep.Common;
+using Keep.Events;
 using Keep.Models;
+using System;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
 
@@ -8,6 +10,8 @@ namespace Keep.Utils
     public class AppSettings : AppSettingsBase
     {
         public static readonly AppSettings Instance = new AppSettings();
+
+        public event EventHandler ThemeChanged;
 
         private const string NOTES_FILENAME = "notes.json";
         private static Notes NOTES_DEFAULT = new Notes();
@@ -23,7 +27,12 @@ namespace Keep.Utils
         public ElementTheme Theme
         {
             get { return GetValueOrDefault(THEME_KEY, THEME_DEFAULT); }
-            set { SetValue<ElementTheme>(THEME_KEY, value); }
+            set {
+                if (SetValue<ElementTheme>(THEME_KEY, value)) {
+                    var handler = ThemeChanged;
+                    if (handler != null) handler(this, EventArgs.Empty);
+                }
+            }
         }
 
         public int Columns

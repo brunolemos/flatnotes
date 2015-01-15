@@ -1,10 +1,5 @@
 ﻿using Keep.Common;
-using Keep.Models;
 using Keep.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using Windows.UI;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
@@ -21,21 +16,16 @@ namespace Keep.Views
         {
             this.InitializeComponent();
 
-            this.Loaded += MainPage_Loaded;
+            //Navigation Helper
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
         }
 
-        private void MainPage_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
-        {
-            App.Watch.Stop();
-            LoadedEllapsedTime.Text = String.Format("content shown after {0}ms", App.Watch.ElapsedMilliseconds.ToString());
-        }
-
         private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
-            LoadStateEllapsedTime.Text = String.Format("navigated in {0}ms", App.Watch.ElapsedMilliseconds.ToString());
+            App.ChangeStatusBarColor();
+            App.RootFrame.Background = LayoutRoot.Background;
         }
 
         private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
