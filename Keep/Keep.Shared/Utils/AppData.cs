@@ -10,8 +10,10 @@ namespace Keep.Utils
     public static class AppData
     {
         public static event EventHandler NotesChanged;
+        public static event EventHandler ArchivedNotesChanged;
         public static event EventHandler<NoteEventArgs> NoteCreated;
         public static event EventHandler<NoteEventArgs> NoteChanged;
+        public static event EventHandler<NoteEventArgs> NoteArchived;
         public static event EventHandler<NoteEventArgs> NoteRemoved;
 
         public static Stopwatch Watch = new Stopwatch();
@@ -31,6 +33,21 @@ namespace Keep.Utils
         }
         private static Notes notes = new Notes();
 
+        public static Notes ArchivedNotes
+        {
+            get { return archivedNotes; }
+
+            set
+            {
+                archivedNotes.Clear();
+                if (value != null) foreach (var item in value) archivedNotes.Add(item);
+
+                var handler = ArchivedNotesChanged;
+                if (handler != null) handler(null, EventArgs.Empty);
+            }
+        }
+        private static Notes archivedNotes = new Notes();
+
         public static Note TempNote { get { return tempNote; } set { tempNote = value; } }
         private static Note tempNote = null;
 
@@ -44,6 +61,12 @@ namespace Keep.Utils
         {
             Debug.WriteLine("Save notes");
             return await AppSettings.Instance.SaveNotes(Notes);
+        }
+
+        public static async Task<bool> SaveArchivedNotes()
+        {
+            Debug.WriteLine("Save archived notes");
+            return await AppSettings.Instance.SaveArchivedNotes(ArchivedNotes);
         }
 
         public static async Task<bool> CreateOrUpdateNote(Note note)
@@ -84,9 +107,35 @@ namespace Keep.Utils
             return true;
         }
 
+        public static async Task<bool> ArchiveNote(Note note)
+        {
+            Debug.WriteLine("Archive note: " + note.Title);
+
+            bool noteExists = Notes.Where<Note>(x => x.ID == note.ID).FirstOrDefault<Note>() != null;
+            if (!noteExists) return false;
+
+            bool noteAlreadyArchived = ArchivedNotes.Where<Note>(x => x.ID == note.ID).FirstOrDefault<Note>() != null;
+            if (noteAlreadyArchived) return true;
+
+            ArchivedNotes.Insert(0, note);
+
+            bool success = await SaveArchivedNotes();
+            if (!success) return false;
+
+            await RemoveNote(note);
+
+            var handler = NoteArchived;
+            if (handler != null) handler(null, new NoteEventArgs(note));
+
+            return true;
+        }
+
         public static async Task<bool> RemoveNote(Note note)
         {
             Debug.WriteLine("Remove note: " + note.Title);
+
+            bool noteExists = Notes.Where<Note>(x => x.ID == note.ID).FirstOrDefault<Note>() != null;
+            if (!noteExists) return false;
 
             note.Changed = false;
             Notes.Remove(note);

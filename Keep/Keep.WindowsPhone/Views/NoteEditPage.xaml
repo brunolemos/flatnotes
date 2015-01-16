@@ -107,6 +107,7 @@
         <CommandBar Background="{Binding Note.Color.DarkColor2}" Foreground="{ThemeResource KeepNoteCommandBarForegroundThemeBrush}">
             <CommandBar.SecondaryCommands>
                 <AppBarButton x:Uid="ToggleChecklistAppBarButton"  Icon="List" Label="toggle checklist" Command="{Binding ToggleChecklistCommand}" />
+                <AppBarButton x:Uid="ArchiveAppBarButton"  Icon="SaveLocal" Label="archive" Command="{Binding ArchiveNoteCommand}" />
                 <AppBarButton x:Uid="DeleteAppBarButton"  Icon="Delete" Label="delete" Command="{Binding DeleteNoteCommand}" />
             </CommandBar.SecondaryCommands>
 

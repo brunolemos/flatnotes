@@ -8,12 +8,14 @@ namespace Keep.ViewModels
     public class NoteEditViewModel : ViewModelBase
     {
         public RelayCommand ToggleChecklistCommand { get; private set; }
+        public RelayCommand ArchiveNoteCommand { get; private set; }
         public RelayCommand DeleteNoteCommand { get; private set; }
 
         public NoteEditViewModel()
         {
             ToggleChecklistCommand = new RelayCommand(ToggleChecklist);
             DeleteNoteCommand = new RelayCommand(DeleteNote);
+            ArchiveNoteCommand = new RelayCommand(ArchiveNote);
         }
 
         public Note Note { get { return note; } set { note = value; NotifyPropertyChanged("Note"); } }
@@ -24,6 +26,14 @@ namespace Keep.ViewModels
         private void ToggleChecklist()
         {
             Note.ToggleChecklist();
+        }
+
+        private async void ArchiveNote()
+        {
+            await AppData.ArchiveNote(Note);
+            note = null;
+
+            App.RootFrame.Navigate(typeof(MainPage));
         }
 
         private async void DeleteNote()

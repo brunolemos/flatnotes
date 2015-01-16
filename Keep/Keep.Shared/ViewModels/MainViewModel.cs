@@ -3,10 +3,7 @@ using Keep.Models;
 using Keep.Utils;
 using Keep.Views;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using Windows.ApplicationModel;
-using Windows.UI.Xaml.Controls;
 
 namespace Keep.ViewModels
 {
@@ -18,7 +15,9 @@ namespace Keep.ViewModels
         public RelayCommand OpenSettingsCommand { get; private set; }
         public RelayCommand DeleteNoteCommand { get; private set; }
 
-        public Notes Notes { get { return AppData.Notes; } set { AppData.Notes = value; } }
+        public Notes Notes { get { return notes; } private set { notes = value; } }
+        public Notes notes = AppData.Notes;
+
         public int Columns { get { return AppSettings.Instance.Columns; } internal set { AppSettings.Instance.Columns = value; } }
         public bool ReorderedNotes { get; set; }
 
@@ -33,6 +32,7 @@ namespace Keep.ViewModels
             DeleteNoteCommand = new RelayCommand(DeleteNote, CanDeleteNote);
 
             AppData.NotesChanged += (s, e) => NotifyPropertyChanged("Notes");
+            AppData.ArchivedNotesChanged += (s, e) => NotifyPropertyChanged("ArchivedNotes");
             AppSettings.Instance.ColumnsChanged += (s, e) => NotifyPropertyChanged("Columns");
         }
 

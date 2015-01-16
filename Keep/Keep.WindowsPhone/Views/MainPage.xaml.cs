@@ -2,6 +2,8 @@
 using Keep.Models;
 using Keep.Utils;
 using Keep.ViewModels;
+using System.Collections;
+using System.Collections.ObjectModel;
 using System.Linq;
 using Windows.Phone.UI.Input;
 using Windows.UI.Xaml;
@@ -96,29 +98,29 @@ namespace Keep.Views
 
         private void NotesListView_DragItemsStarting(object sender, DragItemsStartingEventArgs e)
         {
-            e.Data.Properties["noteSource"] = e.Items[0];
+            e.Data.Properties["sourceItem"] = e.Items[0];
         }
 
         private void NotesListView_DragOver(object sender, DragEventArgs e)
         {
-            e.Data.Properties["noteTarget"] = (e.OriginalSource as FrameworkElement).DataContext;
+            e.Data.Properties["targetItem"] = (e.OriginalSource as FrameworkElement).DataContext;
         }
 
         private void NotesListView_Drop(object sender, DragEventArgs e)
         {
-            Note noteSource = e.Data.Properties["noteSource"] as Note;
-            Note noteTarget = e.Data.Properties["noteTarget"] as Note;
-            if (noteSource == null || noteTarget == null) return;
+            var sourceItem = e.Data.Properties["sourceItem"] as Note;
+            var targetItem = e.Data.Properties["targetItem"] as Note;
+            if (sourceItem == null || targetItem == null) return;
 
-            Notes notes = (sender as ListView).ItemsSource as Notes;
-            if (notes == null) return;
+            var items = (sender as ItemsControl).ItemsSource as Notes;
+            if (items == null) return;
 
-            int noteSourceIndex = notes.IndexOf(noteSource);
-            int noteTargetIndex = notes.IndexOf(noteTarget);
-            if (noteSourceIndex == noteTargetIndex || noteSourceIndex < 0 || noteTargetIndex < 0) return;
+            int sourceItemIndex = items.IndexOf(sourceItem);
+            int targetItemIndex = items.IndexOf(targetItem);
+            if (sourceItemIndex == targetItemIndex || sourceItemIndex < 0 || targetItemIndex < 0) return;
 
             viewModel.ReorderedNotes = true;
-            notes.Move(noteSourceIndex, noteTargetIndex);
+            items.Move(sourceItemIndex, targetItemIndex);
         }
     }
 }

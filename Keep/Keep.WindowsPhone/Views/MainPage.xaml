@@ -43,7 +43,7 @@
         </DataTemplate>
     
         <ItemsPanelTemplate x:Key="FluidItemsPanelTemplate" x:Name="FluidItemsPanelTemplate">
-            <Controls:FluidGrid x:Name="NotesFluidGrid" Margin="4,14" Columns="{Binding Columns, Mode=OneWay, TargetNullValue=2, FallbackValue=2}" ItemMinWidth="150"/>
+            <Controls:FluidGrid x:Name="NotesFluidGrid" Margin="14" Columns="{Binding Columns, Mode=OneWay, TargetNullValue=2, FallbackValue=2}" ItemMinWidth="150"/>
         </ItemsPanelTemplate>
     </Page.Resources>
     

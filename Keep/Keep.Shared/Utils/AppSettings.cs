@@ -17,6 +17,9 @@ namespace Keep.Utils
         private const string NOTES_FILENAME = "notes.json";
         private static Notes NOTES_DEFAULT = new Notes();
 
+        private const string ARCHIVED_NOTES_FILENAME = "notes_archived.json";
+        private static Notes ARCHIVED_NOTES_DEFAULT = new Notes();
+
         private const string THEME_KEY = "THEME";
         private static ElementTheme THEME_DEFAULT = ElementTheme.Light;
 
@@ -51,5 +54,8 @@ namespace Keep.Utils
 
         public async Task<Notes> LoadNotes() { return await ReadFileOrDefault(NOTES_FILENAME, NOTES_DEFAULT); }
         public async Task<bool> SaveNotes(Notes notes) { return await SaveFile(NOTES_FILENAME, notes); }
+
+        public async Task<Notes> LoadArchivedNotes() { return await ReadFileOrDefault(ARCHIVED_NOTES_FILENAME, ARCHIVED_NOTES_DEFAULT); }
+        public async Task<bool> SaveArchivedNotes(Notes notes) { return await SaveFile(ARCHIVED_NOTES_FILENAME, notes); }
     }
 }

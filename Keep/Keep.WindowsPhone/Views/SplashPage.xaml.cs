@@ -35,6 +35,9 @@ namespace Keep
             //};
 
             NavigateAsync(typeof(MainPage));
+
+            //load archived notes
+            AppData.ArchivedNotes = await AppSettings.Instance.LoadArchivedNotes();
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)

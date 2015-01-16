@@ -231,4 +231,7 @@
   <data name="UpdatedTextBox.Text" xml:space="preserve">
     <value>Updated</value>
   </data>
+  <data name="ArchiveAppBarButton.Label" xml:space="preserve">
+    <value>archive</value>
+  </data>
 </root>
