@@ -4,7 +4,7 @@ using Windows.UI.Xaml.Data;
 
 namespace Keep.Converters
 {
-    public sealed class ReorderModeToVisibilityConverter : IValueConverter
+    public sealed class ReorderModeToBooleanConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object invert, string language)
         {

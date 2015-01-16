@@ -39,7 +39,7 @@
     
     <Page.Resources>
         <DataTemplate x:Key="NotePreviewListViewControlTemplate">
-            <Controls:NotePreview/>
+            <Controls:NotePreview Tapped="OnNoteTapped" Loaded="OnNoteLoaded" Unloaded="OnNoteUnloaded"/>
         </DataTemplate>
     
         <ItemsPanelTemplate x:Key="FluidItemsPanelTemplate" x:Name="FluidItemsPanelTemplate">
@@ -49,7 +49,7 @@
     
     <Grid x:Name="LayoutRoot" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid x:Name="ContentRoot">
-            <ListView x:Name="NotesListView" ItemsSource="{Binding Notes, Mode=OneWay}" ItemsPanel="{StaticResource FluidItemsPanelTemplate}" ItemTemplate="{StaticResource NotePreviewListViewControlTemplate}" IsItemClickEnabled="True" ItemClick="NotesListView_ItemClick" ScrollViewer.VerticalScrollMode="Enabled" VerticalAlignment="Stretch" CanDragItems="True"/>
+            <ListView x:Name="NotesListView" ItemsSource="{Binding Notes, Mode=OneWay}" ItemsPanel="{StaticResource FluidItemsPanelTemplate}" ItemTemplate="{StaticResource NotePreviewListViewControlTemplate}" ScrollViewer.VerticalScrollMode="Enabled" VerticalAlignment="Stretch" CanDragItems="True" ReorderMode="{Binding ReorderMode, Mode=TwoWay}"/>
         </Grid>
     </Grid>
 </Page>

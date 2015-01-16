@@ -53,11 +53,11 @@
             <Grid Visibility="{Binding Text, Mode=OneWay, Converter={StaticResource NullableToVisibilityConverter}}">
                 <TextBlock Text="{Binding Text, Mode=OneWay}" FontSize="16" Margin="0,0,0,12" Foreground="{StaticResource KeepNoteForegroundBrush}" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" MaxLines="5" />
             </Grid>
-            
+
             <Grid Visibility="{Binding IsChecklist, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
                 <StackPanel>
-                    <ListView x:Name="NoteChecklistListView" IsTapEnabled="False" ItemTemplate="{StaticResource NoteChecklistListViewControlTemplate}" ItemsSource="{Binding Checklist}" ItemContainerStyle="{StaticResource NotePreviewChecklistItem}" Margin="0,0,0,10" /><!-- Loaded="NoteChecklistListView_Loaded"-->
-                    
+                    <ListView x:Name="NoteChecklistListView" IsTapEnabled="False" ItemTemplate="{StaticResource NoteChecklistListViewControlTemplate}" ItemsSource="{Binding Checklist}" ItemContainerStyle="{StaticResource NotePreviewChecklistItem}" Margin="0,0,0,10" />
+
                     <Grid x:Name="TrimIndicator" Margin="0,-18,0,0" Visibility="{Binding ElementName=Root, Path=ChecklistMaxItemsConverter.IsTrimmed, Converter={StaticResource BooleanToVisibilityConverter}}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
@@ -73,7 +73,7 @@
                         <TextBlock Grid.Column="1" Text="..." FontSize="17" Foreground="{StaticResource KeepNoteForegroundBrush}" TextWrapping="Wrap" Margin="0,6,0,0" MaxLines="3" TextTrimming="CharacterEllipsis" />
                     </Grid>
                 </StackPanel>
-                
+
                 <Grid Background="Transparent"/>
             </Grid>
         </StackPanel>

@@ -13,7 +13,7 @@ namespace Keep.Common
         public bool UpdateLayout { get { return updateLayout; } set { updateLayout = value; } }
         private bool updateLayout = true;
 
-        public TrulyObservableCollection() : base()
+        public TrulyObservableCollection()
         {
             CollectionChanged += OnCollectionChanged;
         }

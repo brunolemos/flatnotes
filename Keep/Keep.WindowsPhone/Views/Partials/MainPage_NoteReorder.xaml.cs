@@ -1,6 +1,7 @@
 ﻿using Keep.Common;
 using Keep.Models;
 using Keep.Utils;
+using System.Diagnostics;
 using Windows.Phone.UI.Input;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -9,21 +10,38 @@ namespace Keep.Views
 {
     public sealed partial class MainPage : Page
     {
-        partial void EnableReorder()
+        partial void EnableReorderFeature()
         {
-            HardwareButtons.BackPressed += (s, e) => SaveNotesIfReordered();
-
             navigationHelper.LoadState += NavigationHelper_LoadState1;
             navigationHelper.SaveState += NavigationHelper_SaveState1;
 
             NotesListView.Holding += NotesListView_Holding;
             NotesListView.DragItemsStarting += NotesListView_DragItemsStarting;
             NotesListView.DragOver += NotesListView_DragOver;
-            NotesListView.DragOver += NotesListView_Drop;
+            NotesListView.Drop += NotesListView_Drop;
+
+            viewModel.ReorderModeDisabled += OnReorderModeDisabled;
+        }
+
+        partial void DisableReorderFeature()
+        {
+            navigationHelper.LoadState -= NavigationHelper_LoadState1;
+            navigationHelper.SaveState -= NavigationHelper_SaveState1;
+
+            NotesListView.Holding -= NotesListView_Holding;
+            NotesListView.DragItemsStarting -= NotesListView_DragItemsStarting;
+            NotesListView.DragOver -= NotesListView_DragOver;
+            NotesListView.Drop -= NotesListView_Drop;
+
+            viewModel.ReorderModeDisabled -= OnReorderModeDisabled;
         }
 
         private void NavigationHelper_LoadState1(object sender, LoadStateEventArgs e)
         {
+            #if WINDOWS_PHONE_APP
+            NotesListView.ReorderMode = ListViewReorderMode.Disabled;
+            #endif
+
             viewModel.ReorderedNotes = false;
         }
 
@@ -32,12 +50,17 @@ namespace Keep.Views
             #if WINDOWS_PHONE_APP
             NotesListView.ReorderMode = ListViewReorderMode.Disabled;
             #endif
+        }
 
+        private void OnReorderModeDisabled(object sender, System.EventArgs e)
+        {
             SaveNotesIfReordered();
         }
 
         private async void SaveNotesIfReordered()
         {
+            Debug.WriteLine("SaveNotesIfReordered");
+
             //save notes if reordered
             if (viewModel.ReorderedNotes)
                 if (await AppData.SaveNotes())

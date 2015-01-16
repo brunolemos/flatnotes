@@ -4,11 +4,15 @@ using Keep.Utils;
 using Keep.Views;
 using System;
 using Windows.ApplicationModel;
+using Windows.UI.Xaml.Controls;
 
 namespace Keep.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {
+        public event EventHandler ReorderModeEnabled;
+        public event EventHandler ReorderModeDisabled;
+
         public RelayCommand CreateTextNoteCommand { get; private set; }
         public RelayCommand CreateChecklistNoteCommand { get; private set; }
         public RelayCommand SendFeedbackCommand { get; private set; }
@@ -18,8 +22,23 @@ namespace Keep.ViewModels
         public Notes Notes { get { return notes; } private set { notes = value; } }
         public Notes notes = AppData.Notes;
 
-        public int Columns { get { return AppSettings.Instance.Columns; } internal set { AppSettings.Instance.Columns = value; } }
+        public ListViewReorderMode ReorderMode {
+            get { return reorderMode; }
+            set {
+                if (reorderMode == value) return;
+
+                reorderMode = value;
+                NotifyPropertyChanged("ReorderMode");
+
+                var handler = value == ListViewReorderMode.Enabled ? ReorderModeEnabled : ReorderModeDisabled;
+                if (handler != null) handler(this, EventArgs.Empty);
+            }
+        }
+        public ListViewReorderMode reorderMode = ListViewReorderMode.Disabled;
+
         public bool ReorderedNotes { get; set; }
+
+        public int Columns { get { return AppSettings.Instance.Columns; } internal set { AppSettings.Instance.Columns = value; } }
 
         #region COMMANDS_ACTIONS
 

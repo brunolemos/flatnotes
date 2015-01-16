@@ -3,7 +3,9 @@ using Keep.Models;
 using Keep.Utils;
 using Keep.ViewModels;
 using System.Linq;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
 
 namespace Keep.Views
@@ -24,10 +26,15 @@ namespace Keep.Views
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
 
-            EnableReorder();
+            this.Loaded += (s, e) => EnableReorderFeature();
+            this.Unloaded += (s, e) => DisableReorderFeature();
         }
 
-        partial void EnableReorder();
+        partial void EnableReorderFeature();
+        partial void DisableReorderFeature();
+
+        partial void EnableSwipeFeature(FrameworkElement element, FrameworkElement referenceFrame);
+        partial void DisableSwipeFeature(FrameworkElement element);
 
         private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
@@ -55,21 +62,34 @@ namespace Keep.Views
 
         #endregion
 
-
-        private void NotesListView_ItemClick(object sender, ItemClickEventArgs e)
+        private void OnNoteTapped(object sender, TappedRoutedEventArgs e)
         {
             #if WINDOWS_PHONE_APP
-            if (NotesListView.ReorderMode == ListViewReorderMode.Enabled) return;
+            if (viewModel.ReorderMode == ListViewReorderMode.Enabled) return;
             #endif
 
-            Note note = e.ClickedItem as Note;
+            Note note = (e.OriginalSource as FrameworkElement).DataContext as Note;
             if (note == null) return;
 
             //it can be trimmed, so get the original
-            if(note.IsChecklist)
+            if (note.IsChecklist)
                 note = AppData.Notes.Where<Note>(n => n.ID == note.ID).FirstOrDefault();
 
-            Frame.Navigate(typeof(NoteEditPage), note);
+            App.RootFrame.Navigate(typeof(NoteEditPage), note);
+        }
+
+        //swipe feature
+        private void OnNoteLoaded(object sender, RoutedEventArgs e)
+        {
+            EnableSwipeFeature(sender as FrameworkElement, NotesListView);
+
+            viewModel.ReorderModeDisabled += (s, _e) => { EnableSwipeFeature(sender as FrameworkElement, NotesListView); };
+            viewModel.ReorderModeEnabled += (s, _e) => { DisableSwipeFeature(sender as FrameworkElement); };
+        }
+
+        private void OnNoteUnloaded(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

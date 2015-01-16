@@ -1,5 +1,6 @@
 ﻿<Page
     x:Class="Keep.Views.NoteEditPage"
+    x:Name="Root"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Keep.Views"
@@ -28,7 +29,7 @@
             <Converters:ReorderModeToVisibilityConverter x:Key="ReorderModeToVisibilityConverter"/>
             
             <DataTemplate x:Key="NoteChecklistListViewControlTemplate">
-                <Grid>
+                <Grid Loaded="OnChecklistItemLoaded" Unloaded="OnChecklistItemUnloaded">
                     <Grid Margin="19,0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="30"/>
@@ -58,9 +59,9 @@
                     <TextBox x:Uid="TextTextBox" x:Name="NoteTextTextBox" PlaceholderText="Text" Text="{Binding Note.Text, Mode=TwoWay}" MinHeight="300" InputScope="Default" Background="Transparent" BorderThickness="0" Padding="19,6" AcceptsReturn="True" TextWrapping="Wrap" FontSize="20" Visibility="{Binding Note.IsText, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
                     <StackPanel Visibility="{Binding Note.IsChecklist, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
-                        <ListView x:Name="NoteChecklistListView" ItemsSource="{Binding Note.Checklist}" AllowDrop="True" CanDragItems="True" ItemTemplate="{StaticResource NoteChecklistListViewControlTemplate}" SelectionMode="None" Holding="NoteChecklistListView_Holding"/>
+                        <ListView x:Name="NoteChecklistListView" ItemsSource="{Binding Note.Checklist}" AllowDrop="True" CanDragItems="True" ItemTemplate="{StaticResource NoteChecklistListViewControlTemplate}" SelectionMode="None" Holding="NoteChecklistListView_Holding" ReorderMode="{Binding ReorderMode, Mode=TwoWay}"/>
 
-                        <Grid Margin="19,0">
+                        <Grid Margin="19,0" Visibility="{Binding ReorderMode, Converter={StaticResource ReorderModeToVisibilityConverter}, ConverterParameter=True}">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="30"/>
                                 <ColumnDefinition Width="*"/>
@@ -70,7 +71,7 @@
                                 <CheckBox x:Name="NewChecklistItemCheckbox" Grid.Column="0" HorizontalAlignment="Left" Opacity="0" IsEnabled="False"/>
                                 <SymbolIcon Symbol="Add" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{ThemeResource PhoneDarkMidBrush}"/>
                             </Grid>
-                            <TextBox x:Uid="NewItemTextBox" x:Name="NewChecklistItemTextBox" Grid.Column="1" PlaceholderText="New item" Text="" Foreground="{StaticResource KeepNoteForegroundBrush}" TextWrapping="Wrap" Margin="0,12,0,0" Background="Transparent" BorderThickness="0" AcceptsReturn="False" KeyDown="NewChecklistItemTextBox_KeyDown" FontSize="20"  />
+                            <TextBox x:Uid="NewItemTextBox" x:Name="NewChecklistItemTextBox" Grid.Column="1" PlaceholderText="New item" Text="" Foreground="{StaticResource KeepNoteForegroundBrush}" TextWrapping="Wrap" Margin="0,12,0,0" Background="Transparent" BorderThickness="0" AcceptsReturn="False" KeyDown="NewChecklistItemTextBox_KeyDown" FontSize="20"/>
                         </Grid>
                     </StackPanel>
                 </StackPanel>
@@ -107,8 +108,8 @@
         <CommandBar Background="{Binding Note.Color.DarkColor2}" Foreground="{ThemeResource KeepNoteCommandBarForegroundThemeBrush}">
             <CommandBar.SecondaryCommands>
                 <AppBarButton x:Uid="ToggleChecklistAppBarButton"  Icon="List" Label="toggle checklist" Command="{Binding ToggleChecklistCommand}" />
-                <AppBarButton x:Uid="ArchiveAppBarButton"  Icon="SaveLocal" Label="archive" Command="{Binding ArchiveNoteCommand}" />
-                <AppBarButton x:Uid="DeleteAppBarButton"  Icon="Delete" Label="delete" Command="{Binding DeleteNoteCommand}" />
+                <AppBarButton x:Uid="ArchiveAppBarButton" Icon="SaveLocal" Label="archive" Command="{Binding ArchiveNoteCommand}" />
+                <AppBarButton x:Uid="DeleteAppBarButton" Icon="Delete" Label="delete" Command="{Binding DeleteNoteCommand}" />
             </CommandBar.SecondaryCommands>
 
             <AppBarToggleButton x:Uid="ColorAppBarButton" x:Name="ColorPickerAppBarToggleButton" Label="color">
