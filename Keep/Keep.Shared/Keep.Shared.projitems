@@ -21,6 +21,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Common\RelayCommand.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\SuspensionManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\TrullyObservableCollection.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\ChecklistMaxItemsConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\ReorderModeToBooleanConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\FriendlyTimeConverter.cs" />

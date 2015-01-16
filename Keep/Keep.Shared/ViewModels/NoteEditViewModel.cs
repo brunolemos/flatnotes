@@ -29,6 +29,8 @@ namespace Keep.ViewModels
         private async void DeleteNote()
         {
             await AppData.RemoveNote(Note);
+            note = null;
+
             App.RootFrame.Navigate(typeof(MainPage));
         }
 

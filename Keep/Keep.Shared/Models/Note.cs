@@ -11,8 +11,9 @@ namespace Keep.Models
     [DataContract]
     public class Note : ModelBase
     {
+        [IgnoreDataMember]
         public bool Changed { get { return changed; } set { if (changed != value) { changed = value; NotifyPropertyChanged("Changed"); } } }
-        public bool changed = false;
+        private bool changed = false;
 
         //public bool IsPinned { get { isPinned = SecondaryTile.Exists(this.ID); return isPinned; } set { if (isPinned != value) { isPinned = value; NotifyPropertyChanged("IsPinned"); } } }
         //private bool isPinned { get { return isPinned_value; } set { if (isPinned_value != value) { isPinned_value = value; NotifyPropertyChanged("IsPinned"); } } }
@@ -89,7 +90,7 @@ namespace Keep.Models
 
         void Note_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == "Changed") return;
+            if (String.IsNullOrEmpty(e.PropertyName) || e.PropertyName == "Changed") return;
             Changed = true;
 
             Debug.WriteLine("Note_PropertyChanged " + e.PropertyName);
@@ -155,13 +156,13 @@ namespace Keep.Models
 
         public void Trim()
         {
-            if (!String.IsNullOrEmpty(Title)) Title = Title.Trim();
-            if (!String.IsNullOrEmpty(Text)) Text = Text.Trim();
+            if (!String.IsNullOrEmpty(Title)) Title = title.Trim();
+            if (!String.IsNullOrEmpty(Text)) Text = text.Trim();
 
             if (IsChecklist && Checklist != null)
                 for (int i = Checklist.Count - 1; i >= 0; i--)
                 {
-                    if (!String.IsNullOrEmpty(Checklist[i].Text)) Checklist[i].Text = Checklist[i].Text.Trim();
+                    if (!String.IsNullOrEmpty(Checklist[i].Text)) Checklist[i].text = Checklist[i].text.Trim();
 
                     if (String.IsNullOrEmpty(Checklist[i].Text))
                         Checklist.RemoveAt(i);

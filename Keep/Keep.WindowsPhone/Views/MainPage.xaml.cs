@@ -1,6 +1,9 @@
 ﻿using Keep.Common;
+using Keep.Models;
+using Keep.Utils;
 using Keep.ViewModels;
 using System.Diagnostics;
+using System.Linq;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
@@ -51,7 +54,14 @@ namespace Keep.Views
 
         private void NotesListView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            Frame.Navigate(typeof(NoteEditPage), e.ClickedItem);
+            Note note = e.ClickedItem as Note;
+            if (note == null) return;
+
+            //it can be trimmed, so get the original
+            if(note.IsChecklist)
+                note = AppData.Notes.Where<Note>(n => n.ID == note.ID).FirstOrDefault();
+
+            Frame.Navigate(typeof(NoteEditPage), note);
         }
     }
 }

@@ -21,6 +21,8 @@ namespace Keep.Views
         public NoteEditViewModel viewModel { get { return (NoteEditViewModel)DataContext; } }
         private Brush previousBackground;
 
+        private bool checklistChanged = false;
+
         public NoteEditPage()
         {
             this.InitializeComponent();
@@ -46,8 +48,8 @@ namespace Keep.Views
                 viewModel.Note = e.NavigationParameter as Note;
 
             viewModel.Note.Changed = false;
-            viewModel.Note.Checklist.CollectionChanged += (s, _e) => viewModel.Note.Touch();
-            viewModel.Note.Checklist.CollectionItemChanged += (s, _e) => viewModel.Note.Touch();
+            viewModel.Note.Checklist.CollectionChanged += Checklist_CollectionChanged;
+            viewModel.Note.Checklist.CollectionItemChanged += Checklist_CollectionItemChanged;
 
             previousBackground = App.RootFrame.Background;
             App.RootFrame.Background = Background;
@@ -57,12 +59,22 @@ namespace Keep.Views
         {
             App.RootFrame.Background = previousBackground;
 
+            //deleted
+            if (viewModel.Note == null) return;
+
+            //remove change binding
+            viewModel.Note.Checklist.CollectionChanged -= Checklist_CollectionChanged;
+            viewModel.Note.Checklist.CollectionItemChanged -= Checklist_CollectionItemChanged;
+
             //trim
             viewModel.Note.Trim();
 
             //save
             if (viewModel.Note.Changed)
-                await AppData.CreateOrUpdateNote(viewModel.Note);
+            await AppData.CreateOrUpdateNote(viewModel.Note);
+
+            //checklist changed (fix cache problem with converter)
+            if (checklistChanged) viewModel.Note.NotifyChanges();
         }
 
         #region NavigationHelper registration
@@ -78,6 +90,18 @@ namespace Keep.Views
         }
 
         #endregion
+
+        private void Checklist_CollectionItemChanged(object sender, EventArgs e)
+        {
+            checklistChanged = true;
+            viewModel.Note.Touch();
+        }
+
+        private void Checklist_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            checklistChanged = true;
+            viewModel.Note.Touch();
+        }
 
         private T FindFirstElementInVisualTree<T>(DependencyObject parentElement) where T : DependencyObject
         {

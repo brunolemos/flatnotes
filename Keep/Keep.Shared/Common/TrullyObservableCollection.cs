@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Diagnostics;
 
 namespace Keep.Common
 {
@@ -35,6 +36,7 @@ namespace Keep.Common
 
         private void OnItemPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
+            Debug.WriteLine("OnItemPropertyChanged " + e.PropertyName);
             CollectionItemChanged(sender, e);
 
             if(UpdateLayout)
