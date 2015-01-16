@@ -49,7 +49,7 @@
     
     <Grid x:Name="LayoutRoot" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid x:Name="ContentRoot">
-            <ListView x:Name="NotesListView" ItemsSource="{Binding Notes, Mode=OneWay}" ItemsPanel="{StaticResource FluidItemsPanelTemplate}" ItemTemplate="{StaticResource NotePreviewListViewControlTemplate}" Holding="NotesListView_Holding" IsItemClickEnabled="True" ItemClick="NotesListView_ItemClick" ScrollViewer.VerticalScrollMode="Enabled" VerticalAlignment="Stretch" CanDragItems="True" DragItemsStarting="NotesListView_DragItemsStarting" DragOver="NotesListView_DragOver" Drop="NotesListView_Drop"/>
+            <ListView x:Name="NotesListView" ItemsSource="{Binding Notes, Mode=OneWay}" ItemsPanel="{StaticResource FluidItemsPanelTemplate}" ItemTemplate="{StaticResource NotePreviewListViewControlTemplate}" IsItemClickEnabled="True" ItemClick="NotesListView_ItemClick" ScrollViewer.VerticalScrollMode="Enabled" VerticalAlignment="Stretch" CanDragItems="True"/>
         </Grid>
     </Grid>
 </Page>
