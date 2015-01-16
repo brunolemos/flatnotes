@@ -43,10 +43,6 @@
                     <TextBlock Grid.Column="1" Text="{Binding Text, Mode=OneWay}" FontSize="16" Foreground="{StaticResource KeepNoteForegroundBrush}" TextWrapping="Wrap" Margin="0,4,0,0" MaxLines="3" TextTrimming="CharacterEllipsis" />
                 </Grid>
             </DataTemplate>
-        
-            <!--<MenuFlyout x:Key="NoteMenuFlyout">
-                <MenuFlyoutItem x:Uid="DeleteMenuFlyoutItem" Text="delete" Click="NoteDeleteMenuFlyoutItem_Click" />
-            </MenuFlyout>-->
         </ResourceDictionary>
     </UserControl.Resources>
     

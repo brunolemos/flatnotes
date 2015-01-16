@@ -25,17 +25,21 @@
             <Converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
             <Converters:NullableToVisibilityConverter x:Key="NullableToVisibilityConverter"/>
             <Converters:FriendlyTimeConverter x:Key="FriendlyTimeConverter"/>
-            <Converters:ReorderModeToBooleanConverter x:Key="ReorderModeToBooleanConverter"/>
+            <Converters:ReorderModeToVisibilityConverter x:Key="ReorderModeToVisibilityConverter"/>
             
             <DataTemplate x:Key="NoteChecklistListViewControlTemplate">
-                <Grid Margin="19,0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="30"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
+                <Grid>
+                    <Grid Margin="19,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="30"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
 
-                    <CheckBox Grid.Column="0" IsChecked="{Binding IsChecked, Mode=TwoWay}" HorizontalAlignment="Left" BorderBrush="{StaticResource KeepNoteForegroundBrush}" RequestedTheme="Light" IsEnabled="{Binding ReorderMode, ElementName=NoteChecklistListView, Converter={StaticResource ReorderModeToBooleanConverter}, ConverterParameter=True}"/>
-                    <TextBox Grid.Column="1" Text="{Binding Text, Mode=TwoWay}" TextWrapping="Wrap" Margin="0,10,0,0" Background="Transparent" BorderThickness="0" AcceptsReturn="False" FontSize="20" IsEnabled="{Binding ReorderMode, ElementName=NoteChecklistListView, Converter={StaticResource ReorderModeToBooleanConverter}, ConverterParameter=True}" KeyDown="NoteChecklistItemTextBox_KeyDown" />
+                        <CheckBox Grid.Column="0" IsChecked="{Binding IsChecked, Mode=TwoWay}" HorizontalAlignment="Left" BorderBrush="{StaticResource KeepNoteForegroundBrush}" RequestedTheme="Light"/>
+                        <TextBox Grid.Column="1" Text="{Binding Text, Mode=TwoWay}" TextWrapping="Wrap" Margin="0,10,0,0" Background="Transparent" BorderThickness="0" AcceptsReturn="False" FontSize="20" KeyDown="NoteChecklistItemTextBox_KeyDown" />
+                    </Grid>
+                    
+                    <Grid Background="Transparent" Visibility="{Binding ReorderMode, ElementName=NoteChecklistListView, Converter={StaticResource ReorderModeToVisibilityConverter}}"/>
                 </Grid>
             </DataTemplate>
         </ResourceDictionary>

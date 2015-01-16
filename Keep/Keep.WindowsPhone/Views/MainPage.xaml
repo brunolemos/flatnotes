@@ -43,17 +43,13 @@
         </DataTemplate>
     
         <ItemsPanelTemplate x:Key="FluidItemsPanelTemplate" x:Name="FluidItemsPanelTemplate">
-            <Controls:FluidGrid x:Name="NotesFluidGrid" Margin="14" Columns="{Binding Columns, Mode=OneWay, TargetNullValue=2, FallbackValue=2}" ItemMinWidth="150"/>
-        </ItemsPanelTemplate>
-
-        <ItemsPanelTemplate x:Key="ReordableItemsPanelTemplate" x:Name="ReordableItemsPanelTemplate">
-            <ItemsWrapGrid x:Name="NotesItemsWrapGrid" Margin="14" Orientation="Horizontal" ItemWidth="{Binding CellWidth, Mode=OneTime}" ItemHeight="125" />
+            <Controls:FluidGrid x:Name="NotesFluidGrid" Margin="4,14" Columns="{Binding Columns, Mode=OneWay, TargetNullValue=2, FallbackValue=2}" ItemMinWidth="150"/>
         </ItemsPanelTemplate>
     </Page.Resources>
     
     <Grid x:Name="LayoutRoot" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid x:Name="ContentRoot">
-            <ListView x:Name="NotesListView" ItemsSource="{Binding Notes, Mode=OneWay}" ItemsPanel="{StaticResource FluidItemsPanelTemplate}" ItemTemplate="{StaticResource NotePreviewListViewControlTemplate}" IsItemClickEnabled="True" ItemClick="NotesListView_ItemClick" ScrollViewer.VerticalScrollMode="Enabled" VerticalAlignment="Stretch"/>
+            <ListView x:Name="NotesListView" ItemsSource="{Binding Notes, Mode=OneWay}" ItemsPanel="{StaticResource FluidItemsPanelTemplate}" ItemTemplate="{StaticResource NotePreviewListViewControlTemplate}" Holding="NotesListView_Holding" IsItemClickEnabled="True" ItemClick="NotesListView_ItemClick" ScrollViewer.VerticalScrollMode="Enabled" VerticalAlignment="Stretch" CanDragItems="True" DragItemsStarting="NotesListView_DragItemsStarting" DragOver="NotesListView_DragOver" Drop="NotesListView_Drop"/>
         </Grid>
     </Grid>
 </Page>

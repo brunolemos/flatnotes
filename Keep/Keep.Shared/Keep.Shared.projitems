@@ -22,7 +22,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Common\SuspensionManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\TrullyObservableCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\ChecklistMaxItemsConverter.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Converters\ReorderModeToBooleanConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\ReorderModeToVisibilityConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\FriendlyTimeConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\NullableToVisibilityConverter.cs" />

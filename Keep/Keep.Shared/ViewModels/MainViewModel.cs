@@ -20,6 +20,7 @@ namespace Keep.ViewModels
 
         public Notes Notes { get { return AppData.Notes; } set { AppData.Notes = value; } }
         public int Columns { get { return AppSettings.Instance.Columns; } internal set { AppSettings.Instance.Columns = value; } }
+        public bool ReorderedNotes { get; set; }
 
         #region COMMANDS_ACTIONS
 

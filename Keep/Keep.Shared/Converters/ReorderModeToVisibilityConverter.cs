@@ -1,4 +1,5 @@
 ﻿using System;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Data;
 
@@ -8,15 +9,15 @@ namespace Keep.Converters
     {
         public object Convert(object value, Type targetType, object invert, string language)
         {
-            bool result = (value is ListViewReorderMode && (ListViewReorderMode)value == ListViewReorderMode.Enabled) ? true : false;
-            if (invert != null && invert.ToString() == Boolean.TrueString) result = !result;
+            bool boolValue = (value is ListViewReorderMode && (ListViewReorderMode)value == ListViewReorderMode.Enabled) ? true : false;
+            if (invert != null && invert.ToString() == Boolean.TrueString) boolValue = !boolValue;
 
-            return result;
+            return boolValue ? Visibility.Visible : Visibility.Collapsed;
         }
 
         public object ConvertBack(object value, Type targetType, object invert, string language)
         {
-            var boolValue = value is bool && (bool)value;
+            var boolValue = value is Visibility && (Visibility)value == Visibility.Visible;
             if (invert != null && invert.ToString() == Boolean.TrueString) boolValue = !boolValue;
 
             return boolValue ? ListViewReorderMode.Enabled : ListViewReorderMode.Disabled;

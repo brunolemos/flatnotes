@@ -2,9 +2,7 @@
 using Windows.UI.Xaml.Navigation;
 using Keep.Common;
 using Keep.ViewModels;
-using Keep.Models;
 using Keep.Utils;
-using System.Diagnostics;
 using Windows.UI.Xaml.Media;
 using Windows.UI;
 using Windows.UI.Xaml;

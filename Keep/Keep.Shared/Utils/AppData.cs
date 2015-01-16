@@ -40,9 +40,15 @@ namespace Keep.Utils
         //    Notes.CollectionChanged += (s, e) => NotesChanged(s, e);
         //}
 
+        public static async Task<bool> SaveNotes()
+        {
+            Debug.WriteLine("Save notes");
+            return await AppSettings.Instance.SaveNotes(Notes);
+        }
+
         public static async Task<bool> CreateOrUpdateNote(Note note)
         {
-            bool noteAlreadyExists = AppData.Notes.Where<Note>(x => x.ID == note.ID).FirstOrDefault<Note>() != null;
+            bool noteAlreadyExists = Notes.Where<Note>(x => x.ID == note.ID).FirstOrDefault<Note>() != null;
 
             if (note.IsEmpty())
                 return noteAlreadyExists ? await RemoveNote(note) : false;
@@ -56,7 +62,7 @@ namespace Keep.Utils
 
             Notes.Insert(0, note);
 
-            bool success = await AppSettings.Instance.SaveNotes(Notes);
+            bool success = await SaveNotes();
             if (!success) return false;
 
             var handler = NoteCreated;
@@ -69,7 +75,7 @@ namespace Keep.Utils
         {
             Debug.WriteLine("Update note: " + note.Title);
 
-            bool success = await AppSettings.Instance.SaveNotes(Notes);
+            bool success = await SaveNotes();
             if (!success) return false;
 
             var handler = NoteChanged;
@@ -85,7 +91,7 @@ namespace Keep.Utils
             note.Changed = false;
             Notes.Remove(note);
 
-            bool success = await AppSettings.Instance.SaveNotes(Notes);
+            bool success = await SaveNotes();
             if (!success) return false;
 
             var handler = NoteRemoved;

@@ -3,7 +3,6 @@ using Keep.Models;
 using Keep.Utils;
 using Keep.ViewModels;
 using System;
-using System.Diagnostics;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -127,9 +126,9 @@ namespace Keep.Views
 
         private void NoteChecklistListView_Holding(object sender, HoldingRoutedEventArgs e)
         {
-#if WINDOWS_PHONE_APP
+            #if WINDOWS_PHONE_APP
             (sender as ListView).ReorderMode = ListViewReorderMode.Enabled;
-#endif
+            #endif
         }
 
         private void NoteTitleTextBox_KeyDown(object sender, KeyRoutedEventArgs e)

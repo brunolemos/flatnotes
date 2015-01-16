@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Diagnostics;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
-using Keep.Views;
 using Windows.UI;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml.Media;
@@ -16,9 +14,9 @@ namespace Keep
 {
     public sealed partial class App : Application
     {
-#if WINDOWS_PHONE_APP
+        #if WINDOWS_PHONE_APP
         private TransitionCollection transitions;
-#endif
+        #endif
 
         public static Frame RootFrame = Window.Current.Content as Frame;
 
@@ -63,7 +61,7 @@ namespace Keep
 
             if (RootFrame.Content == null)
             {
-#if WINDOWS_PHONE_APP
+                #if WINDOWS_PHONE_APP
                 // Removes the turnstile navigation for startup.
                 if (RootFrame.ContentTransitions != null)
                 {
@@ -76,7 +74,7 @@ namespace Keep
 
                 RootFrame.ContentTransitions = null;
                 RootFrame.Navigated += this.RootFrame_FirstNavigated;
-#endif
+                #endif
 
                 // When the navigation stack isn't restored navigate to the first page,
                 // configuring the new page by passing required information as a navigation
@@ -91,14 +89,14 @@ namespace Keep
             Window.Current.Activate();
         }
 
-#if WINDOWS_PHONE_APP
+        #if WINDOWS_PHONE_APP
         private void RootFrame_FirstNavigated(object sender, NavigationEventArgs e)
         {
             var rootFrame = sender as Frame;
             rootFrame.ContentTransitions = null;// this.transitions ?? new TransitionCollection() { new NavigationThemeTransition() };
             rootFrame.Navigated -= this.RootFrame_FirstNavigated;
         }
-#endif
+        #endif
 
         private void OnSuspending(object sender, SuspendingEventArgs e)
         {
@@ -116,10 +114,10 @@ namespace Keep
 
         public static void ChangeStatusBarColor(Color? foregroundColor = null)
         {
-#if WINDOWS_PHONE_APP
+            #if WINDOWS_PHONE_APP
             if (foregroundColor == null) foregroundColor = (App.Current.Resources["AppStatusBarForegroundBrush"] as SolidColorBrush).Color;
             StatusBar.GetForCurrentView().ForegroundColor = foregroundColor;
-#endif
+            #endif
         }
     }
 }
