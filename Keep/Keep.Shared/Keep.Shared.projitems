@@ -37,13 +37,15 @@
     <Compile Include="$(MSBuildThisFileDirectory)Utils\AppSettings.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\Extensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\ManipulationInputProcessor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ArchivedNotesViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\SettingsViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ViewModelBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\NoteEditViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MainViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="$(MSBuildThisFileDirectory)Assets\appbar.text.serif.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\appbar.list.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\appbar.text.sans.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\appbar.water.droplet.png" />
   </ItemGroup>
   <ItemGroup>

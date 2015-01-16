@@ -14,10 +14,11 @@ namespace Keep.Controls
         public event EventHandler Opened;
         public event EventHandler Closed;
 
-        public NoteColor SelectedNoteColor 
-        { 
-            get { return selectedNoteColor; } 
-            set { 
+        public NoteColor SelectedNoteColor
+        {
+            get { return selectedNoteColor; }
+            set
+            {
                 var handler = SelectionChanged;
                 if (handler != null && selectedNoteColor != value)
                 {
@@ -26,9 +27,9 @@ namespace Keep.Controls
 
                     handler(this, new SelectionChangedEventArgs(removedItems, addedItems));
                 }
-                
-                selectedNoteColor = value; 
-            } 
+
+                selectedNoteColor = value;
+            }
         }
         private NoteColor selectedNoteColor;
 

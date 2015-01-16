@@ -1,5 +1,5 @@
 ﻿<Page
-    x:Class="Keep.Views.MainPage"
+    x:Class="Keep.Views.ArchivedNotesPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Keep.Views"
@@ -8,8 +8,8 @@
     xmlns:Controls="using:Keep.Controls"
     mc:Ignorable="d"
     NavigationCacheMode="Required"
-    Background="{ThemeResource AppStatusBarBackgroundBrush}"
-    DataContext="{Binding Source={StaticResource MainViewModel}}"
+    Background="DarkGray"
+    DataContext="{Binding Source={StaticResource ArchivedNotesiewModel}}"
     d:DataContext="{d:DesignData /SampleData/MainViewModelSampleData.xaml}">
 
     <Page.Transitions>
@@ -17,31 +17,6 @@
             <EntranceThemeTransition/>
         </TransitionCollection>
     </Page.Transitions>
-
-    <Page.BottomAppBar>
-        <CommandBar>
-            <CommandBar.SecondaryCommands>
-                <AppBarButton x:Uid="ArchivedNotesAppBarButton" Icon="SaveLocal" Label="archived notes" Command="{Binding OpenArchivedNotesCommand}"/>
-                <AppBarButton x:Uid="FeedbackAppBarButton" Icon="Like" Label="send feedback" Command="{Binding SendFeedbackCommand}"/>
-                <AppBarButton x:Uid="SettingsAppBarButton" Icon="Setting" Label="settings" Command="{Binding OpenSettingsCommand}"/>
-            </CommandBar.SecondaryCommands>
-
-            <AppBarButton x:Uid="NoteTextType" Label="text" Command="{Binding CreateTextNoteCommand}">
-                <AppBarButton.Icon>
-                    <BitmapIcon UriSource="ms-appx:///Assets/appbar.text.sans.png"/>
-                </AppBarButton.Icon>
-            </AppBarButton>
-
-            <AppBarButton x:Uid="NoteChecklistType" Label="checklist" Command="{Binding CreateChecklistNoteCommand}">
-                <AppBarButton.Icon>
-                    <BitmapIcon UriSource="ms-appx:///Assets/appbar.list.png"/>
-                </AppBarButton.Icon>
-            </AppBarButton>
-            
-            <!--<AppBarButton x:Uid="CameraAppBarButton" Icon="Camera" Label="camera" IsEnabled="False"/>
-            <AppBarButton x:Uid="AudioAppBarButton" Icon="Microphone" Label="audio" IsEnabled="False"/>-->
-        </CommandBar>
-    </Page.BottomAppBar>
 
     <Page.Resources>
         <DataTemplate x:Key="NotePreviewListViewControlTemplate">

@@ -11,26 +11,33 @@ namespace Keep.Views
 {
     public sealed partial class MainPage : Page
     {
-        Dictionary<FrameworkElement, ManipulationInputProcessor> elementInputProcessors = new Dictionary<FrameworkElement, ManipulationInputProcessor>();
+        Dictionary<FrameworkElement, ManipulationInputProcessor> inputProcessors = new Dictionary<FrameworkElement, ManipulationInputProcessor>();
+        Dictionary<FrameworkElement, EventHandler> enableSwipeEventHandlers = new Dictionary<FrameworkElement, EventHandler>();
+        Dictionary<FrameworkElement, EventHandler> disableSwipeEventHandlers = new Dictionary<FrameworkElement, EventHandler>();
 
         partial void EnableSwipeFeature(FrameworkElement element, FrameworkElement referenceFrame)
         {
             GestureRecognizer gestureRecognizer = new GestureRecognizer();
             ManipulationInputProcessor elementInputProcessor = new ManipulationInputProcessor(gestureRecognizer, element, referenceFrame);
 
+            //handlers
             elementInputProcessor.ItemSwiped += OnItemSwiped;
 
-            elementInputProcessors[element] = elementInputProcessor;
+            //save
+            inputProcessors[element] = elementInputProcessor;
         }
 
         partial void DisableSwipeFeature(FrameworkElement element)
         {
-            if (!elementInputProcessors.ContainsKey(element)) return;
+            if (!inputProcessors.ContainsKey(element)) return;
+            Debug.WriteLine("DisableSwipeFeature");
 
-            elementInputProcessors[element].ItemSwiped -= OnItemSwiped;
+            //handlers
+            inputProcessors[element].ItemSwiped -= OnItemSwiped;
 
-            elementInputProcessors[element].Disable();
-            elementInputProcessors.Remove(element);
+            //disable
+            inputProcessors[element].Disable();
+            inputProcessors.Remove(element);
         }
 
         private async void OnItemSwiped(object sender, EventArgs e)

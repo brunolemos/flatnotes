@@ -234,4 +234,7 @@
   <data name="ArchiveAppBarButton.Label" xml:space="preserve">
     <value>archive</value>
   </data>
+  <data name="ArchivedNotesAppBarButton.Label" xml:space="preserve">
+    <value>archived notes</value>
+  </data>
 </root>

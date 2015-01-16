@@ -114,11 +114,7 @@
 
             <AppBarToggleButton x:Uid="ColorAppBarButton" x:Name="ColorPickerAppBarToggleButton" Label="color">
                 <AppBarToggleButton.Icon>
-                    <BitmapIcon UriSource="/Assets/appbar.water.droplet.png">
-                        <BitmapIcon.Foreground>
-                            <ImageBrush Stretch="Fill"/>
-                        </BitmapIcon.Foreground>
-                    </BitmapIcon>
+                    <BitmapIcon UriSource="ms-appx:///Assets/appbar.water.droplet.png"/>
                 </AppBarToggleButton.Icon>
             </AppBarToggleButton>
 

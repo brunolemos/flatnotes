@@ -85,8 +85,8 @@
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
     <Page Include="Controls\NoteColorPicker.xaml">
-      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\NotePreview.xaml">
       <SubType>Designer</SubType>
@@ -112,6 +112,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\ArchivedNotesPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\MainPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -131,9 +135,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controls\FluidGrid.cs" />
-    <Compile Include="Controls\NoteColorPicker.xaml.cs" />
+    <Compile Include="Controls\NoteColorPicker.xaml.cs">
+      <DependentUpon>NoteColorPicker.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\NotePreview.xaml.cs">
       <DependentUpon>NotePreview.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ArchivedNotesPage.xaml.cs">
+      <DependentUpon>ArchivedNotesPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Partials\MainPage_Swipe.xaml.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

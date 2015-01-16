@@ -15,11 +15,12 @@ namespace Keep.ViewModels
 
         public RelayCommand CreateTextNoteCommand { get; private set; }
         public RelayCommand CreateChecklistNoteCommand { get; private set; }
+        public RelayCommand OpenArchivedNotesCommand { get; private set; }
         public RelayCommand SendFeedbackCommand { get; private set; }
         public RelayCommand OpenSettingsCommand { get; private set; }
         public RelayCommand DeleteNoteCommand { get; private set; }
 
-        public Notes Notes { get { return notes; } private set { notes = value; } }
+        public Notes Notes { get { return notes; } private set { notes = value; NotifyPropertyChanged("Notes"); } }
         public Notes notes = AppData.Notes;
 
         public ListViewReorderMode ReorderMode {
@@ -46,12 +47,12 @@ namespace Keep.ViewModels
         {
             CreateTextNoteCommand = new RelayCommand(CreateTextNote);
             CreateChecklistNoteCommand = new RelayCommand(CreateChecklistNote);
+            OpenArchivedNotesCommand = new RelayCommand(OpenArchivedNotes);
             SendFeedbackCommand = new RelayCommand(SendFeedback);
             OpenSettingsCommand = new RelayCommand(OpenSettings);
             DeleteNoteCommand = new RelayCommand(DeleteNote, CanDeleteNote);
 
             AppData.NotesChanged += (s, e) => NotifyPropertyChanged("Notes");
-            AppData.ArchivedNotesChanged += (s, e) => NotifyPropertyChanged("ArchivedNotes");
             AppSettings.Instance.ColumnsChanged += (s, e) => NotifyPropertyChanged("Columns");
         }
 
@@ -63,6 +64,11 @@ namespace Keep.ViewModels
         private void CreateChecklistNote()
         {
             App.RootFrame.Navigate(typeof(NoteEditPage), new Note(true));
+        }
+
+        private void OpenArchivedNotes()
+        {
+            App.RootFrame.Navigate(typeof(ArchivedNotesPage));
         }
 
         private void OpenSettings()

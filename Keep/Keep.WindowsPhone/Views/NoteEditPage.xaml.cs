@@ -116,15 +116,26 @@ namespace Keep.Views
         //swipe feature
         private void OnChecklistItemLoaded(object sender, RoutedEventArgs e)
         {
-            EnableSwipeFeature(sender as FrameworkElement, NoteChecklistListView);
+            FrameworkElement element = sender as FrameworkElement;
+            FrameworkElement referenceFrame = NoteChecklistListView;
 
-            viewModel.ReorderModeDisabled += (s, _e) => { EnableSwipeFeature(sender as FrameworkElement, NoteChecklistListView); };
-            viewModel.ReorderModeEnabled += (s, _e) => { DisableSwipeFeature(sender as FrameworkElement); };
+            EnableSwipeFeature(element, referenceFrame);
+
+            enableSwipeEventHandlers[element] = (s, _e) => { EnableSwipeFeature(element, referenceFrame); };
+            disableSwipeEventHandlers[element] = (s, _e) => { DisableSwipeFeature(element); };
+
+            viewModel.ReorderModeDisabled += enableSwipeEventHandlers[element];
+            viewModel.ReorderModeEnabled += disableSwipeEventHandlers[element];
         }
 
         private void OnChecklistItemUnloaded(object sender, RoutedEventArgs e)
         {
+            FrameworkElement element = sender as FrameworkElement;
 
+            viewModel.ReorderModeDisabled -= enableSwipeEventHandlers[element];
+            viewModel.ReorderModeEnabled -= disableSwipeEventHandlers[element];
+
+            DisableSwipeFeature(element);
         }
     }
 }

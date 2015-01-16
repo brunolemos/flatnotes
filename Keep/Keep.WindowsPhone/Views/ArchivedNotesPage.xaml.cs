@@ -2,8 +2,8 @@
 using Keep.Models;
 using Keep.Utils;
 using Keep.ViewModels;
-using System.Diagnostics;
 using System.Linq;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
@@ -11,14 +11,14 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Keep.Views
 {
-    public sealed partial class MainPage : Page
+    public sealed partial class ArchivedNotesPage : Page
     {
         public NavigationHelper NavigationHelper { get { return this.navigationHelper; } }
         private NavigationHelper navigationHelper;
 
-        public MainViewModel viewModel { get { return (MainViewModel)DataContext; } }
+        public ArchivedNotesViewModel viewModel { get { return (ArchivedNotesViewModel)DataContext; } }
 
-        public MainPage()
+        public ArchivedNotesPage()
         {
             this.InitializeComponent();
 
@@ -27,19 +27,19 @@ namespace Keep.Views
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
 
-            this.Loaded += (s, e) => EnableReorderFeature();
-            this.Unloaded += (s, e) => DisableReorderFeature();
+            //this.Loaded += (s, e) => EnableReorderFeature();
+            //this.Unloaded += (s, e) => DisableReorderFeature();
         }
 
-        partial void EnableReorderFeature();
-        partial void DisableReorderFeature();
+        //partial void EnableReorderFeature();
+        //partial void DisableReorderFeature();
 
-        partial void EnableSwipeFeature(FrameworkElement element, FrameworkElement referenceFrame);
-        partial void DisableSwipeFeature(FrameworkElement element);
+        //partial void EnableSwipeFeature(FrameworkElement element, FrameworkElement referenceFrame);
+        //partial void DisableSwipeFeature(FrameworkElement element);
 
         private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
-            App.ChangeStatusBarColor();
+            App.ChangeStatusBarColor(Colors.Black);
             App.RootFrame.Background = LayoutRoot.Background;
         }
 
@@ -51,7 +51,6 @@ namespace Keep.Views
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            Frame.BackStack.Clear();
             this.navigationHelper.OnNavigatedTo(e);
         }
 
@@ -74,7 +73,7 @@ namespace Keep.Views
 
             //it can be trimmed, so get the original
             if (note.IsChecklist)
-                note = AppData.Notes.Where<Note>(n => n.ID == note.ID).FirstOrDefault();
+                note = AppData.ArchivedNotes.Where<Note>(n => n.ID == note.ID).FirstOrDefault();
 
             App.RootFrame.Navigate(typeof(NoteEditPage), note);
         }
@@ -82,26 +81,15 @@ namespace Keep.Views
         //swipe feature
         private void OnNoteLoaded(object sender, RoutedEventArgs e)
         {
-            FrameworkElement element = sender as FrameworkElement;
-            FrameworkElement referenceFrame = NotesListView;
+            //EnableSwipeFeature(sender as FrameworkElement, NotesListView);
 
-            EnableSwipeFeature(element, referenceFrame);
-
-            enableSwipeEventHandlers[element] = (s, _e) => { EnableSwipeFeature(element, referenceFrame); };
-            disableSwipeEventHandlers[element] = (s, _e) => { DisableSwipeFeature(element); };
-
-            viewModel.ReorderModeDisabled += enableSwipeEventHandlers[element];
-            viewModel.ReorderModeEnabled += disableSwipeEventHandlers[element];
+            //viewModel.ReorderModeDisabled += (s, _e) => { EnableSwipeFeature(sender as FrameworkElement, NotesListView); };
+            //viewModel.ReorderModeEnabled += (s, _e) => { DisableSwipeFeature(sender as FrameworkElement); };
         }
 
         private void OnNoteUnloaded(object sender, RoutedEventArgs e)
         {
-            FrameworkElement element = sender as FrameworkElement;
-
-            viewModel.ReorderModeDisabled -= enableSwipeEventHandlers[element];
-            viewModel.ReorderModeEnabled -= disableSwipeEventHandlers[element];
-
-            DisableSwipeFeature(element);
+            //DisableSwipeFeature(sender as FrameworkElement);
         }
     }
 }
