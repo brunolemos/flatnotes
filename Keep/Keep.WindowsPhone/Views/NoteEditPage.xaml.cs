@@ -137,5 +137,11 @@ namespace Keep.Views
 
             DisableSwipeFeature(element);
         }
+
+        private void TextBox_PointerPressed(object sender, PointerRoutedEventArgs e)
+        {
+            //workarround to enable focus on textbox
+            e.Handled = true;
+        }
     }
 }

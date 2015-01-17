@@ -10,7 +10,7 @@ namespace Keep.Controls
         public ChecklistMaxItemsConverter ChecklistMaxItemsConverter { get { return checklistMaxItemsConverter; } }
         private ChecklistMaxItemsConverter checklistMaxItemsConverter = new ChecklistMaxItemsConverter();
 
-        private int maxItems = 6;
+        private int maxItems = 5;
 
         public NotePreview()
         {

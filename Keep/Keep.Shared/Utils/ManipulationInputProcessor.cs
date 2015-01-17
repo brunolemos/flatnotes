@@ -21,6 +21,8 @@ namespace Keep.Utils
         ManipulationModes previousManipulationModes;
         double elementInitialOpacity = 1;
         Size containerSize;
+        int pointerMovedCount = 0;
+        bool wasPointerPressedCalled;
 
         public ManipulationInputProcessor(GestureRecognizer gr, FrameworkElement target, FrameworkElement referenceframe)
         {
@@ -36,8 +38,7 @@ namespace Keep.Utils
                                        ManipulationModes.TranslateX |
                                        ManipulationModes.TranslateInertia;
 
-            this.gestureRecognizer.GestureSettings = GestureSettings.Tap |
-                                                     GestureSettings.ManipulationTranslateX |
+            this.gestureRecognizer.GestureSettings = GestureSettings.ManipulationTranslateX |
                                                      GestureSettings.ManipulationTranslateInertia;
 
             // Set up pointer event handlers. These receive input events that are used by the gesture recognizer.
@@ -86,8 +87,11 @@ namespace Keep.Utils
             // Route the events to the gesture recognizer
             // The points are in the reference frame of the canvas that contains the rectangle element.
             this.gestureRecognizer.ProcessDownEvent(args.GetCurrentPoint(this.reference));
+
             // Set the pointer capture to the element being interacted with
             this.element.CapturePointer(args.Pointer);
+            wasPointerPressedCalled = true;
+
             // Mark the event handled to prevent execution of default handlers
             args.Handled = true;
         }
@@ -96,6 +100,9 @@ namespace Keep.Utils
         {
             this.gestureRecognizer.ProcessUpEvent(args.GetCurrentPoint(this.reference));
             args.Handled = true;
+
+            pointerMovedCount = 0;
+            wasPointerPressedCalled = false;
         }
 
         void OnPointerCanceled(object sender, PointerRoutedEventArgs args)
@@ -106,8 +113,14 @@ namespace Keep.Utils
 
         void OnPointerMoved(object sender, PointerRoutedEventArgs args)
         {
-            this.gestureRecognizer.ProcessMoveEvents(args.GetIntermediatePoints(this.reference));
             args.Handled = true;
+
+            //workarround to enable tap events / focus on textbox / ...
+            if (pointerMovedCount <= 2) pointerMovedCount++;
+            if (pointerMovedCount == 2 && !wasPointerPressedCalled) OnPointerPressed(sender, args);
+            if(pointerMovedCount < 3) return;
+
+            this.gestureRecognizer.ProcessMoveEvents(args.GetIntermediatePoints(this.reference));
         }
 
         public void InitializeTransforms()

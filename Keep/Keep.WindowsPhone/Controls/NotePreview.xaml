@@ -9,7 +9,7 @@
     xmlns:Converters="using:Keep.Converters"
     mc:Ignorable="d"
     d:DesignHeight="300"
-    d:DesignWidth="400"
+    d:DesignWidth="200"
     d:DataContext="{d:DesignData /SampleData/NoteSampleData.xaml}">
     
     <UserControl.Resources>
@@ -40,7 +40,7 @@
                         </Grid>
                     </Viewbox>
 
-                    <TextBlock Grid.Column="1" Text="{Binding Text, Mode=OneWay}" FontSize="16" Foreground="{StaticResource KeepNoteForegroundBrush}" TextWrapping="Wrap" Margin="0,4,0,0" MaxLines="3" TextTrimming="CharacterEllipsis" />
+                    <TextBlock Grid.Column="1" Text="{Binding Text, Mode=OneWay}" FontSize="16" Foreground="{StaticResource KeepNoteForegroundBrush}" TextWrapping="Wrap" Margin="0,4,0,0" MaxLines="2" TextTrimming="CharacterEllipsis" />
                 </Grid>
             </DataTemplate>
         </ResourceDictionary>

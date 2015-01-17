@@ -8,7 +8,7 @@
 
             <Models:Note.Checklist>
                 <Models:ChecklistItem IsChecked="True" Text="Item 1" />
-                <Models:ChecklistItem IsChecked="False" Text="Item 2" />
+                <Models:ChecklistItem IsChecked="True" Text="Item 2" />
                 <Models:ChecklistItem IsChecked="False" Text="Item 3" />
             </Models:Note.Checklist>
         </Models:Note>
