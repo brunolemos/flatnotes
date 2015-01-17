@@ -8,7 +8,11 @@ namespace Keep.Converters
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            return (value == null || String.IsNullOrEmpty(value.ToString())) ? Visibility.Collapsed : Visibility.Visible;
+            bool isNull = (value == null || String.IsNullOrEmpty(value.ToString()));
+
+            if (value is DateTime) isNull |= ((DateTime)value).CompareTo(DateTime.MinValue) == 0;
+            
+            return isNull ? Visibility.Collapsed : Visibility.Visible;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)

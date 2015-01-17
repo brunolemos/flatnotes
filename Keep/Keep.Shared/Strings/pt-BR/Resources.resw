@@ -246,4 +246,7 @@
   <data name="RestoreAppBarButton.Label" xml:space="preserve">
     <value>restaurar</value>
   </data>
+  <data name="ArchivedTextBox.Text" xml:space="preserve">
+    <value>Arquivado</value>
+  </data>
 </root>

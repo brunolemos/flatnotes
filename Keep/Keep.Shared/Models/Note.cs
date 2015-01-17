@@ -61,6 +61,10 @@ namespace Keep.Models
         [DataMember(Name = "UpdatedAt")]
         private DateTime updatedAt = DateTime.UtcNow;
 
+        public DateTime? ArchivedAt { get { return archivedAt; } set { archivedAt = value; NotifyPropertyChanged("ArchivedAt"); } }
+        [DataMember(Name = "ArchivedAt")]
+        private DateTime? archivedAt;
+
         public Note()
         {
             PropertyChanged += Note_PropertyChanged;

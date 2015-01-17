@@ -51,7 +51,7 @@ namespace Keep.Views
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            Frame.BackStack.Clear();
+            App.RootFrame.BackStack.Clear();
             this.navigationHelper.OnNavigatedTo(e);
         }
 
@@ -97,7 +97,6 @@ namespace Keep.Views
 
         private void OnNoteUnloaded(object sender, RoutedEventArgs e)
         {
-            Debug.WriteLine("OnNoteUnloaded");
             FrameworkElement element = sender as FrameworkElement;
 
             viewModel.ReorderModeDisabled -= enableSwipeEventHandlers[element];

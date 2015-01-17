@@ -26,22 +26,30 @@ namespace Keep.ViewModels
             RestoreNoteCommand = new RelayCommand(RestoreNote); //CanRestoreNote
             DeleteNoteCommand = new RelayCommand(DeleteNote);
 
-            AppData.NoteArchived += (s, e) => { ArchiveNoteCommand.RaiseCanExecuteChanged(); RestoreNoteCommand.RaiseCanExecuteChanged(); };
-            AppData.NoteRestored += (s, e) => { ArchiveNoteCommand.RaiseCanExecuteChanged(); RestoreNoteCommand.RaiseCanExecuteChanged(); };
             PropertyChanged += OnPropertyChanged;
         }
 
         private void OnPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             if (e.PropertyName == "Note")
+            {
+                AlreadyExists = AppData.Notes.Where<Note>(x => x.ID == note.ID).FirstOrDefault<Note>() != null;
                 IsArchived = AppData.ArchivedNotes.Where<Note>(x => x.ID == note.ID).FirstOrDefault<Note>() != null;
+                IsNewNote = !AlreadyExists && !IsArchived;
+            }
         }
 
         public Note Note { get { return note; } set { note = value; NotifyPropertyChanged("Note"); } }
         private Note note = new Note();
 
+        public bool IsNewNote { get { return isNewNote; } set { isNewNote = value; NotifyPropertyChanged("IsNewNote"); } }
+        private bool isNewNote;
+
         public bool IsArchived { get { return isArchived; } set { isArchived = value; NotifyPropertyChanged("IsArchived"); } }
         private bool isArchived;
+
+        public bool AlreadyExists { get { return alreadyExists; } set { alreadyExists = value; NotifyPropertyChanged("AlreadyExists"); } }
+        private bool alreadyExists;
 
         public ListViewReorderMode ReorderMode
         {
@@ -68,7 +76,7 @@ namespace Keep.ViewModels
 
         private bool CanArchiveNote()
         {
-            return Note != null && !IsArchived;
+            return Note != null && AlreadyExists && !IsArchived;
         }
 
         private async void ArchiveNote()

@@ -121,6 +121,8 @@ namespace Keep.Utils
             bool noteAlreadyArchived = ArchivedNotes.Where<Note>(x => x.ID == note.ID).FirstOrDefault<Note>() != null;
             if (noteAlreadyArchived) return true;
 
+            //note.ArchivedAt = DateTime.UtcNow;
+
             ArchivedNotes.Insert(0, note);
 
             bool success = await SaveArchivedNotes();

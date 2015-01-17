@@ -77,9 +77,16 @@
                 </StackPanel>
             </ScrollViewer>
 
-            <ScrollViewer Grid.Row="1" Height="44">
-                <StackPanel Margin="19,12">
-                    <StackPanel Margin="0,0,0,12" Orientation="Horizontal">
+            <ScrollViewer Grid.Row="1" Height="44" Visibility="{Binding IsNewNote, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=True}">
+                <StackPanel Margin="19,12,19,0">
+                    <Grid Visibility="{Binding IsArchived, Converter={StaticResource BooleanToVisibilityConverter}}">
+                        <TextBlock Margin="0,0,0,12" Foreground="{StaticResource PhoneDarkMidBrush}" Visibility="{Binding Note.ArchivedAt, Converter={StaticResource NullableToVisibilityConverter}}">
+                            <Run x:Uid="ArchivedTextBox" Text="Archived"/>
+                            <Run Text="{Binding Note.ArchivedAt, Converter={StaticResource FriendlyTimeConverter}}"/>
+                        </TextBlock>
+                    </Grid>
+
+                    <StackPanel Margin="0,0,0,12" Orientation="Horizontal" Visibility="{Binding Note.UpdatedAt, Converter={StaticResource NullableToVisibilityConverter}}">
                         <TextBlock Foreground="{StaticResource PhoneDarkMidBrush}">
                             <Run x:Uid="UpdatedTextBox" Text="Updated"/>
                             <Run Text="{Binding Note.UpdatedAt, Converter={StaticResource FriendlyTimeConverter}}"/>
@@ -93,7 +100,7 @@
                         </TextBlock>
                     </StackPanel>
 
-                    <TextBlock Foreground="{StaticResource PhoneDarkMidBrush}">
+                    <TextBlock Margin="0,0,0,12" Foreground="{StaticResource PhoneDarkMidBrush}"  Visibility="{Binding Note.CreatedAt, Converter={StaticResource NullableToVisibilityConverter}}">
                         <Run x:Uid="CreatedTextBox" Text="Created"/>
                         <Run Text="{Binding Note.CreatedAt, Converter={StaticResource FriendlyTimeConverter}}"/>
                     </TextBlock>
@@ -109,7 +116,7 @@
             <CommandBar.SecondaryCommands>
                 <AppBarButton x:Uid="ToggleChecklistAppBarButton"  Icon="List" Label="toggle checklist" Command="{Binding ToggleChecklistCommand}" />
                 <AppBarButton x:Uid="RestoreAppBarButton" Icon="Undo" Label="restore" Command="{Binding RestoreNoteCommand}" Visibility="{Binding IsArchived, Converter={StaticResource BooleanToVisibilityConverter}}" />
-                <AppBarButton x:Uid="ArchiveAppBarButton" Icon="SaveLocal" Label="archive" Command="{Binding ArchiveNoteCommand}" Visibility="{Binding IsArchived, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=True}" />
+                <AppBarButton x:Uid="ArchiveAppBarButton" Icon="SaveLocal" Label="archive" Command="{Binding ArchiveNoteCommand}" Visibility="{Binding AlreadyExists, Converter={StaticResource BooleanToVisibilityConverter}}" />
                 <AppBarButton x:Uid="DeleteAppBarButton" Icon="Delete" Label="delete" Command="{Binding DeleteNoteCommand}" />
             </CommandBar.SecondaryCommands>
 
