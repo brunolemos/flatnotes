@@ -85,7 +85,8 @@ namespace Keep.Views
             FrameworkElement element = sender as FrameworkElement;
             FrameworkElement referenceFrame = NotesListView;
 
-            EnableSwipeFeature(element, referenceFrame);
+            if(viewModel.ReorderMode != ListViewReorderMode.Enabled)
+                EnableSwipeFeature(element, referenceFrame);
 
             enableSwipeEventHandlers[element] = (s, _e) => { EnableSwipeFeature(element, referenceFrame); };
             disableSwipeEventHandlers[element] = (s, _e) => { DisableSwipeFeature(element); };
@@ -96,6 +97,7 @@ namespace Keep.Views
 
         private void OnNoteUnloaded(object sender, RoutedEventArgs e)
         {
+            Debug.WriteLine("OnNoteUnloaded");
             FrameworkElement element = sender as FrameworkElement;
 
             viewModel.ReorderModeDisabled -= enableSwipeEventHandlers[element];

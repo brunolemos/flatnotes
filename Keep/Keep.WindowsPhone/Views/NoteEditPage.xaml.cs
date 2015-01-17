@@ -119,7 +119,8 @@ namespace Keep.Views
             FrameworkElement element = sender as FrameworkElement;
             FrameworkElement referenceFrame = NoteChecklistListView;
 
-            EnableSwipeFeature(element, referenceFrame);
+            if(viewModel.ReorderMode != ListViewReorderMode.Enabled)
+                EnableSwipeFeature(element, referenceFrame);
 
             enableSwipeEventHandlers[element] = (s, _e) => { EnableSwipeFeature(element, referenceFrame); };
             disableSwipeEventHandlers[element] = (s, _e) => { DisableSwipeFeature(element); };
