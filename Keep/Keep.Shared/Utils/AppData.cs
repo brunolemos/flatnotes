@@ -76,7 +76,7 @@ namespace Keep.Utils
             bool isNoteArchived = ArchivedNotes.Where<Note>(x => x.ID == note.ID).FirstOrDefault<Note>() != null;
 
             if (note.IsEmpty())
-                return noteAlreadyExists || isNoteArchived ? await RemoveNote(note) : false;
+                return noteAlreadyExists ? await RemoveNote(note) : (isNoteArchived ? await RemoveArchivedNote(note) : false);
             else
                 return noteAlreadyExists || isNoteArchived ? await UpdateNote(note) : await CreateNote(note);
         }
@@ -149,7 +149,7 @@ namespace Keep.Utils
             bool success = await SaveNotes();
             if (!success) return false;
 
-            await RemoveNote(note, true);
+            await RemoveArchivedNote(note);
 
             var handler = NoteRestored;
             if (handler != null) handler(null, new NoteEventArgs(note));
@@ -157,25 +157,34 @@ namespace Keep.Utils
             return true;
         }
 
-        public static async Task<bool> RemoveNote(Note note, bool isRestoring = false)
+        public static async Task<bool> RemoveNote(Note note)
         {
             Debug.WriteLine("Remove note: " + note.Title);
 
             bool noteExists = Notes.Where<Note>(x => x.ID == note.ID).FirstOrDefault<Note>() != null;
-            bool isNoteArchived = ArchivedNotes.Where<Note>(x => x.ID == note.ID).FirstOrDefault<Note>() != null;
-            bool success = false;
+            if (!noteExists) return true;
 
-            if (noteExists && !isRestoring)
-            {
-                Notes.Remove(note);
-                success = await SaveNotes();
-            }
 
-            if (isNoteArchived)
-            {
-                ArchivedNotes.Remove(note);
-                success = await SaveArchivedNotes();
-            }
+            Notes.Remove(note);
+            bool success = await SaveNotes();
+
+            if (!success) return false;
+
+            var handler = NoteRemoved;
+            if (handler != null) handler(null, new NoteEventArgs(note));
+
+            return true;
+        }
+
+        public static async Task<bool> RemoveArchivedNote(Note note)
+        {
+            Debug.WriteLine("Remove archived note: " + note.Title);
+
+            bool isArchived = ArchivedNotes.Where<Note>(x => x.ID == note.ID).FirstOrDefault<Note>() != null;
+            if (!isArchived) return true;
+
+            ArchivedNotes.Remove(note);
+            bool success = await SaveArchivedNotes();
 
             if (!success) return false;
 

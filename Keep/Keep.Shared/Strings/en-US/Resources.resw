@@ -243,4 +243,7 @@
   <data name="EmptyArchivedNotesMessageTextBox.Text" xml:space="preserve">
     <value>Archived notes appear here</value>
   </data>
+  <data name="RestoreAppBarButton.Label" xml:space="preserve">
+    <value>restore</value>
+  </data>
 </root>
