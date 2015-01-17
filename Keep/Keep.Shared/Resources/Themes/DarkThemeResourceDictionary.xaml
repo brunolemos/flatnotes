@@ -9,7 +9,7 @@
     <Color x:Key="PhoneBackgroundColor">#FF263646</Color>
     <Color x:Key="PhoneForegroundColor">#FFFFFFFF</Color>
     <Color x:Key="PhoneChromeColor">#FFDDDDDD</Color>
-    <Color x:Key="PhoneLowColor">#73FFFFFF</Color>
+    <Color x:Key="PhoneLowColor">#10FFFFFF</Color>
     
     <SolidColorBrush x:Key="AppMainBrush" Color="{ThemeResource AppMainColor}"/>
     

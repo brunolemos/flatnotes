@@ -237,4 +237,10 @@
   <data name="ArchivedNotesAppBarButton.Label" xml:space="preserve">
     <value>notas arquivadas</value>
   </data>
+  <data name="EmptyNotesMessageTextBox.Text" xml:space="preserve">
+    <value>Notas adicionadas aparecem aqui</value>
+  </data>
+  <data name="EmptyArchivedNotesMessageTextBox.Text" xml:space="preserve">
+    <value>Notas arquivadas aparecem aqui</value>
+  </data>
 </root>

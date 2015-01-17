@@ -6,14 +6,20 @@ namespace Keep.Converters
 {
     public sealed class BooleanToVisibilityConverter : IValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, string language)
+        public object Convert(object value, Type targetType, object invert, string language)
         {
-            return (value is bool && (bool)value) ? Visibility.Visible : Visibility.Collapsed;
+            bool boolValue = value is bool && (bool)value;
+            if (invert != null && invert.ToString() == Boolean.TrueString) boolValue = !boolValue;
+            
+            return boolValue ? Visibility.Visible : Visibility.Collapsed;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, string language)
+        public object ConvertBack(object value, Type targetType, object invert, string language)
         {
-            return value is Visibility && (Visibility)value == Visibility.Visible;
+            bool boolValue = value is Visibility && (Visibility)value == Visibility.Visible;
+            if (invert != null && invert.ToString() == Boolean.TrueString) boolValue = !boolValue;
+
+            return boolValue;
         }
     }
 }
