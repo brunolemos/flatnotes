@@ -22,15 +22,15 @@ namespace Keep.Converters
 
             try
             {
-                var list = (Checklist)value;
+                var list = value as Checklist;
 
-                if (list == null || list.Count <= 0 || MaxItems < 0) return value;
-                if (list.Count <= MaxItems) return list;
+                if (list == null || MaxItems <= 0 || list.Count <= 1) return value;
+
+                var orderedList = list.OrderBy<ChecklistItem, bool>(item => item.IsChecked).ToList<ChecklistItem>();
+                if (orderedList.Count <= MaxItems) return orderedList;
 
                 IsTrimmed = true;
-                var result = list.Take<ChecklistItem>(Math.Max(1, MaxItems - 1)); //(int)Math.Round(maxItems * 0.6)
-
-                return result;
+                return orderedList.Take<ChecklistItem>(Math.Max(1, MaxItems - 1));
             }
             catch (Exception e)
             {

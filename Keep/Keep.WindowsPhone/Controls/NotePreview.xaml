@@ -16,6 +16,7 @@
         <ResourceDictionary>
             <Converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
             <Converters:NullableToVisibilityConverter x:Key="NullableToVisibilityConverter"/>
+            <Converters:ChecklistMaxItemsConverter x:Key="ChecklistMaxItemsConverter"/>
             
             <Style x:Key="NotePreviewChecklistItem" TargetType="ListViewItem">
                 <Setter Property="Template">
@@ -56,9 +57,9 @@
 
             <Grid Visibility="{Binding IsChecklist, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
                 <StackPanel>
-                    <ListView x:Name="NoteChecklistListView" IsTapEnabled="False" ItemTemplate="{StaticResource NoteChecklistListViewControlTemplate}" ItemsSource="{Binding Checklist}" ItemContainerStyle="{StaticResource NotePreviewChecklistItem}" Margin="0,0,0,10" />
+                    <ListView x:Name="NoteChecklistListView" IsTapEnabled="False" ItemTemplate="{StaticResource NoteChecklistListViewControlTemplate}" ItemsSource="{Binding Checklist, Converter={StaticResource ChecklistMaxItemsConverter}, ConverterParameter=5}" ItemContainerStyle="{StaticResource NotePreviewChecklistItem}" Margin="0,0,0,10" />
 
-                    <Grid x:Name="TrimIndicator" Margin="0,-18,0,0" Visibility="{Binding ElementName=Root, Path=ChecklistMaxItemsConverter.IsTrimmed, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <Grid x:Name="TrimIndicator" Margin="0,-18,0,0" Visibility="{Binding Source={StaticResource ChecklistMaxItemsConverter}, Path=IsTrimmed, Converter={StaticResource BooleanToVisibilityConverter}}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
