@@ -9,6 +9,7 @@ using Windows.UI;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml.Media;
 using Keep.Utils;
+using Windows.UI.Popups;
 
 namespace Keep
 {
@@ -26,6 +27,19 @@ namespace Keep
 
             AppSettings.Instance.ThemeChanged += (s, e) => UpdateTheme();
             this.Suspending += this.OnSuspending;
+            this.UnhandledException += App_UnhandledException;
+
+        }
+
+        private async void App_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            if (!e.Handled)
+            {
+                e.Handled = true;
+                await new MessageDialog(e.Message, "Fatal error").ShowAsync();
+
+                App.Current.Exit();
+            }
         }
 
         protected override void OnLaunched(LaunchActivatedEventArgs e)
