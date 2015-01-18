@@ -31,7 +31,7 @@ namespace Keep.Utils
             this.reference = referenceframe;
 
             this.elementInitialOpacity = element.Opacity;
-            this.containerSize = new Size(referenceframe.ActualWidth, 0);
+            this.containerSize = new Size(target.ActualWidth, 0);
 
             previousManipulationModes = element.ManipulationMode;
             element.ManipulationMode = ManipulationModes.System |
@@ -151,7 +151,7 @@ namespace Keep.Utils
             this.deltaTransform.TranslateX = e.Delta.Translation.X;
 
             element.Opacity = Math.Round(100 - 100 * Math.Abs(e.Cumulative.Translation.X) / (containerSize.Width * 0.8)) / 100;
-            if (element.Opacity <= 0) this.gestureRecognizer.CompleteGesture();
+            if (element.Opacity <= 0 && gestureRecognizer.IsInertial) this.gestureRecognizer.CompleteGesture();
         }
 
         void OnManipulationCompleted(object sender, ManipulationCompletedEventArgs e)

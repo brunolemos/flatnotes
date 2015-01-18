@@ -33,8 +33,8 @@ namespace Keep.ViewModels
         {
             if (e.PropertyName == "Note")
             {
-                AlreadyExists = AppData.Notes.Where<Note>(x => x.ID == note.ID).FirstOrDefault<Note>() != null;
-                IsArchived = AppData.ArchivedNotes.Where<Note>(x => x.ID == note.ID).FirstOrDefault<Note>() != null;
+                AlreadyExists = AppData.Notes.Where<Note>(x => x.ID == Note.ID).FirstOrDefault<Note>() != null;
+                IsArchived = AppData.ArchivedNotes.Where<Note>(x => x.ID == Note.ID).FirstOrDefault<Note>() != null;
                 IsNewNote = !AlreadyExists && !IsArchived;
             }
         }

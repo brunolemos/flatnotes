@@ -96,6 +96,7 @@ namespace Keep.Views
 
                     FrameworkElement listViewItem = NoteChecklistListView.ContainerFromIndex(position) as FrameworkElement;
                     TextBox textBox = FindFirstElementInVisualTree<TextBox>(listViewItem);
+                    CheckBox checkBox = FindFirstElementInVisualTree<CheckBox>(listViewItem);
                     if (textBox != null)
                     {
                         e.Handled = true;
@@ -111,6 +112,14 @@ namespace Keep.Views
                             textBox2.Text = text2;
 
                             textBox2.Focus(FocusState.Programmatic);
+                        }
+
+                        FrameworkElement checkBoxItem2 = NoteChecklistListView.ContainerFromIndex(position + 1) as FrameworkElement;
+                        CheckBox checkBox2 = FindFirstElementInVisualTree<CheckBox>(listViewItem2);
+                        if(checkBox2 != null && String.IsNullOrEmpty(text1))
+                        {
+                            checkBox2.IsChecked = checkBox.IsChecked;
+                            checkBox.IsChecked = false;
                         }
                     }
                 }
@@ -128,6 +137,12 @@ namespace Keep.Views
                         TextBox textBox2 = FindFirstElementInVisualTree<TextBox>(listViewItem2);
                         if (textBox2 != null)
                         {
+                            if(String.IsNullOrEmpty(textBox2.Text))
+                            {
+                                CheckBox checkBox2 = FindFirstElementInVisualTree<CheckBox>(listViewItem2);
+                                checkBox2.IsChecked = item.IsChecked;
+                            }
+
                             int pos = textBox2.Text.Length;
 
                             textBox2.Text += textBox.Text;

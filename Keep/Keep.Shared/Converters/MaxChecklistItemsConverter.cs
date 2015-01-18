@@ -8,7 +8,7 @@ using Keep.Common;
 
 namespace Keep.Converters
 {
-    public sealed class ChecklistMaxItemsConverter : Notifiable, IValueConverter
+    public sealed class MaxChecklistItemsConverter : Notifiable, IValueConverter
     {
         public int MaxItems { get { return maxItems; } set { maxItems = value; } }
         private int maxItems = 6;
@@ -19,6 +19,9 @@ namespace Keep.Converters
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             IsTrimmed = false;
+
+            int intParameter;
+            if (parameter != null && int.TryParse(parameter.ToString(), out intParameter)) MaxItems = intParameter;
 
             try
             {
