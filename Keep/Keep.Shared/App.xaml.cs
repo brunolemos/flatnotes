@@ -35,6 +35,7 @@ namespace Keep
         {
             if (!e.Handled)
             {
+
                 e.Handled = true;
                 await new MessageDialog(e.Message, "Fatal error").ShowAsync();
 

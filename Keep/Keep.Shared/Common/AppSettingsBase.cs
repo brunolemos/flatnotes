@@ -4,6 +4,7 @@ using System;
 using Newtonsoft.Json;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace Keep.Common
 {
@@ -32,8 +33,9 @@ namespace Keep.Common
                 if (typeof(T) != typeof(string)) return JsonConvert.DeserializeObject<T>(value.ToString());
                 return (T)value;
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                GoogleAnalytics.EasyTracker.GetTracker().SendException(e.Message, false);
                 return defaultValue;
             }
         }
@@ -48,8 +50,9 @@ namespace Keep.Common
 
                 return true;
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                GoogleAnalytics.EasyTracker.GetTracker().SendException(e.Message, false);
                 return false;
             }
         }
@@ -58,7 +61,8 @@ namespace Keep.Common
         {
             try
             {
-                return await Task.Run<T>(async () => {
+                return await Task.Run<T>(async () =>
+                {
                     StorageFile file = await localFolder.GetFileAsync(fileName);
                     string json = await FileIO.ReadTextAsync(file);
                     Debug.WriteLine("Content of {0} is {1}", fileName, json);
@@ -67,8 +71,13 @@ namespace Keep.Common
                     return JsonConvert.DeserializeObject<T>(json);
                 });
             }
-            catch (Exception)
+            catch (FileNotFoundException)
             {
+                return defaultValue;
+            }
+            catch (Exception e)
+            {
+                GoogleAnalytics.EasyTracker.GetTracker().SendException(e.Message, false);
                 return defaultValue;
             }
         }
@@ -85,8 +94,9 @@ namespace Keep.Common
                 await FileIO.WriteTextAsync(file, json);
                 return true;
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                GoogleAnalytics.EasyTracker.GetTracker().SendException(e.Message, false);
                 return false;
             }
         }
