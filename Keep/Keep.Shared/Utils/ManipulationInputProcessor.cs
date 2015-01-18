@@ -43,7 +43,7 @@ namespace Keep.Utils
 
             // Set up pointer event handlers. These receive input events that are used by the gesture recognizer.
             this.element.PointerCanceled += OnPointerCanceled;
-            this.element.PointerPressed += OnPointerPressed;
+            //this.element.PointerPressed += OnPointerPressed;
             this.element.PointerReleased += OnPointerReleased;
             this.element.PointerMoved += OnPointerMoved;
 
@@ -72,7 +72,7 @@ namespace Keep.Utils
         {
             // Set down pointer event handlers
             this.element.PointerCanceled -= OnPointerCanceled;
-            this.element.PointerPressed -= OnPointerPressed;
+            //this.element.PointerPressed -= OnPointerPressed;
             this.element.PointerReleased -= OnPointerReleased;
             this.element.PointerMoved -= OnPointerMoved;
 
