@@ -11,6 +11,7 @@
     Background="{StaticResource AppMainBrush}">
     
     <Grid x:Name="LayoutRoot">
+        <Image Source="ms-appx:///Assets/SplashScreenExtended.png" CacheMode="BitmapCache" VerticalAlignment="Top"/>
         <ProgressRing IsActive="True" Width="20" Background="Transparent" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
     </Grid>
 </Page>

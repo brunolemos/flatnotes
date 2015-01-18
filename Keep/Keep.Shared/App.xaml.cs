@@ -10,6 +10,7 @@ using Windows.UI.ViewManagement;
 using Windows.UI.Xaml.Media;
 using Keep.Utils;
 using Windows.UI.Popups;
+using System.Threading.Tasks;
 
 namespace Keep
 {
@@ -43,7 +44,7 @@ namespace Keep
             }
         }
 
-        protected override void OnLaunched(LaunchActivatedEventArgs e)
+        protected override async void OnLaunched(LaunchActivatedEventArgs e)
         {
 #if DEBUG
             if (System.Diagnostics.Debugger.IsAttached)
@@ -100,11 +101,15 @@ namespace Keep
                 }
             }
 
+
+            //wait so the splash screen background image may be loaded
+            await Task.Delay(0300);
+
             // Ensure the current window is active
             Window.Current.Activate();
         }
 
-        #if WINDOWS_PHONE_APP
+#if WINDOWS_PHONE_APP
         private void RootFrame_FirstNavigated(object sender, NavigationEventArgs e)
         {
             var rootFrame = sender as Frame;

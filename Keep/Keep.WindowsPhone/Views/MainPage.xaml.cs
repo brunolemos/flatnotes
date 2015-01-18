@@ -51,7 +51,7 @@ namespace Keep.Views
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            App.RootFrame.BackStack.Clear();
+            Frame.BackStack.Clear();
             this.navigationHelper.OnNavigatedTo(e);
         }
 
