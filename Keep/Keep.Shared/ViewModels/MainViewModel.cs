@@ -3,7 +3,9 @@ using Keep.Models;
 using Keep.Utils;
 using Keep.Views;
 using System;
+using System.Diagnostics;
 using Windows.ApplicationModel;
+using Windows.ApplicationModel.Store;
 using Windows.UI.Xaml.Controls;
 
 namespace Keep.ViewModels
@@ -17,6 +19,7 @@ namespace Keep.ViewModels
         public RelayCommand CreateChecklistNoteCommand { get; private set; }
         public RelayCommand OpenArchivedNotesCommand { get; private set; }
         public RelayCommand SendFeedbackCommand { get; private set; }
+        public RelayCommand SuggestFeatureOrReportBugCommand { get; private set; }
         public RelayCommand OpenSettingsCommand { get; private set; }
         public RelayCommand DeleteNoteCommand { get; private set; }
 
@@ -49,6 +52,7 @@ namespace Keep.ViewModels
             CreateChecklistNoteCommand = new RelayCommand(CreateChecklistNote);
             OpenArchivedNotesCommand = new RelayCommand(OpenArchivedNotes);
             SendFeedbackCommand = new RelayCommand(SendFeedback);
+            SuggestFeatureOrReportBugCommand = new RelayCommand(SuggestFeatureOrReportBug);
             OpenSettingsCommand = new RelayCommand(OpenSettings);
             DeleteNoteCommand = new RelayCommand(DeleteNote, CanDeleteNote);
 
@@ -78,11 +82,17 @@ namespace Keep.ViewModels
 
         private async void SendFeedback()
         {
+            await Windows.System.Launcher.LaunchUriAsync(new Uri("ms-windows-store:reviewapp?appid=" + CurrentApp.AppId));
+        }
+
+
+        private async void SuggestFeatureOrReportBug()
+        {
             Windows.ApplicationModel.Email.EmailMessage mail = new Windows.ApplicationModel.Email.EmailMessage();
 
             mail.To.Add(new Windows.ApplicationModel.Email.EmailRecipient("keep@brunolemos.org"));
             mail.Subject = String.Format("Feedback - Keep v{0}.{1}", Package.Current.Id.Version.Major, Package.Current.Id.Version.Minor);
-            mail.Body = "";
+            mail.Body = "[YOUR MESSAGE GOES HERE]";
 
             await Windows.ApplicationModel.Email.EmailManager.ShowComposeNewEmailAsync(mail);
         }

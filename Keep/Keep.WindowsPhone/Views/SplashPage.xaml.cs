@@ -3,13 +3,10 @@ using System.Threading.Tasks;
 using Windows.UI.Core;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using Keep.Models;
 using Keep.Utils;
 using Keep.Utils.Migration;
 using Keep.Views;
 using Windows.UI.ViewManagement;
-using Windows.Storage;
-using System.Diagnostics;
 
 namespace Keep
 {
@@ -30,8 +27,8 @@ namespace Keep
             await Migration.Migrate(AppSettings.Instance.Version);
 
             //load notes
-
-            Task.Run(async () => {
+            Task.Run(async () =>
+            {
                 AppData.Notes = await AppSettings.Instance.LoadNotes();
             }).Wait();
 

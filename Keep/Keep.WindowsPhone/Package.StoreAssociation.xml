@@ -187,11 +187,12 @@
     <MainPackageIdentityName>29428BrunoLemos.Keep</MainPackageIdentityName>
     <ReservedNames>
       <ReservedName>#Keep</ReservedName>
-      <ReservedName>#Keep Notes</ReservedName>
       <ReservedName>#KeepNotes</ReservedName>
       <ReservedName>Flat Notes</ReservedName>
       <ReservedName>KeepNote</ReservedName>
       <ReservedName>Keep 8.1</ReservedName>
+      <ReservedName>Google Keep Alternative</ReservedName>
+      <ReservedName>Google Keep 8.1</ReservedName>
     </ReservedNames>
   </ProductReservedInfo>
   <AccountPackageIdentityNames>

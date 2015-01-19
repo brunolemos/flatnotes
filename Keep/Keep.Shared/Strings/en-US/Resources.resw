@@ -142,7 +142,7 @@
     <value>pending update</value>
   </data>
   <data name="FeedbackAppBarButton.Label" xml:space="preserve">
-    <value>send feedback</value>
+    <value>send a nice feedback</value>
   </data>
   <data name="NewItemTextBox.PlaceholderText" xml:space="preserve">
     <value>New item</value>
@@ -248,5 +248,8 @@
   </data>
   <data name="ArchivedTextBox.Text" xml:space="preserve">
     <value>Archived</value>
+  </data>
+  <data name="RequestFeatureOrReportBugAppBarButton.Label" xml:space="preserve">
+    <value>request feature / report bug</value>
   </data>
 </root>

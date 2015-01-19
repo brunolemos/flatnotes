@@ -20,10 +20,11 @@
     </Page.Transitions>
 
     <Page.BottomAppBar>
-        <CommandBar>
+        <CommandBar IsOpen="True">
             <CommandBar.SecondaryCommands>
                 <AppBarButton x:Uid="ArchivedNotesAppBarButton" Icon="SaveLocal" Label="archived notes" Command="{Binding OpenArchivedNotesCommand}"/>
-                <AppBarButton x:Uid="FeedbackAppBarButton" Icon="Like" Label="send feedback" Command="{Binding SendFeedbackCommand}"/>
+                <AppBarButton x:Uid="FeedbackAppBarButton" Icon="Like" Label="send a nice feedback" Command="{Binding SendFeedbackCommand}"/>
+                <AppBarButton x:Uid="RequestFeatureOrReportBugAppBarButton" Icon="Mail" Label="request feature / report bug" Command="{Binding SuggestFeatureOrReportBugCommand}"/>
                 <AppBarButton x:Uid="SettingsAppBarButton" Icon="Setting" Label="settings" Command="{Binding OpenSettingsCommand}"/>
             </CommandBar.SecondaryCommands>
 
