@@ -13,6 +13,8 @@ namespace Keep.Common
         protected ApplicationDataContainer localSettings;
         protected StorageFolder localFolder;
 
+        public abstract uint Version { get; }
+
         protected AppSettingsBase()
         {
             if (!DesignMode.DesignModeEnabled)
@@ -22,15 +24,18 @@ namespace Keep.Common
             }
         }
 
+        public abstract void Up();
+        public abstract void Down();
+
         protected T GetValueOrDefault<T>(string key, T defaultValue)
         {
             try
             {
                 var value = localSettings.Values[key];
-                if (value == null || String.IsNullOrEmpty(value.ToString())) value = defaultValue;
+                if (value == null || String.IsNullOrEmpty(value.ToString())) return defaultValue;
                 //Debug.WriteLine("Value of {0} is {1}", key, value.ToString());
 
-                if (typeof(T) != typeof(string)) return JsonConvert.DeserializeObject<T>(value.ToString());
+                if (defaultValue is object) return JsonConvert.DeserializeObject<T>(value.ToString());
                 return (T)value;
             }
             catch (Exception e)
@@ -44,7 +49,7 @@ namespace Keep.Common
         {
             try
             {
-                string content = typeof(T) == typeof(string) ? value.ToString() :  JsonConvert.SerializeObject(value);
+                string content = value is object ? value.ToString() :  JsonConvert.SerializeObject(value);
                 localSettings.Values[key] = content;
                 //Debug.WriteLine("SetValue of {0} to {1}", key, content);
 
@@ -61,19 +66,12 @@ namespace Keep.Common
         {
             try
             {
-                return await Task.Run<T>(async () =>
-                {
-                    StorageFile file = await localFolder.GetFileAsync(fileName);
-                    string json = await FileIO.ReadTextAsync(file);
-                    Debug.WriteLine("Content of {0} is {1}", fileName, json);
+                StorageFile file = await localFolder.GetFileAsync(fileName);
+                string json = await FileIO.ReadTextAsync(file);
+                Debug.WriteLine("Content of {0} is {1}", fileName, json);
 
-                    if (String.IsNullOrEmpty(json)) return defaultValue;
-                    return JsonConvert.DeserializeObject<T>(json);
-                });
-            }
-            catch (FileNotFoundException)
-            {
-                return defaultValue;
+                if (String.IsNullOrEmpty(json)) return defaultValue;
+                return JsonConvert.DeserializeObject<T>(json);
             }
             catch (Exception e)
             {

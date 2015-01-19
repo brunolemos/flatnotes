@@ -5,8 +5,11 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using Keep.Models;
 using Keep.Utils;
+using Keep.Utils.Migration;
 using Keep.Views;
 using Windows.UI.ViewManagement;
+using Windows.Storage;
+using System.Diagnostics;
 
 namespace Keep
 {
@@ -23,8 +26,14 @@ namespace Keep
         {
             ApplicationView.GetForCurrentView().SetDesiredBoundsMode(ApplicationViewBoundsMode.UseCoreWindow);
 
+            //versioning -- migrate app data structure when necessary
+            await Migration.Migrate(AppSettings.Instance.Version);
+
             //load notes
-            AppData.Notes = await AppSettings.Instance.LoadNotes();
+
+            Task.Run(async () => {
+                AppData.Notes = await AppSettings.Instance.LoadNotes();
+            }).Wait();
 
             NavigateAsync(typeof(MainPage));
 

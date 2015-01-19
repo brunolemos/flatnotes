@@ -119,6 +119,9 @@ namespace Keep.Views
             FrameworkElement element = sender as FrameworkElement;
             FrameworkElement referenceFrame = NoteChecklistListView;
 
+            //workaround to fix a bug
+            element.Opacity = 1;
+
             if(viewModel.ReorderMode != ListViewReorderMode.Enabled)
                 EnableSwipeFeature(element, referenceFrame);
 

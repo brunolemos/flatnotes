@@ -2,7 +2,10 @@
 using Keep.Events;
 using Keep.Models;
 using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
+using Windows.Storage;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 
 namespace Keep.Utils
@@ -13,6 +16,9 @@ namespace Keep.Utils
 
         public event EventHandler<ThemeEventArgs> ThemeChanged;
         public event EventHandler ColumnsChanged;
+
+        public override uint Version { get { return version; } }
+        private static uint version = 2;
 
         private const string NOTES_FILENAME = "notes.json";
         private static Notes NOTES_DEFAULT = new Notes();
@@ -27,6 +33,34 @@ namespace Keep.Utils
         private static int COLUMNS_DEFAULT = 2;
 
         private AppSettings() : base() { }
+
+        public override void Up()
+        {
+            if (Migration.Versions.v1.AppSettings.Instance.LoggedUser == Migration.Versions.v1.AppSettings.Instance.LOGGEDUSER_DEFAULT)
+                return;
+
+            Task.Run(async () =>
+            {
+                bool success = await SaveNotes(Migration.Versions.v1.AppSettings.Instance.LoggedUser.Notes);
+                await SaveArchivedNotes(Migration.Versions.v1.AppSettings.Instance.LoggedUser.ArchivedNotes);
+
+                if (success) localSettings.Values.Clear();
+            }).Wait();
+
+            Theme = Migration.Versions.v1.AppSettings.Instance.LoggedUser.Preferences.Theme;
+            Columns = Migration.Versions.v1.AppSettings.Instance.LoggedUser.Preferences.Columns;
+        }
+
+        public override void Down()
+        {
+            Task.Run(async () =>
+            {
+                Migration.Versions.v1.AppSettings.Instance.LoggedUser.Preferences.Theme = Theme;
+                Migration.Versions.v1.AppSettings.Instance.LoggedUser.Preferences.Columns = Columns;
+                Migration.Versions.v1.AppSettings.Instance.LoggedUser.Notes = await LoadNotes();
+                Migration.Versions.v1.AppSettings.Instance.LoggedUser.ArchivedNotes = await LoadArchivedNotes();
+            }).Wait();
+        }
 
         public ElementTheme Theme
         {

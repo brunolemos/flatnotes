@@ -64,7 +64,7 @@ namespace Keep.Utils
         public void Disable()
         {
             if (element != null) element.ManipulationMode = previousManipulationModes;
-            if (element != null) element.Opacity = elementInitialOpacity;
+            //if (element != null) element.Opacity = elementInitialOpacity;
             UnhandleEvents();
         }
 

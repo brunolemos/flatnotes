@@ -92,6 +92,10 @@ namespace Keep.Models
             this.checklist = checklist;
         }
 
+        //public Note(string id, bool isChecklist, string title, string text, Checklist checklist, 
+        //notes.Add(new Note() { ID = note.ID, IsChecklist = note.IsChecklist, Title = note.Title, Text = note.Text, Checklist = note.Checklist, Color = note.Color, CreatedAt = note.CreatedAt, UpdatedAt = note.UpdatedAt  });
+
+
         void Note_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             if (String.IsNullOrEmpty(e.PropertyName) || e.PropertyName == "Changed") return;
