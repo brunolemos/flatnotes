@@ -33,7 +33,7 @@ namespace Keep.Converters
                 if (orderedList.Count <= MaxItems) return orderedList;
 
                 IsTrimmed = true;
-                return orderedList.Take<ChecklistItem>(Math.Max(1, MaxItems - 1));
+                return orderedList.Take<ChecklistItem>(Math.Max(1, MaxItems));
             }
             catch (Exception e)
             {

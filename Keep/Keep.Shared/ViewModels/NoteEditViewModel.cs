@@ -39,7 +39,7 @@ namespace Keep.ViewModels
             }
         }
 
-        public Note Note { get { return note; } set { note = value; NotifyPropertyChanged("Note"); } }
+        public Note Note { get { return note; } set { note = value == null ? new Note() : value; NotifyPropertyChanged("Note"); } }
         private Note note = new Note();
 
         public bool IsNewNote { get { return isNewNote; } set { isNewNote = value; NotifyPropertyChanged("IsNewNote"); } }

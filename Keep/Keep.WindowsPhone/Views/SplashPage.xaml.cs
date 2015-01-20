@@ -23,14 +23,22 @@ namespace Keep
         {
             ApplicationView.GetForCurrentView().SetDesiredBoundsMode(ApplicationViewBoundsMode.UseCoreWindow);
 
+            //simulation
+            //Task.Run(async () =>
+            //{
+            //    await Windows.Storage.ApplicationData.Current.SetVersionAsync(0, (x) => { });
+
+            //    string json = "{\"AnonymousID\":null,\"DevicesList\":[],\"Name\":null,\"Email\":null,\"Notes\":[{\"ID\":\"63557205760085_92979168\",\"IsChecklist\":false,\"Title\":\"A\",\"Text\":\"A\",\"Images\":[],\"Checklist\":[],\"CreatedAt\":\"2015-01-18T19:22:40.0986598-02:00\",\"UpdatedAt\":\"2015-01-18T19:22:40.0986598-02:00\",\"Color\":\"BLUE\"},{\"ID\":\"63557205785323_81016993\",\"IsChecklist\":true,\"Title\":\"C\",\"Text\":\"\",\"Images\":[],\"Checklist\":[{\"Text\":\"C\",\"IsChecked\":false},{\"Text\":\"C\",\"IsChecked\":false},{\"Text\":\"C\",\"IsChecked\":true}],\"CreatedAt\":\"2015-01-18T19:23:05.3232166-02:00\",\"UpdatedAt\":\"2015-01-18T19:23:05.3232166-02:00\",\"Color\":\"GREEN\"}],\"Preferences\":{\"Columns\":3,\"ItemMinWidth\":150.0,\"Theme\":0},\"CreatedAt\":\"2015-01-18T19:06:32.6837239-02:00\",\"UpdatedAt\":\"0001-01-01T00:00:00\",\"LastSeenAt\":\"2015-01-18T19:06:32.6867434-02:00\"}"; //,\"ArchivedNotes\":[{\"ID\":\"63557205769921_32577953\",\"IsChecklist\":true,\"Title\":\"B\",\"Text\":\"\",\"Images\":[],\"Checklist\":[{\"Text\":\"B\",\"IsChecked\":false},{\"Text\":\"B\",\"IsChecked\":true},{\"Text\":\"B\",\"IsChecked\":false}],\"CreatedAt\":\"2015-01-18T19:22:49.9209317-02:00\",\"UpdatedAt\":\"2015-01-18T19:22:49.9209317-02:00\",\"Color\":\"YELLOW\"},{\"ID\":\"63557205760085_92979168\",\"IsChecklist\":false,\"Title\":\"A\",\"Text\":\"A\",\"Images\":[],\"Checklist\":[],\"CreatedAt\":\"2015-01-18T19:22:40.0986598-02:00\",\"UpdatedAt\":\"2015-01-18T19:22:40.0986598-02:00\",\"Color\":\"BLUE\"}]
+            //    await Utils.Migration.Versions.v1.AppSettings.Instance.AddOrUpdateValue("KeepSetting_LoggedUser", json);
+
+            //    Utils.Migration.Versions.v1.AppSettings.Instance.LoggedUser = Newtonsoft.Json.JsonConvert.DeserializeObject< Utils.Migration.Versions.v1.Models.User>(json);
+            //}).Wait();
+
             //versioning -- migrate app data structure when necessary
             await Migration.Migrate(AppSettings.Instance.Version);
 
             //load notes
-            Task.Run(async () =>
-            {
-                AppData.Notes = await AppSettings.Instance.LoadNotes();
-            }).Wait();
+            AppData.Notes = await AppSettings.Instance.LoadNotes();
 
             NavigateAsync(typeof(MainPage));
 

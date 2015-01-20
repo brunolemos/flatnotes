@@ -74,10 +74,10 @@ namespace Keep.Views
             if (note == null) return;
 
             //it can be trimmed, so get the original
-            if (note.IsChecklist)
-                note = AppData.ArchivedNotes.Where<Note>(n => n.ID == note.ID).FirstOrDefault();
+            Note originalNote = AppData.ArchivedNotes.Where<Note>(n => n.ID == note.ID).FirstOrDefault();
+            if (originalNote == null) GoogleAnalytics.EasyTracker.GetTracker().SendException(string.Format("Failed to load tapped archived note ({0})", note.GetContent()), false);
 
-            App.RootFrame.Navigate(typeof(NoteEditPage), note);
+            App.RootFrame.Navigate(typeof(NoteEditPage), originalNote);
         }
 
         //swipe feature
