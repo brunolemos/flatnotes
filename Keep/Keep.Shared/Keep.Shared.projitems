@@ -43,7 +43,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Utils\Migration\Versions\v1\Controllers\DeviceController.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\Migration\Versions\v1\Interfaces\IIdentifiableModelInterface.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\Migration\Versions\v1\Models\BaseModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Utils\Migration\Versions\v1\Models\NoteColor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\Migration\Versions\v1\Models\Device.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\Migration\Versions\v1\Models\User.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\Migration\Versions\v1\Models\UserPreferences.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ArchivedNotesViewModel.cs" />

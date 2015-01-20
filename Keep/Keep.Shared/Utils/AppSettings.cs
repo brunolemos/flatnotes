@@ -39,10 +39,20 @@ namespace Keep.Utils
             if (Migration.Versions.v1.AppSettings.Instance.LoggedUser == Migration.Versions.v1.AppSettings.Instance.LOGGEDUSER_DEFAULT)
                 return;
 
+            //import notes
+            Notes notes = new Notes();
+            foreach (var note in Migration.Versions.v1.AppSettings.Instance.LoggedUser.Notes)
+                notes.Add(new Note(note.Title, note.Text, note.Checklist, note.Color, note.CreatedAt, note.UpdatedAt, null));
+
+            //import archived
+            Notes archivedNotes = new Notes();
+            foreach (var note in Migration.Versions.v1.AppSettings.Instance.LoggedUser.ArchivedNotes)
+                notes.Add(new Note(note.Title, note.Text, note.Checklist, note.Color, note.CreatedAt, note.UpdatedAt, note.UpdatedAt));
+
             Task.Run(async () =>
             {
-                bool success = await SaveNotes(Migration.Versions.v1.AppSettings.Instance.LoggedUser.Notes);
-                await SaveArchivedNotes(Migration.Versions.v1.AppSettings.Instance.LoggedUser.ArchivedNotes);
+                bool success = await SaveNotes(notes);
+                await SaveArchivedNotes(archivedNotes);
 
                 if (success) localSettings.Values.Clear();
             }).Wait();

@@ -20,7 +20,7 @@ namespace Keep.Models
         //private bool isPinned_value;
 
         public string ID { get { return id; } private set { id = value; } }
-        [DataMember(Name = "ID")]
+        [DataMember(Name = "_id")]
         private string id = Guid.NewGuid().ToString();
 
         public bool IsChecklist { get { return isChecklist; } set { if (isChecklist != value) { isChecklist = value; if (value) EnableChecklist(); else DisableChecklist(); NotifyPropertyChanged("IsChecklist"); NotifyPropertyChanged("IsText"); } } }
@@ -90,6 +90,19 @@ namespace Keep.Models
 
             this.isChecklist = true;
             this.checklist = checklist;
+        }
+
+        public Note(string title, string text, Checklist checklist, NoteColor color, DateTime createdAt, DateTime updatedAt, DateTime? archivedAt) : this()
+        {
+            this.title = title;
+            this.text = text;
+            this.checklist = checklist;
+            this.color = color is NoteColor ? color : NoteColor.DEFAULT;
+            this.createdAt = createdAt;
+            this.updatedAt = updatedAt;
+            this.archivedAt = archivedAt;
+
+            this.isChecklist = checklist != null;
         }
 
         //public Note(string id, bool isChecklist, string title, string text, Checklist checklist, 
