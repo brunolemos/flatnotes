@@ -39,12 +39,16 @@ namespace Keep.Views
 
         private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
+            GoogleAnalytics.EasyTracker.GetTracker().SendView("MainPage");
+
             App.ChangeStatusBarColor();
             App.RootFrame.Background = LayoutRoot.Background;
         }
 
         private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
         {
+            GoogleAnalytics.EasyTracker.GetTracker().SetCustomMetric(1, AppData.Notes.Count);
+            GoogleAnalytics.EasyTracker.GetTracker().SetCustomMetric(2, AppData.ArchivedNotes.Count);
         }
 
         #region NavigationHelper registration

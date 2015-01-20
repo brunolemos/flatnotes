@@ -62,11 +62,13 @@ namespace Keep.ViewModels
 
         private void CreateTextNote()
         {
+            GoogleAnalytics.EasyTracker.GetTracker().SendEvent("ui_action", "execute_command", "create_text_note", 0);
             App.RootFrame.Navigate(typeof(NoteEditPage), new Note());
         }
 
         private void CreateChecklistNote()
         {
+            GoogleAnalytics.EasyTracker.GetTracker().SendEvent("ui_action", "execute_command", "create_checklist_note", 0);
             App.RootFrame.Navigate(typeof(NoteEditPage), new Note(true));
         }
 
@@ -82,12 +84,14 @@ namespace Keep.ViewModels
 
         private async void SendFeedback()
         {
+            GoogleAnalytics.EasyTracker.GetTracker().SendEvent("ui_action", "execute_command", "send_feedback", 0);
             await Windows.System.Launcher.LaunchUriAsync(new Uri("ms-windows-store:reviewapp?appid=" + CurrentApp.AppId));
         }
 
 
         private async void SuggestFeatureOrReportBug()
         {
+            GoogleAnalytics.EasyTracker.GetTracker().SendEvent("ui_action", "execute_command", "suggest_feature_or_report_bug", 0);
             Windows.ApplicationModel.Email.EmailMessage mail = new Windows.ApplicationModel.Email.EmailMessage();
 
             mail.To.Add(new Windows.ApplicationModel.Email.EmailRecipient("keep@brunolemos.org"));

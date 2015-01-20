@@ -103,7 +103,6 @@ namespace Keep
                 }
             }
 
-
             //wait so the splash screen background image may be loaded
             await Task.Delay(0400);
 

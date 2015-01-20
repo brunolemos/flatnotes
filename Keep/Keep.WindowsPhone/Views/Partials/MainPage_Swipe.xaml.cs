@@ -46,6 +46,8 @@ namespace Keep.Views
             if (note == null) return;
 
             Debug.WriteLine("Swiped note " + note.Title);
+            GoogleAnalytics.EasyTracker.GetTracker().SendEvent("ui_action", "swipe", "note", 0);
+
             await AppData.ArchiveNote(note);
         }
     }

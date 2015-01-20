@@ -45,9 +45,11 @@ namespace Keep.Views
 
         private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
+            GoogleAnalytics.EasyTracker.GetTracker().SendView("NoteEditPage");
+
             App.ChangeStatusBarColor(Colors.Black);
 
-            if(e.NavigationParameter is Note)
+            if (e.NavigationParameter is Note)
                 viewModel.Note = e.NavigationParameter as Note;
 
             viewModel.Note.Changed = false;

@@ -41,11 +41,6 @@ namespace Keep.ViewModels
             AppSettings.Instance.ColumnsChanged += (s, e) => NotifyPropertyChanged("Columns");
         }
 
-        private void OpenHome()
-        {
-            App.RootFrame.Navigate(typeof(MainPage));
-        }
-
         #endregion
     }
 }

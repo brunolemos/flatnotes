@@ -71,6 +71,7 @@ namespace Keep.ViewModels
 
         private void ToggleChecklist()
         {
+            GoogleAnalytics.EasyTracker.GetTracker().SendEvent("ui_action", "execute_command", "toggle_checklist", 0);
             Note.ToggleChecklist();
         }
 
