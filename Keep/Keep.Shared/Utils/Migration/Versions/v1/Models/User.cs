@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.Serialization;
-using Keep.Utils.Migration.Versions.v1.Controllers;
-using Keep.Utils.Migration.Versions.v1.Interfaces;
 using Keep.Models;
 
 namespace Keep.Utils.Migration.Versions.v1.Models
@@ -11,27 +9,27 @@ namespace Keep.Utils.Migration.Versions.v1.Models
     public class Users : List<User> { }
 
     [DataContract]
-    public class User : BaseModel, IIdentifiableModelInterface
+    public class User : BaseModel/*, IIdentifiableModelInterface*/
     {
-        public String GetID() { return AnonymousID; }
-        public DateTime GetCreatedAt() { return CreatedAt; }
-        public DateTime GetUpdatedAt() { return UpdatedAt; }
+        //public String GetID() { return AnonymousID; }
+        //public DateTime GetCreatedAt() { return CreatedAt; }
+        //public DateTime GetUpdatedAt() { return UpdatedAt; }
 
-        public string AnonymousID { get { return anonymousID; } }
-        [DataMember(Name = "AnonymousID")]
-        private string anonymousID = DeviceController.UserAnonymousID;
+        //public string AnonymousID { get { return anonymousID; } }
+        //[DataMember(Name = "AnonymousID")]
+        //private string anonymousID = DeviceController.UserAnonymousID;
 
         //public Devices Devices { get { return devices; } set { replaceDevices(value); } }
         //[DataMember(Name = "DevicesList")]
         //private Devices devices = new Devices();
 
-        public String Name { get { return name; } set { if ( name != value ) { name = value; NotifyPropertyChanged( "Name" ); } } }
-        [DataMember(Name = "Name")]
-        private String name;
+        //public String Name { get { return name; } set { if ( name != value ) { name = value; NotifyPropertyChanged( "Name" ); } } }
+        //[DataMember(Name = "Name")]
+        //private String name;
 
-        public String Email { get { return email; } set { if ( email != value ) { email = value; NotifyPropertyChanged( "Email" ); } } }
-        [DataMember(Name = "Email")]
-        private String email;
+        //public String Email { get { return email; } set { if ( email != value ) { email = value; NotifyPropertyChanged( "Email" ); } } }
+        //[DataMember(Name = "Email")]
+        //private String email;
 
         public Notes Notes { get { return notes; } set { replaceNotes(value); } }
         [DataMember(Name = "Notes")]
@@ -55,17 +53,17 @@ namespace Keep.Utils.Migration.Versions.v1.Models
         public DateTime LastSeenAt = DateTime.Now;
 
         public User() {
-            PropertyChanged += User_PropertyChanged;
+            //PropertyChanged += User_PropertyChanged;
 
             //Notes.CollectionChanged += (s, e) => NotifyPropertyChanged("Notes");
             //ArchivedNotes.CollectionChanged += (s, e) => NotifyPropertyChanged("ArchivedNotes");
             //Preferences.PropertyChanged += (s, e) => NotifyPropertyChanged("Preferences");
         }
 
-        void User_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            Debug.WriteLine(String.Format("User {0} changed", e.PropertyName));
-        }
+        //void User_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        //{
+        //    Debug.WriteLine(String.Format("User {0} changed", e.PropertyName));
+        //}
 
         public void Touch()
         {
@@ -113,7 +111,7 @@ namespace Keep.Utils.Migration.Versions.v1.Models
             foreach (var item in list)
                 archivedNotes.Add(item);
 
-            NotifyPropertyChanged("ArchivedNotes"); 
+            NotifyPropertyChanged("ArchivedNotes");
 
             return;
         }

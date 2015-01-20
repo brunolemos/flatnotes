@@ -33,7 +33,7 @@ namespace Keep.Utils.Migration.Versions.v1
             if (!Windows.ApplicationModel.DesignMode.DesignModeEnabled)
                 localSettings = ApplicationData.Current.LocalSettings;
 
-            String json = GetValueOrDefault<string>(LOGGEDUSER_KEY, "");
+            String json = GetValueOrDefault<string>(LOGGEDUSER_KEY, "{}");
             LoggedUser = (String.IsNullOrEmpty(json)) ? LOGGEDUSER_DEFAULT : JsonConvert.DeserializeObject<User>(json);
         }
 
