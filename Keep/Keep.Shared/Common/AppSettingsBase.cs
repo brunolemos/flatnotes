@@ -66,16 +66,12 @@ namespace Keep.Common
         {
             try
             {
-                StorageFile file = await localFolder.GetFileAsync(fileName);
+                StorageFile file = await localFolder.CreateFileAsync(fileName, CreationCollisionOption.OpenIfExists);
                 string json = await FileIO.ReadTextAsync(file);
                 Debug.WriteLine("Content of {0} is {1}", fileName, json);
 
                 if (String.IsNullOrEmpty(json)) return defaultValue;
                 return JsonConvert.DeserializeObject<T>(json);
-            }
-            catch (FileNotFoundException)
-            {
-                return defaultValue;
             }
             catch (Exception e)
             {
