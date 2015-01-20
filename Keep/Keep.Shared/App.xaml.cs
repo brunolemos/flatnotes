@@ -103,6 +103,11 @@ namespace Keep
                 }
             }
 
+            //user preferences
+            GoogleAnalytics.EasyTracker.GetTracker().SetCustomDimension(1, AppSettings.Instance.Theme.ToString());
+            GoogleAnalytics.EasyTracker.GetTracker().SetCustomDimension(2, AppSettings.Instance.Columns.ToString());
+
+
             //wait so the splash screen background image may be loaded
             await Task.Delay(0400);
 
