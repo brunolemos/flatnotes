@@ -49,7 +49,7 @@ namespace Keep.Common
         {
             try
             {
-                string content = value is object ? value.ToString() :  JsonConvert.SerializeObject(value);
+                string content = value is object ? JsonConvert.SerializeObject(value) : value.ToString();
                 localSettings.Values[key] = content;
                 //Debug.WriteLine("SetValue of {0} to {1}", key, content);
 
@@ -72,6 +72,10 @@ namespace Keep.Common
 
                 if (String.IsNullOrEmpty(json)) return defaultValue;
                 return JsonConvert.DeserializeObject<T>(json);
+            }
+            catch (FileNotFoundException)
+            {
+                return defaultValue;
             }
             catch (Exception e)
             {
