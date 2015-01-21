@@ -10,10 +10,15 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Windows.ApplicationModel.Activation;
+using Windows.Foundation;
+using Windows.Storage;
+using Windows.UI.Popups;
+using Windows.UI.Xaml.Controls.Primitives;
 
 namespace Keep.Views
 {
-    public sealed partial class NoteEditPage : Page
+    public sealed partial class NoteEditPage : Page, IFileOpenPickerContinuable
     {
         public NavigationHelper NavigationHelper { get { return this.navigationHelper; } }
         private NavigationHelper navigationHelper;
@@ -47,17 +52,18 @@ namespace Keep.Views
         {
             GoogleAnalytics.EasyTracker.GetTracker().SendView("NoteEditPage");
 
-            App.ChangeStatusBarColor(Colors.Black);
+            //App.ChangeStatusBarColor(Colors.Black);
 
             if (e.NavigationParameter is Note)
                 viewModel.Note = e.NavigationParameter as Note;
 
             viewModel.Note.Changed = false;
+            viewModel.Note.Images.CollectionChanged += Images_CollectionChanged;
             viewModel.Note.Checklist.CollectionChanged += Checklist_CollectionChanged;
             viewModel.Note.Checklist.CollectionItemChanged += Checklist_CollectionItemChanged;
 
             previousBackground = App.RootFrame.Background;
-            App.RootFrame.Background = Background;
+            App.RootFrame.Background = new SolidColorBrush(new Color().FromHex(viewModel.Note.Color.Color));
         }
 
         private async void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
@@ -68,6 +74,7 @@ namespace Keep.Views
             if (viewModel.Note == null) return;
 
             //remove change binding
+            viewModel.Note.Images.CollectionChanged -= Images_CollectionChanged;
             viewModel.Note.Checklist.CollectionChanged -= Checklist_CollectionChanged;
             viewModel.Note.Checklist.CollectionItemChanged -= Checklist_CollectionItemChanged;
 
@@ -96,13 +103,18 @@ namespace Keep.Views
 
         #endregion
 
-        private void Checklist_CollectionItemChanged(object sender, EventArgs e)
+        private void Images_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            viewModel.Note.Touch();
+        }
+
+        private void Checklist_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             checklistChanged = true;
             viewModel.Note.Touch();
         }
 
-        private void Checklist_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        private void Checklist_CollectionItemChanged(object sender, EventArgs e)
         {
             checklistChanged = true;
             viewModel.Note.Touch();
@@ -142,6 +154,54 @@ namespace Keep.Views
             viewModel.ReorderModeEnabled -= disableSwipeEventHandlers[element];
 
             DisableSwipeFeature(element);
+        }
+
+        public async void ContinueFileOpenPicker(FileOpenPickerContinuationEventArgs args)
+        {
+            if (args.Files.Count > 0)
+            {
+                try
+                {
+                    //delete old images
+                    await AppData.RemoveNoteImages(viewModel.Note.Images);
+
+                    //clear image list
+                    viewModel.Note.Images.Clear();
+
+                    //add new images
+                    foreach (var file in args.Files)
+                    {
+                        Debug.WriteLine("Picked photo: " + file.Path);
+
+                        NoteImage noteImage = new NoteImage();
+
+                        StorageFile savedImage = await AppSettings.Instance.SaveImage(file, viewModel.Note.ID, noteImage.ID);
+
+                        var imageProperties = await savedImage.Properties.GetImagePropertiesAsync();
+                        noteImage.URL = savedImage.Path;
+                        noteImage.Size = new Size(imageProperties.Width, imageProperties.Height);
+
+                        viewModel.Note.Images.Add(noteImage);
+                        break;
+                    }
+                }
+                catch (Exception e)
+                {
+                    GoogleAnalytics.EasyTracker.GetTracker().SendException(String.Format("Failed to save image ({0})", e.Message), false);
+                    await (new MessageDialog("Failed to save image. Try again.", "Sorry")).ShowAsync();
+                }
+            }
+        }
+
+        private void NoteImageContainer_Holding(object sender, HoldingRoutedEventArgs e)
+        {
+            FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);
+        }
+
+        private void DeleteNoteImageMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        {
+            viewModel.TempNoteImage = (e.OriginalSource as FrameworkElement).DataContext as NoteImage;
+            viewModel.DeleteNoteImageCommand.Execute(viewModel.TempNoteImage);
         }
     }
 }

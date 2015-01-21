@@ -23,6 +23,7 @@ namespace Keep
 #endif
 
         public static Frame RootFrame = Window.Current.Content as Frame;
+        public static ContinuationManager ContinuationManager { get; private set; }
 
         public App()
         {
@@ -43,6 +44,21 @@ namespace Keep
                 await new MessageDialog(e.Message, "Fatal error").ShowAsync();
 
                 App.Current.Exit();
+            }
+        }
+
+        protected override void OnActivated(IActivatedEventArgs e)
+        {
+            base.OnActivated(e);
+
+            ContinuationManager = new ContinuationManager();
+
+            var continuationEventArgs = e as IContinuationActivatedEventArgs;
+            if (continuationEventArgs != null)
+            {
+                // Call ContinuationManager to handle continuation activation
+                if (RootFrame != null)
+                    ContinuationManager.Continue(continuationEventArgs, RootFrame);
             }
         }
 

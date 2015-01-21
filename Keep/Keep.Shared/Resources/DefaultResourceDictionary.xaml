@@ -6,7 +6,7 @@
     <SolidColorBrush x:Key="KeepNoteForegroundBrush" Color="#C0000000"/>
     
     <SolidColorBrush x:Key="AppStatusBarBackgroundBrush" Color="#E59900"/>
-    <SolidColorBrush x:Key="AppStatusBarForegroundBrush" Color="#403003"/>
+    <SolidColorBrush x:Key="AppStatusBarForegroundBrush" Color="#FFFFFE"/><!--403003-->
     
     <SolidColorBrush x:Key="KeepNoteCommandBarForegroundThemeBrush" Color="Black"/>
     

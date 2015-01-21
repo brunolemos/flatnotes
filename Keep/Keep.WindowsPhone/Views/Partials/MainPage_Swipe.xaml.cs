@@ -34,7 +34,7 @@ namespace Keep.Views
         partial void DisableSwipeFeature(FrameworkElement element)
         {
             if (element == null || !inputProcessors.ContainsKey(element)) return;
-            Debug.WriteLine("DisableSwipeFeature");
+            //Debug.WriteLine("DisableSwipeFeature");
 
             try
             {

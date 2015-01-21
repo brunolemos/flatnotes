@@ -38,9 +38,9 @@ namespace Keep.Models
         [DataMember(Name = "Text")]
         private String text;
 
-        //public NoteImages Images { get { return images; } set { replaceNoteImages(value); NotifyPropertyChanged("Images"); } }
-        //[DataMember(Name = "Images")]
-        //private NoteImages images = new NoteImages();
+        public NoteImages Images { get { return images; } set { replaceNoteImages(value); NotifyPropertyChanged("Images"); } }
+        [DataMember(Name = "Images")]
+        private NoteImages images = new NoteImages();
 
         public Checklist Checklist { get { return checklist; } private set { replaceChecklist(value); NotifyPropertyChanged("Checklist"); } }
         [DataMember(Name = "Checklist")]
@@ -167,7 +167,7 @@ namespace Keep.Models
 
         public bool IsEmpty()
         {
-            return String.IsNullOrEmpty(Title) && ((!IsChecklist && String.IsNullOrEmpty(Text)) || (IsChecklist && Checklist.Count <= 0));// && Images.Count <= 0;
+            return String.IsNullOrEmpty(Title) && ((!IsChecklist && String.IsNullOrEmpty(Text)) || (IsChecklist && Checklist.Count <= 0)) && Images.Count <= 0;
         }
 
         public String GetContent()
@@ -200,18 +200,18 @@ namespace Keep.Models
             return txt.Trim();
         }
 
-        //private void replaceNoteImages(NoteImages list)
-        //{
-        //    Images.Clear();
+        private void replaceNoteImages(NoteImages list)
+        {
+            Images.Clear();
 
-        //    if (list == null || list.Count <= 0)
-        //        return;
+            if (list == null || list.Count <= 0)
+                return;
 
-        //    foreach (var item in list)
-        //        Images.Add(item);
+            foreach (var item in list)
+                Images.Add(item);
 
-        //    return;
-        //}
+            return;
+        }
 
         private void replaceChecklist(Checklist list)
         {

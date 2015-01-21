@@ -10,7 +10,7 @@
     xmlns:Converters="using:Keep.Converters"
     mc:Ignorable="d"
     NavigationCacheMode="Required"
-    Background="{Binding Note.Color.Color}"
+    Background="{Binding Note.Color.DarkColor2}"
     Foreground="{StaticResource KeepNoteForegroundBrush}"
     DataContext="{Binding Source={StaticResource NoteEditViewModel}}"
     d:DataContext="{d:DesignData /SampleData/NoteEditViewModelSampleData.xaml}"
@@ -29,6 +29,7 @@
             <Converters:FriendlyTimeConverter x:Key="FriendlyTimeConverter"/>
             <Converters:ReorderModeToVisibilityConverter x:Key="ReorderModeToVisibilityConverter"/>
             <Converters:ReorderModeToBooleanConverter x:Key="ReorderModeToBooleanConverter"/>
+            <Converters:PositiveIntToVisibilityConverter x:Key="PositiveIntToVisibilityConverter"/>
             
             <DataTemplate x:Key="NoteChecklistListViewControlTemplate">
                 <Grid Loaded="OnChecklistItemLoaded" Unloaded="OnChecklistItemUnloaded">
@@ -45,10 +46,20 @@
                     <Grid Background="Transparent" Visibility="{Binding ReorderMode, ElementName=NoteChecklistListView, Converter={StaticResource ReorderModeToVisibilityConverter}}"/>
                 </Grid>
             </DataTemplate>
+            
+            <MenuFlyout x:Key="NoteImageMenuFlyout">
+                <MenuFlyoutItem x:Uid="DeleteMenuFlyoutItem" Text="delete" Click="DeleteNoteImageMenuFlyoutItem_Click"/>
+            </MenuFlyout>
+            
+            <DataTemplate x:Key="NoteImagesListViewControlTemplate">
+                <Grid x:Name="NoteImageContainer" MaxHeight="220" FlyoutBase.AttachedFlyout="{StaticResource NoteImageMenuFlyout}" Holding="NoteImageContainer_Holding">
+                    <Image MinHeight="220" Source="{Binding URL}" VerticalAlignment="Center" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+                </Grid>
+            </DataTemplate>
         </ResourceDictionary>
     </Page.Resources>
 
-    <Grid x:Name="LayoutRoot">
+    <Grid x:Name="LayoutRoot" Background="{Binding Note.Color.Color}">
         <Grid x:Name="ContentRoot">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
@@ -56,9 +67,13 @@
             </Grid.RowDefinitions>
 
             <ScrollViewer Grid.Row="0" ScrollViewer.VerticalScrollMode="Enabled">
-                <StackPanel Margin="0,9.5,0,0">
-                    <TextBox x:Uid="TitleTextBox" x:Name="NoteTitleTextBox" PlaceholderText="Title" Text="{Binding Note.Title, Mode=TwoWay}" MinHeight="60" InputScope="Default" Background="Transparent" BorderThickness="0" FontWeight="Bold" Padding="19,12" Margin="0,12,0,0" TextWrapping="NoWrap" MaxLength="30" FontSize="24" KeyDown="NoteTitleTextBox_KeyDown"/>
-                    <TextBox x:Uid="TextTextBox" x:Name="NoteTextTextBox" PlaceholderText="Text" Text="{Binding Note.Text, Mode=TwoWay}" MinHeight="300" InputScope="Default" Background="Transparent" BorderThickness="0" Padding="19,6" AcceptsReturn="True" TextWrapping="Wrap" FontSize="20" Visibility="{Binding Note.IsText, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                <StackPanel>
+                    <Grid MaxHeight="220" Margin="0,0,0,-6" Background="{StaticResource PhoneDarkLowBrush}" Visibility="{Binding Note.Images.Count, Converter={StaticResource PositiveIntToVisibilityConverter}}">
+                        <ListView x:Name="NoteImagesListView" ItemsSource="{Binding Note.Images}" ItemTemplate="{StaticResource NoteImagesListViewControlTemplate}" SelectionMode="None"/>
+                    </Grid>
+                    
+                    <TextBox x:Uid="TitleTextBox" x:Name="NoteTitleTextBox" PlaceholderText="Title" Text="{Binding Note.Title, Mode=TwoWay}" MinHeight="60" InputScope="Default" Background="Transparent" BorderThickness="0" FontWeight="Bold" Padding="19,18,19,12" Margin="0,12,0,0" TextWrapping="NoWrap" MaxLength="30" FontSize="24" KeyDown="NoteTitleTextBox_KeyDown"/>
+                    <TextBox x:Uid="TextTextBox" x:Name="NoteTextTextBox" PlaceholderText="Text" Text="{Binding Note.Text, Mode=TwoWay}" MinHeight="200" InputScope="Default" Background="Transparent" BorderThickness="0" Padding="19,6" AcceptsReturn="True" TextWrapping="Wrap" FontSize="20" Visibility="{Binding Note.IsText, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
                     <StackPanel Visibility="{Binding Note.IsChecklist, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
                         <ListView x:Name="NoteChecklistListView" ItemsSource="{Binding Note.Checklist}" AllowDrop="True" CanDragItems="True" ItemTemplate="{StaticResource NoteChecklistListViewControlTemplate}" SelectionMode="None" Holding="NoteChecklistListView_Holding" ReorderMode="{Binding ReorderMode, Mode=TwoWay}"/>
@@ -129,8 +144,8 @@
                 </AppBarToggleButton.Icon>
             </AppBarToggleButton>
 
-            <!--<AppBarButton x:Uid="CameraAppBarButton" Icon="Camera" Label="camera" IsEnabled="False"/>
-            <AppBarButton x:Uid="AudioAppBarButton" Icon="Microphone" Label="audio" IsEnabled="False"/>
+            <AppBarButton x:Uid="PhotoAppBarButton" Icon="Camera" Label="photo" Command="{Binding OpenImagePickerCommand}"/>
+            <!--<AppBarButton x:Uid="AudioAppBarButton" Icon="Microphone" Label="audio" IsEnabled="False"/>
             <AppBarToggleButton x:Uid="PinToStartAppBarButton" Icon="Pin" Label="pin to start" IsEnabled="False" IsChecked="{Binding Note.IsPinned, Mode=OneWay}" Command="{Binding NoteTogglePinCommand}" CommandParameter="{Binding Note}"/>-->
 
         </CommandBar>

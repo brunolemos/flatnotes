@@ -5,6 +5,7 @@ using Keep.Views;
 using System;
 using System.Diagnostics;
 using System.Linq;
+using Windows.Storage.Pickers;
 using Windows.UI.Xaml.Controls;
 
 namespace Keep.ViewModels
@@ -14,17 +15,21 @@ namespace Keep.ViewModels
         public event EventHandler ReorderModeEnabled;
         public event EventHandler ReorderModeDisabled;
 
+        public RelayCommand OpenImagePickerCommand { get; private set; }
         public RelayCommand ToggleChecklistCommand { get; private set; }
         public RelayCommand ArchiveNoteCommand { get; private set; }
         public RelayCommand RestoreNoteCommand { get; private set; }
         public RelayCommand DeleteNoteCommand { get; private set; }
+        public RelayCommand DeleteNoteImageCommand { get; private set; }
 
         public NoteEditViewModel()
         {
+            OpenImagePickerCommand = new RelayCommand(OpenImagePicker);
             ToggleChecklistCommand = new RelayCommand(ToggleChecklist);
             ArchiveNoteCommand = new RelayCommand(ArchiveNote); //CanArchiveNote
             RestoreNoteCommand = new RelayCommand(RestoreNote); //CanRestoreNote
             DeleteNoteCommand = new RelayCommand(DeleteNote);
+            DeleteNoteImageCommand = new RelayCommand(DeleteNoteImage);
 
             PropertyChanged += OnPropertyChanged;
         }
@@ -51,6 +56,9 @@ namespace Keep.ViewModels
         public bool AlreadyExists { get { return alreadyExists; } set { alreadyExists = value; NotifyPropertyChanged("AlreadyExists"); } }
         private bool alreadyExists;
 
+        public NoteImage TempNoteImage { get { return tempNoteImage; } set { tempNoteImage = value; } }
+        private static NoteImage tempNoteImage = null;
+
         public ListViewReorderMode ReorderMode
         {
             get { return reorderMode; }
@@ -68,6 +76,23 @@ namespace Keep.ViewModels
         public ListViewReorderMode reorderMode = ListViewReorderMode.Disabled;
 
         #region COMMANDS_ACTIONS
+
+        private void OpenImagePicker()
+        {
+            GoogleAnalytics.EasyTracker.GetTracker().SendEvent("ui_action", "execute_command", "open_image_picker", 1);
+
+            FileOpenPicker picker = new FileOpenPicker();
+            picker.ViewMode = PickerViewMode.Thumbnail;
+            picker.SuggestedStartLocation = PickerLocationId.PicturesLibrary;
+
+            //image
+            picker.FileTypeFilter.Add(".jpg");
+            picker.FileTypeFilter.Add(".jpeg");
+            picker.FileTypeFilter.Add(".png");
+
+            //open
+            picker.PickSingleFileAndContinue();
+        }
 
         private void ToggleChecklist()
         {
@@ -110,17 +135,28 @@ namespace Keep.ViewModels
 
         private async void DeleteNote()
         {
-            bool success = IsArchived ? await AppData.RemoveArchivedNote(Note) :  await AppData.RemoveNote(Note);
+            bool success = IsArchived ? await AppData.RemoveArchivedNote(Note) : await AppData.RemoveNote(Note);
             if (!success) return;
 
             note = null;
 
             if (App.RootFrame.CanGoBack)
                 App.RootFrame.GoBack();
-            else if(IsArchived)
+            else if (IsArchived)
                 App.RootFrame.Navigate(typeof(ArchivedNotesPage));
             else
                 App.RootFrame.Navigate(typeof(MainPage));
+        }
+
+        public async void DeleteNoteImage()
+        {
+            if (TempNoteImage == null) return;
+
+            bool success = await AppData.RemoveNoteImage(TempNoteImage);
+            if (!success) return;
+
+            Note.Images.Remove(TempNoteImage);
+            TempNoteImage = null;
         }
 
         #endregion

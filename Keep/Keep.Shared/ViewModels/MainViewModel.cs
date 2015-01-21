@@ -6,6 +6,7 @@ using System;
 using System.Diagnostics;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Store;
+using Windows.Storage.Pickers;
 using Windows.UI.Xaml.Controls;
 
 namespace Keep.ViewModels
@@ -17,11 +18,11 @@ namespace Keep.ViewModels
 
         public RelayCommand CreateTextNoteCommand { get; private set; }
         public RelayCommand CreateChecklistNoteCommand { get; private set; }
+        public RelayCommand OpenImagePickerCommand { get; private set; }
         public RelayCommand OpenArchivedNotesCommand { get; private set; }
         public RelayCommand SendFeedbackCommand { get; private set; }
         public RelayCommand SuggestFeatureOrReportBugCommand { get; private set; }
         public RelayCommand OpenSettingsCommand { get; private set; }
-        public RelayCommand DeleteNoteCommand { get; private set; }
 
         public Notes Notes { get { return notes; } private set { notes = value; NotifyPropertyChanged("Notes"); } }
         public Notes notes = AppData.Notes;
@@ -50,11 +51,11 @@ namespace Keep.ViewModels
         {
             CreateTextNoteCommand = new RelayCommand(CreateTextNote);
             CreateChecklistNoteCommand = new RelayCommand(CreateChecklistNote);
+            OpenImagePickerCommand = new RelayCommand(OpenImagePicker);
             OpenArchivedNotesCommand = new RelayCommand(OpenArchivedNotes);
             SendFeedbackCommand = new RelayCommand(SendFeedback);
             SuggestFeatureOrReportBugCommand = new RelayCommand(SuggestFeatureOrReportBug);
             OpenSettingsCommand = new RelayCommand(OpenSettings);
-            DeleteNoteCommand = new RelayCommand(DeleteNote, CanDeleteNote);
 
             AppData.NotesChanged += (s, e) => NotifyPropertyChanged("Notes");
             AppSettings.Instance.ColumnsChanged += (s, e) => NotifyPropertyChanged("Columns");
@@ -70,6 +71,23 @@ namespace Keep.ViewModels
         {
             GoogleAnalytics.EasyTracker.GetTracker().SendEvent("ui_action", "execute_command", "create_checklist_note", 0);
             App.RootFrame.Navigate(typeof(NoteEditPage), new Note(true));
+        }
+
+        private void OpenImagePicker()
+        {
+            GoogleAnalytics.EasyTracker.GetTracker().SendEvent("ui_action", "execute_command", "open_image_picker", 0);
+
+            FileOpenPicker picker = new FileOpenPicker();
+            picker.ViewMode = PickerViewMode.Thumbnail;
+            picker.SuggestedStartLocation = PickerLocationId.PicturesLibrary;
+
+            //image
+            picker.FileTypeFilter.Add(".jpg");
+            picker.FileTypeFilter.Add(".jpeg");
+            picker.FileTypeFilter.Add(".png");
+
+            //open
+            picker.PickSingleFileAndContinue();
         }
 
         private void OpenArchivedNotes()
@@ -99,16 +117,6 @@ namespace Keep.ViewModels
             mail.Body = "[YOUR MESSAGE GOES HERE]";
 
             await Windows.ApplicationModel.Email.EmailManager.ShowComposeNewEmailAsync(mail);
-        }
-
-        private bool CanDeleteNote()
-        {
-            return AppData.TempNote != null;
-        }
-
-        private async void DeleteNote()
-        {
-            await AppData.RemoveNote(AppData.TempNote);
         }
 
         #endregion

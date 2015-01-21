@@ -17,6 +17,10 @@
                 <Models:Note.Color>
                     <Models:NoteColor Key="BLUE" Color="#FF66CCDD"/>
                 </Models:Note.Color>
+            
+	            <Models:Note.Images>
+                    <Models:NoteImage URL="https://fbcdn-sphotos-d-a.akamaihd.net/hphotos-ak-xpa1/v/t1.0-9/10685361_10152923205364581_863599858757381986_n.jpg?oh=1173d93e5d96b2ec562eb0671b405ccf&amp;oe=55603BCB&amp;__gda__=1428710049_768156b93e0ba18291b5f60c57bf420d"/>
+	            </Models:Note.Images>
         </Models:Note>
 
         <Models:Note IsText="True" IsChecklist="False" Title="Big text" Text="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.">

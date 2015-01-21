@@ -10,19 +10,12 @@ namespace Keep.Common
 {
     public abstract class AppSettingsBase
     {
-        protected ApplicationDataContainer localSettings;
-        protected StorageFolder localFolder;
+        protected ApplicationDataContainer localSettings { get { return ApplicationData.Current.LocalSettings; } }
+        protected StorageFolder localFolder { get { return ApplicationData.Current.LocalFolder; } }
 
         public abstract uint Version { get; }
 
-        protected AppSettingsBase()
-        {
-            if (!DesignMode.DesignModeEnabled)
-            {
-                localSettings = ApplicationData.Current.LocalSettings;
-                localFolder = ApplicationData.Current.LocalFolder;
-            }
-        }
+        protected AppSettingsBase() { }
 
         public abstract void Up();
         public abstract void Down();

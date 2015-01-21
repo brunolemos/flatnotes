@@ -4,6 +4,7 @@ using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Windows.Storage;
 
 namespace Keep.Utils
 {
@@ -48,9 +49,6 @@ namespace Keep.Utils
             }
         }
         private static Notes archivedNotes = new Notes();
-
-        public static Note TempNote { get { return tempNote; } set { tempNote = value; } }
-        private static Note tempNote = null;
 
         //public AppData()
         //{
@@ -168,9 +166,11 @@ namespace Keep.Utils
             Debug.WriteLine("Remove note: " + note.Title);
             GoogleAnalytics.EasyTracker.GetTracker().SendEvent("note", "remove", note.Title, 0);
 
+            //remove note images from disk
+            await RemoveNoteImages(note.Images);
+
             bool noteExists = Notes.Where<Note>(x => x.ID == note.ID).FirstOrDefault<Note>() != null;
             if (!noteExists) return true;
-
 
             Notes.Remove(note);
             bool success = await SaveNotes();
@@ -188,6 +188,9 @@ namespace Keep.Utils
             Debug.WriteLine("Remove archived note: " + note.Title);
             GoogleAnalytics.EasyTracker.GetTracker().SendEvent("archived_note", "remove", note.Title, 0);
 
+            //remove note images from disk
+            await RemoveNoteImages(note.Images);
+
             bool isArchived = ArchivedNotes.Where<Note>(x => x.ID == note.ID).FirstOrDefault<Note>() != null;
             if (!isArchived) return true;
 
@@ -200,6 +203,37 @@ namespace Keep.Utils
             if (handler != null) handler(null, new NoteEventArgs(note));
 
             return true;
+        }
+
+        public static async Task<bool> RemoveNoteImages(NoteImages noteImages)
+        {
+            if (noteImages == null || noteImages.Count <= 0) return true;
+            bool success = true;
+
+            foreach (var noteImage in noteImages)
+                success &= await RemoveNoteImage(noteImage);
+
+            return success;
+        }
+
+        public static async Task<bool> RemoveNoteImage(NoteImage noteImage)
+        {
+            if (noteImage == null) return true;
+            bool success = true;
+
+            try
+            {
+                Debug.WriteLine("Deleting {0}... ", noteImage.URL);
+                var file = await StorageFile.GetFileFromPathAsync(noteImage.URL);
+                await file.DeleteAsync();
+                Debug.WriteLine("Deleted.");
+            }
+            catch (Exception)
+            {
+                success = false;
+            }
+
+            return success;
         }
     }
 }

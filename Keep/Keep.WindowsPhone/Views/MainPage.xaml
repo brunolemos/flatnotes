@@ -40,8 +40,8 @@
                 </AppBarButton.Icon>
             </AppBarButton>
             
-            <!--<AppBarButton x:Uid="CameraAppBarButton" Icon="Camera" Label="camera" IsEnabled="False"/>
-            <AppBarButton x:Uid="AudioAppBarButton" Icon="Microphone" Label="audio" IsEnabled="False"/>-->
+            <AppBarButton x:Uid="PhotoAppBarButton" Icon="Camera" Label="photo" Command="{Binding OpenImagePickerCommand}"/>
+            <!--<AppBarButton x:Uid="AudioAppBarButton" Icon="Microphone" Label="audio" IsEnabled="False"/>-->
         </CommandBar>
     </Page.BottomAppBar>
 

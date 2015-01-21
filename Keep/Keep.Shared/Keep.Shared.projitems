@@ -16,8 +16,10 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Common\AppSettingsBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\ContinuationManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\NavigationHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\Notifiable.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\ObservableDictionary.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\RelayCommand.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\SuspensionManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\TrullyObservableCollection.cs" />
@@ -34,6 +36,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\Checklist.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Note.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\NoteColor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\NoteImage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\AppData.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\AppSettings.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\Extensions.cs" />

@@ -1,17 +1,22 @@
-﻿using Keep.Common;
-using Keep.Models;
-using Keep.Utils;
-using Keep.ViewModels;
+﻿using System;
 using System.Diagnostics;
 using System.Linq;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
+using Keep.Common;
+using Keep.Models;
+using Keep.Utils;
+using Keep.ViewModels;
+using Windows.ApplicationModel.Activation;
+using Windows.Foundation;
+using Windows.UI.Popups;
 
 namespace Keep.Views
 {
-    public sealed partial class MainPage : Page
+    public sealed partial class MainPage : Page, IFileOpenPickerContinuable
     {
         public NavigationHelper NavigationHelper { get { return this.navigationHelper; } }
         private NavigationHelper navigationHelper;
@@ -41,7 +46,7 @@ namespace Keep.Views
         {
             GoogleAnalytics.EasyTracker.GetTracker().SendView("MainPage");
 
-            App.ChangeStatusBarColor();
+            //App.ChangeStatusBarColor();
             App.RootFrame.Background = LayoutRoot.Background;
         }
 
@@ -107,6 +112,38 @@ namespace Keep.Views
             if(disableSwipeEventHandlers[element] != null) viewModel.ReorderModeEnabled -= disableSwipeEventHandlers[element];
 
             DisableSwipeFeature(element);
+        }
+
+        public async void ContinueFileOpenPicker(FileOpenPickerContinuationEventArgs args)
+        {
+            if (args.Files.Count > 0)
+            {
+                try
+                {
+                    foreach (var file in args.Files)
+                    {
+                        Debug.WriteLine("Picked photo: " + file.Path);
+
+                        Note note = new Note();
+                        NoteImage noteImage = new NoteImage();
+
+                        StorageFile savedImage = await AppSettings.Instance.SaveImage(file, note.ID, noteImage.ID);
+
+                        var imageProperties = await savedImage.Properties.GetImagePropertiesAsync();
+                        noteImage.URL = savedImage.Path;
+                        noteImage.Size = new Size(imageProperties.Width, imageProperties.Height);
+
+                        note.Images.Add(noteImage);
+
+                        Frame.Navigate(typeof(NoteEditPage), note);
+                    }
+                }
+                catch (Exception e)
+                {
+                    GoogleAnalytics.EasyTracker.GetTracker().SendException(String.Format("Failed to load image ({0})", e.Message), false);
+                    await (new MessageDialog("Failed to save image. Try again.", "Sorry")).ShowAsync();
+                }
+            }
         }
     }
 }

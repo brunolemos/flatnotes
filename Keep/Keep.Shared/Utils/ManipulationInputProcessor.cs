@@ -26,9 +26,11 @@ namespace Keep.Utils
 
         public ManipulationInputProcessor(GestureRecognizer gr, FrameworkElement target, FrameworkElement referenceframe)
         {
+            if (gr == null || target == null) throw new InvalidOperationException("You must provide valid arguments");
+
             this.gestureRecognizer = gr;
             this.element = target;
-            this.reference = referenceframe;
+            this.reference = referenceframe != null ? referenceframe : target;
 
             this.elementInitialOpacity = element.Opacity;
             this.containerSize = new Size(target.ActualWidth, 0);
@@ -58,28 +60,36 @@ namespace Keep.Utils
         public void ResetPosition()
         {
             InitializeTransforms();
-            element.Opacity = elementInitialOpacity;
+
+            if(element != null) element.Opacity = elementInitialOpacity;
         }
 
         public void Disable()
         {
-            if (element != null) element.ManipulationMode = previousManipulationModes;
-            //if (element != null) element.Opacity = elementInitialOpacity;
+            if (element == null) return;
+
+            element.ManipulationMode = previousManipulationModes;
             UnhandleEvents();
         }
 
         private void UnhandleEvents()
         {
-            // Set down pointer event handlers
-            this.element.PointerCanceled -= OnPointerCanceled;
-            //this.element.PointerPressed -= OnPointerPressed;
-            this.element.PointerReleased -= OnPointerReleased;
-            this.element.PointerMoved -= OnPointerMoved;
+            if(element != null)
+            {
+                // Set down pointer event handlers
+                this.element.PointerCanceled -= OnPointerCanceled;
+                //this.element.PointerPressed -= OnPointerPressed;
+                this.element.PointerReleased -= OnPointerReleased;
+                this.element.PointerMoved -= OnPointerMoved;
+            }
 
-            // Set down event handlers to respond to gesture recognizer output
-            this.gestureRecognizer.ManipulationStarted -= OnManipulationStarted;
-            this.gestureRecognizer.ManipulationUpdated -= OnManipulationUpdated;
-            this.gestureRecognizer.ManipulationCompleted -= OnManipulationCompleted;
+            if(gestureRecognizer != null)
+            {
+                // Set down event handlers to respond to gesture recognizer output
+                this.gestureRecognizer.ManipulationStarted -= OnManipulationStarted;
+                this.gestureRecognizer.ManipulationUpdated -= OnManipulationUpdated;
+                this.gestureRecognizer.ManipulationCompleted -= OnManipulationCompleted;
+            }
         }
 
         void OnPointerPressed(object sender, PointerRoutedEventArgs args)

@@ -4,6 +4,7 @@ using Keep.Models;
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using Windows.ApplicationModel;
 using Windows.Storage;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
@@ -20,6 +21,9 @@ namespace Keep.Utils
         public override uint Version { get { return version; } }
         private static uint version = 2;
 
+        public StorageFolder ImagesFolder { get; private set; }
+        private const string IMAGES_FOLDER_NAME = "Images";
+
         private const string NOTES_FILENAME = "notes.json";
         private static Notes NOTES_DEFAULT = new Notes();
 
@@ -32,7 +36,16 @@ namespace Keep.Utils
         private const string COLUMNS_KEY = "COLUMNS";
         private static int COLUMNS_DEFAULT = 2;
 
-        private AppSettings() : base() { }
+        private AppSettings()
+        {
+            Initialize();
+        }
+
+        private async void Initialize()
+        {
+            if (DesignMode.DesignModeEnabled) return;
+            ImagesFolder = await localFolder.CreateFolderAsync(IMAGES_FOLDER_NAME, CreationCollisionOption.OpenIfExists);
+        }
 
         public override void Up()
         {
@@ -101,5 +114,12 @@ namespace Keep.Utils
 
         public async Task<Notes> LoadArchivedNotes() { return await ReadFileOrDefault(ARCHIVED_NOTES_FILENAME, ARCHIVED_NOTES_DEFAULT); }
         public async Task<bool> SaveArchivedNotes(Notes notes) { return await SaveFile(ARCHIVED_NOTES_FILENAME, notes); }
+
+        public async Task<StorageFile> SaveImage(StorageFile file, string noteId, string noteImageId)
+        {
+            string newFileName = String.Format("{0}_{1}{2}", noteId, noteImageId, file.FileType);
+
+            return await file.CopyAsync(ImagesFolder, newFileName, NameCollisionOption.ReplaceExisting);
+        }
     }
 }
