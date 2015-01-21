@@ -100,8 +100,8 @@ namespace Keep.Views
         {
             FrameworkElement element = sender as FrameworkElement;
 
-            viewModel.ReorderModeDisabled -= enableSwipeEventHandlers[element];
-            viewModel.ReorderModeEnabled -= disableSwipeEventHandlers[element];
+            if (enableSwipeEventHandlers[element] != null) viewModel.ReorderModeDisabled -= enableSwipeEventHandlers[element];
+            if (disableSwipeEventHandlers[element] != null) viewModel.ReorderModeEnabled -= disableSwipeEventHandlers[element];
 
             DisableSwipeFeature(element);
         }
