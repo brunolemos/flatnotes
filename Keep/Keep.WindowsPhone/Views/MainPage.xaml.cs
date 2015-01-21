@@ -145,10 +145,10 @@ namespace Keep.Views
                     return;
                 }
 
+                Frame.Navigate(typeof(NoteEditPage), note);
+
                 //save
                 await AppData.CreateOrUpdateNote(note);
-
-                Frame.Navigate(typeof(NoteEditPage), note);
             }
         }
     }

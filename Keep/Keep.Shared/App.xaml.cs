@@ -13,6 +13,7 @@ using Windows.UI.Popups;
 using System.Threading.Tasks;
 using Windows.UI.Core;
 using Windows.ApplicationModel.Core;
+using Keep.Common;
 
 namespace Keep
 {
@@ -22,7 +23,7 @@ namespace Keep
         private TransitionCollection transitions;
 #endif
 
-        public static Frame RootFrame = Window.Current.Content as Frame;
+        public static Frame RootFrame { get { return Window.Current.Content as Frame; } }
         public static ContinuationManager ContinuationManager { get; private set; }
 
         public App()
@@ -47,11 +48,51 @@ namespace Keep
             }
         }
 
-        protected override void OnActivated(IActivatedEventArgs e)
+        private Frame CreateRootFrame()
+        {
+            Frame rootFrame = Window.Current.Content as Frame;
+
+            // Do not repeat app initialization when the Window already has content, 
+            // just ensure that the window is active 
+            if (rootFrame == null)
+            {
+                // Create a Frame to act as the navigation context
+                rootFrame = new Frame();
+                rootFrame.CacheSize = 2; //1
+            }
+
+            return rootFrame;
+        }
+
+        private async Task RestoreStatusAsync(ApplicationExecutionState previousExecutionState)
+        {
+            // Do not repeat app initialization when the Window already has content, 
+            // just ensure that the window is active 
+            if (previousExecutionState == ApplicationExecutionState.Terminated)
+            {
+                // Restore the saved session state only when appropriate 
+                try
+                {
+                    await SuspensionManager.RestoreAsync();
+                }
+                catch (SuspensionManagerException)
+                {
+                    //Something went wrong restoring state. 
+                    //Assume there is no state and continue 
+                }
+            }
+        }
+
+        protected override async void OnActivated(IActivatedEventArgs e)
         {
             base.OnActivated(e);
 
             ContinuationManager = new ContinuationManager();
+
+            if(RootFrame == null)
+                Window.Current.Content = CreateRootFrame();
+
+            await RestoreStatusAsync(e.PreviousExecutionState);
 
             var continuationEventArgs = e as IContinuationActivatedEventArgs;
             if (continuationEventArgs != null)
@@ -60,6 +101,8 @@ namespace Keep
                 if (RootFrame != null)
                     ContinuationManager.Continue(continuationEventArgs, RootFrame);
             }
+
+            Window.Current.Activate();
         }
 
         protected override async void OnLaunched(LaunchActivatedEventArgs e)
@@ -74,21 +117,7 @@ namespace Keep
             // Do not repeat app initialization when the Window already has content,
             // just ensure that the window is active
             if (RootFrame == null)
-            {
-                // Create a Frame to act as the navigation context and navigate to the first page
-                RootFrame = new Frame();
-
-                // TODO: change this value to a cache size that is appropriate for your application
-                RootFrame.CacheSize = 1;
-
-                if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
-                {
-                    // TODO: Load state from previously suspended application
-                }
-
-                // Place the frame in the current Window
-                Window.Current.Content = RootFrame;
-            }
+                Window.Current.Content = CreateRootFrame();
 
             //user theme
             UpdateTheme(AppSettings.Instance.Theme);
@@ -140,11 +169,10 @@ namespace Keep
         }
 #endif
 
-        private void OnSuspending(object sender, SuspendingEventArgs e)
+        private async void OnSuspending(object sender, SuspendingEventArgs e)
         {
             var deferral = e.SuspendingOperation.GetDeferral();
-
-            // TODO: Save application state and stop any background activity
+            await SuspensionManager.SaveAsync();
             deferral.Complete();
         }
 
