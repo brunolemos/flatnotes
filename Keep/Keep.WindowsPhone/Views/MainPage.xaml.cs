@@ -118,14 +118,14 @@ namespace Keep.Views
         {
             if (args.Files.Count > 0)
             {
+                Note note = new Note();
+                NoteImage noteImage = new NoteImage();
+
                 try
                 {
                     foreach (var file in args.Files)
                     {
                         Debug.WriteLine("Picked photo: " + file.Path);
-
-                        Note note = new Note();
-                        NoteImage noteImage = new NoteImage();
 
                         StorageFile savedImage = await AppSettings.Instance.SaveImage(file, note.ID, noteImage.ID);
 
@@ -134,15 +134,21 @@ namespace Keep.Views
                         noteImage.Size = new Size(imageProperties.Width, imageProperties.Height);
 
                         note.Images.Add(noteImage);
-
-                        Frame.Navigate(typeof(NoteEditPage), note);
+                        break;
                     }
                 }
                 catch (Exception e)
                 {
                     GoogleAnalytics.EasyTracker.GetTracker().SendException(String.Format("Failed to load image ({0})", e.Message), false);
                     await (new MessageDialog("Failed to save image. Try again.", "Sorry")).ShowAsync();
+
+                    return;
                 }
+
+                //save
+                await AppData.CreateOrUpdateNote(note);
+
+                Frame.Navigate(typeof(NoteEditPage), note);
             }
         }
     }

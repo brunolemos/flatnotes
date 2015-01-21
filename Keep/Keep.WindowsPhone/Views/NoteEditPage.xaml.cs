@@ -24,7 +24,7 @@ namespace Keep.Views
         private NavigationHelper navigationHelper;
 
         public NoteEditViewModel viewModel { get { return (NoteEditViewModel)DataContext; } }
-        private Brush previousBackground;
+        private static Brush previousBackground;
 
         private bool checklistChanged = false;
 
@@ -83,7 +83,7 @@ namespace Keep.Views
 
             //save
             if (viewModel.Note.Changed)
-            await AppData.CreateOrUpdateNote(viewModel.Note);
+                await AppData.CreateOrUpdateNote(viewModel.Note);
 
             //checklist changed (fix cache problem with converter)
             if (checklistChanged) viewModel.Note.NotifyChanges();
@@ -191,6 +191,9 @@ namespace Keep.Views
                     await (new MessageDialog("Failed to save image. Try again.", "Sorry")).ShowAsync();
                 }
             }
+
+            //save
+            await AppData.CreateOrUpdateNote(viewModel.Note);
         }
 
         private void NoteImageContainer_Holding(object sender, HoldingRoutedEventArgs e)
