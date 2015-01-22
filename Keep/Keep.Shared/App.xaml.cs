@@ -23,7 +23,9 @@ namespace Keep
         private TransitionCollection transitions;
 #endif
 
-        public static Frame RootFrame { get { return Window.Current.Content as Frame; } }
+        public static Frame RootFrame { get { if (rootFrame == null) rootFrame = CreateRootFrame(); return rootFrame; } }
+        private static Frame rootFrame = null;
+
         public static ContinuationManager ContinuationManager { get; private set; }
 
         public App()
@@ -38,9 +40,10 @@ namespace Keep
 
         private async void App_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
+            GoogleAnalytics.EasyTracker.GetTracker().SendException(String.Format("{0} (Stack trace: {1})", e.Message, e.Exception.StackTrace), true);
+
             if (!e.Handled)
             {
-
                 e.Handled = true;
                 await new MessageDialog(e.Message, "Fatal error").ShowAsync();
 
@@ -48,7 +51,7 @@ namespace Keep
             }
         }
 
-        private Frame CreateRootFrame()
+        private static Frame CreateRootFrame()
         {
             Frame rootFrame = Window.Current.Content as Frame;
 
@@ -60,6 +63,8 @@ namespace Keep
                 rootFrame = new Frame();
                 rootFrame.CacheSize = 2; //1
             }
+
+            Window.Current.Content = rootFrame;
 
             return rootFrame;
         }
@@ -89,9 +94,6 @@ namespace Keep
 
             ContinuationManager = new ContinuationManager();
 
-            if(RootFrame == null)
-                Window.Current.Content = CreateRootFrame();
-
             await RestoreStatusAsync(e.PreviousExecutionState);
 
             var continuationEventArgs = e as IContinuationActivatedEventArgs;
@@ -113,11 +115,6 @@ namespace Keep
                 this.DebugSettings.EnableFrameRateCounter = true;
             }
 #endif
-
-            // Do not repeat app initialization when the Window already has content,
-            // just ensure that the window is active
-            if (RootFrame == null)
-                Window.Current.Content = CreateRootFrame();
 
             //user theme
             UpdateTheme(AppSettings.Instance.Theme);

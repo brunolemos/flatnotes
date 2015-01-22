@@ -70,12 +70,17 @@ namespace Keep.Views
             if (viewModel.ReorderMode == ListViewReorderMode.Enabled) return;
 #endif
 
+            Note note1 = (sender as FrameworkElement).DataContext as Note;
             Note note = (e.OriginalSource as FrameworkElement).DataContext as Note;
             if (note == null) return;
 
             //it can be trimmed, so get the original
             Note originalNote = AppData.ArchivedNotes.Where<Note>(n => n.ID == note.ID).FirstOrDefault();
-            if (originalNote == null) GoogleAnalytics.EasyTracker.GetTracker().SendException(string.Format("Failed to load tapped archived note ({0})", note.GetContent()), false);
+            if (originalNote == null)
+            {
+                GoogleAnalytics.EasyTracker.GetTracker().SendException(string.Format("Failed to load tapped archived note ({0})", note.GetContent()), false);
+                return;
+            }
 
             App.RootFrame.Navigate(typeof(NoteEditPage), originalNote);
         }
@@ -83,27 +88,27 @@ namespace Keep.Views
         //swipe feature
         private void OnNoteLoaded(object sender, RoutedEventArgs e)
         {
-            FrameworkElement element = sender as FrameworkElement;
-            FrameworkElement referenceFrame = NotesListView;
+            //FrameworkElement element = sender as FrameworkElement;
+            //FrameworkElement referenceFrame = NotesListView;
 
-            if (viewModel.ReorderMode != ListViewReorderMode.Enabled)
-                EnableSwipeFeature(element, referenceFrame);
+            //if (viewModel.ReorderMode != ListViewReorderMode.Enabled)
+            //    EnableSwipeFeature(element, referenceFrame);
 
-            enableSwipeEventHandlers[element] = (s, _e) => { EnableSwipeFeature(element, referenceFrame); };
-            disableSwipeEventHandlers[element] = (s, _e) => { DisableSwipeFeature(element); };
+            //enableSwipeEventHandlers[element] = (s, _e) => { EnableSwipeFeature(element, referenceFrame); };
+            //disableSwipeEventHandlers[element] = (s, _e) => { DisableSwipeFeature(element); };
 
-            viewModel.ReorderModeDisabled += enableSwipeEventHandlers[element];
-            viewModel.ReorderModeEnabled += disableSwipeEventHandlers[element];
+            //viewModel.ReorderModeDisabled += enableSwipeEventHandlers[element];
+            //viewModel.ReorderModeEnabled += disableSwipeEventHandlers[element];
         }
 
         private void OnNoteUnloaded(object sender, RoutedEventArgs e)
         {
-            FrameworkElement element = sender as FrameworkElement;
+            //FrameworkElement element = sender as FrameworkElement;
 
-            if (enableSwipeEventHandlers[element] != null) viewModel.ReorderModeDisabled -= enableSwipeEventHandlers[element];
-            if (disableSwipeEventHandlers[element] != null) viewModel.ReorderModeEnabled -= disableSwipeEventHandlers[element];
+            //if (enableSwipeEventHandlers[element] != null) viewModel.ReorderModeDisabled -= enableSwipeEventHandlers[element];
+            //if (disableSwipeEventHandlers[element] != null) viewModel.ReorderModeEnabled -= disableSwipeEventHandlers[element];
 
-            DisableSwipeFeature(element);
+            //DisableSwipeFeature(element);
         }
     }
 }

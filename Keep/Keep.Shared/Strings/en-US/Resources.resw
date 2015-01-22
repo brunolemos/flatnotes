@@ -252,4 +252,7 @@
   <data name="RequestFeatureOrReportBugAppBarButton.Label" xml:space="preserve">
     <value>request feature / report bug</value>
   </data>
+  <data name="YourMessageGoesHere" xml:space="preserve">
+    <value>[YOUR MESSAGE GOES HERE]</value>
+  </data>
 </root>

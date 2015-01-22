@@ -83,7 +83,13 @@ namespace Keep.Views
 
             //it can be trimmed, so get the original
             Note originalNote = AppData.Notes.Where<Note>(n => n.ID == note.ID).FirstOrDefault();
-            if (originalNote == null) GoogleAnalytics.EasyTracker.GetTracker().SendException(string.Format("Failed to load tapped note ({0})", note.GetContent()), false);
+            if (originalNote == null)
+            {
+                GoogleAnalytics.EasyTracker.GetTracker().SendException(string.Format("Failed to load tapped note ({0})", note.GetContent()), false);
+                return;
+            }
+
+            GoogleAnalytics.EasyTracker.GetTracker().SendEvent("app", "open_note", Newtonsoft.Json.JsonConvert.SerializeObject(originalNote), 0);
 
             App.RootFrame.Navigate(typeof(NoteEditPage), originalNote);
         }

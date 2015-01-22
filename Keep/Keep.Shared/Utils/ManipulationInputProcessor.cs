@@ -8,7 +8,7 @@ using System;
 
 namespace Keep.Utils
 {
-    class ManipulationInputProcessor
+    public class ManipulationInputProcessor
     {
         public event EventHandler ItemSwiped;
 

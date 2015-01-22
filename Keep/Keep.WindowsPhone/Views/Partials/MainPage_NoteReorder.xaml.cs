@@ -28,10 +28,13 @@ namespace Keep.Views
             navigationHelper.LoadState -= NavigationHelper_LoadState1;
             navigationHelper.SaveState -= NavigationHelper_SaveState1;
 
-            NotesListView.Holding -= NotesListView_Holding;
-            NotesListView.DragItemsStarting -= NotesListView_DragItemsStarting;
-            NotesListView.DragOver -= NotesListView_DragOver;
-            NotesListView.Drop -= NotesListView_Drop;
+            if(NotesListView != null)
+            {
+                NotesListView.Holding -= NotesListView_Holding;
+                NotesListView.DragItemsStarting -= NotesListView_DragItemsStarting;
+                NotesListView.DragOver -= NotesListView_DragOver;
+                NotesListView.Drop -= NotesListView_Drop;
+            }
 
             viewModel.ReorderModeDisabled -= OnReorderModeDisabled;
         }
@@ -48,7 +51,7 @@ namespace Keep.Views
         private void NavigationHelper_SaveState1(object sender, SaveStateEventArgs e)
         {
             #if WINDOWS_PHONE_APP
-            NotesListView.ReorderMode = ListViewReorderMode.Disabled;
+            if(NotesListView != null) NotesListView.ReorderMode = ListViewReorderMode.Disabled;
             #endif
         }
 

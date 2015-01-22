@@ -31,7 +31,7 @@ namespace Keep.Utils
         private static Notes ARCHIVED_NOTES_DEFAULT = new Notes();
 
         private const string THEME_KEY = "THEME";
-        private static ElementTheme THEME_DEFAULT = ElementTheme.Light;
+        private static ElementTheme THEME_DEFAULT = ElementTheme.Dark;
 
         private const string COLUMNS_KEY = "COLUMNS";
         private static int COLUMNS_DEFAULT = 2;
@@ -89,6 +89,8 @@ namespace Keep.Utils
         {
             get { return GetValueOrDefault(THEME_KEY, THEME_DEFAULT); }
             set {
+                if (value != ElementTheme.Light && value != ElementTheme.Dark) value = THEME_DEFAULT;
+
                 if (SetValue<ElementTheme>(THEME_KEY, value)) {
                     var handler = ThemeChanged;
                     if (handler != null) handler(this, new ThemeEventArgs(value));

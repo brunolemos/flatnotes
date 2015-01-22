@@ -28,7 +28,10 @@ namespace Keep.Views
                 //save
                 inputProcessors[element] = elementInputProcessor;
             }
-            catch (Exception) { }
+            catch (Exception e)
+            {
+                GoogleAnalytics.EasyTracker.GetTracker().SendException(String.Format("Failed to Enable Swipe Feature: {0} (Stack trace: {1})", e.Message, e.StackTrace), false);
+            }
         }
 
         partial void DisableSwipeFeature(FrameworkElement element)
@@ -45,7 +48,9 @@ namespace Keep.Views
                 inputProcessors[element].Disable();
                 inputProcessors.Remove(element);
             }
-            catch (Exception) { }
+            catch (Exception e) {
+                GoogleAnalytics.EasyTracker.GetTracker().SendException(String.Format("Failed to Disable Swipe Feature: {0} (Stack trace: {1})", e.Message, e.StackTrace), false);
+            }
         }
 
         private async void OnItemSwiped(object sender, EventArgs e)

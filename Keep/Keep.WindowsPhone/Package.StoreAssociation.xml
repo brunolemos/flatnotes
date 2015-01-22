@@ -186,19 +186,17 @@
   <ProductReservedInfo>
     <MainPackageIdentityName>29428BrunoLemos.Keep</MainPackageIdentityName>
     <ReservedNames>
-      <ReservedName>#Keep</ReservedName>
-      <ReservedName>#KeepNotes</ReservedName>
-      <ReservedName>Flat Notes</ReservedName>
-      <ReservedName>KeepNote</ReservedName>
       <ReservedName>Keep 8.1</ReservedName>
-      <ReservedName>Google Keep Alternative</ReservedName>
       <ReservedName>Google Keep 8.1</ReservedName>
+      <ReservedName>Google Keep Alternative</ReservedName>
+      <ReservedName>Flat Notes</ReservedName>
+      <ReservedName>#Keep</ReservedName>
     </ReservedNames>
   </ProductReservedInfo>
   <AccountPackageIdentityNames>
-    <MainPackageIdentityName>29428BrunoLemos.KeepBeta</MainPackageIdentityName>
     <MainPackageIdentityName>29428BrunoLemos.Commit</MainPackageIdentityName>
     <MainPackageIdentityName>29428BrunoLemos.Hooks</MainPackageIdentityName>
+    <MainPackageIdentityName>29428BrunoLemos.KeepBeta</MainPackageIdentityName>
     <MainPackageIdentityName>29428BrunoLemos.PopcornNow</MainPackageIdentityName>
     <MainPackageIdentityName>29428BrunoLemos.StellarLite</MainPackageIdentityName>
     <MainPackageIdentityName>29428BrunoLemos.5123029690F68</MainPackageIdentityName>
@@ -207,13 +205,13 @@
     <BundleInfo>
       <PackageInfo>
         <OsMinVersion>6.3.0.0</OsMinVersion>
-        <PackageArchitecture></PackageArchitecture>
-        <PackageMaxArchitectureVersion>1.3.0.0</PackageMaxArchitectureVersion>
-      </PackageInfo>
-      <PackageInfo>
-        <OsMinVersion>6.3.0.0</OsMinVersion>
         <PackageArchitecture>neutral</PackageArchitecture>
-        <PackageMaxArchitectureVersion>1.5.0.0</PackageMaxArchitectureVersion>
+        <PackageMaxArchitectureVersion>1.6.0.2</PackageMaxArchitectureVersion>
+      </PackageInfo>
+      <PackageInfo>
+        <OsMinVersion>6.3.0.0</OsMinVersion>
+        <PackageArchitecture></PackageArchitecture>
+        <PackageMaxArchitectureVersion>1.6.0.2</PackageMaxArchitectureVersion>
       </PackageInfo>
       <PackageInfo>
         <OsMinVersion>6.3.0.0</OsMinVersion>
@@ -223,7 +221,7 @@
       <PackageInfo>
         <OsMinVersion>6.3.0.0</OsMinVersion>
         <PackageArchitecture></PackageArchitecture>
-        <PackageMaxArchitectureVersion>1.5.0.0</PackageMaxArchitectureVersion>
+        <PackageMaxArchitectureVersion>1.3.0.0</PackageMaxArchitectureVersion>
       </PackageInfo>
     </BundleInfo>
   </PackageInfoList>

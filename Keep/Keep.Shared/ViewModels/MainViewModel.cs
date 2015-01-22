@@ -5,6 +5,7 @@ using Keep.Views;
 using System;
 using System.Diagnostics;
 using Windows.ApplicationModel;
+using Windows.ApplicationModel.Resources;
 using Windows.ApplicationModel.Store;
 using Windows.Storage.Pickers;
 using Windows.UI.Xaml.Controls;
@@ -109,14 +110,17 @@ namespace Keep.ViewModels
 
         private async void SuggestFeatureOrReportBug()
         {
-            GoogleAnalytics.EasyTracker.GetTracker().SendEvent("ui_action", "execute_command", "suggest_feature_or_report_bug", 0);
+            bool isBeta = Package.Current.Id.Name.Contains("Beta");
+            string appName = isBeta ? "Keep Beta" : "Keep";
+
+            GoogleAnalytics.EasyTracker.GetTracker().SendEvent("ui_action", "execute_command", "suggest_feature_or_report_bug", isBeta ? 1 : 0);
             Windows.ApplicationModel.Email.EmailMessage mail = new Windows.ApplicationModel.Email.EmailMessage();
 
             mail.To.Add(new Windows.ApplicationModel.Email.EmailRecipient("keep@brunolemos.org"));
-            mail.Subject = String.Format("Feedback - Keep v{0}.{1}", Package.Current.Id.Version.Major, Package.Current.Id.Version.Minor);
-            mail.Body = "[YOUR MESSAGE GOES HERE]";
+            mail.Subject = String.Format("Feedback - {0} v{1}.{2}.{3}.{4}", appName, Package.Current.Id.Version.Major, Package.Current.Id.Version.Minor, Package.Current.Id.Version.Build, Package.Current.Id.Version.Revision);
+            mail.Body = ResourceLoader.GetForCurrentView().GetString("YourMessageGoesHere");
 
-            await Windows.ApplicationModel.Email.EmailManager.ShowComposeNewEmailAsync(mail);
+             await Windows.ApplicationModel.Email.EmailManager.ShowComposeNewEmailAsync(mail);
         }
 
         #endregion

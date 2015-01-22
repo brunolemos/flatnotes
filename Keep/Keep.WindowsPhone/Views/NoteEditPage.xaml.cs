@@ -57,6 +57,9 @@ namespace Keep.Views
             if (e.NavigationParameter is Note)
                 viewModel.Note = e.NavigationParameter as Note;
 
+            if (viewModel.Note == null)
+                viewModel.Note = new Note();
+
             viewModel.Note.Changed = false;
             viewModel.Note.Images.CollectionChanged += Images_CollectionChanged;
             viewModel.Note.Checklist.CollectionChanged += Checklist_CollectionChanged;

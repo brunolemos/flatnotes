@@ -38,13 +38,15 @@ namespace Keep.Models
         [DataMember(Name = "Text")]
         private String text;
 
-        public NoteImages Images { get { return images; } set { replaceNoteImages(value); NotifyPropertyChanged("Images"); } }
+        public NoteImages Images { get { return images; } set { images = value; NotifyPropertyChanged("Images"); } }
         [DataMember(Name = "Images")]
-        private NoteImages images = new NoteImages();
+        private NoteImages images { get { return _images; } set { replaceNoteImages(value); } }
+        private NoteImages _images = new NoteImages();
 
-        public Checklist Checklist { get { return checklist; } private set { replaceChecklist(value); NotifyPropertyChanged("Checklist"); } }
+        public Checklist Checklist { get { return checklist; } private set { checklist = value; NotifyPropertyChanged("Checklist"); } }
         [DataMember(Name = "Checklist")]
-        private Checklist checklist = new Checklist();
+        private Checklist checklist { get { return _checklist; } set { replaceChecklist(value); } }
+        private Checklist _checklist = new Checklist();
 
         [IgnoreDataMember]
         public NoteColor Color { get { return color; } set { color = value is NoteColor ? value : NoteColor.DEFAULT; NotifyPropertyChanged("Color"); } }
