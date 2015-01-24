@@ -161,38 +161,43 @@ namespace Keep.Views
 
         public async void ContinueFileOpenPicker(FileOpenPickerContinuationEventArgs args)
         {
-            if (args.Files.Count > 0)
+            if (args.Files.Count <= 0) return;
+
+            string error = "";
+
+            try
             {
-                try
+                //delete old images
+                await AppData.RemoveNoteImages(viewModel.Note.Images);
+
+                //clear image list
+                viewModel.Note.Images.Clear();
+
+                //add new images
+                foreach (var file in args.Files)
                 {
-                    //delete old images
-                    await AppData.RemoveNoteImages(viewModel.Note.Images);
+                    Debug.WriteLine("Picked photo: " + file.Path);
 
-                    //clear image list
-                    viewModel.Note.Images.Clear();
+                    NoteImage noteImage = new NoteImage();
 
-                    //add new images
-                    foreach (var file in args.Files)
-                    {
-                        Debug.WriteLine("Picked photo: " + file.Path);
+                    StorageFile savedImage = await AppSettings.Instance.SaveImage(file, viewModel.Note.ID, noteImage.ID);
 
-                        NoteImage noteImage = new NoteImage();
+                    var imageProperties = await savedImage.Properties.GetImagePropertiesAsync();
+                    noteImage.URL = savedImage.Path;
+                    noteImage.Size = new Size(imageProperties.Width, imageProperties.Height);
 
-                        StorageFile savedImage = await AppSettings.Instance.SaveImage(file, viewModel.Note.ID, noteImage.ID);
-
-                        var imageProperties = await savedImage.Properties.GetImagePropertiesAsync();
-                        noteImage.URL = savedImage.Path;
-                        noteImage.Size = new Size(imageProperties.Width, imageProperties.Height);
-
-                        viewModel.Note.Images.Add(noteImage);
-                        break;
-                    }
+                    viewModel.Note.Images.Add(noteImage);
+                    break;
                 }
-                catch (Exception e)
-                {
-                    GoogleAnalytics.EasyTracker.GetTracker().SendException(String.Format("Failed to save image ({0})", e.Message), false);
-                    await (new MessageDialog("Failed to save image. Try again.", "Sorry")).ShowAsync();
-                }
+            }
+            catch (Exception e) { error = e.Message; }
+
+            if(!String.IsNullOrEmpty(error))
+            {
+                GoogleAnalytics.EasyTracker.GetTracker().SendException(String.Format("Failed to save image ({0})", error), false);
+                await (new MessageDialog("Failed to save image. Try again.", "Sorry")).ShowAsync();
+
+                return;
             }
 
             //save

@@ -85,11 +85,9 @@ namespace Keep.Views
             Note originalNote = AppData.Notes.Where<Note>(n => n.ID == note.ID).FirstOrDefault();
             if (originalNote == null)
             {
-                GoogleAnalytics.EasyTracker.GetTracker().SendException(string.Format("Failed to load tapped note ({0})", note.GetContent()), false);
+                GoogleAnalytics.EasyTracker.GetTracker().SendException(string.Format("Failed to load tapped note ({0})", Newtonsoft.Json.JsonConvert.SerializeObject(AppData.Notes)), false);
                 return;
             }
-
-            GoogleAnalytics.EasyTracker.GetTracker().SendEvent("app", "open_note", Newtonsoft.Json.JsonConvert.SerializeObject(originalNote), 0);
 
             App.RootFrame.Navigate(typeof(NoteEditPage), originalNote);
         }
@@ -114,48 +112,50 @@ namespace Keep.Views
         {
             FrameworkElement element = sender as FrameworkElement;
 
-            if(enableSwipeEventHandlers[element] != null) viewModel.ReorderModeDisabled -= enableSwipeEventHandlers[element];
-            if(disableSwipeEventHandlers[element] != null) viewModel.ReorderModeEnabled -= disableSwipeEventHandlers[element];
+            if (enableSwipeEventHandlers[element] != null) viewModel.ReorderModeDisabled -= enableSwipeEventHandlers[element];
+            if (disableSwipeEventHandlers[element] != null) viewModel.ReorderModeEnabled -= disableSwipeEventHandlers[element];
 
             DisableSwipeFeature(element);
         }
 
         public async void ContinueFileOpenPicker(FileOpenPickerContinuationEventArgs args)
         {
-            if (args.Files.Count > 0)
+            if (args.Files.Count <= 0) return;
+
+            Note note = new Note();
+            NoteImage noteImage = new NoteImage();
+            string error = "";
+
+            try
             {
-                Note note = new Note();
-                NoteImage noteImage = new NoteImage();
-
-                try
+                foreach (var file in args.Files)
                 {
-                    foreach (var file in args.Files)
-                    {
-                        Debug.WriteLine("Picked photo: " + file.Path);
+                    Debug.WriteLine("Picked photo: " + file.Path);
 
-                        StorageFile savedImage = await AppSettings.Instance.SaveImage(file, note.ID, noteImage.ID);
+                    StorageFile savedImage = await AppSettings.Instance.SaveImage(file, note.ID, noteImage.ID);
 
-                        var imageProperties = await savedImage.Properties.GetImagePropertiesAsync();
-                        noteImage.URL = savedImage.Path;
-                        noteImage.Size = new Size(imageProperties.Width, imageProperties.Height);
+                    var imageProperties = await savedImage.Properties.GetImagePropertiesAsync();
+                    noteImage.URL = savedImage.Path;
+                    noteImage.Size = new Size(imageProperties.Width, imageProperties.Height);
 
-                        note.Images.Add(noteImage);
-                        break;
-                    }
+                    note.Images.Add(noteImage);
+                    break;
                 }
-                catch (Exception e)
-                {
-                    GoogleAnalytics.EasyTracker.GetTracker().SendException(String.Format("Failed to load image ({0})", e.Message), false);
-                    await (new MessageDialog("Failed to save image. Try again.", "Sorry")).ShowAsync();
-
-                    return;
-                }
-
-                Frame.Navigate(typeof(NoteEditPage), note);
-
-                //save
-                await AppData.CreateOrUpdateNote(note);
             }
+            catch (Exception e) { error = e.Message; }
+            
+            if(!String.IsNullOrEmpty(error))
+            {
+                GoogleAnalytics.EasyTracker.GetTracker().SendException(String.Format("Failed to load image ({0})", error), false);
+                await (new MessageDialog("Failed to save image. Try again.", "Sorry")).ShowAsync();
+
+                return;
+            }
+
+            Frame.Navigate(typeof(NoteEditPage), note);
+
+            //save
+            await AppData.CreateOrUpdateNote(note);
         }
     }
 }
