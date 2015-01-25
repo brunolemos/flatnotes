@@ -21,8 +21,9 @@ namespace Keep.Utils
         ManipulationModes previousManipulationModes;
         double elementInitialOpacity = 1;
         Size containerSize;
-        int pointerMovedCount = 0;
         bool wasPointerPressedCalled;
+        int pointerMovedCount = 0;
+        double minOpacity = 0.20;
 
         public ManipulationInputProcessor(GestureRecognizer gr, FrameworkElement target, FrameworkElement referenceframe)
         {
@@ -62,6 +63,9 @@ namespace Keep.Utils
             InitializeTransforms();
 
             if(element != null) element.Opacity = elementInitialOpacity;
+
+            pointerMovedCount = 0;
+            wasPointerPressedCalled = false;
         }
 
         public void Disable()
@@ -74,7 +78,7 @@ namespace Keep.Utils
 
         private void UnhandleEvents()
         {
-            if(element != null)
+            if (element != null)
             {
                 // Set down pointer event handlers
                 this.element.PointerCanceled -= OnPointerCanceled;
@@ -94,6 +98,7 @@ namespace Keep.Utils
 
         void OnPointerPressed(object sender, PointerRoutedEventArgs args)
         {
+            Debug.WriteLine("OnPointerPressed");
             // Route the events to the gesture recognizer
             // The points are in the reference frame of the canvas that contains the rectangle element.
             this.gestureRecognizer.ProcessDownEvent(args.GetCurrentPoint(this.reference));
@@ -119,6 +124,9 @@ namespace Keep.Utils
         {
             this.gestureRecognizer.CompleteGesture();
             args.Handled = true;
+
+            pointerMovedCount = 0;
+            wasPointerPressedCalled = false;
         }
 
         void OnPointerMoved(object sender, PointerRoutedEventArgs args)
@@ -127,8 +135,7 @@ namespace Keep.Utils
 
             //workarround to enable tap events / focus on textbox / ...
             if (pointerMovedCount <= 2) pointerMovedCount++;
-            if (pointerMovedCount == 2 && !wasPointerPressedCalled) OnPointerPressed(sender, args);
-            if(pointerMovedCount < 3) return;
+            if (pointerMovedCount == 2 && !wasPointerPressedCalled) { OnPointerPressed(sender, args); return; }
 
             this.gestureRecognizer.ProcessMoveEvents(args.GetIntermediatePoints(this.reference));
         }
@@ -160,13 +167,16 @@ namespace Keep.Utils
 
             this.deltaTransform.TranslateX = e.Delta.Translation.X;
 
-            element.Opacity = Math.Round(100 - 100 * Math.Abs(e.Cumulative.Translation.X) / (containerSize.Width * 0.8)) / 100;
-            if (element.Opacity <= 0 && gestureRecognizer.IsInertial) this.gestureRecognizer.CompleteGesture();
+            double newOpacity = Math.Round(100 - 100 * Math.Abs(e.Cumulative.Translation.X) / (containerSize.Width * 0.8)) / 100;
+            if (newOpacity <= minOpacity && !gestureRecognizer.IsInertial) newOpacity = minOpacity;
+            element.Opacity = newOpacity;
+
+            if (newOpacity <= 0 && gestureRecognizer.IsInertial) this.gestureRecognizer.CompleteGesture();
         }
 
         void OnManipulationCompleted(object sender, ManipulationCompletedEventArgs e)
         {
-            if (element.Opacity <= 0)
+            if (element.Opacity <= minOpacity)
             {
                 Disable();
 

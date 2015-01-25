@@ -8,7 +8,7 @@
     xmlns:Controls="using:Keep.Controls"
     xmlns:Converters="using:Keep.Converters"
     mc:Ignorable="d"
-    NavigationCacheMode="Required"
+    NavigationCacheMode="Disabled"
     Background="{ThemeResource AppStatusBarBackgroundBrush}"
     DataContext="{Binding Source={StaticResource MainViewModel}}"
     d:DataContext="{d:DesignData /SampleData/MainViewModelSampleData.xaml}">
@@ -53,7 +53,7 @@
         </DataTemplate>
 
         <ItemsPanelTemplate x:Key="FluidItemsPanelTemplate" x:Name="FluidItemsPanelTemplate">
-            <Controls:FluidGrid x:Name="NotesFluidGrid" Margin="14" Columns="{Binding Columns, Mode=OneWay, TargetNullValue=2, FallbackValue=2}" ItemMinWidth="150"/>
+            <Controls:FluidGrid x:Name="NotesFluidGrid" Margin="14" ItemMinWidth="150" Columns="{Binding Columns, Mode=OneWay, TargetNullValue=2, FallbackValue=2}"/>
         </ItemsPanelTemplate>
     </Page.Resources>
 

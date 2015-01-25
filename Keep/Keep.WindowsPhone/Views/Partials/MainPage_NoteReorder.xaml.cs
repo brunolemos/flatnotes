@@ -13,7 +13,6 @@ namespace Keep.Views
         partial void EnableReorderFeature()
         {
             navigationHelper.LoadState += NavigationHelper_LoadState1;
-            navigationHelper.SaveState += NavigationHelper_SaveState1;
 
             NotesListView.Holding += NotesListView_Holding;
             NotesListView.DragItemsStarting += NotesListView_DragItemsStarting;
@@ -26,7 +25,6 @@ namespace Keep.Views
         partial void DisableReorderFeature()
         {
             navigationHelper.LoadState -= NavigationHelper_LoadState1;
-            navigationHelper.SaveState -= NavigationHelper_SaveState1;
 
             if(NotesListView != null)
             {
@@ -46,13 +44,6 @@ namespace Keep.Views
             #endif
 
             viewModel.ReorderedNotes = false;
-        }
-
-        private void NavigationHelper_SaveState1(object sender, SaveStateEventArgs e)
-        {
-            #if WINDOWS_PHONE_APP
-            if(NotesListView != null) NotesListView.ReorderMode = ListViewReorderMode.Disabled;
-            #endif
         }
 
         private void OnReorderModeDisabled(object sender, System.EventArgs e)

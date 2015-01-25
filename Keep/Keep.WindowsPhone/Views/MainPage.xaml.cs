@@ -13,6 +13,7 @@ using Keep.ViewModels;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.UI.Popups;
+using Windows.UI.Core;
 
 namespace Keep.Views
 {
@@ -72,7 +73,7 @@ namespace Keep.Views
 
         #endregion
 
-        private void OnNoteTapped(object sender, TappedRoutedEventArgs e)
+        private async void OnNoteTapped(object sender, TappedRoutedEventArgs e)
         {
             #if WINDOWS_PHONE_APP
             if (viewModel.ReorderMode == ListViewReorderMode.Enabled) return;
@@ -89,7 +90,10 @@ namespace Keep.Views
                 return;
             }
 
-            App.RootFrame.Navigate(typeof(NoteEditPage), originalNote);
+            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            {
+                Frame.Navigate(typeof(NoteEditPage), originalNote);
+            });
         }
 
         //swipe feature
@@ -112,8 +116,8 @@ namespace Keep.Views
         {
             FrameworkElement element = sender as FrameworkElement;
 
-            if (enableSwipeEventHandlers[element] != null) viewModel.ReorderModeDisabled -= enableSwipeEventHandlers[element];
-            if (disableSwipeEventHandlers[element] != null) viewModel.ReorderModeEnabled -= disableSwipeEventHandlers[element];
+            if (enableSwipeEventHandlers.ContainsKey(element)) viewModel.ReorderModeDisabled -= enableSwipeEventHandlers[element];
+            if (disableSwipeEventHandlers.ContainsKey(element)) viewModel.ReorderModeEnabled -= disableSwipeEventHandlers[element];
 
             DisableSwipeFeature(element);
         }
