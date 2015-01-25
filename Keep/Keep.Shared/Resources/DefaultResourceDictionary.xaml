@@ -7,9 +7,9 @@
     
     <SolidColorBrush x:Key="AppStatusBarBackgroundBrush" Color="#E59900"/>
     <SolidColorBrush x:Key="AppStatusBarForegroundBrush" Color="#FFFFFE"/><!--403003-->
-    
-    <SolidColorBrush x:Key="KeepNoteCommandBarForegroundThemeBrush" Color="Black"/>
-    
+
+    <!--<SolidColorBrush x:Key="KeepNoteCommandBarForegroundThemeBrush" Color="Black"/>-->
+
     <SolidColorBrush x:Key="PhoneDarkLowBrush" Color="#20000000"/>
     <SolidColorBrush x:Key="PhoneDarkMidBrush" Color="#70000000"/>
             

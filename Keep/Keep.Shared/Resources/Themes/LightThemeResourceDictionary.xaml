@@ -19,7 +19,9 @@
     <SolidColorBrush x:Key="ContentDialogBackgroundThemeBrush" Color="{ThemeResource PhoneBackgroundColor}"/>
     
     <SolidColorBrush x:Key="CommandBarBackgroundThemeBrush" Color="{ThemeResource AppMainColor}"/>
-    <SolidColorBrush x:Key="CommandBarForegroundThemeBrush" Color="Black"/><!--{ThemeResource AppMainDarkenColor}-->
+    <!--<SolidColorBrush x:Key="CommandBarForegroundThemeBrush" Color="Black"/>
+    <SolidColorBrush x:Key="FocusVisualBlackStrokeThemeBrush" Color="{ThemeResource AppMainDarkenColor}" />
+    <SolidColorBrush x:Key="FocusVisualWhiteStrokeThemeBrush" Color="{ThemeResource AppMainDarkenColor}" />-->
 
     <SolidColorBrush x:Key="ApplicationForegroundThemeBrush" Color="{ThemeResource PhoneForegroundColor}"/>
     <SolidColorBrush x:Key="PhoneForegroundBrush" Color="{ThemeResource PhoneForegroundColor}"/>

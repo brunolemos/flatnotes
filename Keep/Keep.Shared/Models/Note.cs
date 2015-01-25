@@ -49,7 +49,7 @@ namespace Keep.Models
         private Checklist _checklist = new Checklist();
 
         [IgnoreDataMember]
-        public NoteColor Color { get { return color; } set { color = value is NoteColor ? value : NoteColor.DEFAULT; NotifyPropertyChanged("Color"); } }
+        public NoteColor Color { get { return color; } set { var newValue = value is NoteColor ? value : NoteColor.DEFAULT; if (color.Key != newValue.Key) { color = newValue; NotifyPropertyChanged("Color"); } } }
         private NoteColor color = NoteColor.DEFAULT;
 
         [DataMember(Name = "Color")]

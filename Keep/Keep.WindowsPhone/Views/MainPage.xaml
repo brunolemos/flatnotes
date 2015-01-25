@@ -8,7 +8,7 @@
     xmlns:Controls="using:Keep.Controls"
     xmlns:Converters="using:Keep.Converters"
     mc:Ignorable="d"
-    NavigationCacheMode="Disabled"
+    NavigationCacheMode="Required"
     Background="{ThemeResource AppStatusBarBackgroundBrush}"
     DataContext="{Binding Source={StaticResource MainViewModel}}"
     d:DataContext="{d:DesignData /SampleData/MainViewModelSampleData.xaml}">
@@ -20,7 +20,7 @@
     </Page.Transitions>
 
     <Page.BottomAppBar>
-        <CommandBar IsOpen="True">
+        <CommandBar RequestedTheme="Dark">
             <CommandBar.SecondaryCommands>
                 <AppBarButton x:Uid="ArchivedNotesAppBarButton" Icon="SaveLocal" Label="archived notes" Command="{Binding OpenArchivedNotesCommand}"/>
                 <AppBarButton x:Uid="FeedbackAppBarButton" Icon="Like" Label="send a nice feedback" Command="{Binding SendFeedbackCommand}"/>

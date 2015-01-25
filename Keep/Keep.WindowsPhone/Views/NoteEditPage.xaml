@@ -13,8 +13,7 @@
     Background="{Binding Note.Color.DarkColor2}"
     Foreground="{StaticResource KeepNoteForegroundBrush}"
     DataContext="{Binding Source={StaticResource NoteEditViewModel}}"
-    d:DataContext="{d:DesignData /SampleData/NoteEditViewModelSampleData.xaml}"
-    RequestedTheme="Light">
+    d:DataContext="{d:DesignData /SampleData/NoteEditViewModelSampleData.xaml}">
 
     <Page.Transitions>
         <TransitionCollection>
@@ -59,7 +58,7 @@
         </ResourceDictionary>
     </Page.Resources>
 
-    <Grid x:Name="LayoutRoot" Background="{Binding Note.Color.Color}">
+    <Grid x:Name="LayoutRoot" Background="{Binding Note.Color.Color}" RequestedTheme="Light">
         <Grid x:Name="ContentRoot">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
@@ -76,7 +75,7 @@
                     <TextBox x:Uid="TextTextBox" x:Name="NoteTextTextBox" PlaceholderText="Text" Text="{Binding Note.Text, Mode=TwoWay}" MinHeight="200" InputScope="Default" Background="Transparent" BorderThickness="0" Padding="19,6" AcceptsReturn="True" TextWrapping="Wrap" FontSize="20" Visibility="{Binding Note.IsText, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
                     <StackPanel Visibility="{Binding Note.IsChecklist, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
-                        <ListView x:Name="NoteChecklistListView" ItemsSource="{Binding Note.Checklist}" AllowDrop="True" CanDragItems="True" ItemTemplate="{StaticResource NoteChecklistListViewControlTemplate}" SelectionMode="None" Holding="NoteChecklistListView_Holding" ReorderMode="{Binding ReorderMode, Mode=TwoWay}"/>
+                        <ListView x:Name="NoteChecklistListView" ItemsSource="{Binding Note.Checklist}" AllowDrop="True" CanDragItems="True" ItemTemplate="{StaticResource NoteChecklistListViewControlTemplate}" Holding="NoteChecklistListView_Holding" ReorderMode="{Binding ReorderMode, Mode=TwoWay}" SelectionMode="None" IsItemClickEnabled="False" IsTapEnabled="False"/>
 
                         <Grid Margin="19,0">
                             <Grid.ColumnDefinitions>
@@ -130,14 +129,14 @@
     </Grid>
 
     <Page.BottomAppBar>
-        <CommandBar Background="{Binding Note.Color.DarkColor2}" Foreground="{StaticResource KeepNoteCommandBarForegroundThemeBrush}">
+        <CommandBar Background="{Binding Note.Color.DarkColor2}" RequestedTheme="Dark">
             <CommandBar.SecondaryCommands>
                 <AppBarButton x:Uid="ToggleChecklistAppBarButton"  Icon="List" Label="toggle checklist" Command="{Binding ToggleChecklistCommand}" />
                 <AppBarButton x:Uid="RestoreAppBarButton" Icon="Undo" Label="restore" Command="{Binding RestoreNoteCommand}" Visibility="{Binding IsArchived, Converter={StaticResource BooleanToVisibilityConverter}}" />
                 <AppBarButton x:Uid="ArchiveAppBarButton" Icon="SaveLocal" Label="archive" Command="{Binding ArchiveNoteCommand}" Visibility="{Binding AlreadyExists, Converter={StaticResource BooleanToVisibilityConverter}}" />
                 <AppBarButton x:Uid="DeleteAppBarButton" Icon="Delete" Label="delete" Command="{Binding DeleteNoteCommand}" />
             </CommandBar.SecondaryCommands>
-
+            
             <AppBarToggleButton x:Uid="ColorAppBarButton" x:Name="ColorPickerAppBarToggleButton" Label="color">
                 <AppBarToggleButton.Icon>
                     <BitmapIcon UriSource="ms-appx:///Assets/appbar.water.droplet.png"/>

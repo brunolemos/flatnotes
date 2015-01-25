@@ -1,16 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
+using Keep.Events;
 using Keep.Models;
-using Windows.UI.Xaml;
-using System.Diagnostics;
 
 namespace Keep.Controls
 {
-    public sealed partial class NoteColorPicker : UserControl
+    public sealed partial class NoteColorPicker : UserControl, INotifyPropertyChanged
     {
-        public event EventHandler<SelectionChangedEventArgs> SelectionChanged;
+        public event PropertyChangedEventHandler PropertyChanged;
+        public event EventHandler<NoteColorEventArgs> NoteColorChanged;
         public event EventHandler Opened;
         public event EventHandler Closed;
 
@@ -19,19 +22,19 @@ namespace Keep.Controls
             get { return selectedNoteColor; }
             set
             {
-                var handler = SelectionChanged;
-                if (handler != null && selectedNoteColor != value)
-                {
-                    IList<object> removedItems = new List<object>() { selectedNoteColor as object };
-                    IList<object> addedItems = new List<object>() { value as object };
+                if (value == null || !(value is NoteColor)) value = NoteColor.DEFAULT;
 
-                    handler(this, new SelectionChangedEventArgs(removedItems, addedItems));
+                var handler = NoteColorChanged;
+                if (handler != null && selectedNoteColor != null && selectedNoteColor != value)
+                {
+                    handler(this, new NoteColorEventArgs(value));
                 }
 
-                selectedNoteColor = value;
+                selectedNoteColor = Colors.Find(nc => nc.Key == value.Key);
+                NotifyPropertyChanged("SelectedNoteColor");
             }
         }
-        private NoteColor selectedNoteColor;
+        private NoteColor selectedNoteColor = null;
 
         public NoteColors Colors { get { return colors; } }
         private NoteColors colors = new NoteColors()
@@ -66,16 +69,6 @@ namespace Keep.Controls
             if (handler != null) handler(this, EventArgs.Empty);
         }
 
-        private void ColorPickerListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            ListView listView = sender as ListView;
-
-            if (listView.SelectedItem == null || !(listView.SelectedItem is NoteColor))
-                listView.SelectedItem = (listView.ItemsSource as IList<NoteColor>)[0];
-
-            SelectedNoteColor = listView.SelectedItem as NoteColor;
-        }
-
         private void OutsideGrid_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
             Close();
@@ -89,6 +82,11 @@ namespace Keep.Controls
         public void Close(bool useTransitions = true)
         {
             VisualStateManager.GoToState(this, ClosedVisualState.Name, useTransitions);
+        }
+        void NotifyPropertyChanged(String propertyName)
+        {
+            PropertyChangedEventHandler handler = PropertyChanged;
+            if (null != handler) handler(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

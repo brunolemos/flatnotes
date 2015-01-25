@@ -24,8 +24,6 @@ namespace Keep.Views
 
                 //handlers
                 elementInputProcessor.ItemSwiped += OnItemSwiped;
-                enableSwipeEventHandlers[element] = (s, _e) => { EnableSwipeFeature(element, referenceFrame); };
-                disableSwipeEventHandlers[element] = (s, _e) => { DisableSwipeFeature(element); };
 
                 //save
                 inputProcessors[element] = elementInputProcessor;

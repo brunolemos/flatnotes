@@ -90,6 +90,7 @@ namespace Keep.Views
                 return;
             }
 
+            //this dispatcher fixes crash error (access violation on wp preview for developers)
             await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
                 Frame.Navigate(typeof(NoteEditPage), originalNote);

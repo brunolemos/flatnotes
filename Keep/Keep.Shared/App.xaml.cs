@@ -30,6 +30,10 @@ namespace Keep
 
         public App()
         {
+            //different from actual theme
+            if (!((RequestedTheme == ApplicationTheme.Light && AppSettings.Instance.Theme == ElementTheme.Light) || (RequestedTheme == ApplicationTheme.Dark && (AppSettings.Instance.Theme == ElementTheme.Dark || AppSettings.Instance.Theme == ElementTheme.Default))))
+                RequestedTheme = AppSettings.Instance.Theme == ElementTheme.Light ? ApplicationTheme.Light : ApplicationTheme.Dark;
+
             this.InitializeComponent();
 
             AppSettings.Instance.ThemeChanged += (s, e) => UpdateTheme(e.Theme);
@@ -117,7 +121,7 @@ namespace Keep
 #endif
 
             //user theme
-            UpdateTheme(AppSettings.Instance.Theme);
+            //UpdateTheme(AppSettings.Instance.Theme);
 
             if (RootFrame.Content == null)
             {
@@ -139,7 +143,7 @@ namespace Keep
                 // When the navigation stack isn't restored navigate to the first page,
                 // configuring the new page by passing required information as a navigation
                 // parameter
-                if (!RootFrame.Navigate(typeof(SplashPage), e.Arguments))
+                if (!RootFrame.Navigate(typeof(Views.MainPage), e.Arguments))
                 {
                     throw new Exception("Failed to create initial page");
                 }
@@ -179,16 +183,16 @@ namespace Keep
             await dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
             {
                 RootFrame.RequestedTheme = theme;
-                ChangeStatusBarColor();
+                //ChangeStatusBarColor();
             });
         }
 
-        public static void ChangeStatusBarColor(Color? foregroundColor = null)
-        {
-#if WINDOWS_PHONE_APP
-            if (foregroundColor == null) foregroundColor = (App.Current.Resources["AppStatusBarForegroundBrush"] as SolidColorBrush).Color;
-            StatusBar.GetForCurrentView().ForegroundColor = foregroundColor;
-#endif
-        }
+        //public static void ChangeStatusBarColor(Color? foregroundColor = null)
+        //{
+//#if WINDOWS_PHONE_APP
+//            if (foregroundColor == null) foregroundColor = (App.Current.Resources["AppStatusBarForegroundBrush"] as SolidColorBrush).Color;
+//            StatusBar.GetForCurrentView().ForegroundColor = foregroundColor;
+//#endif
+        //}
     }
 }

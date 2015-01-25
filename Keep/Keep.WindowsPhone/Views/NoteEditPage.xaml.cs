@@ -42,7 +42,7 @@ namespace Keep.Views
             ColorPickerAppBarToggleButton.Unchecked += (s, _e) => NoteColorPicker.Close();
             NoteColorPicker.Opened += (s, _e) => { ColorPickerAppBarToggleButton.IsChecked = true; };
             NoteColorPicker.Closed += (s, _e) => { ColorPickerAppBarToggleButton.IsChecked = false; };
-            NoteColorPicker.SelectionChanged += (s, _e) => { viewModel.Note.Color = _e.AddedItems[0] as NoteColor; };
+            NoteColorPicker.NoteColorChanged += (s, _e) => { viewModel.Note.Color = _e.NoteColor; };
         }
 
         partial void EnableSwipeFeature(FrameworkElement element, FrameworkElement referenceFrame);
@@ -67,6 +67,8 @@ namespace Keep.Views
 
             previousBackground = App.RootFrame.Background;
             App.RootFrame.Background = new SolidColorBrush(new Color().FromHex(viewModel.Note.Color.Color));
+
+            NoteColorPicker.SelectedNoteColor = viewModel.Note.Color;
         }
 
         private async void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
@@ -90,6 +92,8 @@ namespace Keep.Views
 
             //checklist changed (fix cache problem with converter)
             if (checklistChanged) viewModel.Note.NotifyChanges();
+
+            viewModel.Note = null;
         }
 
         #region NavigationHelper registration

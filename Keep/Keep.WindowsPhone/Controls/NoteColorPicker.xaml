@@ -14,9 +14,54 @@
     <UserControl.Resources>
         <DataTemplate x:Key="NoteColorTemplate">
             <Grid Margin="10">
-                <Ellipse Width="42"  Height="42" Fill="{Binding Color}" VerticalAlignment="Center" HorizontalAlignment="Center" StrokeThickness="0"/>
+                <Ellipse Width="42"  Height="42" Fill="{Binding Color}" StrokeThickness="0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
             </Grid>
         </DataTemplate>
+        
+        <DataTemplate x:Key="SelectedNoteColorTemplate">
+            <Grid Margin="10">
+                <Ellipse Width="42"  Height="42" Fill="Transparent" StrokeThickness="3" Stroke="{Binding Color}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <Ellipse x:Name="SelectedItemIndicator" Width="27"  Height="27" Fill="{Binding Color}" StrokeThickness="0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            </Grid>
+        </DataTemplate>
+
+        <ItemsPanelTemplate x:Key="NoteColorsItemsPanelTemplate" x:Name="FluidItemsPanelTemplate">
+            <local:FluidGrid Columns="4"/>
+        </ItemsPanelTemplate>
+        
+        <Style x:Name="NoteColorItemContainerStyle" TargetType="ListViewItem">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListViewItem">
+                        <Grid>
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal"/>
+                                </VisualStateGroup>
+                                <VisualStateGroup x:Name="SelectionStates">
+                                    <VisualState x:Name="Unselected">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(ContentPresenter.ContentTemplate)" Storyboard.TargetName="NoteColorContentPresenter">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource NoteColorTemplate}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="SelectedUnfocused">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(ContentPresenter.ContentTemplate)" Storyboard.TargetName="NoteColorContentPresenter">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource SelectedNoteColorTemplate}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+
+                            <ContentPresenter x:Name="NoteColorContentPresenter" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </UserControl.Resources>
 
     <Grid Background="Transparent">
@@ -68,13 +113,7 @@
                 <CompositeTransform/>
             </Grid.RenderTransform>
 
-            <ListView x:Name="ColorPickerListView" Margin="24" SelectionMode="Single" ItemTemplate="{StaticResource NoteColorTemplate}" ItemsSource="{Binding}" DataContext="{Binding Colors, ElementName=Root}" d:DataContext="{d:DesignData /SampleData/NoteColorsSampleData.xaml}" SelectionChanged="ColorPickerListView_SelectionChanged">
-                <ListView.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <local:FluidGrid Columns="4"/>
-                    </ItemsPanelTemplate>
-                </ListView.ItemsPanel>
-            </ListView>
+            <ListView x:Name="ColorPickerListView" Margin="24" SelectionMode="Single" ItemsSource="{Binding}" ItemsPanel="{StaticResource NoteColorsItemsPanelTemplate}" ItemContainerStyle="{StaticResource NoteColorItemContainerStyle}" DataContext="{Binding Colors, ElementName=Root}" d:DataContext="{d:DesignData /SampleData/NoteColorsSampleData.xaml}" SelectedValue="{Binding ElementName=Root, Path=SelectedNoteColor, Mode=TwoWay}"/>
         </Grid>
     </Grid>
 </UserControl>

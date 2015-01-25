@@ -1,13 +1,15 @@
-﻿using Keep.Common;
-using Keep.Models;
-using Keep.Utils;
-using Keep.ViewModels;
+﻿using System;
 using System.Linq;
 using Windows.UI;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
+using Keep.Common;
+using Keep.Models;
+using Keep.Utils;
+using Keep.ViewModels;
 
 namespace Keep.Views
 {
@@ -41,7 +43,7 @@ namespace Keep.Views
         {
             GoogleAnalytics.EasyTracker.GetTracker().SendView("ArchivedNotesPage");
 
-            App.ChangeStatusBarColor(Colors.Black);
+            //App.ChangeStatusBarColor(Colors.Black);
             App.RootFrame.Background = LayoutRoot.Background;
         }
 
@@ -64,7 +66,7 @@ namespace Keep.Views
 
         #endregion
 
-        private void OnNoteTapped(object sender, TappedRoutedEventArgs e)
+        private async void OnNoteTapped(object sender, TappedRoutedEventArgs e)
         {
 #if WINDOWS_PHONE_APP
             if (viewModel.ReorderMode == ListViewReorderMode.Enabled) return;
@@ -82,33 +84,37 @@ namespace Keep.Views
                 return;
             }
 
-            App.RootFrame.Navigate(typeof(NoteEditPage), originalNote);
+            //this dispatcher fixes crash error (access violation on wp preview for developers)
+            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            {
+                Frame.Navigate(typeof(NoteEditPage), originalNote);
+            });
         }
 
         //swipe feature
         private void OnNoteLoaded(object sender, RoutedEventArgs e)
         {
-            //FrameworkElement element = sender as FrameworkElement;
-            //FrameworkElement referenceFrame = NotesListView;
+            FrameworkElement element = sender as FrameworkElement;
+            FrameworkElement referenceFrame = NotesListView;
 
-            //if (viewModel.ReorderMode != ListViewReorderMode.Enabled)
-            //    EnableSwipeFeature(element, referenceFrame);
+            if (viewModel.ReorderMode != ListViewReorderMode.Enabled)
+                EnableSwipeFeature(element, referenceFrame);
 
-            //enableSwipeEventHandlers[element] = (s, _e) => { EnableSwipeFeature(element, referenceFrame); };
-            //disableSwipeEventHandlers[element] = (s, _e) => { DisableSwipeFeature(element); };
+            enableSwipeEventHandlers[element] = (s, _e) => { EnableSwipeFeature(element, referenceFrame); };
+            disableSwipeEventHandlers[element] = (s, _e) => { DisableSwipeFeature(element); };
 
-            //viewModel.ReorderModeDisabled += enableSwipeEventHandlers[element];
-            //viewModel.ReorderModeEnabled += disableSwipeEventHandlers[element];
+            viewModel.ReorderModeDisabled += enableSwipeEventHandlers[element];
+            viewModel.ReorderModeEnabled += disableSwipeEventHandlers[element];
         }
 
         private void OnNoteUnloaded(object sender, RoutedEventArgs e)
         {
-            //FrameworkElement element = sender as FrameworkElement;
+            FrameworkElement element = sender as FrameworkElement;
 
-            //if (enableSwipeEventHandlers[element] != null) viewModel.ReorderModeDisabled -= enableSwipeEventHandlers[element];
-            //if (disableSwipeEventHandlers[element] != null) viewModel.ReorderModeEnabled -= disableSwipeEventHandlers[element];
+            if (enableSwipeEventHandlers.ContainsKey(element)) viewModel.ReorderModeDisabled -= enableSwipeEventHandlers[element];
+            if (disableSwipeEventHandlers.ContainsKey(element)) viewModel.ReorderModeEnabled -= disableSwipeEventHandlers[element];
 
-            //DisableSwipeFeature(element);
+            DisableSwipeFeature(element);
         }
     }
 }
