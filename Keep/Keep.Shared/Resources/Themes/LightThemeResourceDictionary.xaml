@@ -10,7 +10,7 @@
     <Color x:Key="PhoneForegroundColor">#C0000000</Color>
     <Color x:Key="PhoneChromeColor">#FFDDDDDD</Color>
     <Color x:Key="PhoneLowColor">#20000000</Color>
-    
+
     <SolidColorBrush x:Key="AppMainBrush" Color="{ThemeResource AppMainColor}"/>
     
     <SolidColorBrush x:Key="ApplicationPageBackgroundThemeBrush" Color="{ThemeResource PhoneBackgroundColor}"/>
@@ -22,6 +22,9 @@
     <SolidColorBrush x:Key="PhoneForegroundBrush" Color="{ThemeResource PhoneForegroundColor}"/>
     <SolidColorBrush x:Key="ComboBoxForegroundThemeBrush" Color="{ThemeResource PhoneForegroundColor}"/>
     <SolidColorBrush x:Key="ComboBoxBorderThemeBrush" Color="{ThemeResource PhoneForegroundColor}"/>
+
+    <SolidColorBrush x:Key="CommandBarBackgroundThemeBrush" Color="{ThemeResource AppMainColor}"/>
+    <SolidColorBrush x:Key="CommandBarForegroundThemeBrush" Color="Black"/>
 
     <SolidColorBrush x:Key="PhoneChromeBrush" Color="{ThemeResource PhoneChromeColor}"/>
     <SolidColorBrush x:Key="PhoneLowBrush" Color="{ThemeResource PhoneLowColor}"/>

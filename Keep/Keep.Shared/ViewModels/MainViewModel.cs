@@ -111,7 +111,7 @@ namespace Keep.ViewModels
         private async void SuggestFeatureOrReportBug()
         {
             bool isBeta = Package.Current.Id.Name.Contains("Beta");
-            string appName = isBeta ? "Keep Beta" : "Keep";
+            string appName = isBeta ? "Flat Notes Beta" : "Flat Notes";
 
             GoogleAnalytics.EasyTracker.GetTracker().SendEvent("ui_action", "execute_command", "suggest_feature_or_report_bug", isBeta ? 1 : 0);
             Windows.ApplicationModel.Email.EmailMessage mail = new Windows.ApplicationModel.Email.EmailMessage();

@@ -6,12 +6,12 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
+    NavigationCacheMode="Enabled"
     RequestedTheme="Dark" 
-    NavigationCacheMode="Disabled"
-    Background="{StaticResource AppMainBrush}">
+    Background="{StaticResource AppSplashScreenBrush}">
     
     <Grid x:Name="LayoutRoot">
-        <Image x:Name="SplashScreenImage" Source="ms-appx:///Assets/SplashScreenExtended.png" CacheMode="BitmapCache" VerticalAlignment="Top"/>
-        <ProgressRing IsActive="True" Width="20" Background="Transparent" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
+        <Image x:Name="SplashScreenImage" Source="ms-appx:///Assets/ExtendedSplashScreen.png" CacheMode="BitmapCache" VerticalAlignment="Top"/>
+        <ProgressRing IsActive="True" Background="Transparent" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
     </Grid>
 </Page>

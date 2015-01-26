@@ -2,14 +2,12 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Keep.Resources">
-    
-    <SolidColorBrush x:Key="KeepNoteForegroundBrush" Color="#C0000000"/>
 
+    <SolidColorBrush x:Key="AppSplashScreenBrush" Color="#263646"/>
     <SolidColorBrush x:Key="AppStatusBarBackgroundBrush" Color="#E59900"/>
     <SolidColorBrush x:Key="AppStatusBarForegroundBrush" Color="#FFFFFE"/>
 
-    <SolidColorBrush x:Key="CommandBarBackgroundThemeBrush" Color="#f2b60c"/>
-    <SolidColorBrush x:Key="CommandBarForegroundThemeBrush" Color="#A0000000"/>
+    <SolidColorBrush x:Key="KeepNoteForegroundBrush" Color="#C0000000"/>
     <SolidColorBrush x:Key="KeepNoteCommandBarForegroundThemeBrush" Color="White"/>
 
     <SolidColorBrush x:Key="PhoneDarkLowBrush" Color="#20000000"/>
@@ -17,6 +15,8 @@
             
     <SolidColorBrush x:Key="TextBoxFocusedBackgroundThemeBrush" Color="Transparent"/>
     <SolidColorBrush x:Key="TextBoxPlaceholderTextThemeBrush" Color="#70000000"/>
+    <SolidColorBrush x:Key="TextBoxDisabledForegroundThemeBrush" Color="#70000000"/>
+    <SolidColorBrush x:Key="TextBlockDisabledForegroundThemeBrush" Color="#70000000"/>
     
     <Style TargetType="TextBlock">
         <Setter Property="FontSize" Value="16"/>

@@ -8,6 +8,7 @@ using Keep.Utils.Migration;
 using Keep.Views;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
+using Keep.Models;
 
 namespace Keep
 {
@@ -18,13 +19,13 @@ namespace Keep
             this.InitializeComponent();
 
             this.Loaded += SplashPage_Loaded;
+            this.SplashScreenImage.ImageOpened += (s, e) => { Window.Current.Activate(); };
+            this.SplashScreenImage.ImageFailed += (s, e) => { Window.Current.Activate(); };
         }
 
         private async void SplashPage_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             ApplicationView.GetForCurrentView().SetDesiredBoundsMode(ApplicationViewBoundsMode.UseCoreWindow);
-            await Task.Delay(0100); 
-            Window.Current.Activate();
 
             //simulation
             //Task.Run(async () =>
@@ -43,6 +44,24 @@ namespace Keep
             //load notes
             AppData.Notes = await AppSettings.Instance.LoadNotes();
 
+            //simulation for screenshots
+            //AppData.Notes = new Notes()
+            //{
+            //    new Note("Bem-vindo!", "Bem-vindo ao Flat Notes, o mais bonito aplicativo de notas para Windows Phone!", NoteColor.YELLOW),
+            //    new Note("Lembrar", "Estudar para a prova", NoteColor.RED),
+            //    new Note("Novo", "Envio de imagem", NoteColor.BLUE),
+            //    new Note("Funcionalidades", new Checklist() {new ChecklistItem("Rápido e bonito", true), new ChecklistItem("Envie imagens", true), new ChecklistItem("Reordene notas", true), new ChecklistItem("Deslize para arquivar", true), new ChecklistItem("Tema escuro", true)}, NoteColor.TEAL),
+            //    new Note("Hey!", "Envie feedbacks para o desenvolvedor! :)", NoteColor.GREEN),
+            //};
+            //AppData.Notes = new Notes()
+            //{
+            //    new Note("Welcome!", "Welcome to Flat Notes, the most beautiful notes app for Windows Phone!", NoteColor.YELLOW),
+            //    new Note("Remember", "Study for the exam", NoteColor.RED),
+            //    new Note("New feature", "Image upload", NoteColor.BLUE),
+            //    new Note("Features", new Checklist() {new ChecklistItem("Fast and beautiful", true), new ChecklistItem("Image upload", true), new ChecklistItem("Reorder", true), new ChecklistItem("Swipe to archive", true), new ChecklistItem("Dark theme", true)}, NoteColor.TEAL),
+            //    new Note("Hey!", "Send feedbacks to the developer! :)", NoteColor.GREEN),
+            //};
+
             NavigateAsync(typeof(MainPage));
 
             //load archived notes
@@ -60,7 +79,7 @@ namespace Keep
             CoreDispatcher dispatcher = CoreWindow.GetForCurrentThread().Dispatcher;
             await dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
             {
-                await Task.Delay(0300);
+                await Task.Delay(0500);
                 Frame.Navigate(sourcePageType, parameter);
             });
         }
