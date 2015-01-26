@@ -94,6 +94,8 @@ namespace Keep.Utils
                 if (SetValue<ElementTheme>(THEME_KEY, value)) {
                     var handler = ThemeChanged;
                     if (handler != null) handler(this, new ThemeEventArgs(value));
+
+                    GoogleAnalytics.EasyTracker.GetTracker().SetCustomDimension(1, AppSettings.Instance.Theme.ToString());
                 }
             }
         }
@@ -107,6 +109,8 @@ namespace Keep.Utils
                 {
                     var handler = ColumnsChanged;
                     if (handler != null) handler(this, EventArgs.Empty);
+
+                    GoogleAnalytics.EasyTracker.GetTracker().SetCustomDimension(2, AppSettings.Instance.Columns.ToString());
                 }
             }
         }

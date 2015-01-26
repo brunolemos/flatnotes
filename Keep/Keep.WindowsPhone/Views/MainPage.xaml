@@ -20,7 +20,7 @@
     </Page.Transitions>
 
     <Page.BottomAppBar>
-        <CommandBar RequestedTheme="Dark">
+        <CommandBar>
             <CommandBar.SecondaryCommands>
                 <AppBarButton x:Uid="ArchivedNotesAppBarButton" Icon="SaveLocal" Label="archived notes" Command="{Binding OpenArchivedNotesCommand}"/>
                 <AppBarButton x:Uid="FeedbackAppBarButton" Icon="Like" Label="send a nice feedback" Command="{Binding SendFeedbackCommand}"/>

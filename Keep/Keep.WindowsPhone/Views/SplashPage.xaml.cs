@@ -7,6 +7,7 @@ using Keep.Utils;
 using Keep.Utils.Migration;
 using Keep.Views;
 using Windows.UI.ViewManagement;
+using Windows.UI.Xaml;
 
 namespace Keep
 {
@@ -22,6 +23,8 @@ namespace Keep
         private async void SplashPage_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             ApplicationView.GetForCurrentView().SetDesiredBoundsMode(ApplicationViewBoundsMode.UseCoreWindow);
+            await Task.Delay(0100); 
+            Window.Current.Activate();
 
             //simulation
             //Task.Run(async () =>
@@ -57,7 +60,7 @@ namespace Keep
             CoreDispatcher dispatcher = CoreWindow.GetForCurrentThread().Dispatcher;
             await dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
             {
-                await Task.Delay(0200);
+                await Task.Delay(0300);
                 Frame.Navigate(sourcePageType, parameter);
             });
         }

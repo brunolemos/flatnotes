@@ -2,9 +2,9 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Keep.Resources">
-    
-    <Color x:Key="AppMainColor">#FFF2B60C</Color>
-    <Color x:Key="AppMainDarkenColor">#FF403003</Color>
+
+    <Color x:Key="AppMainColor">#f2b60c</Color>
+    <Color x:Key="AppMainDarkenColor">#f39c12</Color><!--FF403003-->
     
     <Color x:Key="PhoneBackgroundColor">#FF263646</Color>
     <Color x:Key="PhoneForegroundColor">#FFFFFFFF</Color>
@@ -17,11 +17,6 @@
     <SolidColorBrush x:Key="PhoneBackgroundBrush" Color="{ThemeResource PhoneBackgroundColor}"/>
     <SolidColorBrush x:Key="FlyoutBackgroundThemeBrush" Color="{ThemeResource PhoneBackgroundColor}"/>
     <SolidColorBrush x:Key="ContentDialogBackgroundThemeBrush" Color="{ThemeResource PhoneBackgroundColor}"/>
-    
-    <SolidColorBrush x:Key="CommandBarBackgroundThemeBrush" Color="{ThemeResource AppMainColor}"/>
-    <!--<SolidColorBrush x:Key="CommandBarForegroundThemeBrush" Color="{ThemeResource AppMainDarkenColor}"/>
-    <SolidColorBrush x:Key="FocusVisualBlackStrokeThemeBrush" Color="{ThemeResource AppMainDarkenColor}" />
-    <SolidColorBrush x:Key="FocusVisualWhiteStrokeThemeBrush" Color="{ThemeResource AppMainDarkenColor}" />-->
 
     <SolidColorBrush x:Key="ApplicationForegroundThemeBrush" Color="{ThemeResource PhoneForegroundColor}"/>
     <SolidColorBrush x:Key="PhoneForegroundBrush" Color="{ThemeResource PhoneForegroundColor}"/>

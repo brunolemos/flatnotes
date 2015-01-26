@@ -129,7 +129,7 @@
     </Grid>
 
     <Page.BottomAppBar>
-        <CommandBar Background="{Binding Note.Color.DarkColor2}" RequestedTheme="Dark">
+        <CommandBar Background="{Binding Note.Color.DarkColor2}" Foreground="{StaticResource KeepNoteCommandBarForegroundThemeBrush}">
             <CommandBar.SecondaryCommands>
                 <AppBarButton x:Uid="ToggleChecklistAppBarButton"  Icon="List" Label="toggle checklist" Command="{Binding ToggleChecklistCommand}" />
                 <AppBarButton x:Uid="RestoreAppBarButton" Icon="Undo" Label="restore" Command="{Binding RestoreNoteCommand}" Visibility="{Binding IsArchived, Converter={StaticResource BooleanToVisibilityConverter}}" />

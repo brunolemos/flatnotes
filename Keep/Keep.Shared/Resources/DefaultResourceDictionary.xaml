@@ -4,11 +4,13 @@
     xmlns:local="using:Keep.Resources">
     
     <SolidColorBrush x:Key="KeepNoteForegroundBrush" Color="#C0000000"/>
-    
-    <SolidColorBrush x:Key="AppStatusBarBackgroundBrush" Color="#E59900"/>
-    <SolidColorBrush x:Key="AppStatusBarForegroundBrush" Color="#FFFFFE"/><!--403003-->
 
-    <!--<SolidColorBrush x:Key="KeepNoteCommandBarForegroundThemeBrush" Color="Black"/>-->
+    <SolidColorBrush x:Key="AppStatusBarBackgroundBrush" Color="#E59900"/>
+    <SolidColorBrush x:Key="AppStatusBarForegroundBrush" Color="#FFFFFE"/>
+
+    <SolidColorBrush x:Key="CommandBarBackgroundThemeBrush" Color="#f2b60c"/>
+    <SolidColorBrush x:Key="CommandBarForegroundThemeBrush" Color="#A0000000"/>
+    <SolidColorBrush x:Key="KeepNoteCommandBarForegroundThemeBrush" Color="White"/>
 
     <SolidColorBrush x:Key="PhoneDarkLowBrush" Color="#20000000"/>
     <SolidColorBrush x:Key="PhoneDarkMidBrush" Color="#70000000"/>
