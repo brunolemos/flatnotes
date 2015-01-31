@@ -1,7 +1,9 @@
 ﻿using Keep.Common;
 using Keep.Models;
 using Keep.Utils;
+using System;
 using System.Diagnostics;
+using Windows.Phone.Devices.Notification;
 using Windows.Phone.UI.Input;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -13,6 +15,7 @@ namespace Keep.Views
         partial void EnableReorderFeature()
         {
             navigationHelper.LoadState += NavigationHelper_LoadState1;
+            navigationHelper.SaveState += NavigationHelper_SaveState1;
 
             NotesListView.Holding += NotesListView_Holding;
             NotesListView.DragItemsStarting += NotesListView_DragItemsStarting;
@@ -25,8 +28,9 @@ namespace Keep.Views
         partial void DisableReorderFeature()
         {
             navigationHelper.LoadState -= NavigationHelper_LoadState1;
+            navigationHelper.SaveState -= NavigationHelper_SaveState1;
 
-            if(NotesListView != null)
+            if (NotesListView != null)
             {
                 NotesListView.Holding -= NotesListView_Holding;
                 NotesListView.DragItemsStarting -= NotesListView_DragItemsStarting;
@@ -44,6 +48,13 @@ namespace Keep.Views
             #endif
 
             viewModel.ReorderedNotes = false;
+        }
+
+        private void NavigationHelper_SaveState1(object sender, SaveStateEventArgs e)
+        {
+            #if WINDOWS_PHONE_APP
+            NotesListView.ReorderMode = ListViewReorderMode.Disabled;
+            #endif
         }
 
         private void OnReorderModeDisabled(object sender, System.EventArgs e)
@@ -64,8 +75,8 @@ namespace Keep.Views
         private void NotesListView_Holding(object sender, Windows.UI.Xaml.Input.HoldingRoutedEventArgs e)
         {
             #if WINDOWS_PHONE_APP
-            NotesListView.ReorderMode = ListViewReorderMode.Enabled;
-#endif
+            NotesListView.ReorderMode = NotesListView.Items.Count > 1 ? ListViewReorderMode.Enabled : ListViewReorderMode.Disabled;
+            #endif
         }
 
         private void NotesListView_DragItemsStarting(object sender, DragItemsStartingEventArgs e)
