@@ -179,17 +179,23 @@ namespace Keep
             await dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
             {
                 RootFrame.RequestedTheme = theme;
-
-                //ChangeStatusBarColor();
             });
         }
 
-        //public static void ChangeStatusBarColor(Color? foregroundColor = null)
-        //{
-//#if WINDOWS_PHONE_APP
-//            if (foregroundColor == null) foregroundColor = (App.Current.Resources["AppStatusBarForegroundBrush"] as SolidColorBrush).Color;
-//            StatusBar.GetForCurrentView().ForegroundColor = foregroundColor;
-//#endif
-        //}
+        public async void HideStatusBar()
+        {
+            //hide status bar
+            #if WINDOWS_PHONE_APP
+            await StatusBar.GetForCurrentView().HideAsync();
+            #endif
+        }
+
+        public static void ChangeStatusBarColor(Color? foregroundColor = null)
+        {
+            #if WINDOWS_PHONE_APP
+            if (foregroundColor == null) foregroundColor = (App.Current.Resources["AppStatusBarForegroundBrush"] as SolidColorBrush).Color;
+            StatusBar.GetForCurrentView().ForegroundColor = foregroundColor;
+            #endif
+        }
     }
 }

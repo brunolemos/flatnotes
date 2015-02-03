@@ -47,7 +47,7 @@ namespace Keep.Views
         {
             GoogleAnalytics.EasyTracker.GetTracker().SendView("MainPage");
 
-            //App.ChangeStatusBarColor();
+            App.ChangeStatusBarColor();
             App.RootFrame.Background = LayoutRoot.Background;
         }
 
