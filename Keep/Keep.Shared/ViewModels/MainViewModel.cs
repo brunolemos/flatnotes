@@ -54,8 +54,8 @@ namespace Keep.ViewModels
             CreateChecklistNoteCommand = new RelayCommand(CreateChecklistNote);
             OpenImagePickerCommand = new RelayCommand(OpenImagePicker);
             OpenArchivedNotesCommand = new RelayCommand(OpenArchivedNotes);
-            SendFeedbackCommand = new RelayCommand(SendFeedback);
-            SuggestFeatureOrReportBugCommand = new RelayCommand(SuggestFeatureOrReportBug);
+            SendFeedbackCommand = new RelayCommand(SettingsViewModel.SendFeedback);
+            SuggestFeatureOrReportBugCommand = new RelayCommand(SettingsViewModel.SuggestFeatureOrReportBug);
             OpenSettingsCommand = new RelayCommand(OpenSettings);
 
             AppData.NotesChanged += (s, e) => NotifyPropertyChanged("Notes");
@@ -99,28 +99,6 @@ namespace Keep.ViewModels
         private void OpenSettings()
         {
             App.RootFrame.Navigate(typeof(SettingsPage));
-        }
-
-        private async void SendFeedback()
-        {
-            GoogleAnalytics.EasyTracker.GetTracker().SendEvent("ui_action", "execute_command", "send_feedback", 0);
-            await Windows.System.Launcher.LaunchUriAsync(new Uri("ms-windows-store:reviewapp?appid=" + CurrentApp.AppId));
-        }
-
-
-        private async void SuggestFeatureOrReportBug()
-        {
-            bool isBeta = Package.Current.Id.Name.Contains("Beta");
-            string appName = isBeta ? "Flat Notes Beta" : "Flat Notes";
-
-            GoogleAnalytics.EasyTracker.GetTracker().SendEvent("ui_action", "execute_command", "suggest_feature_or_report_bug", isBeta ? 1 : 0);
-            Windows.ApplicationModel.Email.EmailMessage mail = new Windows.ApplicationModel.Email.EmailMessage();
-
-            mail.To.Add(new Windows.ApplicationModel.Email.EmailRecipient("keep@brunolemos.org"));
-            mail.Subject = String.Format("Feedback - {0} v{1}.{2}.{3}.{4}", appName, Package.Current.Id.Version.Major, Package.Current.Id.Version.Minor, Package.Current.Id.Version.Build, Package.Current.Id.Version.Revision);
-            mail.Body = ResourceLoader.GetForCurrentView().GetString("YourMessageGoesHere");
-
-             await Windows.ApplicationModel.Email.EmailManager.ShowComposeNewEmailAsync(mail);
         }
 
         #endregion

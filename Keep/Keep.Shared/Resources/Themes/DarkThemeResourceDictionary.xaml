@@ -20,10 +20,7 @@
     <SolidColorBrush x:Key="PhoneChromeBrush" Color="{ThemeResource PhoneChromeColor}"/>
     <SolidColorBrush x:Key="PhoneLowBrush" Color="{ThemeResource PhoneLowColor}"/>
 
-    <SolidColorBrush x:Key="CommandBarBackgroundThemeBrush" Color="#22303f"/>
-    <SolidColorBrush x:Key="CommandBarForegroundThemeBrush" Color="White"/>
-
     <Style x:Key="LogoImage" TargetType="Image">
-        <Setter Property="Source" Value="Assets/Dark/LogoTransparent.png"/>
+        <Setter Property="Source" Value="ms-appx:///Assets/Dark/LogoTransparent.png"/>
     </Style>
 </ResourceDictionary>

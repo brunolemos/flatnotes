@@ -25,6 +25,9 @@
     <SolidColorBrush x:Key="TextBoxPlaceholderTextThemeBrush" Color="#70000000"/>
     <SolidColorBrush x:Key="TextBoxDisabledForegroundThemeBrush" Color="#70000000"/>
     <SolidColorBrush x:Key="TextBlockDisabledForegroundThemeBrush" Color="#70000000"/>
+
+    <SolidColorBrush x:Key="CommandBarBackgroundThemeBrush" Color="{ThemeResource AppMainColor}"/>
+    <SolidColorBrush x:Key="CommandBarForegroundThemeBrush" Color="White"/>
     
     <Style TargetType="TextBlock">
         <Setter Property="FontSize" Value="16"/>
