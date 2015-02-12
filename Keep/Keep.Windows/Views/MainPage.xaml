@@ -1,0 +1,86 @@
+﻿<Page
+    x:Class="Keep.Views.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Keep.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:Controls="using:Keep.Controls"
+    xmlns:Converters="using:Keep.Converters"
+    xmlns:Tiles="using:Keep.Controls.Tiles"
+    mc:Ignorable="d"
+    NavigationCacheMode="Required"
+    Background="{ThemeResource AppStatusBarBackgroundBrush}"
+    DataContext="{Binding Source={StaticResource MainViewModel}}"
+    d:DataContext="{d:DesignData /SampleData/MainViewModelSampleData.xaml}">
+
+    <Page.Transitions>
+        <TransitionCollection>
+            <EntranceThemeTransition/>
+        </TransitionCollection>
+    </Page.Transitions>
+
+    <Page.BottomAppBar>
+        <CommandBar>
+            <CommandBar.SecondaryCommands>
+                <AppBarButton x:Uid="ArchivedNotesAppBarButton" Icon="SaveLocal" Label="archived notes" Command="{Binding OpenArchivedNotesCommand}"/>
+                <AppBarButton x:Uid="FeedbackAppBarButton" Icon="Like" Label="send a nice feedback" Command="{Binding SendFeedbackCommand}"/>
+                <AppBarButton x:Uid="RequestFeatureOrReportBugAppBarButton" Icon="Mail" Label="request feature / report bug" Command="{Binding SuggestFeatureOrReportBugCommand}"/>
+                <AppBarButton x:Uid="SettingsAppBarButton" Icon="Setting" Label="settings" Command="{Binding OpenSettingsCommand}"/>
+            </CommandBar.SecondaryCommands>
+
+            <AppBarButton x:Uid="NoteTextType" Label="text" Command="{Binding CreateTextNoteCommand}">
+                <AppBarButton.Icon>
+                    <BitmapIcon UriSource="ms-appx:///Assets/appbar.text.sans.png"/>
+                </AppBarButton.Icon>
+            </AppBarButton>
+
+            <AppBarButton x:Uid="NoteChecklistType" Label="checklist" Command="{Binding CreateChecklistNoteCommand}">
+                <AppBarButton.Icon>
+                    <BitmapIcon UriSource="ms-appx:///Assets/appbar.list.png"/>
+                </AppBarButton.Icon>
+            </AppBarButton>
+            
+            <AppBarButton x:Uid="PhotoAppBarButton" Icon="Camera" Label="photo" Command="{Binding OpenImagePickerCommand}"/>
+            <!--<AppBarButton x:Uid="AudioAppBarButton" Icon="Microphone" Label="audio" IsEnabled="False"/>-->
+        </CommandBar>
+    </Page.BottomAppBar>
+
+    <Page.Resources>
+        <Converters:PositiveIntToVisibilityConverter x:Key="PositiveIntToVisibilityConverter"/>
+        
+        <DataTemplate x:Key="NotePreviewListViewControlTemplate">
+            <Controls:NotePreview Tapped="OnNoteTapped" Loaded="OnNoteLoaded" Unloaded="OnNoteUnloaded"/>
+        </DataTemplate>
+
+        <ItemsPanelTemplate x:Key="FluidItemsPanelTemplate" x:Name="FluidItemsPanelTemplate">
+            <Controls:FluidGrid x:Name="NotesFluidGrid" Margin="14" ItemMinWidth="150" Columns="{Binding Columns, Mode=OneWay, TargetNullValue=2, FallbackValue=2}"/>
+        </ItemsPanelTemplate>
+    </Page.Resources>
+
+    <Grid x:Name="LayoutRoot">
+        <Grid x:Name="HiddenContent">
+            <Tiles:SquareTile x:Name="SquareTileUserControl" HorizontalAlignment="Center" VerticalAlignment="Top" Background="Transparent" Opacity="0"/>
+            <Tiles:WideTile x:Name="WideTileUserControl" HorizontalAlignment="Center" VerticalAlignment="Top" Background="Transparent" Opacity="0"/>
+        </Grid>
+        
+        <Grid x:Name="ContentRoot" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+            <Grid Visibility="{Binding Notes.Count, Converter={StaticResource PositiveIntToVisibilityConverter}, ConverterParameter=True}">
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Viewbox Width="180">
+                        <Canvas Width="100" Height="100" HorizontalAlignment="Center">
+                            <Rectangle Fill="{ThemeResource PhoneLowBrush}" Width="100" Height="70" StrokeThickness="0"/>
+                            <Rectangle Fill="{ThemeResource PhoneLowBrush}" Width="70" Height="30" StrokeThickness="0" Margin="0,70,0,0"/>
+                            <Polygon Fill="{ThemeResource PhoneLowBrush}" Points="0,0 30,0, 0,30" StrokeThickness="0" Margin="70,70,0,0" />
+                            <Polygon Fill="#10000000" Points="0,0 30,0, 0,30" StrokeThickness="0" Margin="70,70,0,0" />
+                        </Canvas>
+                    </Viewbox>
+                    
+                    <TextBlock x:Uid="EmptyNotesMessageTextBox" Margin="10,24" Text="Notes you add appear here" Foreground="{ThemeResource PhoneMidBrush}" FontSize="{StaticResource TextStyleExtraLargeFontSize}" TextWrapping="Wrap" TextAlignment="Center"/>
+                </StackPanel>
+            </Grid>
+            
+            <ListView x:Name="NotesListView" ItemsSource="{Binding Notes, Mode=OneWay}" ItemsPanel="{StaticResource FluidItemsPanelTemplate}" ItemTemplate="{StaticResource NotePreviewListViewControlTemplate}" ScrollViewer.VerticalScrollMode="Enabled" VerticalAlignment="Stretch" CanDragItems="True" ReorderMode="{Binding ReorderMode, Mode=TwoWay}"/>
+        </Grid>
+    </Grid>
+</Page>

@@ -15,20 +15,20 @@ namespace Keep
 {
     public sealed partial class SplashPage : Page
     {
-        object navigationParameter;
+        object parameter;
 
         public SplashPage()
         {
-            InitializeComponent();
+            this.InitializeComponent();
 
-            Loaded += SplashPage_Loaded;
-            SplashScreenImage.ImageOpened += (s, e) => { Window.Current.Activate(); };
-            SplashScreenImage.ImageFailed += (s, e) => { Window.Current.Activate(); };
+            this.Loaded += SplashPage_Loaded;
+            this.SplashScreenImage.ImageOpened += (s, e) => { Window.Current.Activate(); };
+            this.SplashScreenImage.ImageFailed += (s, e) => { Window.Current.Activate(); };
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            navigationParameter = e.Parameter;
+            parameter = e.Parameter;
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
@@ -39,12 +39,12 @@ namespace Keep
 
         private async void NavigateAsync(Type sourcePageType, object parameter = null)
         {
+            Window.Current.Activate();
+
             CoreDispatcher dispatcher = CoreWindow.GetForCurrentThread().Dispatcher;
             await dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
             {
-                await Task.Delay(0300);
-
-                Window.Current.Activate();
+                await Task.Delay(0200);
                 Frame.Navigate(sourcePageType, parameter);
             });
         }
@@ -62,7 +62,20 @@ namespace Keep
             //load archived notes
             AppData.ArchivedNotes = await AppSettings.Instance.LoadArchivedNotes();
 
-            NavigateAsync(typeof(MainPage), navigationParameter);
+            //received a note via parameter (from secondary tile)
+            if (parameter != null && !String.IsNullOrEmpty(parameter.ToString()))
+            {
+                var note = AppData.Notes.FirstOrDefault(n => n.ID == parameter.ToString());
+                if (note == null) note = AppData.ArchivedNotes.FirstOrDefault(n => n.ID == parameter.ToString());
+
+                if (note != null)
+                {
+                    NavigateAsync(typeof(NoteEditPage), note);
+                    return;
+                }
+            }
+
+            NavigateAsync(typeof(MainPage), parameter);
         }
     }
 }
