@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Keep.Events;
+using Keep.Models;
+using System;
 using System.ComponentModel;
-using System.Diagnostics;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-
-using Keep.Events;
-using Keep.Models;
 
 namespace Keep.Controls
 {

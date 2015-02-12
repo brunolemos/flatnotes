@@ -9,7 +9,7 @@
     xmlns:Converters="using:Keep.Converters"
     mc:Ignorable="d"
     NavigationCacheMode="Required"
-    Background="DarkGray"
+    Background="#313131"
     DataContext="{Binding Source={StaticResource ArchivedNotesiewModel}}"
     d:DataContext="{d:DesignData /SampleData/MainViewModelSampleData.xaml}">
 

@@ -4,17 +4,19 @@ using Keep.Utils;
 using Keep.ViewModels;
 using System;
 using System.Diagnostics;
+using System.Threading.Tasks;
+using Windows.ApplicationModel.Activation;
+using Windows.ApplicationModel.Resources;
+using Windows.Foundation;
+using Windows.Storage;
 using Windows.UI;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using Windows.ApplicationModel.Activation;
-using Windows.Foundation;
-using Windows.Storage;
-using Windows.UI.Popups;
-using Windows.UI.Xaml.Controls.Primitives;
 
 namespace Keep.Views
 {
@@ -43,6 +45,27 @@ namespace Keep.Views
             NoteColorPicker.Opened += (s, _e) => { ColorPickerAppBarToggleButton.IsChecked = true; };
             NoteColorPicker.Closed += (s, _e) => { ColorPickerAppBarToggleButton.IsChecked = false; };
             NoteColorPicker.NoteColorChanged += (s, _e) => { viewModel.Note.Color = _e.NoteColor; };
+
+            this.Loaded += (s, _e) => App.ChangeStatusBarColor(Colors.Black);
+            viewModel.PropertyChanged += OnPropertyChanged;
+        }
+
+        private void OnPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if(e.PropertyName == "Note" || e.PropertyName == "IsPinned")
+            {
+                if(viewModel.IsPinned)
+                {
+                    TogglePinAppBarButton.Icon = new SymbolIcon(Symbol.UnPin);
+                    TogglePinAppBarButton.Command = viewModel.UnpinCommand;
+                    TogglePinAppBarButton.Label = ResourceLoader.GetForCurrentView().GetString("Unpin");
+                } else
+                {
+                    TogglePinAppBarButton.Icon = new SymbolIcon(Symbol.Pin);
+                    TogglePinAppBarButton.Command = viewModel.PinCommand;
+                    TogglePinAppBarButton.Label = ResourceLoader.GetForCurrentView().GetString("Pin");
+                }
+            }
         }
 
         partial void EnableSwipeFeature(FrameworkElement element, FrameworkElement referenceFrame);
@@ -51,8 +74,6 @@ namespace Keep.Views
         private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
             GoogleAnalytics.EasyTracker.GetTracker().SendView("NoteEditPage");
-
-            //App.ChangeStatusBarColor(Colors.Black);
 
             if (e.NavigationParameter is Note)
                 viewModel.Note = e.NavigationParameter as Note;
@@ -86,14 +107,19 @@ namespace Keep.Views
             //trim
             viewModel.Note.Trim();
 
-            //save
-            if (viewModel.Note.Changed)
+            //update tile
+            if (viewModel.Note.Changed) TileManager.UpdateNoteTileIfExists(viewModel.Note);
+
+            //save or remove if empty
+            if (viewModel.Note.Changed || viewModel.Note.IsEmpty())
                 await AppData.CreateOrUpdateNote(viewModel.Note);
 
             //checklist changed (fix cache problem with converter)
             if (checklistChanged) viewModel.Note.NotifyChanges();
 
-            viewModel.Note = null;
+            //await Task.Delay(0300);
+            //viewModel.Note = null;
+            NoteEditViewModel.CurrentNoteBeingEdited = null;
         }
 
         #region NavigationHelper registration

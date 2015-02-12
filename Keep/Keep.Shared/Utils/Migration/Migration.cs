@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
-using Windows.Foundation;
 using Windows.Storage;
 
 namespace Keep.Utils.Migration
@@ -30,7 +28,7 @@ namespace Keep.Utils.Migration
                 {
                     //fix current version (because v1 was not especified before)
                     uint currentVersion = setVersionRequest.CurrentVersion;
-                    if (currentVersion == 0 && Versions.v1.AppSettings.Instance.LoggedUser != Versions.v1.AppSettings.Instance.LOGGEDUSER_DEFAULT)
+                    if (currentVersion == 0 && Versions.v1.AppSettings.Instance.LoggedUser.Notes.Count > 0)
                         currentVersion = 1;
 
                     //no data to migrate or already in the desired version, do nothing

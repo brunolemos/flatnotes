@@ -15,10 +15,6 @@ namespace Keep.Models
         public bool Changed { get { return changed; } set { if (changed != value) { changed = value; NotifyPropertyChanged("Changed"); } } }
         private bool changed = false;
 
-        //public bool IsPinned { get { isPinned = SecondaryTile.Exists(this.ID); return isPinned; } set { if (isPinned != value) { isPinned = value; NotifyPropertyChanged("IsPinned"); } } }
-        //private bool isPinned { get { return isPinned_value; } set { if (isPinned_value != value) { isPinned_value = value; NotifyPropertyChanged("IsPinned"); } } }
-        //private bool isPinned_value;
-
         public string ID { get { return id; } private set { id = value; } }
         [DataMember(Name = "_id")]
         private string id = Guid.NewGuid().ToString();
@@ -30,13 +26,13 @@ namespace Keep.Models
         [IgnoreDataMember]
         public bool IsText { get { return !IsChecklist; } }
 
-        public String Title { get { return title; } set { if (title != value) { title = value; NotifyPropertyChanged("Title"); } } }
+        public string Title { get { return title; } set { if (title != value) { title = value; NotifyPropertyChanged("Title"); } } }
         [DataMember(Name = "Title")]
-        private String title;
+        private string title;
 
-        public String Text { get { return text; } set { if (text != value) { text = value; NotifyPropertyChanged("Text"); } } }
+        public string Text { get { return text; } set { if (text != value) { text = value; NotifyPropertyChanged("Text"); } } }
         [DataMember(Name = "Text")]
-        private String text;
+        private string text;
 
         public NoteImages Images { get { return images; } set { images = value; NotifyPropertyChanged("Images"); } }
         [DataMember(Name = "Images")]
@@ -113,7 +109,7 @@ namespace Keep.Models
 
         void Note_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            if (String.IsNullOrEmpty(e.PropertyName) || e.PropertyName == "Changed") return;
+            if (string.IsNullOrEmpty(e.PropertyName) || e.PropertyName == "Changed") return;
             Changed = true;
 
             Debug.WriteLine("Note_PropertyChanged " + e.PropertyName);
@@ -169,30 +165,30 @@ namespace Keep.Models
 
         public bool IsEmpty()
         {
-            return String.IsNullOrEmpty(Title) && ((!IsChecklist && String.IsNullOrEmpty(Text)) || (IsChecklist && Checklist.Count <= 0)) && Images.Count <= 0;
+            return string.IsNullOrEmpty(Title) && ((!IsChecklist && string.IsNullOrEmpty(Text)) || (IsChecklist && Checklist.Count <= 0)) && Images.Count <= 0;
         }
 
-        public String GetContent()
+        public string GetContent()
         {
             return IsChecklist ? GetTextFromChecklist() : Text;
         }
 
         public void Trim()
         {
-            if (!String.IsNullOrEmpty(Title)) Title = title.Trim();
-            if (!String.IsNullOrEmpty(Text)) Text = text.Trim();
+            if (!string.IsNullOrEmpty(Title)) Title = title.Trim();
+            if (!string.IsNullOrEmpty(Text)) Text = text.Trim();
 
             if (IsChecklist && Checklist != null)
                 for (int i = Checklist.Count - 1; i >= 0; i--)
                 {
-                    if (!String.IsNullOrEmpty(Checklist[i].Text)) Checklist[i].text = Checklist[i].text.Trim();
+                    if (!string.IsNullOrEmpty(Checklist[i].Text)) Checklist[i].text = Checklist[i].text.Trim();
 
-                    if (String.IsNullOrEmpty(Checklist[i].Text))
+                    if (string.IsNullOrEmpty(Checklist[i].Text))
                         Checklist.RemoveAt(i);
                 }
         }
 
-        protected String GetTextFromChecklist()
+        protected string GetTextFromChecklist()
         {
             string txt = "";
 

@@ -21,8 +21,6 @@ namespace Keep.ViewModels
         public RelayCommand CreateChecklistNoteCommand { get; private set; }
         public RelayCommand OpenImagePickerCommand { get; private set; }
         public RelayCommand OpenArchivedNotesCommand { get; private set; }
-        public RelayCommand SendFeedbackCommand { get; private set; }
-        public RelayCommand SuggestFeatureOrReportBugCommand { get; private set; }
         public RelayCommand OpenSettingsCommand { get; private set; }
 
         public Notes Notes { get { return notes; } private set { notes = value; NotifyPropertyChanged("Notes"); } }
@@ -46,21 +44,19 @@ namespace Keep.ViewModels
 
         public int Columns { get { return AppSettings.Instance.Columns; } internal set { AppSettings.Instance.Columns = value; } }
 
-        #region COMMANDS_ACTIONS
-
         public MainViewModel()
         {
             CreateTextNoteCommand = new RelayCommand(CreateTextNote);
             CreateChecklistNoteCommand = new RelayCommand(CreateChecklistNote);
             OpenImagePickerCommand = new RelayCommand(OpenImagePicker);
             OpenArchivedNotesCommand = new RelayCommand(OpenArchivedNotes);
-            SendFeedbackCommand = new RelayCommand(SettingsViewModel.SendFeedback);
-            SuggestFeatureOrReportBugCommand = new RelayCommand(SettingsViewModel.SuggestFeatureOrReportBug);
             OpenSettingsCommand = new RelayCommand(OpenSettings);
 
             AppData.NotesChanged += (s, e) => NotifyPropertyChanged("Notes");
             AppSettings.Instance.ColumnsChanged += (s, e) => NotifyPropertyChanged("Columns");
         }
+
+        #region COMMANDS_ACTIONS
 
         private void CreateTextNote()
         {

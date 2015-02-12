@@ -19,6 +19,8 @@ namespace Keep.Utils
         public static event EventHandler<NoteEventArgs> NoteRemoved;
 
         public static Stopwatch Watch = new Stopwatch();
+        public static bool HasUnsavedChangesOnNotes;
+        public static bool HasUnsavedChangesOnArchivedNotes;
 
         public static Notes Notes
         {
@@ -59,13 +61,19 @@ namespace Keep.Utils
         public static async Task<bool> SaveNotes()
         {
             Debug.WriteLine("Save notes");
-            return await AppSettings.Instance.SaveNotes(Notes);
+            var success = await AppSettings.Instance.SaveNotes(Notes);
+
+            if (success) HasUnsavedChangesOnNotes = false;
+            return success;
         }
 
         public static async Task<bool> SaveArchivedNotes()
         {
             Debug.WriteLine("Save archived notes");
-            return await AppSettings.Instance.SaveArchivedNotes(ArchivedNotes);
+            var success = await AppSettings.Instance.SaveArchivedNotes(ArchivedNotes);
+
+            if (success) HasUnsavedChangesOnArchivedNotes = false;
+            return success;
         }
 
         public static async Task<bool> CreateOrUpdateNote(Note note)
@@ -126,8 +134,7 @@ namespace Keep.Utils
             bool noteAlreadyArchived = ArchivedNotes.Where<Note>(x => x.ID == note.ID).FirstOrDefault<Note>() != null;
             if (noteAlreadyArchived) return true;
 
-            //note.ArchivedAt = DateTime.UtcNow;
-
+            note.ArchivedAt = DateTime.UtcNow;
             ArchivedNotes.Insert(0, note);
 
             bool success = await SaveArchivedNotes();
@@ -182,8 +189,11 @@ namespace Keep.Utils
 
             if (!success) return false;
 
-            var handler = NoteRemoved;
-            if (handler != null) handler(null, new NoteEventArgs(note));
+            if (!isArchiving)
+            {
+                var handler = NoteRemoved;
+                if (handler != null) handler(null, new NoteEventArgs(note));
+            }
 
             return true;
         }
@@ -205,8 +215,11 @@ namespace Keep.Utils
 
             if (!success) return false;
 
-            var handler = NoteRemoved;
-            if (handler != null) handler(null, new NoteEventArgs(note));
+            if(!isRestoring)
+            {
+                var handler = NoteRemoved;
+                if (handler != null) handler(null, new NoteEventArgs(note));
+            }
 
             return true;
         }

@@ -15,11 +15,14 @@ namespace Keep.Utils
     {
         public static readonly AppSettings Instance = new AppSettings();
 
+        public event EventHandler NotesSaved;
+        public event EventHandler ArchivedNotesSaved;
         public event EventHandler<ThemeEventArgs> ThemeChanged;
-        public event EventHandler ColumnsChanged;
+        public event EventHandler<ColumnsEventArgs> ColumnsChanged;
+        public event EventHandler<TransparentTileEventArgs> TransparentTileChanged;
 
-        public override uint Version { get { return version; } }
-        private static uint version = 2;
+        public override uint Version { get { return VERSION; } }
+        private const uint VERSION = 2;
 
         public StorageFolder ImagesFolder { get; private set; }
         private const string IMAGES_FOLDER_NAME = "Images";
@@ -31,10 +34,15 @@ namespace Keep.Utils
         private static Notes ARCHIVED_NOTES_DEFAULT = new Notes();
 
         private const string THEME_KEY = "THEME";
-        private static ElementTheme THEME_DEFAULT = ElementTheme.Dark;
+        private const ElementTheme THEME_DEFAULT = ElementTheme.Light;
 
         private const string COLUMNS_KEY = "COLUMNS";
-        private static int COLUMNS_DEFAULT = 2;
+        private const int COLUMNS_DEFAULT = 1;
+
+        private const string TRANSPARENT_TILE_KEY = "TRANSPARENT_TILE";
+        private const bool TRANSPARENT_TILE_DEFAULT = false;
+
+        private const string FIXED_THEME_BUG_KEY = "FIXED_THEME_BUG";
 
         private AppSettings()
         {
@@ -45,11 +53,15 @@ namespace Keep.Utils
         {
             if (DesignMode.DesignModeEnabled) return;
             ImagesFolder = await localFolder.CreateFolderAsync(IMAGES_FOLDER_NAME, CreationCollisionOption.OpenIfExists);
+
+            //fix theme bug
+            if (localSettings.Values[THEME_KEY] == null || localSettings.Values[THEME_KEY].ToString().Length > 1 || localSettings.Values[THEME_KEY].ToString() == "0")
+                Theme = THEME_DEFAULT;
         }
 
         public override void Up()
         {
-            if (Migration.Versions.v1.AppSettings.Instance.LoggedUser == Migration.Versions.v1.AppSettings.Instance.LOGGEDUSER_DEFAULT)
+            if (Migration.Versions.v1.AppSettings.Instance.LoggedUser.Notes.Count <= 0)
                 return;
 
             //import notes
@@ -68,10 +80,10 @@ namespace Keep.Utils
                 await SaveArchivedNotes(archivedNotes);
 
                 if (success) localSettings.Values.Clear();
-            }).Wait();
 
-            Theme = Migration.Versions.v1.AppSettings.Instance.LoggedUser.Preferences.Theme;
-            Columns = Migration.Versions.v1.AppSettings.Instance.LoggedUser.Preferences.Columns;
+                Theme = Migration.Versions.v1.AppSettings.Instance.LoggedUser.Preferences.Theme;
+                Columns = Migration.Versions.v1.AppSettings.Instance.LoggedUser.Preferences.Columns;
+            }).Wait();
         }
 
         public override void Down()
@@ -88,14 +100,15 @@ namespace Keep.Utils
         public ElementTheme Theme
         {
             get { return GetValueOrDefault(THEME_KEY, THEME_DEFAULT); }
-            set {
+            set
+            {
                 if (value != ElementTheme.Light && value != ElementTheme.Dark) value = THEME_DEFAULT;
 
                 if (SetValue<ElementTheme>(THEME_KEY, value)) {
                     var handler = ThemeChanged;
                     if (handler != null) handler(this, new ThemeEventArgs(value));
 
-                    GoogleAnalytics.EasyTracker.GetTracker().SetCustomDimension(1, AppSettings.Instance.Theme.ToString());
+                    GoogleAnalytics.EasyTracker.GetTracker().SetCustomDimension(1, value.ToString());
                 }
             }
         }
@@ -105,21 +118,57 @@ namespace Keep.Utils
             get { return GetValueOrDefault(COLUMNS_KEY, COLUMNS_DEFAULT); }
             set
             {
+                if (!(value >= 1 && value <= 4)) value = COLUMNS_DEFAULT;
+
                 if (SetValue<int>(COLUMNS_KEY, value))
                 {
                     var handler = ColumnsChanged;
-                    if (handler != null) handler(this, EventArgs.Empty);
+                    if (handler != null) handler(this, new ColumnsEventArgs(value));
 
-                    GoogleAnalytics.EasyTracker.GetTracker().SetCustomDimension(2, AppSettings.Instance.Columns.ToString());
+                    GoogleAnalytics.EasyTracker.GetTracker().SetCustomDimension(2, value.ToString());
+                }
+            }
+        }
+
+        public bool TransparentTile
+        {
+            get { return GetValueOrDefault(TRANSPARENT_TILE_KEY, TRANSPARENT_TILE_DEFAULT); }
+            set
+            {
+                if (SetValue<bool>(TRANSPARENT_TILE_KEY, value))
+                {
+                    var handler = TransparentTileChanged;
+                    if (handler != null) handler(this, new TransparentTileEventArgs(value));
                 }
             }
         }
 
         public async Task<Notes> LoadNotes() { return await ReadFileOrDefault(NOTES_FILENAME, NOTES_DEFAULT); }
-        public async Task<bool> SaveNotes(Notes notes) { return await SaveFile(NOTES_FILENAME, notes); }
+        public async Task<bool> SaveNotes(Notes notes) {
+            var success = await SaveFile(NOTES_FILENAME, notes);
+
+            if(success)
+            {
+                var handler = NotesSaved;
+                if (handler != null) handler(this, EventArgs.Empty);
+            }
+
+            return success;
+        }
 
         public async Task<Notes> LoadArchivedNotes() { return await ReadFileOrDefault(ARCHIVED_NOTES_FILENAME, ARCHIVED_NOTES_DEFAULT); }
-        public async Task<bool> SaveArchivedNotes(Notes notes) { return await SaveFile(ARCHIVED_NOTES_FILENAME, notes); }
+        public async Task<bool> SaveArchivedNotes(Notes notes)
+        {
+            var success = await SaveFile(ARCHIVED_NOTES_FILENAME, notes);
+
+            if (success)
+            {
+                var handler = ArchivedNotesSaved;
+                if (handler != null) handler(this, EventArgs.Empty);
+            }
+
+            return success;
+        }
 
         public async Task<StorageFile> SaveImage(StorageFile file, string noteId, string noteImageId)
         {

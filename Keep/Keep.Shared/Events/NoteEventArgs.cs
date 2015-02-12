@@ -10,8 +10,8 @@ namespace Keep.Events
 
         public NoteEventArgs(Note note)
         {
-            this.Note = note;
-            this.Handled = false;
+            Note = note;
+            Handled = false;
         }
     }
 }

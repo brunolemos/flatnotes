@@ -2,15 +2,14 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     
-    <Color x:Key="AppMainColor">#009998</Color><!--f2b60c-->
-    <Color x:Key="PhoneAccentColor">#009998</Color>
+    <Color x:Key="AppMainColor">#ffbb00</Color><!--009998 / f2b60-->
+    <Color x:Key="PhoneAccentColor">#ffbb00</Color>
     
     <SolidColorBrush x:Key="AppMainBrush" Color="{ThemeResource AppMainColor}"/>
     <SolidColorBrush x:Key="PhoneAccentBrush" Color="{ThemeResource AppMainColor}"/>
 
     <SolidColorBrush x:Key="AppSplashScreenBrush" Color="{ThemeResource AppMainColor}"/>
-    <SolidColorBrush x:Key="AppStatusBarBackgroundBrush" Color="{ThemeResource AppMainColor}"/>
-    <SolidColorBrush x:Key="AppStatusBarForegroundBrush" Color="#FFFFFE"/>
+    <SolidColorBrush x:Key="ProgressBarIndeterminateForegroundThemeBrush" Color="{ThemeResource AppMainColor}"/>
 
     <SolidColorBrush x:Key="ToggleSwitchCurtainBackgroundThemeBrush" Color="{ThemeResource AppMainColor}"/>
     <SolidColorBrush x:Key="SliderTrackDecreaseBackgroundThemeBrush" Color="{ThemeResource AppMainColor}"/>
@@ -19,7 +18,7 @@
     <SolidColorBrush x:Key="PhoneDarkMidBrush" Color="#70000000"/>
 
     <SolidColorBrush x:Key="KeepNoteForegroundBrush" Color="#C0000000"/>
-    <SolidColorBrush x:Key="KeepNoteCommandBarForegroundThemeBrush" Color="White"/>
+    <SolidColorBrush x:Key="KeepNoteCommandBarForegroundThemeBrush" Color="Black"/>
             
     <SolidColorBrush x:Key="TextBoxFocusedBackgroundThemeBrush" Color="Transparent"/>
     <SolidColorBrush x:Key="TextBoxPlaceholderTextThemeBrush" Color="#70000000"/>
@@ -27,7 +26,7 @@
     <SolidColorBrush x:Key="TextBlockDisabledForegroundThemeBrush" Color="#70000000"/>
 
     <SolidColorBrush x:Key="CommandBarBackgroundThemeBrush" Color="{ThemeResource AppMainColor}"/>
-    <SolidColorBrush x:Key="CommandBarForegroundThemeBrush" Color="White"/>
+    <SolidColorBrush x:Key="CommandBarForegroundThemeBrush" Color="#402f00"/><!--White/99000000-->
     
     <Style TargetType="TextBlock">
         <Setter Property="FontSize" Value="16"/>

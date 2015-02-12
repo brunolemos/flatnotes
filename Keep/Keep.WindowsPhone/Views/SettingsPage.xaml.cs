@@ -24,15 +24,11 @@ namespace Keep
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
-
-            AppSettings.Instance.ThemeChanged += FixComboBoxTheme;
         }
 
         private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
             GoogleAnalytics.EasyTracker.GetTracker().SendView("SettingsPage");
-
-            //App.ChangeStatusBarColor();
         }
 
         private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
@@ -53,17 +49,12 @@ namespace Keep
 
         #endregion
 
-        private void FixComboBoxTheme(object sender, Events.ThemeEventArgs e)
-        {
-            if (e.Theme == ElementTheme.Light)
-            {
-                ThemeComboBox.BorderBrush = new SolidColorBrush(Color.FromArgb(0xC0, 0x00, 0x00, 0x00));
-                ThemeComboBox.Foreground = new SolidColorBrush(Color.FromArgb(0xC0, 0x00, 0x00, 0x00));
-            } else
-            {
-                ThemeComboBox.BorderBrush = new SolidColorBrush(Colors.White);
-                ThemeComboBox.Foreground = new SolidColorBrush(Colors.White);
-            }
-        }
+        //private void Pivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //{
+        //    if ((e.AddedItems[0] as PivotItem).Tag.ToString() == "about")
+        //        CommandBar.ClosedDisplayMode = AppBarClosedDisplayMode.Compact;
+        //    else
+        //        CommandBar.ClosedDisplayMode = AppBarClosedDisplayMode.Minimal;
+        //}
     }
 }

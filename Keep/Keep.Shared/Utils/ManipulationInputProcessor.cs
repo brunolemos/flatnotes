@@ -48,6 +48,7 @@ namespace Keep.Utils
             this.element.PointerCanceled += OnPointerCanceled;
             //this.element.PointerPressed += OnPointerPressed;
             this.element.PointerReleased += OnPointerReleased;
+            this.element.PointerCaptureLost += OnPointerCaptureLost;
             this.element.PointerMoved += OnPointerMoved;
 
             // Set up event handlers to respond to gesture recognizer output
@@ -84,6 +85,7 @@ namespace Keep.Utils
                 this.element.PointerCanceled -= OnPointerCanceled;
                 //this.element.PointerPressed -= OnPointerPressed;
                 this.element.PointerReleased -= OnPointerReleased;
+                this.element.PointerCaptureLost -= OnPointerCaptureLost;
                 this.element.PointerMoved -= OnPointerMoved;
             }
 
@@ -96,52 +98,67 @@ namespace Keep.Utils
             }
         }
 
-        void OnPointerPressed(object sender, PointerRoutedEventArgs args)
+        void OnPointerPressed(object sender, PointerRoutedEventArgs e)
         {
-            Debug.WriteLine("OnPointerPressed");
             // Route the events to the gesture recognizer
             // The points are in the reference frame of the canvas that contains the rectangle element.
-            this.gestureRecognizer.ProcessDownEvent(args.GetCurrentPoint(this.reference));
+            this.gestureRecognizer.ProcessDownEvent(e.GetCurrentPoint(this.reference));
 
             // Set the pointer capture to the element being interacted with
-            this.element.CapturePointer(args.Pointer);
+            this.element.CapturePointer(e.Pointer);
             wasPointerPressedCalled = true;
 
             // Mark the event handled to prevent execution of default handlers
-            args.Handled = true;
+            e.Handled = true;
         }
 
-        void OnPointerReleased(object sender, PointerRoutedEventArgs args)
+        void OnPointerReleased(object sender, PointerRoutedEventArgs e)
         {
-            this.gestureRecognizer.ProcessUpEvent(args.GetCurrentPoint(this.reference));
-            args.Handled = true;
+            this.gestureRecognizer.ProcessUpEvent(e.GetCurrentPoint(this.reference));
+            e.Handled = true;
 
             pointerMovedCount = 0;
             wasPointerPressedCalled = false;
         }
 
-        void OnPointerCanceled(object sender, PointerRoutedEventArgs args)
+        void OnPointerCanceled(object sender, PointerRoutedEventArgs e)
         {
             this.gestureRecognizer.CompleteGesture();
-            args.Handled = true;
+            e.Handled = true;
 
             pointerMovedCount = 0;
             wasPointerPressedCalled = false;
+
+            ResetPosition();
         }
 
-        void OnPointerMoved(object sender, PointerRoutedEventArgs args)
+        void OnPointerCaptureLost(object sender, PointerRoutedEventArgs e)
         {
-            args.Handled = true;
+            e.Handled = true;
+            if (!e.Pointer.IsInContact) return;
+
+            this.gestureRecognizer.CompleteGesture();
+
+            pointerMovedCount = 0;
+            wasPointerPressedCalled = false;
+
+            ResetPosition();
+        }
+
+        void OnPointerMoved(object sender, PointerRoutedEventArgs e)
+        {
+            e.Handled = true;
 
             //workarround to enable tap events / focus on textbox / ...
             if (pointerMovedCount <= 2) pointerMovedCount++;
-            if (pointerMovedCount == 2 && !wasPointerPressedCalled) { OnPointerPressed(sender, args); return; }
+            if (pointerMovedCount == 2 && !wasPointerPressedCalled) { OnPointerPressed(sender, e); return; }
 
-            this.gestureRecognizer.ProcessMoveEvents(args.GetIntermediatePoints(this.reference));
+            this.gestureRecognizer.ProcessMoveEvents(e.GetIntermediatePoints(this.reference));
         }
 
         public void InitializeTransforms()
         {
+            Debug.WriteLine("InitializeTransforms");
             this.cumulativeTransform = new TransformGroup();
             this.deltaTransform = new CompositeTransform();
             this.previousTransform = new MatrixTransform() { Matrix = Matrix.Identity };
@@ -167,8 +184,8 @@ namespace Keep.Utils
 
             this.deltaTransform.TranslateX = e.Delta.Translation.X;
 
-            double newOpacity = Math.Round(100 - 100 * Math.Abs(e.Cumulative.Translation.X) / (containerSize.Width * 0.8)) / 100;
-            if (newOpacity <= minOpacity && !gestureRecognizer.IsInertial) newOpacity = minOpacity;
+            double newOpacity = Math.Round(100 - 100 * Math.Abs(e.Cumulative.Translation.X) / (containerSize.Width * 0.6)) / 100;
+            if (double.IsNaN(newOpacity) || (newOpacity <= minOpacity && !gestureRecognizer.IsInertial)) newOpacity = minOpacity;
             element.Opacity = newOpacity;
 
             if (newOpacity <= 0 && gestureRecognizer.IsInertial) this.gestureRecognizer.CompleteGesture();
@@ -176,6 +193,7 @@ namespace Keep.Utils
 
         void OnManipulationCompleted(object sender, ManipulationCompletedEventArgs e)
         {
+            Debug.WriteLine("OnManipulationCompleted");
             if (element.Opacity <= minOpacity)
             {
                 Disable();

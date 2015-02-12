@@ -126,11 +126,11 @@
   <data name="ColorAppBarButton.Label" xml:space="preserve">
     <value>cor</value>
   </data>
-  <data name="ColumnsTextBlock.Text" xml:space="preserve">
-    <value>Colunas</value>
+  <data name="ColumnsSlider.Header" xml:space="preserve">
+    <value>colunas</value>
   </data>
   <data name="CreatedTextBox.Text" xml:space="preserve">
-    <value>Criado</value>
+    <value>criado</value>
   </data>
   <data name="DeleteAppBarButton.Label" xml:space="preserve">
     <value>deletar</value>
@@ -148,7 +148,7 @@
     <value>Novo item</value>
   </data>
   <data name="NoGoogleKeepIntegrationMessageTextBox.Text" xml:space="preserve">
-    <value>Este app não sincroniza com o Google Keep porque, infelizmente, não é possível</value>
+    <value>este app não sincroniza com o Google Keep porque, infelizmente, não é possível</value>
   </data>
   <data name="NoteChecklistType.Label" xml:space="preserve">
     <value>checklist</value>
@@ -156,7 +156,7 @@
   <data name="NoteTextType.Label" xml:space="preserve">
     <value>texto</value>
   </data>
-  <data name="PinToStartAppBarButton.Label" xml:space="preserve">
+  <data name="Pin" xml:space="preserve">
     <value>fixar</value>
   </data>
   <data name="PrettyDate_AMinuteAgo" xml:space="preserve">
@@ -201,9 +201,6 @@
   <data name="SettingsAppBarButton.Label" xml:space="preserve">
     <value>configurações</value>
   </data>
-  <data name="SettingsContentDialog.Title" xml:space="preserve">
-    <value>CONFIGURAÇÕES</value>
-  </data>
   <data name="SettingsTextBlock.Text" xml:space="preserve">
     <value>configurações</value>
   </data>
@@ -213,13 +210,13 @@
   <data name="TextTextBox.PlaceholderText" xml:space="preserve">
     <value>Texto</value>
   </data>
-  <data name="ThemeTextBlock.Text" xml:space="preserve">
-    <value>Tema</value>
+  <data name="ThemeToggleSwitch.Header" xml:space="preserve">
+    <value>tema</value>
   </data>
-  <data name="Theme_Dark" xml:space="preserve">
+  <data name="ThemeToggleSwitch.OnContent" xml:space="preserve">
     <value>escuro</value>
   </data>
-  <data name="Theme_Light" xml:space="preserve">
+  <data name="ThemeToggleSwitch.OffContent" xml:space="preserve">
     <value>claro</value>
   </data>
   <data name="TitleTextBox.PlaceholderText" xml:space="preserve">
@@ -229,7 +226,7 @@
     <value>mostrar/ocultar checklist</value>
   </data>
   <data name="UpdatedTextBox.Text" xml:space="preserve">
-    <value>Atualizado</value>
+    <value>atualizado</value>
   </data>
   <data name="ArchiveAppBarButton.Label" xml:space="preserve">
     <value>arquivar</value>
@@ -238,21 +235,63 @@
     <value>notas arquivadas</value>
   </data>
   <data name="EmptyNotesMessageTextBox.Text" xml:space="preserve">
-    <value>Notas adicionadas aparecem aqui</value>
+    <value>notas adicionadas aparecem aqui</value>
   </data>
   <data name="EmptyArchivedNotesMessageTextBox.Text" xml:space="preserve">
-    <value>Notas arquivadas aparecem aqui</value>
+    <value>notas arquivadas aparecem aqui</value>
   </data>
   <data name="RestoreAppBarButton.Label" xml:space="preserve">
     <value>restaurar</value>
   </data>
   <data name="ArchivedTextBox.Text" xml:space="preserve">
-    <value>Arquivado</value>
+    <value>arquivado</value>
   </data>
   <data name="RequestFeatureOrReportBugAppBarButton.Label" xml:space="preserve">
     <value>enviar sugestão / reportar bug</value>
   </data>
   <data name="YourMessageGoesHere" xml:space="preserve">
     <value>[ESCREVA SUA MENSAGEM AQUI]</value>
+  </data>
+  <data name="AboutPivotItem.Header" xml:space="preserve">
+    <value>sobre</value>
+  </data>
+  <data name="BackupPivotItem.Header" xml:space="preserve">
+    <value>backup</value>
+  </data>
+  <data name="PreferencesPivotItem.Header" xml:space="preserve">
+    <value>preferências</value>
+  </data>
+  <data name="AppVersionTextBlock.Text" xml:space="preserve">
+    <value>versão</value>
+  </data>
+  <data name="DevelopedByTextBlock.Text" xml:space="preserve">
+    <value>desenvolvido por</value>
+  </data>
+  <data name="FeedbackButton.Content" xml:space="preserve">
+    <value>enviar feedback positivo</value>
+  </data>
+  <data name="PraiseAppBarButton.Label" xml:space="preserve">
+    <value>elogiar</value>
+  </data>
+  <data name="RequestFeatureOrReportBugButton.Content" xml:space="preserve">
+    <value>enviar sugestão / reportar bug</value>
+  </data>
+  <data name="SupportAppBarButton.Label" xml:space="preserve">
+    <value>suporte</value>
+  </data>
+  <data name="DeveloperNameAndCountry.Text" xml:space="preserve">
+    <value>Bruno Lemos (Brasil)</value>
+  </data>
+  <data name="Unpin" xml:space="preserve">
+    <value>desfixar</value>
+  </data>
+  <data name="TransparentTileToggleSwitch.Header" xml:space="preserve">
+    <value>bloco dinâmico</value>
+  </data>
+  <data name="TransparentTileToggleSwitch.OffContent" xml:space="preserve">
+    <value>transparente</value>
+  </data>
+  <data name="TransparentTileToggleSwitch.OnContent" xml:space="preserve">
+    <value>cor sólida</value>
   </data>
 </root>

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest" xmlns:m3="http://schemas.microsoft.com/appx/2014/manifest" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest">
-  <Identity Name="29428BrunoLemos.KeepBeta" Publisher="CN=0B66D0B0-F691-4768-B3EE-FC3873EB0D73" Version="1.9.0.3" />
+  <Identity Name="29428BrunoLemos.KeepBeta" Publisher="CN=0B66D0B0-F691-4768-B3EE-FC3873EB0D73" Version="1.9.5.1" />
   <mp:PhoneIdentity PhoneProductId="fa536e3c-256b-4f5e-901b-7f4bd4493906" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>Flat Notes Beta</DisplayName>
@@ -16,10 +16,14 @@
   </Resources>
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="Keep.WindowsPhone.App">
-      <m3:VisualElements DisplayName="Flat Notes Beta" Square150x150Logo="Assets\Logo.png" Square44x44Logo="Assets\SmallLogo.png" Description="Flat Notes is the most beautiful notes app for Windows Phone!" ForegroundText="light" BackgroundColor="transparent">
-        <m3:DefaultTile Wide310x150Logo="Assets\WideLogo.png" Square71x71Logo="Assets\Square71x71Logo.png">
+      <m3:VisualElements DisplayName="Flat Notes Beta" Square150x150Logo="Assets\Tiles\Solid\Logo.png" Square44x44Logo="Assets\SmallLogo.png" Description="Flat Notes is the most beautiful notes app for Windows Phone!" ForegroundText="light" BackgroundColor="transparent">
+        <m3:DefaultTile Wide310x150Logo="Assets\Tiles\Solid\WideLogo.png" Square71x71Logo="Assets\Tiles\Solid\Square71x71Logo.png">
+          <m3:ShowNameOnTiles>
+            <m3:ShowOn Tile="square150x150Logo" />
+            <m3:ShowOn Tile="wide310x150Logo" />
+          </m3:ShowNameOnTiles>
         </m3:DefaultTile>
-        <m3:SplashScreen Image="Assets\SplashScreen.png" BackgroundColor="#009998" />
+        <m3:SplashScreen Image="Assets\SplashScreen.png" BackgroundColor="#ffbb00" />
         <m3:InitialRotationPreference>
           <m3:Rotation Preference="portrait" />
         </m3:InitialRotationPreference>

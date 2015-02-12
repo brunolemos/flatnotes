@@ -26,7 +26,7 @@ namespace Keep.Common
             {
                 var value = localSettings.Values[key];
                 if (value == null || String.IsNullOrEmpty(value.ToString())) return defaultValue;
-                Debug.WriteLine("Value of {0} is {1}", key, value.ToString());
+                //Debug.WriteLine("Value of {0} is {1}", key, value.ToString());
 
                 return value.GetType() != typeof(string) ? (T)value : JsonConvert.DeserializeObject<T>(value.ToString());
             }
@@ -43,7 +43,7 @@ namespace Keep.Common
             {
                 string content = JsonConvert.SerializeObject(value);
                 localSettings.Values[key] = content;
-                Debug.WriteLine("SetValue of {0} to {1}", key, content);
+                //Debug.WriteLine("SetValue of {0} to {1}", key, content);
 
                 return true;
             }

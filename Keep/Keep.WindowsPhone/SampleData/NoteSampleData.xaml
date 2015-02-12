@@ -1,6 +1,6 @@
-﻿<Models:Note IsText="False" IsChecklist="True" Title="Title" Text="Hi" UpdatedAt="2015-01-01T00:00:00.2801964Z" xmlns:Models="using:Keep.Models">
+﻿<Models:Note IsText="False" IsChecklist="True" Title="Title" Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." UpdatedAt="2015-01-01T00:00:00.2801964Z" xmlns:Models="using:Keep.Models">
     <Models:Note.Color>
-        <Models:NoteColor Key="GREEN" Color="#8ac249"/>
+        <Models:NoteColor Key="GREEN" Color="#8ac249" DarkColor1="#8ac249" DarkColor2="#679e37"/>
     </Models:Note.Color>
             
 	<Models:Note.Images>
@@ -11,5 +11,10 @@
         <Models:ChecklistItem IsChecked="True" Text="Item 1 Has A Big text and it will be trimmed to aasd kdkasmdk maskldm asklmd lsamdm" />
         <Models:ChecklistItem IsChecked="False" Text="Item 2" />
         <Models:ChecklistItem IsChecked="False" Text="Item 3" />
+        <Models:ChecklistItem IsChecked="False" Text="Item 4" />
+        <Models:ChecklistItem IsChecked="False" Text="Item 5" />
+        <Models:ChecklistItem IsChecked="False" Text="Item 6" />
+        <Models:ChecklistItem IsChecked="False" Text="Item 7" />
+        <Models:ChecklistItem IsChecked="False" Text="Item 8" />
     </Models:Note.Checklist>
 </Models:Note>

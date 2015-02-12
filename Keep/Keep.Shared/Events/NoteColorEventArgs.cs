@@ -10,8 +10,8 @@ namespace Keep.Events
 
         public NoteColorEventArgs(NoteColor noteColor)
         {
-            this.NoteColor = noteColor;
-            this.Handled = false;
+            NoteColor = noteColor;
+            Handled = false;
         }
     }
 }

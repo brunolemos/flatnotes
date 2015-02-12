@@ -1,19 +1,21 @@
-﻿using System;
+﻿using Keep.Common;
+using Keep.Utils;
+using Keep.ViewModels;
+using Keep.Views;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.ApplicationModel.Core;
+using Windows.UI;
+using Windows.UI.Core;
+using Windows.UI.Popups;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
-using Windows.UI;
-using Windows.UI.ViewManagement;
-using Windows.UI.Xaml.Media;
-using Keep.Utils;
-using Windows.UI.Popups;
-using System.Threading.Tasks;
-using Windows.UI.Core;
-using Windows.ApplicationModel.Core;
-using Keep.Common;
 
 namespace Keep
 {
@@ -32,10 +34,16 @@ namespace Keep
         {
             this.InitializeComponent();
 
-            AppSettings.Instance.ThemeChanged += (s, e) => UpdateTheme(e.Theme);
             this.Suspending += this.OnSuspending;
             this.UnhandledException += App_UnhandledException;
 
+            AppSettings.Instance.NotesSaved += (s, e) => SimulateStatusBarProgressComplete();
+            AppSettings.Instance.ArchivedNotesSaved += (s, e) => SimulateStatusBarProgressComplete();
+            AppSettings.Instance.ThemeChanged += (s, e) => UpdateTheme(e.Theme);
+            AppSettings.Instance.TransparentTileChanged += (s, e) => TileManager.UpdateDefaultTile(e.TransparentTile);
+
+            AppData.NoteArchived += (s, _e) => { TileManager.RemoveTileIfExists(_e.Note); };
+            AppData.NoteRemoved += (s, _e) => { TileManager.RemoveTileIfExists(_e.Note); };
         }
 
         private async void App_UnhandledException(object sender, UnhandledExceptionEventArgs e)
@@ -87,10 +95,11 @@ namespace Keep
                 }
             }
         }
-
+        
         protected override async void OnActivated(IActivatedEventArgs e)
         {
             base.OnActivated(e);
+            System.Diagnostics.Debug.WriteLine("OnActivated " + e.PreviousExecutionState.ToString());
 
             ContinuationManager = new ContinuationManager();
 
@@ -111,13 +120,15 @@ namespace Keep
         {
 #if DEBUG
             if (System.Diagnostics.Debugger.IsAttached)
-            {
                 this.DebugSettings.EnableFrameRateCounter = true;
-            }
 #endif
 
             //user theme
             UpdateTheme(AppSettings.Instance.Theme);
+
+            //user preferences
+            GoogleAnalytics.EasyTracker.GetTracker().SetCustomDimension(1, AppSettings.Instance.Theme.ToString());
+            GoogleAnalytics.EasyTracker.GetTracker().SetCustomDimension(2, AppSettings.Instance.Columns.ToString());
 
             if (RootFrame.Content == null)
             {
@@ -140,21 +151,15 @@ namespace Keep
                 // configuring the new page by passing required information as a navigation
                 // parameter
                 if (!RootFrame.Navigate(typeof(SplashPage), e.Arguments))
-                {
                     throw new Exception("Failed to create initial page");
-                }
             }
 
-            //user preferences
-            GoogleAnalytics.EasyTracker.GetTracker().SetCustomDimension(1, AppSettings.Instance.Theme.ToString());
-            GoogleAnalytics.EasyTracker.GetTracker().SetCustomDimension(2, AppSettings.Instance.Columns.ToString());
-
-
-            //wait so the splash screen background image may be loaded
-            //await Task.Delay(0500);
-
-            // Ensure the current window is active
-            //Window.Current.Activate();
+            //received parameters and the app was suspended
+            else if (e.Arguments != null && !String.IsNullOrEmpty(e.Arguments.ToString()))
+            {
+                Window.Current.Activate();
+                RootFrame.Navigate(typeof(MainPage), e.Arguments);
+            }
         }
 
 #if WINDOWS_PHONE_APP
@@ -170,6 +175,14 @@ namespace Keep
         {
             var deferral = e.SuspendingOperation.GetDeferral();
             await SuspensionManager.SaveAsync();
+
+            //update tile
+            //if (NoteEditViewModel.CurrentNoteBeingEdited != null) TileManager.UpdateNoteTileIfExists(NoteEditViewModel.CurrentNoteBeingEdited);
+
+            //save data
+            if (AppData.HasUnsavedChangesOnNotes) await AppData.SaveNotes();
+            if (AppData.HasUnsavedChangesOnArchivedNotes) await AppData.SaveArchivedNotes();
+
             deferral.Complete();
         }
 
@@ -179,23 +192,39 @@ namespace Keep
             await dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
             {
                 RootFrame.RequestedTheme = theme;
+                ChangeStatusBarColor();
             });
         }
-
-        public async void HideStatusBar()
-        {
-            //hide status bar
-            #if WINDOWS_PHONE_APP
-            await StatusBar.GetForCurrentView().HideAsync();
-            #endif
-        }
-
+        
         public static void ChangeStatusBarColor(Color? foregroundColor = null)
         {
-            #if WINDOWS_PHONE_APP
-            if (foregroundColor == null) foregroundColor = (App.Current.Resources["AppStatusBarForegroundBrush"] as SolidColorBrush).Color;
+#if WINDOWS_PHONE_APP
+            if (foregroundColor == null)
+            {
+                if (AppSettings.Instance.Theme == ElementTheme.Light && App.Current.RequestedTheme == ApplicationTheme.Dark)
+                    foregroundColor = new Color().FromHex("#404040");
+                else if (AppSettings.Instance.Theme != ElementTheme.Light && App.Current.RequestedTheme == ApplicationTheme.Light)
+                    foregroundColor = new Color().FromHex("#c9cdd1");
+            }
+
             StatusBar.GetForCurrentView().ForegroundColor = foregroundColor;
-            #endif
+#endif
+        }
+
+        public static async void SimulateStatusBarProgressComplete()
+        {
+#if WINDOWS_PHONE_APP
+            StatusBar.GetForCurrentView().ProgressIndicator.ProgressValue = 0;
+            await StatusBar.GetForCurrentView().ProgressIndicator.ShowAsync();
+
+            for (int i = 0; i <= 100; i += 10)
+            {
+                await Task.Delay(0050);
+                StatusBar.GetForCurrentView().ProgressIndicator.ProgressValue = i;
+            }
+
+            await StatusBar.GetForCurrentView().ProgressIndicator.HideAsync();
+#endif
         }
     }
 }

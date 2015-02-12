@@ -126,11 +126,11 @@
   <data name="ColorAppBarButton.Label" xml:space="preserve">
     <value>color</value>
   </data>
-  <data name="ColumnsTextBlock.Text" xml:space="preserve">
-    <value>Columns</value>
+  <data name="ColumnsSlider.Header" xml:space="preserve">
+    <value>columns</value>
   </data>
   <data name="CreatedTextBox.Text" xml:space="preserve">
-    <value>Created</value>
+    <value>created</value>
   </data>
   <data name="DeleteAppBarButton.Label" xml:space="preserve">
     <value>delete</value>
@@ -145,10 +145,10 @@
     <value>send a nice feedback</value>
   </data>
   <data name="NewItemTextBox.PlaceholderText" xml:space="preserve">
-    <value>New item</value>
+    <value>new item</value>
   </data>
   <data name="NoGoogleKeepIntegrationMessageTextBox.Text" xml:space="preserve">
-    <value>This app does not integrate with official Google Keep because unfortunately it's not possible</value>
+    <value>this app does not integrate with official Google Keep because unfortunately it's not possible</value>
   </data>
   <data name="NoteChecklistType.Label" xml:space="preserve">
     <value>checklist</value>
@@ -156,7 +156,7 @@
   <data name="NoteTextType.Label" xml:space="preserve">
     <value>text</value>
   </data>
-  <data name="PinToStartAppBarButton.Label" xml:space="preserve">
+  <data name="Pin" xml:space="preserve">
     <value>pin to start</value>
   </data>
   <data name="PrettyDate_AMinuteAgo" xml:space="preserve">
@@ -201,9 +201,6 @@
   <data name="SettingsAppBarButton.Label" xml:space="preserve">
     <value>settings</value>
   </data>
-  <data name="SettingsContentDialog.Title" xml:space="preserve">
-    <value>SETTINGS</value>
-  </data>
   <data name="SettingsTextBlock.Text" xml:space="preserve">
     <value>settings</value>
   </data>
@@ -213,14 +210,8 @@
   <data name="TextTextBox.PlaceholderText" xml:space="preserve">
     <value>Text</value>
   </data>
-  <data name="ThemeTextBlock.Text" xml:space="preserve">
-    <value>Theme</value>
-  </data>
-  <data name="Theme_Dark" xml:space="preserve">
-    <value>dark</value>
-  </data>
-  <data name="Theme_Light" xml:space="preserve">
-    <value>light</value>
+  <data name="ThemeToggleSwitch.Header" xml:space="preserve">
+    <value>theme</value>
   </data>
   <data name="TitleTextBox.PlaceholderText" xml:space="preserve">
     <value>Title</value>
@@ -229,7 +220,7 @@
     <value>toggle checklist</value>
   </data>
   <data name="UpdatedTextBox.Text" xml:space="preserve">
-    <value>Updated</value>
+    <value>updated</value>
   </data>
   <data name="ArchiveAppBarButton.Label" xml:space="preserve">
     <value>archive</value>
@@ -238,21 +229,69 @@
     <value>archived notes</value>
   </data>
   <data name="EmptyNotesMessageTextBox.Text" xml:space="preserve">
-    <value>Notes you add appear here</value>
+    <value>notes you add appear here</value>
   </data>
   <data name="EmptyArchivedNotesMessageTextBox.Text" xml:space="preserve">
-    <value>Archived notes appear here</value>
+    <value>archived notes appear here</value>
   </data>
   <data name="RestoreAppBarButton.Label" xml:space="preserve">
     <value>restore</value>
   </data>
   <data name="ArchivedTextBox.Text" xml:space="preserve">
-    <value>Archived</value>
+    <value>archived</value>
   </data>
   <data name="RequestFeatureOrReportBugAppBarButton.Label" xml:space="preserve">
     <value>request feature / report bug</value>
   </data>
   <data name="YourMessageGoesHere" xml:space="preserve">
     <value>[YOUR MESSAGE GOES HERE]</value>
+  </data>
+  <data name="AboutPivotItem.Header" xml:space="preserve">
+    <value>about</value>
+  </data>
+  <data name="BackupPivotItem.Header" xml:space="preserve">
+    <value>backup</value>
+  </data>
+  <data name="PreferencesPivotItem.Header" xml:space="preserve">
+    <value>preferences</value>
+  </data>
+  <data name="ThemeToggleSwitch.OffContent" xml:space="preserve">
+    <value>light</value>
+  </data>
+  <data name="ThemeToggleSwitch.OnContent" xml:space="preserve">
+    <value>dark</value>
+  </data>
+  <data name="AppVersionTextBlock.Text" xml:space="preserve">
+    <value>version</value>
+  </data>
+  <data name="DevelopedByTextBlock.Text" xml:space="preserve">
+    <value>developed by</value>
+  </data>
+  <data name="FeedbackButton.Content" xml:space="preserve">
+    <value>send a nice feedback</value>
+  </data>
+  <data name="PraiseAppBarButton.Label" xml:space="preserve">
+    <value>praise</value>
+  </data>
+  <data name="RequestFeatureOrReportBugButton.Content" xml:space="preserve">
+    <value>request feature / report bug</value>
+  </data>
+  <data name="SupportAppBarButton.Label" xml:space="preserve">
+    <value>support</value>
+  </data>
+  <data name="DeveloperNameAndCountry.Text" xml:space="preserve">
+    <value>Bruno Lemos (Brazil)</value>
+  </data>
+  <data name="Unpin" xml:space="preserve">
+    <value>unpin</value>
+  </data>
+  <data name="TransparentTileToggleSwitch.Header" xml:space="preserve">
+    <value>live tile</value>
+  </data>
+  <data name="TransparentTileToggleSwitch.OffContent" xml:space="preserve">
+    <value>transparent</value>
+  </data>
+  <data name="TransparentTileToggleSwitch.OnContent" xml:space="preserve">
+    <value>solid color</value>
   </data>
 </root>

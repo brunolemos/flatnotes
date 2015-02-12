@@ -6,6 +6,7 @@ using System;
 using System.Diagnostics;
 using System.Linq;
 using Windows.Storage.Pickers;
+using Windows.UI.StartScreen;
 using Windows.UI.Xaml.Controls;
 
 namespace Keep.ViewModels
@@ -17,6 +18,8 @@ namespace Keep.ViewModels
 
         public RelayCommand OpenImagePickerCommand { get; private set; }
         public RelayCommand ToggleChecklistCommand { get; private set; }
+        public RelayCommand PinCommand { get; private set; }
+        public RelayCommand UnpinCommand { get; private set; }
         public RelayCommand ArchiveNoteCommand { get; private set; }
         public RelayCommand RestoreNoteCommand { get; private set; }
         public RelayCommand DeleteNoteCommand { get; private set; }
@@ -26,26 +29,52 @@ namespace Keep.ViewModels
         {
             OpenImagePickerCommand = new RelayCommand(OpenImagePicker);
             ToggleChecklistCommand = new RelayCommand(ToggleChecklist);
+            PinCommand = new RelayCommand(Pin);
+            UnpinCommand = new RelayCommand(Unpin);
             ArchiveNoteCommand = new RelayCommand(ArchiveNote); //CanArchiveNote
             RestoreNoteCommand = new RelayCommand(RestoreNote); //CanRestoreNote
             DeleteNoteCommand = new RelayCommand(DeleteNote);
             DeleteNoteImageCommand = new RelayCommand(DeleteNoteImage);
 
             PropertyChanged += OnPropertyChanged;
+
+            AppSettings.Instance.NotesSaved += (s, e) => { NotifyPropertyChanged("Note"); if (!IsArchived) Note.Changed = false; TileManager.UpdateNoteTileIfExists(Note); };
+            AppSettings.Instance.ArchivedNotesSaved += (s, e) => { NotifyPropertyChanged("Note"); if (IsArchived) Note.Changed = false; };
         }
 
         private void OnPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             if (e.PropertyName == "Note")
             {
+                CurrentNoteBeingEdited = Note;
+                if (Note == null) return;
+
                 AlreadyExists = AppData.Notes.Where<Note>(x => x.ID == Note.ID).FirstOrDefault<Note>() != null;
                 IsArchived = AppData.ArchivedNotes.Where<Note>(x => x.ID == Note.ID).FirstOrDefault<Note>() != null;
                 IsNewNote = !AlreadyExists && !IsArchived;
+                IsPinned = SecondaryTile.Exists(Note.ID);
+
+                Note.PropertyChanged += (s, _e) =>
+                {
+                    if (_e.PropertyName == "Changed")
+                    {
+                        if (AlreadyExists)
+                            AppData.HasUnsavedChangesOnNotes = Note.Changed;
+
+                        else if (IsArchived)
+                            AppData.HasUnsavedChangesOnArchivedNotes = Note.Changed;
+                    }
+                };
             }
         }
 
+        public static Note CurrentNoteBeingEdited { get; set; }
+
         public Note Note { get { return note; } set { note = value == null ? new Note() : value; NotifyPropertyChanged("Note"); } }
-        private Note note = new Note();
+        private static Note note = new Note();
+
+        public bool IsPinned { get { isPinned = SecondaryTile.Exists(Note.ID); return isPinned; } set { isPinned = value; NotifyPropertyChanged("IsPinned"); } }
+        private bool isPinned;
 
         public bool IsNewNote { get { return isNewNote; } set { isNewNote = value; NotifyPropertyChanged("IsNewNote"); } }
         private bool isNewNote;
@@ -58,7 +87,7 @@ namespace Keep.ViewModels
 
         public NoteImage TempNoteImage { get { return tempNoteImage; } set { tempNoteImage = value; } }
         private static NoteImage tempNoteImage = null;
-
+        
         public ListViewReorderMode ReorderMode
         {
             get { return reorderMode; }
@@ -98,6 +127,22 @@ namespace Keep.ViewModels
         {
             GoogleAnalytics.EasyTracker.GetTracker().SendEvent("ui_action", "execute_command", "toggle_checklist", 0);
             Note.ToggleChecklist();
+        }
+
+        private async void Pin()
+        {
+            GoogleAnalytics.EasyTracker.GetTracker().SendEvent("ui_action", "execute_command", "pin", 0);
+
+            await TileManager.CreateOrUpdateNoteTile(Note);
+            IsPinned = SecondaryTile.Exists(Note.ID);
+        }
+
+        private void Unpin()
+        {
+            GoogleAnalytics.EasyTracker.GetTracker().SendEvent("ui_action", "execute_command", "unpin", 0);
+
+            TileManager.RemoveTileIfExists(Note);
+            IsPinned = SecondaryTile.Exists(Note.ID);
         }
 
         private bool CanArchiveNote()
@@ -157,6 +202,12 @@ namespace Keep.ViewModels
 
             Note.Images.Remove(TempNoteImage);
             TempNoteImage = null;
+
+            //save
+            if (IsArchived)
+                await AppData.SaveArchivedNotes();
+            else
+                await AppData.SaveNotes();
         }
 
         #endregion

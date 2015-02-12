@@ -23,6 +23,13 @@
     <Compile Include="$(MSBuildThisFileDirectory)Common\RelayCommand.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\SuspensionManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\TrullyObservableCollection.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\FluidGrid.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\NoteColorPicker.xaml.cs">
+      <DependentUpon>NoteColorPicker.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\NotePreview.xaml.cs">
+      <DependentUpon>NotePreview.xaml</DependentUpon>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Converters\MaxChecklistItemsConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\PositiveIntToVisibilityConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\ReorderModeToBooleanConverter.cs" />
@@ -31,6 +38,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Converters\FriendlyTimeConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\NullableToVisibilityConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Events\NoteColorEventArgs.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Events\ColumnsEventArgs.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Events\TransparentTileEventArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Events\ThemeEventArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Events\NoteEventArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\ModelBase.cs" />
@@ -50,6 +59,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Utils\Migration\Versions\v1\Models\Device.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\Migration\Versions\v1\Models\User.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\Migration\Versions\v1\Models\UserPreferences.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\TileManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ArchivedNotesViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\SettingsViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ViewModelBase.cs" />
@@ -62,6 +72,8 @@
     <Content Include="$(MSBuildThisFileDirectory)Assets\appbar.water.droplet.png" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="$(MSBuildThisFileDirectory)Controls\NoteColorPicker.xaml" />
+    <Page Include="$(MSBuildThisFileDirectory)Controls\NotePreview.xaml" />
     <Page Include="$(MSBuildThisFileDirectory)Resources\DefaultResourceDictionary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

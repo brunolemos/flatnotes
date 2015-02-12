@@ -7,6 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:Controls="using:Keep.Controls"
     xmlns:Converters="using:Keep.Converters"
+    xmlns:Tiles="using:Keep.Controls.Tiles"
     mc:Ignorable="d"
     NavigationCacheMode="Required"
     Background="{ThemeResource AppStatusBarBackgroundBrush}"
@@ -23,8 +24,6 @@
         <CommandBar>
             <CommandBar.SecondaryCommands>
                 <AppBarButton x:Uid="ArchivedNotesAppBarButton" Icon="SaveLocal" Label="archived notes" Command="{Binding OpenArchivedNotesCommand}"/>
-                <AppBarButton x:Uid="FeedbackAppBarButton" Icon="Like" Label="send a nice feedback" Command="{Binding SendFeedbackCommand}"/>
-                <AppBarButton x:Uid="RequestFeatureOrReportBugAppBarButton" Icon="Mail" Label="request feature / report bug" Command="{Binding SuggestFeatureOrReportBugCommand}"/>
                 <AppBarButton x:Uid="SettingsAppBarButton" Icon="Setting" Label="settings" Command="{Binding OpenSettingsCommand}"/>
             </CommandBar.SecondaryCommands>
 
@@ -57,8 +56,8 @@
         </ItemsPanelTemplate>
     </Page.Resources>
 
-    <Grid x:Name="LayoutRoot" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Grid x:Name="ContentRoot">
+    <Grid x:Name="LayoutRoot">
+        <Grid x:Name="ContentRoot" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
             <Grid Visibility="{Binding Notes.Count, Converter={StaticResource PositiveIntToVisibilityConverter}, ConverterParameter=True}">
                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                     <Viewbox Width="180">

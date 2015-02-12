@@ -29,6 +29,7 @@ namespace Keep.Views
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
 
+            this.Loaded += (s, _e) => App.ChangeStatusBarColor(Colors.White);
             //this.Loaded += (s, e) => EnableReorderFeature();
             //this.Unloaded += (s, e) => DisableReorderFeature();
         }

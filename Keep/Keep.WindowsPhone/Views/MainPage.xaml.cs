@@ -1,19 +1,20 @@
-﻿using System;
+﻿using Keep.Common;
+using Keep.Models;
+using Keep.Utils;
+using Keep.ViewModels;
+using System;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
+using Windows.ApplicationModel.Activation;
+using Windows.Foundation;
 using Windows.Storage;
+using Windows.UI.Core;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
-using Keep.Common;
-using Keep.Models;
-using Keep.Utils;
-using Keep.ViewModels;
-using Windows.ApplicationModel.Activation;
-using Windows.Foundation;
-using Windows.UI.Popups;
-using Windows.UI.Core;
 
 namespace Keep.Views
 {
@@ -23,6 +24,7 @@ namespace Keep.Views
         private NavigationHelper navigationHelper;
 
         public MainViewModel viewModel { get { return (MainViewModel)DataContext; } }
+        private object navigationParameter;
 
         public MainPage()
         {
@@ -32,23 +34,38 @@ namespace Keep.Views
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
-
+            
+            this.Loaded += (s, e) => App.ChangeStatusBarColor();
             this.Loaded += (s, e) => EnableReorderFeature();
             this.Unloaded += (s, e) => DisableReorderFeature();
         }
-
+        
         partial void EnableReorderFeature();
         partial void DisableReorderFeature();
 
         partial void EnableSwipeFeature(FrameworkElement element, FrameworkElement referenceFrame);
         partial void DisableSwipeFeature(FrameworkElement element);
 
-        private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
+        private async void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
             GoogleAnalytics.EasyTracker.GetTracker().SendView("MainPage");
 
             App.ChangeStatusBarColor();
-            App.RootFrame.Background = LayoutRoot.Background;
+            App.RootFrame.Background = ContentRoot.Background;
+
+            //received a note via parameter (from secondary tile)
+            if (navigationParameter != null && !String.IsNullOrEmpty(navigationParameter.ToString()))
+            {
+                var note = TileManager.TryToGetNoteFromNavigationArgument(navigationParameter.ToString());
+
+                if (note != null)
+                {
+                    await Task.Delay(0200);
+                    Frame.Navigate(typeof(NoteEditPage), note);
+
+                    return;
+                }
+            }
         }
 
         private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
@@ -61,6 +78,8 @@ namespace Keep.Views
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            navigationParameter = e.NavigationMode == NavigationMode.New ? e.Parameter : null;
+
             Frame.BackStack.Clear();
             this.navigationHelper.OnNavigatedTo(e);
         }
@@ -72,7 +91,7 @@ namespace Keep.Views
 
 
         #endregion
-
+        
         private async void OnNoteTapped(object sender, TappedRoutedEventArgs e)
         {
             #if WINDOWS_PHONE_APP
@@ -162,5 +181,6 @@ namespace Keep.Views
             //save
             await AppData.CreateOrUpdateNote(note);
         }
+
     }
 }

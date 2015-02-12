@@ -9,7 +9,7 @@ namespace Keep.Events
 
         public ThemeEventArgs(ElementTheme theme)
         {
-            this.Theme = theme;
+            Theme = theme;
         }
     }
 }

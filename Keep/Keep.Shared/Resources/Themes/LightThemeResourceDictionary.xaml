@@ -2,10 +2,13 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <Color x:Key="PhoneBackgroundColor">#d9d9d9</Color><!--FFE8E8E8-->
+    <Color x:Key="PhoneBackgroundColor">#ffffff</Color><!--d9d9d9-->
     <Color x:Key="PhoneForegroundColor">#C0000000</Color>
     <Color x:Key="PhoneChromeColor">#FFDDDDDD</Color>
     <Color x:Key="PhoneLowColor">#20000000</Color>
+    
+    <SolidColorBrush x:Key="AppStatusBarBackgroundBrush" Color="{ThemeResource PhoneBackgroundColor}"/>
+    <SolidColorBrush x:Key="AppStatusBarForegroundBrush" Color="#404040"/>
     
     <SolidColorBrush x:Key="ApplicationPageBackgroundThemeBrush" Color="{ThemeResource PhoneBackgroundColor}"/>
     <SolidColorBrush x:Key="PhoneBackgroundBrush" Color="{ThemeResource PhoneBackgroundColor}"/>
@@ -19,11 +22,4 @@
 
     <SolidColorBrush x:Key="PhoneChromeBrush" Color="{ThemeResource PhoneChromeColor}"/>
     <SolidColorBrush x:Key="PhoneLowBrush" Color="{ThemeResource PhoneLowColor}"/>
-
-    <!--<SolidColorBrush x:Key="CommandBarBackgroundThemeBrush" Color="#828282"/>
-    <SolidColorBrush x:Key="CommandBarForegroundThemeBrush" Color="White"/>-->
-            
-    <Style x:Key="LogoImage" TargetType="Image">
-        <Setter Property="Source" Value="ms-appx:///Assets/Light/LogoTransparent.png"/>
-    </Style>
 </ResourceDictionary>
