@@ -2,7 +2,6 @@
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Runtime.Serialization;
-using Newtonsoft.Json;
 
 namespace Keep.Models
 {
@@ -109,7 +108,7 @@ namespace Keep.Models
 
         void Note_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            if (string.IsNullOrEmpty(e.PropertyName) || e.PropertyName == "Changed") return;
+            if (string.IsNullOrEmpty(e.PropertyName) || e.PropertyName == "Changed" || e.PropertyName == "ArchivedAt" || e.PropertyName == "CreatedAt") return;
             Changed = true;
 
             Debug.WriteLine("Note_PropertyChanged " + e.PropertyName);
@@ -148,7 +147,7 @@ namespace Keep.Models
 
                 Checklist.Clear();
                 foreach (string line in lines)
-                    Checklist.Add(new ChecklistItem(line));
+                    Checklist.Add(ChecklistItem.FromText(line));
             }
 
             Text = "";
@@ -168,9 +167,12 @@ namespace Keep.Models
             return string.IsNullOrEmpty(Title) && ((!IsChecklist && string.IsNullOrEmpty(Text)) || (IsChecklist && Checklist.Count <= 0)) && Images.Count <= 0;
         }
 
-        public string GetContent()
+        public string GetContent(bool showCheckedMark = false, bool includeTitle = false)
         {
-            return IsChecklist ? GetTextFromChecklist() : Text;
+            string content = IsChecklist ? GetTextFromChecklist(showCheckedMark) : Text;
+            if (includeTitle && !string.IsNullOrEmpty(Title)) content = Title + Environment.NewLine + content;
+
+            return content;
         }
 
         public void Trim()
@@ -188,12 +190,12 @@ namespace Keep.Models
                 }
         }
 
-        protected string GetTextFromChecklist()
+        protected string GetTextFromChecklist(bool showCheckedMark = false)
         {
             string txt = "";
 
             foreach (ChecklistItem item in Checklist)
-                txt += item.Text + Environment.NewLine.ToString();
+                txt += item.ToString(showCheckedMark) + Environment.NewLine.ToString();
 
             return txt.Trim();
         }

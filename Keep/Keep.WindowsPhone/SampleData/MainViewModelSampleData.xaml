@@ -1,4 +1,4 @@
-﻿<ViewModels:MainViewModel xmlns:ViewModels="using:Keep.ViewModels" xmlns:Models="using:Keep.Models">
+﻿<ViewModels:MainViewModel IsWindows="False" IsWindowsPhone="True"  xmlns:ViewModels="using:Keep.ViewModels" xmlns:Models="using:Keep.Models">
     <ViewModels:MainViewModel.Columns>2</ViewModels:MainViewModel.Columns>
     <ViewModels:MainViewModel.Notes>
         <Models:Note IsText="False" IsChecklist="True" Title="Title" Text="Hi">

@@ -3,10 +3,6 @@ using Keep.Models;
 using Keep.Utils;
 using Keep.Views;
 using System;
-using System.Diagnostics;
-using Windows.ApplicationModel;
-using Windows.ApplicationModel.Resources;
-using Windows.ApplicationModel.Store;
 using Windows.Storage.Pickers;
 using Windows.UI.Xaml.Controls;
 
@@ -14,8 +10,10 @@ namespace Keep.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {
+#if WINDOWS_PHONE_APP
         public event EventHandler ReorderModeEnabled;
         public event EventHandler ReorderModeDisabled;
+#endif
 
         public RelayCommand CreateTextNoteCommand { get; private set; }
         public RelayCommand CreateChecklistNoteCommand { get; private set; }
@@ -26,6 +24,7 @@ namespace Keep.ViewModels
         public Notes Notes { get { return notes; } private set { notes = value; NotifyPropertyChanged("Notes"); } }
         public Notes notes = AppData.Notes;
 
+#if WINDOWS_PHONE_APP
         public ListViewReorderMode ReorderMode {
             get { return reorderMode; }
             set {
@@ -39,6 +38,7 @@ namespace Keep.ViewModels
             }
         }
         public ListViewReorderMode reorderMode = ListViewReorderMode.Disabled;
+#endif
 
         public bool ReorderedNotes { get; set; }
 
@@ -50,13 +50,13 @@ namespace Keep.ViewModels
             CreateChecklistNoteCommand = new RelayCommand(CreateChecklistNote);
             OpenImagePickerCommand = new RelayCommand(OpenImagePicker);
             OpenArchivedNotesCommand = new RelayCommand(OpenArchivedNotes);
-            OpenSettingsCommand = new RelayCommand(OpenSettings);
+            OpenSettingsCommand = new RelayCommand(App.OpenSettings);
 
             AppData.NotesChanged += (s, e) => NotifyPropertyChanged("Notes");
             AppSettings.Instance.ColumnsChanged += (s, e) => NotifyPropertyChanged("Columns");
         }
 
-        #region COMMANDS_ACTIONS
+#region COMMANDS_ACTIONS
 
         private void CreateTextNote()
         {
@@ -83,8 +83,10 @@ namespace Keep.ViewModels
             picker.FileTypeFilter.Add(".jpeg");
             picker.FileTypeFilter.Add(".png");
 
+#if WINDOWS_PHONE_APP
             //open
             picker.PickSingleFileAndContinue();
+#endif
         }
 
         private void OpenArchivedNotes()
@@ -92,11 +94,6 @@ namespace Keep.ViewModels
             App.RootFrame.Navigate(typeof(ArchivedNotesPage));
         }
 
-        private void OpenSettings()
-        {
-            App.RootFrame.Navigate(typeof(SettingsPage));
-        }
-
-        #endregion
+#endregion
     }
 }

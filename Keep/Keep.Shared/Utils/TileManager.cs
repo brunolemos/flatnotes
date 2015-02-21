@@ -17,10 +17,15 @@ namespace Keep.Utils
     {
         public static void UpdateDefaultTile(bool transparentTile = true)
         {
-            var tileSubFolder = transparentTile ? "Transparent" : "Solid";
-
+            var tileSubFolder = transparentTile ? "Transparent" :  "Solid";
             var tileSquare71Content = TileContentFactory.CreateTileSquare71x71Image();
+            ITileNotificationContent biggerTile;
+
+#if WINDOWS_PHONE_APP
             tileSquare71Content.Image.Src = String.Format("ms-appx:///Assets/Tiles/{0}/Square71x71Logo.png", tileSubFolder);
+#else
+            tileSquare71Content.Image.Src = String.Format("ms-appx:///Assets/Tiles/{0}/Square70x70Logo.png", tileSubFolder);
+#endif
 
             var tileSquare150Content = TileContentFactory.CreateTileSquare150x150Image();
             tileSquare150Content.Image.Src = String.Format("ms-appx:///Assets/Tiles/{0}/Logo.png", tileSubFolder);
@@ -30,7 +35,17 @@ namespace Keep.Utils
             tileWideContent.Image.Src = String.Format("ms-appx:///Assets/Tiles/{0}/WideLogo.png", tileSubFolder);
             tileWideContent.Square150x150Content = tileSquare150Content;
 
-            TileUpdateManager.CreateTileUpdaterForApplication().Update(tileWideContent.CreateNotification());
+#if WINDOWS_PHONE_APP
+            biggerTile = tileWideContent;
+#else
+            var tileSquare310Content = TileContentFactory.CreateTileSquare310x310Image();
+            tileSquare310Content.Image.Src = String.Format("ms-appx:///Assets/Tiles/{0}/Square310x310Logo.png", tileSubFolder);
+            tileSquare310Content.Wide310x150Content = tileWideContent;
+
+            biggerTile = tileSquare310Content;
+#endif
+
+            TileUpdateManager.CreateTileUpdaterForApplication().Update(biggerTile.CreateNotification());
         }
 
         public static async Task<bool> CreateOrUpdateNoteTile(Note note)
@@ -40,11 +55,17 @@ namespace Keep.Utils
             //update content
             if (SecondaryTile.Exists(note.ID)) return UpdateNoteTileIfExists(note);
 
-            //create
+
+#if WINDOWS_PHONE_APP
+            //create (and suspend)
+            return await CreateNoteTile(note);
+#else
+            //create and update
             var success = await CreateNoteTile(note);
             UpdateNoteTileIfExists(note);
 
             return success;
+#endif
         }
 
         private static async Task<bool> CreateNoteTile(Note note)
@@ -52,13 +73,26 @@ namespace Keep.Utils
             var tile = new SecondaryTile(note.ID, "Flat Notes", GenerateNavigationArgumentFromNote(note), 
                 new Uri("ms-appx:///Assets/Tiles/Transparent/Logo.png"), TileSize.Wide310x150);
 
-            tile.VisualElements.ForegroundText = ForegroundText.Dark;
+            tile.VisualElements.ForegroundText = ForegroundText.Light;
             tile.VisualElements.BackgroundColor = new Color().FromHex(note.Color.DarkColor1);
 
+            tile.VisualElements.ShowNameOnSquare150x150Logo = true;
+            tile.VisualElements.ShowNameOnWide310x150Logo = true;
+            tile.VisualElements.ShowNameOnSquare310x310Logo = true;
+
+            tile.RoamingEnabled = true;
+
+#if WINDOWS_PHONE_APP
+            tile.VisualElements.Square30x30Logo = new Uri("ms-appx:///Assets/Tiles/Transparent/Square71x71Logo.png");
             tile.VisualElements.Square71x71Logo = new Uri("ms-appx:///Assets/Tiles/Transparent/Square71x71Logo.png");
+#else
+            tile.VisualElements.Square30x30Logo = new Uri("ms-appx:///Assets/Tiles/Transparent/Square30x30Logo.png");
+            tile.VisualElements.Square70x70Logo = new Uri("ms-appx:///Assets/Tiles/Transparent/Square70x70Logo.png");
+#endif
             tile.VisualElements.Square150x150Logo = new Uri("ms-appx:///Assets/Tiles/Transparent/Logo.png");
             tile.VisualElements.Wide310x150Logo = new Uri("ms-appx:///Assets/Tiles/Transparent/WideLogo.png");
-
+            tile.VisualElements.Square310x310Logo = new Uri("ms-appx:///Assets/Tiles/Transparent/Square310x310Logo.png");
+            
             return await tile.RequestCreateAsync();
         }
 
@@ -71,7 +105,12 @@ namespace Keep.Utils
             TryUpdateNoteTileBackgroundColor(note);
 
             var tileSquare71Content = TileContentFactory.CreateTileSquare71x71Image();
+
+#if WINDOWS_PHONE_APP
             tileSquare71Content.Image.Src = "ms-appx:///Assets/Tiles/Transparent/Square71x71Logo.png";
+#else
+            tileSquare71Content.Image.Src = "ms-appx:///Assets/Tiles/Transparent/Square70x70Logo.png";
+#endif
 
             ISquare150x150TileNotificationContent tileSquare150Content;
 
@@ -81,16 +120,17 @@ namespace Keep.Utils
 
                 var _tileSquare150Content = tileSquare150Content as ITileSquare150x150PeekImageAndText02;
                 _tileSquare150Content.TextHeading.Text = note.Title;
-                _tileSquare150Content.TextBodyWrap.Text = note.GetContent();
+                _tileSquare150Content.TextBodyWrap.Text = note.GetContent(true);
                 _tileSquare150Content.Image.Src = note.Images[0].URL;
                 _tileSquare150Content.Square71x71Content = tileSquare71Content;
-            } else
+            }
+            else
             {
                 tileSquare150Content = TileContentFactory.CreateTileSquare150x150Text02();
 
                 var _tileSquare150Content = tileSquare150Content as ITileSquare150x150Text02;
                 _tileSquare150Content.TextHeading.Text = note.Title;
-                _tileSquare150Content.TextBodyWrap.Text = note.GetContent();
+                _tileSquare150Content.TextBodyWrap.Text = note.GetContent(true);
                 _tileSquare150Content.Square71x71Content = tileSquare71Content;
             }
 
@@ -102,7 +142,7 @@ namespace Keep.Utils
 
                 var _tileWideContent = tileWideContent as ITileWide310x150PeekImage05;
                 _tileWideContent.TextHeading.Text = note.Title;
-                _tileWideContent.TextBodyWrap.Text = note.GetContent();
+                _tileWideContent.TextBodyWrap.Text = note.GetContent(true);
                 _tileWideContent.ImageMain.Src = note.Images[0].URL;
                 _tileWideContent.ImageSecondary.Src = note.Images[0].URL;
                 _tileWideContent.Square150x150Content = tileSquare150Content;
@@ -113,11 +153,26 @@ namespace Keep.Utils
 
                 var _tileWideContent = tileWideContent as ITileWide310x150Text09;
                 _tileWideContent.TextHeading.Text = note.Title;
-                _tileWideContent.TextBodyWrap.Text = note.GetContent();
+                _tileWideContent.TextBodyWrap.Text = note.GetContent(true);
                 _tileWideContent.Square150x150Content = tileSquare150Content;
             }
 
-            TileUpdateManager.CreateTileUpdaterForSecondaryTile(note.ID).Update(tileWideContent.CreateNotification());
+            var tileSquare310Content = TileContentFactory.CreateTileSquare310x310ImageAndTextOverlay02();
+            tileSquare310Content.TextHeadingWrap.Text = note.Title;
+            tileSquare310Content.TextBodyWrap.Text = note.GetContent(true);
+            tileSquare310Content.Image.Src = note.Images.Count > 0 ? note.Images[0].URL : null;
+            tileSquare310Content.Wide310x150Content = tileWideContent;
+            
+            //create notification
+            var notification = tileSquare310Content.CreateNotification();
+            notification.Tag = note.ID.Substring(0, 16);
+
+            //update
+            var tileUpdater = TileUpdateManager.CreateTileUpdaterForSecondaryTile(note.ID);
+            tileUpdater.Clear();
+            tileUpdater.EnableNotificationQueue(false);
+            tileUpdater.Update(notification);
+
             return true;
         }
 

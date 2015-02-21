@@ -49,12 +49,12 @@ namespace Keep
 
         #endregion
 
-        private void Pivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if ((e.AddedItems[0] as PivotItem).Tag.ToString() == "about")
-                CommandBar.ClosedDisplayMode = AppBarClosedDisplayMode.Compact;
-            else
-                CommandBar.ClosedDisplayMode = AppBarClosedDisplayMode.Minimal;
-        }
+        //private void Pivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //{
+        //    if ((e.AddedItems[0] as PivotItem).Tag.ToString() == "about")
+        //        CommandBar.ClosedDisplayMode = AppBarClosedDisplayMode.Compact;
+        //    else
+        //        CommandBar.ClosedDisplayMode = AppBarClosedDisplayMode.Minimal;
+        //}
     }
 }

@@ -1,4 +1,5 @@
-﻿using Windows.UI.Xaml;
+﻿using Keep.Models;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 namespace Keep.Controls

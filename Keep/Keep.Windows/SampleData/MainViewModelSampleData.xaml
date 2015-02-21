@@ -1,5 +1,5 @@
-﻿<ViewModels:MainViewModel xmlns:ViewModels="using:Keep.ViewModels" xmlns:Models="using:Keep.Models">
-    <ViewModels:MainViewModel.Columns>2</ViewModels:MainViewModel.Columns>
+﻿<ViewModels:MainViewModel IsWindows="True"  xmlns:ViewModels="using:Keep.ViewModels" xmlns:Models="using:Keep.Models">
+    <ViewModels:MainViewModel.Columns>-1</ViewModels:MainViewModel.Columns>
     <ViewModels:MainViewModel.Notes>
         <Models:Note IsText="False" IsChecklist="True" Title="Title" Text="Hi">
             <Models:Note.Color>
@@ -44,6 +44,12 @@
         <Models:Note IsText="True" IsChecklist="False" Title="Title" Text="Hi">
             <Models:Note.Color>
                 <Models:NoteColor Key="RED" Color="#FFF56545"/>
+            </Models:Note.Color>
+        </Models:Note>
+
+        <Models:Note IsText="True" IsChecklist="False" Title="Title" Text="Hi">
+            <Models:Note.Color>
+                <Models:NoteColor Key="GREEN" Color="#FFBBE535"/>
             </Models:Note.Color>
         </Models:Note>
     </ViewModels:MainViewModel.Notes>

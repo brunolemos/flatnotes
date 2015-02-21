@@ -85,5 +85,17 @@ namespace Keep.Controls
             PropertyChangedEventHandler handler = PropertyChanged;
             if (null != handler) handler(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        private void ColorsGrid_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (ClosedVisualStatePositionAnimation != null)
+                ClosedVisualStatePositionAnimation.To = (sender as FrameworkElement).Height;
+        }
+
+        private void ColorsGrid_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            if (ClosedVisualStatePositionAnimation != null)
+                ClosedVisualStatePositionAnimation.To = e.NewSize.Height;
+        }
     }
 }

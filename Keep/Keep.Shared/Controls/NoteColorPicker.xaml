@@ -8,7 +8,7 @@
     xmlns:local="using:Keep.Controls"
     xmlns:models="using:Keep.Models"
     mc:Ignorable="d"
-    d:DesignHeight="300"
+    d:DesignHeight="200"
     d:DesignWidth="400">
 
     <UserControl.Resources>
@@ -90,7 +90,7 @@
                 </VisualState>
                 <VisualState x:Name="ClosedVisualState">
                     <Storyboard>
-                        <DoubleAnimation Duration="0:0:0.35" To="180" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="ColorsGrid" d:IsOptimized="True">
+                        <DoubleAnimation x:Name="ClosedVisualStatePositionAnimation" Duration="0:0:0.35" To="190" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="ColorsGrid" d:IsOptimized="True">
                             <DoubleAnimation.EasingFunction>
                                 <BackEase Amplitude="0" EasingMode="EaseOut"/>
                             </DoubleAnimation.EasingFunction>
@@ -108,12 +108,12 @@
         </VisualStateManager.VisualStateGroups>
 
         <Grid Grid.Row="0" Background="Transparent" Tapped="OutsideGrid_Tapped"/>
-        <Grid Grid.Row="1" x:Name="ColorsGrid" Height="180" Background="{Binding Background, ElementName=Root, TargetNullValue={StaticResource PhoneMidBrush}}" VerticalAlignment="Bottom" RenderTransformOrigin="0.5,0.5">
+        <Grid Grid.Row="1" x:Name="ColorsGrid" Background="{Binding Background, ElementName=Root, TargetNullValue={StaticResource PhoneMidBrush}}" VerticalAlignment="Bottom" RenderTransformOrigin="0.5,0.5" Loaded="ColorsGrid_Loaded" SizeChanged="ColorsGrid_SizeChanged">
             <Grid.RenderTransform>
                 <CompositeTransform/>
             </Grid.RenderTransform>
 
-            <ListView x:Name="ColorPickerListView" Margin="24" SelectionMode="Single" ItemsSource="{Binding}" ItemsPanel="{StaticResource NoteColorsItemsPanelTemplate}" ItemContainerStyle="{StaticResource NoteColorItemContainerStyle}" DataContext="{Binding Colors, ElementName=Root}" d:DataContext="{d:DesignData /SampleData/NoteColorsSampleData.xaml}" SelectedValue="{Binding ElementName=Root, Path=SelectedNoteColor, Mode=TwoWay}"/>
+            <ListView x:Name="ColorPickerListView" Margin="19,30" SelectionMode="Single" ItemsSource="{Binding}" ItemsPanel="{StaticResource NoteColorsItemsPanelTemplate}" ItemContainerStyle="{StaticResource NoteColorItemContainerStyle}" DataContext="{Binding Colors, ElementName=Root}" d:DataContext="{d:DesignData /SampleData/NoteColorsSampleData.xaml}" SelectedValue="{Binding ElementName=Root, Path=SelectedNoteColor, Mode=TwoWay}"/>
         </Grid>
     </Grid>
 </UserControl>

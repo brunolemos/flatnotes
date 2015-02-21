@@ -37,7 +37,7 @@ namespace Keep.Utils
         private const ElementTheme THEME_DEFAULT = ElementTheme.Light;
 
         private const string COLUMNS_KEY = "COLUMNS";
-        private const int COLUMNS_DEFAULT = 1;
+        private const int COLUMNS_DEFAULT = 2;
 
         private const string TRANSPARENT_TILE_KEY = "TRANSPARENT_TILE";
         private const bool TRANSPARENT_TILE_DEFAULT = false;
@@ -115,7 +115,11 @@ namespace Keep.Utils
 
         public int Columns
         {
+#if WINDOWS_PHONE_APP
             get { return GetValueOrDefault(COLUMNS_KEY, COLUMNS_DEFAULT); }
+#else
+            get { return -1; }
+#endif
             set
             {
                 if (!(value >= 1 && value <= 4)) value = COLUMNS_DEFAULT;

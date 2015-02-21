@@ -147,12 +147,6 @@
   <data name="NewItemTextBox.PlaceholderText" xml:space="preserve">
     <value>Novo item</value>
   </data>
-  <data name="NoGoogleKeepIntegrationMessageTextBox.Text" xml:space="preserve">
-    <value>este app não sincroniza com o Google Keep porque, infelizmente, não é possível</value>
-  </data>
-  <data name="NoteChecklistType.Label" xml:space="preserve">
-    <value>checklist</value>
-  </data>
   <data name="NoteTextType.Label" xml:space="preserve">
     <value>texto</value>
   </data>
@@ -293,5 +287,11 @@
   </data>
   <data name="TransparentTileToggleSwitch.OnContent" xml:space="preserve">
     <value>cor sólida</value>
+  </data>
+  <data name="NoGoogleKeepIntegrationMessageTextBox.Text" xml:space="preserve">
+    <value>este app não sincroniza com o Google Keep porque, infelizmente, não é possível</value>
+  </data>
+  <data name="NoteChecklistType.Label" xml:space="preserve">
+    <value>checklist</value>
   </data>
 </root>

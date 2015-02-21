@@ -26,32 +26,32 @@
                 <Setter Property="Template">
                   <Setter.Value>
                      <ControlTemplate TargetType="ListViewItem">
-                            <ContentPresenter Margin="0,0,0,-14"/>
+                            <ContentPresenter Margin="0,0,0,-14" HorizontalAlignment="Stretch"/>
                         </ControlTemplate>
                   </Setter.Value>
                 </Setter>    
             </Style>
             
             <DataTemplate x:Key="NoteChecklistListViewControlTemplate">
-                <Grid Margin="0,0,0,12">
+                <Grid Margin="0,2,0,14">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-
-                    <Viewbox Grid.Column="0" Height="28" Margin="0,2,0,0" VerticalAlignment="Top">
-                        <Grid Width="40">
-                            <CheckBox IsChecked="{Binding IsChecked, Mode=OneWay}" HorizontalAlignment="Left" Foreground="{Binding ElementName=Root, Path=Foreground}" BorderBrush="{Binding ElementName=Root, Path=Foreground}" RequestedTheme="{Binding ElementName=Root, Path=RequestedTheme}"/>
+                    
+                    <Viewbox Grid.Column="0" Height="{StaticResource KeepNotePreviewChecklistSize}" Margin="0,2,0,0" VerticalAlignment="Top">
+                        <Grid Width="30" Height="30">
+                            <CheckBox Margin="0,-14" IsChecked="{Binding IsChecked, Mode=OneTime}" HorizontalAlignment="Left" IsHitTestVisible="False" Foreground="{StaticResource KeepNoteForegroundBrush}" BorderBrush="{StaticResource KeepNoteForegroundBrush}" Opacity="0.8"/>
                         </Grid>
                     </Viewbox>
 
-                    <TextBlock Grid.Column="1" Text="{Binding Text, Mode=OneWay}" FontSize="16" Foreground="{Binding ElementName=Root, Path=Foreground}" TextWrapping="Wrap" Margin="0,4,0,0" MaxLines="2" TextTrimming="CharacterEllipsis" />
+                    <TextBlock Grid.Column="1" Text="{Binding Text, Mode=OneWay}"  Style="{StaticResource KeepNotePreviewChecklistTextStyle}" Foreground="{Binding ElementName=Root, Path=Foreground}" />
                 </Grid>
             </DataTemplate>
             
             <DataTemplate x:Key="NoteImagesListViewControlTemplate">
-                <Grid x:Name="NoteImageContainer" MaxHeight="150">
-                    <Image MinHeight="150" Source="{Binding URL}" VerticalAlignment="Center" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+                <Grid x:Name="NoteImageContainer" MaxHeight="{StaticResource KeepNotePreviewImageSize}">
+                    <Image MinHeight="{StaticResource KeepNotePreviewImageSize}" Source="{Binding URL}" VerticalAlignment="Center" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
                 </Grid>
             </DataTemplate>
         </ResourceDictionary>
@@ -60,34 +60,34 @@
     <Grid x:Name="NoteContainer" Margin="5" Background="{Binding ElementName=Root, Path=Background}">
         <StackPanel Margin="0">
             <Grid Visibility="{Binding ElementName=Root, Path=HideImage, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=True}">
-                <Grid MaxHeight="150" Background="{StaticResource PhoneDarkLowBrush}" Visibility="{Binding Images.Count, Converter={StaticResource PositiveIntToVisibilityConverter}}">
+                <Grid MaxHeight="{StaticResource KeepNotePreviewImageSize}" Background="{StaticResource PhoneDarkLowBrush}" Visibility="{Binding Images.Count, Converter={StaticResource PositiveIntToVisibilityConverter}}">
                     <ListView x:Name="NoteImagesListView" ItemsSource="{Binding Images}" ItemTemplate="{StaticResource NoteImagesListViewControlTemplate}" SelectionMode="None" IsTapEnabled="False" IsItemClickEnabled="False"/>
                 </Grid>
             </Grid>
 
             <StackPanel Margin="10">
-                <TextBlock Text="{Binding Title, Mode=OneWay}" FontSize="20" Margin="0,0,0,6" Foreground="{Binding ElementName=Root, Path=Foreground}" FontWeight="Bold" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" MaxLines="1" Visibility="{Binding Title, Mode=OneWay, Converter={StaticResource NullableToVisibilityConverter}}"/>
+                <TextBlock Text="{Binding Title, Mode=OneWay}" Style="{StaticResource KeepNotePreviewTitleStyle}" Foreground="{Binding ElementName=Root, Path=Foreground}" Visibility="{Binding Title, Mode=OneWay, Converter={StaticResource NullableToVisibilityConverter}}"/>
 
                 <Grid Visibility="{Binding Text, Mode=OneWay, Converter={StaticResource NullableToVisibilityConverter}}">
-                    <TextBlock Text="{Binding Text, Mode=OneWay}" FontSize="16" Margin="0,0,0,12" Foreground="{Binding ElementName=Root, Path=Foreground}" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" MaxHeight="90" />
+                    <TextBlock Text="{Binding Text, Mode=OneWay}" Style="{StaticResource KeepNotePreviewTextStyle}" Foreground="{Binding ElementName=Root, Path=Foreground}" />
                 </Grid>
 
                 <StackPanel Visibility="{Binding IsChecklist, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
                     <ListView x:Name="NoteChecklistListView" Margin="0,-3,0,10" ItemsSource="{Binding Checklist, Converter={StaticResource MaxChecklistItemsConverter}}" ItemContainerStyle="{StaticResource NotePreviewChecklistItem}" ItemTemplate="{StaticResource NoteChecklistListViewControlTemplate}" IsTapEnabled="False" IsItemClickEnabled="False" />
 
-                    <Grid x:Name="TrimIndicator" Margin="0,-18,0,0" Visibility="{Binding Source={StaticResource MaxChecklistItemsConverter}, Path=IsTrimmed, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <Grid x:Name="TrimIndicator" Margin="0,-12,0,0" Visibility="{Binding Source={StaticResource MaxChecklistItemsConverter}, Path=IsTrimmed, Converter={StaticResource BooleanToVisibilityConverter}}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
-                        <Viewbox Grid.Column="0" Height="28" VerticalAlignment="Top" Opacity="0">
-                            <Grid Width="40">
-                                <CheckBox HorizontalAlignment="Left" IsEnabled="False"/>
+                        <Viewbox Grid.Column="0" Height="{StaticResource KeepNotePreviewChecklistSize}" Margin="0,2,0,0" VerticalAlignment="Top">
+                            <Grid Width="30" Height="30">
+                                <CheckBox Margin="0,-14" IsEnabled="False" Opacity="0"/>
                             </Grid>
                         </Viewbox>
 
-                        <TextBlock Grid.Column="1" Text="..." FontSize="17" Foreground="{Binding ElementName=Root, Path=Foreground}" TextWrapping="Wrap" Margin="0,6,0,0" MaxLines="3" TextTrimming="CharacterEllipsis" />
+                        <TextBlock Grid.Column="1" Text="..."  Style="{StaticResource KeepNotePreviewChecklistTextStyle}" Foreground="{Binding ElementName=Root, Path=Foreground}" />
                     </Grid>
                 </StackPanel>
             </StackPanel>

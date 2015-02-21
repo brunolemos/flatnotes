@@ -194,8 +194,9 @@
   </ProductReservedInfo>
   <AccountPackageIdentityNames>
     <MainPackageIdentityName>29428BrunoLemos.Commit</MainPackageIdentityName>
-    <MainPackageIdentityName>29428BrunoLemos.Hooks</MainPackageIdentityName>
     <MainPackageIdentityName>29428BrunoLemos.Keep</MainPackageIdentityName>
+    <MainPackageIdentityName>29428BrunoLemos.Hooks</MainPackageIdentityName>
+    <MainPackageIdentityName>29428BrunoLemos.Nubank</MainPackageIdentityName>
     <MainPackageIdentityName>29428BrunoLemos.PopcornNow</MainPackageIdentityName>
     <MainPackageIdentityName>29428BrunoLemos.StellarLite</MainPackageIdentityName>
     <MainPackageIdentityName>29428BrunoLemos.5123029690F68</MainPackageIdentityName>
@@ -204,18 +205,18 @@
     <BundleInfo>
       <PackageInfo>
         <OsMinVersion>6.3.0.0</OsMinVersion>
-        <PackageArchitecture>neutral</PackageArchitecture>
-        <PackageMaxArchitectureVersion>1.9.0.1</PackageMaxArchitectureVersion>
-      </PackageInfo>
-      <PackageInfo>
-        <OsMinVersion>6.3.0.0</OsMinVersion>
-        <PackageArchitecture></PackageArchitecture>
-        <PackageMaxArchitectureVersion>1.9.0.1</PackageMaxArchitectureVersion>
-      </PackageInfo>
-      <PackageInfo>
-        <OsMinVersion>6.3.0.0</OsMinVersion>
         <PackageArchitecture></PackageArchitecture>
         <PackageMaxArchitectureVersion>1.2.0.1</PackageMaxArchitectureVersion>
+      </PackageInfo>
+      <PackageInfo>
+        <OsMinVersion>6.3.0.0</OsMinVersion>
+        <PackageArchitecture></PackageArchitecture>
+        <PackageMaxArchitectureVersion>1.9.5.1</PackageMaxArchitectureVersion>
+      </PackageInfo>
+      <PackageInfo>
+        <OsMinVersion>6.3.0.0</OsMinVersion>
+        <PackageArchitecture>neutral</PackageArchitecture>
+        <PackageMaxArchitectureVersion>1.9.5.1</PackageMaxArchitectureVersion>
       </PackageInfo>
     </BundleInfo>
   </PackageInfoList>

@@ -13,8 +13,10 @@ namespace Keep.ViewModels
 {
     public class NoteEditViewModel : ViewModelBase
     {
+#if WINDOWS_PHONE_APP
         public event EventHandler ReorderModeEnabled;
         public event EventHandler ReorderModeDisabled;
+#endif
 
         public RelayCommand OpenImagePickerCommand { get; private set; }
         public RelayCommand ToggleChecklistCommand { get; private set; }
@@ -31,15 +33,15 @@ namespace Keep.ViewModels
             ToggleChecklistCommand = new RelayCommand(ToggleChecklist);
             PinCommand = new RelayCommand(Pin);
             UnpinCommand = new RelayCommand(Unpin);
-            ArchiveNoteCommand = new RelayCommand(ArchiveNote); //CanArchiveNote
-            RestoreNoteCommand = new RelayCommand(RestoreNote); //CanRestoreNote
+            ArchiveNoteCommand = new RelayCommand(ArchiveNote);
+            RestoreNoteCommand = new RelayCommand(RestoreNote);
             DeleteNoteCommand = new RelayCommand(DeleteNote);
             DeleteNoteImageCommand = new RelayCommand(DeleteNoteImage);
 
             PropertyChanged += OnPropertyChanged;
 
-            AppSettings.Instance.NotesSaved += (s, e) => { NotifyPropertyChanged("Note"); if (!IsArchived) Note.Changed = false; TileManager.UpdateNoteTileIfExists(Note); };
-            AppSettings.Instance.ArchivedNotesSaved += (s, e) => { NotifyPropertyChanged("Note"); if (IsArchived) Note.Changed = false; };
+            AppSettings.Instance.NotesSaved += OnNotesSaved;
+            AppSettings.Instance.ArchivedNotesSaved += OnArchivedNotesSaved;
         }
 
         private void OnPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -53,7 +55,7 @@ namespace Keep.ViewModels
                 IsArchived = AppData.ArchivedNotes.Where<Note>(x => x.ID == Note.ID).FirstOrDefault<Note>() != null;
                 IsNewNote = !AlreadyExists && !IsArchived;
                 IsPinned = SecondaryTile.Exists(Note.ID);
-
+                
                 Note.PropertyChanged += (s, _e) =>
                 {
                     if (_e.PropertyName == "Changed")
@@ -68,12 +70,32 @@ namespace Keep.ViewModels
             }
         }
 
+        private void OnNotesSaved(object sender, EventArgs e)
+        {
+            NotifyPropertyChanged("Note");
+            if (Note == null) return;
+
+            if (!IsArchived)
+                Note.Changed = false;
+
+            TileManager.UpdateNoteTileIfExists(Note);
+        }
+
+        private void OnArchivedNotesSaved(object sender, EventArgs e)
+        {
+            NotifyPropertyChanged("Note");
+            if (Note == null) return;
+
+            if (IsArchived)
+                Note.Changed = false;
+        }
+
         public static Note CurrentNoteBeingEdited { get; set; }
 
         public Note Note { get { return note; } set { note = value == null ? new Note() : value; NotifyPropertyChanged("Note"); } }
         private static Note note = new Note();
 
-        public bool IsPinned { get { isPinned = SecondaryTile.Exists(Note.ID); return isPinned; } set { isPinned = value; NotifyPropertyChanged("IsPinned"); } }
+        public bool IsPinned { get { isPinned = Note == null ? false : SecondaryTile.Exists(Note.ID); return isPinned; } set { isPinned = value; NotifyPropertyChanged("IsPinned"); } }
         private bool isPinned;
 
         public bool IsNewNote { get { return isNewNote; } set { isNewNote = value; NotifyPropertyChanged("IsNewNote"); } }
@@ -87,7 +109,8 @@ namespace Keep.ViewModels
 
         public NoteImage TempNoteImage { get { return tempNoteImage; } set { tempNoteImage = value; } }
         private static NoteImage tempNoteImage = null;
-        
+
+#if WINDOWS_PHONE_APP
         public ListViewReorderMode ReorderMode
         {
             get { return reorderMode; }
@@ -103,8 +126,8 @@ namespace Keep.ViewModels
             }
         }
         public ListViewReorderMode reorderMode = ListViewReorderMode.Disabled;
-
-        #region COMMANDS_ACTIONS
+#endif
+#region COMMANDS_ACTIONS
 
         private void OpenImagePicker()
         {
@@ -119,8 +142,10 @@ namespace Keep.ViewModels
             picker.FileTypeFilter.Add(".jpeg");
             picker.FileTypeFilter.Add(".png");
 
+#if WINDOWS_PHONE_APP
             //open
             picker.PickSingleFileAndContinue();
+#endif
         }
 
         private void ToggleChecklist()
@@ -133,8 +158,12 @@ namespace Keep.ViewModels
         {
             GoogleAnalytics.EasyTracker.GetTracker().SendEvent("ui_action", "execute_command", "pin", 0);
 
-            await TileManager.CreateOrUpdateNoteTile(Note);
-            IsPinned = SecondaryTile.Exists(Note.ID);
+            if (Note.IsEmpty()) return;
+
+            if (IsNewNote)
+                await AppData.CreateOrUpdateNote(Note);
+
+            IsPinned = await TileManager.CreateOrUpdateNoteTile(Note);
         }
 
         private void Unpin()
@@ -143,11 +172,6 @@ namespace Keep.ViewModels
 
             TileManager.RemoveTileIfExists(Note);
             IsPinned = SecondaryTile.Exists(Note.ID);
-        }
-
-        private bool CanArchiveNote()
-        {
-            return Note != null && AlreadyExists && !IsArchived;
         }
 
         private async void ArchiveNote()
@@ -159,12 +183,6 @@ namespace Keep.ViewModels
                 App.RootFrame.GoBack();
             else
                 App.RootFrame.Navigate(typeof(MainPage));
-        }
-
-        private bool CanRestoreNote()
-        {
-            Debug.WriteLine("CanRestoreNote " + IsArchived);
-            return IsArchived;
         }
 
         private async void RestoreNote()
@@ -210,6 +228,6 @@ namespace Keep.ViewModels
                 await AppData.SaveNotes();
         }
 
-        #endregion
+#endregion
     }
 }

@@ -18,7 +18,6 @@ namespace Keep.Utils
         public static event EventHandler<NoteEventArgs> NoteRestored;
         public static event EventHandler<NoteEventArgs> NoteRemoved;
 
-        public static Stopwatch Watch = new Stopwatch();
         public static bool HasUnsavedChangesOnNotes;
         public static bool HasUnsavedChangesOnArchivedNotes;
 
@@ -58,6 +57,18 @@ namespace Keep.Utils
         //    Notes.CollectionChanged += (s, e) => NotesChanged(s, e);
         //}
 
+        public static async Task Load()
+        {
+            //versioning -- migrate app data structure when necessary
+            await Migration.Migration.Migrate(AppSettings.Instance.Version);
+
+            //load notes
+            AppData.Notes = await AppSettings.Instance.LoadNotes();
+
+            //load archived notes
+            AppData.ArchivedNotes = await AppSettings.Instance.LoadArchivedNotes();
+        }
+
         public static async Task<bool> SaveNotes()
         {
             Debug.WriteLine("Save notes");
@@ -89,6 +100,8 @@ namespace Keep.Utils
 
         private static async Task<bool> CreateNote(Note note)
         {
+            if (note == null || note.IsEmpty()) return false;
+
             Debug.WriteLine("Create note: " + note.Title);
             GoogleAnalytics.EasyTracker.GetTracker().SendEvent("app_data", "create", "note", 0);
 
@@ -107,6 +120,7 @@ namespace Keep.Utils
 
         private static async Task<bool> UpdateNote(Note note)
         {
+            if (note == null) return false;
             bool isNoteArchived = ArchivedNotes.Where<Note>(x => x.ID == note.ID).FirstOrDefault<Note>() != null;
 
             Debug.WriteLine("Update note: " + note.Title);
@@ -125,6 +139,8 @@ namespace Keep.Utils
 
         public static async Task<bool> ArchiveNote(Note note)
         {
+            if (note == null) return false;
+
             Debug.WriteLine("Archive note: " + note.Title);
             GoogleAnalytics.EasyTracker.GetTracker().SendEvent("app_data", "archive", "note", 0);
 
@@ -132,13 +148,15 @@ namespace Keep.Utils
             if (!noteExists) return false;
 
             bool noteAlreadyArchived = ArchivedNotes.Where<Note>(x => x.ID == note.ID).FirstOrDefault<Note>() != null;
-            if (noteAlreadyArchived) return true;
 
-            note.ArchivedAt = DateTime.UtcNow;
-            ArchivedNotes.Insert(0, note);
+            if (!noteAlreadyArchived)
+            {
+                note.ArchivedAt = DateTime.UtcNow;
+                ArchivedNotes.Insert(0, note);
 
-            bool success = await SaveArchivedNotes();
-            if (!success) return false;
+                bool success = await SaveArchivedNotes();
+                if (!success) return false;
+            }
 
             await RemoveNote(note, true);
 
@@ -150,6 +168,8 @@ namespace Keep.Utils
 
         public static async Task<bool> RestoreNote(Note note)
         {
+            if (note == null) return false;
+
             Debug.WriteLine("Restore note: " + note.Title);
             GoogleAnalytics.EasyTracker.GetTracker().SendEvent("app_data", "restore", "archived_note", 0);
 
@@ -157,12 +177,14 @@ namespace Keep.Utils
             if (!noteAlreadyArchived) return false;
 
             bool noteExists = Notes.Where<Note>(x => x.ID == note.ID).FirstOrDefault<Note>() != null;
-            if (noteExists) return true;
 
-            Notes.Insert(0, note);
+            if (!noteExists)
+            {
+                Notes.Insert(0, note);
 
-            bool success = await SaveNotes();
-            if (!success) return false;
+                bool success = await SaveNotes();
+                if (!success) return false;
+            }
 
             await RemoveArchivedNote(note, true);
 
@@ -174,6 +196,8 @@ namespace Keep.Utils
 
         public static async Task<bool> RemoveNote(Note note, bool isArchiving = false)
         {
+            if (note == null) return false;
+
             Debug.WriteLine("Remove note: " + note.Title);
             GoogleAnalytics.EasyTracker.GetTracker().SendEvent("app_data", "remove", "note", 0);
 
@@ -200,6 +224,8 @@ namespace Keep.Utils
 
         public static async Task<bool> RemoveArchivedNote(Note note, bool isRestoring = false)
         {
+            if (note == null) return false;
+
             Debug.WriteLine("Remove archived note: " + note.Title);
             GoogleAnalytics.EasyTracker.GetTracker().SendEvent("app_data", "remove", "archived_note", 0);
 
@@ -242,10 +268,9 @@ namespace Keep.Utils
 
             try
             {
-                Debug.WriteLine("Deleting {0}... ", noteImage.URL);
+                Debug.WriteLine("Delete {0}", noteImage.URL);
                 var file = await StorageFile.GetFileFromPathAsync(noteImage.URL);
                 await file.DeleteAsync();
-                Debug.WriteLine("Deleted.");
             }
             catch (Exception)
             {

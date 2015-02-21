@@ -9,6 +9,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="ms-appx:///Resources/DefaultResourceDictionary.xaml"/>
+                <ResourceDictionary Source="ms-appx:///Resources/CustomResourceDictionary.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             
             <ResourceDictionary.ThemeDictionaries>

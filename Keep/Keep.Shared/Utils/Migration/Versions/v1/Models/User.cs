@@ -87,7 +87,7 @@ namespace Keep.Utils.Migration.Versions.v1.Models
 
         private void replaceNotes(Notes list)
         {
-            Debug.WriteLine("REPLACE NOTES");
+            //Debug.WriteLine("REPLACE NOTES");
             notes.Clear();
 
             if (list == null || list.Count <= 0)

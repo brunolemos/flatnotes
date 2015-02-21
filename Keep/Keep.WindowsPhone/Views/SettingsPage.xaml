@@ -18,7 +18,7 @@
     </Page.Transitions>
     
     <Page.BottomAppBar>
-        <CommandBar x:Name="CommandBar">
+        <CommandBar x:Name="CommandBar" IsOpen="True" IsSticky="True">
             <CommandBar.PrimaryCommands>
                 <AppBarButton x:Uid="PraiseAppBarButton" Icon="Like" Label="praise" Command="{Binding SendFeedbackCommand}"/>
                 <AppBarButton x:Uid="SupportAppBarButton" Icon="Mail" Label="support" Command="{Binding SuggestFeatureOrReportBugCommand}"/>
@@ -36,20 +36,6 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        
-        <!--<StackPanel>
-            <Grid  Margin="19,12,0,0">
-                <TextBlock x:Uid="SettingsTextBlock" Text="settings" Margin="0,-6.5,0,26.5" Style="{ThemeResource HeaderTextBlockStyle}"/>
-            </Grid>
-
-            <StackPanel x:Name="ContentRoot" Margin="19,9.5,19,0">
-                <TextBlock x:Uid="ThemeTextBlock" Text="Theme" Style="{StaticResource TitleTextBlockStyle}" Margin="0,0,0,6"/>
-                <ComboBox Margin="0,0,0,24" ItemsSource="{Binding Themes}" SelectedValue="{Binding Theme, Mode=TwoWay}" DisplayMemberPath="Name" />
-
-                <TextBlock x:Uid="ColumnsTextBlock" Text="Columns" Margin="0,0,0,6" Style="{StaticResource TitleTextBlockStyle}"/>
-                <Slider Margin="0,0,0,24" Minimum="0" Maximum="4" LargeChange="1" TickFrequency="1" Value="{Binding Columns, Mode=TwoWay}" />
-            </StackPanel>
-        </StackPanel>-->
 
         <Pivot HeaderTemplate="{StaticResource HeaderTemplate}">
             <PivotItem x:Uid="PreferencesPivotItem" Header="preferences" Tag="preferences">
@@ -82,7 +68,7 @@
             <PivotItem x:Uid="AboutPivotItem" Header="about" Tag="about">
                 <ScrollViewer>
                     <StackPanel>
-                        <Image Width="80" Source="ms-appx:///Assets/LogoTransparent.png" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+                        <Image Width="80" Source="ms-appx:///Assets/Logo.png" VerticalAlignment="Top" HorizontalAlignment="Center"/>
                         <TextBlock Margin="0,0,0,24" Text="Flat Notes" HorizontalAlignment="Center" Style="{StaticResource SubheaderTextBlockStyle}"/>
                     
                         <Grid Margin="0,0,0,24">

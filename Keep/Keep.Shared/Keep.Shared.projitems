@@ -24,6 +24,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Common\SuspensionManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\TrullyObservableCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\FluidGrid.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\MyListView.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\NoteColorPicker.xaml.cs">
       <DependentUpon>NoteColorPicker.xaml</DependentUpon>
     </Compile>
@@ -50,6 +51,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Utils\AppData.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\AppSettings.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\Extensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\NoteSwipeFeature.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\ManipulationInputProcessor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\Migration\Migration.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\Migration\Versions\v1\AppSettings.cs" />
@@ -65,11 +67,20 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ViewModelBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\NoteEditViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MainViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\ArchivedNotesPage.xaml.cs">
+      <DependentUpon>ArchivedNotesPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\MainPage.xaml.cs">
+      <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\NoteEditPage.xaml.cs">
+      <DependentUpon>NoteEditPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Partials\MainPage_NoteReorder.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Partials\NoteEditPage_KeyDownHandlers.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="$(MSBuildThisFileDirectory)Assets\appbar.list.png" />
-    <Content Include="$(MSBuildThisFileDirectory)Assets\appbar.text.sans.png" />
-    <Content Include="$(MSBuildThisFileDirectory)Assets\appbar.water.droplet.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Logo.png" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="$(MSBuildThisFileDirectory)Controls\NoteColorPicker.xaml" />
@@ -83,6 +94,19 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="$(MSBuildThisFileDirectory)Resources\Themes\LightThemeResourceDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\ArchivedNotesPage.xaml">
+      <SubType>
+      </SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\MainPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\NoteEditPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

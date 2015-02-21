@@ -48,16 +48,23 @@ namespace Keep.ViewModels
         public static async void SuggestFeatureOrReportBug()
         {
             bool isBeta = Package.Current.Id.Name.Contains("Beta");
-            string appName = isBeta ? "Flat Notes Beta" : "Flat Notes";
-
             GoogleAnalytics.EasyTracker.GetTracker().SendEvent("ui_action", "execute_command", "suggest_feature_or_report_bug", isBeta ? 1 : 0);
+
+            string appName = isBeta ? "Flat Notes Beta" : "Flat Notes";
+            string email = "flatnotes@brunolemos.org";
+            string subject = String.Format("Feedback - {0} v{1}", appName, AppVersion);
+            string body = ResourceLoader.GetForCurrentView().GetString("YourMessageGoesHere");
+
+#if WINDOWS_PHONE_APP
             Windows.ApplicationModel.Email.EmailMessage mail = new Windows.ApplicationModel.Email.EmailMessage();
-
-            mail.To.Add(new Windows.ApplicationModel.Email.EmailRecipient("flatnotes@brunolemos.org"));
-            mail.Subject = String.Format("Feedback - {0} v{1}", appName, AppVersion);
-            mail.Body = ResourceLoader.GetForCurrentView().GetString("YourMessageGoesHere");
-
+            mail.To.Add(new Windows.ApplicationModel.Email.EmailRecipient(email));
+            mail.Subject = subject;
+            mail.Body = body;
             await Windows.ApplicationModel.Email.EmailManager.ShowComposeNewEmailAsync(mail);
+#else
+            var emailToUri = new Uri(String.Format("mailto:?to={0}&subject={1}&body={2}", email, subject, body));
+            await Windows.System.Launcher.LaunchUriAsync(emailToUri);
+#endif
         }
     }
 }

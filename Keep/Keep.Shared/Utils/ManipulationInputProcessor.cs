@@ -33,7 +33,7 @@ namespace Keep.Utils
             this.element = target;
             this.reference = referenceframe != null ? referenceframe : target;
 
-            this.elementInitialOpacity = element.Opacity;
+            //this.elementInitialOpacity = 1;// element.Opacity;
             this.containerSize = new Size(target.ActualWidth, 0);
 
             previousManipulationModes = element.ManipulationMode;
@@ -158,7 +158,8 @@ namespace Keep.Utils
 
         public void InitializeTransforms()
         {
-            Debug.WriteLine("InitializeTransforms");
+            if (element == null) return;
+
             this.cumulativeTransform = new TransformGroup();
             this.deltaTransform = new CompositeTransform();
             this.previousTransform = new MatrixTransform() { Matrix = Matrix.Identity };
@@ -193,7 +194,6 @@ namespace Keep.Utils
 
         void OnManipulationCompleted(object sender, ManipulationCompletedEventArgs e)
         {
-            Debug.WriteLine("OnManipulationCompleted");
             if (element.Opacity <= minOpacity)
             {
                 Disable();

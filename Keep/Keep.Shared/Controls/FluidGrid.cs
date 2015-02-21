@@ -91,14 +91,14 @@ namespace Keep.Controls
             set { SetValue(LastCellWidthProperty, value); }
         }
 
-        public static readonly DependencyProperty ColumnsProperty = DependencyProperty.Register("Columns", typeof(int), typeof(FluidGrid), new PropertyMetadata(1, OnColumnsChanged));
+        public static readonly DependencyProperty ColumnsProperty = DependencyProperty.Register("Columns", typeof(int), typeof(FluidGrid), new PropertyMetadata(-1, OnColumnsChanged));
         public int Columns
         {
             get { return (int)GetValue(ColumnsProperty); }
             set { SetValue(ColumnsProperty, value); }
         }
 
-        public static readonly DependencyProperty ItemMinWidthProperty = DependencyProperty.Register("ItemMinWidth", typeof(int), typeof(FluidGrid), new PropertyMetadata(0, OnItemMinWidthChanged));
+        public static readonly DependencyProperty ItemMinWidthProperty = DependencyProperty.Register("ItemMinWidth", typeof(int), typeof(FluidGrid), new PropertyMetadata(200, OnItemMinWidthChanged));
         public int ItemMinWidth
         {
             get { return (int)GetValue( ItemMinWidthProperty ); }

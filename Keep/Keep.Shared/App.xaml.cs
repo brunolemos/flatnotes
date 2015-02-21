@@ -3,13 +3,13 @@ using Keep.Utils;
 using Keep.ViewModels;
 using Keep.Views;
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Core;
 using Windows.UI;
 using Windows.UI.Core;
+using Windows.UI.Notifications;
 using Windows.UI.Popups;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
@@ -17,18 +17,22 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 
+#if WINDOWS_APP
+using Windows.UI.ApplicationSettings;
+using Windows.UI.Notifications;
+#endif
+
 namespace Keep
 {
     public sealed partial class App : Application
     {
 #if WINDOWS_PHONE_APP
         private TransitionCollection transitions;
+        public static ContinuationManager ContinuationManager { get; private set; }
 #endif
 
         public static Frame RootFrame { get { if (rootFrame == null) rootFrame = CreateRootFrame(); return rootFrame; } }
         private static Frame rootFrame = null;
-
-        public static ContinuationManager ContinuationManager { get; private set; }
 
         public App()
         {
@@ -44,6 +48,8 @@ namespace Keep
 
             AppData.NoteArchived += (s, _e) => { TileManager.RemoveTileIfExists(_e.Note); };
             AppData.NoteRemoved += (s, _e) => { TileManager.RemoveTileIfExists(_e.Note); };
+
+            TileUpdateManager.CreateTileUpdaterForApplication().EnableNotificationQueue(false);
         }
 
         private async void App_UnhandledException(object sender, UnhandledExceptionEventArgs e)
@@ -99,11 +105,10 @@ namespace Keep
         protected override async void OnActivated(IActivatedEventArgs e)
         {
             base.OnActivated(e);
-            System.Diagnostics.Debug.WriteLine("OnActivated " + e.PreviousExecutionState.ToString());
-
-            ContinuationManager = new ContinuationManager();
-
             await RestoreStatusAsync(e.PreviousExecutionState);
+
+#if WINDOWS_PHONE_APP
+            ContinuationManager = new ContinuationManager();
 
             var continuationEventArgs = e as IContinuationActivatedEventArgs;
             if (continuationEventArgs != null)
@@ -112,11 +117,12 @@ namespace Keep
                 if (RootFrame != null)
                     ContinuationManager.Continue(continuationEventArgs, RootFrame);
             }
+#endif
 
             Window.Current.Activate();
         }
 
-        protected override void OnLaunched(LaunchActivatedEventArgs e)
+        protected override async void OnLaunched(LaunchActivatedEventArgs e)
         {
 #if DEBUG
             if (System.Diagnostics.Debugger.IsAttached)
@@ -147,19 +153,23 @@ namespace Keep
                 RootFrame.Navigated += this.RootFrame_FirstNavigated;
 #endif
 
+                //load app data
+                await AppData.Load();
+
                 // When the navigation stack isn't restored navigate to the first page,
                 // configuring the new page by passing required information as a navigation
                 // parameter
-                if (!RootFrame.Navigate(typeof(SplashPage), e.Arguments))
+                if (!RootFrame.Navigate(typeof(MainPage), e.Arguments))
                     throw new Exception("Failed to create initial page");
             }
 
             //received parameters and the app was suspended
             else if (e.Arguments != null && !String.IsNullOrEmpty(e.Arguments.ToString()))
             {
-                Window.Current.Activate();
                 RootFrame.Navigate(typeof(MainPage), e.Arguments);
             }
+
+            Window.Current.Activate();
         }
 
 #if WINDOWS_PHONE_APP
@@ -177,7 +187,7 @@ namespace Keep
             await SuspensionManager.SaveAsync();
 
             //update tile
-            //if (NoteEditViewModel.CurrentNoteBeingEdited != null) TileManager.UpdateNoteTileIfExists(NoteEditViewModel.CurrentNoteBeingEdited);
+            if (NoteEditViewModel.CurrentNoteBeingEdited != null) TileManager.UpdateNoteTileIfExists(NoteEditViewModel.CurrentNoteBeingEdited);
 
             //save data
             if (AppData.HasUnsavedChangesOnNotes) await AppData.SaveNotes();
@@ -211,9 +221,9 @@ namespace Keep
 #endif
         }
 
+#if WINDOWS_PHONE_APP
         public static async void SimulateStatusBarProgressComplete()
         {
-#if WINDOWS_PHONE_APP
             StatusBar.GetForCurrentView().ProgressIndicator.ProgressValue = 0;
             await StatusBar.GetForCurrentView().ProgressIndicator.ShowAsync();
 
@@ -224,6 +234,37 @@ namespace Keep
             }
 
             await StatusBar.GetForCurrentView().ProgressIndicator.HideAsync();
+        }
+#else
+        public static void SimulateStatusBarProgressComplete() { }
+#endif
+
+#if WINDOWS_APP
+        protected override void OnWindowCreated(WindowCreatedEventArgs args)
+        {
+            SettingsPane.GetForCurrentView().CommandsRequested += OnCommandsRequested;
+        }
+
+        private void OnCommandsRequested(SettingsPane sender, SettingsPaneCommandsRequestedEventArgs args)
+        {
+            var preferencesSettings = new SettingsCommand("preferences_settings", "Preferences", (handler) => { new PreferencesSettingsFlyout().Show(); });
+            var aboutSettings = new SettingsCommand("about_settings", "About", (handler) => { new AboutSettingsFlyout().Show(); });
+            var feedbackSettings = new SettingsCommand("feedback_settings", "Send a nice feedback", (handler) => SettingsViewModel.SendFeedback());
+            var reportBugSettings = new SettingsCommand("report_bug_settings", "Report bug / Suggest feature", (handler) => SettingsViewModel.SuggestFeatureOrReportBug());
+
+            args.Request.ApplicationCommands.Add(preferencesSettings);
+            args.Request.ApplicationCommands.Add(aboutSettings);
+            args.Request.ApplicationCommands.Add(feedbackSettings);
+            args.Request.ApplicationCommands.Add(reportBugSettings);
+        }
+#endif
+
+        public static void OpenSettings()
+        {
+#if WINDOWS_APP
+            new PreferencesSettingsFlyout().Show();
+#else
+            RootFrame.Navigate(typeof(SettingsPage));
 #endif
         }
     }
