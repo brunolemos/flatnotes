@@ -45,7 +45,13 @@ namespace Keep.ViewModels
         public static async void DownloadApp()
         {
             GoogleAnalytics.EasyTracker.GetTracker().SendEvent("ui_action", "execute_command", "download_app", 0);
-            await Launcher.LaunchUriAsync(new Uri("ms-windows-store:navigate?appid=da5b3964-02d9-42c4-ab1d-5e58d1c06095"));
+            await Launcher.LaunchUriAsync(new Uri("ms-windows-store:navigate?appid=" + App.PublishedMainAppId));
+        }
+
+        public static async void DownloadWindowsPhoneApp()
+        {
+            GoogleAnalytics.EasyTracker.GetTracker().SendEvent("ui_action", "execute_command", "download_wp_app", 0);
+            await Launcher.LaunchUriAsync(new Uri("http://www.windowsphone.com/s?appid=" + App.PublishedMainAppId));
         }
 
         public static async void SendFeedback()

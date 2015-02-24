@@ -17,7 +17,11 @@
     <StackPanel Width="280">
         <StackPanel Style="{StaticResource SettingsFlyoutSectionStyle}">
             <Image Width="80" Source="ms-appx:///Assets/Logo.png" VerticalAlignment="Top" HorizontalAlignment="Center"/>
-            <TextBlock Text="Flat Notes" HorizontalAlignment="Center" Style="{StaticResource SubheaderTextBlockStyle}"/>
+            <TextBlock Text="{Binding AppName}" Margin="0,0,0,12" HorizontalAlignment="Center" Style="{StaticResource SubheaderTextBlockStyle}"/>
+        
+            <StackPanel Grid.Row="1" Margin="0,0,0,12" Visibility="{Binding IsBeta}">
+                <Button Content="Download Flat Notes" HorizontalAlignment="Stretch" Command="{Binding DownloadAppCommand}"/>
+            </StackPanel>
         </StackPanel>
         
         <StackPanel Style="{StaticResource SettingsFlyoutSectionStyle}">
@@ -35,7 +39,11 @@
 
                     <StackPanel VerticalAlignment="Center" HorizontalAlignment="Left">
                         <TextBlock x:Uid="DevelopedByTextBlock" Text="developed by" Style="{StaticResource TitleTextBlockStyle}" />
-                        <TextBlock x:Uid="DeveloperNameAndCountry" Text="Bruno Lemos (Brazil)" Margin="0,0,0,12" Style="{StaticResource BodyTextBlockStyle}"/>
+                        <TextBlock Margin="0,0,0,12" Style="{StaticResource BodyTextBlockStyle}">
+                            <Run Text="@brunolemos ("/><Run
+                                Text="{Binding Converter={StaticResource LocalizedResourcesConverter}, ConverterParameter='Brazil', FallbackValue='Brazil', TargetNullValue='Brazil'}"/><Run
+                                Text=")"/>
+                        </TextBlock>
                     </StackPanel>
 
                     <Viewbox Grid.Column="1" Height="24" Margin="48,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Right">
