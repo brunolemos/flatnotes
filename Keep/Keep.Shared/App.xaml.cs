@@ -2,7 +2,6 @@
 using Keep.Utils;
 using Keep.ViewModels;
 using Keep.Views;
-using Parse;
 using System;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
@@ -54,7 +53,7 @@ namespace Keep
             AppData.NoteArchived += (s, _e) => { TileManager.RemoveTileIfExists(_e.Note); };
             AppData.NoteRemoved += (s, _e) => { TileManager.RemoveTileIfExists(_e.Note); };
 
-            ParseClient.Initialize("l3HEDWzlj1zLmkL8l2KH8lBToeVVpUiurHNi8AHv", "w1s6IQUJHUxRQvKIZVQbRgfwJ2PfUz0HLRkhya2K");
+            //ParseClient.Initialize("l3HEDWzlj1zLmkL8l2KH8lBToeVVpUiurHNi8AHv", "w1s6IQUJHUxRQvKIZVQbRgfwJ2PfUz0HLRkhya2K");
         }
 
         private async void App_UnhandledException(object sender, UnhandledExceptionEventArgs e)
