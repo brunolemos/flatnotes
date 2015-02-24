@@ -24,9 +24,9 @@ namespace Keep.Converters
             int delta = (int)currentDateTime.Subtract(receivedDateTime).TotalSeconds;
             TimeSpan ts_delta = new TimeSpan(0, 0, delta);
 
-            Debug.WriteLine("receivedDateTime:" + receivedDateTime);
-            Debug.WriteLine("currentDateTime:" + currentDateTime);
-            Debug.WriteLine("delta:" + delta);
+            //Debug.WriteLine("receivedDateTime:" + receivedDateTime);
+            //Debug.WriteLine("currentDateTime:" + currentDateTime);
+            //Debug.WriteLine("delta:" + delta);
 
             if (delta < 0) return "";
             if (delta < 30 * SECOND) return GetGlobalizedString("JustNow");

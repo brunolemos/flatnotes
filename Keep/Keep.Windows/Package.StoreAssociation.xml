@@ -348,22 +348,23 @@
     <Language Code="zu-za" InMinimumRequirementSet="true" />
   </SupportedLocales>
   <ProductReservedInfo>
-    <MainPackageIdentityName>29428BrunoLemos.KeepBeta</MainPackageIdentityName>
+    <MainPackageIdentityName>29428BrunoLemos.Keep</MainPackageIdentityName>
     <ReservedNames>
-      <ReservedName>Flat Notes Beta</ReservedName>
-      <ReservedName>Google Keep Beta</ReservedName>
-      <ReservedName>Keep Notes Beta</ReservedName>
-      <ReservedName>Keep Beta</ReservedName>
+      <ReservedName>Flat Notes</ReservedName>
+      <ReservedName>Keep 8.1</ReservedName>
+      <ReservedName>Google Keep 8.1</ReservedName>
+      <ReservedName>Google Keep Alternative</ReservedName>
+      <ReservedName>#Keep</ReservedName>
     </ReservedNames>
   </ProductReservedInfo>
   <AccountPackageIdentityNames>
     <MainPackageIdentityName>29428BrunoLemos.Commit</MainPackageIdentityName>
-    <MainPackageIdentityName>29428BrunoLemos.Keep</MainPackageIdentityName>
+    <MainPackageIdentityName>29428BrunoLemos.KeepBeta</MainPackageIdentityName>
     <MainPackageIdentityName>29428BrunoLemos.Hooks</MainPackageIdentityName>
     <MainPackageIdentityName>29428BrunoLemos.Nubank</MainPackageIdentityName>
     <MainPackageIdentityName>29428BrunoLemos.PopcornNow</MainPackageIdentityName>
     <MainPackageIdentityName>29428BrunoLemos.StellarLite</MainPackageIdentityName>
     <MainPackageIdentityName>29428BrunoLemos.5123029690F68</MainPackageIdentityName>
   </AccountPackageIdentityNames>
-  <PackageInfoList LandingUrl="https://appdev.microsoft.com:443/StorePortals/Developer/Catalog/ReleaseAnchor/5ce343c3-5530-455c-bfcf-998a516b50ad" />
+  <PackageInfoList LandingUrl="https://appdev.microsoft.com:443/StorePortals/Developer/Catalog/ReleaseAnchor/8375815d-4437-4c4e-b27b-925c2596244b" />
 </StoreAssociation>
