@@ -5,6 +5,7 @@
     xmlns:local="using:Keep"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:Converters="using:Keep.Converters"
     mc:Ignorable="d"
     NavigationCacheMode="Required"
     Background="{ThemeResource AppStatusBarBackgroundBrush}"
@@ -17,6 +18,10 @@
         </TransitionCollection>
     </Page.Transitions>
     
+    <Page.Resources>
+        <Converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </Page.Resources>
+
     <Page.BottomAppBar>
         <CommandBar x:Name="CommandBar">
             <CommandBar.PrimaryCommands>
@@ -107,9 +112,7 @@
                         </StackPanel>
                     </ScrollViewer>
                         
-                    <StackPanel Grid.Row="1" Margin="0,24,0,12" Visibility="{Binding IsBeta}">
-                        <Button Content="Download Flat Notes" HorizontalAlignment="Stretch" Command="{Binding DownloadAppCommand}"/>
-                    </StackPanel>
+                     <Button Grid.Row="1" Margin="0,24,0,12" Content="Download Flat Notes" HorizontalAlignment="Stretch" Command="{Binding DownloadAppCommand}" Visibility="{Binding IsBeta, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                 </Grid>
             </PivotItem>
         </Pivot>

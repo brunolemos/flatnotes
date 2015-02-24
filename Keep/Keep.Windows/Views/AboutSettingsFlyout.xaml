@@ -6,6 +6,7 @@
     xmlns:local="using:Keep.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:Converters="using:Keep.Converters"
     mc:Ignorable="d"
     Title="about"
     Width="360"
@@ -14,14 +15,15 @@
     DataContext="{Binding Source={StaticResource SettingsViewModel}}"
     d:DataContext="{d:DesignData /SampleData/SettingsViewModelSampleData.xaml}">
 
+    <SettingsFlyout.Resources>
+        <Converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </SettingsFlyout.Resources>
+    
     <StackPanel Width="280">
         <StackPanel Style="{StaticResource SettingsFlyoutSectionStyle}">
             <Image Width="80" Source="ms-appx:///Assets/Logo.png" VerticalAlignment="Top" HorizontalAlignment="Center"/>
             <TextBlock Text="{Binding AppName}" Margin="0,0,0,12" HorizontalAlignment="Center" Style="{StaticResource SubheaderTextBlockStyle}"/>
-        
-            <StackPanel Grid.Row="1" Margin="0,0,0,12" Visibility="{Binding IsBeta}">
-                <Button Content="Download Flat Notes" HorizontalAlignment="Stretch" Command="{Binding DownloadAppCommand}"/>
-            </StackPanel>
+            <Button Content="Download Flat Notes" HorizontalAlignment="Stretch" Command="{Binding DownloadAppCommand}" Margin="0,0,0,12" Visibility="{Binding IsBeta, Converter={StaticResource BooleanToVisibilityConverter}}"/>
         </StackPanel>
         
         <StackPanel Style="{StaticResource SettingsFlyoutSectionStyle}">
