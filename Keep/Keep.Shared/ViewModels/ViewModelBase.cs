@@ -1,10 +1,10 @@
 ﻿using Keep.Common;
+using Keep.Utils;
 
 namespace Keep.ViewModels
 {
     public class ViewModelBase : Notifiable
     {
-
 #if WINDOWS_PHONE_APP
         public bool IsWindows { get { return false; } }
         public bool IsWindowsPhone { get { return true; } }
@@ -12,5 +12,7 @@ namespace Keep.ViewModels
         public bool IsWindows { get { return true; } }
         public bool IsWindowsPhone { get { return false; } }
 #endif
+
+        public LocalizedResources LocalizedResources { get { return LocalizedResources.Instance; } }
     }
 }

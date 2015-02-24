@@ -31,6 +31,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\NotePreview.xaml.cs">
       <DependentUpon>NotePreview.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\LocalizedResourcesConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\StringFormatConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\MaxChecklistItemsConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\PositiveIntToVisibilityConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\ReorderModeToBooleanConverter.cs" />
@@ -51,6 +53,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Utils\AppData.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\AppSettings.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\Extensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\LocalizedResources.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\NoteSwipeFeature.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\ManipulationInputProcessor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\Migration\Migration.cs" />
@@ -112,7 +115,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <PRIResource Include="$(MSBuildThisFileDirectory)Strings\es\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Strings\hi\Resources.resw" />
     <PRIResource Include="$(MSBuildThisFileDirectory)Strings\pt-BR\Resources.resw" />
     <PRIResource Include="$(MSBuildThisFileDirectory)Strings\en-US\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Strings\zh-CN\Resources.resw" />
   </ItemGroup>
 </Project>

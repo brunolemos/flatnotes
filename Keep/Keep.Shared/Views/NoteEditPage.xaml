@@ -39,7 +39,7 @@
 
                         <Viewbox Grid.Column="0" Height="{StaticResource KeepNoteEditChecklistSize}" Margin="0,2,0,0" VerticalAlignment="Top">
                             <Grid Width="30" Height="30">
-                                <CheckBox Margin="0,-14" IsChecked="{Binding IsChecked, Mode=TwoWay}" HorizontalAlignment="Left" BorderBrush="{StaticResource KeepNoteForegroundBrush}" IsEnabled="{Binding ReorderMode, ElementName=NoteChecklistListView, Converter={StaticResource ReorderModeToBooleanConverter}, ConverterParameter=True}"/>
+                                <CheckBox Margin="0,-14" IsChecked="{Binding IsChecked, Mode=TwoWay}" HorizontalAlignment="Left" BorderBrush="{StaticResource KeepNoteForegroundBrush}" IsEnabled="{Binding ReorderMode, ElementName=NoteChecklistListView, Converter={StaticResource ReorderModeToBooleanConverter}, ConverterParameter=True}" ClickMode="Release" IsTapEnabled="False"/>
                             </Grid>
                         </Viewbox>
                         
@@ -117,7 +117,7 @@
                 </StackPanel>
             </ScrollViewer>
 
-            <ScrollViewer Grid.Row="1" Margin="0,12,0,0" Height="44"><!-- Visibility="{Binding IsNewNote, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=True}"-->
+            <ScrollViewer Grid.Row="1" Margin="0,12,0,0" Height="40"><!-- Visibility="{Binding IsNewNote, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=True}"-->
                 <StackPanel Margin="19,12,19,0">
                     <Grid Visibility="{Binding IsArchived, Converter={StaticResource BooleanToVisibilityConverter}}">
                         
@@ -127,10 +127,7 @@
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
                             
-                            <TextBlock Foreground="{StaticResource PhoneDarkMidBrush}">
-                                <Run x:Uid="ArchivedTextBox" Text="Archived"/>
-                                <Run Text="{Binding Note.ArchivedAt, Converter={StaticResource FriendlyTimeConverter}}"/>
-                            </TextBlock>
+                            <TextBlock Foreground="{StaticResource PhoneDarkMidBrush}" Text="{Binding ArchivedAtFormatedString}"/>
                             
                             <TextBlock Grid.Column="1" Text="↓" Foreground="{StaticResource PhoneDarkMidBrush}"/>
                         </Grid>
@@ -138,30 +135,17 @@
 
                     <Grid Margin="0,0,0,12" Visibility="{Binding Note.UpdatedAt, Converter={StaticResource NullableToVisibilityConverter}}">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
                             
-                        <TextBlock Foreground="{StaticResource PhoneDarkMidBrush}">
-                            <Run x:Uid="UpdatedTextBox" Text="Updated"/>
-                            <Run Text="{Binding Note.UpdatedAt, Converter={StaticResource FriendlyTimeConverter}}"/>
-                        </TextBlock>
-
-                        <TextBlock Grid.Column="1" FontStyle="Italic" Visibility="{Binding Note.Changed, Converter={StaticResource BooleanToVisibilityConverter}}" Foreground="{StaticResource PhoneDarkMidBrush}">
-                            <Run 
-                                Text=" ("/><Run x:Uid="PendingChangesTextBox"
-                                Text="pending update"/><Run 
-                                Text=")"/>
-                        </TextBlock>
-                            
-                        <TextBlock Grid.Column="2" Text="↓" Foreground="{StaticResource PhoneDarkMidBrush}"/>
+                        <TextBlock Foreground="{StaticResource PhoneDarkMidBrush}" Text="{Binding UpdatedAtFormatedString}" Visibility="{Binding Note.Changed, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=True}"/>
+                        <TextBlock x:Uid="PendingChangesTextBox" Text="pending update" FontStyle="Italic" Foreground="{StaticResource PhoneDarkMidBrush}" Visibility="{Binding Note.Changed, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                        
+                        <TextBlock Grid.Column="1" Text="↓" Foreground="{StaticResource PhoneDarkMidBrush}"/>
                     </Grid>
 
-                    <TextBlock Margin="0,0,0,12" Foreground="{StaticResource PhoneDarkMidBrush}"  Visibility="{Binding Note.CreatedAt, Converter={StaticResource NullableToVisibilityConverter}}">
-                        <Run x:Uid="CreatedTextBox" Text="Created"/>
-                        <Run Text="{Binding Note.CreatedAt, Converter={StaticResource FriendlyTimeConverter}}"/>
-                    </TextBlock>
+                    <TextBlock Margin="0,0,0,12" Foreground="{StaticResource PhoneDarkMidBrush}"  Visibility="{Binding Note.CreatedAt, Converter={StaticResource NullableToVisibilityConverter}}" Text="{Binding CreatedAtFormatedString}"/>
                 </StackPanel>
             </ScrollViewer>
         </Grid>

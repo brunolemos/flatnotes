@@ -14,7 +14,7 @@ namespace Keep.Converters
         const int DAY = 24 * HOUR;
         const int MONTH = 30 * DAY;
 
-        public object Convert(object value, Type targetType, object parameter, string language)
+        public object Convert(object value, Type targetType = null, object parameter = null, string language = "")
         {
             if (value == null) return "";
 
@@ -24,9 +24,9 @@ namespace Keep.Converters
             int delta = (int)currentDateTime.Subtract(receivedDateTime).TotalSeconds;
             TimeSpan ts_delta = new TimeSpan(0, 0, delta);
 
-            //Debug.WriteLine("receivedDateTime:" + receivedDateTime);
-            //Debug.WriteLine("currentDateTime:" + currentDateTime);
-            //Debug.WriteLine("delta:" + delta);
+            Debug.WriteLine("receivedDateTime:" + receivedDateTime);
+            Debug.WriteLine("currentDateTime:" + currentDateTime);
+            Debug.WriteLine("delta:" + delta);
 
             if (delta < 0) return "";
             if (delta < 30 * SECOND) return GetGlobalizedString("JustNow");

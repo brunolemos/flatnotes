@@ -2,6 +2,7 @@
 using Keep.Utils;
 using Keep.ViewModels;
 using Keep.Views;
+using Parse;
 using System;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
@@ -9,7 +10,6 @@ using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Core;
 using Windows.UI;
 using Windows.UI.Core;
-using Windows.UI.Notifications;
 using Windows.UI.Popups;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
@@ -19,7 +19,6 @@ using Windows.UI.Xaml.Navigation;
 
 #if WINDOWS_APP
 using Windows.UI.ApplicationSettings;
-using Windows.UI.Notifications;
 #endif
 
 namespace Keep
@@ -30,6 +29,10 @@ namespace Keep
         private TransitionCollection transitions;
         public static ContinuationManager ContinuationManager { get; private set; }
 #endif
+
+        public static bool IsBeta = Package.Current.Id.Name.Contains("Beta");
+        public static string Name = IsBeta ? "Flat Notes Beta" : "Flat Notes";
+        public static string Version = String.Format("{0}.{1}.{2}.{3}", Package.Current.Id.Version.Major, Package.Current.Id.Version.Minor, Package.Current.Id.Version.Build, Package.Current.Id.Version.Revision);
 
         public static Frame RootFrame { get { if (rootFrame == null) rootFrame = CreateRootFrame(); return rootFrame; } }
         private static Frame rootFrame = null;
@@ -49,7 +52,7 @@ namespace Keep
             AppData.NoteArchived += (s, _e) => { TileManager.RemoveTileIfExists(_e.Note); };
             AppData.NoteRemoved += (s, _e) => { TileManager.RemoveTileIfExists(_e.Note); };
 
-            TileUpdateManager.CreateTileUpdaterForApplication().EnableNotificationQueue(false);
+            ParseClient.Initialize("l3HEDWzlj1zLmkL8l2KH8lBToeVVpUiurHNi8AHv", "w1s6IQUJHUxRQvKIZVQbRgfwJ2PfUz0HLRkhya2K");
         }
 
         private async void App_UnhandledException(object sender, UnhandledExceptionEventArgs e)

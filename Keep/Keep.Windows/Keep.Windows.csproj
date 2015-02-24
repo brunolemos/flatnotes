@@ -113,9 +113,6 @@
     <Compile Include="Views\AboutSettingsFlyout.xaml.cs">
       <DependentUpon>AboutSettingsFlyout.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SettingsPage.xaml.cs">
-      <DependentUpon>SettingsPage.xaml</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -217,10 +214,6 @@
       <SubType>
       </SubType>
     </Page>
-    <Page Include="Views\SettingsPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="GoogleAnalytics">
@@ -234,6 +227,12 @@
     </Reference>
     <Reference Include="NotificationsExtensions">
       <HintPath>..\..\packages\NotificationsExtensions.1.0.0\lib\portable-wpa81+win81\NotificationsExtensions.winmd</HintPath>
+    </Reference>
+    <Reference Include="Parse">
+      <HintPath>..\..\..\..\..\..\Downloads\Parse-1.3.4\Parse.dll</HintPath>
+    </Reference>
+    <Reference Include="Parse.WinRT">
+      <HintPath>..\..\..\..\..\..\Downloads\Parse-1.3.4\Parse.WinRT.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

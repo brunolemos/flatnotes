@@ -129,13 +129,10 @@
   <data name="ColumnsSlider.Header" xml:space="preserve">
     <value>columns</value>
   </data>
-  <data name="CreatedTextBox.Text" xml:space="preserve">
-    <value>created</value>
+  <data name="CreatedAtFormatString" xml:space="preserve">
+    <value>created {0}</value>
   </data>
   <data name="DeleteAppBarButton.Label" xml:space="preserve">
-    <value>delete</value>
-  </data>
-  <data name="DeleteMenuFlyoutItem.Text" xml:space="preserve">
     <value>delete</value>
   </data>
   <data name="PendingChangesTextBox.Text" xml:space="preserve">
@@ -145,10 +142,7 @@
     <value>send a nice feedback</value>
   </data>
   <data name="NewItemTextBox.PlaceholderText" xml:space="preserve">
-    <value>new item</value>
-  </data>
-  <data name="NoGoogleKeepIntegrationMessageTextBox.Text" xml:space="preserve">
-    <value>this app does not integrate with official Google Keep because unfortunately it's not possible</value>
+    <value>New item</value>
   </data>
   <data name="NoteTextType.Label" xml:space="preserve">
     <value>text</value>
@@ -216,8 +210,8 @@
   <data name="ToggleChecklistAppBarButton.Label" xml:space="preserve">
     <value>toggle checklist</value>
   </data>
-  <data name="UpdatedTextBox.Text" xml:space="preserve">
-    <value>updated</value>
+  <data name="UpdatedAtFormatString" xml:space="preserve">
+    <value>updated {0}</value>
   </data>
   <data name="ArchiveAppBarButton.Label" xml:space="preserve">
     <value>archive</value>
@@ -234,8 +228,8 @@
   <data name="RestoreAppBarButton.Label" xml:space="preserve">
     <value>restore</value>
   </data>
-  <data name="ArchivedTextBox.Text" xml:space="preserve">
-    <value>archived</value>
+  <data name="ArchivedAtFormatString" xml:space="preserve">
+    <value>archived {0}</value>
   </data>
   <data name="RequestFeatureOrReportBugAppBarButton.Label" xml:space="preserve">
     <value>request feature / report bug</value>
@@ -264,20 +258,14 @@
   <data name="DevelopedByTextBlock.Text" xml:space="preserve">
     <value>developed by</value>
   </data>
-  <data name="FeedbackButton.Content" xml:space="preserve">
-    <value>send a nice feedback</value>
-  </data>
   <data name="PraiseAppBarButton.Label" xml:space="preserve">
     <value>praise</value>
-  </data>
-  <data name="RequestFeatureOrReportBugButton.Content" xml:space="preserve">
-    <value>request feature / report bug</value>
   </data>
   <data name="SupportAppBarButton.Label" xml:space="preserve">
     <value>support</value>
   </data>
-  <data name="DeveloperNameAndCountry.Text" xml:space="preserve">
-    <value>Bruno Lemos (Brazil)</value>
+  <data name="Brazil" xml:space="preserve">
+    <value>Brazil</value>
   </data>
   <data name="Unpin" xml:space="preserve">
     <value>unpin</value>
@@ -293,5 +281,16 @@
   </data>
   <data name="NoteChecklistType.Label" xml:space="preserve">
     <value>checklist</value>
+  </data>
+  <data name="AppDescription" xml:space="preserve">
+    <value>Flat Notes is the most beautiful notes app for Windows Phone!
+
+Some features:
+- Awesome usability
+- Pin notes to start screen
+- Swipe to archive a note
+- Image upload
+- Custom number of columns
+- Choose the light or dark theme</value>
   </data>
 </root>

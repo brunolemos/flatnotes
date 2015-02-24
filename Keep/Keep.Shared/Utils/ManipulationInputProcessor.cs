@@ -73,6 +73,8 @@ namespace Keep.Utils
         {
             if (element == null) return;
 
+            ResetPosition();
+
             element.ManipulationMode = previousManipulationModes;
             UnhandleEvents();
         }
@@ -197,6 +199,7 @@ namespace Keep.Utils
             if (element.Opacity <= minOpacity)
             {
                 Disable();
+                element.Opacity = 0;
 
                 var handler = ItemSwiped;
                 if (handler != null) handler(element, EventArgs.Empty);

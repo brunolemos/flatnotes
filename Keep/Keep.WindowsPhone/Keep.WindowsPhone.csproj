@@ -179,6 +179,12 @@
     <Reference Include="NotificationsExtensions">
       <HintPath>..\..\packages\NotificationsExtensions.1.0.0\lib\portable-wpa81+win81\NotificationsExtensions.winmd</HintPath>
     </Reference>
+    <Reference Include="Parse">
+      <HintPath>..\..\..\..\..\..\Downloads\Parse-1.3.4\Parse.dll</HintPath>
+    </Reference>
+    <Reference Include="Parse.WinRT">
+      <HintPath>..\..\..\..\..\..\Downloads\Parse-1.3.4\Parse.WinRT.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">

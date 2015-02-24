@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
-    <xsd:element name="root" msdata:IsDataSet="true">
+  <xsd:schema id="root" xmlns="" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+    <xsd:element msdata:IsDataSet="true" name="root">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element minOccurs="0" name="value" type="xsd:string"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element minOccurs="0" msdata:Ordinal="1" name="value" type="xsd:string"/>
+                <xsd:element minOccurs="0" msdata:Ordinal="2" name="comment" type="xsd:string"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute msdata:Ordinal="1" name="name" type="xsd:string" use="required"/>
+              <xsd:attribute msdata:Ordinal="3" name="type" type="xsd:string"/>
+              <xsd:attribute msdata:Ordinal="4" name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element minOccurs="0" msdata:Ordinal="1" name="value" type="xsd:string"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -117,180 +117,179 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AboutPivotItem.Header" xml:space="preserve">
-    <value>sobre</value>
-  </data>
-  <data name="AppDescription" xml:space="preserve">
-    <value>Flat Notes é o aplicativo de notas mais bonito para Windows Phone!
-
-Algumas funcionalidades:
-- Fixe notas na tela inicial
-- Envie imagens
-- Deslize para arquivar uma nota
-- Deslize uma nota arquivada para deletar permanentemente
-- Customize o numero de colunas
-- Escolha o tema claro ou escuro</value>
-  </data>
-  <data name="AppVersionTextBlock.Text" xml:space="preserve">
-    <value>versão</value>
-  </data>
-  <data name="ArchiveAppBarButton.Label" xml:space="preserve">
-    <value>arquivar</value>
-  </data>
-  <data name="ArchivedAtFormatString" xml:space="preserve">
-    <value>arquivado {0}</value>
-  </data>
-  <data name="ArchivedNotesAppBarButton.Label" xml:space="preserve">
-    <value>notas arquivadas</value>
-  </data>
   <data name="AudioAppBarButton.Label" xml:space="preserve">
-    <value>áudio</value>
-  </data>
-  <data name="BackupPivotItem.Header" xml:space="preserve">
-    <value>backup</value>
-  </data>
-  <data name="Brazil" xml:space="preserve">
-    <value>Brasil</value>
-  </data>
-  <data name="ColorAppBarButton.Label" xml:space="preserve">
-    <value>cor</value>
-  </data>
-  <data name="ColumnsSlider.Header" xml:space="preserve">
-    <value>colunas</value>
-  </data>
-  <data name="CreatedAtFormatString" xml:space="preserve">
-    <value>criado {0}</value>
-  </data>
-  <data name="DeleteAppBarButton.Label" xml:space="preserve">
-    <value>deletar</value>
-  </data>
-  <data name="DevelopedByTextBlock.Text" xml:space="preserve">
-    <value>desenvolvido por</value>
-  </data>
-  <data name="EmptyArchivedNotesMessageTextBox.Text" xml:space="preserve">
-    <value>notas arquivadas aparecem aqui</value>
-  </data>
-  <data name="EmptyNotesMessageTextBox.Text" xml:space="preserve">
-    <value>notas adicionadas aparecem aqui</value>
-  </data>
-  <data name="FeedbackAppBarButton.Label" xml:space="preserve">
-    <value>enviar feedback positivo</value>
-  </data>
-  <data name="NewItemTextBox.PlaceholderText" xml:space="preserve">
-    <value>Novo item</value>
-  </data>
-  <data name="NoteChecklistType.Label" xml:space="preserve">
-    <value>checklist</value>
-  </data>
-  <data name="NoteTextType.Label" xml:space="preserve">
-    <value>texto</value>
-  </data>
-  <data name="PendingChangesTextBox.Text" xml:space="preserve">
-    <value>alterações pendentes</value>
+    <value>音频</value>
   </data>
   <data name="PhotoAppBarButton.Label" xml:space="preserve">
-    <value>foto</value>
+    <value>图片</value>
+  </data>
+  <data name="ColorAppBarButton.Label" xml:space="preserve">
+    <value>颜色</value>
+  </data>
+  <data name="ColumnsSlider.Header" xml:space="preserve">
+    <value>栏目数</value>
+  </data>
+  <data name="CreatedAtFormatString" xml:space="preserve">
+    <value>创建于{0}</value>
+  </data>
+  <data name="DeleteAppBarButton.Label" xml:space="preserve">
+    <value>删除</value>
+  </data>
+  <data name="PendingChangesTextBox.Text" xml:space="preserve">
+    <value>变更未处理</value>
+  </data>
+  <data name="FeedbackAppBarButton.Label" xml:space="preserve">
+    <value>向我反馈</value>
+  </data>
+  <data name="NewItemTextBox.PlaceholderText" xml:space="preserve">
+    <value>新建项目</value>
+  </data>
+  <data name="NoteTextType.Label" xml:space="preserve">
+    <value>文本</value>
   </data>
   <data name="Pin" xml:space="preserve">
-    <value>fixar</value>
-  </data>
-  <data name="PraiseAppBarButton.Label" xml:space="preserve">
-    <value>elogiar</value>
-  </data>
-  <data name="PreferencesPivotItem.Header" xml:space="preserve">
-    <value>preferências</value>
+    <value>创建磁贴</value>
   </data>
   <data name="PrettyDate_AMinuteAgo" xml:space="preserve">
-    <value>há um minuto</value>
+    <value>一分钟前</value>
   </data>
   <data name="PrettyDate_AMonthAgo" xml:space="preserve">
-    <value>há um mês</value>
+    <value>一个月前</value>
   </data>
   <data name="PrettyDate_AnHourAgo" xml:space="preserve">
-    <value>há uma hora</value>
+    <value>一小时前</value>
   </data>
   <data name="PrettyDate_AWeekAgo" xml:space="preserve">
-    <value>há uma semana</value>
+    <value>一周前</value>
   </data>
   <data name="PrettyDate_AYearAgo" xml:space="preserve">
-    <value>há um ano</value>
+    <value>一年前</value>
   </data>
   <data name="PrettyDate_JustNow" xml:space="preserve">
-    <value>agora</value>
+    <value>刚刚</value>
   </data>
   <data name="PrettyDate_NDaysAgo" xml:space="preserve">
-    <value>há {0} dias</value>
+    <value>{0} 天前</value>
   </data>
   <data name="PrettyDate_NHoursAgo" xml:space="preserve">
-    <value>há {0} horas</value>
+    <value>{0} 小时前</value>
   </data>
   <data name="PrettyDate_NMinutesAgo" xml:space="preserve">
-    <value>há {0} minutos</value>
+    <value>{0} 分钟前</value>
   </data>
   <data name="PrettyDate_NMonthsAgo" xml:space="preserve">
-    <value>há {0} meses</value>
+    <value>{0} 个月前</value>
   </data>
   <data name="PrettyDate_NWeeksAgo" xml:space="preserve">
-    <value>há {0} semanas</value>
+    <value>{0} 周前</value>
   </data>
   <data name="PrettyDate_NYearsAgo" xml:space="preserve">
-    <value>há {0} anos</value>
+    <value>{0} 年前</value>
   </data>
   <data name="PrettyDate_Yesterday" xml:space="preserve">
-    <value>ontem</value>
-  </data>
-  <data name="RequestFeatureOrReportBugAppBarButton.Label" xml:space="preserve">
-    <value>enviar sugestão / reportar bug</value>
-  </data>
-  <data name="RestoreAppBarButton.Label" xml:space="preserve">
-    <value>restaurar</value>
+    <value>昨天</value>
   </data>
   <data name="SettingsAppBarButton.Label" xml:space="preserve">
-    <value>configurações</value>
+    <value>设置</value>
   </data>
   <data name="SettingsTextBlock.Text" xml:space="preserve">
-    <value>configurações</value>
+    <value>设置</value>
   </data>
   <data name="ShareAppBarButton.Label" xml:space="preserve">
-    <value>compartilhar...</value>
-  </data>
-  <data name="SupportAppBarButton.Label" xml:space="preserve">
-    <value>suporte</value>
+    <value>共享</value>
   </data>
   <data name="TextTextBox.PlaceholderText" xml:space="preserve">
-    <value>Texto</value>
+    <value>文本</value>
   </data>
   <data name="ThemeToggleSwitch.Header" xml:space="preserve">
-    <value>tema</value>
-  </data>
-  <data name="ThemeToggleSwitch.OffContent" xml:space="preserve">
-    <value>claro</value>
-  </data>
-  <data name="ThemeToggleSwitch.OnContent" xml:space="preserve">
-    <value>escuro</value>
+    <value>主题</value>
   </data>
   <data name="TitleTextBox.PlaceholderText" xml:space="preserve">
-    <value>Título</value>
+    <value>标题</value>
   </data>
   <data name="ToggleChecklistAppBarButton.Label" xml:space="preserve">
-    <value>mostrar/ocultar checklist</value>
-  </data>
-  <data name="TransparentTileToggleSwitch.Header" xml:space="preserve">
-    <value>bloco dinâmico</value>
-  </data>
-  <data name="TransparentTileToggleSwitch.OffContent" xml:space="preserve">
-    <value>transparente</value>
-  </data>
-  <data name="TransparentTileToggleSwitch.OnContent" xml:space="preserve">
-    <value>cor sólida</value>
-  </data>
-  <data name="Unpin" xml:space="preserve">
-    <value>desfixar</value>
+    <value>转换为清单</value>
   </data>
   <data name="UpdatedAtFormatString" xml:space="preserve">
-    <value>atualizado {0}</value>
+    <value>更新于{0}</value>
+  </data>
+  <data name="ArchiveAppBarButton.Label" xml:space="preserve">
+    <value>存档</value>
+  </data>
+  <data name="ArchivedNotesAppBarButton.Label" xml:space="preserve">
+    <value>已存档笔记</value>
+  </data>
+  <data name="EmptyNotesMessageTextBox.Text" xml:space="preserve">
+    <value>你添加的笔记将会出现在这里</value>
+  </data>
+  <data name="EmptyArchivedNotesMessageTextBox.Text" xml:space="preserve">
+    <value>存档的笔记将会出现在这里</value>
+  </data>
+  <data name="RestoreAppBarButton.Label" xml:space="preserve">
+    <value>还原</value>
+  </data>
+  <data name="ArchivedAtFormatString" xml:space="preserve">
+    <value>存档于{0}</value>
+  </data>
+  <data name="RequestFeatureOrReportBugAppBarButton.Label" xml:space="preserve">
+    <value>请求新功能 / 报告bug</value>
   </data>
   <data name="YourMessageGoesHere" xml:space="preserve">
-    <value>[ESCREVA SUA MENSAGEM AQUI]</value>
+    <value>[在这里输入消息]</value>
+  </data>
+  <data name="AboutPivotItem.Header" xml:space="preserve">
+    <value>关于</value>
+  </data>
+  <data name="BackupPivotItem.Header" xml:space="preserve">
+    <value>备份</value>
+  </data>
+  <data name="PreferencesPivotItem.Header" xml:space="preserve">
+    <value>首选项</value>
+  </data>
+  <data name="ThemeToggleSwitch.OffContent" xml:space="preserve">
+    <value>亮色</value>
+  </data>
+  <data name="ThemeToggleSwitch.OnContent" xml:space="preserve">
+    <value>暗色</value>
+  </data>
+  <data name="AppVersionTextBlock.Text" xml:space="preserve">
+    <value>版本号</value>
+  </data>
+  <data name="DevelopedByTextBlock.Text" xml:space="preserve">
+    <value>开发者：</value>
+  </data>
+  <data name="PraiseAppBarButton.Label" xml:space="preserve">
+    <value>喜欢</value>
+  </data>
+  <data name="SupportAppBarButton.Label" xml:space="preserve">
+    <value>支持</value>
+  </data>
+  <data name="Brazil" xml:space="preserve">
+    <value>巴西</value>
+  </data>
+  <data name="Unpin" xml:space="preserve">
+    <value>删除磁贴</value>
+  </data>
+  <data name="TransparentTileToggleSwitch.Header" xml:space="preserve">
+    <value>动态磁贴</value>
+  </data>
+  <data name="TransparentTileToggleSwitch.OffContent" xml:space="preserve">
+    <value>透明</value>
+  </data>
+  <data name="TransparentTileToggleSwitch.OnContent" xml:space="preserve">
+    <value>纯色</value>
+  </data>
+  <data name="NoteChecklistType.Label" xml:space="preserve">
+    <value>清单</value>
+  </data>
+  <data name="AppDescription" xml:space="preserve">
+    <value>Flat Notes是Windows Phone上最赞的笔记APP!
+功能如下:
+- 极佳的可用性
+- 将笔记Pin到开始屏幕
+- 滑动以存档笔记
+- 上传照片
+- 自定义栏目数
+- 选择亮色或暗色主题</value>
   </data>
 </root>

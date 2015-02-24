@@ -1,4 +1,5 @@
 using Keep.Common;
+using Keep.Converters;
 using Keep.Models;
 using Keep.Utils;
 using Keep.Views;
@@ -55,16 +56,35 @@ namespace Keep.ViewModels
                 IsArchived = AppData.ArchivedNotes.Where<Note>(x => x.ID == Note.ID).FirstOrDefault<Note>() != null;
                 IsNewNote = !AlreadyExists && !IsArchived;
                 IsPinned = SecondaryTile.Exists(Note.ID);
-                
+
+                NotifyPropertyChanged("ArchivedAtFormatedString");
+                NotifyPropertyChanged("UpdatedAtFormatedString");
+                NotifyPropertyChanged("CreatedAtFormatedString");
+
                 Note.PropertyChanged += (s, _e) =>
                 {
-                    if (_e.PropertyName == "Changed")
+                    Debug.WriteLine("PROPPPRPROR: " + _e.PropertyName);
+                    switch (_e.PropertyName)
                     {
-                        if (AlreadyExists)
-                            AppData.HasUnsavedChangesOnNotes = Note.Changed;
+                        case "Changed":
+                            if (AlreadyExists)
+                                AppData.HasUnsavedChangesOnNotes = Note.Changed;
+                            else if (IsArchived)
+                                AppData.HasUnsavedChangesOnArchivedNotes = Note.Changed;
 
-                        else if (IsArchived)
-                            AppData.HasUnsavedChangesOnArchivedNotes = Note.Changed;
+                            break;
+
+                        case "ArchivedAt":
+                            NotifyPropertyChanged("ArchivedAtFormatedString");
+                            break;
+
+                        case "UpdatedAt":
+                            NotifyPropertyChanged("UpdatedAtFormatedString");
+                            break;
+
+                        case "CreatedAt":
+                            NotifyPropertyChanged("CreatedAtFormatedString");
+                            break;
                     }
                 };
             }
@@ -91,6 +111,7 @@ namespace Keep.ViewModels
         }
 
         public static Note CurrentNoteBeingEdited { get; set; }
+        private static FriendlyTimeConverter friendlyTimeConverter = new FriendlyTimeConverter();
 
         public Note Note { get { return note; } set { note = value == null ? new Note() : value; NotifyPropertyChanged("Note"); } }
         private static Note note = new Note();
@@ -109,6 +130,10 @@ namespace Keep.ViewModels
 
         public NoteImage TempNoteImage { get { return tempNoteImage; } set { tempNoteImage = value; } }
         private static NoteImage tempNoteImage = null;
+
+        public string ArchivedAtFormatedString { get { return string.Format(LocalizedResources.ArchivedAtFormatString, friendlyTimeConverter.Convert(Note.ArchivedAt)); } }
+        public string UpdatedAtFormatedString { get { return string.Format(LocalizedResources.UpdatedAtFormatString, friendlyTimeConverter.Convert(Note.UpdatedAt)); } }
+        public string CreatedAtFormatedString { get { return string.Format(LocalizedResources.CreatedAtFormatString, friendlyTimeConverter.Convert(Note.CreatedAt)); } }
 
 #if WINDOWS_PHONE_APP
         public ListViewReorderMode ReorderMode

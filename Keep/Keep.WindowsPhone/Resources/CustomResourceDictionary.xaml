@@ -60,7 +60,7 @@
     <Style x:Key="KeepNoteEditTextStyle" TargetType="TextBox" BasedOn="{StaticResource KeepNoteEditStyle}">
         <Setter Property="FontSize" Value="{ThemeResource KeepNoteEditTextFontSize}"/>
         <Setter Property="MinHeight" Value="200"/>
-        <Setter Property="Margin" Value="12,0,12,0"/>
+        <Setter Property="Margin" Value="19,0,19,0"/>
         <Setter Property="Padding" Value="0"/>
         <Setter Property="FontWeight" Value="Normal"/>
         <Setter Property="AcceptsReturn" Value="True"/>
@@ -72,7 +72,7 @@
         <Setter Property="FontSize" Value="{ThemeResource KeepNoteEditTextFontSize}"/>
         <Setter Property="MinHeight" Value="45"/>
         <Setter Property="Margin" Value="0"/>
-        <Setter Property="Padding" Value="18,0,18,12"/>
+        <Setter Property="Padding" Value="12,0,19,12"/>
         <Setter Property="FontWeight" Value="Normal"/>
         <Setter Property="AcceptsReturn" Value="False"/>
         <Setter Property="TextWrapping" Value="Wrap"/>
