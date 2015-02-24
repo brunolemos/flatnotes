@@ -113,7 +113,7 @@ namespace Keep.Views
             viewModel.Note.Trim();
 
             //update tile
-            if (viewModel.Note.Changed) TileManager.UpdateNoteTileIfExists(viewModel.Note);
+            if (viewModel.Note.Changed) TileManager.UpdateNoteTileIfExists(viewModel.Note, AppSettings.Instance.TransparentNoteTile);
 
             //save or remove if empty
             if (viewModel.Note.Changed || viewModel.Note.IsEmpty())

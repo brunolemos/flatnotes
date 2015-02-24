@@ -15,7 +15,7 @@ namespace Keep.Utils
     //Tile Template Catalog: https://msdn.microsoft.com/en-us/library/windows/apps/xaml/hh761491.aspx
     public static class TileManager
     {
-        public static void UpdateDefaultTile(bool transparentTile = true)
+        public static void UpdateDefaultTile(bool transparentTile = false)
         {
             var tileSubFolder = transparentTile ? "Transparent" :  "Solid";
             var tileSquare71Content = TileContentFactory.CreateTileSquare71x71Image();
@@ -48,17 +48,17 @@ namespace Keep.Utils
             TileUpdateManager.CreateTileUpdaterForApplication().Update(biggerTile.CreateNotification());
         }
 
-        public static async Task<bool> CreateOrUpdateNoteTile(Note note)
+        public static async Task<bool> CreateOrUpdateNoteTile(Note note, bool transparentTile = false)
         {
             if (note == null || note.IsEmpty()) return false;
 
             //update content
-            if (SecondaryTile.Exists(note.ID)) return UpdateNoteTileIfExists(note);
+            if (SecondaryTile.Exists(note.ID)) return UpdateNoteTileIfExists(note, transparentTile);
 
 
 #if WINDOWS_PHONE_APP
             //create (and suspend)
-            return await CreateNoteTile(note);
+            return await CreateNoteTile(note, transparentTile);
 #else
             //create and update
             var success = await CreateNoteTile(note);
@@ -68,13 +68,13 @@ namespace Keep.Utils
 #endif
         }
 
-        private static async Task<bool> CreateNoteTile(Note note)
+        private static async Task<bool> CreateNoteTile(Note note, bool transparentTile = false)
         {
-            var tile = new SecondaryTile(note.ID, "Flat Notes", GenerateNavigationArgumentFromNote(note), 
+            var tile = new SecondaryTile(note.ID, App.Name, GenerateNavigationArgumentFromNote(note), 
                 new Uri("ms-appx:///Assets/Tiles/Transparent/Logo.png"), TileSize.Wide310x150);
 
             tile.VisualElements.ForegroundText = ForegroundText.Light;
-            tile.VisualElements.BackgroundColor = new Color().FromHex(note.Color.DarkColor1);
+            tile.VisualElements.BackgroundColor = transparentTile ? Colors.Transparent : new Color().FromHex(note.Color.DarkColor2);
 
             tile.VisualElements.ShowNameOnSquare150x150Logo = true;
             tile.VisualElements.ShowNameOnWide310x150Logo = true;
@@ -96,13 +96,13 @@ namespace Keep.Utils
             return await tile.RequestCreateAsync();
         }
 
-        public static bool UpdateNoteTileIfExists(Note note)
+        public static bool UpdateNoteTileIfExists(Note note, bool transparentTile = false)
         {
             //must exists
             if (!SecondaryTile.Exists(note.ID)) return false;
 
             //update background
-            TryUpdateNoteTileBackgroundColor(note);
+            UpdateNoteTileBackgroundColor(note, transparentTile);
 
             var tileSquare71Content = TileContentFactory.CreateTileSquare71x71Image();
 
@@ -176,15 +176,29 @@ namespace Keep.Utils
             return true;
         }
 
-        private static async void TryUpdateNoteTileBackgroundColor(Note note)
+        private static async void UpdateNoteTileBackgroundColor(Note note, bool transparentTile = false)
         {
-            try
+            var tile = new SecondaryTile(note.ID);
+            if (tile == null) return;
+
+            tile.VisualElements.BackgroundColor = transparentTile ? Colors.Transparent : new Color().FromHex(note.Color.DarkColor2);
+            await tile.UpdateAsync();
+        }
+
+        public static async void UpdateAllNoteTilesBackgroundColor(bool transparentTile = false)
+        {
+            var tiles = await SecondaryTile.FindAllAsync();
+            if (tiles == null) return;
+
+            foreach (var tile in tiles)
             {
-                var tile = new SecondaryTile(note.ID);
-                tile.VisualElements.BackgroundColor = new Color().FromHex(note.Color.DarkColor1);
+                Note note = AppData.Notes.FirstOrDefault(n => n.ID == tile.TileId);
+                if (note == null) continue;
+
+                //var tile = new SecondaryTile(t.TileId);
+                tile.VisualElements.BackgroundColor = transparentTile ? Colors.Transparent : new Color().FromHex(note.Color.DarkColor2);
                 await tile.UpdateAsync();
             }
-            catch (Exception) { }
         }
 
         public static async void RemoveTileIfExists(Note note)

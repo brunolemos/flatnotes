@@ -267,13 +267,13 @@
   <data name="ToggleChecklistAppBarButton.Label" xml:space="preserve">
     <value>mostrar / ocultar lista</value>
   </data>
-  <data name="TransparentTileToggleSwitch.Header" xml:space="preserve">
-    <value>bloque dinámico</value>
+  <data name="TransparentDefaultTileToggleSwitch.Header" xml:space="preserve">
+    <value>bloque dinámico estándar</value>
   </data>
-  <data name="TransparentTileToggleSwitch.OffContent" xml:space="preserve">
+  <data name="TransparentDefaultTileToggleSwitch.OffContent" xml:space="preserve">
     <value>transparente</value>
   </data>
-  <data name="TransparentTileToggleSwitch.OnContent" xml:space="preserve">
+  <data name="TransparentDefaultTileToggleSwitch.OnContent" xml:space="preserve">
     <value>color sólido</value>
   </data>
   <data name="Unpin" xml:space="preserve">
@@ -284,5 +284,14 @@
   </data>
   <data name="YourMessageGoesHere" xml:space="preserve">
     <value>[ESCRIBA AQUÍ SU MENSAJE]</value>
+  </data>
+  <data name="TransparentNoteTileToggleSwitch.Header" xml:space="preserve">
+    <value>bloque dinámico de las notas</value>
+  </data>
+  <data name="TransparentNoteTileToggleSwitch.OffContent" xml:space="preserve">
+    <value>transparente</value>
+  </data>
+  <data name="TransparentNoteTileToggleSwitch.OnContent" xml:space="preserve">
+    <value>color sólido</value>
   </data>
 </root>

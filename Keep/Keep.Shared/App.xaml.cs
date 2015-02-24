@@ -48,6 +48,7 @@ namespace Keep
             AppSettings.Instance.ArchivedNotesSaved += (s, e) => SimulateStatusBarProgressComplete();
             AppSettings.Instance.ThemeChanged += (s, e) => UpdateTheme(e.Theme);
             AppSettings.Instance.TransparentTileChanged += (s, e) => TileManager.UpdateDefaultTile(e.TransparentTile);
+            AppSettings.Instance.TransparentNoteTileChanged += (s, e) => TileManager.UpdateAllNoteTilesBackgroundColor(e.TransparentTile);
 
             AppData.NoteArchived += (s, _e) => { TileManager.RemoveTileIfExists(_e.Note); };
             AppData.NoteRemoved += (s, _e) => { TileManager.RemoveTileIfExists(_e.Note); };
@@ -190,7 +191,7 @@ namespace Keep
             await SuspensionManager.SaveAsync();
 
             //update tile
-            if (NoteEditViewModel.CurrentNoteBeingEdited != null) TileManager.UpdateNoteTileIfExists(NoteEditViewModel.CurrentNoteBeingEdited);
+            if (NoteEditViewModel.CurrentNoteBeingEdited != null) TileManager.UpdateNoteTileIfExists(NoteEditViewModel.CurrentNoteBeingEdited, AppSettings.Instance.TransparentNoteTile);
 
             //save data
             if (AppData.HasUnsavedChangesOnNotes) await AppData.SaveNotes();

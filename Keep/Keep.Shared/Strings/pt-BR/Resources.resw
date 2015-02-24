@@ -275,13 +275,13 @@ Algumas funcionalidades:
   <data name="ToggleChecklistAppBarButton.Label" xml:space="preserve">
     <value>mostrar/ocultar checklist</value>
   </data>
-  <data name="TransparentTileToggleSwitch.Header" xml:space="preserve">
-    <value>bloco dinâmico</value>
+  <data name="TransparentDefaultTileToggleSwitch.Header" xml:space="preserve">
+    <value>bloco dinâmico padrão</value>
   </data>
-  <data name="TransparentTileToggleSwitch.OffContent" xml:space="preserve">
+  <data name="TransparentDefaultTileToggleSwitch.OffContent" xml:space="preserve">
     <value>transparente</value>
   </data>
-  <data name="TransparentTileToggleSwitch.OnContent" xml:space="preserve">
+  <data name="TransparentDefaultTileToggleSwitch.OnContent" xml:space="preserve">
     <value>cor sólida</value>
   </data>
   <data name="Unpin" xml:space="preserve">
@@ -292,5 +292,14 @@ Algumas funcionalidades:
   </data>
   <data name="YourMessageGoesHere" xml:space="preserve">
     <value>[ESCREVA SUA MENSAGEM AQUI]</value>
+  </data>
+  <data name="TransparentNoteTileToggleSwitch.Header" xml:space="preserve">
+    <value>bloco dinâmico das notas</value>
+  </data>
+  <data name="TransparentNoteTileToggleSwitch.OffContent" xml:space="preserve">
+    <value>transparente</value>
+  </data>
+  <data name="TransparentNoteTileToggleSwitch.OnContent" xml:space="preserve">
+    <value>cor sólida</value>
   </data>
 </root>

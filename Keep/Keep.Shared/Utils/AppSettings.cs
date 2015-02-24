@@ -20,6 +20,7 @@ namespace Keep.Utils
         public event EventHandler<ThemeEventArgs> ThemeChanged;
         public event EventHandler<ColumnsEventArgs> ColumnsChanged;
         public event EventHandler<TransparentTileEventArgs> TransparentTileChanged;
+        public event EventHandler<TransparentTileEventArgs> TransparentNoteTileChanged;
 
         public override uint Version { get { return VERSION; } }
         private const uint VERSION = 2;
@@ -41,6 +42,9 @@ namespace Keep.Utils
 
         private const string TRANSPARENT_TILE_KEY = "TRANSPARENT_TILE";
         private const bool TRANSPARENT_TILE_DEFAULT = false;
+
+        private const string TRANSPARENT_NOTE_TILE_KEY = "TRANSPARENT_NOTE_TILE";
+        private const bool TRANSPARENT_NOTE_TILE_DEFAULT = false;
 
         private const string FIXED_THEME_BUG_KEY = "FIXED_THEME_BUG";
 
@@ -142,6 +146,19 @@ namespace Keep.Utils
                 if (SetValue<bool>(TRANSPARENT_TILE_KEY, value))
                 {
                     var handler = TransparentTileChanged;
+                    if (handler != null) handler(this, new TransparentTileEventArgs(value));
+                }
+            }
+        }
+
+        public bool TransparentNoteTile
+        {
+            get { return GetValueOrDefault(TRANSPARENT_NOTE_TILE_KEY, TRANSPARENT_NOTE_TILE_DEFAULT); }
+            set
+            {
+                if (SetValue<bool>(TRANSPARENT_NOTE_TILE_KEY, value))
+                {
+                    var handler = TransparentNoteTileChanged;
                     if (handler != null) handler(this, new TransparentTileEventArgs(value));
                 }
             }

@@ -98,7 +98,7 @@ namespace Keep.ViewModels
             if (!IsArchived)
                 Note.Changed = false;
 
-            TileManager.UpdateNoteTileIfExists(Note);
+            TileManager.UpdateNoteTileIfExists(Note, AppSettings.Instance.TransparentNoteTile);
         }
 
         private void OnArchivedNotesSaved(object sender, EventArgs e)
@@ -188,7 +188,7 @@ namespace Keep.ViewModels
             if (IsNewNote)
                 await AppData.CreateOrUpdateNote(Note);
 
-            IsPinned = await TileManager.CreateOrUpdateNoteTile(Note);
+            IsPinned = await TileManager.CreateOrUpdateNoteTile(Note, AppSettings.Instance.TransparentNoteTile);
         }
 
         private void Unpin()

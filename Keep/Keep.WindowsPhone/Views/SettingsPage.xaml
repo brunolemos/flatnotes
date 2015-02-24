@@ -41,7 +41,8 @@
             <PivotItem x:Uid="PreferencesPivotItem" Header="preferences" Tag="preferences">
                 <StackPanel>
                     <ToggleSwitch x:Uid="ThemeToggleSwitch" Margin="0,0,0,24" Header="theme" OffContent="light" OnContent="dark" IsOn="{Binding IsDarkTheme, Mode=TwoWay}"/>
-                    <ToggleSwitch x:Uid="TransparentTileToggleSwitch" Margin="0,0,0,24" Header="live tile" OffContent="transparent" OnContent="solid color" IsOn="{Binding IsSolidColorTile, Mode=TwoWay}"/>
+                    <ToggleSwitch x:Uid="TransparentDefaultTileToggleSwitch" Margin="0,0,0,24" Header="default tile" OffContent="transparent" OnContent="solid color" IsOn="{Binding IsSolidColorDefaultTile, Mode=TwoWay}"/>
+                    <ToggleSwitch x:Uid="TransparentNoteTileToggleSwitch" Margin="0,0,0,24" Header="note live tile" OffContent="transparent" OnContent="solid color" IsOn="{Binding IsSolidColorNoteTile, Mode=TwoWay}"/>
                     <Slider x:Uid="ColumnsSlider" Margin="0,0,0,24" Header="columns" Minimum="0" Maximum="4" LargeChange="1" TickFrequency="1" Value="{Binding Columns, Mode=TwoWay}" />
                 </StackPanel>
             </PivotItem>
@@ -78,7 +79,7 @@
                             <TextBlock Margin="0,0,0,24" Text="{Binding AppName}" HorizontalAlignment="Center" Style="{StaticResource SubheaderTextBlockStyle}"/>
                         
                             <StackPanel Margin="0,0,0,24">
-                                <TextBlock x:Uid="AppVersionTextBlock" Grid.Row="0" Margin="0,0,0,12" Text="version" Style="{StaticResource ControlHeaderTextBlockStyle}"/>
+                                <TextBlock x:Uid="AppVersionTextBlock" Grid.Row="0" Margin="0,0,0,6" Text="version" Style="{StaticResource ControlHeaderTextBlockStyle}"/>
                                 <TextBlock Grid.Row="1" Margin="0,0,0,12" Text="{Binding AppVersion}"/>
                             </StackPanel>
                     
@@ -89,7 +90,7 @@
                                 </Grid.ColumnDefinitions>
                             
                                 <StackPanel VerticalAlignment="Center">
-                                    <TextBlock x:Uid="DevelopedByTextBlock" Grid.Row="0" Margin="0,0,0,12" Text="developed by" Style="{StaticResource ControlHeaderTextBlockStyle}"/>
+                                    <TextBlock x:Uid="DevelopedByTextBlock" Grid.Row="0" Margin="0,0,0,6" Text="developed by" Style="{StaticResource ControlHeaderTextBlockStyle}"/>
                                     <TextBlock Grid.Row="1">
                                         <Run Text="@brunolemos ("/><Run
                                             Text="{Binding Converter={StaticResource LocalizedResourcesConverter}, ConverterParameter='Brazil', FallbackValue='Brazil', TargetNullValue='Brazil'}"/><Run

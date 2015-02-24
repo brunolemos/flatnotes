@@ -270,13 +270,13 @@
   <data name="Unpin" xml:space="preserve">
     <value>unpin</value>
   </data>
-  <data name="TransparentTileToggleSwitch.Header" xml:space="preserve">
-    <value>live tile</value>
+  <data name="TransparentDefaultTileToggleSwitch.Header" xml:space="preserve">
+    <value>default live tile</value>
   </data>
-  <data name="TransparentTileToggleSwitch.OffContent" xml:space="preserve">
+  <data name="TransparentDefaultTileToggleSwitch.OffContent" xml:space="preserve">
     <value>transparent</value>
   </data>
-  <data name="TransparentTileToggleSwitch.OnContent" xml:space="preserve">
+  <data name="TransparentDefaultTileToggleSwitch.OnContent" xml:space="preserve">
     <value>solid color</value>
   </data>
   <data name="NoteChecklistType.Label" xml:space="preserve">
@@ -292,5 +292,14 @@ Some features:
 - Image upload
 - Custom number of columns
 - Choose the light or dark theme</value>
+  </data>
+  <data name="TransparentNoteTileToggleSwitch.Header" xml:space="preserve">
+    <value>note live tile</value>
+  </data>
+  <data name="TransparentNoteTileToggleSwitch.OffContent" xml:space="preserve">
+    <value>transparent</value>
+  </data>
+  <data name="TransparentNoteTileToggleSwitch.OnContent" xml:space="preserve">
+    <value>solid color</value>
   </data>
 </root>
