@@ -59,8 +59,11 @@ namespace FlatNotes.Utils
 
         public static async Task Load()
         {
+#if WINDOWS_UAP
+#else
             //versioning -- migrate app data structure when necessary
             await Migration.Migration.Migrate(AppSettings.Instance.Version);
+#endif
 
             //load notes
             AppData.Notes = await AppSettings.Instance.LoadNotes();

@@ -18,18 +18,24 @@ namespace FlatNotes.Utils
         public static void UpdateDefaultTile(bool transparentTile = false)
         {
             var tileSubFolder = transparentTile ? "Transparent" :  "Solid";
+#if WINDOWS_UAP
+#else
             var tileSquare71Content = TileContentFactory.CreateTileSquare71x71Image();
+#endif
             ITileNotificationContent biggerTile;
 
 #if WINDOWS_PHONE_APP
             tileSquare71Content.Image.Src = String.Format("ms-appx:///Assets/Tiles/{0}/Square71x71Logo.png", tileSubFolder);
-#else
+#elif WINDOWS_APP
             tileSquare71Content.Image.Src = String.Format("ms-appx:///Assets/Tiles/{0}/Square70x70Logo.png", tileSubFolder);
 #endif
 
             var tileSquare150Content = TileContentFactory.CreateTileSquare150x150Image();
             tileSquare150Content.Image.Src = String.Format("ms-appx:///Assets/Tiles/{0}/Logo.png", tileSubFolder);
+#if WINDOWS_UAP
+#else
             tileSquare150Content.Square71x71Content = tileSquare71Content;
+#endif
 
             var tileWideContent = TileContentFactory.CreateTileWide310x150Image();
             tileWideContent.Image.Src = String.Format("ms-appx:///Assets/Tiles/{0}/WideLogo.png", tileSubFolder);
@@ -82,12 +88,10 @@ namespace FlatNotes.Utils
 
             tile.RoamingEnabled = true;
 
-#if WINDOWS_PHONE_APP
+#if WINDOWS_UAP
+#elif WINDOWS_PHONE_APP
             tile.VisualElements.Square30x30Logo = new Uri("ms-appx:///Assets/Tiles/Transparent/Square71x71Logo.png");
             tile.VisualElements.Square71x71Logo = new Uri("ms-appx:///Assets/Tiles/Transparent/Square71x71Logo.png");
-#else
-            tile.VisualElements.Square30x30Logo = new Uri("ms-appx:///Assets/Tiles/Transparent/Square30x30Logo.png");
-            tile.VisualElements.Square70x70Logo = new Uri("ms-appx:///Assets/Tiles/Transparent/Square70x70Logo.png");
 #endif
             tile.VisualElements.Square150x150Logo = new Uri("ms-appx:///Assets/Tiles/Transparent/Logo.png");
             tile.VisualElements.Wide310x150Logo = new Uri("ms-appx:///Assets/Tiles/Transparent/WideLogo.png");
@@ -104,11 +108,15 @@ namespace FlatNotes.Utils
             //update background
             UpdateNoteTileBackgroundColor(note, transparentTile);
 
+#if WINDOWS_UAP
+            ISquare71x71TileNotificationContent tileSquare71Content = null;
+#else
             var tileSquare71Content = TileContentFactory.CreateTileSquare71x71Image();
+#endif
 
 #if WINDOWS_PHONE_APP
             tileSquare71Content.Image.Src = "ms-appx:///Assets/Tiles/Transparent/Square71x71Logo.png";
-#else
+#elif WINDOWS_APP
             tileSquare71Content.Image.Src = "ms-appx:///Assets/Tiles/Transparent/Square70x70Logo.png";
 #endif
 

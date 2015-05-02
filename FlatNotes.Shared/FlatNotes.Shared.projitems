@@ -9,12 +9,6 @@
     <Import_RootNamespace>FlatNotes</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <ApplicationDefinition Include="$(MSBuildThisFileDirectory)App.xaml">
-      <SubType>Designer</SubType>
-    </ApplicationDefinition>
-    <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
-      <DependentUpon>App.xaml</DependentUpon>
-    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Common\AppSettingsBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\ContinuationManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\NavigationHelper.cs" />
@@ -86,8 +80,12 @@
     <Content Include="$(MSBuildThisFileDirectory)Assets\Logo.png" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="$(MSBuildThisFileDirectory)Controls\NoteColorPicker.xaml" />
-    <Page Include="$(MSBuildThisFileDirectory)Controls\NotePreview.xaml" />
+    <Page Include="$(MSBuildThisFileDirectory)Controls\NoteColorPicker.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Controls\NotePreview.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="$(MSBuildThisFileDirectory)Resources\DefaultResourceDictionary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -101,8 +99,7 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="$(MSBuildThisFileDirectory)Views\ArchivedNotesPage.xaml">
-      <SubType>
-      </SubType>
+      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="$(MSBuildThisFileDirectory)Views\MainPage.xaml">

@@ -89,7 +89,7 @@ namespace FlatNotes.Controls
         private void ColorsGrid_Loaded(object sender, RoutedEventArgs e)
         {
             if (ClosedVisualStatePositionAnimation != null)
-                ClosedVisualStatePositionAnimation.To = (sender as FrameworkElement).Height;
+                ClosedVisualStatePositionAnimation.To = (sender as FrameworkElement).ActualHeight;
         }
 
         private void ColorsGrid_SizeChanged(object sender, SizeChangedEventArgs e)
