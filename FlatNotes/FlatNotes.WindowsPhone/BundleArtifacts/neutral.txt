@@ -1,3 +1,0 @@
-MainPackage=C:\Users\Bruno\Documents\Visual Studio 2015\Projects\FlatNotes\FlatNotes\FlatNotes.WindowsPhone\bin\Release\FlatNotes.WindowsPhone_1.9.5.1_AnyCPU.appx
-SymbolPackage=C:\Users\Bruno\Documents\Visual Studio 2015\Projects\FlatNotes\FlatNotes\FlatNotes.WindowsPhone\AppPackages\FlatNotes.WindowsPhone_1.9.5.1_Test\FlatNotes.WindowsPhone_1.9.5.1_AnyCPU.appxsym
-ResourcePack=C:\Users\Bruno\Documents\Visual Studio 2015\Projects\FlatNotes\FlatNotes\FlatNotes.WindowsPhone\bin\Release\FlatNotes.WindowsPhone_1.9.5.1_language-pt.appx

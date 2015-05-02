@@ -8,14 +8,14 @@
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>FlatNotes</RootNamespace>
-    <AssemblyName>FlatNotes.Windows</AssemblyName>
+    <AssemblyName>FlatNotes.Windows81</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformVersion>8.1</TargetPlatformVersion>
     <MinimumVisualStudioVersion>12</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
     <SynthesizeLinkMetadata>true</SynthesizeLinkMetadata>
     <ProjectTypeGuids>{BC8A1FFA-BEE3-4634-8014-F334798102B3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <PackageCertificateKeyFile>FlatNotes.Windows_StoreKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateKeyFile>FlatNotes.Windows81_StoreKey.pfx</PackageCertificateKeyFile>
     <PackageCertificateThumbprint>760281CE3AAB523873AB5C5D5DD08166C47BE144</PackageCertificateThumbprint>
     <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
     <AppxBundlePlatforms>neutral</AppxBundlePlatforms>
@@ -122,8 +122,8 @@
     <None Include="analytics.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="FlatNotes.Windows_StoreKey.pfx" />
-    <None Include="FlatNotes.Windows_TemporaryKey.pfx" />
+    <None Include="FlatNotes.Windows81_StoreKey.pfx" />
+    <None Include="FlatNotes.Windows81_TemporaryKey.pfx" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -218,16 +218,16 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="GoogleAnalytics">
-      <HintPath>..\..\packages\GoogleAnalyticsSDK.1.2.12\lib\windows81\GoogleAnalytics.winmd</HintPath>
+      <HintPath>..\packages\GoogleAnalyticsSDK.1.2.12\lib\windows81\GoogleAnalytics.winmd</HintPath>
     </Reference>
     <Reference Include="GoogleAnalytics.Core">
-      <HintPath>..\..\packages\GoogleAnalyticsSDK.1.2.12\lib\windows81\GoogleAnalytics.Core.winmd</HintPath>
+      <HintPath>..\packages\GoogleAnalyticsSDK.1.2.12\lib\windows81\GoogleAnalytics.Core.winmd</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>..\..\packages\Newtonsoft.Json.6.0.8\lib\netcore45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\netcore45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="NotificationsExtensions">
-      <HintPath>..\..\packages\NotificationsExtensions.1.0.0\lib\portable-wpa81+win81\NotificationsExtensions.winmd</HintPath>
+      <HintPath>..\packages\NotificationsExtensions.1.0.0\lib\portable-wpa81+win81\NotificationsExtensions.winmd</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
