@@ -1,4 +1,0 @@
-﻿<ViewModels:SettingsViewModel  xmlns:ViewModels="using:Keep.ViewModels" xmlns:Models="using:Keep.Models">
-    <ViewModels:SettingsViewModel.Columns>2</ViewModels:SettingsViewModel.Columns>
-    <ViewModels:SettingsViewModel.IsSolidColorDefaultTile>True</ViewModels:SettingsViewModel.IsSolidColorDefaultTile>
-</ViewModels:SettingsViewModel>

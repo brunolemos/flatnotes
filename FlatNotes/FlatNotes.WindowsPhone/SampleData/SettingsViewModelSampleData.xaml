@@ -1,0 +1,4 @@
+﻿<ViewModels:SettingsViewModel  xmlns:ViewModels="using:FlatNotes.ViewModels" xmlns:Models="using:FlatNotes.Models">
+    <ViewModels:SettingsViewModel.Columns>2</ViewModels:SettingsViewModel.Columns>
+    <ViewModels:SettingsViewModel.IsSolidColorDefaultTile>True</ViewModels:SettingsViewModel.IsSolidColorDefaultTile>
+</ViewModels:SettingsViewModel>

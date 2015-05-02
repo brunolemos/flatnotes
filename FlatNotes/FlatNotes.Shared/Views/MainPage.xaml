@@ -1,0 +1,78 @@
+﻿<Page
+    x:Class="FlatNotes.Views.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="using:FlatNotes.Controls"
+    xmlns:Converters="using:FlatNotes.Converters"
+    mc:Ignorable="d"
+    NavigationCacheMode="Required"
+    Background="{ThemeResource AppStatusBarBackgroundBrush}"
+    DataContext="{Binding Source={StaticResource MainViewModel}}"
+    d:DataContext="{d:DesignData /SampleData/MainViewModelSampleData.xaml}">
+
+    <Page.Transitions>
+        <TransitionCollection>
+            <EntranceThemeTransition/>
+        </TransitionCollection>
+    </Page.Transitions>
+
+    <Page.Resources>
+        <Converters:PositiveIntToVisibilityConverter x:Key="PositiveIntToVisibilityConverter"/>
+        <Converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        
+        <DataTemplate x:Key="NotePreviewListViewControlTemplate">
+            <local:NotePreview Tapped="OnNoteTapped" Loaded="OnNoteLoaded" Unloaded="OnNoteUnloaded"/>
+        </DataTemplate>
+
+        <ItemsPanelTemplate x:Key="FluidItemsPanelTemplate" x:Name="FluidItemsPanelTemplate">
+            <local:FluidGrid x:Name="NotesFluidGrid" Margin="14" ItemMinWidth="200" Columns="{Binding Columns, Mode=OneWay, TargetNullValue=-1, FallbackValue=-1}"/>
+        </ItemsPanelTemplate>
+    </Page.Resources>
+
+    <Grid x:Name="LayoutRoot" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid x:Name="ContentRoot" MaxWidth="1000">
+            <Grid Visibility="{Binding Notes.Count, Converter={StaticResource PositiveIntToVisibilityConverter}, ConverterParameter=True}">
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Viewbox Width="180">
+                        <Canvas Width="100" Height="100" HorizontalAlignment="Center">
+                            <Rectangle Fill="{ThemeResource PhoneLowBrush}" Width="100" Height="70" StrokeThickness="0"/>
+                            <Rectangle Fill="{ThemeResource PhoneLowBrush}" Width="70" Height="30" StrokeThickness="0" Margin="0,70,0,0"/>
+                            <Polygon Fill="{ThemeResource PhoneLowBrush}" Points="0,0 30,0, 0,30" StrokeThickness="0" Margin="70,70,0,0" />
+                            <Polygon Fill="#10000000" Points="0,0 30,0, 0,30" StrokeThickness="0" Margin="70,70,0,0" />
+                        </Canvas>
+                    </Viewbox>
+                    
+                    <TextBlock x:Uid="EmptyNotesMessageTextBox" Margin="10,24" Text="Notes you add appear here" Foreground="{ThemeResource PhoneMidBrush}" FontSize="{StaticResource TextStyleExtraLargeFontSize}" TextWrapping="Wrap" TextAlignment="Center"/>
+                </StackPanel>
+            </Grid>
+            
+            <local:MyListView x:Name="NotesListView" ItemsSource="{Binding Notes, Mode=OneWay}" ItemsPanel="{StaticResource FluidItemsPanelTemplate}" ItemTemplate="{StaticResource NotePreviewListViewControlTemplate}" ScrollViewer.VerticalScrollMode="Enabled" VerticalAlignment="Stretch" SelectionMode="None" CanDragItems="True" ReorderMode="{Binding ReorderMode, Mode=TwoWay}"/>
+        </Grid>
+    </Grid>
+
+    <Page.BottomAppBar>
+        <CommandBar IsOpen="{Binding IsWindows}" IsSticky="True">
+            <CommandBar.SecondaryCommands>
+                <AppBarButton x:Uid="ArchivedNotesAppBarButton" Icon="Page2" Label="archived notes" Command="{Binding OpenArchivedNotesCommand}"/>
+                <AppBarButton x:Uid="SettingsAppBarButton" Icon="Setting" Label="settings" Command="{Binding OpenSettingsCommand}" Visibility="{Binding IsWindowsPhone, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+            </CommandBar.SecondaryCommands>
+
+            <AppBarButton x:Uid="NoteTextType" Label="text" Command="{Binding CreateTextNoteCommand}">
+                <AppBarButton.Icon>
+                    <PathIcon Data="M11.875,10.2916498184204L26.1250019073486,10.2916498184204 26.1250019073486,13.4583511352539 20.5833511352539,13.4583511352539 20.5833511352539,29.2916507720947 17.4166507720947,29.2916507720947 17.4166507720947,13.4583511352539 11.875,13.4583511352539 11.875,10.2916498184204z"/>
+                </AppBarButton.Icon>
+            </AppBarButton>
+
+            <AppBarButton x:Uid="NoteChecklistType" Label="checklist" Command="{Binding CreateChecklistNoteCommand}">
+                <AppBarButton.Icon>
+                    <PathIcon Data="M9.5,11.5000343322754L13.4999742507935,11.5000343322754 13.4999742507935,15.5000095367432 9.5,15.5000095367432 9.5,11.5000343322754z M9.5,16.999963760376L13.4999742507935,16.999963760376 13.4999742507935,21.000036239624 9.5,21.000036239624 9.5,16.999963760376z M15.5000095367432,11.5000343322754L28.5,11.5000343322754 28.5,15.5000095367432 15.5000095367432,15.5000095367432 15.5000095367432,11.5000343322754z M9.5,22.4999904632568L13.4999742507935,22.4999904632568 13.4999742507935,26.499963760376 9.5,26.499963760376 9.5,22.4999904632568z M15.5000095367432,16.999963760376L28.5,16.999963760376 28.5,21.000036239624 15.5000095367432,21.000036239624 15.5000095367432,16.999963760376z M15.5000095367432,22.4999904632568L28.5,22.4999904632568 28.5,26.499963760376 15.5000095367432,26.499963760376 15.5000095367432,22.4999904632568z"/>
+                </AppBarButton.Icon>
+            </AppBarButton>
+
+            <AppBarButton x:Uid="PhotoAppBarButton" Icon="Camera" Label="photo" Command="{Binding OpenImagePickerCommand}"/>
+            <!--<AppBarButton x:Uid="AudioAppBarButton" Icon="Microphone" Label="audio" IsEnabled="False"/>-->
+        </CommandBar>
+    </Page.BottomAppBar>
+</Page>

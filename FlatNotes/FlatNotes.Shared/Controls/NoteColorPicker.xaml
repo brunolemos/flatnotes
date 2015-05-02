@@ -1,0 +1,119 @@
+﻿<UserControl
+    x:Name="Root"
+    x:Class="FlatNotes.Controls.NoteColorPicker"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="using:FlatNotes.Controls"
+    xmlns:models="using:FlatNotes.Models"
+    mc:Ignorable="d"
+    d:DesignHeight="200"
+    d:DesignWidth="400">
+
+    <UserControl.Resources>
+        <DataTemplate x:Key="NoteColorTemplate">
+            <Grid Margin="10">
+                <Ellipse Width="42"  Height="42" Fill="{Binding Color}" StrokeThickness="0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            </Grid>
+        </DataTemplate>
+        
+        <DataTemplate x:Key="SelectedNoteColorTemplate">
+            <Grid Margin="10">
+                <Ellipse Width="42"  Height="42" Fill="Transparent" StrokeThickness="3" Stroke="{Binding Color}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <Ellipse x:Name="SelectedItemIndicator" Width="27"  Height="27" Fill="{Binding Color}" StrokeThickness="0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            </Grid>
+        </DataTemplate>
+
+        <ItemsPanelTemplate x:Key="NoteColorsItemsPanelTemplate" x:Name="FluidItemsPanelTemplate">
+            <local:FluidGrid Columns="4"/>
+        </ItemsPanelTemplate>
+        
+        <Style x:Name="NoteColorItemContainerStyle" TargetType="ListViewItem">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListViewItem">
+                        <Grid>
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal"/>
+                                </VisualStateGroup>
+                                <VisualStateGroup x:Name="SelectionStates">
+                                    <VisualState x:Name="Unselected">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(ContentPresenter.ContentTemplate)" Storyboard.TargetName="NoteColorContentPresenter">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource NoteColorTemplate}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="SelectedUnfocused">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(ContentPresenter.ContentTemplate)" Storyboard.TargetName="NoteColorContentPresenter">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource SelectedNoteColorTemplate}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+
+                            <ContentPresenter x:Name="NoteColorContentPresenter" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="ColorPickerVisualStateGroup">
+                <VisualState x:Name="OpenedVisualState">
+                    <Storyboard>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="Root">
+                            <DiscreteObjectKeyFrame KeyTime="0">
+                                <DiscreteObjectKeyFrame.Value>
+                                    <Visibility>Visible</Visibility>
+                                </DiscreteObjectKeyFrame.Value>
+                            </DiscreteObjectKeyFrame>
+                        </ObjectAnimationUsingKeyFrames>
+                        <DoubleAnimation Duration="0:0:0.25" To="0" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="ColorsGrid" d:IsOptimized="True">
+                            <DoubleAnimation.EasingFunction>
+                                <BackEase Amplitude="0" EasingMode="EaseOut"/>
+                            </DoubleAnimation.EasingFunction>
+                        </DoubleAnimation>
+                    </Storyboard>
+                </VisualState>
+                <VisualState x:Name="ClosedVisualState">
+                    <Storyboard>
+                        <DoubleAnimation x:Name="ClosedVisualStatePositionAnimation" Duration="0:0:0.35" To="190" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="ColorsGrid" d:IsOptimized="True">
+                            <DoubleAnimation.EasingFunction>
+                                <BackEase Amplitude="0" EasingMode="EaseOut"/>
+                            </DoubleAnimation.EasingFunction>
+                        </DoubleAnimation>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="Root">
+                            <DiscreteObjectKeyFrame KeyTime="0:0:0.4">
+                                <DiscreteObjectKeyFrame.Value>
+                                    <Visibility>Collapsed</Visibility>
+                                </DiscreteObjectKeyFrame.Value>
+                            </DiscreteObjectKeyFrame>
+                        </ObjectAnimationUsingKeyFrames>
+                    </Storyboard>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
+        <Grid Grid.Row="0" Background="Transparent" Tapped="OutsideGrid_Tapped"/>
+        <Grid Grid.Row="1" x:Name="ColorsGrid" Background="{Binding Background, ElementName=Root, TargetNullValue={StaticResource PhoneMidBrush}}" VerticalAlignment="Bottom" RenderTransformOrigin="0.5,0.5" Loaded="ColorsGrid_Loaded" SizeChanged="ColorsGrid_SizeChanged">
+            <Grid.RenderTransform>
+                <CompositeTransform/>
+            </Grid.RenderTransform>
+
+            <ListView x:Name="ColorPickerListView" Margin="19,30" SelectionMode="Single" ItemsSource="{Binding}" ItemsPanel="{StaticResource NoteColorsItemsPanelTemplate}" ItemContainerStyle="{StaticResource NoteColorItemContainerStyle}" DataContext="{Binding Colors, ElementName=Root}" d:DataContext="{d:DesignData /SampleData/NoteColorsSampleData.xaml}" SelectedValue="{Binding ElementName=Root, Path=SelectedNoteColor, Mode=TwoWay}"/>
+        </Grid>
+    </Grid>
+</UserControl>

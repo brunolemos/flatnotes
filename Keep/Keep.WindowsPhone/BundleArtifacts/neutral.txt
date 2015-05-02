@@ -1,3 +1,0 @@
-MainPackage=C:\Users\Bruno\Documents\Visual Studio 2015\Projects\Keep\Keep\Keep.WindowsPhone\bin\Release\Keep.WindowsPhone_1.9.5.1_AnyCPU.appx
-SymbolPackage=C:\Users\Bruno\Documents\Visual Studio 2015\Projects\Keep\Keep\Keep.WindowsPhone\AppPackages\Keep.WindowsPhone_1.9.5.1_Test\Keep.WindowsPhone_1.9.5.1_AnyCPU.appxsym
-ResourcePack=C:\Users\Bruno\Documents\Visual Studio 2015\Projects\Keep\Keep\Keep.WindowsPhone\bin\Release\Keep.WindowsPhone_1.9.5.1_language-pt.appx

@@ -1,0 +1,58 @@
+﻿<SettingsFlyout
+    x:Name="Root"
+    x:Class="FlatNotes.Views.AboutSettingsFlyout"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:FlatNotes.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:Converters="using:FlatNotes.Converters"
+    mc:Ignorable="d"
+    Title="about"
+    Width="360"
+    d:DesignWidth="350"
+    d:DesignHeight="550"
+    DataContext="{Binding Source={StaticResource SettingsViewModel}}"
+    d:DataContext="{d:DesignData /SampleData/SettingsViewModelSampleData.xaml}">
+
+    <SettingsFlyout.Resources>
+        <Converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </SettingsFlyout.Resources>
+    
+    <StackPanel Width="280">
+        <StackPanel Style="{StaticResource SettingsFlyoutSectionStyle}">
+            <Image Width="80" Source="ms-appx:///Assets/Logo.png" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+            <TextBlock Text="{Binding AppName}" Margin="0,0,0,12" HorizontalAlignment="Center" Style="{StaticResource SubheaderTextBlockStyle}"/>
+            <Button Content="Download Flat Notes" HorizontalAlignment="Stretch" Command="{Binding DownloadAppCommand}" Margin="0,0,0,12" Visibility="{Binding IsBeta, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+        </StackPanel>
+        
+        <StackPanel Style="{StaticResource SettingsFlyoutSectionStyle}">
+            <TextBlock x:Uid="AppVersionTextBlock" Text="version" Style="{StaticResource TitleTextBlockStyle}" />
+            <TextBlock Text="{Binding AppVersion}" Style="{StaticResource BodyTextBlockStyle}" TextWrapping="Wrap"/>
+        </StackPanel>
+        
+        <StackPanel Style="{StaticResource SettingsFlyoutSectionStyle}">
+            <Button Margin="-12,0" Background="Transparent" BorderThickness="0" Command="{Binding OpenDeveloperTwitterCommand}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
+                <Grid VerticalAlignment="Center">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Left">
+                        <TextBlock x:Uid="DevelopedByTextBlock" Text="developed by" Style="{StaticResource TitleTextBlockStyle}" />
+                        <TextBlock Margin="0,0,0,12" Style="{StaticResource BodyTextBlockStyle}">
+                            <Run Text="@brunolemos ("/><Run
+                                Text="{Binding Converter={StaticResource LocalizedResourcesConverter}, ConverterParameter='Brazil', FallbackValue='Brazil', TargetNullValue='Brazil'}"/><Run
+                                Text=")"/>
+                        </TextBlock>
+                    </StackPanel>
+
+                    <Viewbox Grid.Column="1" Height="24" Margin="48,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Right">
+                        <Path Margin="0,8,0,0" Stretch="Fill" Fill="{Binding Foreground, ElementName=Root}" Data="F1 M 59.7481,27.0756C 58.2644,27.7337 56.6696,28.1784 54.9961,28.3784C 56.704,27.3544 58.0162,25.7329 58.634,23.8008C 57.0352,24.749 55.2645,25.4376 53.3797,25.8086C 51.8705,24.2005 49.7202,23.1958 47.3403,23.1958C 42.771,23.1958 39.0661,26.9003 39.0661,31.4697C 39.0661,32.1181 39.1393,32.7497 39.2804,33.3553C 32.4039,33.0102 26.3071,29.7162 22.2263,24.7102C 21.514,25.9322 21.106,27.3535 21.106,28.8699C 21.106,31.7405 22.5667,34.2731 24.7869,35.7569C 23.4307,35.7138 22.1547,35.3416 21.0392,34.7219C 21.0385,34.7565 21.0385,34.791 21.0385,34.826C 21.0385,38.8348 23.8906,42.1789 27.6756,42.9392C 26.9814,43.1282 26.2504,43.2294 25.4958,43.2294C 24.9626,43.2294 24.4443,43.1775 23.939,43.081C 24.992,46.368 28.0476,48.7603 31.6683,48.8269C 28.8365,51.0462 25.2689,52.369 21.3923,52.369C 20.7245,52.369 20.0659,52.3297 19.4186,52.2533C 23.0802,54.6008 27.4295,55.9708 32.102,55.9708C 47.321,55.9708 55.6436,43.363 55.6436,32.4291C 55.6436,32.0704 55.6353,31.7136 55.6194,31.3586C 57.2362,30.192 58.6389,28.7348 59.7481,27.0756 Z "/>
+                    </Viewbox>
+                </Grid>
+            </Button>
+        </StackPanel>
+    </StackPanel>
+</SettingsFlyout>

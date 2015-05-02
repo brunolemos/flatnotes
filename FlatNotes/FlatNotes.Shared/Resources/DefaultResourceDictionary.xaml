@@ -1,0 +1,44 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    
+    <x:String x:Key="AppName">Flat Notes</x:String>
+    
+    <Color x:Key="AppMainColor">#ffbb00</Color>
+    <Color x:Key="PhoneAccentColor">#ffbb00</Color>
+    
+    <SolidColorBrush x:Key="AppMainBrush" Color="{ThemeResource AppMainColor}"/>
+    <SolidColorBrush x:Key="PhoneAccentBrush" Color="{ThemeResource AppMainColor}"/>
+
+    <SolidColorBrush x:Key="AppSplashScreenBrush" Color="#56007f"/><!--263646-->
+    <SolidColorBrush x:Key="ProgressBarIndeterminateForegroundThemeBrush" Color="{ThemeResource AppMainColor}"/>
+
+    <SolidColorBrush x:Key="ToggleSwitchCurtainBackgroundThemeBrush" Color="{ThemeResource AppMainColor}"/>
+    <SolidColorBrush x:Key="SliderTrackDecreaseBackgroundThemeBrush" Color="{ThemeResource AppMainColor}"/>
+
+    <SolidColorBrush x:Key="PhoneDarkLowBrush" Color="#20000000"/>
+    <SolidColorBrush x:Key="PhoneDarkMidBrush" Color="#70000000"/>
+    
+    <SolidColorBrush x:Key="AppNoteForegroundBrush" Color="#C0000000"/>
+    <SolidColorBrush x:Key="AppNoteCommandBarForegroundThemeBrush" Color="Black"/>
+            
+    <SolidColorBrush x:Key="TextBoxFocusedBackgroundThemeBrush" Color="Transparent"/>
+    <SolidColorBrush x:Key="TextBoxPlaceholderTextThemeBrush" Color="#70000000"/>
+    <SolidColorBrush x:Key="TextBoxDisabledForegroundThemeBrush" Color="#70000000"/>
+    <SolidColorBrush x:Key="TextBlockDisabledForegroundThemeBrush" Color="#70000000"/>
+
+    <SolidColorBrush x:Key="CommandBarBackgroundThemeBrush" Color="{ThemeResource AppMainColor}"/>
+    <SolidColorBrush x:Key="CommandBarForegroundThemeBrush" Color="#402f00"/><!--White-->
+    
+    <Style TargetType="CommandBar">
+        <Setter Property="RequestedTheme" Value="Light"/>
+        <Setter Property="Background" Value="{ThemeResource CommandBarBackgroundThemeBrush}"/>
+        <Setter Property="Foreground" Value="{ThemeResource CommandBarForegroundThemeBrush}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+    </Style>
+        
+    <Style TargetType="ListViewItem">
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+    </Style>
+</ResourceDictionary>
