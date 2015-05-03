@@ -43,8 +43,8 @@
                             <Polygon Fill="#10000000" Points="0,0 30,0, 0,30" StrokeThickness="0" Margin="70,70,0,0" />
                         </Canvas>
                     </Viewbox>
-                    
-                    <TextBlock x:Uid="EmptyNotesMessageTextBox" Margin="10,24" Text="Notes you add appear here" Foreground="{ThemeResource PhoneMidBrush}" FontSize="{StaticResource TextStyleExtraLargeFontSize}" TextWrapping="Wrap" TextAlignment="Center"/>
+
+                    <TextBlock x:Uid="EmptyNotesMessageTextBox" Margin="10,24" Text="Notes you add appear here" Foreground="{ThemeResource PhoneMidBrush}" FontSize="{StaticResource EmptyNotesMessageFontSize}" TextWrapping="Wrap" TextAlignment="Center"/>
                 </StackPanel>
             </Grid>
             

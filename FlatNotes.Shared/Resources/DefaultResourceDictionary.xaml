@@ -42,6 +42,8 @@
         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
     </Style>
 
+    <x:Double x:Key="EmptyNotesMessageFontSize">36</x:Double>
+
     <Style TargetType="TextBlock">
         <Setter Property="FontSize" Value="17"/>
     </Style>

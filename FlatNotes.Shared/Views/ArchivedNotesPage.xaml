@@ -59,7 +59,7 @@
                         </Canvas>
                     </Viewbox>
                     
-                    <TextBlock x:Uid="EmptyArchivedNotesMessageTextBox" Margin="10,24" Text="Archived notes appear here" Foreground="{ThemeResource PhoneMidBrush}" FontSize="{StaticResource TextStyleExtraLargeFontSize}" TextWrapping="Wrap" TextAlignment="Center"/>
+                    <TextBlock x:Uid="EmptyArchivedNotesMessageTextBox" Margin="10,24" Text="Archived notes appear here" Foreground="{ThemeResource PhoneMidBrush}" FontSize="{StaticResource EmptyNotesMessageFontSize}" TextWrapping="Wrap" TextAlignment="Center"/>
                 </StackPanel>
             </Grid>
             
