@@ -126,10 +126,10 @@ namespace FlatNotes
 
         protected override async void OnLaunched(LaunchActivatedEventArgs e)
         {
-#if DEBUG
-            if (System.Diagnostics.Debugger.IsAttached)
-                this.DebugSettings.EnableFrameRateCounter = true;
-#endif
+//#if DEBUG
+//            if (System.Diagnostics.Debugger.IsAttached)
+//                this.DebugSettings.EnableFrameRateCounter = true;
+//#endif
 
             //user theme
             UpdateTheme(AppSettings.Instance.Theme);
