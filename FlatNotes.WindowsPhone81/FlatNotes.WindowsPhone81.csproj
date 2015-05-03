@@ -100,14 +100,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </DesignData>
-    <ApplicationDefinition Include="App.xaml">
-      <SubType>Designer</SubType>
-    </ApplicationDefinition>
-    <Page Include="Resources\CustomResourceDictionary.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>
-      </SubType>
-    </Page>
     <Page Include="SampleData\SettingsViewModelSampleData.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -118,9 +110,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App.xaml.cs">
-      <DependentUpon>App.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Views\Partials\NoteEditPage_Swipe.cs" />
     <Compile Include="Views\SettingsPage.xaml.cs">

@@ -41,4 +41,16 @@
     <Style TargetType="ListViewItem">
         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
     </Style>
+
+    <Style TargetType="TextBlock">
+        <Setter Property="FontSize" Value="17"/>
+    </Style>
+
+    <Style x:Key="NavigationBackButtonNormalStyle" TargetType="Button">
+        <Setter Property="Visibility" Value="Visible"/>
+    </Style>
+
+    <DataTemplate x:Key="HeaderTemplate">
+        <TextBlock Margin="0,12,0,0" Text="{Binding}" FontSize="34.14"/>
+    </DataTemplate>
 </ResourceDictionary>

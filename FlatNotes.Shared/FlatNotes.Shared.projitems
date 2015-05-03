@@ -9,6 +9,9 @@
     <Import_RootNamespace>FlatNotes</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Common\AppSettingsBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\ContinuationManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\NavigationHelper.cs" />
@@ -117,5 +120,10 @@
     <PRIResource Include="$(MSBuildThisFileDirectory)Strings\pt-BR\Resources.resw" />
     <PRIResource Include="$(MSBuildThisFileDirectory)Strings\en-US\Resources.resw" />
     <PRIResource Include="$(MSBuildThisFileDirectory)Strings\zh-CN\Resources.resw" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="$(MSBuildThisFileDirectory)App.xaml">
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
   </ItemGroup>
 </Project>

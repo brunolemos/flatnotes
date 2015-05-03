@@ -37,13 +37,13 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
-                        <Viewbox Grid.Column="0" Height="{StaticResource AppNoteEditChecklistSize}" Margin="0,2,0,0" VerticalAlignment="Top">
+                        <Viewbox Grid.Column="0" Height="30" Margin="0,2,0,0" VerticalAlignment="Top">
                             <Grid Width="30" Height="30">
                                 <CheckBox Margin="0,-14" IsChecked="{Binding IsChecked, Mode=TwoWay}" HorizontalAlignment="Left" BorderBrush="{StaticResource AppNoteForegroundBrush}" IsEnabled="{Binding ReorderMode, ElementName=NoteChecklistListView, Converter={StaticResource ReorderModeToBooleanConverter}, ConverterParameter=True}" ClickMode="Release" IsTapEnabled="False"/>
                             </Grid>
                         </Viewbox>
-                        
-                        <TextBox Grid.Column="1" Text="{Binding Text, Mode=TwoWay}" Style="{StaticResource AppNoteEditChecklistTextStyle}" IsEnabled="{Binding ReorderMode, ElementName=NoteChecklistListView, Converter={StaticResource ReorderModeToBooleanConverter}, ConverterParameter=True}" KeyDown="NoteChecklistItemTextBox_KeyDown"/>
+
+                        <TextBox Grid.Column="1" Text="{Binding Text, Mode=TwoWay}" Foreground="{StaticResource AppNoteForegroundBrush}" InputScope="Chat" Background="Transparent" BorderThickness="0" FontSize="20" MinHeight="45" Margin="0" Padding="12,0,19,12" FontWeight="Normal" AcceptsReturn="False" TextWrapping="Wrap" IsEnabled="{Binding ReorderMode, ElementName=NoteChecklistListView, Converter={StaticResource ReorderModeToBooleanConverter}, ConverterParameter=True}" KeyDown="NoteChecklistItemTextBox_KeyDown"/>
                     </Grid>
                     
                     <Grid Background="Transparent" Visibility="{Binding ReorderMode, ElementName=NoteChecklistListView, Converter={StaticResource ReorderModeToVisibilityConverter}}"/>
@@ -55,8 +55,8 @@
             </MenuFlyout>
             
             <DataTemplate x:Key="NoteImagesListViewControlTemplate">
-                <Grid x:Name="NoteImageContainer" MaxHeight="{StaticResource AppNoteEditImageSize}" FlyoutBase.AttachedFlyout="{StaticResource NoteImageMenuFlyout}" Holding="NoteImageContainer_Holding">
-                    <Image MinHeight="{StaticResource AppNoteEditImageSize}" Source="{Binding URL}" VerticalAlignment="Center" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+                <Grid x:Name="NoteImageContainer" MaxHeight="220" FlyoutBase.AttachedFlyout="{StaticResource NoteImageMenuFlyout}" Holding="NoteImageContainer_Holding">
+                    <Image MinHeight="220" Source="{Binding URL}" VerticalAlignment="Center" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
                 </Grid>
             </DataTemplate>
         </ResourceDictionary>
@@ -85,12 +85,12 @@
 
             <ScrollViewer Grid.Row="0" ScrollViewer.VerticalScrollMode="Enabled">
                 <StackPanel>
-                    <Grid MaxHeight="{StaticResource AppNoteEditImageSize}" Margin="0,0,0,-6" Background="{StaticResource PhoneDarkLowBrush}" Visibility="{Binding Note.Images.Count, Converter={StaticResource PositiveIntToVisibilityConverter}}">
+                    <Grid MaxHeight="220" Margin="0,0,0,-6" Background="{StaticResource PhoneDarkLowBrush}" Visibility="{Binding Note.Images.Count, Converter={StaticResource PositiveIntToVisibilityConverter}}">
                         <ListView x:Name="NoteImagesListView" ItemsSource="{Binding Note.Images}" ItemTemplate="{StaticResource NoteImagesListViewControlTemplate}" SelectionMode="None"/>
                     </Grid>
-                    
-                    <TextBox x:Uid="TitleTextBox" x:Name="NoteTitleTextBox" PlaceholderText="Title" Text="{Binding Note.Title, Mode=TwoWay}" Style="{StaticResource AppNoteEditTitleStyle}" KeyDown="NoteTitleTextBox_KeyDown"/>
-                    <TextBox x:Uid="TextTextBox" x:Name="NoteTextTextBox" PlaceholderText="Text" Text="{Binding Note.Text, Mode=TwoWay}" Style="{StaticResource AppNoteEditTextStyle}" Visibility="{Binding Note.IsText, Converter={StaticResource BooleanToVisibilityConverter}}" />
+
+                    <TextBox x:Uid="TitleTextBox" x:Name="NoteTitleTextBox" PlaceholderText="Title" Text="{Binding Note.Title, Mode=TwoWay}" Foreground="{StaticResource AppNoteForegroundBrush}" InputScope="Chat" Background="Transparent" BorderThickness="0" FontSize="24" MinHeight="65" Margin="0,12,0,6" Padding="19,18,19,12" FontWeight="Bold" MaxLength="30" TextWrapping="NoWrap" KeyDown="NoteTitleTextBox_KeyDown"/>
+                    <TextBox x:Uid="TextTextBox" x:Name="NoteTextTextBox" PlaceholderText="Text" Text="{Binding Note.Text, Mode=TwoWay}" Foreground="{StaticResource AppNoteForegroundBrush}" InputScope="Chat" Background="Transparent" BorderThickness="0" FontSize="20" MinHeight="200" Margin="19,0,19,0" Padding="0" FontWeight="Normal" AcceptsReturn="True" MaxLength="1024" TextWrapping="Wrap" Visibility="{Binding Note.IsText, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
                     <StackPanel Visibility="{Binding Note.IsChecklist, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
                         <local:MyListView x:Name="NoteChecklistListView" ItemsSource="{Binding Note.Checklist}" AllowDrop="True" CanDragItems="True" ItemTemplate="{StaticResource NoteChecklistListViewControlTemplate}" Holding="NoteChecklistListView_Holding" ReorderMode="{Binding ReorderMode, Mode=TwoWay}" SelectionMode="None" IsItemClickEnabled="False" IsTapEnabled="False"/>
@@ -102,7 +102,7 @@
                             </Grid.ColumnDefinitions>
 
                             <Grid VerticalAlignment="Top">
-                                <Viewbox Grid.Column="0" Height="{StaticResource AppNoteEditChecklistSize}" Margin="0,2,0,0" VerticalAlignment="Top">
+                                <Viewbox Grid.Column="0" Height="30" Margin="0,2,0,0" VerticalAlignment="Top">
                                     <Grid Width="30" Height="30">
                                         <CheckBox Margin="0,-14" IsEnabled="False" Opacity="0"/>
                                     </Grid>
@@ -110,8 +110,8 @@
                                 
                                 <SymbolIcon Symbol="Add" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource PhoneDarkMidBrush}" Margin="0,-2,0,0"/>
                             </Grid>
-                            
-                            <TextBox x:Uid="NewItemTextBox" x:Name="NewChecklistItemTextBox" Grid.Column="1" PlaceholderText="New item" Text="" Style="{StaticResource AppNoteEditChecklistTextStyle}" KeyDown="NewChecklistItemTextBox_KeyDown" IsEnabled="{Binding ReorderMode, ElementName=NoteChecklistListView, Converter={StaticResource ReorderModeToBooleanConverter}, ConverterParameter=True}" />
+
+                            <TextBox x:Uid="NewItemTextBox" x:Name="NewChecklistItemTextBox" Grid.Column="1" PlaceholderText="New item" Text="" Foreground="{StaticResource AppNoteForegroundBrush}" InputScope="Chat" Background="Transparent" BorderThickness="0" FontSize="20" MinHeight="45" Margin="0" Padding="12,0,19,12" FontWeight="Normal" AcceptsReturn="False" TextWrapping="Wrap" KeyDown="NewChecklistItemTextBox_KeyDown" IsEnabled="{Binding ReorderMode, ElementName=NoteChecklistListView, Converter={StaticResource ReorderModeToBooleanConverter}, ConverterParameter=True}" />
                         </Grid>
                     </StackPanel>
                 </StackPanel>

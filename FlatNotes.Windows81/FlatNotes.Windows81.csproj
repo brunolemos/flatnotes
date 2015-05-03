@@ -107,9 +107,6 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="App.xaml.cs">
-      <DependentUpon>App.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Views\PreferencesSettingsFlyout.xaml.cs">
       <DependentUpon>PreferencesSettingsFlyout.xaml</DependentUpon>
@@ -199,17 +196,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </DesignData>
-    <ApplicationDefinition Include="App.xaml">
-      <SubType>Designer</SubType>
-    </ApplicationDefinition>
     <Page Include="SampleData\SettingsViewModelSampleData.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Resources\CustomResourceDictionary.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>
-      </SubType>
     </Page>
     <Page Include="Views\PreferencesSettingsFlyout.xaml">
       <Generator>MSBuild:Compile</Generator>

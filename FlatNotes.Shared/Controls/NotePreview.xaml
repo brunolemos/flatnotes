@@ -39,19 +39,19 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     
-                    <Viewbox Grid.Column="0" Height="{StaticResource AppNotePreviewChecklistSize}" Margin="0,2,0,0" VerticalAlignment="Top">
+                    <Viewbox Grid.Column="0" Height="18" Margin="0,2,0,0" VerticalAlignment="Top">
                         <Grid Width="30" Height="30">
                             <CheckBox Margin="0,-14" IsChecked="{Binding IsChecked, Mode=OneTime}" HorizontalAlignment="Left" IsHitTestVisible="False" Foreground="{StaticResource AppNoteForegroundBrush}" BorderBrush="{StaticResource AppNoteForegroundBrush}" Opacity="0.8"/>
                         </Grid>
                     </Viewbox>
 
-                    <TextBlock Grid.Column="1" Text="{Binding Text, Mode=OneWay}"  Style="{StaticResource AppNotePreviewChecklistTextStyle}" Foreground="{Binding ElementName=Root, Path=Foreground}" />
+                    <TextBlock Grid.Column="1" Text="{Binding Text, Mode=OneWay}" Foreground="{Binding ElementName=Root, Path=Foreground}" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" FontSize="17" Margin="0,-2,0,0" Padding="4,0,0,0" FontWeight="Normal" MaxLines="1" />
                 </Grid>
             </DataTemplate>
             
             <DataTemplate x:Key="NoteImagesListViewControlTemplate">
-                <Grid x:Name="NoteImageContainer" MaxHeight="{StaticResource AppNotePreviewImageSize}">
-                    <Image MinHeight="{StaticResource AppNotePreviewImageSize}" Source="{Binding URL}" VerticalAlignment="Center" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+                <Grid x:Name="NoteImageContainer" MaxHeight="120">
+                    <Image MinHeight="120" Source="{Binding URL}" VerticalAlignment="Center" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
                 </Grid>
             </DataTemplate>
         </ResourceDictionary>
@@ -60,16 +60,16 @@
     <Grid x:Name="NoteContainer" Margin="5" Background="{Binding ElementName=Root, Path=Background}">
         <StackPanel Margin="0">
             <Grid Visibility="{Binding ElementName=Root, Path=HideImage, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=True}">
-                <Grid MaxHeight="{StaticResource AppNotePreviewImageSize}" Background="{StaticResource PhoneDarkLowBrush}" Visibility="{Binding Images.Count, Converter={StaticResource PositiveIntToVisibilityConverter}}">
+                <Grid MaxHeight="120" Background="{StaticResource PhoneDarkLowBrush}" Visibility="{Binding Images.Count, Converter={StaticResource PositiveIntToVisibilityConverter}}">
                     <ListView x:Name="NoteImagesListView" ItemsSource="{Binding Images}" ItemTemplate="{StaticResource NoteImagesListViewControlTemplate}" SelectionMode="None" IsTapEnabled="False" IsItemClickEnabled="False"/>
                 </Grid>
             </Grid>
 
             <StackPanel Margin="10">
-                <TextBlock Text="{Binding Title, Mode=OneWay}" Style="{StaticResource AppNotePreviewTitleStyle}" Foreground="{Binding ElementName=Root, Path=Foreground}" Visibility="{Binding Title, Mode=OneWay, Converter={StaticResource NullableToVisibilityConverter}}"/>
+                <TextBlock Text="{Binding Title, Mode=OneWay}" FontSize="20" Foreground="{Binding ElementName=Root, Path=Foreground}" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" Margin="0,0,0,6" FontWeight="Bold" MaxLines="1" Visibility="{Binding Title, Mode=OneWay, Converter={StaticResource NullableToVisibilityConverter}}"/>
 
                 <Grid Visibility="{Binding Text, Mode=OneWay, Converter={StaticResource NullableToVisibilityConverter}}">
-                    <TextBlock Text="{Binding Text, Mode=OneWay}" Style="{StaticResource AppNotePreviewTextStyle}" Foreground="{Binding ElementName=Root, Path=Foreground}" />
+                    <TextBlock Text="{Binding Text, Mode=OneWay}" Foreground="{Binding ElementName=Root, Path=Foreground}" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" FontSize="17" Margin="0,-4,0,6" FontWeight="Normal" MaxLines="3" />
                 </Grid>
 
                 <StackPanel Visibility="{Binding IsChecklist, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
@@ -81,13 +81,13 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
-                        <Viewbox Grid.Column="0" Height="{StaticResource AppNotePreviewChecklistSize}" Margin="0,2,0,0" VerticalAlignment="Top">
+                        <Viewbox Grid.Column="0" Height="18" Margin="0,2,0,0" VerticalAlignment="Top">
                             <Grid Width="30" Height="30">
                                 <CheckBox Margin="0,-14" IsEnabled="False" Opacity="0"/>
                             </Grid>
                         </Viewbox>
 
-                        <TextBlock Grid.Column="1" Text="..."  Style="{StaticResource AppNotePreviewChecklistTextStyle}" Foreground="{Binding ElementName=Root, Path=Foreground}" />
+                        <TextBlock Grid.Column="1" Text="..." Foreground="{Binding ElementName=Root, Path=Foreground}" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" FontSize="17" Margin="0,-2,0,0" Padding="4,0,0,0" FontWeight="Normal" MaxLines="1"  />
                     </Grid>
                 </StackPanel>
             </StackPanel>
