@@ -49,6 +49,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\NoteImage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\AppData.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\AppSettings.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\NavLink.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\Extensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\LocalizedResources.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\NoteSwipeFeature.cs" />
@@ -70,13 +71,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Views\ArchivedNotesPage.xaml.cs">
       <DependentUpon>ArchivedNotesPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Views\MainPage.xaml.cs">
-      <DependentUpon>MainPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Views\NoteEditPage.xaml.cs">
       <DependentUpon>NoteEditPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Views\Partials\MainPage_NoteReorder.xaml.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\Partials\NoteEditPage_KeyDownHandlers.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -102,10 +99,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="$(MSBuildThisFileDirectory)Views\ArchivedNotesPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="$(MSBuildThisFileDirectory)Views\MainPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

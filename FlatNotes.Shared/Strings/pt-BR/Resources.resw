@@ -141,7 +141,7 @@ Algumas funcionalidades:
     <value>arquivado {0}</value>
   </data>
   <data name="ArchivedNotesAppBarButton.Label" xml:space="preserve">
-    <value>notas arquivadas</value>
+    <value>arquivadas</value>
   </data>
   <data name="AudioAppBarButton.Label" xml:space="preserve">
     <value>áudio</value>

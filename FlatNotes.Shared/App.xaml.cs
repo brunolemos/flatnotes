@@ -171,6 +171,27 @@ namespace FlatNotes
                 RootFrame.Navigate(typeof(MainPage), e.Arguments);
             }
 
+#if WINDOWS_UAP
+            var titleBar = ApplicationView.GetForCurrentView().TitleBar;
+
+            var titleBarBackground = Color.FromArgb(0xff, 0xff, 0xbb, 0x00);// f9, 0x9f, 0x00);
+            var titleBarButtonHoverBackground = Color.FromArgb(0xff, 0xe6, 0xa9, 0x00); //background 10% darker
+            var titleBarButtonPressedBackground = Color.FromArgb(0xff, 0xcc, 0x96, 0x00); //background 20% darker
+            var titleBarForeground = Color.FromArgb(0xff, 0x45, 0x2c, 0x00);
+
+            titleBar.BackgroundColor = titleBarBackground;
+            titleBar.ButtonBackgroundColor = titleBarBackground;
+            titleBar.ButtonInactiveBackgroundColor = titleBarBackground;
+            titleBar.ButtonHoverBackgroundColor = titleBarButtonHoverBackground;
+            titleBar.ButtonPressedBackgroundColor = titleBarButtonPressedBackground;
+
+            titleBar.ForegroundColor = titleBarForeground; //hide app title
+            titleBar.ButtonForegroundColor = titleBarForeground;
+            titleBar.ButtonInactiveForegroundColor = Color.FromArgb(0xff, 0xe0, 0x8f, 0x00);
+            titleBar.ButtonHoverForegroundColor = titleBarForeground;
+            titleBar.ButtonPressedForegroundColor = titleBarForeground;
+#endif
+
             Window.Current.Activate();
         }
 

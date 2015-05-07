@@ -1,0 +1,84 @@
+﻿<Page
+    x:Class="FlatNotes.Views.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:FlatNotes.Views"
+    xmlns:utils="using:FlatNotes.Utils"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <DataTemplate x:Key="NavLinkItemTemplate" x:DataType="utils:NavLink">
+            <StackPanel Margin="-12,0" Orientation="Horizontal">
+                <AppBarButton IsCompact="True" Label="{x:Bind Label}" IsHitTestVisible="False" FontWeight="SemiBold" ToolTipService.Placement="Right" ToolTipService.ToolTip="{x:Bind Label}">
+                    <SymbolIcon Symbol="{x:Bind Symbol}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </AppBarButton>
+                <TextBlock Text="{x:Bind Label}" FontWeight="SemiBold" VerticalAlignment="Center"/>
+            </StackPanel>
+        </DataTemplate>
+    </Page.Resources>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+
+                    <VisualState.Setters>
+                        <Setter Target="ActionsCommandBarContainer.Grid.Row" Value="2" />
+                    </VisualState.Setters>
+                </VisualState>
+                
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="600" />
+                    </VisualState.StateTriggers>
+
+                    <VisualState.Setters>
+                        <Setter Target="ActionsCommandBarContainer.Grid.Row" Value="0" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid x:Name="ActionsCommandBarContainer" Grid.Row="0">
+            <CommandBar>
+                <CommandBar.Content>
+                    <StackPanel Orientation="Horizontal">
+                        <AppBarButton x:Name="MenuToggleButton" IsCompact="True" Click="MenuToggleButton_Click">
+                            <TextBlock Text="&#xE700;" FontFamily="{StaticResource SymbolThemeFontFamily}" HorizontalAlignment="Center"/>
+                        </AppBarButton>
+                    </StackPanel>
+                </CommandBar.Content>
+
+                <CommandBar.PrimaryCommands>
+                    <AppBarButton x:Uid="NoteTextType" Label="text" Command="{Binding CreateTextNoteCommand}" Icon="Add" ToolTipService.Placement="Bottom" ToolTipService.ToolTip="New text note"/>
+                    <AppBarButton x:Uid="NoteChecklistType" Label="checklist" Command="{Binding CreateChecklistNoteCommand}" Icon="List" ToolTipService.Placement="Bottom" ToolTipService.ToolTip="New checklist note"/>
+                    <AppBarButton x:Uid="PhotoAppBarButton" Icon="Camera" Label="photo" Command="{Binding OpenImagePickerCommand}" ToolTipService.Placement="Bottom" ToolTipService.ToolTip="New note from image gallery"/>
+                    <AppBarButton x:Uid="AudioAppBarButton" Icon="Microphone" Label="audio" IsEnabled="False" ToolTipService.Placement="Bottom" ToolTipService.ToolTip="New audio note"/>
+                </CommandBar.PrimaryCommands>
+            </CommandBar>
+        </Grid>
+              
+        <SplitView x:Name="MainSplitView" Grid.Row="1" PaneBackground="{ThemeResource SystemControlBackgroundAltMediumHighBrush}" 
+            DisplayMode="Overlay" IsPaneOpen="False" CompactPaneLength="68" OpenPaneLength="280" Canvas.ZIndex="100">
+            <SplitView.Pane>
+                <ListView x:Name="NavLinksList" Margin="0" Padding="0,12" SelectionMode="None" VerticalAlignment="Stretch"
+        ItemClick="NavLinksList_ItemClick" IsItemClickEnabled="True"
+        ItemsSource="{x:Bind NavLinks}" ItemTemplate="{StaticResource NavLinkItemTemplate}"/>
+            </SplitView.Pane>
+
+            <Grid>
+            </Grid>
+        </SplitView>
+    </Grid>
+</Page>

@@ -217,7 +217,7 @@
     <value>archive</value>
   </data>
   <data name="ArchivedNotesAppBarButton.Label" xml:space="preserve">
-    <value>archived notes</value>
+    <value>archived</value>
   </data>
   <data name="EmptyNotesMessageTextBox.Text" xml:space="preserve">
     <value>notes you add appear here</value>

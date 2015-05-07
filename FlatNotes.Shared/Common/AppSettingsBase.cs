@@ -42,6 +42,7 @@ namespace FlatNotes.Common
             try
             {
                 string content = JsonConvert.SerializeObject(value);
+                localSettings.Values.Remove(key);
                 localSettings.Values[key] = content;
                 //Debug.WriteLine("SetValue of {0} to {1}", key, content);
 

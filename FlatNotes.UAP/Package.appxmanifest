@@ -32,11 +32,11 @@
       Executable="$targetnametoken$.exe"
       EntryPoint="FlatNotes.UAP.App">
       <uap:VisualElements
-        DisplayName="FlatNotes.UAP"
+        DisplayName="Flat Notes"
         Square150x150Logo="Assets\Logo.png"
         Square44x44Logo="Assets\SmallLogo.png"
-        Description="FlatNotes.UAP"
-        BackgroundColor="#464646">
+        Description="FlatNotes"
+        BackgroundColor="#ffbb00">
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
       </uap:VisualElements>
     </Application>

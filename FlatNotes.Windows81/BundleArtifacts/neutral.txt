@@ -1,0 +1,8 @@
+MainPackage=C:\Users\bruno\Documents\Visual Studio 2015\Projects\FlatNotes\FlatNotes.Windows81\bin\Release\FlatNotes.Windows81_1.9.6.2_AnyCPU.appx
+SymbolPackage=C:\Users\bruno\Documents\Visual Studio 2015\Projects\FlatNotes\FlatNotes.Windows81\AppPackages\FlatNotes.Windows81_1.9.6.2_Test\FlatNotes.Windows81_1.9.6.2_AnyCPU.appxsym
+ResourcePack=C:\Users\bruno\Documents\Visual Studio 2015\Projects\FlatNotes\FlatNotes.Windows81\bin\Release\FlatNotes.Windows81_1.9.6.2_language-es.appx
+ResourcePack=C:\Users\bruno\Documents\Visual Studio 2015\Projects\FlatNotes\FlatNotes.Windows81\bin\Release\FlatNotes.Windows81_1.9.6.2_language-hi.appx
+ResourcePack=C:\Users\bruno\Documents\Visual Studio 2015\Projects\FlatNotes\FlatNotes.Windows81\bin\Release\FlatNotes.Windows81_1.9.6.2_language-pt.appx
+ResourcePack=C:\Users\bruno\Documents\Visual Studio 2015\Projects\FlatNotes\FlatNotes.Windows81\bin\Release\FlatNotes.Windows81_1.9.6.2_language-zh-hans.appx
+ResourcePack=C:\Users\bruno\Documents\Visual Studio 2015\Projects\FlatNotes\FlatNotes.Windows81\bin\Release\FlatNotes.Windows81_1.9.6.2_scale-140.appx
+ResourcePack=C:\Users\bruno\Documents\Visual Studio 2015\Projects\FlatNotes\FlatNotes.Windows81\bin\Release\FlatNotes.Windows81_1.9.6.2_scale-180.appx
