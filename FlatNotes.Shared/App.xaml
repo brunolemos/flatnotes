@@ -22,7 +22,8 @@
             <ViewModels:ArchivedNotesViewModel x:Key="ArchivedNotesiewModel" />
             <ViewModels:NoteEditViewModel x:Key="NoteEditViewModel" />
             <ViewModels:SettingsViewModel x:Key="SettingsViewModel" />
-            
+
+            <Converters:NullableToVisibilityConverter x:Key="NullableToVisibilityConverter"/>
             <Converters:StringFormatConverter x:Key="StringFormatConverter"/>
             <Converters:LocalizedResourcesConverter x:Key="LocalizedResourcesConverter"/>
         </ResourceDictionary>
