@@ -26,14 +26,14 @@
                 <Setter Property="Template">
                   <Setter.Value>
                      <ControlTemplate TargetType="ListViewItem">
-                            <ContentPresenter Margin="0,0,0,-14" HorizontalAlignment="Stretch"/>
+                            <ContentPresenter Margin="0" HorizontalAlignment="Stretch"/>
                         </ControlTemplate>
                   </Setter.Value>
                 </Setter>    
             </Style>
             
             <DataTemplate x:Key="NoteChecklistListViewControlTemplate">
-                <Grid Margin="0,2,0,14">
+                <Grid Margin="0,3" VerticalAlignment="Top">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="*"/>
@@ -45,7 +45,7 @@
                         </Grid>
                     </Viewbox>
 
-                    <TextBlock Grid.Column="1" Text="{Binding Text, Mode=OneWay}" Foreground="{Binding ElementName=Root, Path=Foreground}" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" FontSize="17" Margin="0,-2,0,0" Padding="4,0,0,0" FontWeight="Normal" MaxLines="1" />
+                    <TextBlock Grid.Column="1" Text="{Binding Text, Mode=OneWay}" Foreground="{Binding ElementName=Root, Path=Foreground}" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" FontSize="17" Margin="0,-2,0,0" Padding="4,0,0,0" FontWeight="Normal" MaxLines="1" VerticalAlignment="Top" />
                 </Grid>
             </DataTemplate>
             
@@ -64,13 +64,10 @@
                     <ListView x:Name="NoteImagesListView" ItemsSource="{Binding Images}" ItemTemplate="{StaticResource NoteImagesListViewControlTemplate}" SelectionMode="None" IsTapEnabled="False" IsItemClickEnabled="False"/>
                 </Grid>
             </Grid>
-
-            <StackPanel Margin="10">
-                <TextBlock Text="{Binding Title, Mode=OneWay}" FontSize="20" Foreground="{Binding ElementName=Root, Path=Foreground}" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" Margin="0,0,0,6" FontWeight="Bold" MaxLines="1" Visibility="{Binding Title, Mode=OneWay, Converter={StaticResource NullableToVisibilityConverter}}"/>
-
-                <Grid Visibility="{Binding Text, Mode=OneWay, Converter={StaticResource NullableToVisibilityConverter}}">
-                    <TextBlock Text="{Binding Text, Mode=OneWay}" Foreground="{Binding ElementName=Root, Path=Foreground}" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" FontSize="17" Margin="0,-4,0,6" FontWeight="Normal" MaxLines="3" />
-                </Grid>
+            
+            <StackPanel Margin="12,12,12,36">
+                <TextBlock Text="{Binding Title}" Foreground="{Binding ElementName=Root, Path=Foreground}" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" Margin="0,0,0,6" FontWeight="Bold" MaxLines="1" Visibility="{Binding Title, Converter={StaticResource NullableToVisibilityConverter}}"/>
+                <TextBlock Text="{Binding Text}" Foreground="{Binding ElementName=Root, Path=Foreground}" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" Margin="0,0,0,6" FontWeight="SemiLight" MaxLines="3" Visibility="{Binding Text, Converter={StaticResource NullableToVisibilityConverter}}" />
 
                 <StackPanel Visibility="{Binding IsChecklist, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
                     <ListView x:Name="NoteChecklistListView" Margin="0,-3,0,10" ItemsSource="{Binding Checklist, Converter={StaticResource MaxChecklistItemsConverter}}" ItemContainerStyle="{StaticResource NotePreviewChecklistItem}" ItemTemplate="{StaticResource NoteChecklistListViewControlTemplate}" IsTapEnabled="False" IsItemClickEnabled="False" />

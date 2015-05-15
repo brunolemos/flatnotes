@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Color x:Key="PhoneBackgroundColor">#e6e6e6</Color>
-    <Color x:Key="PhoneForegroundColor">#C0000000</Color>
+    <Color x:Key="PhoneForegroundColor">#CC000000</Color>
     <Color x:Key="PhoneChromeColor">#FFDDDDDD</Color>
     <Color x:Key="PhoneMidColor">#40000000</Color>
     <Color x:Key="PhoneLowColor">#20000000</Color>
@@ -24,4 +24,10 @@
     <SolidColorBrush x:Key="PhoneChromeBrush" Color="{ThemeResource PhoneChromeColor}"/>
     <SolidColorBrush x:Key="PhoneMidBrush" Color="{ThemeResource PhoneMidColor}"/>
     <SolidColorBrush x:Key="PhoneLowBrush" Color="{ThemeResource PhoneLowColor}"/>
+
+    <SolidColorBrush x:Key="ListViewItemPointerOverBackgroundThemeBrush" Color="#08000000"/>
+    <SolidColorBrush x:Key="ListViewItemSelectedBackgroundThemeBrush" Color="#20000000"/>
+    <SolidColorBrush x:Key="ListViewItemSelectedPointerOverBackgroundThemeBrush" Color="#2A000000"/>
+    <SolidColorBrush x:Key="ListViewItemSelectedForegroundThemeBrush" Color="Black"/>
+    
 </ResourceDictionary>

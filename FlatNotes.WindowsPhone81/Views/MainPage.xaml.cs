@@ -43,7 +43,7 @@ namespace FlatNotes.Views
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
             
-            this.Loaded += (s, e) => App.ChangeStatusBarColor();
+            this.Loaded += (s, e) => App.ResetStatusBar();
 
             this.Loaded += (s, e) => EnableReorderFeature();
             this.Unloaded += (s, e) => DisableReorderFeature();

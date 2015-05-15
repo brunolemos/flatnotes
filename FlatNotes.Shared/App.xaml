@@ -24,6 +24,7 @@
             <ViewModels:SettingsViewModel x:Key="SettingsViewModel" />
 
             <Converters:NullableToVisibilityConverter x:Key="NullableToVisibilityConverter"/>
+            <Converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
             <Converters:StringFormatConverter x:Key="StringFormatConverter"/>
             <Converters:LocalizedResourcesConverter x:Key="LocalizedResourcesConverter"/>
         </ResourceDictionary>

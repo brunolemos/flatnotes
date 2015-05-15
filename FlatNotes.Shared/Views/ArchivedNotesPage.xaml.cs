@@ -30,7 +30,7 @@ namespace FlatNotes.Views
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
 
-            this.Loaded += (s, e) => App.ChangeStatusBarColor(Color.FromArgb(0xff, 0xff, 0xff, 0xfe));
+            this.Loaded += (s, e) => App.ChangeStatusBarColor(Color.FromArgb(0xff, 0x44, 0x59, 0x63), Color.FromArgb(0xff, 0xff, 0xff, 0xfe));
         }
 
         private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)

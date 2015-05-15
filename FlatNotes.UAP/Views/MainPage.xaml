@@ -7,20 +7,93 @@
     xmlns:models="using:FlatNotes.Models"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Page.Resources>
         <DataTemplate x:Key="NavLinkItemTemplate" x:DataType="utils:NavLink">
-            <StackPanel Margin="-12,0" Orientation="Horizontal">
-                <AppBarButton IsCompact="True" Label="{x:Bind Label}" IsHitTestVisible="False" FontWeight="SemiBold" ToolTipService.Placement="Right" ToolTipService.ToolTip="{x:Bind Label}">
-                    <SymbolIcon Symbol="{x:Bind Symbol}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                </AppBarButton>
-                <TextBlock Text="{x:Bind Label}" FontWeight="SemiBold" VerticalAlignment="Center"/>
+            <StackPanel Orientation="Horizontal">
+                <SymbolIcon Width="68" Symbol="{x:Bind Symbol}" VerticalAlignment="Center"/>
+                <TextBlock Text="{x:Bind Label}" VerticalAlignment="Center"/>
             </StackPanel>
         </DataTemplate>
+
+        <Style TargetType="ListViewItem">
+            <Setter Property="FontWeight" Value="Medium"/>
+            
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListViewItem">
+                        <GridViewItemPresenter 
+                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                            CheckBrush="{ThemeResource ListViewItemCheckThemeBrush}"
+                            CheckHintBrush="{ThemeResource ListViewItemCheckHintThemeBrush}"
+                            CheckSelectingBrush="{ThemeResource ListViewItemCheckSelectingThemeBrush}"
+                            ContentMargin="0"
+                            ContentTransitions="{TemplateBinding ContentTransitions}"
+                            DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}"
+                            DragBackground="{ThemeResource ListViewItemDragBackgroundThemeBrush}"
+                            DragForeground="{ThemeResource ListViewItemDragForegroundThemeBrush}"
+                            DragOpacity="{ThemeResource ListViewItemDragThemeOpacity}"
+                            FocusBorderBrush="{ThemeResource ListViewItemFocusBorderThemeBrush}"
+                            Padding="{TemplateBinding Padding}"
+                            PlaceholderBackground="{ThemeResource ListViewItemPlaceholderBackgroundThemeBrush}"
+                            PointerOverBackground="{ThemeResource ListViewItemPointerOverBackgroundThemeBrush}"
+                            PointerOverBackgroundMargin="1"
+                            ReorderHintOffset="{ThemeResource ListViewItemReorderHintThemeOffset}"
+                            SelectedBackground="{ThemeResource ListViewItemSelectedBackgroundThemeBrush}"
+                            SelectedBorderThickness="{ThemeResource ListViewItemCompactSelectedBorderThemeThickness}"
+                            SelectedForeground="{ThemeResource ListViewItemSelectedForegroundThemeBrush}"
+                            SelectedPointerOverBackground="{ThemeResource ListViewItemSelectedPointerOverBackgroundThemeBrush}"
+                            SelectedPointerOverBorderBrush="{ThemeResource ListViewItemSelectedPointerOverBorderThemeBrush}"
+                            SelectionCheckMarkVisualEnabled="False" />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Name="NotesGridViewStyle" x:Key="NotesGridViewStyle" TargetType="GridViewItem">
+            <Setter Property="Margin" Value="4"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="VerticalAlignment" Value="Stretch"/>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="GridViewItem">
+                        <GridViewItemPresenter 
+                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                            CheckBrush="{ThemeResource ListViewItemCheckThemeBrush}"
+                            CheckHintBrush="{ThemeResource ListViewItemCheckHintThemeBrush}"
+                            CheckSelectingBrush="{ThemeResource ListViewItemCheckSelectingThemeBrush}"
+                            ContentMargin="0"
+                            ContentTransitions="{TemplateBinding ContentTransitions}"
+                            DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}"
+                            DragBackground="{ThemeResource ListViewItemDragBackgroundThemeBrush}"
+                            DragForeground="{ThemeResource ListViewItemDragForegroundThemeBrush}"
+                            DragOpacity="{ThemeResource ListViewItemDragThemeOpacity}"
+                            FocusBorderBrush="{ThemeResource ListViewItemFocusBorderThemeBrush}"
+                            Padding="{TemplateBinding Padding}"
+                            PlaceholderBackground="{ThemeResource ListViewItemPlaceholderBackgroundThemeBrush}"
+                            PointerOverBackground="Transparent"
+                            PointerOverBackgroundMargin="1"
+                            ReorderHintOffset="{ThemeResource ListViewItemReorderHintThemeOffset}"
+                            SelectedBackground="{ThemeResource ListViewItemSelectedBackgroundThemeBrush}"
+                            SelectedBorderThickness="{ThemeResource ListViewItemCompactSelectedBorderThemeThickness}"
+                            SelectedForeground="{ThemeResource ListViewItemSelectedForegroundThemeBrush}"
+                            SelectedPointerOverBackground="{ThemeResource ListViewItemSelectedPointerOverBackgroundThemeBrush}"
+                            SelectedPointerOverBorderBrush="{ThemeResource ListViewItemSelectedPointerOverBorderThemeBrush}"
+                            SelectionCheckMarkVisualEnabled="False" />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Page.Resources>
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid>
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
                 <VisualState>
@@ -30,9 +103,10 @@
 
                     <VisualState.Setters>
                         <Setter Target="ActionsCommandBarContainer.Grid.Row" Value="2" />
+                        <Setter Target="NotesListView.Margin" Value="0"/>
                     </VisualState.Setters>
                 </VisualState>
-                
+
                 <VisualState>
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="600" />
@@ -40,8 +114,29 @@
 
                     <VisualState.Setters>
                         <Setter Target="ActionsCommandBarContainer.Grid.Row" Value="0" />
+                        <Setter Target="NotesListView.Margin" Value="48,24,48,12"/>
                     </VisualState.Setters>
                 </VisualState>
+
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="800" />
+                    </VisualState.StateTriggers>
+
+                    <VisualState.Setters>
+                        <Setter Target="NotesListView.Margin" Value="120,24,120,12"/>
+                    </VisualState.Setters>
+                </VisualState>
+
+            <VisualState>
+                <VisualState.StateTriggers>
+                    <AdaptiveTrigger MinWindowWidth="1200" />
+                </VisualState.StateTriggers>
+
+                <VisualState.Setters>
+                    <Setter Target="NotesListView.Margin" Value="250,24,250,12"/>
+                </VisualState.Setters>
+            </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
         
@@ -54,95 +149,85 @@
         <Grid x:Name="ActionsCommandBarContainer" Grid.Row="0">
             <CommandBar>
                 <CommandBar.Content>
-                    <StackPanel Orientation="Horizontal">
-                        <AppBarButton x:Name="MenuToggleButton" IsCompact="True" Click="MenuToggleButton_Click">
-                            <TextBlock Text="&#xE700;" FontFamily="{StaticResource SymbolThemeFontFamily}" HorizontalAlignment="Center"/>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <AppBarButton x:Name="MenuToggleButton" IsCompact="True" Label="Menu" Click="MenuToggleButton_Click" ToolTipService.ToolTip="Menu">
+                            <FontIcon Glyph="&#xE700;"/>
                         </AppBarButton>
+                        
+                        <!--<AppBarButton Icon="Back" IsCompact="True" IsEnabled="False"/>-->
                     </StackPanel>
                 </CommandBar.Content>
 
                 <CommandBar.PrimaryCommands>
                     <AppBarButton x:Uid="NoteTextType" Label="text" Command="{Binding CreateTextNoteCommand}" Icon="Add" ToolTipService.Placement="Bottom" ToolTipService.ToolTip="New text note"/>
                     <AppBarButton x:Uid="NoteChecklistType" Label="checklist" Command="{Binding CreateChecklistNoteCommand}" Icon="List" ToolTipService.Placement="Bottom" ToolTipService.ToolTip="New checklist note"/>
-                    <AppBarButton x:Uid="PhotoAppBarButton" Icon="Camera" Label="photo" Command="{Binding OpenImagePickerCommand}" ToolTipService.Placement="Bottom" ToolTipService.ToolTip="New note from image gallery"/>
-                    <AppBarButton x:Uid="AudioAppBarButton" Icon="Microphone" Label="audio" IsEnabled="False" ToolTipService.Placement="Bottom" ToolTipService.ToolTip="New audio note"/>
+                    <AppBarButton x:Uid="PhotoAppBarButton" Icon="Camera" Label="photo" Command="{Binding OpenImagePickerCommand}" ToolTipService.Placement="Bottom" ToolTipService.ToolTip="New note from image or camera"/>
+                    <!--<AppBarButton x:Uid="AudioAppBarButton" Icon="Microphone" Label="audio" IsEnabled="False" ToolTipService.Placement="Bottom" ToolTipService.ToolTip="New audio note"/>-->
                 </CommandBar.PrimaryCommands>
             </CommandBar>
         </Grid>
               
-        <SplitView x:Name="MainSplitView" Grid.Row="1" PaneBackground="{ThemeResource SystemControlBackgroundAltMediumHighBrush}" 
-            DisplayMode="Overlay" IsPaneOpen="False" CompactPaneLength="68" OpenPaneLength="280" Canvas.ZIndex="100">
+        <SplitView x:Name="MainSplitView" Grid.Row="1" PaneBackground="{StaticResource SystemControlBackgroundAltHighBrush}" 
+            DisplayMode="Overlay" IsPaneOpen="False" CompactPaneLength="68" OpenPaneLength="260" Canvas.ZIndex="100">
             <SplitView.Pane>
-                <ListView x:Name="NavLinksList" Margin="0" Padding="0,12" SelectionMode="None" VerticalAlignment="Stretch"
-        ItemClick="NavLinksList_ItemClick" IsItemClickEnabled="True"
-        ItemsSource="{x:Bind NavLinks}" ItemTemplate="{StaticResource NavLinkItemTemplate}"/>
+                <ListView x:Name="NavLinksList" Margin="0,12,12,12" Padding="0" SelectionMode="Single" 
+                    ItemTemplate="{StaticResource NavLinkItemTemplate}" VerticalAlignment="Stretch"
+                    ItemClick="NavLinksList_ItemClick" IsItemClickEnabled="True"
+                    ItemsSource="{x:Bind NavLinks}">
+
+                    <ListView.ItemContainerTransitions>
+                        <TransitionCollection/>
+                    </ListView.ItemContainerTransitions>
+
+                    <ListView.Footer>
+                        <ListView x:Name="NavFooterLinksList" Grid.Row="1" Margin="0" Padding="0" SelectionMode="None" 
+                            ItemTemplate="{StaticResource NavLinkItemTemplate}" VerticalAlignment="Stretch" 
+                            ItemClick="NavLinksList_ItemClick" IsItemClickEnabled="True" ScrollViewer.VerticalScrollMode="Disabled"
+                            ItemsSource="{x:Bind NavFooterLinks}">
+                            <ListView.ItemContainerTransitions>
+                                <TransitionCollection/>
+                            </ListView.ItemContainerTransitions>
+                        </ListView>
+                    </ListView.Footer>
+                </ListView>
             </SplitView.Pane>
 
-            <Grid>
-                <GridView x:Name="NotesListView" Margin="12" HorizontalAlignment="Center"
+            <SplitView.Content>
+                <GridView x:Name="NotesListView" Margin="12,24" HorizontalAlignment="Center" HorizontalContentAlignment="Stretch"
                           ItemsSource="{x:Bind Path=viewModel.Notes}" SelectionMode="None"
                           CanReorderItems="False" CanDragItems="False" AllowDrop="False" 
-                          Loaded="NotesListView_Loaded">
+                          ItemContainerStyle="{StaticResource NotesGridViewStyle}">
+                    
+                    <GridView.ItemContainerTransitions>
+                        <TransitionCollection>
+                            <EntranceThemeTransition IsStaggeringEnabled="True" FromVerticalOffset="200" FromHorizontalOffset="0"/>
+                            <!--<NavigationThemeTransition/>
+                            <ContentThemeTransition/>
+                            <AddDeleteThemeTransition/>
+                            <ReorderThemeTransition/>-->
+                        </TransitionCollection>
+                    </GridView.ItemContainerTransitions>
+                    
                     <GridView.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <RelativePanel Margin="-6" AllowDrop="False"/>
+                            <local:FluidGrid x:Name="NotesFluidGrid" Margin="10" ItemMinWidth="180"/>
+                            <!--<RelativePanel Margin="-6" AllowDrop="False"/>-->
                             <!--<ItemsWrapGrid AllowDrop="True" ItemWidth="200" MaximumRowsOrColumns="4" Orientation="Horizontal"/>-->
                         </ItemsPanelTemplate>
                     </GridView.ItemsPanel>
-                    
-                    <GridView.ItemContainerStyle>
-                        <Style TargetType="GridViewItem">
-                            <Setter Property="Margin" Value="6"/>
-                            <Setter Property="HorizontalAlignment" Value="Left"/>
-                            <Setter Property="VerticalAlignment" Value="Top"/>
-                            <Setter Property="HorizontalContentAlignment" Value="Left"/>
-                            <Setter Property="VerticalContentAlignment" Value="Top"/>
-                            
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="GridViewItem">
-                                        <GridViewItemPresenter 
-                                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" 
-                                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                            CheckBrush="{ThemeResource ListViewItemCheckThemeBrush}"
-                                            CheckHintBrush="{ThemeResource ListViewItemCheckHintThemeBrush}"
-                                            CheckSelectingBrush="{ThemeResource ListViewItemCheckSelectingThemeBrush}"
-                                            ContentMargin="0"
-                                            ContentTransitions="{TemplateBinding ContentTransitions}"
-                                            DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}"
-                                            DragBackground="{ThemeResource ListViewItemDragBackgroundThemeBrush}"
-                                            DragForeground="{ThemeResource ListViewItemDragForegroundThemeBrush}"
-                                            DragOpacity="{ThemeResource ListViewItemDragThemeOpacity}"
-                                            FocusBorderBrush="{ThemeResource ListViewItemFocusBorderThemeBrush}"
-                                            Padding="{TemplateBinding Padding}"
-                                            PlaceholderBackground="{ThemeResource ListViewItemPlaceholderBackgroundThemeBrush}"
-                                            PointerOverBackground="Transparent"
-                                            PointerOverBackgroundMargin="1"
-                                            ReorderHintOffset="{ThemeResource ListViewItemReorderHintThemeOffset}"
-                                            SelectedBackground="{ThemeResource ListViewItemSelectedBackgroundThemeBrush}"
-                                            SelectedBorderThickness="{ThemeResource ListViewItemCompactSelectedBorderThemeThickness}"
-                                            SelectedForeground="{ThemeResource ListViewItemSelectedForegroundThemeBrush}"
-                                            SelectedPointerOverBackground="{ThemeResource ListViewItemSelectedPointerOverBackgroundThemeBrush}"
-                                            SelectedPointerOverBorderBrush="{ThemeResource ListViewItemSelectedPointerOverBorderThemeBrush}"
-                                            SelectionCheckMarkVisualEnabled="False" />
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
-                    </GridView.ItemContainerStyle>
 
                     <GridView.ItemTemplate>
                         <DataTemplate x:DataType="models:Note">
-                            <Grid Width="250" Background="{x:Bind Color.Color}">
-                                <StackPanel Margin="12">
-                                    <TextBlock Text="{x:Bind Title}" Foreground="{StaticResource AppNoteForegroundBrush}" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" Margin="0,0,0,6" FontWeight="Bold" MaxLines="1"/>
-                                    <TextBlock Text="{x:Bind Text}" Foreground="{StaticResource AppNoteForegroundBrush}" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" Margin="0,0,0,6" FontWeight="Normal" MaxLines="3" />
+                            <Grid Background="{x:Bind Color.Color}">
+                                <StackPanel Margin="12,12,12,36">
+                                    <TextBlock Text="{x:Bind Title}" Foreground="{StaticResource AppNoteForegroundBrush}" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" Margin="0,0,0,6" FontWeight="Bold" MaxLines="1" Visibility="{Binding Title, Converter={StaticResource NullableToVisibilityConverter}}"/>
+                                    <TextBlock Text="{x:Bind Text}" Foreground="{StaticResource AppNoteForegroundBrush}" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" Margin="0,0,0,6" FontWeight="SemiLight" MaxLines="3" Visibility="{Binding Text, Converter={StaticResource NullableToVisibilityConverter}}" />
                                 </StackPanel>
                             </Grid>
                         </DataTemplate>
                     </GridView.ItemTemplate>
                 </GridView>
-            </Grid>
+            </SplitView.Content>
         </SplitView>
     </Grid>
 </Page>

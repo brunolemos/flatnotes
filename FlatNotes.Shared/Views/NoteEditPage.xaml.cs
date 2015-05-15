@@ -50,7 +50,7 @@ namespace FlatNotes.Views
             NoteColorPicker.Closed += (s, _e) => { ColorPickerAppBarToggleButton.IsChecked = false; };
             NoteColorPicker.NoteColorChanged += (s, _e) => { viewModel.Note.Color = _e.NoteColor; };
 
-            this.Loaded += (s, _e) => App.ChangeStatusBarColor(Colors.Black);
+            this.Loaded += (s, _e) => App.ChangeStatusBarColor(Colors.Transparent, Colors.Black);
             viewModel.PropertyChanged += OnPropertyChanged;
         }
 

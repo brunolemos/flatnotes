@@ -3,8 +3,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     
     <x:String x:Key="AppName">Flat Notes</x:String>
-    
-    <Color x:Key="AppMainColor">#ffbb00</Color>
+
+    <Color x:Key="AppMainColor">#ffbb00</Color><!--blue:4184f3-->
     <Color x:Key="PhoneAccentColor">#ffbb00</Color>
 
     <SolidColorBrush x:Key="AppMainBrush" Color="{ThemeResource AppMainColor}"/>
@@ -19,7 +19,7 @@
     <SolidColorBrush x:Key="PhoneDarkLowBrush" Color="#20000000"/>
     <SolidColorBrush x:Key="PhoneDarkMidBrush" Color="#70000000"/>
     
-    <SolidColorBrush x:Key="AppNoteForegroundBrush" Color="#C0000000"/>
+    <SolidColorBrush x:Key="AppNoteForegroundBrush" Color="#CC000000"/>
     <SolidColorBrush x:Key="AppNoteCommandBarForegroundThemeBrush" Color="Black"/>
             
     <SolidColorBrush x:Key="TextBoxFocusedBackgroundThemeBrush" Color="Transparent"/>
@@ -31,7 +31,7 @@
     <SolidColorBrush x:Key="CommandBarForegroundThemeBrush" Color="#402f00"/><!--White-->
     
     <Style TargetType="CommandBar">
-        <Setter Property="RequestedTheme" Value="Light"/>
+        <Setter Property="RequestedTheme" Value="Dark"/>
         <Setter Property="Background" Value="{ThemeResource CommandBarBackgroundThemeBrush}"/>
         <Setter Property="Foreground" Value="{ThemeResource CommandBarForegroundThemeBrush}"/>
         <Setter Property="BorderThickness" Value="0"/>
@@ -44,9 +44,9 @@
 
     <x:Double x:Key="EmptyNotesMessageFontSize">36</x:Double>
 
-    <Style TargetType="TextBlock">
+    <!--<Style TargetType="TextBlock">
         <Setter Property="FontSize" Value="17"/>
-    </Style>
+    </Style>-->
 
     <!--<Style x:Key="NavigationBackButtonNormalStyle" TargetType="Button">
         <Setter Property="Visibility" Value="Visible"/>

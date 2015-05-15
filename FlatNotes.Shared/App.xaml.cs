@@ -171,27 +171,6 @@ namespace FlatNotes
                 RootFrame.Navigate(typeof(MainPage), e.Arguments);
             }
 
-#if WINDOWS_UAP
-            var titleBar = ApplicationView.GetForCurrentView().TitleBar;
-
-            var titleBarBackground = Color.FromArgb(0xff, 0xff, 0xbb, 0x00);// f9, 0x9f, 0x00);
-            var titleBarButtonHoverBackground = Color.FromArgb(0xff, 0xe6, 0xa9, 0x00); //background 10% darker
-            var titleBarButtonPressedBackground = Color.FromArgb(0xff, 0xcc, 0x96, 0x00); //background 20% darker
-            var titleBarForeground = Color.FromArgb(0xff, 0x45, 0x2c, 0x00);
-
-            titleBar.BackgroundColor = titleBarBackground;
-            titleBar.ButtonBackgroundColor = titleBarBackground;
-            titleBar.ButtonInactiveBackgroundColor = titleBarBackground;
-            titleBar.ButtonHoverBackgroundColor = titleBarButtonHoverBackground;
-            titleBar.ButtonPressedBackgroundColor = titleBarButtonPressedBackground;
-
-            titleBar.ForegroundColor = titleBarForeground; //hide app title
-            titleBar.ButtonForegroundColor = titleBarForeground;
-            titleBar.ButtonInactiveForegroundColor = Color.FromArgb(0xff, 0xe0, 0x8f, 0x00);
-            titleBar.ButtonHoverForegroundColor = titleBarForeground;
-            titleBar.ButtonPressedForegroundColor = titleBarForeground;
-#endif
-
             Window.Current.Activate();
         }
 
@@ -225,13 +204,52 @@ namespace FlatNotes
             await dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
             {
                 RootFrame.RequestedTheme = theme;
-                ChangeStatusBarColor();
+                ResetStatusBar();
             });
         }
-        
-        public static void ChangeStatusBarColor(Color? foregroundColor = null)
+
+        public static void ResetStatusBar()
         {
-#if WINDOWS_PHONE_APP
+#if WINDOWS_APP
+#else
+    #if WINDOWS_UAP
+            var titleBar = ApplicationView.GetForCurrentView().TitleBar;
+            var mainColor = Color.FromArgb(0xff, 0xff, 0xbb, 0x00);
+
+            titleBar.BackgroundColor = Colors.White;
+            titleBar.ForegroundColor = mainColor;
+
+            titleBar.ButtonBackgroundColor = titleBar.BackgroundColor;
+            titleBar.ButtonForegroundColor = mainColor;
+
+            titleBar.ButtonInactiveBackgroundColor = titleBar.BackgroundColor;
+            titleBar.ButtonInactiveForegroundColor = Colors.LightGray;
+
+            titleBar.ButtonHoverBackgroundColor = Color.FromArgb(0xff, 0xe5, 0xe5, 0xe5);
+            titleBar.ButtonHoverForegroundColor = titleBar.ButtonForegroundColor;
+
+            titleBar.ButtonPressedBackgroundColor = Color.FromArgb(0xff, 0xcc, 0xcc, 0xcc);
+            titleBar.ButtonPressedForegroundColor = Colors.White;
+
+            bool hasStatusBar = Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar");
+            if (!hasStatusBar) return;
+    #endif
+
+            StatusBar.GetForCurrentView().BackgroundOpacity = 1;
+            StatusBar.GetForCurrentView().BackgroundColor = Color.FromArgb(0xff, 0xff, 0xbb, 0x00);
+            StatusBar.GetForCurrentView().ForegroundColor = Colors.White;
+#endif
+        }
+
+        public static void ChangeStatusBarColor(Color backgroundColor, Color foregroundColor)
+        {
+#if WINDOWS_APP
+#else
+    #if WINDOWS_UAP
+            bool hasStatusBar = Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar");
+            if (!hasStatusBar) return;
+#endif
+
             if (foregroundColor == null)
             {
                 if (AppSettings.Instance.Theme == ElementTheme.Light && App.Current.RequestedTheme == ApplicationTheme.Dark)
@@ -240,6 +258,8 @@ namespace FlatNotes
                     foregroundColor = new Color().FromHex("#c9cdd1");
             }
 
+            StatusBar.GetForCurrentView().BackgroundOpacity = 1;
+            StatusBar.GetForCurrentView().BackgroundColor = backgroundColor;
             StatusBar.GetForCurrentView().ForegroundColor = foregroundColor;
 #endif
         }

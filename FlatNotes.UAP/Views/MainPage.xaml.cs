@@ -15,15 +15,20 @@ namespace FlatNotes.Views
         public MainViewModel viewModel { get { return _viewModel; } }
         private static MainViewModel _viewModel = new MainViewModel();
 
-        private ObservableCollection<NavLink> _navLinks = new ObservableCollection<NavLink>()
+        public ObservableCollection<NavLink> NavLinks { get; } = new ObservableCollection<NavLink>()
         {
-            new NavLink() { Label = "Back", Symbol = Symbol.Back  },
-            new NavLink() { Label = "Notes", Symbol = Symbol.Document  },
-            new NavLink() { Label = "Archived", Symbol = Symbol.Delete },
-            new NavLink() { Label = "Settings", Symbol = Symbol.Setting },
+            new NavLink() { Label = "Notes", Symbol = Symbol.Emoji  },
+            new NavLink() { Label = "Reminders", Symbol = Symbol.Clock },
+            new NavLink() { Label = "Archive", Symbol = Symbol.Emoji },
+            new NavLink() { Label = "Trash", Symbol = Symbol.Delete },
         };
 
-        public ObservableCollection<NavLink> NavLinks { get { return _navLinks; } }
+        public ObservableCollection<NavLink> NavFooterLinks { get; } = new ObservableCollection<NavLink>()
+        {
+            new NavLink() { Label = "Accounts", Symbol = Symbol.Contact },
+            new NavLink() { Label = "Feedback", Symbol = Symbol.Favorite },
+            new NavLink() { Label = "Settings", Symbol = Symbol.Setting },
+        };
 
         public MainPage()
         {
@@ -68,7 +73,7 @@ namespace FlatNotes.Views
             viewModel.Notes.Add(new Note("My Weaknesses", checklistMyWeakness, NoteColor.RED));
             viewModel.Notes.Add(new Note("My Opportunities", checklistMyOpportunities, NoteColor.GREEN));
             viewModel.Notes.Add(new Note("My Threats", checklistMyThreats, NoteColor.ORANGE));
-            viewModel.Notes.Add(new Note("Ler livros", checklistBooks, NoteColor.YELLOW));
+            viewModel.Notes.Add(new Note("Ler livros", checklistBooks, NoteColor.DEFAULT));
         }
 
         private void NavLinksList_ItemClick(object sender, ItemClickEventArgs e)
@@ -81,48 +86,46 @@ namespace FlatNotes.Views
             MainSplitView.IsPaneOpen = !MainSplitView.IsPaneOpen;
         }
 
-        private void NotesListView_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
-        {
-            var listControl = sender as ItemsControl;
-            if (listControl.ItemsPanelRoot?.Children == null) return;
+        //private void NotesListView_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        //{
+        //    var listControl = sender as ItemsControl;
+        //    if (listControl.ItemsPanelRoot?.Children == null) return;
 
-            UpdateListAppearence(listControl.ItemsPanelRoot?.Children);
-        }
+        //    UpdateListAppearence(listControl.ItemsPanelRoot?.Children);
+        //}
 
-        private void UpdateListAppearence(UIElementCollection elements)
-        {
-            if (elements == null || elements.Count <= 0) return;
+        //private void UpdateListAppearence(UIElementCollection elements)
+        //{
+        //    if (elements == null || elements.Count <= 0) return;
 
-            int columns = 4, nextColumn = 0;
-            double[] lastYInColumn = new double[columns];
-            UIElement[] lastElementInColumn = new UIElement[columns];
+        //    int columns = 4, nextColumn = 0;
+        //    double[] lastYInColumn = new double[columns];
+        //    UIElement[] lastElementInColumn = new UIElement[columns];
 
-            for (int i = 0; i < elements.Count; i++)
-            {
-                var item = elements[i];
+        //    for (int i = 0; i < elements.Count; i++)
+        //    {
+        //        var item = elements[i];
 
-                if (i < columns)
-                {
-                    lastElementInColumn[i] = item;
-                    lastYInColumn[i] = item.DesiredSize.Height;
-                    System.Diagnostics.Debug.WriteLine("Item #{0} in column {1}", i, i);
+        //        if (i < columns)
+        //        {
+        //            lastElementInColumn[i] = item;
+        //            lastYInColumn[i] = item.DesiredSize.Height;
 
-                    if (i > 0) RelativePanel.SetRightOf(item, elements[i - 1]);
+        //            if (i > 0) RelativePanel.SetRightOf(item, elements[i - 1]);
 
-                    continue;
-                }
+        //            continue;
+        //        }
 
-                for (int j = columns - 1; j >= 0; j--)
-                    if (lastYInColumn[j] <= lastYInColumn[nextColumn])
-                        nextColumn = j;
+        //        for (int j = columns - 1; j >= 0; j--)
+        //            if (lastYInColumn[j] <= lastYInColumn[nextColumn])
+        //                nextColumn = j;
 
-                System.Diagnostics.Debug.WriteLine("Item #{0} in column {1}", i, nextColumn);
-                RelativePanel.SetBelow(item, lastElementInColumn[nextColumn]);
-                RelativePanel.SetAlignHorizontalCenterWith(item, lastElementInColumn[nextColumn]);
+        //        RelativePanel.SetBelow(item, lastElementInColumn[nextColumn]);
+        //        RelativePanel.SetAlignHorizontalCenterWith(item, lastElementInColumn[nextColumn]);
 
-                lastElementInColumn[nextColumn] = item;
-                lastYInColumn[nextColumn] += item.DesiredSize.Height;
-            }
-        }
+        //        lastElementInColumn[nextColumn] = item;
+        //        lastYInColumn[nextColumn] += item.DesiredSize.Height;
+        //    }
+        //}
     }
 }
