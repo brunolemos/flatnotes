@@ -28,7 +28,7 @@
     <SolidColorBrush x:Key="TextBlockDisabledForegroundThemeBrush" Color="#70000000"/>
 
     <SolidColorBrush x:Key="CommandBarBackgroundThemeBrush" Color="{ThemeResource AppMainColor}"/>
-    <SolidColorBrush x:Key="CommandBarForegroundThemeBrush" Color="#402f00"/><!--White-->
+    <SolidColorBrush x:Key="CommandBarForegroundThemeBrush" Color="White"/><!--#402f00-->
     
     <Style TargetType="CommandBar">
         <Setter Property="RequestedTheme" Value="Dark"/>

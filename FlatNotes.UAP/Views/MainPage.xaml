@@ -18,6 +18,7 @@
             </StackPanel>
         </DataTemplate>
 
+
         <Style TargetType="ListViewItem">
             <Setter Property="FontWeight" Value="Medium"/>
             
@@ -139,94 +140,106 @@
             </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
-        
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
 
-        <Grid x:Name="ActionsCommandBarContainer" Grid.Row="0">
-            <CommandBar>
-                <CommandBar.Content>
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                        <AppBarButton x:Name="MenuToggleButton" IsCompact="True" Label="Menu" Click="MenuToggleButton_Click" ToolTipService.ToolTip="Menu">
-                            <FontIcon Glyph="&#xE700;"/>
-                        </AppBarButton>
-                        
-                        <!--<AppBarButton Icon="Back" IsCompact="True" IsEnabled="False"/>-->
-                    </StackPanel>
-                </CommandBar.Content>
-
-                <CommandBar.PrimaryCommands>
-                    <AppBarButton x:Uid="NoteTextType" Label="text" Command="{Binding CreateTextNoteCommand}" Icon="Add" ToolTipService.Placement="Bottom" ToolTipService.ToolTip="New text note"/>
-                    <AppBarButton x:Uid="NoteChecklistType" Label="checklist" Command="{Binding CreateChecklistNoteCommand}" Icon="List" ToolTipService.Placement="Bottom" ToolTipService.ToolTip="New checklist note"/>
-                    <AppBarButton x:Uid="PhotoAppBarButton" Icon="Camera" Label="photo" Command="{Binding OpenImagePickerCommand}" ToolTipService.Placement="Bottom" ToolTipService.ToolTip="New note from image or camera"/>
-                    <!--<AppBarButton x:Uid="AudioAppBarButton" Icon="Microphone" Label="audio" IsEnabled="False" ToolTipService.Placement="Bottom" ToolTipService.ToolTip="New audio note"/>-->
-                </CommandBar.PrimaryCommands>
-            </CommandBar>
-        </Grid>
-              
-        <SplitView x:Name="MainSplitView" Grid.Row="1" PaneBackground="{StaticResource SystemControlBackgroundAltHighBrush}" 
+        <SplitView x:Name="MainSplitView" PaneBackground="{StaticResource SystemControlBackgroundAltHighBrush}" 
             DisplayMode="Overlay" IsPaneOpen="False" CompactPaneLength="68" OpenPaneLength="260" Canvas.ZIndex="100">
             <SplitView.Pane>
-                <ListView x:Name="NavLinksList" Margin="0,12,12,12" Padding="0" SelectionMode="Single" 
-                    ItemTemplate="{StaticResource NavLinkItemTemplate}" VerticalAlignment="Stretch"
-                    ItemClick="NavLinksList_ItemClick" IsItemClickEnabled="True"
-                    ItemsSource="{x:Bind NavLinks}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    
+                    <AppBarButton IsCompact="True" Label="Menu" Click="MenuToggleButton_Click" ToolTipService.ToolTip="Close menu" ToolTipService.Placement="Right">
+                        <FontIcon Glyph="&#xE700;"/>
+                    </AppBarButton>
+                    
+                    <ListView x:Name="NavLinksList" Grid.Row="1" Margin="0,12,12,12" Padding="0" SelectionMode="Single" 
+                        ItemTemplate="{StaticResource NavLinkItemTemplate}" VerticalAlignment="Stretch"
+                        ItemClick="NavLinksList_ItemClick" IsItemClickEnabled="True"
+                        ItemsSource="{x:Bind NavLinks}">
 
-                    <ListView.ItemContainerTransitions>
-                        <TransitionCollection/>
-                    </ListView.ItemContainerTransitions>
+                        <ListView.ItemContainerTransitions>
+                            <TransitionCollection/>
+                        </ListView.ItemContainerTransitions>
 
-                    <ListView.Footer>
-                        <ListView x:Name="NavFooterLinksList" Grid.Row="1" Margin="0" Padding="0" SelectionMode="None" 
-                            ItemTemplate="{StaticResource NavLinkItemTemplate}" VerticalAlignment="Stretch" 
-                            ItemClick="NavLinksList_ItemClick" IsItemClickEnabled="True" ScrollViewer.VerticalScrollMode="Disabled"
-                            ItemsSource="{x:Bind NavFooterLinks}">
-                            <ListView.ItemContainerTransitions>
-                                <TransitionCollection/>
-                            </ListView.ItemContainerTransitions>
-                        </ListView>
-                    </ListView.Footer>
-                </ListView>
+                        <ListView.Footer>
+                            <ListView x:Name="NavFooterLinksList" Grid.Row="1" Margin="0" Padding="0" SelectionMode="None" 
+                                ItemTemplate="{StaticResource NavLinkItemTemplate}" VerticalAlignment="Stretch" 
+                                ItemClick="NavLinksList_ItemClick" IsItemClickEnabled="True" ScrollViewer.VerticalScrollMode="Disabled"
+                                ItemsSource="{x:Bind NavFooterLinks}">
+                                <ListView.ItemContainerTransitions>
+                                    <TransitionCollection/>
+                                </ListView.ItemContainerTransitions>
+                            </ListView>
+                        </ListView.Footer>
+                    </ListView>
+                </Grid>
             </SplitView.Pane>
 
             <SplitView.Content>
-                <GridView x:Name="NotesListView" Margin="12,24" HorizontalAlignment="Center" HorizontalContentAlignment="Stretch"
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid x:Name="ActionsCommandBarContainer" Grid.Row="0" Background="{StaticResource CommandBarBackgroundThemeBrush}" RequestedTheme="Dark">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <AppBarButton x:Name="MenuToggleButton" IsCompact="True" Label="Menu" Click="MenuToggleButton_Click" ToolTipService.ToolTip="Open menu" ToolTipService.Placement="Right">
+                            <FontIcon Glyph="&#xE700;" Foreground="{StaticResource CommandBarForegroundThemeBrush}"/>
+                        </AppBarButton>
+
+                        <CommandBar Grid.Column="1" HorizontalAlignment="Right">
+                            <CommandBar.PrimaryCommands>
+                                <AppBarButton x:Uid="NoteTextType" Label="text" Command="{Binding CreateTextNoteCommand}" Icon="Add" ToolTipService.Placement="Bottom" ToolTipService.ToolTip="New text note"/>
+                                <AppBarButton x:Uid="NoteChecklistType" Label="checklist" Command="{Binding CreateChecklistNoteCommand}" Icon="List" ToolTipService.Placement="Bottom" ToolTipService.ToolTip="New checklist note"/>
+                                <AppBarButton x:Uid="PhotoAppBarButton" Icon="Camera" Label="photo" Command="{Binding OpenImagePickerCommand}" ToolTipService.Placement="Bottom" ToolTipService.ToolTip="New note from image or camera"/>
+                                <!--<AppBarButton x:Uid="AudioAppBarButton" Icon="Microphone" Label="audio" IsEnabled="False" ToolTipService.Placement="Bottom" ToolTipService.ToolTip="New audio note"/>-->
+                            </CommandBar.PrimaryCommands>
+                        </CommandBar>
+                    </Grid>
+                    
+                    <GridView x:Name="NotesListView" Grid.Row="1"  Margin="12,24" HorizontalAlignment="Center" HorizontalContentAlignment="Stretch"
                           ItemsSource="{x:Bind Path=viewModel.Notes}" SelectionMode="None"
                           CanReorderItems="False" CanDragItems="False" AllowDrop="False" 
                           ItemContainerStyle="{StaticResource NotesGridViewStyle}">
-                    
-                    <GridView.ItemContainerTransitions>
-                        <TransitionCollection>
-                            <EntranceThemeTransition IsStaggeringEnabled="True" FromVerticalOffset="200" FromHorizontalOffset="0"/>
-                            <!--<NavigationThemeTransition/>
+
+                        <GridView.ItemContainerTransitions>
+                            <TransitionCollection>
+                                <EntranceThemeTransition IsStaggeringEnabled="True" FromVerticalOffset="200" FromHorizontalOffset="0"/>
+                                <!--<NavigationThemeTransition/>
                             <ContentThemeTransition/>
                             <AddDeleteThemeTransition/>
                             <ReorderThemeTransition/>-->
-                        </TransitionCollection>
-                    </GridView.ItemContainerTransitions>
-                    
-                    <GridView.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <local:FluidGrid x:Name="NotesFluidGrid" Margin="10" ItemMinWidth="180"/>
-                            <!--<RelativePanel Margin="-6" AllowDrop="False"/>-->
-                            <!--<ItemsWrapGrid AllowDrop="True" ItemWidth="200" MaximumRowsOrColumns="4" Orientation="Horizontal"/>-->
-                        </ItemsPanelTemplate>
-                    </GridView.ItemsPanel>
+                            </TransitionCollection>
+                        </GridView.ItemContainerTransitions>
 
-                    <GridView.ItemTemplate>
-                        <DataTemplate x:DataType="models:Note">
-                            <Grid Background="{x:Bind Color.Color}">
-                                <StackPanel Margin="12,12,12,36">
-                                    <TextBlock Text="{x:Bind Title}" Foreground="{StaticResource AppNoteForegroundBrush}" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" Margin="0,0,0,6" FontWeight="Bold" MaxLines="1" Visibility="{Binding Title, Converter={StaticResource NullableToVisibilityConverter}}"/>
-                                    <TextBlock Text="{x:Bind Text}" Foreground="{StaticResource AppNoteForegroundBrush}" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" Margin="0,0,0,6" FontWeight="SemiLight" MaxLines="3" Visibility="{Binding Text, Converter={StaticResource NullableToVisibilityConverter}}" />
-                                </StackPanel>
-                            </Grid>
-                        </DataTemplate>
-                    </GridView.ItemTemplate>
-                </GridView>
+                        <GridView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <local:FluidGrid x:Name="NotesFluidGrid" Margin="10" ItemMinWidth="180"/>
+                                <!--<RelativePanel Margin="-6" AllowDrop="False"/>-->
+                                <!--<ItemsWrapGrid AllowDrop="True" ItemWidth="200" MaximumRowsOrColumns="4" Orientation="Horizontal"/>-->
+                            </ItemsPanelTemplate>
+                        </GridView.ItemsPanel>
+
+                        <GridView.ItemTemplate>
+                            <DataTemplate x:DataType="models:Note">
+                                <Grid Background="{x:Bind Color.Color}">
+                                    <StackPanel Margin="12,12,12,36">
+                                        <TextBlock Text="{x:Bind Title}" Foreground="{StaticResource AppNoteForegroundBrush}" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" Margin="0,0,0,6" FontWeight="Bold" MaxLines="1" Visibility="{Binding Title, Converter={StaticResource NullableToVisibilityConverter}}"/>
+                                        <TextBlock Text="{x:Bind Text}" Foreground="{StaticResource AppNoteForegroundBrush}" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" Margin="0,0,0,6" FontWeight="SemiLight" MaxLines="3" Visibility="{Binding Text, Converter={StaticResource NullableToVisibilityConverter}}" />
+                                    </StackPanel>
+                                </Grid>
+                            </DataTemplate>
+                        </GridView.ItemTemplate>
+                    </GridView>
+                </Grid>
             </SplitView.Content>
         </SplitView>
     </Grid>

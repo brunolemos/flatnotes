@@ -214,13 +214,14 @@ namespace FlatNotes
 #else
     #if WINDOWS_UAP
             var titleBar = ApplicationView.GetForCurrentView().TitleBar;
-            var mainColor = Color.FromArgb(0xff, 0xff, 0xbb, 0x00);
+            var foregroundColor = Colors.Black;
+            //var mainColor = Color.FromArgb(0xff, 0xff, 0xbb, 0x00);
 
             titleBar.BackgroundColor = Colors.White;
-            titleBar.ForegroundColor = mainColor;
+            titleBar.ForegroundColor = foregroundColor;
 
             titleBar.ButtonBackgroundColor = titleBar.BackgroundColor;
-            titleBar.ButtonForegroundColor = mainColor;
+            titleBar.ButtonForegroundColor = foregroundColor;
 
             titleBar.ButtonInactiveBackgroundColor = titleBar.BackgroundColor;
             titleBar.ButtonInactiveForegroundColor = Colors.LightGray;
