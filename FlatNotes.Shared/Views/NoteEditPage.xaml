@@ -66,7 +66,6 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0" Height="140" Visibility="{Binding IsWindows, Converter={StaticResource BooleanToVisibilityConverter}}">
@@ -153,17 +152,10 @@
         </Grid>
 
         <local:NoteColorPicker Grid.Row="1" x:Name="NoteColorPicker" Background="{Binding Note.Color.DarkColor2}" Visibility="Collapsed"/>
+    </Grid>
 
-        <CommandBar Grid.Row="2" IsSticky="True" Background="{Binding Note.Color.DarkColor2}" Foreground="{StaticResource AppNoteCommandBarForegroundThemeBrush}">
-            <CommandBar.Content>
-                <StackPanel Orientation="Horizontal">
-                    <AppBarButton x:Uid="ToggleChecklistAppBarButton" Label="toggle checklist" Command="{Binding ToggleChecklistCommand}" Icon="List" />
-                    <AppBarButton x:Uid="RestoreAppBarButton" Icon="Undo" Label="restore" Command="{Binding RestoreNoteCommand}" Visibility="{Binding IsArchived, Converter={StaticResource BooleanToVisibilityConverter}}" />
-                    <AppBarButton x:Uid="ArchiveAppBarButton" Icon="Remove" Label="archive" Command="{Binding ArchiveNoteCommand}" Visibility="{Binding AlreadyExists, Converter={StaticResource BooleanToVisibilityConverter}}" />
-                    <AppBarButton x:Uid="DeleteAppBarButton" Icon="Delete" Label="delete" Command="{Binding DeleteNoteCommand}" />
-                </StackPanel>
-            </CommandBar.Content>
-
+    <Page.BottomAppBar>
+        <CommandBar IsSticky="True" Background="{Binding Note.Color.DarkColor2}" Foreground="{StaticResource AppNoteCommandBarForegroundThemeBrush}">
             <CommandBar.PrimaryCommands>
                 <AppBarToggleButton x:Uid="ColorAppBarButton" x:Name="ColorPickerAppBarToggleButton"  Label="color">
                     <AppBarToggleButton.Icon>
@@ -175,6 +167,13 @@
                 <!--<AppBarButton x:Uid="AudioAppBarButton" Icon="Microphone" Label="audio" IsEnabled="False"/>-->
                 <AppBarButton x:Name="TogglePinAppBarButton" Icon="Pin" Label="pin to start" Command="{Binding PinCommand}" Visibility="{Binding IsArchived, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=True}"/>
             </CommandBar.PrimaryCommands>
+
+            <CommandBar.SecondaryCommands>
+                <AppBarButton x:Uid="ToggleChecklistAppBarButton" Label="toggle checklist" Command="{Binding ToggleChecklistCommand}" Icon="List" />
+                <AppBarButton x:Uid="RestoreAppBarButton" Icon="Undo" Label="restore" Command="{Binding RestoreNoteCommand}" Visibility="{Binding IsArchived, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                <AppBarButton x:Uid="ArchiveAppBarButton" Icon="Remove" Label="archive" Command="{Binding ArchiveNoteCommand}" Visibility="{Binding AlreadyExists, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                <AppBarButton x:Uid="DeleteAppBarButton" Icon="Delete" Label="delete" Command="{Binding DeleteNoteCommand}" />
+            </CommandBar.SecondaryCommands>
         </CommandBar>
-    </Grid>
+    </Page.BottomAppBar>
 </Page>

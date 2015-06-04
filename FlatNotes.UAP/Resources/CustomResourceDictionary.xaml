@@ -1,0 +1,40 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!--<Style TargetType="ListViewItem">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListViewItem">
+                    <ListViewItemPresenter 
+                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                            CheckBrush="{ThemeResource ListViewItemCheckThemeBrush}"
+                            CheckHintBrush="{ThemeResource ListViewItemCheckHintThemeBrush}"
+                            CheckSelectingBrush="{ThemeResource ListViewItemCheckSelectingThemeBrush}"
+                            Margin="0"
+                            ContentMargin="0"
+                            MinHeight="10"
+                            Height="10"
+                            ContentTransitions="{TemplateBinding ContentTransitions}"
+                            DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}"
+                            DragBackground="{ThemeResource ListViewItemDragBackgroundThemeBrush}"
+                            DragForeground="{ThemeResource ListViewItemDragForegroundThemeBrush}"
+                            DragOpacity="{ThemeResource ListViewItemDragThemeOpacity}"
+                            FocusBorderBrush="{ThemeResource ListViewItemFocusBorderThemeBrush}"
+                            Padding="{TemplateBinding Padding}"
+                            PlaceholderBackground="{ThemeResource ListViewItemPlaceholderBackgroundThemeBrush}"
+                            PointerOverBackground="{ThemeResource ListViewItemPointerOverBackgroundThemeBrush}"
+                            PointerOverBackgroundMargin="1"
+                            ReorderHintOffset="{ThemeResource ListViewItemReorderHintThemeOffset}"
+                            SelectedBackground="{ThemeResource ListViewItemSelectedBackgroundThemeBrush}"
+                            SelectedBorderThickness="{ThemeResource ListViewItemCompactSelectedBorderThemeThickness}"
+                            SelectedForeground="{ThemeResource ListViewItemSelectedForegroundThemeBrush}"
+                            SelectedPointerOverBackground="{ThemeResource ListViewItemSelectedPointerOverBackgroundThemeBrush}"
+                            SelectedPointerOverBorderBrush="{ThemeResource ListViewItemSelectedPointerOverBorderThemeBrush}"
+                            SelectionCheckMarkVisualEnabled="False" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>-->
+</ResourceDictionary>

@@ -2,8 +2,8 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <Color x:Key="PhoneBackgroundColor">#e6e6e6</Color>
-    <Color x:Key="PhoneForegroundColor">#CC000000</Color>
+    <Color x:Key="PhoneBackgroundColor">#e8e8e8</Color>
+    <Color x:Key="PhoneForegroundColor">#C0000000</Color>
     <Color x:Key="PhoneChromeColor">#FFDDDDDD</Color>
     <Color x:Key="PhoneMidColor">#40000000</Color>
     <Color x:Key="PhoneLowColor">#20000000</Color>

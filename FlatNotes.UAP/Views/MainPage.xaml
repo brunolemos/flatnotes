@@ -18,44 +18,8 @@
             </StackPanel>
         </DataTemplate>
 
-
-        <Style TargetType="ListViewItem">
-            <Setter Property="FontWeight" Value="Medium"/>
-            
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="ListViewItem">
-                        <GridViewItemPresenter 
-                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" 
-                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                            CheckBrush="{ThemeResource ListViewItemCheckThemeBrush}"
-                            CheckHintBrush="{ThemeResource ListViewItemCheckHintThemeBrush}"
-                            CheckSelectingBrush="{ThemeResource ListViewItemCheckSelectingThemeBrush}"
-                            ContentMargin="0"
-                            ContentTransitions="{TemplateBinding ContentTransitions}"
-                            DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}"
-                            DragBackground="{ThemeResource ListViewItemDragBackgroundThemeBrush}"
-                            DragForeground="{ThemeResource ListViewItemDragForegroundThemeBrush}"
-                            DragOpacity="{ThemeResource ListViewItemDragThemeOpacity}"
-                            FocusBorderBrush="{ThemeResource ListViewItemFocusBorderThemeBrush}"
-                            Padding="{TemplateBinding Padding}"
-                            PlaceholderBackground="{ThemeResource ListViewItemPlaceholderBackgroundThemeBrush}"
-                            PointerOverBackground="{ThemeResource ListViewItemPointerOverBackgroundThemeBrush}"
-                            PointerOverBackgroundMargin="1"
-                            ReorderHintOffset="{ThemeResource ListViewItemReorderHintThemeOffset}"
-                            SelectedBackground="{ThemeResource ListViewItemSelectedBackgroundThemeBrush}"
-                            SelectedBorderThickness="{ThemeResource ListViewItemCompactSelectedBorderThemeThickness}"
-                            SelectedForeground="{ThemeResource ListViewItemSelectedForegroundThemeBrush}"
-                            SelectedPointerOverBackground="{ThemeResource ListViewItemSelectedPointerOverBackgroundThemeBrush}"
-                            SelectedPointerOverBorderBrush="{ThemeResource ListViewItemSelectedPointerOverBorderThemeBrush}"
-                            SelectionCheckMarkVisualEnabled="False" />
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
         <Style x:Name="NotesGridViewStyle" x:Key="NotesGridViewStyle" TargetType="GridViewItem">
-            <Setter Property="Margin" Value="4"/>
+            <Setter Property="Margin" Value="0"/>
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
             <Setter Property="VerticalAlignment" Value="Stretch"/>
             <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
@@ -103,19 +67,20 @@
                     </VisualState.StateTriggers>
 
                     <VisualState.Setters>
-                        <Setter Target="ActionsCommandBarContainer.Grid.Row" Value="2" />
-                        <Setter Target="NotesListView.Margin" Value="0"/>
+                        <!--<Setter Target="ActionsCommandBarContainer.Grid.Row" Value="2" />-->
+                        <Setter Target="NotesListView.Margin" Value="0,12"/>
+                        <Setter Target="NotesFluidGrid.ItemStretch" Value="True"/>
                     </VisualState.Setters>
                 </VisualState>
 
                 <VisualState>
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="600" />
+                        <AdaptiveTrigger MinWindowWidth="480" />
                     </VisualState.StateTriggers>
 
                     <VisualState.Setters>
-                        <Setter Target="ActionsCommandBarContainer.Grid.Row" Value="0" />
-                        <Setter Target="NotesListView.Margin" Value="48,24,48,12"/>
+                        <!--<Setter Target="ActionsCommandBarContainer.Grid.Row" Value="0" />-->
+                        <Setter Target="NotesFluidGrid.ItemStretch" Value="False"/>
                     </VisualState.Setters>
                 </VisualState>
 
@@ -125,7 +90,6 @@
                     </VisualState.StateTriggers>
 
                     <VisualState.Setters>
-                        <Setter Target="NotesListView.Margin" Value="120,24,120,12"/>
                     </VisualState.Setters>
                 </VisualState>
 
@@ -135,9 +99,9 @@
                 </VisualState.StateTriggers>
 
                 <VisualState.Setters>
-                    <Setter Target="NotesListView.Margin" Value="250,24,250,12"/>
+                    <Setter Target="NotesListView.Margin" Value="65,12"/>
                 </VisualState.Setters>
-            </VisualState>
+                </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
 
@@ -155,7 +119,7 @@
                     </AppBarButton>
                     
                     <ListView x:Name="NavLinksList" Grid.Row="1" Margin="0,12,12,12" Padding="0" SelectionMode="Single" 
-                        ItemTemplate="{StaticResource NavLinkItemTemplate}" VerticalAlignment="Stretch"
+                        ItemTemplate="{StaticResource NavLinkItemTemplate}" FontWeight="Medium" VerticalAlignment="Stretch"
                         ItemClick="NavLinksList_ItemClick" IsItemClickEnabled="True"
                         ItemsSource="{x:Bind NavLinks}">
 
@@ -205,7 +169,7 @@
                         </CommandBar>
                     </Grid>
                     
-                    <GridView x:Name="NotesListView" Grid.Row="1"  Margin="12,24" HorizontalAlignment="Center" HorizontalContentAlignment="Stretch"
+                    <GridView x:Name="NotesListView" Grid.Row="1"  Margin="0,12" HorizontalAlignment="Center" HorizontalContentAlignment="Stretch"
                           ItemsSource="{x:Bind Path=viewModel.Notes}" SelectionMode="None"
                           CanReorderItems="False" CanDragItems="False" AllowDrop="False" 
                           ItemContainerStyle="{StaticResource NotesGridViewStyle}">
@@ -222,7 +186,7 @@
 
                         <GridView.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <local:FluidGrid x:Name="NotesFluidGrid" Margin="10" ItemMinWidth="180"/>
+                                <local:FluidGrid x:Name="NotesFluidGrid" Margin="10" ItemWidth="260"/>
                                 <!--<RelativePanel Margin="-6" AllowDrop="False"/>-->
                                 <!--<ItemsWrapGrid AllowDrop="True" ItemWidth="200" MaximumRowsOrColumns="4" Orientation="Horizontal"/>-->
                             </ItemsPanelTemplate>
@@ -230,12 +194,7 @@
 
                         <GridView.ItemTemplate>
                             <DataTemplate x:DataType="models:Note">
-                                <Grid Background="{x:Bind Color.Color}">
-                                    <StackPanel Margin="12,12,12,36">
-                                        <TextBlock Text="{x:Bind Title}" Foreground="{StaticResource AppNoteForegroundBrush}" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" Margin="0,0,0,6" FontWeight="Bold" MaxLines="1" Visibility="{Binding Title, Converter={StaticResource NullableToVisibilityConverter}}"/>
-                                        <TextBlock Text="{x:Bind Text}" Foreground="{StaticResource AppNoteForegroundBrush}" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" Margin="0,0,0,6" FontWeight="SemiLight" MaxLines="3" Visibility="{Binding Text, Converter={StaticResource NullableToVisibilityConverter}}" />
-                                    </StackPanel>
-                                </Grid>
+                                <local:NotePreview/>
                             </DataTemplate>
                         </GridView.ItemTemplate>
                     </GridView>

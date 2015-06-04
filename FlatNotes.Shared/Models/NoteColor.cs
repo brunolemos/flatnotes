@@ -15,7 +15,7 @@ namespace FlatNotes.Models
         public string DarkColor1 { get; internal set; }
         public string DarkColor2 { get; internal set; }
         
-        public static readonly NoteColor DEFAULT    = new NoteColor("DEFAULT",  "#f0f0f0", "#aaaaaa", "#999999");//f5f5f5
+        public static readonly NoteColor DEFAULT    = new NoteColor("DEFAULT",  "#ffffff", "#aaaaaa", "#999999");
         public static readonly NoteColor RED        = new NoteColor("RED",      "#ff6d3f", "#ff6d3f", "#ea5f39");
         public static readonly NoteColor ORANGE     = new NoteColor("ORANGE",   "#ff9700", "#ff9700", "#f47b00");
         public static readonly NoteColor YELLOW     = new NoteColor("YELLOW",   "#ffe900", "#ffc000", "#f4a800");

@@ -7,41 +7,49 @@ namespace FlatNotes.Controls
 {
     public class FluidGrid : Panel
     {
-        int[] childrenColumns;
-        Size[] childrenSizes;
+        private int[] childrenColumns;
+        private Size[] childrenSizes;
+        private double itemWidth = 150;
+        public const double ITEM_MIN_WIDTH = 150;
 
         protected override Size MeasureOverride(Size totalSize)
         {
-            int columns = Columns;
-            if (columns < 1) columns = Math.Max( (int)Math.Floor(totalSize.Width / ItemMinWidth), 1);
+            itemWidth = Math.Min(ItemWidth, totalSize.Width);
+            int columns = Columns > 1 ? Columns : Math.Max(1, (int)Math.Floor(totalSize.Width / ItemWidth));
 
-            int i, columnWithlastY = 0;
-            LastCellWidth = totalSize.Width / columns;
-            Size resultSize = new Size(totalSize.Width, 0);
-            BiggerCellHeight= 0;
+            //adjust item width when itemwidth is too big
+            itemWidth = Math.Min(itemWidth, totalSize.Width / columns);
+
+            //stretch on force or when when single column on small screen
+            if (ItemStretch || (columns == 1 && totalSize.Width < itemWidth * 2)) itemWidth = totalSize.Width / columns;
+
+            Size resultSize = new Size(columns * itemWidth, 0);
+
+            int i, columnWithLowerY = 0;
+            BiggerItemHeight= 0;
 
             double[] lastYInColumn = new double[columns];
             for (i = 0; i < columns; i++) lastYInColumn[i] = 0;
 
             childrenColumns = new int[Children.Count];
             childrenSizes = new Size[Children.Count];
+
             for (int pos = 0; pos < Children.Count; pos++)
             {
                 for (i = columns - 1; i >= 0; i--)
-                    if (lastYInColumn[i] <= lastYInColumn[columnWithlastY])
-                        columnWithlastY = i;
+                    if (lastYInColumn[i] <= lastYInColumn[columnWithLowerY])
+                        columnWithLowerY = i;
 
-                Children[pos].Measure(new Size(LastCellWidth, totalSize.Height));
-                Size cellSize = new Size(LastCellWidth, Children[pos].DesiredSize.Height);
-                if (Double.IsPositiveInfinity(cellSize.Width)) cellSize.Width = 0;
-                if (Double.IsPositiveInfinity(cellSize.Height)) cellSize.Height = 0;
+                Children[pos].Measure(new Size(itemWidth, totalSize.Height));
+                Size itemSize = new Size(itemWidth, Children[pos].DesiredSize.Height);
+                if (Double.IsPositiveInfinity(itemSize.Width)) itemSize.Width = 0;
+                if (Double.IsPositiveInfinity(itemSize.Height)) itemSize.Height = 0;
 
-                Point startPoint = new Point(cellSize.Width * columnWithlastY, lastYInColumn[columnWithlastY]);
-                lastYInColumn[columnWithlastY] = startPoint.Y + cellSize.Height;
+                lastYInColumn[columnWithLowerY] = lastYInColumn[columnWithLowerY] + itemSize.Height;
 
-                childrenColumns[pos] = columnWithlastY;
-                childrenSizes[pos] = cellSize;
-                BiggerCellHeight = Math.Max(BiggerCellHeight, cellSize.Height);
+                childrenColumns[pos] = columnWithLowerY;
+                childrenSizes[pos] = itemSize;
+                BiggerItemHeight = Math.Max(BiggerItemHeight, itemSize.Height);
             }
 
             if (Double.IsPositiveInfinity(resultSize.Width)) resultSize.Width = 0;
@@ -56,9 +64,8 @@ namespace FlatNotes.Controls
         protected override Size ArrangeOverride( Size totalSize )
         {
             if (childrenColumns.Length != Children.Count || childrenSizes.Length != Children.Count) return totalSize;
-
-            int columns = Columns;
-            if (columns < 1) columns = Math.Max( (int)Math.Floor(totalSize.Width / ItemMinWidth), 1);
+            
+            int columns = Columns > 1 ? Columns : Math.Max(1, (int)Math.Floor(totalSize.Width / itemWidth));
 
             double[] lastYInColumn = new double[columns];
             for (int i = 0; i < columns; i++) lastYInColumn[i] = 0;
@@ -77,42 +84,43 @@ namespace FlatNotes.Controls
             return totalSize;
         }
 
-        public static readonly DependencyProperty BiggerCellHeightProperty = DependencyProperty.Register("BiggerCellHeight", typeof(Double), typeof(FluidGrid), new PropertyMetadata(0));
-        public Double BiggerCellHeight
-        {
-            get { return (Double)GetValue(BiggerCellHeightProperty); }
-            set { SetValue(BiggerCellHeightProperty, value); }
-        }
-
-        public static readonly DependencyProperty LastCellWidthProperty = DependencyProperty.Register("LastCellWidth", typeof(Double), typeof(FluidGrid), new PropertyMetadata(194.0));
-        public Double LastCellWidth
-        {
-            get { return (Double)GetValue(LastCellWidthProperty); }
-            set { SetValue(LastCellWidthProperty, value); }
-        }
-
-        public static readonly DependencyProperty ColumnsProperty = DependencyProperty.Register("Columns", typeof(int), typeof(FluidGrid), new PropertyMetadata(-1, OnColumnsChanged));
+        public static readonly DependencyProperty ColumnsProperty = DependencyProperty.Register("Columns", typeof(int), typeof(FluidGrid), new PropertyMetadata(-1, OnColumnsPropertyChanged));
         public int Columns
         {
             get { return (int)GetValue(ColumnsProperty); }
             set { SetValue(ColumnsProperty, value); }
         }
 
-        public static readonly DependencyProperty ItemMinWidthProperty = DependencyProperty.Register("ItemMinWidth", typeof(int), typeof(FluidGrid), new PropertyMetadata(200, OnItemMinWidthChanged));
-        public int ItemMinWidth
+        static void OnColumnsPropertyChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
         {
-            get { return (int)GetValue( ItemMinWidthProperty ); }
-            set { SetValue( ItemMinWidthProperty, value ); }
+            (obj as FluidGrid).InvalidateMeasure();
         }
 
-        static void OnColumnsChanged( DependencyObject obj, DependencyPropertyChangedEventArgs e )
+        public static readonly DependencyProperty ItemWidthProperty = DependencyProperty.Register("ItemWidth", typeof(double), typeof(FluidGrid), new PropertyMetadata(ITEM_MIN_WIDTH, OnItemWidthPropertyChanged));
+        public double ItemWidth
         {
-            ( obj as FrameworkElement ).InvalidateMeasure();
+            get { return (double)GetValue(ItemWidthProperty); }
+            set { SetValue(ItemWidthProperty, value); }
         }
 
-        static void OnItemMinWidthChanged( DependencyObject obj, DependencyPropertyChangedEventArgs e )
+        static void OnItemWidthPropertyChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
         {
-            ( obj as FrameworkElement ).InvalidateMeasure();
+            if ((obj as FluidGrid).ItemWidth < ITEM_MIN_WIDTH) (obj as FluidGrid).ItemWidth = ITEM_MIN_WIDTH;
+            (obj as FluidGrid).InvalidateMeasure();
+        }
+
+        public static readonly DependencyProperty ItemStretchProperty = DependencyProperty.Register("ItemStretch", typeof(bool), typeof(FluidGrid), new PropertyMetadata(false));
+        public bool ItemStretch
+        {
+            get { return (bool)GetValue(ItemStretchProperty); }
+            private set { SetValue(ItemStretchProperty, value); }
+        }
+
+        public static readonly DependencyProperty BiggerItemHeightProperty = DependencyProperty.Register("BiggerItemHeight", typeof(double), typeof(FluidGrid), new PropertyMetadata(0));
+        public double BiggerItemHeight
+        {
+            get { return (double)GetValue(BiggerItemHeightProperty); }
+            private set { SetValue(BiggerItemHeightProperty, value); }
         }
     }
 }

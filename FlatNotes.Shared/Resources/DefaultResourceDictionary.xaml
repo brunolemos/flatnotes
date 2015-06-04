@@ -19,7 +19,7 @@
     <SolidColorBrush x:Key="PhoneDarkLowBrush" Color="#20000000"/>
     <SolidColorBrush x:Key="PhoneDarkMidBrush" Color="#70000000"/>
     
-    <SolidColorBrush x:Key="AppNoteForegroundBrush" Color="#CC000000"/>
+    <SolidColorBrush x:Key="AppNoteForegroundBrush" Color="#C0000000"/>
     <SolidColorBrush x:Key="AppNoteCommandBarForegroundThemeBrush" Color="Black"/>
             
     <SolidColorBrush x:Key="TextBoxFocusedBackgroundThemeBrush" Color="Transparent"/>
@@ -28,8 +28,8 @@
     <SolidColorBrush x:Key="TextBlockDisabledForegroundThemeBrush" Color="#70000000"/>
 
     <SolidColorBrush x:Key="CommandBarBackgroundThemeBrush" Color="{ThemeResource AppMainColor}"/>
-    <SolidColorBrush x:Key="CommandBarForegroundThemeBrush" Color="White"/><!--#402f00-->
-    
+    <SolidColorBrush x:Key="CommandBarForegroundThemeBrush" Color="White"/>
+
     <Style TargetType="CommandBar">
         <Setter Property="RequestedTheme" Value="Dark"/>
         <Setter Property="Background" Value="{ThemeResource CommandBarBackgroundThemeBrush}"/>
@@ -37,20 +37,21 @@
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="BorderBrush" Value="Transparent"/>
     </Style>
-        
+
     <Style TargetType="ListViewItem">
+        <Setter Property="Margin" Value="0"/>
         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
     </Style>
 
-    <x:Double x:Key="EmptyNotesMessageFontSize">36</x:Double>
+    <x:Double x:Key="EmptyNotesMessageFontSize">24</x:Double>
 
-    <!--<Style TargetType="TextBlock">
-        <Setter Property="FontSize" Value="17"/>
-    </Style>-->
+    <Style TargetType="TextBlock">
+        <Setter Property="FontSize" Value="16"/>
+    </Style>
 
-    <!--<Style x:Key="NavigationBackButtonNormalStyle" TargetType="Button">
+    <Style x:Key="NavigationBackButtonNormalStyle" TargetType="Button">
         <Setter Property="Visibility" Value="Visible"/>
-    </Style>-->
+    </Style>
 
     <DataTemplate x:Key="HeaderTemplate">
         <TextBlock Margin="0,12,0,0" Text="{Binding}" FontSize="34.14"/>

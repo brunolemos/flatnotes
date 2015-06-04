@@ -27,16 +27,11 @@
         </DataTemplate>
 
         <ItemsPanelTemplate x:Key="FluidItemsPanelTemplate" x:Name="FluidItemsPanelTemplate">
-            <local:FluidGrid x:Name="NotesFluidGrid" Margin="14" ItemMinWidth="200" Columns="{Binding Columns, Mode=OneWay, TargetNullValue=-1, FallbackValue=-1}"/>
+            <local:FluidGrid x:Name="NotesFluidGrid" Margin="14" ItemWidth="200" Columns="{Binding Columns, Mode=OneWay, TargetNullValue=-1, FallbackValue=-1}"/>
         </ItemsPanelTemplate>
     </Page.Resources>
 
     <Grid x:Name="LayoutRoot" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-        
         <Grid x:Name="ContentRoot" MaxWidth="1000">
             <Grid Visibility="{Binding Notes.Count, Converter={StaticResource PositiveIntToVisibilityConverter}, ConverterParameter=True}">
                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -55,21 +50,21 @@
 
             <local:MyListView x:Name="NotesListView" ItemsSource="{Binding Notes, Mode=OneWay}" ItemsPanel="{StaticResource FluidItemsPanelTemplate}" ItemTemplate="{StaticResource NotePreviewListViewControlTemplate}" ScrollViewer.VerticalScrollMode="Enabled" VerticalAlignment="Stretch" SelectionMode="None" CanDragItems="True" ReorderMode="{Binding ReorderMode, Mode=TwoWay}"/>
         </Grid>
-
-        <CommandBar Grid.Row="1"  IsSticky="True">
-            <CommandBar.Content>
-                <StackPanel Orientation="Horizontal">
-                    <AppBarButton x:Uid="ArchivedNotesAppBarButton" Icon="Preview" Label="archived" Command="{Binding OpenArchivedNotesCommand}"/>
-                    <AppBarButton x:Uid="SettingsAppBarButton" Icon="Setting" Label="settings" Command="{Binding OpenSettingsCommand}"/>
-                </StackPanel>
-            </CommandBar.Content>
-
+    </Grid>
+    
+    <Page.BottomAppBar>
+        <CommandBar IsSticky="True">
             <CommandBar.PrimaryCommands>
                 <AppBarButton x:Uid="NoteTextType" Label="text" Command="{Binding CreateTextNoteCommand}" Icon="Add"/>
                 <AppBarButton x:Uid="NoteChecklistType" Label="checklist" Command="{Binding CreateChecklistNoteCommand}" Icon="List"/>
                 <AppBarButton x:Uid="PhotoAppBarButton" Icon="Camera" Label="photo" Command="{Binding OpenImagePickerCommand}"/>
                 <!--<AppBarButton x:Uid="AudioAppBarButton" Icon="Microphone" Label="audio" IsEnabled="False"/>-->
             </CommandBar.PrimaryCommands>
+
+            <CommandBar.SecondaryCommands>
+                <AppBarButton x:Uid="ArchivedNotesAppBarButton" Icon="Preview" Label="archived" Command="{Binding OpenArchivedNotesCommand}"/>
+                <AppBarButton x:Uid="SettingsAppBarButton" Icon="Setting" Label="settings" Command="{Binding OpenSettingsCommand}"/>
+            </CommandBar.SecondaryCommands>
         </CommandBar>
-    </Grid>
+    </Page.BottomAppBar>
 </Page>

@@ -36,7 +36,7 @@ namespace FlatNotes.Views
 
             var checklistMyStrengths = new Checklist();
             checklistMyStrengths.Add(new ChecklistItem("ASBD AHJSBdjk nsadnk", false));
-            checklistMyStrengths.Add(new ChecklistItem(" asdkls ndKLSANDK n", false));
+            checklistMyStrengths.Add(new ChecklistItem("Asdkls ndKLSANDK n", false));
             checklistMyStrengths.Add(new ChecklistItem("KJASNDKjasn dklasn kda", false));
             checklistMyStrengths.Add(new ChecklistItem("ALJDnsaldn salkndkajnd kA", false));
             checklistMyStrengths.Add(new ChecklistItem("Tempo", false));
@@ -68,7 +68,7 @@ namespace FlatNotes.Views
 
 
             viewModel.Notes.Add(new Note("IMEI Moto G 2014", "353334062411489", NoteColor.BLUE));
-            viewModel.Notes.Add(new Note("", "\"Enquanto você pensar em centavos, você irá ganhar em centavos\"", NoteColor.GRAY));
+            viewModel.Notes.Add(new Note("", "\"Enquanto você pensar em centavos, você irá ganhar em centavos\"", NoteColor.GRAY) { Images = new NoteImages() { new NoteImage("https://timedotcom.files.wordpress.com/2015/04/money1.jpg?quality=65&strip=color&w=1100") } });
             viewModel.Notes.Add(new Note("My Strengths", checklistMyStrengths, NoteColor.YELLOW));
             viewModel.Notes.Add(new Note("My Weaknesses", checklistMyWeakness, NoteColor.RED));
             viewModel.Notes.Add(new Note("My Opportunities", checklistMyOpportunities, NoteColor.GREEN));

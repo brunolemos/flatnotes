@@ -23,10 +23,13 @@
             <Converters:PositiveIntToVisibilityConverter x:Key="PositiveIntToVisibilityConverter"/>
             
             <Style x:Key="NotePreviewChecklistItem" TargetType="ListViewItem">
+                <Setter Property="Margin" Value="0"/>
+                <Setter Property="MinHeight" Value="10"/>
+                
                 <Setter Property="Template">
                   <Setter.Value>
                      <ControlTemplate TargetType="ListViewItem">
-                            <ContentPresenter Margin="0" HorizontalAlignment="Stretch"/>
+                            <ContentPresenter Margin="0" MinHeight="10" HorizontalAlignment="Stretch" VerticalAlignment="Top"/>
                         </ControlTemplate>
                   </Setter.Value>
                 </Setter>    
@@ -45,7 +48,7 @@
                         </Grid>
                     </Viewbox>
 
-                    <TextBlock Grid.Column="1" Text="{Binding Text, Mode=OneWay}" Foreground="{Binding ElementName=Root, Path=Foreground}" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" FontSize="17" Margin="0,-2,0,0" Padding="4,0,0,0" FontWeight="Normal" MaxLines="1" VerticalAlignment="Top" />
+                    <TextBlock Grid.Column="1" Text="{Binding Text, Mode=OneWay}" Foreground="{Binding ElementName=Root, Path=Foreground}" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" FontSize="{Binding ElementName=Root, Path=FontSize}" Margin="0,-2,0,0" Padding="4,0,0,0" FontWeight="Normal" MaxLines="1" VerticalAlignment="Top" />
                 </Grid>
             </DataTemplate>
             
@@ -57,7 +60,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
     
-    <Grid x:Name="NoteContainer" Margin="5" Background="{Binding ElementName=Root, Path=Background}">
+    <Grid x:Name="NoteContainer" Margin="4" Background="{Binding ElementName=Root, Path=Background}">
         <StackPanel Margin="0">
             <Grid Visibility="{Binding ElementName=Root, Path=HideImage, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=True}">
                 <Grid MaxHeight="120" Background="{StaticResource PhoneDarkLowBrush}" Visibility="{Binding Images.Count, Converter={StaticResource PositiveIntToVisibilityConverter}}">
@@ -65,9 +68,9 @@
                 </Grid>
             </Grid>
             
-            <StackPanel Margin="12,12,12,36">
-                <TextBlock Text="{Binding Title}" Foreground="{Binding ElementName=Root, Path=Foreground}" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" Margin="0,0,0,6" FontWeight="Bold" MaxLines="1" Visibility="{Binding Title, Converter={StaticResource NullableToVisibilityConverter}}"/>
-                <TextBlock Text="{Binding Text}" Foreground="{Binding ElementName=Root, Path=Foreground}" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" Margin="0,0,0,6" FontWeight="SemiLight" MaxLines="3" Visibility="{Binding Text, Converter={StaticResource NullableToVisibilityConverter}}" />
+            <StackPanel Margin="18,18,18,36">
+                <TextBlock Text="{Binding Title}" Foreground="{Binding ElementName=Root, Path=Foreground}" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" Margin="0,0,0,10" FontWeight="Bold" MaxLines="1" Visibility="{Binding Title, Converter={StaticResource NullableToVisibilityConverter}}"/>
+                <TextBlock Text="{Binding Text}" Foreground="{Binding ElementName=Root, Path=Foreground}" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" Margin="0,0,0,10" FontWeight="SemiLight" MaxLines="3" Visibility="{Binding Text, Converter={StaticResource NullableToVisibilityConverter}}" />
 
                 <StackPanel Visibility="{Binding IsChecklist, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
                     <ListView x:Name="NoteChecklistListView" Margin="0,-3,0,10" ItemsSource="{Binding Checklist, Converter={StaticResource MaxChecklistItemsConverter}}" ItemContainerStyle="{StaticResource NotePreviewChecklistItem}" ItemTemplate="{StaticResource NoteChecklistListViewControlTemplate}" IsTapEnabled="False" IsItemClickEnabled="False" />

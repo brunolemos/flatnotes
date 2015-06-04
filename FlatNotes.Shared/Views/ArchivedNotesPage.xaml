@@ -28,7 +28,7 @@
         </DataTemplate>
 
         <ItemsPanelTemplate x:Key="FluidItemsPanelTemplate" x:Name="FluidItemsPanelTemplate">
-            <local:FluidGrid x:Name="NotesFluidGrid" Margin="14" ItemMinWidth="200" Columns="{Binding Columns, Mode=OneWay, TargetNullValue=-1, FallbackValue=-1}"/>
+            <local:FluidGrid x:Name="NotesFluidGrid" Margin="14" ItemWidth="200" Columns="{Binding Columns, Mode=OneWay, TargetNullValue=-1, FallbackValue=-1}"/>
         </ItemsPanelTemplate>
     </Page.Resources>
 

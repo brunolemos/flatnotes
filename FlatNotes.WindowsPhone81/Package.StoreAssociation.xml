@@ -184,60 +184,59 @@
     <Language Code="vi-vn" InMinimumRequirementSet="true" />
   </SupportedLocales>
   <ProductReservedInfo>
-    <MainPackageIdentityName>29428BrunoLemos.Keep</MainPackageIdentityName>
+    <MainPackageIdentityName>29428BrunoLemos.KeepBeta</MainPackageIdentityName>
     <ReservedNames>
-      <ReservedName>Flat Notes</ReservedName>
-      <ReservedName>Keep 8.1</ReservedName>
-      <ReservedName>Google Keep 8.1</ReservedName>
-      <ReservedName>Google Keep Alternative</ReservedName>
-      <ReservedName>#Keep</ReservedName>
+      <ReservedName>Flat Notes Beta</ReservedName>
+      <ReservedName>Google Keep Beta</ReservedName>
+      <ReservedName>Keep Notes Beta</ReservedName>
+      <ReservedName>Keep Beta</ReservedName>
     </ReservedNames>
   </ProductReservedInfo>
   <AccountPackageIdentityNames>
     <MainPackageIdentityName>29428BrunoLemos.6lack</MainPackageIdentityName>
-    <MainPackageIdentityName>29428BrunoLemos.KeepBeta</MainPackageIdentityName>
+    <MainPackageIdentityName>29428BrunoLemos.Keep</MainPackageIdentityName>
     <MainPackageIdentityName>29428BrunoLemos.GroupsforFacebook</MainPackageIdentityName>
     <MainPackageIdentityName>29428BrunoLemos.Nubank</MainPackageIdentityName>
     <MainPackageIdentityName>29428BrunoLemos.PopcornNow</MainPackageIdentityName>
     <MainPackageIdentityName>29428BrunoLemos.StellarLite</MainPackageIdentityName>
     <MainPackageIdentityName>29428BrunoLemos.5123029690F68</MainPackageIdentityName>
   </AccountPackageIdentityNames>
-  <PackageInfoList LandingUrl="https://dev.windowsphone.com/AppSubmission/AssociationLanding?windowsProductId=8375815d-4437-4c4e-b27b-925c2596244b">
+  <PackageInfoList LandingUrl="https://dev.windowsphone.com/AppSubmission/AssociationLanding?windowsProductId=5ce343c3-5530-455c-bfcf-998a516b50ad">
     <BundleInfo>
       <PackageInfo>
         <OsMinVersion>6.3.0.0</OsMinVersion>
         <PackageArchitecture></PackageArchitecture>
-        <PackageMaxArchitectureVersion>1.9.6.0</PackageMaxArchitectureVersion>
+        <PackageMaxArchitectureVersion>1.9.6.3</PackageMaxArchitectureVersion>
       </PackageInfo>
       <PackageInfo>
         <OsMinVersion>6.3.0.0</OsMinVersion>
         <PackageArchitecture></PackageArchitecture>
-        <PackageMaxArchitectureVersion>1.9.6.0</PackageMaxArchitectureVersion>
+        <PackageMaxArchitectureVersion>1.9.6.3</PackageMaxArchitectureVersion>
       </PackageInfo>
       <PackageInfo>
         <OsMinVersion>6.3.0.0</OsMinVersion>
         <PackageArchitecture></PackageArchitecture>
-        <PackageMaxArchitectureVersion>1.9.6.0</PackageMaxArchitectureVersion>
+        <PackageMaxArchitectureVersion>1.9.6.3</PackageMaxArchitectureVersion>
       </PackageInfo>
       <PackageInfo>
         <OsMinVersion>6.3.0.0</OsMinVersion>
         <PackageArchitecture></PackageArchitecture>
-        <PackageMaxArchitectureVersion>1.9.6.0</PackageMaxArchitectureVersion>
+        <PackageMaxArchitectureVersion>1.9.6.3</PackageMaxArchitectureVersion>
       </PackageInfo>
       <PackageInfo>
         <OsMinVersion>6.3.0.0</OsMinVersion>
         <PackageArchitecture></PackageArchitecture>
-        <PackageMaxArchitectureVersion>1.9.6.0</PackageMaxArchitectureVersion>
-      </PackageInfo>
-      <PackageInfo>
-        <OsMinVersion>6.3.0.0</OsMinVersion>
-        <PackageArchitecture></PackageArchitecture>
-        <PackageMaxArchitectureVersion>1.9.6.0</PackageMaxArchitectureVersion>
+        <PackageMaxArchitectureVersion>1.9.6.3</PackageMaxArchitectureVersion>
       </PackageInfo>
       <PackageInfo>
         <OsMinVersion>6.3.0.0</OsMinVersion>
         <PackageArchitecture>neutral</PackageArchitecture>
-        <PackageMaxArchitectureVersion>1.9.6.0</PackageMaxArchitectureVersion>
+        <PackageMaxArchitectureVersion>1.9.6.3</PackageMaxArchitectureVersion>
+      </PackageInfo>
+      <PackageInfo>
+        <OsMinVersion>6.3.0.0</OsMinVersion>
+        <PackageArchitecture></PackageArchitecture>
+        <PackageMaxArchitectureVersion>1.9.6.3</PackageMaxArchitectureVersion>
       </PackageInfo>
     </BundleInfo>
   </PackageInfoList>
