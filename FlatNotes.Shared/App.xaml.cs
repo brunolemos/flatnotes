@@ -210,14 +210,18 @@ namespace FlatNotes
 
         public static void ResetStatusBar()
         {
+            Color mainColor = Color.FromArgb(0xff, 0xff, 0xbb, 0x00);
+            Color mainDarkenColor = Color.FromArgb(0xff, 0xf9, 0x9f, 0x00);
+
+            Color backgrouncColor = mainDarkenColor;//Color.FromArgb(0xff, 0xe8, 0xe8, 0xe8);
+            Color foregroundColor = Colors.White;//Color.FromArgb(0xc0, 0x00, 0x00, 0x00);
+
 #if WINDOWS_APP
 #else
-    #if WINDOWS_UAP
+#if WINDOWS_UAP
             var titleBar = ApplicationView.GetForCurrentView().TitleBar;
-            var foregroundColor = Colors.Black;
-            //var mainColor = Color.FromArgb(0xff, 0xff, 0xbb, 0x00);
 
-            titleBar.BackgroundColor = Colors.White;
+            titleBar.BackgroundColor = backgrouncColor;
             titleBar.ForegroundColor = foregroundColor;
 
             titleBar.ButtonBackgroundColor = titleBar.BackgroundColor;
@@ -229,7 +233,7 @@ namespace FlatNotes
             titleBar.ButtonHoverBackgroundColor = Color.FromArgb(0xff, 0xe5, 0xe5, 0xe5);
             titleBar.ButtonHoverForegroundColor = titleBar.ButtonForegroundColor;
 
-            titleBar.ButtonPressedBackgroundColor = Color.FromArgb(0xff, 0xcc, 0xcc, 0xcc);
+            titleBar.ButtonPressedBackgroundColor = backgrouncColor;
             titleBar.ButtonPressedForegroundColor = Colors.White;
 
             bool hasStatusBar = Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar");
@@ -237,8 +241,8 @@ namespace FlatNotes
     #endif
 
             StatusBar.GetForCurrentView().BackgroundOpacity = 1;
-            StatusBar.GetForCurrentView().BackgroundColor = Color.FromArgb(0xff, 0xff, 0xbb, 0x00);
-            StatusBar.GetForCurrentView().ForegroundColor = Colors.White;
+            StatusBar.GetForCurrentView().BackgroundColor = backgrouncColor;
+            StatusBar.GetForCurrentView().ForegroundColor = foregroundColor;
 #endif
         }
 

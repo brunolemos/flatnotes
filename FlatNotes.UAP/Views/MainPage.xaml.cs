@@ -1,12 +1,14 @@
 ﻿using FlatNotes.Models;
 using FlatNotes.Utils;
 using FlatNotes.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using Windows.Foundation;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using System.Linq;
 
 namespace FlatNotes.Views
 {
@@ -34,54 +36,34 @@ namespace FlatNotes.Views
         {
             this.InitializeComponent();
 
-            var checklistMyStrengths = new Checklist();
-            checklistMyStrengths.Add(new ChecklistItem("ASBD AHJSBdjk nsadnk", false));
-            checklistMyStrengths.Add(new ChecklistItem("Asdkls ndKLSANDK n", false));
-            checklistMyStrengths.Add(new ChecklistItem("KJASNDKjasn dklasn kda", false));
-            checklistMyStrengths.Add(new ChecklistItem("ALJDnsaldn salkndkajnd kA", false));
-            checklistMyStrengths.Add(new ChecklistItem("Tempo", false));
-
-
-            var checklistMyWeakness = new Checklist();
-            checklistMyWeakness.Add(new ChecklistItem("a DKJotagem", false));
-            checklistMyWeakness.Add(new ChecklistItem("Falta de ASD LAKSMLD Msl", false));
-            checklistMyWeakness.Add(new ChecklistItem("AK DNSALKmd  / Pouco AKM DLKSdk ", false));
-            checklistMyWeakness.Add(new ChecklistItem("ASDN KSANDKAN jk a", false));
-            checklistMyWeakness.Add(new ChecklistItem("Pouco KASDL ASdklm d (mais AKLSMDLKAS MDL)", false));
-            checklistMyWeakness.Add(new ChecklistItem("KLASDMSADlk asm de A", false));
-            checklistMyWeakness.Add(new ChecklistItem("Falta de KASD KASMDLK m / ALK DMSLD", false));
-            checklistMyWeakness.Add(new ChecklistItem("Geralmente KALSMD LKMDLK am ", false));
-
-            var checklistMyOpportunities = new Checklist();
-
-            var checklistMyThreats = new Checklist();
-            checklistMyThreats.Add(new ChecklistItem("Pouco AKSDM ASLMDLK AMS", false));
-            checklistMyThreats.Add(new ChecklistItem("Ambiente ASKDM KSAMDK saapsodk asafiador", false));
-            checklistMyThreats.Add(new ChecklistItem("Pessoas ASKDM SAMDjk / Más AOD kmsaas", false));
-            checklistMyThreats.Add(new ChecklistItem("Falta de AKJ SDKASJ nd / Grandes AKJ DNksa", false));
-
-            var checklistBooks = new Checklist();
-            checklistBooks.Add(new ChecklistItem("A Arte do Começo", true));
-            checklistBooks.Add(new ChecklistItem("O Poder do Hábito", true));
-            checklistBooks.Add(new ChecklistItem("Trabalhe 4 horas por semana", true));
-            checklistBooks.Add(new ChecklistItem("The Four Steps To The Epiphany - Steve Blanks", false));
-
-
-            viewModel.Notes.Add(new Note("IMEI Moto G 2014", "353334062411489", NoteColor.BLUE));
-            viewModel.Notes.Add(new Note("", "\"Enquanto você pensar em centavos, você irá ganhar em centavos\"", NoteColor.GRAY) { Images = new NoteImages() { new NoteImage("https://timedotcom.files.wordpress.com/2015/04/money1.jpg?quality=65&strip=color&w=1100") } });
-            viewModel.Notes.Add(new Note("My Strengths", checklistMyStrengths, NoteColor.YELLOW));
-            viewModel.Notes.Add(new Note("My Weaknesses", checklistMyWeakness, NoteColor.RED));
-            viewModel.Notes.Add(new Note("My Opportunities", checklistMyOpportunities, NoteColor.GREEN));
-            viewModel.Notes.Add(new Note("My Threats", checklistMyThreats, NoteColor.ORANGE));
-            viewModel.Notes.Add(new Note("Ler livros", checklistBooks, NoteColor.DEFAULT));
+            Loaded += (s, e) => { App.ResetStatusBar(); };
         }
 
         private void NavLinksList_ItemClick(object sender, ItemClickEventArgs e)
         {
-
         }
 
-        private void MenuToggleButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private async void NotesListView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            Note note = e.ClickedItem as Note;
+            if (note == null) return;
+
+            //it can be trimmed, so get the original
+            Note originalNote = AppData.Notes.Where<Note>(n => n.ID == note.ID).FirstOrDefault();
+            if (originalNote == null)
+            {
+                GoogleAnalytics.EasyTracker.GetTracker().SendException(string.Format("Failed to load tapped note ({0})", Newtonsoft.Json.JsonConvert.SerializeObject(AppData.Notes)), false);
+                return;
+            }
+
+            //this dispatcher fixes crash error (access violation on wp preview for developers)
+            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            {
+                Frame.Navigate(typeof(NoteEditPage), originalNote);
+            });
+        }
+
+        private void MenuToggleButton_Click(object sender, RoutedEventArgs e)
         {
             MainSplitView.IsPaneOpen = !MainSplitView.IsPaneOpen;
         }

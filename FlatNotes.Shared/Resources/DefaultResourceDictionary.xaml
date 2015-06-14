@@ -4,10 +4,14 @@
     
     <x:String x:Key="AppName">Flat Notes</x:String>
 
-    <Color x:Key="AppMainColor">#ffbb00</Color><!--blue:4184f3-->
+    <Color x:Key="AppMainColor">#ffbb00</Color>
+    <Color x:Key="AppMainDarkenColor">#f99f00</Color>
+    <Color x:Key="AppMainForegroundColor">White</Color><!--664B00-->
     <Color x:Key="PhoneAccentColor">#ffbb00</Color>
 
     <SolidColorBrush x:Key="AppMainBrush" Color="{ThemeResource AppMainColor}"/>
+    <SolidColorBrush x:Key="AppMainDarkenBrush" Color="{ThemeResource AppMainDarkenColor}"/>
+    <SolidColorBrush x:Key="AppMainForegroundBrush" Color="{StaticResource AppMainForegroundColor}"/>
     <SolidColorBrush x:Key="PhoneAccentBrush" Color="{ThemeResource AppMainColor}"/>
 
     <SolidColorBrush x:Key="AppSplashScreenBrush" Color="#56007f"/><!--263646-->
@@ -28,18 +32,19 @@
     <SolidColorBrush x:Key="TextBlockDisabledForegroundThemeBrush" Color="#70000000"/>
 
     <SolidColorBrush x:Key="CommandBarBackgroundThemeBrush" Color="{ThemeResource AppMainColor}"/>
-    <SolidColorBrush x:Key="CommandBarForegroundThemeBrush" Color="White"/>
+    <SolidColorBrush x:Key="CommandBarForegroundThemeBrush" Color="{StaticResource AppMainForegroundColor}"/>
 
     <Style TargetType="CommandBar">
         <Setter Property="RequestedTheme" Value="Dark"/>
-        <Setter Property="Background" Value="{ThemeResource CommandBarBackgroundThemeBrush}"/>
-        <Setter Property="Foreground" Value="{ThemeResource CommandBarForegroundThemeBrush}"/>
+        <Setter Property="Background" Value="{StaticResource CommandBarBackgroundThemeBrush}"/>
+        <!--<Setter Property="Foreground" Value="{StaticResource CommandBarForegroundThemeBrush}"/>-->
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="BorderBrush" Value="Transparent"/>
     </Style>
 
     <Style TargetType="ListViewItem">
         <Setter Property="Margin" Value="0"/>
+        <Setter Property="Padding" Value="0"/>
         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
     </Style>
 

@@ -84,36 +84,25 @@ namespace FlatNotes.Controls
             return totalSize;
         }
 
-        public static readonly DependencyProperty ColumnsProperty = DependencyProperty.Register("Columns", typeof(int), typeof(FluidGrid), new PropertyMetadata(-1, OnColumnsPropertyChanged));
+        public static readonly DependencyProperty ColumnsProperty = DependencyProperty.Register("Columns", typeof(int), typeof(FluidGrid), new PropertyMetadata(-1, OnPropertyChanged));
         public int Columns
         {
             get { return (int)GetValue(ColumnsProperty); }
             set { SetValue(ColumnsProperty, value); }
         }
 
-        static void OnColumnsPropertyChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
-        {
-            (obj as FluidGrid).InvalidateMeasure();
-        }
-
-        public static readonly DependencyProperty ItemWidthProperty = DependencyProperty.Register("ItemWidth", typeof(double), typeof(FluidGrid), new PropertyMetadata(ITEM_MIN_WIDTH, OnItemWidthPropertyChanged));
+        public static readonly DependencyProperty ItemWidthProperty = DependencyProperty.Register("ItemWidth", typeof(double), typeof(FluidGrid), new PropertyMetadata(ITEM_MIN_WIDTH, OnPropertyChanged));
         public double ItemWidth
         {
             get { return (double)GetValue(ItemWidthProperty); }
             set { SetValue(ItemWidthProperty, value); }
         }
 
-        static void OnItemWidthPropertyChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
-        {
-            if ((obj as FluidGrid).ItemWidth < ITEM_MIN_WIDTH) (obj as FluidGrid).ItemWidth = ITEM_MIN_WIDTH;
-            (obj as FluidGrid).InvalidateMeasure();
-        }
-
-        public static readonly DependencyProperty ItemStretchProperty = DependencyProperty.Register("ItemStretch", typeof(bool), typeof(FluidGrid), new PropertyMetadata(false));
+        public static readonly DependencyProperty ItemStretchProperty = DependencyProperty.Register("ItemStretch", typeof(bool), typeof(FluidGrid), new PropertyMetadata(false, OnPropertyChanged));
         public bool ItemStretch
         {
             get { return (bool)GetValue(ItemStretchProperty); }
-            private set { SetValue(ItemStretchProperty, value); }
+            set { SetValue(ItemStretchProperty, value); }
         }
 
         public static readonly DependencyProperty BiggerItemHeightProperty = DependencyProperty.Register("BiggerItemHeight", typeof(double), typeof(FluidGrid), new PropertyMetadata(0));
@@ -121,6 +110,14 @@ namespace FlatNotes.Controls
         {
             get { return (double)GetValue(BiggerItemHeightProperty); }
             private set { SetValue(BiggerItemHeightProperty, value); }
+        }
+
+        static void OnPropertyChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
+        {
+            System.Diagnostics.Debug.WriteLine("OnPropertyChanged ItemWidth: {0}, Stretch: {1}", (obj as FluidGrid).itemWidth, (obj as FluidGrid).ItemStretch);
+
+            if ((obj as FluidGrid).ItemWidth < ITEM_MIN_WIDTH) (obj as FluidGrid).ItemWidth = ITEM_MIN_WIDTH;
+            (obj as FluidGrid).InvalidateMeasure();
         }
     }
 }

@@ -302,4 +302,13 @@ Some features:
   <data name="TransparentNoteTileToggleSwitch.OnContent" xml:space="preserve">
     <value>solid color</value>
   </data>
+  <data name="ChecklistAppBarButton" xml:space="preserve">
+    <value>checklist</value>
+  </data>
+  <data name="NewNoteAppBarButton.Label" xml:space="preserve">
+    <value>new</value>
+  </data>
+  <data name="TextAppBarButton.Label" xml:space="preserve">
+    <value>text</value>
+  </data>
 </root>
