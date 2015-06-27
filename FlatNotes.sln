@@ -11,6 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlatNotes.UAP", "FlatNotes.
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		FlatNotes.Shared\FlatNotes.Shared.projitems*{86ff2a6f-71db-46ec-b67f-35fb7f8573c1}*SharedItemsImports = 4
 		FlatNotes.Shared\FlatNotes.Shared.projitems*{1e0baa61-7286-4953-8cd3-0808109979de}*SharedItemsImports = 13
 		FlatNotes.Shared\FlatNotes.Shared.projitems*{7d55f9b3-b9ac-4fca-9ace-bf655193094a}*SharedItemsImports = 4
 	EndGlobalSection

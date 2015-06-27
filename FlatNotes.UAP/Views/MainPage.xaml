@@ -20,45 +20,6 @@
                 <TextBlock Text="{x:Bind Label}" VerticalAlignment="Center"/>
             </StackPanel>
         </DataTemplate>
-
-        <Style x:Name="NotesGridViewStyle" x:Key="NotesGridViewStyle" TargetType="GridViewItem">
-            <Setter Property="Margin" Value="0"/>
-            <Setter Property="HorizontalAlignment" Value="Stretch"/>
-            <Setter Property="VerticalAlignment" Value="Stretch"/>
-            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-            <Setter Property="VerticalContentAlignment" Value="Stretch"/>
-
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="GridViewItem">
-                        <GridViewItemPresenter 
-                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" 
-                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                            CheckBrush="{ThemeResource ListViewItemCheckThemeBrush}"
-                            CheckHintBrush="{ThemeResource ListViewItemCheckHintThemeBrush}"
-                            CheckSelectingBrush="{ThemeResource ListViewItemCheckSelectingThemeBrush}"
-                            ContentMargin="0"
-                            ContentTransitions="{TemplateBinding ContentTransitions}"
-                            DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}"
-                            DragBackground="{ThemeResource ListViewItemDragBackgroundThemeBrush}"
-                            DragForeground="{ThemeResource ListViewItemDragForegroundThemeBrush}"
-                            DragOpacity="{ThemeResource ListViewItemDragThemeOpacity}"
-                            FocusBorderBrush="{ThemeResource ListViewItemFocusBorderThemeBrush}"
-                            Padding="{TemplateBinding Padding}"
-                            PlaceholderBackground="{ThemeResource ListViewItemPlaceholderBackgroundThemeBrush}"
-                            PointerOverBackground="Transparent"
-                            PointerOverBackgroundMargin="1"
-                            ReorderHintOffset="{ThemeResource ListViewItemReorderHintThemeOffset}"
-                            SelectedBackground="{ThemeResource ListViewItemSelectedBackgroundThemeBrush}"
-                            SelectedBorderThickness="{ThemeResource ListViewItemCompactSelectedBorderThemeThickness}"
-                            SelectedForeground="{ThemeResource ListViewItemSelectedForegroundThemeBrush}"
-                            SelectedPointerOverBackground="{ThemeResource ListViewItemSelectedPointerOverBackgroundThemeBrush}"
-                            SelectedPointerOverBorderBrush="{ThemeResource ListViewItemSelectedPointerOverBorderThemeBrush}"
-                            SelectionCheckMarkVisualEnabled="False" />
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
     </Page.Resources>
     
     <Page.TopAppBar>
@@ -105,9 +66,9 @@
                     </VisualState.StateTriggers>
 
                     <VisualState.Setters>
-                        <Setter Target="NotesFluidGrid.ItemStretch" Value="True"/>
-                        <Setter Target="NotesFluidGrid.ItemWidth" Value="150"/>
-                        <Setter Target="NotesListView.Padding" Value="0,6"/>
+                        <Setter Target="NotesControl.ItemStretch" Value="True"/>
+                        <Setter Target="NotesControl.ItemWidth" Value="150"/>
+                        <!--<Setter Target="NotesControl.Padding" Value="0,6"/>-->
                     </VisualState.Setters>
                 </VisualState>
 
@@ -117,9 +78,9 @@
                     </VisualState.StateTriggers>
 
                     <VisualState.Setters>
-                        <Setter Target="NotesFluidGrid.ItemStretch" Value="False"/>
-                        <Setter Target="NotesFluidGrid.ItemWidth" Value="220"/>
-                        <Setter Target="NotesListView.Padding" Value="12,24"/>
+                        <Setter Target="NotesControl.ItemStretch" Value="False"/>
+                        <Setter Target="NotesControl.ItemWidth" Value="220"/>
+                        <!--<Setter Target="NotesControl.Padding" Value="12,24"/>-->
                     </VisualState.Setters>
                 </VisualState>
 
@@ -129,9 +90,9 @@
                     </VisualState.StateTriggers>
 
                     <VisualState.Setters>
-                        <Setter Target="NotesFluidGrid.ItemStretch" Value="False"/>
-                        <Setter Target="NotesFluidGrid.ItemWidth" Value="260"/>
-                        <Setter Target="NotesListView.Padding" Value="24"/>
+                        <Setter Target="NotesControl.ItemStretch" Value="False"/>
+                        <Setter Target="NotesControl.ItemWidth" Value="260"/>
+                        <!--<Setter Target="NotesControl.Padding" Value="24"/>-->
                     </VisualState.Setters>
                 </VisualState>
 
@@ -141,9 +102,9 @@
                     </VisualState.StateTriggers>
 
                     <VisualState.Setters>
-                        <Setter Target="NotesFluidGrid.ItemStretch" Value="False"/>
-                        <Setter Target="NotesFluidGrid.ItemWidth" Value="260"/>
-                        <Setter Target="NotesListView.Padding" Value="24"/>
+                        <Setter Target="NotesControl.ItemStretch" Value="False"/>
+                        <Setter Target="NotesControl.ItemWidth" Value="260"/>
+                        <!--<Setter Target="NotesControl.Padding" Value="24"/>-->
                     </VisualState.Setters>
                 </VisualState>
 
@@ -153,9 +114,9 @@
                     </VisualState.StateTriggers>
 
                     <VisualState.Setters>
-                        <Setter Target="NotesFluidGrid.ItemStretch" Value="False"/>
-                        <Setter Target="NotesFluidGrid.ItemWidth" Value="260"/>
-                        <Setter Target="NotesListView.Padding" Value="64,24"/>
+                        <Setter Target="NotesControl.ItemStretch" Value="False"/>
+                        <Setter Target="NotesControl.ItemWidth" Value="260"/>
+                        <!--<Setter Target="NotesControl.Padding" Value="64,24"/>-->
                     </VisualState.Setters>
                 </VisualState>
 
@@ -165,9 +126,9 @@
                 </VisualState.StateTriggers>
 
                     <VisualState.Setters>
-                        <Setter Target="NotesFluidGrid.ItemStretch" Value="False"/>
-                        <Setter Target="NotesFluidGrid.ItemWidth" Value="300"/>
-                        <Setter Target="NotesListView.Padding" Value="64,24"/>
+                        <Setter Target="NotesControl.ItemStretch" Value="False"/>
+                        <Setter Target="NotesControl.ItemWidth" Value="300"/>
+                        <!--<Setter Target="NotesControl.Padding" Value="64,24"/>-->
                     </VisualState.Setters>
             </VisualState>
             </VisualStateGroup>
@@ -200,36 +161,7 @@
             </SplitView.Pane>
 
             <SplitView.Content>
-                <GridView x:Name="NotesListView"  Margin="0" Padding="0,12"
-                        HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
-                        ItemsSource="{Binding Notes}" SelectionMode="None" CanReorderItems="True" CanDragItems="False" AllowDrop="False" 
-                        IsItemClickEnabled="True" ItemClick="NotesListView_ItemClick"
-                        ItemContainerStyle="{StaticResource NotesGridViewStyle}">
-
-                    <GridView.ItemContainerTransitions>
-                        <TransitionCollection>
-                            <EntranceThemeTransition IsStaggeringEnabled="True" FromVerticalOffset="200" FromHorizontalOffset="0"/>
-                            <!--<NavigationThemeTransition/>
-                        <ContentThemeTransition/>
-                        <AddDeleteThemeTransition/>
-                        <ReorderThemeTransition/>-->
-                        </TransitionCollection>
-                    </GridView.ItemContainerTransitions>
-
-                    <GridView.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <local:FluidGrid x:Name="NotesFluidGrid" Margin="4" ItemWidth="150" ItemStretch="True" HorizontalAlignment="Center"/>
-                            <!--<RelativePanel Margin="-6" AllowDrop="False"/>-->
-                            <!--<ItemsWrapGrid AllowDrop="True" ItemWidth="200" MaximumRowsOrColumns="4" Orientation="Horizontal"/>-->
-                        </ItemsPanelTemplate>
-                    </GridView.ItemsPanel>
-
-                    <GridView.ItemTemplate>
-                        <DataTemplate x:DataType="models:Note">
-                            <local:NotePreview/>
-                        </DataTemplate>
-                    </GridView.ItemTemplate>
-                </GridView>
+                <local:NotesControl x:Name="NotesControl" DataContext="{Binding Notes}" ItemClick="NotesListView_ItemClick"/>
             </SplitView.Content>
         </SplitView>
     </Grid>

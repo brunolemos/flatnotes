@@ -1,4 +1,5 @@
-﻿using FlatNotes.Models;
+﻿using FlatNotes.Common;
+using FlatNotes.Models;
 using FlatNotes.Utils;
 using FlatNotes.ViewModels;
 using System;
@@ -9,6 +10,7 @@ using Windows.Foundation;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Navigation;
 
 namespace FlatNotes.Views
 {
@@ -16,6 +18,9 @@ namespace FlatNotes.Views
     {
         public MainViewModel viewModel { get { return _viewModel; } }
         private static MainViewModel _viewModel = new MainViewModel();
+
+        public NavigationHelper NavigationHelper { get { return this.navigationHelper; } }
+        private NavigationHelper navigationHelper;
 
         public ObservableCollection<NavLink> NavLinks { get; } = new ObservableCollection<NavLink>()
         {
@@ -36,8 +41,40 @@ namespace FlatNotes.Views
         {
             this.InitializeComponent();
 
+            //Navigation Helper
+            this.navigationHelper = new NavigationHelper(this);
+            this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
+            this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
+
             Loaded += (s, e) => { App.ResetStatusBar(); };
+
+            //SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
         }
+
+        private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
+        {
+        }
+
+
+        private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
+        {
+        }
+
+        #region NavigationHelper registration
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            Frame.BackStack.Clear();
+            this.navigationHelper.OnNavigatedTo(e);
+        }
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            this.navigationHelper.OnNavigatedFrom(e);
+        }
+
+
+        #endregion
 
         private void NavLinksList_ItemClick(object sender, ItemClickEventArgs e)
         {
