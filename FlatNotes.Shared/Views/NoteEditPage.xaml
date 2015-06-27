@@ -63,7 +63,7 @@
     </Page.Resources>
 
     <Grid x:Name="LayoutRoot" RequestedTheme="Light" Background="{Binding Note.Color.Color}">
-        <Grid.RowDefinitions>
+        <!--<Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
@@ -75,9 +75,9 @@
                     AutomationProperties.Name="Back"
                     AutomationProperties.AutomationId="BackButton"
                     AutomationProperties.ItemType="Navigation Button"/>
-        </Grid>
+        </Grid>-->
 
-        <Grid Grid.Row="1" x:Name="ContentRoot" MaxWidth="1000">
+        <Grid x:Name="ContentRoot" MaxWidth="1000">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>

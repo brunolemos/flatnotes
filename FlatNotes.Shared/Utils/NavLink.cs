@@ -1,4 +1,5 @@
-﻿using Windows.UI.Xaml.Controls;
+﻿using System;
+using Windows.UI.Xaml.Controls;
 
 namespace FlatNotes.Utils
 {
@@ -7,5 +8,6 @@ namespace FlatNotes.Utils
         public string Label { get; set; } = "";
         public Symbol Symbol { get; set; } = Symbol.Emoji;
         public bool IsSeparator { get; set; } = false;
+        public Type TargetPageType { get; set; }
     }
 }

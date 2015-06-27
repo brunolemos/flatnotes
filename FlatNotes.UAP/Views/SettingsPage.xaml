@@ -8,15 +8,16 @@
     xmlns:Converters="using:FlatNotes.Converters"
     mc:Ignorable="d"
     NavigationCacheMode="Required"
-    Background="{ThemeResource AppStatusBarBackgroundBrush}"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     DataContext="{Binding Source={StaticResource SettingsViewModel}}"
     d:DataContext="{d:DesignData /SampleData/SettingsViewModelSampleData.xaml}">
+    <!--Background="{ThemeResource AppStatusBarBackgroundBrush}"-->
 
-    <Page.Transitions>
+    <!--<Page.Transitions>
         <TransitionCollection>
             <EntranceThemeTransition/>
         </TransitionCollection>
-    </Page.Transitions>
+    </Page.Transitions>-->
     
     <Page.Resources>
         <Converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
@@ -42,9 +43,9 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <Pivot HeaderTemplate="{StaticResource HeaderTemplate}">
-            <PivotItem x:Uid="PreferencesPivotItem" Header="preferences" Tag="preferences">
-                <StackPanel>
+        <Pivot>
+            <PivotItem x:Uid="PreferencesPivotItem" Header="Preferences" Tag="preferences">
+                <StackPanel HorizontalAlignment="Left">
                     <ToggleSwitch x:Uid="ThemeToggleSwitch" Margin="0,0,0,24" Header="theme" OffContent="light" OnContent="dark" IsOn="{Binding IsDarkTheme, Mode=TwoWay}"/>
                     <ToggleSwitch x:Uid="TransparentDefaultTileToggleSwitch" Margin="0,0,0,24" Header="default tile" OffContent="transparent" OnContent="solid color" IsOn="{Binding IsSolidColorDefaultTile, Mode=TwoWay}"/>
                     <ToggleSwitch x:Uid="TransparentNoteTileToggleSwitch" Margin="0,0,0,24" Header="note live tile" OffContent="transparent" OnContent="solid color" IsOn="{Binding IsSolidColorNoteTile, Mode=TwoWay}"/>
@@ -52,7 +53,7 @@
                 </StackPanel>
             </PivotItem>
 
-            <!--<PivotItem x:Uid="BackupPivotItem" Header="backup" Tag="backup">
+            <!--<PivotItem x:Uid="BackupPivotItem" Header="Backup" Tag="backup">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
@@ -71,7 +72,7 @@
                 </Grid>
             </PivotItem>-->
 
-            <PivotItem x:Uid="AboutPivotItem" Header="about" Tag="about">
+            <PivotItem x:Uid="AboutPivotItem" Header="About" Tag="about">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
@@ -84,7 +85,7 @@
                             <TextBlock Margin="0,0,0,24" Text="{Binding AppName}" HorizontalAlignment="Center" Style="{StaticResource SubheaderTextBlockStyle}"/>
                         
                             <StackPanel Margin="0,0,0,24">
-                                <TextBlock x:Uid="AppVersionTextBlock" Grid.Row="0" Margin="0,0,0,6" Text="version" Style="{StaticResource ControlHeaderTextBlockStyle}"/>
+                                <TextBlock x:Uid="AppVersionTextBlock" Grid.Row="0" Margin="0,0,0,6" Text="version"/><!-- Style="{StaticResource ControlHeaderTextBlockStyle}"-->
                                 <TextBlock Grid.Row="1" Margin="0,0,0,12" Text="{Binding AppVersion}"/>
                             </StackPanel>
                     
@@ -95,7 +96,7 @@
                                 </Grid.ColumnDefinitions>
                             
                                 <StackPanel VerticalAlignment="Center">
-                                    <TextBlock x:Uid="DevelopedByTextBlock" Grid.Row="0" Margin="0,0,0,6" Text="developed by" Style="{StaticResource ControlHeaderTextBlockStyle}"/>
+                                    <TextBlock x:Uid="DevelopedByTextBlock" Grid.Row="0" Margin="0,0,0,6" Text="developed by"/><!-- Style="{StaticResource ControlHeaderTextBlockStyle}"-->
                                     <TextBlock Grid.Row="1">
                                         <Run Text="@brunolemos ("/><Run
                                             Text="{Binding Converter={StaticResource LocalizedResourcesConverter}, ConverterParameter='Brazil', FallbackValue='Brazil', TargetNullValue='Brazil'}"/><Run

@@ -4,8 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:ViewModels="using:FlatNotes.ViewModels"
-    xmlns:Converters="using:FlatNotes.Converters"
-    RequestedTheme="Light">
+    xmlns:Converters="using:FlatNotes.Converters">
     
     <Application.Resources>
         <ResourceDictionary>

@@ -34,8 +34,13 @@ namespace FlatNotes.Views
         {
             new NavLink() { Label = "Accounts", Symbol = Symbol.Contact },
             new NavLink() { Label = "Feedback", Symbol = Symbol.Favorite },
-            new NavLink() { Label = "Settings", Symbol = Symbol.Setting },
+            new NavLink() { Label = "Settings", Symbol = Symbol.Setting, TargetPageType = typeof(SettingsPage) },
         };
+
+        private void OpenSettingsPage()
+        {
+            Frame.Navigate(typeof(SettingsPage));
+        }
 
         public MainPage()
         {
@@ -47,8 +52,6 @@ namespace FlatNotes.Views
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
 
             Loaded += (s, e) => { App.ResetStatusBar(); };
-
-            //SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
         }
 
         private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
@@ -78,6 +81,11 @@ namespace FlatNotes.Views
 
         private void NavLinksList_ItemClick(object sender, ItemClickEventArgs e)
         {
+            var navLink = e.ClickedItem as NavLink;
+            if (navLink?.TargetPageType == null) return;
+
+            MainSplitView.IsPaneOpen = false;
+            Frame.Navigate(navLink.TargetPageType);
         }
 
         private async void NotesListView_ItemClick(object sender, ItemClickEventArgs e)

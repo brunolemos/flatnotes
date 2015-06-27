@@ -208,7 +208,7 @@ namespace FlatNotes
             });
         }
 
-        public static void ResetStatusBar()
+        public static async void ResetStatusBar()
         {
             Color mainColor = Color.FromArgb(0xff, 0xff, 0xbb, 0x00);
             Color mainDarkenColor = Color.FromArgb(0xff, 0xf9, 0x9f, 0x00);
@@ -238,11 +238,12 @@ namespace FlatNotes
 
             bool hasStatusBar = Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar");
             if (!hasStatusBar) return;
-    #endif
+#endif
 
-            StatusBar.GetForCurrentView().BackgroundOpacity = 1;
-            StatusBar.GetForCurrentView().BackgroundColor = backgrouncColor;
-            StatusBar.GetForCurrentView().ForegroundColor = foregroundColor;
+            await StatusBar.GetForCurrentView().HideAsync();
+            //StatusBar.GetForCurrentView().BackgroundOpacity = 1;
+            //StatusBar.GetForCurrentView().BackgroundColor = backgrouncColor;
+            //StatusBar.GetForCurrentView().ForegroundColor = foregroundColor;
 #endif
         }
 
@@ -251,21 +252,21 @@ namespace FlatNotes
 #if WINDOWS_APP
 #else
     #if WINDOWS_UAP
-            bool hasStatusBar = Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar");
-            if (!hasStatusBar) return;
-#endif
+        bool hasStatusBar = Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar");
+        if (!hasStatusBar) return;
+    #endif
 
-            if (foregroundColor == null)
-            {
-                if (AppSettings.Instance.Theme == ElementTheme.Light && App.Current.RequestedTheme == ApplicationTheme.Dark)
-                    foregroundColor = new Color().FromHex("#404040");
-                else if (AppSettings.Instance.Theme != ElementTheme.Light && App.Current.RequestedTheme == ApplicationTheme.Light)
-                    foregroundColor = new Color().FromHex("#c9cdd1");
-            }
+        if (foregroundColor == null)
+        {
+            if (AppSettings.Instance.Theme == ElementTheme.Light && App.Current.RequestedTheme == ApplicationTheme.Dark)
+                foregroundColor = new Color().FromHex("#404040");
+            else if (AppSettings.Instance.Theme != ElementTheme.Light && App.Current.RequestedTheme == ApplicationTheme.Light)
+                foregroundColor = new Color().FromHex("#c9cdd1");
+        }
 
-            StatusBar.GetForCurrentView().BackgroundOpacity = 1;
-            StatusBar.GetForCurrentView().BackgroundColor = backgroundColor;
-            StatusBar.GetForCurrentView().ForegroundColor = foregroundColor;
+        StatusBar.GetForCurrentView().BackgroundOpacity = 1;
+        StatusBar.GetForCurrentView().BackgroundColor = backgroundColor;
+        StatusBar.GetForCurrentView().ForegroundColor = foregroundColor;
 #endif
         }
 

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Windows.Foundation.Metadata;
 using Windows.System;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
@@ -78,32 +79,55 @@ namespace FlatNotes.Common
             this.Page.Loaded += (sender, e) =>
             {
 #if WINDOWS_PHONE_APP
-                Windows.Phone.UI.Input.HardwareButtons.BackPressed += HardwareButtons_BackPressed;
-#else
-                // Keyboard and mouse navigation only apply when occupying the entire window
-                if (this.Page.ActualHeight == Window.Current.Bounds.Height &&
-                    this.Page.ActualWidth == Window.Current.Bounds.Width)
-                {
-                    // Listen to the window directly so focus isn't required
-                    Window.Current.CoreWindow.Dispatcher.AcceleratorKeyActivated +=
-                        CoreDispatcher_AcceleratorKeyActivated;
-                    Window.Current.CoreWindow.PointerPressed +=
-                        this.CoreWindow_PointerPressed;
-                }
+                bool hasHardwareBackButton = true;
+#elif WINDOWS_UAP
+                bool hasHardwareBackButton = ApiInformation.IsTypePresent("Windows.Phone.UI.Input.HardwareButtons");
+
+                SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = this.GoBackCommand.CanExecute(null) ? AppViewBackButtonVisibility.Visible : AppViewBackButtonVisibility.Collapsed;
+                if (!hasHardwareBackButton)
+                    SystemNavigationManager.GetForCurrentView().BackRequested += NavigationHelper_BackRequested;
 #endif
+
+                if (hasHardwareBackButton)
+                {
+                    Windows.Phone.UI.Input.HardwareButtons.BackPressed += HardwareButtons_BackPressed;
+                }
+                else
+                {
+                    // Keyboard and mouse navigation only apply when occupying the entire window
+                    if (this.Page.ActualHeight == Window.Current.Bounds.Height &&
+                        this.Page.ActualWidth == Window.Current.Bounds.Width)
+                    {
+                        // Listen to the window directly so focus isn't required
+                        Window.Current.CoreWindow.Dispatcher.AcceleratorKeyActivated +=
+                            CoreDispatcher_AcceleratorKeyActivated;
+                        Window.Current.CoreWindow.PointerPressed +=
+                            this.CoreWindow_PointerPressed;
+                    }
+                }
             };
 
             // Undo the same changes when the page is no longer visible
             this.Page.Unloaded += (sender, e) =>
             {
 #if WINDOWS_PHONE_APP
-                Windows.Phone.UI.Input.HardwareButtons.BackPressed -= HardwareButtons_BackPressed;
-#else
-                Window.Current.CoreWindow.Dispatcher.AcceleratorKeyActivated -=
-                    CoreDispatcher_AcceleratorKeyActivated;
-                Window.Current.CoreWindow.PointerPressed -=
-                    this.CoreWindow_PointerPressed;
+                bool hasHardwareBackButton = true;
+#elif WINDOWS_UAP
+                bool hasHardwareBackButton = ApiInformation.IsTypePresent("Windows.Phone.UI.Input.HardwareButtons");
+
+                if(!hasHardwareBackButton)
+                    SystemNavigationManager.GetForCurrentView().BackRequested -= NavigationHelper_BackRequested;
 #endif
+
+                if (hasHardwareBackButton)
+                {
+                    Windows.Phone.UI.Input.HardwareButtons.BackPressed -= HardwareButtons_BackPressed;
+                }
+                else
+                {
+                    Window.Current.CoreWindow.Dispatcher.AcceleratorKeyActivated -= CoreDispatcher_AcceleratorKeyActivated;
+                    Window.Current.CoreWindow.PointerPressed -= this.CoreWindow_PointerPressed;
+                }
             };
         }
 
@@ -200,21 +224,6 @@ namespace FlatNotes.Common
             if (this.Frame != null && this.Frame.CanGoForward) this.Frame.GoForward();
         }
 
-#if WINDOWS_PHONE_APP
-        /// <summary>
-        /// Invoked when the hardware back button is pressed. For Windows Phone only.
-        /// </summary>
-        /// <param name="sender">Instance that triggered the event.</param>
-        /// <param name="e">Event data describing the conditions that led to the event.</param>
-        private void HardwareButtons_BackPressed(object sender, Windows.Phone.UI.Input.BackPressedEventArgs e)
-        {
-            if (this.GoBackCommand.CanExecute(null))
-            {
-                e.Handled = true;
-                this.GoBackCommand.Execute(null);
-            }
-        }
-#else
         /// <summary>
         /// Invoked on every keystroke, including system keys such as Alt key combinations, when
         /// this page is active and occupies the entire window.  Used to detect keyboard navigation
@@ -286,7 +295,28 @@ namespace FlatNotes.Common
                 if (forwardPressed) this.GoForwardCommand.Execute(null);
             }
         }
-#endif
+        /// <summary>
+        /// Invoked when the hardware back button is pressed. For Windows Phone only.
+        /// </summary>
+        /// <param name="sender">Instance that triggered the event.</param>
+        /// <param name="e">Event data describing the conditions that led to the event.</param>
+        private void HardwareButtons_BackPressed(object sender, Windows.Phone.UI.Input.BackPressedEventArgs e)
+        {
+            if (this.GoBackCommand.CanExecute(null))
+            {
+                e.Handled = true;
+                this.GoBackCommand.Execute(null);
+            }
+        }
+
+        private void NavigationHelper_BackRequested(object sender, BackRequestedEventArgs e)
+        {
+            if (this.GoBackCommand.CanExecute(null))
+            {
+                e.Handled = true;
+                this.GoBackCommand.Execute(null);
+            }
+        }
 
         #endregion
 
