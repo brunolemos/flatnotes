@@ -119,14 +119,10 @@ namespace FlatNotes.Utils
 
         public int Columns
         {
-#if WINDOWS_PHONE_APP
             get { return GetValueOrDefault(COLUMNS_KEY, COLUMNS_DEFAULT); }
-#else
-            get { return -1; }
-#endif
             set
             {
-                if (!(value >= 1 && value <= 4)) value = COLUMNS_DEFAULT;
+                if (!(value >= 1)) value = COLUMNS_DEFAULT; // && value <= 4
 
                 if (SetValue<int>(COLUMNS_KEY, value))
                 {

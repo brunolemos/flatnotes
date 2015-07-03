@@ -10,11 +10,11 @@
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400"
-    d:DataContext="{Binding Notes, Source={d:DesignData /SampleData/MainViewModelSampleData.xaml}}"
-    Padding="0,12">
+    d:DataContext="{Binding Notes, Source={d:DesignData /SampleData/MainViewModelSampleData.xaml}}">
     
-    <GridView Margin="0" Padding="{Binding ElementName=Root, Path=Padding}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
-              ItemsSource="{Binding}" SelectionMode="None" CanReorderItems="True" CanDragItems="False" AllowDrop="False" 
+    <GridView HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
+              ItemsSource="{Binding}" DataContext="{Binding ItemsSource, ElementName=Root}"
+              SelectionMode="None" CanReorderItems="True" CanDragItems="False" AllowDrop="False" 
               IsItemClickEnabled="True" ItemClick="GridView_ItemClick">
         
         <GridView.ItemContainerTransitions>
@@ -29,7 +29,7 @@
 
         <GridView.ItemsPanel>
             <ItemsPanelTemplate>
-                <local:FluidGrid x:Name="NotesFluidGrid" Margin="4" ItemWidth="{Binding ElementName=Root, Path=ItemWidth}" ItemStretch="{Binding ElementName=Root, Path=ItemStretch}" Columns="{Binding ElementName=Root, Path=Columns}" HorizontalAlignment="Center"/>
+                <local:FluidGrid x:Name="NotesFluidGrid" Margin="{Binding ElementName=Root, Path=Padding}" ItemWidth="{Binding ElementName=Root, Path=ItemWidth}" ItemStretch="{Binding ElementName=Root, Path=ItemStretch}" Columns="{Binding ElementName=Root, Path=Columns}" HorizontalAlignment="Center"/>
                 <!--<RelativePanel Margin="-6" AllowDrop="False"/>-->
                 <!--<ItemsWrapGrid AllowDrop="True" ItemWidth="200" MaximumRowsOrColumns="4" Orientation="Horizontal"/>-->
             </ItemsPanelTemplate>

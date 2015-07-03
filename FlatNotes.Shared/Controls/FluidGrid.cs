@@ -15,7 +15,7 @@ namespace FlatNotes.Controls
         protected override Size MeasureOverride(Size totalSize)
         {
             itemWidth = Math.Min(ItemWidth, totalSize.Width);
-            int columns = Columns > 1 ? Columns : Math.Max(1, (int)Math.Floor(totalSize.Width / ItemWidth));
+            int columns = Columns >= 1 ? Columns : Math.Max(1, (int)Math.Floor(totalSize.Width / ItemWidth));
 
             //adjust item width when itemwidth is too big
             itemWidth = Math.Min(itemWidth, totalSize.Width / columns);
@@ -65,7 +65,7 @@ namespace FlatNotes.Controls
         {
             if (childrenColumns.Length != Children.Count || childrenSizes.Length != Children.Count) return totalSize;
             
-            int columns = Columns > 1 ? Columns : Math.Max(1, (int)Math.Floor(totalSize.Width / itemWidth));
+            int columns = Columns >= 1 ? Columns : Math.Max(1, (int)Math.Floor(totalSize.Width / itemWidth));
 
             double[] lastYInColumn = new double[columns];
             for (int i = 0; i < columns; i++) lastYInColumn[i] = 0;
@@ -114,7 +114,7 @@ namespace FlatNotes.Controls
 
         static void OnPropertyChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
         {
-            System.Diagnostics.Debug.WriteLine("OnPropertyChanged ItemWidth: {0}, Stretch: {1}", (obj as FluidGrid).itemWidth, (obj as FluidGrid).ItemStretch);
+            System.Diagnostics.Debug.WriteLine("OnPropertyChanged ItemWidth: {0}, Stretch: {1}, Columns: {2}", (obj as FluidGrid).itemWidth, (obj as FluidGrid).ItemStretch, (obj as FluidGrid).Columns);
 
             if ((obj as FluidGrid).ItemWidth < ITEM_MIN_WIDTH) (obj as FluidGrid).ItemWidth = ITEM_MIN_WIDTH;
             (obj as FluidGrid).InvalidateMeasure();

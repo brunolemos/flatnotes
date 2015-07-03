@@ -79,6 +79,11 @@ namespace FlatNotes.Views
 
         #endregion
 
+        private void MenuToggleButton_Click(object sender, RoutedEventArgs e)
+        {
+            MainSplitView.IsPaneOpen = !MainSplitView.IsPaneOpen;
+        }
+
         private void NavLinksList_ItemClick(object sender, ItemClickEventArgs e)
         {
             var navLink = e.ClickedItem as NavLink;
@@ -107,12 +112,7 @@ namespace FlatNotes.Views
                 Frame.Navigate(typeof(NoteEditPage), originalNote);
             });
         }
-
-        private void MenuToggleButton_Click(object sender, RoutedEventArgs e)
-        {
-            MainSplitView.IsPaneOpen = !MainSplitView.IsPaneOpen;
-        }
-
+        
         //private void NotesListView_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         //{
         //    var listControl = sender as ItemsControl;

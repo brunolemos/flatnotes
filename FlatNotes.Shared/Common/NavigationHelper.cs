@@ -309,6 +309,7 @@ namespace FlatNotes.Common
             }
         }
 
+#if WINDOWS_UAP
         private void NavigationHelper_BackRequested(object sender, BackRequestedEventArgs e)
         {
             if (this.GoBackCommand.CanExecute(null))
@@ -317,8 +318,9 @@ namespace FlatNotes.Common
                 this.GoBackCommand.Execute(null);
             }
         }
+#endif
 
-        #endregion
+#endregion
 
         #region Process lifetime management
 

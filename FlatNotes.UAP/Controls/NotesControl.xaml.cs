@@ -9,8 +9,8 @@ namespace FlatNotes.Controls
         public event EventHandler<ItemClickEventArgs> ItemClick;
         public const double ITEM_MIN_WIDTH = 150;
 
-        public new static readonly DependencyProperty PaddingProperty = DependencyProperty.Register("Padding", typeof(Thickness), typeof(NotesControl), new PropertyMetadata(-1));
-        public new Thickness Padding { get { return (Thickness)GetValue(PaddingProperty); } set { SetValue(PaddingProperty, value); } }
+        public static readonly DependencyProperty ItemsSourceProperty = DependencyProperty.Register("ItemsSource", typeof(Object), typeof(NotesControl), new PropertyMetadata(-1));
+        public Object ItemsSource { get { return (Object)GetValue(ItemsSourceProperty); } set { SetValue(ItemsSourceProperty, value); } }
 
         public static readonly DependencyProperty ColumnsProperty = DependencyProperty.Register("Columns", typeof(int), typeof(NotesControl), new PropertyMetadata(-1));
         public int Columns { get { return (int)GetValue(ColumnsProperty); } set { SetValue(ColumnsProperty, value); } }

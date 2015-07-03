@@ -2,7 +2,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <Color x:Key="PhoneBackgroundColor">#1f1f1f</Color><!--2d3132-->
+    <Color x:Key="PhoneBackgroundColor">#2e3132</Color><!--aeries:2d3132-->
     <Color x:Key="PhoneForegroundColor">#ffffff</Color>
     <Color x:Key="PhoneChromeColor">#DDDDDD</Color>
     <Color x:Key="PhoneMidColor">#40FFFFFF</Color>
@@ -18,12 +18,14 @@
 
     <SolidColorBrush x:Key="ApplicationPageForegroundThemeBrush" Color="{ThemeResource PhoneForegroundColor}"/>
     <SolidColorBrush x:Key="PhoneForegroundBrush" Color="{ThemeResource PhoneForegroundColor}"/>
-    <SolidColorBrush x:Key="ComboBoxForegroundThemeBrush" Color="{ThemeResource PhoneForegroundColor}"/>
-    <SolidColorBrush x:Key="ComboBoxBorderThemeBrush" Color="{ThemeResource PhoneForegroundColor}"/>
+    <!--<SolidColorBrush x:Key="ComboBoxForegroundThemeBrush" Color="{ThemeResource PhoneForegroundColor}"/>
+    <SolidColorBrush x:Key="ComboBoxBorderThemeBrush" Color="{ThemeResource PhoneForegroundColor}"/>-->
 
     <SolidColorBrush x:Key="PhoneChromeBrush" Color="{ThemeResource PhoneChromeColor}"/>
     <SolidColorBrush x:Key="PhoneMidBrush" Color="{ThemeResource PhoneMidColor}"/>
     <SolidColorBrush x:Key="PhoneLowBrush" Color="{ThemeResource PhoneLowColor}"/>
+
+    <SolidColorBrush x:Key="CommandBarBackgroundThemeBrush" Color="#202223"/>
 
     <SolidColorBrush x:Key="ListViewItemPointerOverBackgroundThemeBrush" Color="#10000000"/>
     <SolidColorBrush x:Key="ListViewItemSelectedBackgroundThemeBrush" Color="#20000000"/>
