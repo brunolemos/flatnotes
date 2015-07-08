@@ -150,18 +150,22 @@
                 </StackPanel>
             </ScrollViewer>
         </Grid>
-
-        <local:NoteColorPicker Grid.Row="1" x:Name="NoteColorPicker" Background="{Binding Note.Color.DarkColor2}" Visibility="Collapsed"/>
     </Grid>
 
     <Page.BottomAppBar>
         <CommandBar IsSticky="True" Background="{Binding Note.Color.DarkColor2}" Foreground="{StaticResource AppNoteCommandBarForegroundThemeBrush}">
             <CommandBar.PrimaryCommands>
-                <AppBarToggleButton x:Uid="ColorAppBarButton" x:Name="ColorPickerAppBarToggleButton"  Label="color">
-                    <AppBarToggleButton.Icon>
+                <AppBarButton x:Uid="ColorAppBarButton" x:Name="ColorPickerAppBarToggleButton"  Label="color">
+                    <AppBarButton.Icon>
                         <FontIcon Glyph="&#xE2B1;"/>
-                    </AppBarToggleButton.Icon>
-                </AppBarToggleButton>
+                    </AppBarButton.Icon>
+
+                    <AppBarButton.Flyout>
+                        <Flyout>
+                            <local:NoteColorPicker x:Name="NoteColorPicker" Background="{Binding Note.Color.DarkColor2}"/>
+                        </Flyout>
+                    </AppBarButton.Flyout>
+                </AppBarButton>
 
                 <AppBarButton x:Uid="PhotoAppBarButton" Icon="Camera" Label="photo" Command="{Binding OpenImagePickerCommand}"/>
                 <!--<AppBarButton x:Uid="AudioAppBarButton" Icon="Microphone" Label="audio" IsEnabled="False"/>-->

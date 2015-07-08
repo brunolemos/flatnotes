@@ -183,6 +183,11 @@
     </None>
     <None Include="Package.StoreAssociation.xml" />
     <None Include="packages.config" />
+    <PRIResource Include="Strings\zh-CN\Resources.resw" />
+    <PRIResource Include="Strings\pt-BR\Resources.resw" />
+    <PRIResource Include="Strings\hi\Resources.resw" />
+    <PRIResource Include="Strings\es\Resources.resw" />
+    <PRIResource Include="Strings\en-US\Resources.resw" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="GoogleAnalytics, Version=1.2.11.29792, Culture=neutral, processorArchitecture=MSIL">

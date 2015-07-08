@@ -88,7 +88,7 @@ namespace FlatNotes.Views
             viewModel.Note.Checklist.CollectionItemChanged += Checklist_CollectionItemChanged;
 
             previousBackground = App.RootFrame.Background;
-            App.RootFrame.Background = new SolidColorBrush(new Color().FromHex(viewModel.Note.Color.Color));
+            App.RootFrame.Background = new SolidColorBrush().fromHex(viewModel.Note.Color.Color);
 
             NoteColorPicker.SelectedNoteColor = viewModel.Note.Color;
         }

@@ -1,5 +1,6 @@
 ﻿using System;
 using Windows.UI;
+using Windows.UI.Xaml.Media;
 
 namespace FlatNotes.Utils
 {
@@ -14,7 +15,17 @@ namespace FlatNotes.Utils
             return str.Replace(Environment.NewLine, " ").Replace("\n", " ").Replace("\r", " ").Trim();
         }
 
-        public static Color FromHex( this  Color color, String hex )
+        public static Color fromHex(this Color color, String hex)
+        {
+            return hexToColor(hex);
+        }
+
+        public static SolidColorBrush fromHex(this SolidColorBrush color, String hex)
+        {
+            return new SolidColorBrush(hexToColor(hex));
+        }
+
+        private static Color hexToColor(String hex)
         {
             //remove the # at the front
             hex = hex.Replace( "#", "" );

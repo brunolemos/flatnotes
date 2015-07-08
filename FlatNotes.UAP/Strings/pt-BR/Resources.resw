@@ -1,0 +1,305 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AboutPivotItem.Header" xml:space="preserve">
+    <value>sobre</value>
+  </data>
+  <data name="AppDescription" xml:space="preserve">
+    <value>Flat Notes é o aplicativo de notas mais bonito para Windows Phone!
+
+Algumas funcionalidades:
+- Fixe notas na tela inicial
+- Envie imagens
+- Deslize para arquivar uma nota
+- Deslize uma nota arquivada para deletar permanentemente
+- Customize o numero de colunas
+- Escolha o tema claro ou escuro</value>
+  </data>
+  <data name="AppVersionTextBlock.Text" xml:space="preserve">
+    <value>versão</value>
+  </data>
+  <data name="ArchiveAppBarButton.Label" xml:space="preserve">
+    <value>arquivar</value>
+  </data>
+  <data name="ArchivedAtFormatString" xml:space="preserve">
+    <value>arquivado {0}</value>
+  </data>
+  <data name="ArchivedNotesAppBarButton.Label" xml:space="preserve">
+    <value>arquivadas</value>
+  </data>
+  <data name="AudioAppBarButton.Label" xml:space="preserve">
+    <value>áudio</value>
+  </data>
+  <data name="BackupPivotItem.Header" xml:space="preserve">
+    <value>backup</value>
+  </data>
+  <data name="Brazil" xml:space="preserve">
+    <value>Brasil</value>
+  </data>
+  <data name="ColorAppBarButton.Label" xml:space="preserve">
+    <value>cor</value>
+  </data>
+  <data name="ColumnsSlider.Header" xml:space="preserve">
+    <value>colunas</value>
+  </data>
+  <data name="CreatedAtFormatString" xml:space="preserve">
+    <value>criado {0}</value>
+  </data>
+  <data name="DeleteAppBarButton.Label" xml:space="preserve">
+    <value>deletar</value>
+  </data>
+  <data name="DevelopedByTextBlock.Text" xml:space="preserve">
+    <value>desenvolvido por</value>
+  </data>
+  <data name="EmptyArchivedNotesMessageTextBox.Text" xml:space="preserve">
+    <value>notas arquivadas aparecem aqui</value>
+  </data>
+  <data name="EmptyNotesMessageTextBox.Text" xml:space="preserve">
+    <value>notas adicionadas aparecem aqui</value>
+  </data>
+  <data name="FeedbackAppBarButton.Label" xml:space="preserve">
+    <value>enviar feedback positivo</value>
+  </data>
+  <data name="NewItemTextBox.PlaceholderText" xml:space="preserve">
+    <value>Novo item</value>
+  </data>
+  <data name="NoteChecklistType.Label" xml:space="preserve">
+    <value>checklist</value>
+  </data>
+  <data name="NoteTextType.Label" xml:space="preserve">
+    <value>texto</value>
+  </data>
+  <data name="PendingChangesTextBox.Text" xml:space="preserve">
+    <value>alterações pendentes</value>
+  </data>
+  <data name="PhotoAppBarButton.Label" xml:space="preserve">
+    <value>foto</value>
+  </data>
+  <data name="Pin" xml:space="preserve">
+    <value>fixar</value>
+  </data>
+  <data name="PraiseAppBarButton.Label" xml:space="preserve">
+    <value>elogiar</value>
+  </data>
+  <data name="PreferencesPivotItem.Header" xml:space="preserve">
+    <value>preferências</value>
+  </data>
+  <data name="PrettyDate_AMinuteAgo" xml:space="preserve">
+    <value>há um minuto</value>
+  </data>
+  <data name="PrettyDate_AMonthAgo" xml:space="preserve">
+    <value>há um mês</value>
+  </data>
+  <data name="PrettyDate_AnHourAgo" xml:space="preserve">
+    <value>há uma hora</value>
+  </data>
+  <data name="PrettyDate_AWeekAgo" xml:space="preserve">
+    <value>há uma semana</value>
+  </data>
+  <data name="PrettyDate_AYearAgo" xml:space="preserve">
+    <value>há um ano</value>
+  </data>
+  <data name="PrettyDate_JustNow" xml:space="preserve">
+    <value>agora</value>
+  </data>
+  <data name="PrettyDate_NDaysAgo" xml:space="preserve">
+    <value>há {0} dias</value>
+  </data>
+  <data name="PrettyDate_NHoursAgo" xml:space="preserve">
+    <value>há {0} horas</value>
+  </data>
+  <data name="PrettyDate_NMinutesAgo" xml:space="preserve">
+    <value>há {0} minutos</value>
+  </data>
+  <data name="PrettyDate_NMonthsAgo" xml:space="preserve">
+    <value>há {0} meses</value>
+  </data>
+  <data name="PrettyDate_NWeeksAgo" xml:space="preserve">
+    <value>há {0} semanas</value>
+  </data>
+  <data name="PrettyDate_NYearsAgo" xml:space="preserve">
+    <value>há {0} anos</value>
+  </data>
+  <data name="PrettyDate_Yesterday" xml:space="preserve">
+    <value>ontem</value>
+  </data>
+  <data name="RequestFeatureOrReportBugAppBarButton.Label" xml:space="preserve">
+    <value>enviar sugestão / reportar bug</value>
+  </data>
+  <data name="RestoreAppBarButton.Label" xml:space="preserve">
+    <value>restaurar</value>
+  </data>
+  <data name="SettingsAppBarButton.Label" xml:space="preserve">
+    <value>configurações</value>
+  </data>
+  <data name="SettingsTextBlock.Text" xml:space="preserve">
+    <value>configurações</value>
+  </data>
+  <data name="ShareAppBarButton.Label" xml:space="preserve">
+    <value>compartilhar...</value>
+  </data>
+  <data name="SupportAppBarButton.Label" xml:space="preserve">
+    <value>suporte</value>
+  </data>
+  <data name="TextTextBox.PlaceholderText" xml:space="preserve">
+    <value>Texto</value>
+  </data>
+  <data name="ThemeToggleSwitch.Header" xml:space="preserve">
+    <value>tema</value>
+  </data>
+  <data name="ThemeToggleSwitch.OffContent" xml:space="preserve">
+    <value>claro</value>
+  </data>
+  <data name="ThemeToggleSwitch.OnContent" xml:space="preserve">
+    <value>escuro</value>
+  </data>
+  <data name="TitleTextBox.PlaceholderText" xml:space="preserve">
+    <value>Título</value>
+  </data>
+  <data name="ToggleChecklistAppBarButton.Label" xml:space="preserve">
+    <value>mostrar/ocultar checklist</value>
+  </data>
+  <data name="TransparentDefaultTileToggleSwitch.Header" xml:space="preserve">
+    <value>bloco dinâmico padrão</value>
+  </data>
+  <data name="TransparentDefaultTileToggleSwitch.OffContent" xml:space="preserve">
+    <value>transparente</value>
+  </data>
+  <data name="TransparentDefaultTileToggleSwitch.OnContent" xml:space="preserve">
+    <value>cor sólida</value>
+  </data>
+  <data name="Unpin" xml:space="preserve">
+    <value>desfixar</value>
+  </data>
+  <data name="UpdatedAtFormatString" xml:space="preserve">
+    <value>atualizado {0}</value>
+  </data>
+  <data name="YourMessageGoesHere" xml:space="preserve">
+    <value>[ESCREVA SUA MENSAGEM AQUI]</value>
+  </data>
+  <data name="TransparentNoteTileToggleSwitch.Header" xml:space="preserve">
+    <value>bloco dinâmico das notas</value>
+  </data>
+  <data name="TransparentNoteTileToggleSwitch.OffContent" xml:space="preserve">
+    <value>transparente</value>
+  </data>
+  <data name="TransparentNoteTileToggleSwitch.OnContent" xml:space="preserve">
+    <value>cor sólida</value>
+  </data>
+</root>

@@ -208,7 +208,7 @@ namespace FlatNotes
             });
         }
 
-        public static async void ResetStatusBar()
+        public static void ResetStatusBar()
         {
             Color mainColor = Color.FromArgb(0xff, 0xff, 0xbb, 0x00);
             Color mainDarkenColor = Color.FromArgb(0xff, 0xf9, 0x9f, 0x00);
@@ -240,10 +240,10 @@ namespace FlatNotes
             if (!hasStatusBar) return;
 #endif
 
-            await StatusBar.GetForCurrentView().HideAsync();
-            //StatusBar.GetForCurrentView().BackgroundOpacity = 1;
-            //StatusBar.GetForCurrentView().BackgroundColor = backgrouncColor;
-            //StatusBar.GetForCurrentView().ForegroundColor = foregroundColor;
+            //await StatusBar.GetForCurrentView().HideAsync();
+            StatusBar.GetForCurrentView().BackgroundOpacity = backgrouncColor.A;
+            StatusBar.GetForCurrentView().BackgroundColor = backgrouncColor;
+            StatusBar.GetForCurrentView().ForegroundColor = foregroundColor;
 #endif
         }
 
@@ -259,12 +259,12 @@ namespace FlatNotes
         if (foregroundColor == null)
         {
             if (AppSettings.Instance.Theme == ElementTheme.Light && App.Current.RequestedTheme == ApplicationTheme.Dark)
-                foregroundColor = new Color().FromHex("#404040");
+                foregroundColor = new Color().fromHex("#404040");
             else if (AppSettings.Instance.Theme != ElementTheme.Light && App.Current.RequestedTheme == ApplicationTheme.Light)
-                foregroundColor = new Color().FromHex("#c9cdd1");
+                foregroundColor = new Color().fromHex("#c9cdd1");
         }
 
-        StatusBar.GetForCurrentView().BackgroundOpacity = 1;
+        StatusBar.GetForCurrentView().BackgroundOpacity = backgroundColor.A;
         StatusBar.GetForCurrentView().BackgroundColor = backgroundColor;
         StatusBar.GetForCurrentView().ForegroundColor = foregroundColor;
 #endif

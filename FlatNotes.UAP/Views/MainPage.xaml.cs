@@ -79,17 +79,17 @@ namespace FlatNotes.Views
 
         #endregion
 
-        private void MenuToggleButton_Click(object sender, RoutedEventArgs e)
-        {
-            MainSplitView.IsPaneOpen = !MainSplitView.IsPaneOpen;
-        }
+        //private void MenuToggleButton_Click(object sender, RoutedEventArgs e)
+        //{
+        //    MainSplitView.IsPaneOpen = !MainSplitView.IsPaneOpen;
+        //}
 
         private void NavLinksList_ItemClick(object sender, ItemClickEventArgs e)
         {
             var navLink = e.ClickedItem as NavLink;
             if (navLink?.TargetPageType == null) return;
 
-            MainSplitView.IsPaneOpen = false;
+            //MainSplitView.IsPaneOpen = false;
             Frame.Navigate(navLink.TargetPageType);
         }
 

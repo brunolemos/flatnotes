@@ -13,8 +13,8 @@
     
     <SolidColorBrush x:Key="ApplicationPageBackgroundThemeBrush" Color="{ThemeResource PhoneBackgroundColor}"/>
     <SolidColorBrush x:Key="PhoneBackgroundBrush" Color="{ThemeResource PhoneBackgroundColor}"/>
-    <SolidColorBrush x:Key="FlyoutBackgroundThemeBrush" Color="{ThemeResource PhoneBackgroundColor}"/>
-    <SolidColorBrush x:Key="ContentDialogBackgroundThemeBrush" Color="{ThemeResource PhoneBackgroundColor}"/>
+    <!--<SolidColorBrush x:Key="FlyoutBackgroundThemeBrush" Color="{ThemeResource PhoneBackgroundColor}"/>
+    <SolidColorBrush x:Key="ContentDialogBackgroundThemeBrush" Color="{ThemeResource PhoneBackgroundColor}"/>-->
 
     <SolidColorBrush x:Key="ApplicationPageForegroundThemeBrush" Color="{ThemeResource PhoneForegroundColor}"/>
     <SolidColorBrush x:Key="PhoneForegroundBrush" Color="{ThemeResource PhoneForegroundColor}"/>
