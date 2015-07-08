@@ -38,7 +38,7 @@ namespace FlatNotes.Utils
         private const ElementTheme THEME_DEFAULT = ElementTheme.Light;
 
         private const string COLUMNS_KEY = "COLUMNS";
-        private const int COLUMNS_DEFAULT = 2;
+        private const int COLUMNS_DEFAULT = -1;
 
         private const string TRANSPARENT_TILE_KEY = "TRANSPARENT_TILE";
         private const bool TRANSPARENT_TILE_DEFAULT = false;
@@ -122,8 +122,6 @@ namespace FlatNotes.Utils
             get { return GetValueOrDefault(COLUMNS_KEY, COLUMNS_DEFAULT); }
             set
             {
-                if (!(value >= 1)) value = COLUMNS_DEFAULT; // && value <= 4
-
                 if (SetValue<int>(COLUMNS_KEY, value))
                 {
                     var handler = ColumnsChanged;

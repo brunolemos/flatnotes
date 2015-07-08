@@ -28,7 +28,11 @@
                 <!--<AppBarButton x:Uid="NewAppBarButton" Label="New" Icon="Add" Command="{Binding CreateTextNoteCommand}" ToolTipService.ToolTip="New note"/>-->
                 <!--<AppBarButton x:Uid="ManageAppBarButton" Label="Manage" Icon="Bullets" IsCompact="True" ToolTipService.ToolTip="Manage"/>
                 <AppBarButton x:Uid="ReorderAppBarButton" Label="Reorder" Icon="Sort" IsCompact="True" ToolTipService.ToolTip="Reorder"/>-->
-                <AppBarButton x:Uid="TextAppBarButton" Label="Text" Command="{Binding CreateTextNoteCommand}" Icon="Add" ToolTipService.ToolTip="New text note"/>
+                <AppBarButton x:Uid="TextAppBarButton" Label="Text" Command="{Binding CreateTextNoteCommand}" ToolTipService.ToolTip="New text note">
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="T" FontSize="20" FontFamily="Segoe UI Light" FontWeight="Light"/>
+                    </AppBarButton.Icon>
+                </AppBarButton>
                 <AppBarButton x:Uid="ChecklistAppBarButton" Label="Checklist" Command="{Binding CreateChecklistNoteCommand}" Icon="List" ToolTipService.ToolTip="New checklist note"/>
                 <AppBarButton x:Uid="PhotoAppBarButton" Icon="Camera" Label="Photo" Command="{Binding OpenImagePickerCommand}" ToolTipService.ToolTip="New note from image or camera"/>
                 <AppBarButton x:Uid="AudioAppBarButton" Icon="Microphone" Label="Audio" ToolTipService.ToolTip="New audio note"/>
@@ -53,7 +57,6 @@
                         <Setter Target="NotesControl.ItemStretch" Value="True"/>
                         <Setter Target="NotesControl.ItemWidth" Value="150"/>
                         <Setter Target="NotesControl.Padding" Value="8"/>
-                        <!--<Setter Target="MainSplitView.OpenPaneLength" Value="{Binding ElementName=LayoutRoot, Path=ActualWidth}"/>-->
                     </VisualState.Setters>
                 </VisualState>
 
@@ -66,7 +69,6 @@
                         <Setter Target="NotesControl.ItemStretch" Value="False"/>
                         <Setter Target="NotesControl.ItemWidth" Value="260"/>
                         <Setter Target="NotesControl.Padding" Value="24"/>
-                        <!--<Setter Target="MainSplitView.OpenPaneLength" Value="260"/>-->
                     </VisualState.Setters>
                 </VisualState>
 
@@ -120,7 +122,7 @@
             </Grid.ColumnDefinitions>
 
             <StackPanel Grid.Column="0" Orientation="Horizontal">
-                <TextBlock Margin="12,0,24,0" Text="Notes" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                <TextBlock Margin="12,0" Text="Notes" FontWeight="Medium" VerticalAlignment="Center"/>
             </StackPanel>
 
             <StackPanel Grid.Column="1" Orientation="Horizontal">

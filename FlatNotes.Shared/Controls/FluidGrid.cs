@@ -10,20 +10,20 @@ namespace FlatNotes.Controls
         private int[] childrenColumns;
         private Size[] childrenSizes;
         private double itemWidth = 150;
-        public const double ITEM_MIN_WIDTH = 150;
 
         protected override Size MeasureOverride(Size totalSize)
         {
             itemWidth = Math.Min(ItemWidth, totalSize.Width);
-            int columns = Columns >= 1 ? Columns : Math.Max(1, (int)Math.Floor(totalSize.Width / ItemWidth));
+            int columns = Columns >= 1 ? Columns : Math.Max(1, (int)Math.Floor(totalSize.Width / itemWidth));
 
             //adjust item width when itemwidth is too big
             itemWidth = Math.Min(itemWidth, totalSize.Width / columns);
+            System.Diagnostics.Debug.WriteLine("MeasureOverride ItemWidth: {0}, Stretch: {1}, Columns: {2}", itemWidth, ItemStretch, columns);
 
             //stretch on force or when when single column on small screen
-            if (ItemStretch || (columns == 1 && totalSize.Width < itemWidth * 2)) itemWidth = totalSize.Width / columns;
+            if (ItemStretch || columns == 1) itemWidth = totalSize.Width / columns; // && totalSize.Width < itemWidth * 2
 
-            Size resultSize = new Size(columns * itemWidth, 0);
+            Size resultSize = new Size(columns * itemWidth, 100);
 
             int i, columnWithLowerY = 0;
             BiggerItemHeight= 0;
@@ -91,7 +91,7 @@ namespace FlatNotes.Controls
             set { SetValue(ColumnsProperty, value); }
         }
 
-        public static readonly DependencyProperty ItemWidthProperty = DependencyProperty.Register("ItemWidth", typeof(double), typeof(FluidGrid), new PropertyMetadata(ITEM_MIN_WIDTH, OnPropertyChanged));
+        public static readonly DependencyProperty ItemWidthProperty = DependencyProperty.Register("ItemWidth", typeof(double), typeof(FluidGrid), new PropertyMetadata(150, OnPropertyChanged));
         public double ItemWidth
         {
             get { return (double)GetValue(ItemWidthProperty); }
@@ -115,8 +115,6 @@ namespace FlatNotes.Controls
         static void OnPropertyChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
         {
             System.Diagnostics.Debug.WriteLine("OnPropertyChanged ItemWidth: {0}, Stretch: {1}, Columns: {2}", (obj as FluidGrid).itemWidth, (obj as FluidGrid).ItemStretch, (obj as FluidGrid).Columns);
-
-            if ((obj as FluidGrid).ItemWidth < ITEM_MIN_WIDTH) (obj as FluidGrid).ItemWidth = ITEM_MIN_WIDTH;
             (obj as FluidGrid).InvalidateMeasure();
         }
     }
