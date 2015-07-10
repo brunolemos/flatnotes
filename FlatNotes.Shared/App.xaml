@@ -10,7 +10,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="ms-appx:///Resources/DefaultResourceDictionary.xaml"/>
-                <!--<ResourceDictionary Source="ms-appx:///Resources/CustomResourceDictionary.xaml"/>-->
+                <ResourceDictionary Source="ms-appx:///Resources/CustomResourceDictionary.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             
             <ResourceDictionary.ThemeDictionaries>
@@ -19,12 +19,13 @@
             </ResourceDictionary.ThemeDictionaries>
         
             <ViewModels:MainViewModel x:Key="MainViewModel" />
-            <ViewModels:ArchivedNotesViewModel x:Key="ArchivedNotesiewModel" />
+            <ViewModels:ArchivedNotesViewModel x:Key="ArchivedNotesViewModel" />
             <ViewModels:NoteEditViewModel x:Key="NoteEditViewModel" />
             <ViewModels:SettingsViewModel x:Key="SettingsViewModel" />
 
             <Converters:NullableToVisibilityConverter x:Key="NullableToVisibilityConverter"/>
             <Converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+            <Converters:PositiveIntToVisibilityConverter x:Key="PositiveIntToVisibilityConverter"/>
             <Converters:StringFormatConverter x:Key="StringFormatConverter"/>
             <Converters:LocalizedResourcesConverter x:Key="LocalizedResourcesConverter"/>
         </ResourceDictionary>

@@ -10,19 +10,20 @@ namespace FlatNotes.Controls
         private int[] childrenColumns;
         private Size[] childrenSizes;
         private double itemWidth = 150;
+        private int columns = -1;
 
         protected override Size MeasureOverride(Size totalSize)
         {
             itemWidth = Math.Min(ItemWidth, totalSize.Width);
-            int columns = Columns >= 1 ? Columns : Math.Max(1, (int)Math.Floor(totalSize.Width / itemWidth));
+            columns = Columns >= 1 ? Columns : Math.Max(1, (int)Math.Floor(totalSize.Width / itemWidth));
 
             //adjust item width when itemwidth is too big
             itemWidth = Math.Min(itemWidth, totalSize.Width / columns);
-            System.Diagnostics.Debug.WriteLine("MeasureOverride ItemWidth: {0}, Stretch: {1}, Columns: {2}", itemWidth, ItemStretch, columns);
 
             //stretch on force or when when single column on small screen
             if (ItemStretch || columns == 1) itemWidth = totalSize.Width / columns; // && totalSize.Width < itemWidth * 2
 
+            //System.Diagnostics.Debug.WriteLine("MeasureOverride ItemWidth: {0}, Stretch: {1}, Columns: {2}", itemWidth, ItemStretch, columns);
             Size resultSize = new Size(columns * itemWidth, 100);
 
             int i, columnWithLowerY = 0;
@@ -65,8 +66,6 @@ namespace FlatNotes.Controls
         {
             if (childrenColumns.Length != Children.Count || childrenSizes.Length != Children.Count) return totalSize;
             
-            int columns = Columns >= 1 ? Columns : Math.Max(1, (int)Math.Floor(totalSize.Width / itemWidth));
-
             double[] lastYInColumn = new double[columns];
             for (int i = 0; i < columns; i++) lastYInColumn[i] = 0;
 
@@ -114,7 +113,7 @@ namespace FlatNotes.Controls
 
         static void OnPropertyChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
         {
-            System.Diagnostics.Debug.WriteLine("OnPropertyChanged ItemWidth: {0}, Stretch: {1}, Columns: {2}", (obj as FluidGrid).itemWidth, (obj as FluidGrid).ItemStretch, (obj as FluidGrid).Columns);
+            //System.Diagnostics.Debug.WriteLine("OnPropertyChanged ItemWidth: {0}, Stretch: {1}, Columns: {2}", (obj as FluidGrid).itemWidth, (obj as FluidGrid).ItemStretch, (obj as FluidGrid).Columns);
             (obj as FluidGrid).InvalidateMeasure();
         }
     }

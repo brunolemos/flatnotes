@@ -14,7 +14,7 @@
     
     <GridView HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
               ItemsSource="{Binding}" DataContext="{Binding ItemsSource, ElementName=Root}"
-              SelectionMode="None" CanReorderItems="True" CanDragItems="False" AllowDrop="False" 
+              SelectionMode="None" CanReorderItems="False" CanDragItems="False" AllowDrop="False" 
               IsItemClickEnabled="True" ItemClick="GridView_ItemClick">
         
         <GridView.ItemContainerTransitions>

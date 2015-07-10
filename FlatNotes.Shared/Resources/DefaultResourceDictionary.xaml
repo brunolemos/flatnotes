@@ -31,11 +31,12 @@
     <SolidColorBrush x:Key="TextBoxDisabledForegroundThemeBrush" Color="#70000000"/>
     <SolidColorBrush x:Key="TextBlockDisabledForegroundThemeBrush" Color="#70000000"/>
 
-    <!--<SolidColorBrush x:Key="CommandBarBackgroundThemeBrush" Color="{ThemeResource AppMainDarkenColor}"/>
-    <SolidColorBrush x:Key="CommandBarForegroundThemeBrush" Color="{StaticResource AppMainForegroundColor}"/>-->
+    <SolidColorBrush x:Key="CommandBarBackgroundThemeBrush" Color="{ThemeResource AppMainDarkenColor}"/>
+    <SolidColorBrush x:Key="CommandBarForegroundThemeBrush" Color="{StaticResource AppMainForegroundColor}"/>
 
     <Style TargetType="CommandBar">
         <Setter Property="Background" Value="{ThemeResource CommandBarBackgroundThemeBrush}"/>
+        <Setter Property="RequestedTheme" Value="Dark"/>
     </Style>
 
     <Style TargetType="ListViewItem">

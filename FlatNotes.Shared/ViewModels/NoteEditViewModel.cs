@@ -4,9 +4,13 @@ using FlatNotes.Models;
 using FlatNotes.Utils;
 using FlatNotes.Views;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using Windows.Foundation;
+using Windows.Storage;
 using Windows.Storage.Pickers;
+using Windows.UI.Popups;
 using Windows.UI.StartScreen;
 using Windows.UI.Xaml.Controls;
 
@@ -14,10 +18,8 @@ namespace FlatNotes.ViewModels
 {
     public class NoteEditViewModel : ViewModelBase
     {
-#if WINDOWS_PHONE_APP
         public event EventHandler ReorderModeEnabled;
         public event EventHandler ReorderModeDisabled;
-#endif
 
         public RelayCommand OpenImagePickerCommand { get; private set; }
         public RelayCommand ToggleChecklistCommand { get; private set; }
@@ -135,7 +137,6 @@ namespace FlatNotes.ViewModels
         public string UpdatedAtFormatedString { get { return string.Format(LocalizedResources.UpdatedAtFormatString, friendlyTimeConverter.Convert(Note.UpdatedAt)); } }
         public string CreatedAtFormatedString { get { return string.Format(LocalizedResources.CreatedAtFormatString, friendlyTimeConverter.Convert(Note.CreatedAt)); } }
 
-#if WINDOWS_PHONE_APP
         public ListViewReorderMode ReorderMode
         {
             get { return reorderMode; }
@@ -151,10 +152,9 @@ namespace FlatNotes.ViewModels
             }
         }
         public ListViewReorderMode reorderMode = ListViewReorderMode.Disabled;
-#endif
-#region COMMANDS_ACTIONS
+        #region COMMANDS_ACTIONS
 
-        private void OpenImagePicker()
+        private async void OpenImagePicker()
         {
             GoogleAnalytics.EasyTracker.GetTracker().SendEvent("ui_action", "execute_command", "open_image_picker", 1);
 
@@ -166,11 +166,64 @@ namespace FlatNotes.ViewModels
             picker.FileTypeFilter.Add(".jpg");
             picker.FileTypeFilter.Add(".jpeg");
             picker.FileTypeFilter.Add(".png");
+            picker.FileTypeFilter.Add(".gif");
 
 #if WINDOWS_PHONE_APP
             //open
             picker.PickSingleFileAndContinue();
+#elif WINDOWS_UAP
+            var file = await picker.PickSingleFileAsync();
+            handleImageFromFilePicker(file);
 #endif
+        }
+
+        private void handleImageFromFilePicker(StorageFile file)
+        {
+            handleImageFromFilePicker(new List<StorageFile>() { file });
+        }
+
+        private async void handleImageFromFilePicker(IReadOnlyList<StorageFile> files)
+        {
+            if (files == null || files.Count <= 0) return;
+            string error = "";
+
+            try
+            {
+                //delete old images
+                await AppData.RemoveNoteImages(Note.Images);
+
+                //clear image list
+                Note.Images.Clear();
+
+                //add new images
+                foreach (var file in files)
+                {
+                    Debug.WriteLine("Picked photo: " + file.Path);
+
+                    NoteImage noteImage = new NoteImage();
+
+                    StorageFile savedImage = await AppSettings.Instance.SaveImage(file, Note.ID, noteImage.ID);
+
+                    var imageProperties = await savedImage.Properties.GetImagePropertiesAsync();
+                    noteImage.URL = savedImage.Path;
+                    noteImage.Size = new Size(imageProperties.Width, imageProperties.Height);
+
+                    Note.Images.Add(noteImage);
+                    break;
+                }
+            }
+            catch (Exception e) { error = e.Message; }
+
+            if (!String.IsNullOrEmpty(error))
+            {
+                GoogleAnalytics.EasyTracker.GetTracker().SendException(String.Format("Failed to save image ({0})", error), false);
+                await(new MessageDialog("Failed to save image. Try again.", "Sorry")).ShowAsync();
+
+                return;
+            }
+
+            //save
+            await AppData.CreateOrUpdateNote(Note);
         }
 
         private void ToggleChecklist()

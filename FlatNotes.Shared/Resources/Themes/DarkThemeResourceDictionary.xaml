@@ -25,7 +25,7 @@
     <SolidColorBrush x:Key="PhoneMidBrush" Color="{ThemeResource PhoneMidColor}"/>
     <SolidColorBrush x:Key="PhoneLowBrush" Color="{ThemeResource PhoneLowColor}"/>
 
-    <SolidColorBrush x:Key="CommandBarBackgroundThemeBrush" Color="#202223"/>
+    <!--<SolidColorBrush x:Key="CommandBarBackgroundThemeBrush" Color="#202223"/>-->
 
     <SolidColorBrush x:Key="ListViewItemPointerOverBackgroundThemeBrush" Color="#10000000"/>
     <SolidColorBrush x:Key="ListViewItemSelectedBackgroundThemeBrush" Color="#20000000"/>

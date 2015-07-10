@@ -20,11 +20,7 @@ using Windows.UI.Xaml.Navigation;
 
 namespace FlatNotes.Views
 {
-#if WINDOWS_PHONE_APP
-    public sealed partial class NoteEditPage : Page, IFileOpenPickerContinuable
-#else
     public sealed partial class NoteEditPage : Page
-#endif
     {
         public NavigationHelper NavigationHelper { get { return this.navigationHelper; } }
         private NavigationHelper navigationHelper;
@@ -207,52 +203,5 @@ namespace FlatNotes.Views
             viewModel.TempNoteImage = (e.OriginalSource as FrameworkElement).DataContext as NoteImage;
             viewModel.DeleteNoteImageCommand.Execute(viewModel.TempNoteImage);
         }
-
-#if WINDOWS_PHONE_APP
-        public async void ContinueFileOpenPicker(FileOpenPickerContinuationEventArgs args)
-        {
-            if (args.Files.Count <= 0) return;
-
-            string error = "";
-
-            try
-            {
-                //delete old images
-                await AppData.RemoveNoteImages(viewModel.Note.Images);
-
-                //clear image list
-                viewModel.Note.Images.Clear();
-
-                //add new images
-                foreach (var file in args.Files)
-                {
-                    Debug.WriteLine("Picked photo: " + file.Path);
-
-                    NoteImage noteImage = new NoteImage();
-
-                    StorageFile savedImage = await AppSettings.Instance.SaveImage(file, viewModel.Note.ID, noteImage.ID);
-
-                    var imageProperties = await savedImage.Properties.GetImagePropertiesAsync();
-                    noteImage.URL = savedImage.Path;
-                    noteImage.Size = new Size(imageProperties.Width, imageProperties.Height);
-
-                    viewModel.Note.Images.Add(noteImage);
-                    break;
-                }
-            }
-            catch (Exception e) { error = e.Message; }
-
-            if(!String.IsNullOrEmpty(error))
-            {
-                GoogleAnalytics.EasyTracker.GetTracker().SendException(String.Format("Failed to save image ({0})", error), false);
-                await (new MessageDialog("Failed to save image. Try again.", "Sorry")).ShowAsync();
-
-                return;
-            }
-
-            //save
-            await AppData.CreateOrUpdateNote(viewModel.Note);
-        }
-#endif
     }
 }

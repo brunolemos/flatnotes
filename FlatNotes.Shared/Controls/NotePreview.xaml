@@ -36,24 +36,24 @@
             </Style>
             
             <DataTemplate x:Key="NoteChecklistListViewControlTemplate">
-                <Grid Margin="0,3" VerticalAlignment="Top">
+                <Grid Margin="0,0,0,2" VerticalAlignment="Top">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    
-                    <!--<Viewbox Grid.Column="0" Height="18" Margin="0" VerticalAlignment="Top">
-                        <Grid Width="30" Height="30">
-                            <CheckBox Margin="0" IsChecked="{Binding IsChecked, Mode=OneTime}" HorizontalAlignment="Left" IsHitTestVisible="False" Foreground="{StaticResource AppNoteForegroundBrush}" BorderBrush="{StaticResource AppNoteForegroundBrush}" Opacity="0.8"/>
-                        </Grid>
-                    </Viewbox>-->
 
-                    <TextBlock Grid.Column="1" Text="{Binding Text, Mode=OneWay}" Foreground="{Binding ElementName=Root, Path=Foreground}" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" FontSize="{Binding ElementName=Root, Path=FontSize}" Margin="0" Padding="4,0,0,0" FontWeight="Normal" MaxLines="1" VerticalAlignment="Top" />
+                    <Viewbox Grid.Column="0" Height="20" Margin="0,-3,0,0" VerticalAlignment="Top">
+                        <Grid Width="30" Height="30">
+                            <CheckBox Margin="0,0,0,-16" IsChecked="{Binding IsChecked, Mode=TwoWay}" BorderBrush="{StaticResource AppNoteForegroundBrush}" ClickMode="Release" IsTapEnabled="False" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        </Grid>
+                    </Viewbox>
+
+                    <TextBlock Grid.Column="1" Margin="0" Padding="2,0,0,0" Text="{Binding Text, Mode=OneWay}" Foreground="{Binding ElementName=Root, Path=Foreground}" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" FontSize="{Binding ElementName=Root, Path=FontSize}" FontWeight="Normal" MaxLines="1" VerticalAlignment="Top" />
                 </Grid>
             </DataTemplate>
             
             <DataTemplate x:Key="NoteImagesListViewControlTemplate">
-                <Grid x:Name="NoteImageContainer" MaxHeight="160">
+                <Grid x:Name="NoteImageContainer" MaxHeight="120">
                     <Image Source="{Binding URL}" Stretch="UniformToFill" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 </Grid>
             </DataTemplate>
@@ -63,14 +63,14 @@
     <Grid x:Name="NoteContainer" Margin="4" Background="{Binding ElementName=Root, Path=Background}">
         <StackPanel Margin="0">
             <Grid Visibility="{Binding ElementName=Root, Path=HideImage, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=True}">
-                <Grid MaxHeight="160" Background="{StaticResource PhoneDarkLowBrush}" Visibility="{Binding Images.Count, Converter={StaticResource PositiveIntToVisibilityConverter}}">
+                <Grid MaxHeight="120" Background="{StaticResource PhoneDarkLowBrush}" Visibility="{Binding Images.Count, Converter={StaticResource PositiveIntToVisibilityConverter}}">
                     <ListView x:Name="NoteImagesListView" ItemsSource="{Binding Images}" ItemTemplate="{StaticResource NoteImagesListViewControlTemplate}" SelectionMode="None" IsTapEnabled="False" IsItemClickEnabled="False" HorizontalContentAlignment="Stretch"/>
                 </Grid>
             </Grid>
             
             <StackPanel Margin="8,8,8,24">
-                <TextBlock Text="{Binding Title}" Foreground="{Binding ElementName=Root, Path=Foreground}" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" Margin="0,0,0,4" FontWeight="Bold" MaxLines="1" Visibility="{Binding Title, Converter={StaticResource NullableToVisibilityConverter}}"/>
-                <TextBlock Text="{Binding Text}" Foreground="{Binding ElementName=Root, Path=Foreground}" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" Margin="0,0,0,4" FontWeight="SemiLight" MaxLines="3" Visibility="{Binding Text, Converter={StaticResource NullableToVisibilityConverter}}" />
+                <TextBlock Text="{Binding Title}" Foreground="{Binding ElementName=Root, Path=Foreground}" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" Margin="0,0,0,4" FontWeight="Bold" FontSize="{Binding ElementName=Root, Path=FontSize}" MaxLines="2" Visibility="{Binding Title, Converter={StaticResource NullableToVisibilityConverter}}"/>
+                <TextBlock Text="{Binding Text}" Foreground="{Binding ElementName=Root, Path=Foreground}" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" Margin="0,0,0,4" FontWeight="SemiLight" FontSize="{Binding ElementName=Root, Path=FontSize}" MaxLines="4" Visibility="{Binding Text, Converter={StaticResource NullableToVisibilityConverter}}" />
 
                 <StackPanel Visibility="{Binding IsChecklist, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
                     <ListView x:Name="NoteChecklistListView" Margin="0,0,0,4" ItemsSource="{Binding Checklist, Converter={StaticResource MaxChecklistItemsConverter}}" ItemContainerStyle="{StaticResource NotePreviewChecklistItem}" ItemTemplate="{StaticResource NoteChecklistListViewControlTemplate}" IsTapEnabled="False" IsItemClickEnabled="False" />
@@ -83,11 +83,11 @@
 
                         <Viewbox Grid.Column="0" Height="18" Margin="0,2,0,0" VerticalAlignment="Top">
                             <Grid Width="30" Height="30">
-                                <CheckBox Margin="0,-14" IsEnabled="False" Opacity="0"/>
+                                <CheckBox Margin="0,-16" IsEnabled="False" Opacity="0"/>
                             </Grid>
                         </Viewbox>
 
-                        <TextBlock Grid.Column="1" Text="..." Foreground="{Binding ElementName=Root, Path=Foreground}" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" FontSize="17" Margin="0,-2,0,0" Padding="4,0,0,0" FontWeight="Normal" MaxLines="1"  />
+                        <TextBlock Grid.Column="1" Text="..." Foreground="{Binding ElementName=Root, Path=Foreground}" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" FontSize="{Binding ElementName=Root, Path=FontSize}" Margin="0,-2,0,0" Padding="4,0,0,0" FontWeight="Normal" MaxLines="1"  />
                     </Grid>
                 </StackPanel>
             </StackPanel>

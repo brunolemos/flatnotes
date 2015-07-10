@@ -178,7 +178,7 @@ namespace FlatNotes
         private void RootFrame_FirstNavigated(object sender, NavigationEventArgs e)
         {
             var rootFrame = sender as Frame;
-            rootFrame.ContentTransitions = null;// this.transitions ?? new TransitionCollection() { new NavigationThemeTransition() };
+            rootFrame.ContentTransitions = this.transitions ?? new TransitionCollection() { new NavigationThemeTransition() };
             rootFrame.Navigated -= this.RootFrame_FirstNavigated;
         }
 #endif
@@ -208,7 +208,7 @@ namespace FlatNotes
             });
         }
 
-        public static void ResetStatusBar()
+        public async static void ResetStatusBar()
         {
             Color mainColor = Color.FromArgb(0xff, 0xff, 0xbb, 0x00);
             Color mainDarkenColor = Color.FromArgb(0xff, 0xf9, 0x9f, 0x00);
@@ -240,10 +240,10 @@ namespace FlatNotes
             if (!hasStatusBar) return;
 #endif
 
-            //await StatusBar.GetForCurrentView().HideAsync();
             StatusBar.GetForCurrentView().BackgroundOpacity = backgrouncColor.A;
             StatusBar.GetForCurrentView().BackgroundColor = backgrouncColor;
             StatusBar.GetForCurrentView().ForegroundColor = foregroundColor;
+            await StatusBar.GetForCurrentView().HideAsync();
 #endif
         }
 

@@ -2,48 +2,25 @@
     x:Class="FlatNotes.Views.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:local="using:FlatNotes.Controls"
     xmlns:utils="using:FlatNotes.Utils"
     xmlns:models="using:FlatNotes.Models"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     NavigationCacheMode="Required"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     DataContext="{x:Bind Path=viewModel}"
     d:DataContext="{d:DesignData /SampleData/MainViewModelSampleData.xaml}">
 
-    <Page.Resources>
+    <!--<Page.Resources>
         <DataTemplate x:Key="NavLinkItemTemplate" x:DataType="utils:NavLink">
             <StackPanel Orientation="Horizontal">
                 <SymbolIcon Width="68" Symbol="{x:Bind Symbol}" VerticalAlignment="Center"/>
                 <TextBlock Text="{x:Bind Label}" VerticalAlignment="Center"/>
             </StackPanel>
         </DataTemplate>
-    </Page.Resources>
-
-    <Page.BottomAppBar>
-        <CommandBar>
-            <CommandBar.PrimaryCommands>
-                <!--<AppBarButton x:Uid="NewAppBarButton" Label="New" Icon="Add" Command="{Binding CreateTextNoteCommand}" ToolTipService.ToolTip="New note"/>-->
-                <!--<AppBarButton x:Uid="ManageAppBarButton" Label="Manage" Icon="Bullets" IsCompact="True" ToolTipService.ToolTip="Manage"/>
-                <AppBarButton x:Uid="ReorderAppBarButton" Label="Reorder" Icon="Sort" IsCompact="True" ToolTipService.ToolTip="Reorder"/>-->
-                <AppBarButton x:Uid="TextAppBarButton" Label="Text" Command="{Binding CreateTextNoteCommand}" ToolTipService.ToolTip="New text note">
-                    <AppBarButton.Icon>
-                        <FontIcon Glyph="T" FontSize="20" FontFamily="Segoe UI Light" FontWeight="Light"/>
-                    </AppBarButton.Icon>
-                </AppBarButton>
-                <AppBarButton x:Uid="ChecklistAppBarButton" Label="Checklist" Command="{Binding CreateChecklistNoteCommand}" Icon="List" ToolTipService.ToolTip="New checklist note"/>
-                <AppBarButton x:Uid="PhotoAppBarButton" Icon="Camera" Label="Photo" Command="{Binding OpenImagePickerCommand}" ToolTipService.ToolTip="New note from image or camera"/>
-                <AppBarButton x:Uid="AudioAppBarButton" Icon="Microphone" Label="Audio" ToolTipService.ToolTip="New audio note"/>
-            </CommandBar.PrimaryCommands>
-
-            <CommandBar.SecondaryCommands>
-                <AppBarButton x:Uid="ArchivedNotesAppBarButton" Icon="Preview" Label="Archived notes" Command="{Binding OpenArchivedNotesCommand}" ToolTipService.ToolTip="Open archived notes page"/>
-                <AppBarButton x:Uid="SettingsAppBarButton" Icon="Setting" Label="Settings" Command="{Binding OpenSettingsCommand}" ToolTipService.ToolTip="Open settings page"/>
-            </CommandBar.SecondaryCommands>
-        </CommandBar>
-    </Page.BottomAppBar>
+    </Page.Resources>-->
 
     <Grid x:Name="LayoutRoot">
         <VisualStateManager.VisualStateGroups>
@@ -54,6 +31,7 @@
                     </VisualState.StateTriggers>
 
                     <VisualState.Setters>
+                        <Setter Target="CommandBar.(Grid.Row)" Value="2"/>
                         <Setter Target="NotesControl.ItemStretch" Value="True"/>
                         <Setter Target="NotesControl.ItemWidth" Value="150"/>
                         <Setter Target="NotesControl.Padding" Value="8"/>
@@ -66,6 +44,7 @@
                     </VisualState.StateTriggers>
 
                     <VisualState.Setters>
+                        <Setter Target="CommandBar.(Grid.Row)" Value="0"/>
                         <Setter Target="NotesControl.ItemStretch" Value="False"/>
                         <Setter Target="NotesControl.ItemWidth" Value="260"/>
                         <Setter Target="NotesControl.Padding" Value="24"/>
@@ -78,6 +57,7 @@
                     </VisualState.StateTriggers>
 
                     <VisualState.Setters>
+                        <Setter Target="CommandBar.(Grid.Row)" Value="0"/>
                         <Setter Target="NotesControl.ItemStretch" Value="False"/>
                         <Setter Target="NotesControl.ItemWidth" Value="260"/>
                         <Setter Target="NotesControl.Padding" Value="24"/>
@@ -90,6 +70,7 @@
                     </VisualState.StateTriggers>
 
                     <VisualState.Setters>
+                        <Setter Target="CommandBar.(Grid.Row)" Value="0"/>
                         <Setter Target="NotesControl.ItemStretch" Value="False"/>
                         <Setter Target="NotesControl.ItemWidth" Value="260"/>
                         <Setter Target="NotesControl.Padding" Value="80,24"/>
@@ -102,6 +83,7 @@
                     </VisualState.StateTriggers>
 
                     <VisualState.Setters>
+                        <Setter Target="CommandBar.(Grid.Row)" Value="0"/>
                         <Setter Target="NotesControl.ItemStretch" Value="False"/>
                         <Setter Target="NotesControl.ItemWidth" Value="300"/>
                         <Setter Target="NotesControl.Padding" Value="120,24"/>
@@ -113,9 +95,10 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0" Background="{StaticResource AppMainDarkenBrush}" RequestedTheme="Dark">
+        <!--<Grid Grid.Row="0" Background="{StaticResource AppMainDarkenBrush}" RequestedTheme="Dark">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
@@ -128,8 +111,44 @@
             <StackPanel Grid.Column="1" Orientation="Horizontal">
                 <AppBarButton x:Uid="SearchAppBarButton" Label="Search" Icon="Find" IsCompact="True" ToolTipService.ToolTip="Search"/>
             </StackPanel>
+        </Grid>-->
+
+        <Grid Grid.Row="1" Visibility="{Binding Notes.Count, Converter={StaticResource PositiveIntToVisibilityConverter}, ConverterParameter=True}">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Viewbox Width="180">
+                    <Canvas Width="100" Height="100" HorizontalAlignment="Center">
+                        <Rectangle Fill="{ThemeResource PhoneLowBrush}" Width="100" Height="70" StrokeThickness="0"/>
+                        <Rectangle Fill="{ThemeResource PhoneLowBrush}" Width="70" Height="30" StrokeThickness="0" Margin="0,70,0,0"/>
+                        <Polygon Fill="{ThemeResource PhoneLowBrush}" Points="0,0 30,0, 0,30" StrokeThickness="0" Margin="70,70,0,0" />
+                        <Polygon Fill="#10000000" Points="0,0 30,0, 0,30" StrokeThickness="0" Margin="70,70,0,0" />
+                    </Canvas>
+                </Viewbox>
+
+                <TextBlock x:Uid="EmptyNotesMessageTextBox" Margin="10,24" Text="Notes you add appear here" Foreground="{ThemeResource PhoneMidBrush}" FontSize="{StaticResource EmptyNotesMessageFontSize}" TextWrapping="Wrap" TextAlignment="Center"/>
+            </StackPanel>
         </Grid>
 
-        <local:NotesControl Grid.Row="1" x:Name="NotesControl" ItemsSource="{Binding Notes}" Columns="{Binding Columns, TargetNullValue=-1, FallbackValue=-1}" d:DataContext="{Binding Notes}" ItemClick="NotesListView_ItemClick"/>
+        <local:NotesControl Grid.Row="1" x:Name="NotesControl" ItemsSource="{Binding Notes}" Columns="{Binding Columns, TargetNullValue=-1, FallbackValue=-1}" d:DataContext="{Binding Notes}" ItemClick="OnNoteClick"/>
+
+        <CommandBar Grid.Row="2" x:Name="CommandBar">
+            <CommandBar.PrimaryCommands>
+                <!--<AppBarButton x:Uid="NewAppBarButton" Label="New" Icon="Add" Command="{Binding CreateTextNoteCommand}" ToolTipService.ToolTip="New note"/>-->
+                <!--<AppBarButton x:Uid="ManageAppBarButton" Label="Manage" Icon="Bullets" IsCompact="True" ToolTipService.ToolTip="Manage"/>
+                <AppBarButton x:Uid="ReorderAppBarButton" Label="Reorder" Icon="Sort" IsCompact="True" ToolTipService.ToolTip="Reorder"/>-->
+                <AppBarButton x:Uid="TextAppBarButton" Label="Text" Command="{Binding CreateTextNoteCommand}" ToolTipService.ToolTip="New text note">
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="T" FontSize="20" FontFamily="Segoe UI Light" FontWeight="Light"/>
+                    </AppBarButton.Icon>
+                </AppBarButton>
+                <AppBarButton x:Uid="ChecklistAppBarButton" Label="Checklist" Command="{Binding CreateChecklistNoteCommand}" Icon="List" ToolTipService.ToolTip="New checklist note"/>
+                <AppBarButton x:Uid="PhotoAppBarButton" Icon="Camera" Label="Photo" Command="{Binding OpenImagePickerCommand}" ToolTipService.ToolTip="New image note from camera or gallery"/>
+                <AppBarButton x:Uid="AudioAppBarButton" Icon="Microphone" Label="Audio" ToolTipService.ToolTip="New audio note" IsEnabled="False"/>
+            </CommandBar.PrimaryCommands>
+
+            <CommandBar.SecondaryCommands>
+                <AppBarButton x:Uid="ArchivedNotesAppBarButton" Icon="Preview" Label="Archived notes" Command="{Binding OpenArchivedNotesCommand}" ToolTipService.ToolTip="Open archived notes page"/>
+                <AppBarButton x:Uid="SettingsAppBarButton" Icon="Setting" Label="Settings" Command="{Binding OpenSettingsCommand}" ToolTipService.ToolTip="Open settings page"/>
+            </CommandBar.SecondaryCommands>
+        </CommandBar>
     </Grid>
 </Page>
