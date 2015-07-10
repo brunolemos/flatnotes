@@ -9,15 +9,12 @@ namespace FlatNotes.ViewModels
 {
     public class ArchivedNotesViewModel : ViewModelBase
     {
-#if WINDOWS_PHONE_APP
         public event EventHandler ReorderModeEnabled;
         public event EventHandler ReorderModeDisabled;
-#endif
 
         public Notes Notes { get { return notes; } private set { notes = value; NotifyPropertyChanged("Notes"); } }
         public Notes notes = AppData.ArchivedNotes;
 
-#if WINDOWS_PHONE_APP
         public ListViewReorderMode ReorderMode {
             get { return reorderMode; }
             set {
@@ -31,7 +28,6 @@ namespace FlatNotes.ViewModels
             }
         }
         public ListViewReorderMode reorderMode = ListViewReorderMode.Disabled;
-#endif
 
         public bool ReorderedNotes { get; set; }
 

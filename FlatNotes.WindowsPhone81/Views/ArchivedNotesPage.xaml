@@ -13,16 +13,7 @@
     DataContext="{Binding Source={StaticResource ArchivedNotesiewModel}}"
     d:DataContext="{d:DesignData /SampleData/MainViewModelSampleData.xaml}">
 
-    <Page.Transitions>
-        <TransitionCollection>
-            <EntranceThemeTransition/>
-        </TransitionCollection>
-    </Page.Transitions>
-
     <Page.Resources>
-        <Converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
-        <Converters:PositiveIntToVisibilityConverter x:Key="PositiveIntToVisibilityConverter"/>
-        
         <DataTemplate x:Key="NotePreviewListViewControlTemplate">
             <local:NotePreview Tapped="OnNoteTapped" Loaded="OnNoteLoaded" Unloaded="OnNoteUnloaded"/>
         </DataTemplate>
@@ -33,21 +24,7 @@
     </Page.Resources>
 
     <Grid x:Name="LayoutRoot" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-            
-        <Grid Grid.Row="0" Height="140" Visibility="{Binding IsWindows, Converter={StaticResource BooleanToVisibilityConverter}}">
-            <Button x:Name="backButton" Margin="39,59,39,0" Command="{Binding NavigationHelper.GoBackCommand, ElementName=Root}"
-                    Style="{StaticResource NavigationBackButtonNormalStyle}"
-                    VerticalAlignment="Top"
-                    AutomationProperties.Name="Back"
-                    AutomationProperties.AutomationId="BackButton"
-                    AutomationProperties.ItemType="Navigation Button"/>
-        </Grid>
-        
-        <Grid Grid.Row="1" x:Name="ContentRoot" MaxWidth="1000">
+        <Grid x:Name="ContentRoot" MaxWidth="1000">
             <Grid Visibility="{Binding Notes.Count, Converter={StaticResource PositiveIntToVisibilityConverter}, ConverterParameter=True}">
                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                     <Viewbox Width="180">
