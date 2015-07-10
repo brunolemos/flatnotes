@@ -42,27 +42,58 @@ namespace FlatNotes.Views
             //Color Picker
             NoteColorPicker.NoteColorChanged += (s, _e) => { viewModel.Note.Color = _e.NoteColor; };
 
-            this.Loaded += (s, _e) => App.ChangeStatusBarColor(Colors.Transparent, Colors.Black);
-            viewModel.PropertyChanged += OnPropertyChanged;
+            this.Loaded += OnLoaded;
+            viewModel.PropertyChanged += OnViewModelPropertyChanged;
+            viewModel.Note.PropertyChanged += OnNotePropertyChanged;
         }
 
-        private void OnPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        private void OnLoaded(object sender, RoutedEventArgs e)
         {
-            if(e.PropertyName == "Note" || e.PropertyName == "IsPinned")
-            {
-                if (viewModel.Note == null) return;
+            UpdateStatusBarColor();
 
-                if(viewModel.IsPinned)
-                {
-                    TogglePinAppBarButton.Icon = new SymbolIcon(Symbol.UnPin);
-                    TogglePinAppBarButton.Command = viewModel.UnpinCommand;
-                    TogglePinAppBarButton.Label = ResourceLoader.GetForCurrentView().GetString("Unpin");
-                } else
-                {
-                    TogglePinAppBarButton.Icon = new SymbolIcon(Symbol.Pin);
-                    TogglePinAppBarButton.Command = viewModel.PinCommand;
-                    TogglePinAppBarButton.Label = ResourceLoader.GetForCurrentView().GetString("Pin");
-                }
+            if(viewModel.Note.IsNewNote && AppData.Notes.Count > 0)
+                NoteTitleTextBox.Focus(FocusState.Programmatic);
+        }
+
+        private void OnViewModelPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if(e.PropertyName == "Note" && viewModel.Note != null)
+            {
+                viewModel.Note.PropertyChanged += OnNotePropertyChanged;
+                UpdateStatusBarColor();
+                UpdateIsPinnedStatus();
+            }
+        }
+
+        private void OnNotePropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "IsPinned")
+                UpdateIsPinnedStatus();
+            else if(e.PropertyName == "Color")
+                UpdateStatusBarColor();
+        }
+
+        private void UpdateStatusBarColor()
+        {
+            if (viewModel.Note == null) return;
+            App.ChangeStatusBarColor(new Color().FromHex(viewModel.Note.Color.DarkColor2), Colors.White);
+        }
+
+        private void UpdateIsPinnedStatus()
+        {
+            if (viewModel.Note == null) return;
+
+            if (viewModel.Note.IsPinned)
+            {
+                TogglePinAppBarButton.Icon = new SymbolIcon(Symbol.UnPin);
+                TogglePinAppBarButton.Command = viewModel.UnpinCommand;
+                TogglePinAppBarButton.Label = ResourceLoader.GetForCurrentView().GetString("Unpin");
+            }
+            else
+            {
+                TogglePinAppBarButton.Icon = new SymbolIcon(Symbol.Pin);
+                TogglePinAppBarButton.Command = viewModel.PinCommand;
+                TogglePinAppBarButton.Label = ResourceLoader.GetForCurrentView().GetString("Pin");
             }
         }
 
@@ -92,6 +123,7 @@ namespace FlatNotes.Views
         private async void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
         {
             App.RootFrame.Background = previousBackground;
+            CommandBar.IsOpen = false;
 
             //deleted
             if (viewModel.Note == null) return;

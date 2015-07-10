@@ -6,7 +6,7 @@ namespace FlatNotes.Controls
     {
 #if WINDOWS_PHONE_APP
 #else
-        public object ReorderMode { get; set; }
+        public new object ReorderMode { get; set; }
 #endif
     }
 }

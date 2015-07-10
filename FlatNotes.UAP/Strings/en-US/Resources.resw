@@ -130,7 +130,7 @@
     <value>Columns</value>
   </data>
   <data name="CreatedAtFormatString" xml:space="preserve">
-    <value>Created {0}</value>
+    <value>created {0}</value>
   </data>
   <data name="DeleteAppBarButton.Label" xml:space="preserve">
     <value>Delete</value>
@@ -211,13 +211,13 @@
     <value>Toggle checklist</value>
   </data>
   <data name="UpdatedAtFormatString" xml:space="preserve">
-    <value>Updated {0}</value>
+    <value>updated {0}</value>
   </data>
   <data name="ArchiveAppBarButton.Label" xml:space="preserve">
     <value>Archive</value>
   </data>
   <data name="ArchivedNotesAppBarButton.Label" xml:space="preserve">
-    <value>Archived</value>
+    <value>Archived notes</value>
   </data>
   <data name="EmptyNotesMessageTextBox.Text" xml:space="preserve">
     <value>Notes you add appear here</value>
@@ -229,7 +229,7 @@
     <value>Restore</value>
   </data>
   <data name="ArchivedAtFormatString" xml:space="preserve">
-    <value>Archived {0}</value>
+    <value>archived {0}</value>
   </data>
   <data name="RequestFeatureOrReportBugAppBarButton.Label" xml:space="preserve">
     <value>Request feature / report bug</value>

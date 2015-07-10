@@ -7,20 +7,20 @@
   IgnorableNamespaces="uap mp">
 
   <Identity
-    Name="3afb9f09-2002-430d-ab5f-fba9abecb8cg"
+    Name="3afb9f09-2002-430d-ab5f-fba9abecb8cf2"
     Publisher="CN=Bruno Lemos"
     Version="2.0.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="3afb9f09-2002-430d-ab5f-fba9abecb8cf" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
-    <DisplayName>Flat Notes</DisplayName>
+    <DisplayName>Flat Notes UAP</DisplayName>
     <PublisherDisplayName>Bruno Lemos</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
   <Dependencies>
-    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.10069.0" MaxVersionTested="10.0.10069.0" />
+    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.10069.0" MaxVersionTested="10.0.10158.0" />
   </Dependencies>
 
   <Resources>

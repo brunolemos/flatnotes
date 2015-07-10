@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Storage;
 using Windows.Storage.Pickers;
@@ -54,10 +55,9 @@ namespace FlatNotes.ViewModels
                 CurrentNoteBeingEdited = Note;
                 if (Note == null) return;
 
-                AlreadyExists = AppData.Notes.Where<Note>(x => x.ID == Note.ID).FirstOrDefault<Note>() != null;
-                IsArchived = AppData.ArchivedNotes.Where<Note>(x => x.ID == Note.ID).FirstOrDefault<Note>() != null;
-                IsNewNote = !AlreadyExists && !IsArchived;
-                IsPinned = SecondaryTile.Exists(Note.ID);
+                Note.AlreadyExists = AppData.Notes.Where<Note>(x => x.ID == Note.ID).FirstOrDefault<Note>() != null;
+                Note.IsArchived = AppData.ArchivedNotes.Where<Note>(x => x.ID == Note.ID).FirstOrDefault<Note>() != null;
+                Note.IsPinned = SecondaryTile.Exists(Note.ID);
 
                 NotifyPropertyChanged("ArchivedAtFormatedString");
                 NotifyPropertyChanged("UpdatedAtFormatedString");
@@ -69,9 +69,9 @@ namespace FlatNotes.ViewModels
                     switch (_e.PropertyName)
                     {
                         case "Changed":
-                            if (AlreadyExists)
+                            if (Note.AlreadyExists)
                                 AppData.HasUnsavedChangesOnNotes = Note.Changed;
-                            else if (IsArchived)
+                            else if (Note.IsArchived)
                                 AppData.HasUnsavedChangesOnArchivedNotes = Note.Changed;
 
                             break;
@@ -97,7 +97,7 @@ namespace FlatNotes.ViewModels
             NotifyPropertyChanged("Note");
             if (Note == null) return;
 
-            if (!IsArchived)
+            if (!Note.IsArchived)
                 Note.Changed = false;
 
             TileManager.UpdateNoteTileIfExists(Note, AppSettings.Instance.TransparentNoteTile);
@@ -108,7 +108,7 @@ namespace FlatNotes.ViewModels
             NotifyPropertyChanged("Note");
             if (Note == null) return;
 
-            if (IsArchived)
+            if (Note.IsArchived)
                 Note.Changed = false;
         }
 
@@ -117,18 +117,6 @@ namespace FlatNotes.ViewModels
 
         public Note Note { get { return note; } set { note = value == null ? new Note() : value; NotifyPropertyChanged("Note"); } }
         private static Note note = new Note();
-
-        public bool IsPinned { get { isPinned = Note == null ? false : SecondaryTile.Exists(Note.ID); return isPinned; } set { isPinned = value; NotifyPropertyChanged("IsPinned"); } }
-        private bool isPinned;
-
-        public bool IsNewNote { get { return isNewNote; } set { isNewNote = value; NotifyPropertyChanged("IsNewNote"); } }
-        private bool isNewNote;
-
-        public bool IsArchived { get { return isArchived; } set { isArchived = value; NotifyPropertyChanged("IsArchived"); } }
-        private bool isArchived;
-
-        public bool AlreadyExists { get { return alreadyExists; } set { alreadyExists = value; NotifyPropertyChanged("AlreadyExists"); } }
-        private bool alreadyExists;
 
         public NoteImage TempNoteImage { get { return tempNoteImage; } set { tempNoteImage = value; } }
         private static NoteImage tempNoteImage = null;
@@ -238,10 +226,10 @@ namespace FlatNotes.ViewModels
 
             if (Note.IsEmpty()) return;
 
-            if (IsNewNote)
+            if (Note.IsNewNote)
                 await AppData.CreateOrUpdateNote(Note);
 
-            IsPinned = await TileManager.CreateOrUpdateNoteTile(Note, AppSettings.Instance.TransparentNoteTile);
+            Note.IsPinned = await TileManager.CreateOrUpdateNoteTile(Note, AppSettings.Instance.TransparentNoteTile);
         }
 
         private void Unpin()
@@ -249,7 +237,7 @@ namespace FlatNotes.ViewModels
             GoogleAnalytics.EasyTracker.GetTracker().SendEvent("ui_action", "execute_command", "unpin", 0);
 
             TileManager.RemoveTileIfExists(Note);
-            IsPinned = SecondaryTile.Exists(Note.ID);
+            Note.IsPinned = false;// SecondaryTile.Exists(Note.ID);
         }
 
         private async void ArchiveNote()
@@ -276,14 +264,14 @@ namespace FlatNotes.ViewModels
 
         private async void DeleteNote()
         {
-            bool success = IsArchived ? await AppData.RemoveArchivedNote(Note) : await AppData.RemoveNote(Note);
+            bool success = Note.IsArchived ? await AppData.RemoveArchivedNote(Note) : await AppData.RemoveNote(Note);
             if (!success) return;
 
             note = null;
 
             if (App.RootFrame.CanGoBack)
                 App.RootFrame.GoBack();
-            else if (IsArchived)
+            else if (Note.IsArchived)
                 App.RootFrame.Navigate(typeof(ArchivedNotesPage));
             else
                 App.RootFrame.Navigate(typeof(MainPage));
@@ -300,7 +288,7 @@ namespace FlatNotes.ViewModels
             TempNoteImage = null;
 
             //save
-            if (IsArchived)
+            if (Note.IsArchived)
                 await AppData.SaveArchivedNotes();
             else
                 await AppData.SaveNotes();

@@ -216,33 +216,15 @@ namespace FlatNotes
             Color backgrouncColor = mainDarkenColor;//Color.FromArgb(0xff, 0xe8, 0xe8, 0xe8);
             Color foregroundColor = Colors.White;//Color.FromArgb(0xc0, 0x00, 0x00, 0x00);
 
+            ChangeStatusBarColor(backgrouncColor, foregroundColor);
+
 #if WINDOWS_APP
 #else
 #if WINDOWS_UAP
-            var titleBar = ApplicationView.GetForCurrentView().TitleBar;
-
-            titleBar.BackgroundColor = backgrouncColor;
-            titleBar.ForegroundColor = foregroundColor;
-
-            titleBar.ButtonBackgroundColor = titleBar.BackgroundColor;
-            titleBar.ButtonForegroundColor = foregroundColor;
-
-            titleBar.ButtonInactiveBackgroundColor = titleBar.BackgroundColor;
-            titleBar.ButtonInactiveForegroundColor = Colors.LightGray;
-
-            titleBar.ButtonHoverBackgroundColor = Color.FromArgb(0xff, 0xe5, 0xe5, 0xe5);
-            titleBar.ButtonHoverForegroundColor = titleBar.ButtonForegroundColor;
-
-            titleBar.ButtonPressedBackgroundColor = backgrouncColor;
-            titleBar.ButtonPressedForegroundColor = Colors.White;
 
             bool hasStatusBar = Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar");
             if (!hasStatusBar) return;
 #endif
-
-            StatusBar.GetForCurrentView().BackgroundOpacity = backgrouncColor.A;
-            StatusBar.GetForCurrentView().BackgroundColor = backgrouncColor;
-            StatusBar.GetForCurrentView().ForegroundColor = foregroundColor;
             await StatusBar.GetForCurrentView().HideAsync();
 #endif
         }
@@ -251,7 +233,24 @@ namespace FlatNotes
         {
 #if WINDOWS_APP
 #else
-    #if WINDOWS_UAP
+#if WINDOWS_UAP
+        var titleBar = ApplicationView.GetForCurrentView().TitleBar;
+
+        titleBar.BackgroundColor = backgroundColor;
+        titleBar.ForegroundColor = foregroundColor;
+
+        titleBar.ButtonBackgroundColor = backgroundColor;
+        titleBar.ButtonForegroundColor = foregroundColor;
+
+        titleBar.ButtonInactiveBackgroundColor = backgroundColor;
+        titleBar.ButtonInactiveForegroundColor = Colors.LightGray;
+
+        titleBar.ButtonHoverBackgroundColor = backgroundColor.Add(Color.FromArgb(0x10, 0xff, 0xff, 0xff));
+        titleBar.ButtonHoverForegroundColor = titleBar.ButtonForegroundColor;
+
+        titleBar.ButtonPressedBackgroundColor = backgroundColor.Add(Color.FromArgb(0x20, 0xff, 0xff, 0xff));
+        titleBar.ButtonPressedForegroundColor = Colors.White;
+
         bool hasStatusBar = Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar");
         if (!hasStatusBar) return;
     #endif
@@ -259,9 +258,9 @@ namespace FlatNotes
         if (foregroundColor == null)
         {
             if (AppSettings.Instance.Theme == ElementTheme.Light && App.Current.RequestedTheme == ApplicationTheme.Dark)
-                foregroundColor = new Color().fromHex("#404040");
+                foregroundColor = new Color().FromHex("#404040");
             else if (AppSettings.Instance.Theme != ElementTheme.Light && App.Current.RequestedTheme == ApplicationTheme.Light)
-                foregroundColor = new Color().fromHex("#c9cdd1");
+                foregroundColor = new Color().FromHex("#c9cdd1");
         }
 
         StatusBar.GetForCurrentView().BackgroundOpacity = backgroundColor.A;

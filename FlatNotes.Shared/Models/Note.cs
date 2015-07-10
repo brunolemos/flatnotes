@@ -1,7 +1,10 @@
-﻿using System;
+﻿using FlatNotes.Utils;
+using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Runtime.Serialization;
+using Windows.UI.StartScreen;
 
 namespace FlatNotes.Models
 {
@@ -62,9 +65,26 @@ namespace FlatNotes.Models
         [DataMember(Name = "ArchivedAt")]
         private DateTime? archivedAt;
 
+        [IgnoreDataMember]
+        public bool IsPinned { get { return isPinned; } set { isPinned = value; NotifyPropertyChanged("IsPinned"); } }
+        private bool isPinned;
+
+        [IgnoreDataMember]
+        public bool AlreadyExists { get { return alreadyExists; } set { alreadyExists = value; IsNewNote = !AlreadyExists && !IsArchived; NotifyPropertyChanged("AlreadyExists"); } }
+        private bool alreadyExists;
+
+        [IgnoreDataMember]
+        public bool IsArchived { get { return isArchived; } set { isArchived = value; IsNewNote = !AlreadyExists && !IsArchived; NotifyPropertyChanged("IsArchived"); } }
+        private bool isArchived;
+
+        [IgnoreDataMember]
+        public bool IsNewNote { get { return isNewNote; } private set { isNewNote = value; NotifyPropertyChanged("IsNewNote"); } }
+        private bool isNewNote;
+
         public Note()
         {
             PropertyChanged += Note_PropertyChanged;
+            IsPinned = SecondaryTile.Exists(ID);
         }
 
         public Note(bool isChecklist = false) : this()

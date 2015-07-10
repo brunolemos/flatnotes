@@ -12,6 +12,20 @@
     d:DesignWidth="400"
     d:DataContext="{Binding Notes, Source={d:DesignData /SampleData/MainViewModelSampleData.xaml}}">
     
+    <UserControl.Resources>
+        <MenuFlyout x:Key="NoteMenuFlyout">
+            <MenuFlyoutItem Text="Archive"/>
+            <MenuFlyoutItem Text="Delete"/>
+            <MenuFlyoutItem Text="Pin to start"/>
+            <MenuFlyoutSeparator/>
+            <MenuFlyoutSubItem Text="Change color">
+                <MenuFlyoutItem Text="{x:Bind}"/>
+                <MenuFlyoutItem Text="{Binding}"/>
+            </MenuFlyoutSubItem>
+            <MenuFlyoutItem Text="Reorder..."/>
+        </MenuFlyout>
+    </UserControl.Resources>
+    
     <GridView HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
               ItemsSource="{Binding}" DataContext="{Binding ItemsSource, ElementName=Root}"
               SelectionMode="None" CanReorderItems="False" CanDragItems="False" AllowDrop="False" 
@@ -37,7 +51,7 @@
 
         <GridView.ItemTemplate>
             <DataTemplate x:DataType="models:Note">
-                <local:NotePreview/>
+                <local:NotePreview Holding="NotePreview_Holding" RightTapped="NotePreview_RightTapped" RequestedTheme="Dark" FlyoutBase.AttachedFlyout="{StaticResource NoteMenuFlyout}"/>
             </DataTemplate>
         </GridView.ItemTemplate>
         

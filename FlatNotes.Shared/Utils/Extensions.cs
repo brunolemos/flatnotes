@@ -15,7 +15,7 @@ namespace FlatNotes.Utils
             return str.Replace(Environment.NewLine, " ").Replace("\n", " ").Replace("\r", " ").Trim();
         }
 
-        public static Color fromHex(this Color color, String hex)
+        public static Color FromHex(this Color color, String hex)
         {
             return hexToColor(hex);
         }
@@ -50,6 +50,19 @@ namespace FlatNotes.Utils
             b = byte.Parse( hex.Substring( start + 4, 2 ), System.Globalization.NumberStyles.HexNumber );
 
             return Color.FromArgb( a, r, g, b );
+        }
+
+        //https://en.wikipedia.org/wiki/Alpha_compositing#Alpha%5Fblending
+        public static Color Add(this Color color_src, Color color_dst)
+        {
+            return color_src;
+
+            //byte a = (byte)(color_src.A + (color_dst.A * (255 - color_src.A) / 255));
+            //byte r = (byte)((color_src.R * color_src.A / 255) + (color_dst.R * (color_dst.A / 255) * (255 - color_src.A) / 255) / a);
+            //byte g = (byte)((color_src.G * color_src.A / 255) + (color_dst.G * (color_dst.A / 255) * (255 - color_src.A) / 255) / a);
+            //byte b = (byte)((color_src.B * color_src.A / 255) + (color_dst.B * (color_dst.A / 255) * (255 - color_src.A) / 255) / a);
+
+            //return Color.FromArgb(a, r, g, b);
         }
     }
 }

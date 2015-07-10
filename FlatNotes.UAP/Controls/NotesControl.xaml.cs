@@ -34,5 +34,21 @@ namespace FlatNotes.Controls
             var handler = ItemClick;
             if (handler != null) handler(sender, e);
         }
+
+        private void NotePreview_Holding(object sender, Windows.UI.Xaml.Input.HoldingRoutedEventArgs e)
+        {
+            ShowNoteFlyout(sender as FrameworkElement);
+        }
+
+        private void NotePreview_RightTapped(object sender, Windows.UI.Xaml.Input.RightTappedRoutedEventArgs e)
+        {
+            ShowNoteFlyout(sender as FrameworkElement);
+        }
+
+        private void ShowNoteFlyout(FrameworkElement element)
+        {
+            if (element == null) return;
+            Flyout.GetAttachedFlyout(element).ShowAt(element);
+        }
     }
 }

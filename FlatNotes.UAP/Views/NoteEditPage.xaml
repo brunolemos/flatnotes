@@ -31,11 +31,11 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
-                        <Grid Margin="0,2,0,0" Width="24" Height="24" VerticalAlignment="Top">
-                            <CheckBox IsChecked="{Binding IsChecked, Mode=TwoWay}" BorderBrush="{StaticResource AppNoteForegroundBrush}" IsEnabled="{Binding ReorderMode, ElementName=NoteChecklistListView, Converter={StaticResource ReorderModeToBooleanConverter}, ConverterParameter=True}" ClickMode="Release" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                        </Grid>
+                        <Viewbox Margin="0,3,0,0" Height="20" HorizontalAlignment="Center" VerticalAlignment="Top">
+                            <CheckBox IsChecked="{Binding IsChecked, Mode=TwoWay}" Style="{StaticResource CheckBoxWithoutContentStyle}" BorderBrush="{StaticResource AppNoteForegroundBrush}" IsEnabled="{Binding ReorderMode, ElementName=NoteChecklistListView, Converter={StaticResource ReorderModeToBooleanConverter}, ConverterParameter=True}" ClickMode="Release" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        </Viewbox>
 
-                        <TextBox Grid.Column="1" Text="{Binding Text, Mode=TwoWay}" Foreground="{StaticResource AppNoteForegroundBrush}" InputScope="Chat" Background="Transparent" BorderThickness="0" FontSize="18" Margin="0" Padding="4,0,12,0" FontWeight="Normal" AcceptsReturn="False" TextWrapping="Wrap" IsEnabled="{Binding ReorderMode, ElementName=NoteChecklistListView, Converter={StaticResource ReorderModeToBooleanConverter}, ConverterParameter=True}" KeyDown="NoteChecklistItemTextBox_KeyDown"/>
+                        <TextBox Grid.Column="1" Text="{Binding Text, Mode=TwoWay}" Margin="0" Padding="8,0" Foreground="{StaticResource AppNoteForegroundBrush}" InputScope="Chat" Background="Transparent" BorderThickness="0" FontSize="18" FontWeight="Normal" AcceptsReturn="False" TextWrapping="Wrap" IsEnabled="{Binding ReorderMode, ElementName=NoteChecklistListView, Converter={StaticResource ReorderModeToBooleanConverter}, ConverterParameter=True}" KeyDown="NoteChecklistItemTextBox_KeyDown"/>
                     </Grid>
 
                     <Grid Background="Transparent" Visibility="{Binding ReorderMode, ElementName=NoteChecklistListView, Converter={StaticResource ReorderModeToVisibilityConverter}}"/>
@@ -94,39 +94,40 @@
             <ScrollViewer Grid.Row="0" ScrollViewer.VerticalScrollMode="Enabled">
                 <StackPanel>
                     <Grid MaxHeight="220" Background="{StaticResource PhoneDarkLowBrush}" Visibility="{Binding Note.Images.Count, Converter={StaticResource PositiveIntToVisibilityConverter}}">
-                        <ListView x:Name="NoteImagesListView" ItemsSource="{Binding Note.Images}" ItemTemplate="{StaticResource NoteImagesListViewControlTemplate}" SelectionMode="None"/>
+                        <ListView x:Name="NoteImagesListView" ItemsSource="{Binding Note.Images}" ItemTemplate="{StaticResource NoteImagesListViewControlTemplate}" SelectionMode="None" RequestedTheme="Dark"/>
                     </Grid>
 
-                    <TextBox x:Uid="TitleTextBox" x:Name="NoteTitleTextBox" PlaceholderText="Title" Text="{Binding Note.Title, Mode=TwoWay}" Foreground="{StaticResource AppNoteForegroundBrush}" InputScope="Chat" Background="Transparent" BorderThickness="0" FontSize="22" Margin="0" Padding="12" FontWeight="Bold" MaxLength="50" TextWrapping="NoWrap" KeyDown="NoteTitleTextBox_KeyDown" ScrollViewer.HorizontalScrollMode="Disabled"/>
+                    <TextBox x:Uid="TitleTextBox" x:Name="NoteTitleTextBox" PlaceholderText="Title" Text="{Binding Note.Title, Mode=TwoWay}" Foreground="{StaticResource AppNoteForegroundBrush}" InputScope="Chat" Background="Transparent" BorderThickness="0" FontSize="18" Margin="0" Padding="12" FontWeight="Bold" MaxLength="50" TextWrapping="Wrap" KeyDown="NoteTitleTextBox_KeyDown" ScrollViewer.HorizontalScrollMode="Disabled"/>
                     <TextBox x:Uid="TextTextBox" x:Name="NoteTextTextBox" PlaceholderText="Text" Text="{Binding Note.Text, Mode=TwoWay}" Foreground="{StaticResource AppNoteForegroundBrush}" InputScope="Chat" Background="Transparent" BorderThickness="0" FontSize="18" Margin="0" Padding="12,4" FontWeight="Normal" AcceptsReturn="True" TextWrapping="Wrap" Visibility="{Binding Note.IsText, Converter={StaticResource BooleanToVisibilityConverter}}" ScrollViewer.HorizontalScrollMode="Disabled" />
 
                     <StackPanel Visibility="{Binding Note.IsChecklist, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
                         <ListView x:Name="NoteChecklistListView" Margin="0" Padding="0" ItemsSource="{Binding Note.Checklist}" AllowDrop="True" CanDragItems="True" ItemTemplate="{StaticResource NoteChecklistListViewControlTemplate}" Holding="NoteChecklistListView_Holding" SelectionMode="None" IsItemClickEnabled="False" IsTapEnabled="False"/>
-
                         <Grid Margin="12,0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
 
-                            <Grid VerticalAlignment="Top">
-                                <Grid Margin="0,2,0,0" Width="24" Height="24" VerticalAlignment="Top" Opacity="0" IsHitTestVisible="False">
-                                    <CheckBox IsEnabled="False" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                                </Grid>
+                            <Grid>
+                                <Viewbox Margin="0,3,0,0" Height="20" HorizontalAlignment="Center" VerticalAlignment="Top" IsHitTestVisible="False" Opacity="0">
+                                    <CheckBox IsChecked="{Binding IsChecked, Mode=TwoWay}" Style="{StaticResource CheckBoxWithoutContentStyle}" IsEnabled="False" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                </Viewbox>
 
-                                <SymbolIcon Symbol="Add" Margin="-3,0,0,0" Foreground="{StaticResource PhoneDarkMidBrush}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                <Viewbox Margin="2,5,0,0" Width="16" HorizontalAlignment="Center" VerticalAlignment="Top" IsHitTestVisible="False">
+                                    <SymbolIcon Symbol="Add" Foreground="{StaticResource PhoneDarkMidBrush}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                </Viewbox>
                             </Grid>
 
-                            <TextBox x:Uid="NewItemTextBox" x:Name="NewChecklistItemTextBox" Grid.Column="1" PlaceholderText="New item" Text="" Foreground="{StaticResource AppNoteForegroundBrush}" InputScope="Chat" Background="Transparent" BorderThickness="0" FontSize="18" Margin="0" Padding="4,0,12,0" FontWeight="Normal" AcceptsReturn="False" TextWrapping="Wrap" KeyDown="NewChecklistItemTextBox_KeyDown" IsEnabled="{Binding ReorderMode, ElementName=NoteChecklistListView, Converter={StaticResource ReorderModeToBooleanConverter}, ConverterParameter=True}" />
+                            <TextBox Grid.Column="1" x:Uid="NewItemTextBox" x:Name="NewChecklistItemTextBox" PlaceholderText="New item" Text="" Margin="0" Padding="8,0" Foreground="{StaticResource AppNoteForegroundBrush}" InputScope="Chat" Background="Transparent" BorderThickness="0" FontSize="18" FontWeight="Normal" AcceptsReturn="False" TextWrapping="Wrap" KeyDown="NewChecklistItemTextBox_KeyDown" IsEnabled="{Binding ReorderMode, ElementName=NoteChecklistListView, Converter={StaticResource ReorderModeToBooleanConverter}, ConverterParameter=True}" />
                         </Grid>
                     </StackPanel>
                 </StackPanel>
             </ScrollViewer>
 
             <ScrollViewer Grid.Row="1" Margin="0,12,0,0" Height="40">
-                <!-- Visibility="{Binding IsNewNote, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=True}"-->
+                <!-- Visibility="{Binding Note.IsNewNote, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=True}"-->
                 <StackPanel Margin="12,12,12,0">
-                    <Grid Visibility="{Binding IsArchived, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <Grid Visibility="{Binding Note.IsArchived, Converter={StaticResource BooleanToVisibilityConverter}}">
 
                         <Grid Margin="0,0,0,12" Visibility="{Binding Note.ArchivedAt, Converter={StaticResource NullableToVisibilityConverter}}">
                             <Grid.ColumnDefinitions>
@@ -173,13 +174,13 @@
 
                 <AppBarButton x:Uid="PhotoAppBarButton" Icon="Camera" Label="Photo" Command="{Binding OpenImagePickerCommand}"/>
                 <AppBarButton x:Uid="AudioAppBarButton" Icon="Microphone" Label="Audio" IsEnabled="False"/>
-                <AppBarButton x:Name="TogglePinAppBarButton" Icon="Pin" Label="Pin to start" Command="{Binding PinCommand}" Visibility="{Binding IsArchived, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=True}"/>
+                <AppBarButton x:Name="TogglePinAppBarButton" Icon="Pin" Label="Pin to start" Command="{Binding PinCommand}" Visibility="{Binding Note.IsArchived, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=True}"/>
             </CommandBar.PrimaryCommands>
 
             <CommandBar.SecondaryCommands>
                 <AppBarButton x:Uid="ToggleChecklistAppBarButton" Label="Toggle checklist" Command="{Binding ToggleChecklistCommand}" Icon="List" />
-                <AppBarButton x:Uid="RestoreAppBarButton" Icon="Undo" Label="Restore" Command="{Binding RestoreNoteCommand}" Visibility="{Binding IsArchived, Converter={StaticResource BooleanToVisibilityConverter}}" />
-                <AppBarButton x:Uid="ArchiveAppBarButton" Icon="Remove" Label="Archive" Command="{Binding ArchiveNoteCommand}" Visibility="{Binding AlreadyExists, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                <AppBarButton x:Uid="RestoreAppBarButton" Icon="Undo" Label="Restore" Command="{Binding RestoreNoteCommand}" Visibility="{Binding Note.IsArchived, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                <AppBarButton x:Uid="ArchiveAppBarButton" Icon="Remove" Label="Archive" Command="{Binding ArchiveNoteCommand}" Visibility="{Binding Note.AlreadyExists, Converter={StaticResource BooleanToVisibilityConverter}}" />
                 <AppBarButton x:Uid="DeleteAppBarButton" Icon="Delete" Label="Delete" Command="{Binding DeleteNoteCommand}" />
             </CommandBar.SecondaryCommands>
         </CommandBar>
