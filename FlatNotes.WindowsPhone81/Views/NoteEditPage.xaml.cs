@@ -26,10 +26,12 @@ namespace FlatNotes.Views
     public sealed partial class NoteEditPage : Page
 #endif
     {
+        public NoteEditViewModel viewModel { get { return _viewModel; } }
+        private static NoteEditViewModel _viewModel = new NoteEditViewModel();
+
         public NavigationHelper NavigationHelper { get { return this.navigationHelper; } }
         private NavigationHelper navigationHelper;
 
-        public NoteEditViewModel viewModel { get { return (NoteEditViewModel)DataContext; } }
         private static Brush previousBackground;
 
         private bool checklistChanged = false;
@@ -60,7 +62,7 @@ namespace FlatNotes.Views
             {
                 if (viewModel.Note == null) return;
 
-                if(viewModel.IsPinned)
+                if(viewModel.Note.IsPinned)
                 {
                     TogglePinAppBarButton.Icon = new SymbolIcon(Symbol.UnPin);
                     TogglePinAppBarButton.Command = viewModel.UnpinCommand;
@@ -92,7 +94,7 @@ namespace FlatNotes.Views
             viewModel.Note.Checklist.CollectionItemChanged += Checklist_CollectionItemChanged;
 
             previousBackground = App.RootFrame.Background;
-            App.RootFrame.Background = new SolidColorBrush(new Color().fromHex(viewModel.Note.Color.Color));
+            App.RootFrame.Background = new SolidColorBrush(new Color().FromHex(viewModel.Note.Color.Color));
 
             NoteColorPicker.SelectedNoteColor = viewModel.Note.Color;
         }

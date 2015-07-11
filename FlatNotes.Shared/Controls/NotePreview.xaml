@@ -42,10 +42,10 @@
                     </Grid.ColumnDefinitions>
 
                     <Viewbox Margin="0,6,0,0" Height="12" HorizontalAlignment="Left" VerticalAlignment="Top">
-                        <CheckBox Grid.Column="0" IsChecked="{Binding IsChecked, Mode=TwoWay}" Style="{StaticResource CheckBoxWithoutContentStyle}" BorderBrush="{StaticResource AppNoteForegroundBrush}" Foreground="{StaticResource AppNoteForegroundBrush}" ClickMode="Release" IsTapEnabled="False"/>
+                        <CheckBox Grid.Column="0" IsChecked="{Binding IsChecked, Mode=TwoWay}" Style="{StaticResource CheckBoxWithoutContentStyle}" BorderBrush="{StaticResource AppNoteForegroundBrush}" Foreground="{StaticResource AppNoteForegroundBrush}" FontWeight="SemiLight" ClickMode="Release" IsTapEnabled="False"/>
                     </Viewbox>
 
-                    <TextBlock Grid.Column="1" Margin="0" Padding="8,0" Text="{Binding Text, Mode=OneWay}" Foreground="{Binding ElementName=Root, Path=Foreground}" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" FontSize="{Binding ElementName=Root, Path=FontSize}" FontWeight="Normal" MaxLines="1" VerticalAlignment="Top" />
+                    <TextBlock Grid.Column="1" Margin="0" Padding="8,0" Text="{Binding Text, Mode=OneWay}" Foreground="{Binding ElementName=Root, Path=Foreground}" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" FontSize="{Binding ElementName=Root, Path=FontSize}" FontWeight="SemiLight" MaxLines="1" VerticalAlignment="Top" />
                 </Grid>
             </DataTemplate>
             
@@ -61,7 +61,7 @@
         <StackPanel Margin="0">
             <Grid Visibility="{Binding ElementName=Root, Path=HideImage, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=True}">
                 <Grid MaxHeight="120" Background="{StaticResource PhoneDarkLowBrush}" Visibility="{Binding Images.Count, Converter={StaticResource PositiveIntToVisibilityConverter}}">
-                    <ListView x:Name="NoteImagesListView" ItemsSource="{Binding Images}" ItemTemplate="{StaticResource NoteImagesListViewControlTemplate}" SelectionMode="None" IsTapEnabled="False" IsItemClickEnabled="False" HorizontalContentAlignment="Stretch" RequestedTheme="Dark"/>
+                    <ListView x:Name="NoteImagesListView" ItemsSource="{Binding Images}" ItemTemplate="{StaticResource NoteImagesListViewControlTemplate}" SelectionMode="None" IsTapEnabled="False" IsItemClickEnabled="False" HorizontalContentAlignment="Stretch"/>
                 </Grid>
             </Grid>
             

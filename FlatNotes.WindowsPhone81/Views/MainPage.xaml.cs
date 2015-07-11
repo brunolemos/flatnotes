@@ -26,10 +26,11 @@ namespace FlatNotes.Views
     public partial class MainPage : Page
 #endif
     {
+        public MainViewModel viewModel { get { return _viewModel; } }
+        private static MainViewModel _viewModel = new MainViewModel();
+
         public NavigationHelper NavigationHelper { get { return this.navigationHelper; } }
         private NavigationHelper navigationHelper;
-
-        public MainViewModel viewModel { get { return (MainViewModel)DataContext; } }
 
         private Note RedirectToNote = null;
         private static NoteSwipeFeature noteSwipeFeature = new NoteSwipeFeature();

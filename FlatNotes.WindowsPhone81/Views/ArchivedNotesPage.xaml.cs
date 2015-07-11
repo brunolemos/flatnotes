@@ -15,10 +15,12 @@ namespace FlatNotes.Views
 {
     public partial class ArchivedNotesPage : Page
     {
+        public ArchivedNotesViewModel viewModel { get { return _viewModel; } }
+        private static ArchivedNotesViewModel _viewModel = new ArchivedNotesViewModel();
+
         public NavigationHelper NavigationHelper { get { return this.navigationHelper; } }
         private NavigationHelper navigationHelper;
 
-        public ArchivedNotesViewModel viewModel { get { return (ArchivedNotesViewModel)DataContext; } }
         private static NoteSwipeFeature noteSwipeFeature = new NoteSwipeFeature();
 
         public ArchivedNotesPage()

@@ -8,8 +8,8 @@
     xmlns:Converters="using:FlatNotes.Converters"
     mc:Ignorable="d"
     NavigationCacheMode="Required"
-    Background="{ThemeResource AppStatusBarBackgroundBrush}"
-    DataContext="{Binding Source={StaticResource MainViewModel}}"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    DataContext="{Binding viewModel, RelativeSource={RelativeSource Mode=Self}}"
     d:DataContext="{d:DesignData /SampleData/MainViewModelSampleData.xaml}">
 
     <Page.Transitions>
@@ -55,14 +55,11 @@
     <Page.BottomAppBar>
         <CommandBar IsSticky="True">
             <CommandBar.PrimaryCommands>
-                <AppBarButton x:Uid="NoteTextType" Label="text" Command="{Binding CreateTextNoteCommand}" Icon="Add"/>
-                <AppBarButton x:Uid="NoteChecklistType" Label="checklist" Command="{Binding CreateChecklistNoteCommand}" Icon="List"/>
-                <AppBarButton x:Uid="PhotoAppBarButton" Icon="Camera" Label="photo" Command="{Binding OpenImagePickerCommand}"/>
-                <!--<AppBarButton x:Uid="AudioAppBarButton" Icon="Microphone" Label="audio" IsEnabled="False"/>-->
+                <AppBarButton x:Uid="NewAppBarButton" Label="new" Command="{Binding NewNoteCommand}" Icon="Add"/>
             </CommandBar.PrimaryCommands>
 
             <CommandBar.SecondaryCommands>
-                <AppBarButton x:Uid="ArchivedNotesAppBarButton" Icon="Preview" Label="archived" Command="{Binding OpenArchivedNotesCommand}"/>
+                <AppBarButton x:Uid="ArchivedNotesAppBarButton" Icon="Preview" Label="archived notes" Command="{Binding OpenArchivedNotesCommand}"/>
                 <AppBarButton x:Uid="SettingsAppBarButton" Icon="Setting" Label="settings" Command="{Binding OpenSettingsCommand}"/>
             </CommandBar.SecondaryCommands>
         </CommandBar>

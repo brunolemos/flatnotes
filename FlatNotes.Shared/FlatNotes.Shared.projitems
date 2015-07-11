@@ -36,6 +36,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Converters\NullableToVisibilityConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Events\NoteColorEventArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Events\ColumnsEventArgs.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Events\IsSingleColumnEnabledEventArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Events\TransparentTileEventArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Events\ThemeEventArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Events\NoteEventArgs.cs" />

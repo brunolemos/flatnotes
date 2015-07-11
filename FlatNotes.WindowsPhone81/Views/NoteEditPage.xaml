@@ -11,7 +11,7 @@
     NavigationCacheMode="Required"
     Background="{Binding Note.Color.Color}"
     Foreground="{StaticResource AppNoteForegroundBrush}"
-    DataContext="{Binding Source={StaticResource NoteEditViewModel}}"
+    DataContext="{Binding viewModel, RelativeSource={RelativeSource Mode=Self}}"
     d:DataContext="{d:DesignData /SampleData/NoteEditViewModelSampleData.xaml}">
 
     <Page.Transitions>

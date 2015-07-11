@@ -19,6 +19,7 @@ namespace FlatNotes.Utils
         public event EventHandler ArchivedNotesSaved;
         public event EventHandler<ThemeEventArgs> ThemeChanged;
         public event EventHandler<ColumnsEventArgs> ColumnsChanged;
+        public event EventHandler<IsSingleColumnEnabledEventArgs> IsSingleColumnEnabledChanged;
         public event EventHandler<TransparentTileEventArgs> TransparentTileChanged;
         public event EventHandler<TransparentTileEventArgs> TransparentNoteTileChanged;
 
@@ -39,6 +40,9 @@ namespace FlatNotes.Utils
 
         private const string COLUMNS_KEY = "COLUMNS";
         private const int COLUMNS_DEFAULT = -1;
+
+        private const string IS_SINGLE_COLUMN_ENABLED_KEY = "IS_SINGLE_COLUMN_ENABLED";
+        private const bool IS_SINGLE_COLUMN_ENABLED_DEFAULT = false;
 
         private const string TRANSPARENT_TILE_KEY = "TRANSPARENT_TILE";
         private const bool TRANSPARENT_TILE_DEFAULT = false;
@@ -119,7 +123,7 @@ namespace FlatNotes.Utils
 
         public int Columns
         {
-            get { return GetValueOrDefault(COLUMNS_KEY, COLUMNS_DEFAULT); }
+            get { return -1; /*GetValueOrDefault(COLUMNS_KEY, COLUMNS_DEFAULT);*/ }
             set
             {
                 if (SetValue<int>(COLUMNS_KEY, value))
@@ -128,6 +132,19 @@ namespace FlatNotes.Utils
                     if (handler != null) handler(this, new ColumnsEventArgs(value));
 
                     GoogleAnalytics.EasyTracker.GetTracker().SetCustomDimension(2, value.ToString());
+                }
+            }
+        }
+
+        public bool IsSingleColumnEnabled
+        {
+            get { return GetValueOrDefault(IS_SINGLE_COLUMN_ENABLED_KEY, IS_SINGLE_COLUMN_ENABLED_DEFAULT); }
+            set
+            {
+                if (SetValue<bool>(IS_SINGLE_COLUMN_ENABLED_KEY, value))
+                {
+                    var handler = IsSingleColumnEnabledChanged;
+                    if (handler != null) handler(this, new IsSingleColumnEnabledEventArgs(value));
                 }
             }
         }

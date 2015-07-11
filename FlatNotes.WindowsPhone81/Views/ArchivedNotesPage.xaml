@@ -10,7 +10,7 @@
     mc:Ignorable="d"
     NavigationCacheMode="Required"
     Background="#445963"
-    DataContext="{Binding Source={StaticResource ArchivedNotesiewModel}}"
+    DataContext="{Binding viewModel, RelativeSource={RelativeSource Mode=Self}}"
     d:DataContext="{d:DesignData /SampleData/MainViewModelSampleData.xaml}">
 
     <Page.Resources>

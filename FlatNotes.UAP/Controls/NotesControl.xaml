@@ -17,11 +17,12 @@
             <MenuFlyoutItem Text="Archive"/>
             <MenuFlyoutItem Text="Delete"/>
             <MenuFlyoutItem Text="Pin to start"/>
-            <MenuFlyoutSeparator/>
             <MenuFlyoutSubItem Text="Change color">
                 <MenuFlyoutItem Text="{x:Bind}"/>
                 <MenuFlyoutItem Text="{Binding}"/>
             </MenuFlyoutSubItem>
+            <MenuFlyoutSeparator/>
+            <MenuFlyoutItem Text="Share..."/>
             <MenuFlyoutItem Text="Reorder..."/>
         </MenuFlyout>
     </UserControl.Resources>

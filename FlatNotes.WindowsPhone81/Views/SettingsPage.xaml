@@ -8,8 +8,8 @@
     xmlns:Converters="using:FlatNotes.Converters"
     mc:Ignorable="d"
     NavigationCacheMode="Required"
-    Background="{ThemeResource AppStatusBarBackgroundBrush}"
-    DataContext="{Binding Source={StaticResource SettingsViewModel}}"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    DataContext="{Binding viewModel, RelativeSource={RelativeSource Mode=Self}}"
     d:DataContext="{d:DesignData /SampleData/SettingsViewModelSampleData.xaml}">
 
     <Page.Transitions>
@@ -25,14 +25,14 @@
     <Page.BottomAppBar>
         <CommandBar x:Name="CommandBar">
             <CommandBar.PrimaryCommands>
-                <AppBarButton x:Uid="PraiseAppBarButton" Icon="Favorite" Label="praise" Command="{Binding SendFeedbackCommand}"/>
+                <AppBarButton x:Uid="PraiseAppBarButton" Icon="Favorite" Label="rate" Command="{Binding SendFeedbackCommand}"/>
                 <AppBarButton x:Uid="SupportAppBarButton" Icon="Mail" Label="support" Command="{Binding SuggestFeatureOrReportBugCommand}"/>
             </CommandBar.PrimaryCommands>
             
-            <CommandBar.SecondaryCommands>
+            <!--<CommandBar.SecondaryCommands>
                 <AppBarButton x:Uid="FeedbackAppBarButton" Icon="Like" Label="send a nice feedback" Command="{Binding SendFeedbackCommand}"/>
                 <AppBarButton x:Uid="RequestFeatureOrReportBugAppBarButton" Icon="Mail" Label="request feature / report bug" Command="{Binding SuggestFeatureOrReportBugCommand}"/>
-            </CommandBar.SecondaryCommands>
+            </CommandBar.SecondaryCommands>-->
         </CommandBar>
     </Page.BottomAppBar>
 
@@ -48,7 +48,7 @@
                     <ToggleSwitch x:Uid="ThemeToggleSwitch" Margin="0,0,0,24" Header="theme" OffContent="light" OnContent="dark" IsOn="{Binding IsDarkTheme, Mode=TwoWay}"/>
                     <ToggleSwitch x:Uid="TransparentDefaultTileToggleSwitch" Margin="0,0,0,24" Header="default tile" OffContent="transparent" OnContent="solid color" IsOn="{Binding IsSolidColorDefaultTile, Mode=TwoWay}"/>
                     <ToggleSwitch x:Uid="TransparentNoteTileToggleSwitch" Margin="0,0,0,24" Header="note live tile" OffContent="transparent" OnContent="solid color" IsOn="{Binding IsSolidColorNoteTile, Mode=TwoWay}"/>
-                    <Slider x:Uid="ColumnsSlider" Margin="0,0,0,24" Header="columns" Minimum="0" Maximum="4" LargeChange="1" TickFrequency="1" Value="{Binding Columns, Mode=TwoWay}" />
+                    <!--<Slider x:Uid="ColumnsSlider" Margin="0,0,0,24" Header="columns" Minimum="0" Maximum="4" LargeChange="1" TickFrequency="1" Value="{Binding Columns, Mode=TwoWay}" />-->
                 </StackPanel>
             </PivotItem>
 

@@ -48,7 +48,7 @@ namespace FlatNotes.Controls
         private void ShowNoteFlyout(FrameworkElement element)
         {
             if (element == null) return;
-            Flyout.GetAttachedFlyout(element).ShowAt(element);
+            Flyout.ShowAttachedFlyout(element);
         }
     }
 }

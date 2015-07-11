@@ -51,8 +51,8 @@ namespace FlatNotes.Views
         {
             UpdateStatusBarColor();
 
-            if(viewModel.Note.IsNewNote && AppData.Notes.Count > 0)
-                NoteTitleTextBox.Focus(FocusState.Programmatic);
+            //if(viewModel.Note.IsNewNote && AppData.Notes.Count > 0)
+            //    NoteTitleTextBox.Focus(FocusState.Programmatic);
         }
 
         private void OnViewModelPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -76,7 +76,7 @@ namespace FlatNotes.Views
         private void UpdateStatusBarColor()
         {
             if (viewModel.Note == null) return;
-            App.ChangeStatusBarColor(new Color().FromHex(viewModel.Note.Color.DarkColor2), Colors.White);
+            App.ChangeStatusBarColor(new Color().FromHex(viewModel.Note.Color.DarkColor2));
         }
 
         private void UpdateIsPinnedStatus()
@@ -224,16 +224,27 @@ namespace FlatNotes.Views
             DisableSwipeFeature(element);
 #endif
         }
-        
-        private void NoteImageContainer_Holding(object sender, HoldingRoutedEventArgs e)
-        {
-            FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);
-        }
 
         private void DeleteNoteImageMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
             viewModel.TempNoteImage = (e.OriginalSource as FrameworkElement).DataContext as NoteImage;
             viewModel.DeleteNoteImageCommand.Execute(viewModel.TempNoteImage);
+        }
+
+        private void NoteImageContainer_Holding(object sender, HoldingRoutedEventArgs e)
+        {
+            ShowNoteImageFlyout((FrameworkElement)sender);
+        }
+
+        private void NoteImageContainer_RightTapped(object sender, RightTappedRoutedEventArgs e)
+        {
+            ShowNoteImageFlyout((FrameworkElement)sender);
+        }
+
+        private void ShowNoteImageFlyout(FrameworkElement element)
+        {
+            if (element == null) return;
+            Flyout.ShowAttachedFlyout(element);
         }
     }
 }
