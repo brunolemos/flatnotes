@@ -136,7 +136,7 @@
     <value>Delete</value>
   </data>
   <data name="PendingChangesTextBox.Text" xml:space="preserve">
-    <value>Pending changes</value>
+    <value>pending changes</value>
   </data>
   <data name="FeedbackAppBarButton.Label" xml:space="preserve">
     <value>Send a nice feedback</value>

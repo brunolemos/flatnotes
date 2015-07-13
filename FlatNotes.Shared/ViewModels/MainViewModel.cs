@@ -43,7 +43,7 @@ namespace FlatNotes.ViewModels
         public int Columns { get { return IsSingleColumnEnabled ? 1 : AppSettings.Instance.Columns; } }
         private bool IsSingleColumnEnabled { get { return AppSettings.Instance.IsSingleColumnEnabled; } set { AppSettings.Instance.IsSingleColumnEnabled = value; NotifyPropertyChanged("IsSingleColumnEnabled"); NotifyPropertyChanged("Columns"); } }
 
-public MainViewModel()
+        public MainViewModel()
         {
             NewNoteCommand = new RelayCommand(CreateTextNote);
             ToggleSingleColumnCommand = new RelayCommand(ToggleSingleColumn, CanToggleSingleColumn);

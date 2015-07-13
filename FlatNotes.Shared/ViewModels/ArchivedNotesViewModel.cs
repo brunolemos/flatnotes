@@ -31,7 +31,7 @@ namespace FlatNotes.ViewModels
 
         public bool ReorderedNotes { get; set; }
 
-        public int Columns { get { return AppSettings.Instance.Columns; } internal set { AppSettings.Instance.Columns = value; } }
+        public int Columns { get { return -1; } }// AppSettings.Instance.Columns; } internal set { AppSettings.Instance.Columns = value; } }
 
 #region COMMANDS_ACTIONS
 

@@ -26,6 +26,7 @@
         <m3:SplashScreen Image="Assets\SplashScreenVertical.png" BackgroundColor="#ffbb00" />
         <m3:InitialRotationPreference>
           <m3:Rotation Preference="portrait" />
+          <m3:Rotation Preference="landscape" />
         </m3:InitialRotationPreference>
       </m3:VisualElements>
     </Application>

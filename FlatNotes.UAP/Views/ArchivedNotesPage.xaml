@@ -99,6 +99,6 @@
             </StackPanel>
         </Grid>
 
-        <local:NotesControl Grid.Row="1" x:Name="NotesControl" ItemsSource="{Binding Notes}" Columns="{Binding Columns, TargetNullValue=-1, FallbackValue=-1}" d:DataContext="{Binding Notes}" ItemClick="OnNoteClick"/>
+        <local:NotesControl Grid.Row="1" x:Name="NotesControl" ItemsSource="{Binding Notes}" Columns="-1" d:DataContext="{Binding Notes}" ItemClick="OnNoteClick"/>
     </Grid>
 </Page>

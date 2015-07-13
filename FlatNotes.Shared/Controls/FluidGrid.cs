@@ -15,7 +15,9 @@ namespace FlatNotes.Controls
         protected override Size MeasureOverride(Size totalSize)
         {
             itemWidth = Math.Min(ItemWidth, totalSize.Width);
-            columns = Columns >= 1 ? Columns : Math.Max(1, (int)Math.Floor(totalSize.Width / itemWidth));
+            columns = Columns < 1 || (Columns == 1 && !AllowSingleColumn) 
+                    ? Math.Max(1, (int)Math.Floor(totalSize.Width / itemWidth))
+                    : Columns;
 
             //adjust item width when itemwidth is too big
             itemWidth = Math.Min(itemWidth, totalSize.Width / columns);
@@ -90,7 +92,7 @@ namespace FlatNotes.Controls
             set { SetValue(ColumnsProperty, value); }
         }
 
-        public static readonly DependencyProperty ItemWidthProperty = DependencyProperty.Register("ItemWidth", typeof(double), typeof(FluidGrid), new PropertyMetadata(150, OnPropertyChanged));
+        public static readonly DependencyProperty ItemWidthProperty = DependencyProperty.Register("ItemWidth", typeof(double), typeof(FluidGrid), new PropertyMetadata(150.0, OnPropertyChanged));
         public double ItemWidth
         {
             get { return (double)GetValue(ItemWidthProperty); }
@@ -102,6 +104,13 @@ namespace FlatNotes.Controls
         {
             get { return (bool)GetValue(ItemStretchProperty); }
             set { SetValue(ItemStretchProperty, value); }
+        }
+
+        public static readonly DependencyProperty AllowSingleColumnProperty = DependencyProperty.Register("AllowSingleColumn", typeof(bool), typeof(FluidGrid), new PropertyMetadata(true, OnPropertyChanged));
+        public bool AllowSingleColumn
+        {
+            get { return (bool)GetValue(AllowSingleColumnProperty); }
+            set { SetValue(AllowSingleColumnProperty, value); }
         }
 
         public static readonly DependencyProperty BiggerItemHeightProperty = DependencyProperty.Register("BiggerItemHeight", typeof(double), typeof(FluidGrid), new PropertyMetadata(0));

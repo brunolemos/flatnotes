@@ -22,12 +22,13 @@ namespace FlatNotes.Views
 {
     public sealed partial class NoteEditPage : Page
     {
+        public NoteEditViewModel viewModel { get { return _viewModel; } }
+        private static NoteEditViewModel _viewModel = new NoteEditViewModel();
+
         public NavigationHelper NavigationHelper { get { return this.navigationHelper; } }
         private NavigationHelper navigationHelper;
 
-        public NoteEditViewModel viewModel { get { return (NoteEditViewModel)DataContext; } }
         private static Brush previousBackground;
-
         private bool checklistChanged = false;
 
         public NoteEditPage()
@@ -57,7 +58,7 @@ namespace FlatNotes.Views
 
         private void OnViewModelPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            if(e.PropertyName == "Note" && viewModel.Note != null)
+            if (e.PropertyName == "Note" && viewModel.Note != null)
             {
                 viewModel.Note.PropertyChanged += OnNotePropertyChanged;
                 UpdateStatusBarColor();
@@ -69,7 +70,7 @@ namespace FlatNotes.Views
         {
             if (e.PropertyName == "IsPinned")
                 UpdateIsPinnedStatus();
-            else if(e.PropertyName == "Color")
+            else if (e.PropertyName == "Color")
                 UpdateStatusBarColor();
         }
 
@@ -151,7 +152,7 @@ namespace FlatNotes.Views
             NoteEditViewModel.CurrentNoteBeingEdited = null;
         }
 
-#region NavigationHelper registration
+        #region NavigationHelper registration
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
@@ -163,7 +164,7 @@ namespace FlatNotes.Views
             this.navigationHelper.OnNavigatedFrom(e);
         }
 
-#endregion
+        #endregion
 
         private void Images_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {

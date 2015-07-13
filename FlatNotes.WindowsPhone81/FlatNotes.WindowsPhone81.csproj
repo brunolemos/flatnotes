@@ -85,19 +85,15 @@
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
     <DesignData Include="SampleData\MainViewModelSampleData.xaml">
-      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </DesignData>
     <DesignData Include="SampleData\NoteColorsSampleData.xaml">
-      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </DesignData>
     <DesignData Include="SampleData\NoteEditViewModelSampleData.xaml">
-      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </DesignData>
     <DesignData Include="SampleData\NoteSampleData.xaml">
-      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </DesignData>
     <Page Include="Controls\NoteColorPicker.xaml">
@@ -109,10 +105,9 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
-    <Page Include="SampleData\SettingsViewModelSampleData.xaml">
-      <Generator>MSBuild:Compile</Generator>
+    <DesignData Include="SampleData\SettingsViewModelSampleData.xaml">
       <SubType>Designer</SubType>
-    </Page>
+    </DesignData>
     <Page Include="Views\ArchivedNotesPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -139,7 +134,9 @@
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\NoteEditPage.xaml.cs" />
+    <Compile Include="Views\NoteEditPage.xaml.cs">
+      <DependentUpon>NoteEditPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Partials\MainPage_NoteReorder.xaml.cs" />
     <Compile Include="Views\Partials\NoteEditPage_Swipe.cs" />
     <Compile Include="Views\SettingsPage.xaml.cs">

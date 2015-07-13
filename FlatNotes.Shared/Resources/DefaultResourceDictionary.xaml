@@ -4,20 +4,22 @@
     
     <x:String x:Key="AppName">Flat Notes</x:String>
 
-    <Color x:Key="AppMainColor">#f99f00</Color><!--yellow: ffbb00, dark yellow: f99f00-->
-    <Color x:Key="AppMainForegroundColor">Black</Color><!--664B00-->
+    <Color x:Key="AppMainColor">#ffbb00</Color>
+    <Color x:Key="AppMainDarkenColor">#f99f00</Color>
+    <Color x:Key="AppMainForegroundColor">White</Color><!--664B00-->
     <Color x:Key="PhoneAccentColor">#f99f00</Color>
 
     <SolidColorBrush x:Key="AppMainBrush" Color="{StaticResource AppMainColor}"/>
+    <SolidColorBrush x:Key="AppMainDarkenBrush" Color="{StaticResource AppMainDarkenColor}"/>
     <SolidColorBrush x:Key="AppMainForegroundBrush" Color="{StaticResource AppMainForegroundColor}"/>
     <SolidColorBrush x:Key="PhoneAccentBrush" Color="{StaticResource AppMainColor}"/>
     <SolidColorBrush x:Key="SystemControlHighlightAccentBrush" Color="{StaticResource AppMainColor}"/>
 
     <SolidColorBrush x:Key="AppSplashScreenBrush" Color="#56007f"/><!--263646-->
-    <SolidColorBrush x:Key="ProgressBarIndeterminateForegroundThemeBrush" Color="{StaticResource AppMainColor}"/>
+    <SolidColorBrush x:Key="ProgressBarIndeterminateForegroundThemeBrush" Color="{StaticResource AppMainDarkenColor}"/>
 
-    <SolidColorBrush x:Key="ToggleSwitchCurtainBackgroundThemeBrush" Color="{StaticResource AppMainColor}"/>
-    <SolidColorBrush x:Key="SliderTrackDecreaseBackgroundThemeBrush" Color="{StaticResource AppMainColor}"/>
+    <SolidColorBrush x:Key="ToggleSwitchCurtainBackgroundThemeBrush" Color="{StaticResource AppMainDarkenColor}"/>
+    <SolidColorBrush x:Key="SliderTrackDecreaseBackgroundThemeBrush" Color="{StaticResource AppMainDarkenColor}"/>
 
     <SolidColorBrush x:Key="PhoneDarkLowBrush" Color="#20000000"/>
     <SolidColorBrush x:Key="PhoneDarkMidBrush" Color="#70000000"/>

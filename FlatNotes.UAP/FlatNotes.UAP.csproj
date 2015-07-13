@@ -106,7 +106,9 @@
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\NoteEditPage.xaml.cs" />
+    <Compile Include="Views\NoteEditPage.xaml.cs">
+      <DependentUpon>NoteEditPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
     </Compile>
@@ -137,19 +139,15 @@
   </ItemGroup>
   <ItemGroup>
     <DesignData Include="SampleData\MainViewModelSampleData.xaml">
-      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </DesignData>
     <DesignData Include="SampleData\NoteColorsSampleData.xaml">
-      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </DesignData>
     <DesignData Include="SampleData\NoteEditViewModelSampleData.xaml">
-      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </DesignData>
     <DesignData Include="SampleData\NoteSampleData.xaml">
-      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </DesignData>
     <Page Include="Controls\NoteColorPicker.xaml">
@@ -165,10 +163,9 @@
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
-    <Page Include="SampleData\SettingsViewModelSampleData.xaml">
-      <Generator>MSBuild:Compile</Generator>
+    <DesignData Include="SampleData\SettingsViewModelSampleData.xaml">
       <SubType>Designer</SubType>
-    </Page>
+    </DesignData>
     <Page Include="Views\ArchivedNotesPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -178,8 +175,8 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\NoteEditPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\SettingsPage.xaml">
       <Generator>MSBuild:Compile</Generator>

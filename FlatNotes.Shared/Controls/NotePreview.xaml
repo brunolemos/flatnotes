@@ -61,7 +61,7 @@
         <StackPanel Margin="0">
             <Grid Visibility="{Binding ElementName=Root, Path=HideImage, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=True}">
                 <Grid MaxHeight="120" Background="{StaticResource PhoneDarkLowBrush}" Visibility="{Binding Images.Count, Converter={StaticResource PositiveIntToVisibilityConverter}}">
-                    <ListView x:Name="NoteImagesListView" ItemsSource="{Binding Images}" ItemTemplate="{StaticResource NoteImagesListViewControlTemplate}" SelectionMode="None" IsTapEnabled="False" IsItemClickEnabled="False" HorizontalContentAlignment="Stretch"/>
+                    <ListView x:Name="NoteImagesListView" ItemsSource="{Binding Images}" Margin="0" Padding="0" BorderThickness="0" ItemTemplate="{StaticResource NoteImagesListViewControlTemplate}" SelectionMode="None" IsTapEnabled="False" IsItemClickEnabled="False" HorizontalContentAlignment="Stretch"/>
                 </Grid>
             </Grid>
             

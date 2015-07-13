@@ -15,11 +15,11 @@
 
     <Page.Resources>
         <DataTemplate x:Key="NotePreviewListViewControlTemplate">
-            <local:NotePreview Tapped="OnNoteTapped" Loaded="OnNoteLoaded" Unloaded="OnNoteUnloaded"/>
+            <local:NotePreview Tapped="OnNoteTapped" Loaded="OnNoteLoaded" Unloaded="OnNoteUnloaded" FontSize="17"/>
         </DataTemplate>
 
         <ItemsPanelTemplate x:Key="FluidItemsPanelTemplate" x:Name="FluidItemsPanelTemplate">
-            <local:FluidGrid x:Name="NotesFluidGrid" Margin="14" ItemWidth="200" Columns="{Binding Columns, Mode=OneWay, TargetNullValue=-1, FallbackValue=-1}"/>
+            <local:FluidGrid x:Name="NotesFluidGrid" Margin="8" ItemWidth="150" Columns="{Binding Columns, Mode=OneWay, TargetNullValue=-1, FallbackValue=-1}" ItemStretch="True" AllowSingleColumn="True"/>
         </ItemsPanelTemplate>
     </Page.Resources>
 

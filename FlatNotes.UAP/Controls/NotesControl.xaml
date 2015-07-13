@@ -18,8 +18,14 @@
             <MenuFlyoutItem Text="Delete"/>
             <MenuFlyoutItem Text="Pin to start"/>
             <MenuFlyoutSubItem Text="Change color">
-                <MenuFlyoutItem Text="{x:Bind}"/>
-                <MenuFlyoutItem Text="{Binding}"/>
+                <MenuFlyoutItem/>
+                <MenuFlyoutItem/>
+                <MenuFlyoutItem/>
+                <MenuFlyoutItem/>
+                <MenuFlyoutItem/>
+                <MenuFlyoutItem/>
+                <MenuFlyoutItem/>
+                <MenuFlyoutItem/>
             </MenuFlyoutSubItem>
             <MenuFlyoutSeparator/>
             <MenuFlyoutItem Text="Share..."/>
@@ -44,7 +50,7 @@
 
         <GridView.ItemsPanel>
             <ItemsPanelTemplate>
-                <local:FluidGrid x:Name="NotesFluidGrid" Margin="{Binding ElementName=Root, Path=Padding}" ItemWidth="{Binding ElementName=Root, Path=ItemWidth}" ItemStretch="{Binding ElementName=Root, Path=ItemStretch}" Columns="{Binding ElementName=Root, Path=Columns}" HorizontalAlignment="Center"/>
+                <local:FluidGrid x:Name="NotesFluidGrid" Margin="{Binding ElementName=Root, Path=Padding}" ItemWidth="{Binding ElementName=Root, Path=ItemWidth}" ItemStretch="{Binding ElementName=Root, Path=ItemStretch}" Columns="{Binding ElementName=Root, Path=Columns}" AllowSingleColumn="{Binding ElementName=Root, Path=AllowSingleColumn}" HorizontalAlignment="Center"/>
                 <!--<RelativePanel Margin="-6" AllowDrop="False"/>-->
                 <!--<ItemsWrapGrid AllowDrop="True" ItemWidth="200" MaximumRowsOrColumns="4" Orientation="Horizontal"/>-->
             </ItemsPanelTemplate>

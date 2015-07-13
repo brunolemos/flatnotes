@@ -23,11 +23,11 @@
         <Converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
 
         <DataTemplate x:Key="NotePreviewListViewControlTemplate">
-            <local:NotePreview Tapped="OnNoteTapped" Loaded="OnNoteLoaded" Unloaded="OnNoteUnloaded"/>
+            <local:NotePreview Tapped="OnNoteTapped" Loaded="OnNoteLoaded" Unloaded="OnNoteUnloaded" FontSize="17"/>
         </DataTemplate>
 
         <ItemsPanelTemplate x:Key="FluidItemsPanelTemplate" x:Name="FluidItemsPanelTemplate">
-            <local:FluidGrid x:Name="NotesFluidGrid" Margin="14" ItemWidth="200" Columns="{Binding Columns, Mode=OneWay, TargetNullValue=-1, FallbackValue=-1}"/>
+            <local:FluidGrid x:Name="NotesFluidGrid" Margin="8" ItemWidth="150" Columns="{Binding Columns, Mode=OneWay, TargetNullValue=-1, FallbackValue=-1}" ItemStretch="True" AllowSingleColumn="True"/>
         </ItemsPanelTemplate>
     </Page.Resources>
 
@@ -59,6 +59,7 @@
             </CommandBar.PrimaryCommands>
 
             <CommandBar.SecondaryCommands>
+                <AppBarButton x:Uid="ToggleSingleColumnAppBarButton" x:Name="ToggleSingleColumnAppBarButton" Label="toggle single column view" Command="{Binding ToggleSingleColumnCommand}" ToolTipService.ToolTip="Open archived notes page"/>
                 <AppBarButton x:Uid="ArchivedNotesAppBarButton" Icon="Preview" Label="archived notes" Command="{Binding OpenArchivedNotesCommand}"/>
                 <AppBarButton x:Uid="SettingsAppBarButton" Icon="Setting" Label="settings" Command="{Binding OpenSettingsCommand}"/>
             </CommandBar.SecondaryCommands>
