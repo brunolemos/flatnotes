@@ -103,10 +103,10 @@
 
                             <Grid>
                                 <Viewbox Margin="0,3,0,0" Height="24" HorizontalAlignment="Center" VerticalAlignment="Top" IsHitTestVisible="False" Opacity="0">
-                                    <CheckBox IsChecked="{Binding IsChecked, Mode=TwoWay}" Style="{StaticResource CheckBoxWithoutContentStyle}" IsEnabled="False" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                    <CheckBox Style="{StaticResource CheckBoxWithoutContentStyle}" IsEnabled="False" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                                 </Viewbox>
 
-                                <Viewbox Margin="2,5,0,0" Width="16" HorizontalAlignment="Center" VerticalAlignment="Top" IsHitTestVisible="False">
+                                <Viewbox Margin="0,3,0,0" Width="24" HorizontalAlignment="Center" VerticalAlignment="Top" IsHitTestVisible="False">
                                     <SymbolIcon Symbol="Add" Foreground="{StaticResource PhoneDarkMidBrush}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                                 </Viewbox>
                             </Grid>

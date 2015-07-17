@@ -46,7 +46,7 @@ namespace FlatNotes
         public App()
         {
             //application insights
-            WindowsAppInitializer.InitializeAsync();
+            WindowsAppInitializer.InitializeAsync(WindowsCollectors.Metadata | WindowsCollectors.Session | WindowsCollectors.UnhandledException);
             TelemetryClient = new TelemetryClient();
 
             this.InitializeComponent();
@@ -66,11 +66,11 @@ namespace FlatNotes
 
         private async void App_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-            App.TelemetryClient.TrackException(e.Exception);
+            //App.TelemetryClient.TrackException(e.Exception);
 
             if (!e.Handled)
             {
-                e.Handled = true;
+                //e.Handled = true;
                 await new MessageDialog(e.Message, "Fatal error").ShowAsync();
 
                 App.Current.Exit();
@@ -144,12 +144,6 @@ namespace FlatNotes
             //user theme
             UpdateTheme(AppSettings.Instance.Theme);
 
-            //user preferences
-            App.TelemetryClient.TrackMetric("Theme", AppSettings.Instance.Theme == ElementTheme.Light ? 1 : 2);
-            App.TelemetryClient.TrackMetric("Single Column", AppSettings.Instance.IsSingleColumnEnabled ? 1 : 0);
-            App.TelemetryClient.TrackMetric("Transparent Tile", AppSettings.Instance.TransparentTile ? 1 : 0);
-            App.TelemetryClient.TrackMetric("Transparent Note Tile", AppSettings.Instance.TransparentNoteTile ? 1 : 0);
-
             if (RootFrame.Content == null)
             {
 #if WINDOWS_PHONE_APP
@@ -201,14 +195,19 @@ namespace FlatNotes
             await SuspensionManager.SaveAsync();
 
             //update tile
-            if (NoteEditViewModel.CurrentNoteBeingEdited != null) TileManager.UpdateNoteTileIfExists(NoteEditViewModel.CurrentNoteBeingEdited, AppSettings.Instance.TransparentNoteTile);
+            if (NoteEditViewModel.CurrentNoteBeingEdited != null) await TileManager.UpdateNoteTileIfExists(NoteEditViewModel.CurrentNoteBeingEdited, AppSettings.Instance.TransparentNoteTile);
 
             //save data
             if (AppData.HasUnsavedChangesOnNotes) await AppData.SaveNotes();
             if (AppData.HasUnsavedChangesOnArchivedNotes) await AppData.SaveArchivedNotes();
 
+            //user preferences and useful data
             App.TelemetryClient.TrackMetric("Notes Count", AppData.Notes.Count);
             App.TelemetryClient.TrackMetric("Archived Notes Count", AppData.ArchivedNotes.Count);
+            App.TelemetryClient.TrackMetric("Theme", AppSettings.Instance.Theme == ElementTheme.Light ? 1 : 2);
+            App.TelemetryClient.TrackMetric("Single Column", AppSettings.Instance.IsSingleColumnEnabled ? 1 : 0);
+            App.TelemetryClient.TrackMetric("Transparent Tile", AppSettings.Instance.TransparentTile ? 1 : 0);
+            App.TelemetryClient.TrackMetric("Transparent Note Tile", AppSettings.Instance.TransparentNoteTile ? 1 : 0);
 
             deferral.Complete();
         }

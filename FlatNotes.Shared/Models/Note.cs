@@ -128,10 +128,13 @@ namespace FlatNotes.Models
 
         void Note_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            if (string.IsNullOrEmpty(e.PropertyName) || e.PropertyName == "Changed" || e.PropertyName == "ArchivedAt" || e.PropertyName == "CreatedAt") return;
-            Changed = true;
+            if (string.IsNullOrEmpty(e.PropertyName) || e.PropertyName == "Changed"
+                || e.PropertyName == "ArchivedAt" || e.PropertyName == "CreatedAt"
+                || e.PropertyName == "IsPinned" || e.PropertyName == "IsNewNote"
+                || e.PropertyName == "IsArchived" || e.PropertyName == "AlreadyExists") return;
 
             Debug.WriteLine("Note_PropertyChanged " + e.PropertyName);
+            Changed = true;
 
             if (e.PropertyName == "UpdatedAt") return;
             Touch();

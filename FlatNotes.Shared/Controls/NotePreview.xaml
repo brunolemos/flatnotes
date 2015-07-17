@@ -50,7 +50,7 @@
             </DataTemplate>
             
             <DataTemplate x:Key="NoteImagesListViewControlTemplate">
-                <Grid x:Name="NoteImageContainer" MaxHeight="120">
+                <Grid x:Name="NoteImageContainer" Height="120">
                     <Image Source="{Binding URL}" Stretch="UniformToFill" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 </Grid>
             </DataTemplate>

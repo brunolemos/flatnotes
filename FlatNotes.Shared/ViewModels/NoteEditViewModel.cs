@@ -65,7 +65,8 @@ namespace FlatNotes.ViewModels
 
                 Note.PropertyChanged += (s, _e) =>
                 {
-                    Debug.WriteLine("PROPPPRPROR: " + _e.PropertyName);
+                    //Debug.WriteLine("PROPPPRPROR: " + _e.PropertyName);
+
                     switch (_e.PropertyName)
                     {
                         case "Changed":
@@ -92,7 +93,7 @@ namespace FlatNotes.ViewModels
             }
         }
 
-        private void OnNotesSaved(object sender, EventArgs e)
+        private async void OnNotesSaved(object sender, EventArgs e)
         {
             NotifyPropertyChanged("Note");
             if (Note == null) return;
@@ -100,7 +101,7 @@ namespace FlatNotes.ViewModels
             if (!Note.IsArchived)
                 Note.Changed = false;
 
-            TileManager.UpdateNoteTileIfExists(Note, AppSettings.Instance.TransparentNoteTile);
+            await TileManager.UpdateNoteTileIfExists(Note, AppSettings.Instance.TransparentNoteTile);
         }
 
         private void OnArchivedNotesSaved(object sender, EventArgs e)

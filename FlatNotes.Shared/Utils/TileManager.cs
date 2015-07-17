@@ -59,7 +59,7 @@ namespace FlatNotes.Utils
             if (note == null || note.IsEmpty()) return false;
 
             //update content
-            if (SecondaryTile.Exists(note.ID)) return UpdateNoteTileIfExists(note, transparentTile);
+            if (SecondaryTile.Exists(note.ID)) return await UpdateNoteTileIfExists(note, transparentTile);
 
 
 #if WINDOWS_PHONE_APP
@@ -68,7 +68,7 @@ namespace FlatNotes.Utils
 #else
             //create and update
             var success = await CreateNoteTile(note);
-            UpdateNoteTileIfExists(note);
+            await UpdateNoteTileIfExists(note);
 
             return success;
 #endif
@@ -100,13 +100,13 @@ namespace FlatNotes.Utils
             return await tile.RequestCreateAsync();
         }
 
-        public static bool UpdateNoteTileIfExists(Note note, bool transparentTile = false)
+        public static async Task<bool> UpdateNoteTileIfExists(Note note, bool transparentTile = false)
         {
             //must exists
             if (!SecondaryTile.Exists(note.ID)) return false;
 
             //update background
-            UpdateNoteTileBackgroundColor(note, transparentTile);
+            await UpdateNoteTileBackgroundColor(note, transparentTile);
 
 #if WINDOWS_UAP
             ISquare71x71TileNotificationContent tileSquare71Content = null;
@@ -170,7 +170,7 @@ namespace FlatNotes.Utils
             tileSquare310Content.TextBodyWrap.Text = note.GetContent(true);
             tileSquare310Content.Image.Src = note.Images.Count > 0 ? note.Images[0].URL : null;
             tileSquare310Content.Wide310x150Content = tileWideContent;
-            
+
             //create notification
             var notification = tileSquare310Content.CreateNotification();
             notification.Tag = note.ID.Substring(0, 16);
@@ -184,7 +184,7 @@ namespace FlatNotes.Utils
             return true;
         }
 
-        private static async void UpdateNoteTileBackgroundColor(Note note, bool transparentTile = false)
+        private static async Task UpdateNoteTileBackgroundColor(Note note, bool transparentTile = false)
         {
             var tile = new SecondaryTile(note.ID);
             if (tile == null) return;
