@@ -1,7 +1,5 @@
-using FlatNotes.Common;
 using FlatNotes.Models;
 using FlatNotes.Utils;
-using FlatNotes.Views;
 using System;
 using Windows.UI.Xaml.Controls;
 

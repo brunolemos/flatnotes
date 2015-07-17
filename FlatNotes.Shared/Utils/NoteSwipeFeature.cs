@@ -33,7 +33,9 @@ namespace FlatNotes.Views
             }
             catch (Exception e)
             {
-                GoogleAnalytics.EasyTracker.GetTracker().SendException(String.Format("Failed to Enable Swipe Feature: {0} (Stack trace: {1})", e.Message, e.StackTrace), false);
+                var exceptionProperties = new Dictionary<string, string>() { { "Details", "Failed to Enable Swipe Feature" } };
+                var exceptionMetrics = new Dictionary<string, double>() { { "Input processors count", inputProcessors.Count } };
+                App.TelemetryClient.TrackException(e, exceptionProperties, exceptionMetrics);
             }
         }
 
@@ -52,7 +54,7 @@ namespace FlatNotes.Views
                 inputProcessors.Remove(element);
             }
             catch (Exception e) {
-                GoogleAnalytics.EasyTracker.GetTracker().SendException(String.Format("Failed to Disable Swipe Feature: {0} (Stack trace: {1})", e.Message, e.StackTrace), false);
+                App.TelemetryClient.TrackException(e, new Dictionary<string, string>() { { "Details", "Failed to Disable Swipe Feature" } });
             }
         }
 
@@ -66,14 +68,14 @@ namespace FlatNotes.Views
             if (isArchived)
             {
                 Debug.WriteLine("Swiped archived note " + note.Title);
-                GoogleAnalytics.EasyTracker.GetTracker().SendEvent("ui_action", "swipe", "archived_note", 0);
+                App.TelemetryClient.TrackEvent("ArchivedNoteSwiped");
 
                 await AppData.RemoveArchivedNote(note);
             }
             else
             {
                 Debug.WriteLine("Swiped note " + note.Title);
-                GoogleAnalytics.EasyTracker.GetTracker().SendEvent("ui_action", "swipe", "note", 0);
+                App.TelemetryClient.TrackEvent("NoteSwiped");
 
                 await AppData.ArchiveNote(note);
             }

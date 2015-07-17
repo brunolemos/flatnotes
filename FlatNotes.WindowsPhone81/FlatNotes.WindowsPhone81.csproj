@@ -149,7 +149,6 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="analytics.xml" />
     <Content Include="Assets\BadgeLogo.scale-100.png" />
     <Content Include="Assets\BadgeLogo.scale-140.png" />
     <Content Include="Assets\BadgeLogo.scale-240.png" />
@@ -180,9 +179,9 @@
     <Content Include="Assets\Tiles\Solid\WideLogo.scale-100.png" />
     <Content Include="Assets\Tiles\Solid\WideLogo.scale-140.png" />
     <Content Include="Assets\Tiles\Solid\WideLogo.scale-240.png" />
-    <None Include="analytics.xsd">
-      <SubType>Designer</SubType>
-    </None>
+    <Content Include="ApplicationInsights.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Package.StoreAssociation.xml" />
     <None Include="packages.config" />
     <PRIResource Include="Strings\zh-CN\Resources.resw" />
@@ -192,13 +191,17 @@
     <PRIResource Include="Strings\en-US\Resources.resw" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="GoogleAnalytics, Version=1.2.11.29792, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\GoogleAnalyticsSDK.1.2.12\lib\wpa81\GoogleAnalytics.winmd</HintPath>
+    <Reference Include="Microsoft.ApplicationInsights, Version=1.1.0.1899, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.1.1.0\lib\portable-win81+wpa81\Microsoft.ApplicationInsights.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="GoogleAnalytics.Core, Version=1.2.11.29621, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\GoogleAnalyticsSDK.1.2.12\lib\wpa81\GoogleAnalytics.Core.winmd</HintPath>
+    <Reference Include="Microsoft.ApplicationInsights.Extensibility.Windows, Version=1.1.0.1906, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.WindowsApps.1.1.0\lib\wpa81\Microsoft.ApplicationInsights.Extensibility.Windows.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ApplicationInsights.PersistenceChannel, Version=1.1.0.1903, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.PersistenceChannel.1.1.0\lib\portable-win81+wpa81\Microsoft.ApplicationInsights.PersistenceChannel.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\portable-net40+sl5+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>

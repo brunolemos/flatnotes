@@ -4,15 +4,9 @@ using FlatNotes.Utils;
 using FlatNotes.ViewModels;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using Windows.ApplicationModel.Activation;
-using Windows.Foundation;
-using Windows.Storage;
 using Windows.UI.Core;
-using Windows.UI.Popups;
-using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
@@ -20,11 +14,7 @@ using Windows.UI.Xaml.Navigation;
 
 namespace FlatNotes.Views
 {
-#if WINDOWS_PHONE_APP
-    public partial class MainPage : Page, IFileOpenPickerContinuable
-#else
     public partial class MainPage : Page
-#endif
     {
         public MainViewModel viewModel { get { return _viewModel; } }
         private static MainViewModel _viewModel = new MainViewModel();
@@ -55,8 +45,6 @@ namespace FlatNotes.Views
 
         private async void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
-            GoogleAnalytics.EasyTracker.GetTracker().SendView("MainPage");
-
             App.RootFrame.Background = LayoutRoot.Background;
 
             //received a note via parameter (from secondary tile)
@@ -72,9 +60,6 @@ namespace FlatNotes.Views
 
         private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
         {
-            GoogleAnalytics.EasyTracker.GetTracker().SetCustomMetric(1, AppData.Notes.Count);
-            GoogleAnalytics.EasyTracker.GetTracker().SetCustomMetric(2, AppData.ArchivedNotes.Count);
-
             RedirectToNote = null;
         }
 
@@ -114,7 +99,8 @@ namespace FlatNotes.Views
             Note originalNote = AppData.Notes.Where<Note>(n => n.ID == note.ID).FirstOrDefault();
             if (originalNote == null)
             {
-                GoogleAnalytics.EasyTracker.GetTracker().SendException(string.Format("Failed to load tapped note ({0})", Newtonsoft.Json.JsonConvert.SerializeObject(AppData.Notes)), false);
+                var exceptionProperties = new Dictionary<string, string>() { { "Details", "Failed to load tapped note" } };
+                App.TelemetryClient.TrackException(null, exceptionProperties);
                 return;
             }
 
@@ -157,47 +143,5 @@ namespace FlatNotes.Views
             noteSwipeFeature.DisableSwipeFeature(element);
 #endif
         }
-
-#if WINDOWS_PHONE_APP
-        public async void ContinueFileOpenPicker(FileOpenPickerContinuationEventArgs args)
-        {
-            if (args.Files.Count <= 0) return;
-
-            Note note = new Note();
-            NoteImage noteImage = new NoteImage();
-            string error = "";
-
-            try
-            {
-                foreach (var file in args.Files)
-                {
-                    Debug.WriteLine("Picked photo: " + file.Path);
-
-                    StorageFile savedImage = await AppSettings.Instance.SaveImage(file, note.ID, noteImage.ID);
-
-                    var imageProperties = await savedImage.Properties.GetImagePropertiesAsync();
-                    noteImage.URL = savedImage.Path;
-                    noteImage.Size = new Size(imageProperties.Width, imageProperties.Height);
-
-                    note.Images.Add(noteImage);
-                    break;
-                }
-            }
-            catch (Exception e) { error = e.Message; }
-            
-            if(!String.IsNullOrEmpty(error))
-            {
-                GoogleAnalytics.EasyTracker.GetTracker().SendException(String.Format("Failed to load image ({0})", error), false);
-                await (new MessageDialog("Failed to save image. Try again.", "Sorry")).ShowAsync();
-
-                return;
-            }
-
-            Frame.Navigate(typeof(NoteEditPage), note);
-
-            //save
-            await AppData.CreateOrUpdateNote(note);
-        }
-#endif
     }
 }

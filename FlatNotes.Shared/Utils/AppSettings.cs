@@ -38,8 +38,8 @@ namespace FlatNotes.Utils
         private const string THEME_KEY = "THEME";
         private const ElementTheme THEME_DEFAULT = ElementTheme.Light;
 
-        private const string COLUMNS_KEY = "COLUMNS";
-        private const int COLUMNS_DEFAULT = -1;
+        //private const string COLUMNS_KEY = "COLUMNS";
+        //private const int COLUMNS_DEFAULT = -1;
 
         private const string IS_SINGLE_COLUMN_ENABLED_KEY = "IS_SINGLE_COLUMN_ENABLED";
         private const bool IS_SINGLE_COLUMN_ENABLED_DEFAULT = false;
@@ -90,7 +90,7 @@ namespace FlatNotes.Utils
                 if (success) localSettings.Values.Clear();
 
                 Theme = Migration.Versions.v1.AppSettings.Instance.LoggedUser.Preferences.Theme;
-                Columns = Migration.Versions.v1.AppSettings.Instance.LoggedUser.Preferences.Columns;
+                //Columns = Migration.Versions.v1.AppSettings.Instance.LoggedUser.Preferences.Columns;
             }).Wait();
         }
 
@@ -116,7 +116,7 @@ namespace FlatNotes.Utils
                     var handler = ThemeChanged;
                     if (handler != null) handler(this, new ThemeEventArgs(value));
 
-                    GoogleAnalytics.EasyTracker.GetTracker().SetCustomDimension(1, value.ToString());
+                    App.TelemetryClient.TrackMetric("Theme", value == ElementTheme.Light ? 1 : 2);
                 }
             }
         }
@@ -124,16 +124,16 @@ namespace FlatNotes.Utils
         public int Columns
         {
             get { return -1; /*GetValueOrDefault(COLUMNS_KEY, COLUMNS_DEFAULT);*/ }
-            set
-            {
-                if (SetValue<int>(COLUMNS_KEY, value))
-                {
-                    var handler = ColumnsChanged;
-                    if (handler != null) handler(this, new ColumnsEventArgs(value));
+            //set
+            //{
+            //    if (SetValue<int>(COLUMNS_KEY, value))
+            //    {
+            //        var handler = ColumnsChanged;
+            //        if (handler != null) handler(this, new ColumnsEventArgs(value));
 
-                    GoogleAnalytics.EasyTracker.GetTracker().SetCustomDimension(2, value.ToString());
-                }
-            }
+            //        App.TelemetryClient.TrackMetric("Columns", value);
+            //    }
+            //}
         }
 
         public bool IsSingleColumnEnabled

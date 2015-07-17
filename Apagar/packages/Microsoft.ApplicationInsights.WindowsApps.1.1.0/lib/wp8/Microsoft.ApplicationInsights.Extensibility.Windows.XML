@@ -1,0 +1,493 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Microsoft.ApplicationInsights.Extensibility.Windows</name>
+    </assembly>
+    <members>
+        <member name="T:Microsoft.ApplicationInsights.Extensibility.ComponentContextReader">
+            <summary>
+            The reader is platform specific and applies to Windows Phone Silverlight applications only.
+            </summary>
+            <summary>
+            The reader is platform specific and will contain different implementations for reading specific data based on the platform its running on.
+            </summary>
+        </member>
+        <member name="T:Microsoft.ApplicationInsights.Extensibility.IComponentContextReader">
+            <summary>
+            The component context reader interface used while reading component related information in a platform specific way.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.IComponentContextReader.Initialize">
+            <summary>
+            Initializes the current reader with respect to its environment.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.IComponentContextReader.GetVersion">
+            <summary>
+            Gets the version for the current application. If the version cannot be found, we will return the passed in default.
+            </summary>
+            <returns>The extracted data.</returns>
+        </member>
+        <member name="F:Microsoft.ApplicationInsights.Extensibility.ComponentContextReader.UnknownComponentVersion">
+            <summary>
+            The default application version we will be returning if no application version is found.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ApplicationInsights.Extensibility.ComponentContextReader.name">
+            <summary>
+            The name for this component.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ApplicationInsights.Extensibility.ComponentContextReader.version">
+            <summary>
+            The version for this component.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.ComponentContextReader.Initialize">
+            <summary>
+            Initializes the current instance with respect to the platform specific implementation.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.ComponentContextReader.GetName">
+            <summary>
+            Gets the name for this application.
+            </summary>
+            <returns>The name of the application if found, Unknown otherwise.</returns>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.ComponentContextReader.GetVersion">
+            <summary>
+            Gets the version for the current application. If the version cannot be found, we will return the passed in default.
+            </summary>
+            <returns>The extracted data.</returns>
+        </member>
+        <member name="F:Microsoft.ApplicationInsights.Extensibility.ComponentContextReader.instance">
+            <summary>
+            The singleton instance for our reader.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.ComponentContextReader.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.ApplicationInsights.Extensibility.ComponentContextReader"/> class.
+            </summary>
+        </member>
+        <member name="P:Microsoft.ApplicationInsights.Extensibility.ComponentContextReader.Manifest">
+            <summary>
+            Gets the manifest's root level element.
+            </summary>
+        </member>
+        <member name="P:Microsoft.ApplicationInsights.Extensibility.ComponentContextReader.Instance">
+            <summary>
+            Gets or sets the singleton instance for our application context reader.
+            </summary>
+        </member>
+        <member name="T:Microsoft.ApplicationInsights.Extensibility.DeviceContextReader">
+            <summary>
+            The reader is platform specific and applies to Windows Phone Silverlight applications only.
+            </summary>
+            <summary>
+            The reader is platform specific and will contain different implementations for reading specific data based on the platform its running on.
+            </summary>
+        </member>
+        <member name="T:Microsoft.ApplicationInsights.Extensibility.IDeviceContextReader">
+            <summary>
+            The device context reader interface used while reading device related information in a platform specific way.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.IDeviceContextReader.Initialize">
+            <summary>
+            Initializes the current reader with respect to its environment.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.IDeviceContextReader.GetDeviceType">
+            <summary>
+            Gets the type of the device.
+            </summary>
+            <returns>The type for this device as a hard-coded string.</returns>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.IDeviceContextReader.GetDeviceUniqueId">
+            <summary>
+            Gets the device unique identifier.
+            </summary>
+            <returns>The discovered device identifier.</returns>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.IDeviceContextReader.GetOperatingSystemAsync">
+            <summary>
+            Gets the operating system version.
+            </summary>
+            <returns>The discovered operating system.</returns>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.IDeviceContextReader.GetOemName">
+            <summary>
+            Gets the device OEM.
+            </summary>
+            <returns>The discovered OEM.</returns>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.IDeviceContextReader.GetDeviceModel">
+            <summary>
+            Gets the device model.
+            </summary>
+            <returns>The discovered device model.</returns>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.IDeviceContextReader.GetNetworkType">
+            <summary>
+            Gets the network type.
+            </summary>
+            <returns>The discovered network type.</returns>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.IDeviceContextReader.GetHostSystemLocale">
+            <summary>
+            Gets the host system locale.
+            </summary>
+            <returns>The discovered locale.</returns>
+        </member>
+        <member name="F:Microsoft.ApplicationInsights.Extensibility.DeviceContextReader.ContextPersistentStorageFileName">
+            <summary>
+            The file name used when storing persistent context.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ApplicationInsights.Extensibility.DeviceContextReader.deviceId">
+            <summary>
+            The device identifier.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ApplicationInsights.Extensibility.DeviceContextReader.operatingSystem">
+            <summary>
+            The operating system.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ApplicationInsights.Extensibility.DeviceContextReader.deviceManufacturer">
+            <summary>
+            The device manufacturer.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ApplicationInsights.Extensibility.DeviceContextReader.deviceName">
+            <summary>
+            The device name.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ApplicationInsights.Extensibility.DeviceContextReader.networkType">
+            <summary>
+            The network type.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ApplicationInsights.Extensibility.DeviceContextReader.cachedContext">
+            <summary>
+            The cached fallback context.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.DeviceContextReader.Initialize">
+            <summary>
+            Initializes the current instance with respect to the platform specific implementation.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.DeviceContextReader.GetDeviceType">
+            <summary>
+            Gets the type of the device.
+            </summary>
+            <returns>The type for this device as a hard-coded string.</returns>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.DeviceContextReader.GetDeviceUniqueId">
+            <summary>
+            Gets the device unique ID, or uses the fallback if none is available due to application configuration.
+            </summary>
+            <returns>
+            The discovered device identifier.
+            </returns>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.DeviceContextReader.GetOperatingSystemAsync">
+            <summary>
+            Gets the operating system.
+            </summary>
+            <returns>The discovered operating system.</returns>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.DeviceContextReader.GetOemName">
+            <summary>
+            Gets the device OEM.
+            </summary>
+            <returns>The discovered OEM.</returns>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.DeviceContextReader.GetDeviceModel">
+            <summary>
+            Gets the device model.
+            </summary>
+            <returns>The discovered device model.</returns>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.DeviceContextReader.GetNetworkType">
+            <summary>
+            Gets the network type.
+            </summary>
+            <returns>The discovered network type.</returns>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.DeviceContextReader.ReadSerializedContext">
+            <summary>
+            Reads the serialized context from persistent storage, or will create a new context if none exits.
+            </summary>
+            <returns>The fallback context we will be using.</returns>
+        </member>
+        <member name="F:Microsoft.ApplicationInsights.Extensibility.DeviceContextReader.instance">
+            <summary>
+            The singleton instance for our reader.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ApplicationInsights.Extensibility.DeviceContextReader.syncRoot">
+            <summary>
+            The sync root used in synchronizing access to persistent storage.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.DeviceContextReader.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.ApplicationInsights.Extensibility.DeviceContextReader"/> class.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.DeviceContextReader.GetHostSystemLocale">
+            <summary>
+            Gets the host system locale.
+            </summary>
+            <returns>The discovered locale.</returns>
+        </member>
+        <member name="P:Microsoft.ApplicationInsights.Extensibility.DeviceContextReader.FallbackContext">
+            <summary>
+            Gets the fallback device context.
+            </summary>
+        </member>
+        <member name="P:Microsoft.ApplicationInsights.Extensibility.DeviceContextReader.Instance">
+            <summary>
+            Gets or sets the singleton instance for our application context reader.
+            </summary>
+        </member>
+        <member name="T:Microsoft.ApplicationInsights.Extensibility.FallbackDeviceContext">
+            <summary>
+            The fallback device context we will be using if we can't extract device information directly.
+            </summary>
+        </member>
+        <member name="T:Microsoft.ApplicationInsights.Extensibility.IFallbackContext">
+            <summary>
+            The interface for all fallback contexts.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.IFallbackContext.Initialize">
+            <summary>
+            Initializes this instance with a set of new properties to serve as context.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.IFallbackContext.Serialize(System.Xml.Linq.XElement)">
+            <summary>
+            Serializes the current instance to the passed in root element.
+            </summary>
+            <param name="rootElement">The root element to serialize to.</param>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.IFallbackContext.Deserialize(System.Xml.Linq.XElement)">
+            <summary>
+            Deserializes the passed in root element to the current instance.
+            </summary>
+            <param name="rootElement">The root element to deserialize.</param>
+            <returns>True if deserialization was successful, false otherwise.</returns>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.FallbackDeviceContext.Initialize">
+            <summary>
+            Initializes this instance with a set of new properties to serve as context.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.FallbackDeviceContext.Serialize(System.Xml.Linq.XElement)">
+            <summary>
+            Serializes the current instance to the passed in root element.
+            </summary>
+            <param name="rootElement">The root element to serialize to.</param>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.FallbackDeviceContext.Deserialize(System.Xml.Linq.XElement)">
+            <summary>
+            Deserializes the passed in root element to the current instance.
+            </summary>
+            <param name="rootElement">The root element to deserialize.</param>
+            <returns>True if deserialization was successful, false otherwise.</returns>
+        </member>
+        <member name="P:Microsoft.ApplicationInsights.Extensibility.FallbackDeviceContext.DeviceUniqueId">
+            <summary>
+            Gets the device unique identifier.
+            </summary>
+        </member>
+        <member name="T:Microsoft.ApplicationInsights.Extensibility.Windows.PageViewTelemetryModule">
+            <summary>
+            PageView telemetry module for WP80.
+            </summary>
+            <summary>
+            A module that deals in PageView events and will create PageViewTelemetry objects when triggered.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.Windows.PageViewTelemetryModule.Initialize(Microsoft.ApplicationInsights.Extensibility.TelemetryConfiguration)">
+            <summary>
+            Initializing the PageView telemetry module for WP80.
+            </summary>
+            <param name="configuration">Telemetry configuration.</param>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.Windows.PageViewTelemetryModule.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.ApplicationInsights.Extensibility.Windows.PageViewTelemetryModule"/> class.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.Windows.PageViewTelemetryModule.Dispose">
+            <summary>
+            Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+            </summary>
+        </member>
+        <member name="T:Microsoft.ApplicationInsights.Extensibility.Windows.UnhandledExceptionTelemetryModule">
+            <summary>
+            A module that deals in Exception events and will create ExceptionTelemetry objects when triggered.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.Windows.UnhandledExceptionTelemetryModule.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.ApplicationInsights.Extensibility.Windows.UnhandledExceptionTelemetryModule"/> class.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.Windows.UnhandledExceptionTelemetryModule.Dispose">
+            <summary>
+            Unsubscribe from the <see cref="E:System.Windows.Application.UnhandledException"/> event.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.Windows.UnhandledExceptionTelemetryModule.Initialize(Microsoft.ApplicationInsights.Extensibility.TelemetryConfiguration)">
+            <summary>
+            Subscribes to unhandled event notifications.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.Windows.UnhandledExceptionTelemetryModule.ApplicationOnUnhandledException(System.Object,System.Object)">
+            <summary>
+            Issues with the previous code - 
+            We were changing the exception as handled which should not be done, 
+            as the application might want the exception in other unhandled exception event handler.
+            Re throw of the exception triggers the users unhandled exception event handler twice and also caused the infinite loop issue.
+            Creating a new thread is not a good practice and the code will eventually move to persist and send exception on resume as hockeyApp.
+            </summary>
+        </member>
+        <member name="T:Microsoft.ApplicationInsights.Extensibility.UserContextReader">
+            <summary>
+            The reader is platform specific and applies to Silverlight applications only.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.UserContextReader.GetStoreRegion">
+            <summary>
+            Gets the store region.
+            </summary>
+            <returns>Since there is no API for this Silverlight-based apps always returns null.</returns>
+        </member>
+        <member name="T:Microsoft.ApplicationInsights.Extensibility.Utils">
+            <summary>
+            Various utilities.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.Utils.ReadSerializedContext``1(System.String)">
+            <summary>
+            Reads the serialized context from persistent storage, or will create a new context if none exits.
+            </summary>
+            <param name="fileName">The file to read from storage.</param>
+            <returns>The fallback context we will be using.</returns>
+        </member>
+        <member name="T:Microsoft.ApplicationInsights.Extensibility.ComponentContextInitializer">
+            <summary>
+            A telemetry context initializer that will gather component context information.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.ComponentContextInitializer.Initialize(Microsoft.ApplicationInsights.DataContracts.TelemetryContext)">
+            <summary>
+            Initializes the given <see cref="T:Microsoft.ApplicationInsights.DataContracts.TelemetryContext"/>.
+            </summary>
+            <param name="context">The telemetry context to initialize.</param>
+        </member>
+        <member name="T:Microsoft.ApplicationInsights.Extensibility.DeviceContextInitializer">
+            <summary>
+            A telemetry context initializer that will gather device context information.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.DeviceContextInitializer.Initialize(Microsoft.ApplicationInsights.DataContracts.TelemetryContext)">
+            <summary>
+            Initializes the given <see cref="T:Microsoft.ApplicationInsights.DataContracts.TelemetryContext"/>.
+            </summary>
+            <param name="context">The telemetry context to initialize.</param>
+        </member>
+        <member name="T:Microsoft.ApplicationInsights.Extensibility.Windows.SessionTelemetryModule">
+            <summary>
+            Tracks user sessions for Store Apps (Windows Store and Windows Phone).
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.Windows.SessionTelemetryModule.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.ApplicationInsights.Extensibility.Windows.SessionTelemetryModule"/> class.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.Windows.SessionTelemetryModule.Microsoft#ApplicationInsights#Extensibility#ITelemetryInitializer#Initialize(Microsoft.ApplicationInsights.Channel.ITelemetry)">
+            <summary>
+            Initializes <see cref="P:Microsoft.ApplicationInsights.Extensibility.Implementation.SessionContext.Id"/> property of the <see cref="P:Microsoft.ApplicationInsights.DataContracts.TelemetryContext.Session"/> context.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.Windows.SessionTelemetryModule.Initialize(Microsoft.ApplicationInsights.Extensibility.TelemetryConfiguration)">
+            <summary>
+            Initializes this instance of <see cref="T:Microsoft.ApplicationInsights.Extensibility.Windows.SessionTelemetryModule"/> and begins session tracking.
+            </summary>
+        </member>
+        <member name="P:Microsoft.ApplicationInsights.Extensibility.Windows.SessionTelemetryModule.Timeout">
+            <summary>
+            Gets or sets the value that determines if previous user session timed out.
+            </summary>
+            <remarks>
+            Store apps can be suspended or even closed when user switches back and forth between apps. 
+            If the amount of time between the moment an app is closed and then started again is less 
+            than <see cref="P:Microsoft.ApplicationInsights.Extensibility.Windows.SessionTelemetryModule.Timeout"/> we assume that the previous session continues.
+            </remarks>
+        </member>
+        <member name="T:Microsoft.ApplicationInsights.Extensibility.Windows.UserContextInitializer">
+            <summary>
+            Tracks anonymous user Id for Store Apps (Windows Store and Windows Phone).
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.Windows.UserContextInitializer.Initialize(Microsoft.ApplicationInsights.Channel.ITelemetry)">
+            <summary>
+            Initializes <see cref="P:Microsoft.ApplicationInsights.Extensibility.Implementation.UserContext.Id"/> property of the <see cref="P:Microsoft.ApplicationInsights.DataContracts.TelemetryContext.User"/> telemetry
+            and updates the IsFirst property of the SessionContext.
+            </summary>
+        </member>
+        <member name="T:Microsoft.ApplicationInsights.WindowsAppInitializer">
+            <summary>
+            Windows app Initializer is TelemetryConfiguration and TelemetryModules 
+            Bootstrap the WindowsApps SDK.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.WindowsAppInitializer.InitializeAsync(Microsoft.ApplicationInsights.WindowsCollectors)">
+            <summary>
+            Initializes default configuration and starts automatic telemetry collection for specified WindowsCollectors flags. Must specify InstrumentationKey as a parameter or in ApplicationInsights.config.
+            <param name="collectors">Enumeration flag <see cref="T:Microsoft.ApplicationInsights.WindowsCollectors"/> specifying automatic collectors. By default enable all collectors.</param>
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.WindowsAppInitializer.InitializeAsync(System.String,Microsoft.ApplicationInsights.WindowsCollectors)">
+            <summary>
+            Initializes default configuration and starts automatic telemetry collection for specified WindowsCollectors flags. Must specify InstrumentationKey as a parameter or in ApplicationInsights.config.
+            <param name="instrumentationKey">InstrumentationKey obtain from http://portal.azure.com</param>
+            <param name="collectors">Enumeration flag <see cref="T:Microsoft.ApplicationInsights.WindowsCollectors"/> specifying automatic collectors. By default enable all collectors.</param>
+            </summary>
+        </member>
+        <member name="T:Microsoft.ApplicationInsights.WindowsCollectors">
+            <summary>
+            Windows auto collectors provide automatic collection of telemetry context and automatic collection of telemetry data points for Windows Applications.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ApplicationInsights.WindowsCollectors.Metadata">
+            <summary>
+            Collector to auto populate TelemetryContext for all telemetry.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ApplicationInsights.WindowsCollectors.Session">
+            <summary>
+            Auto collection of user and session information from application startup.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ApplicationInsights.WindowsCollectors.PageView">
+            <summary>
+            Auto collection of page view telemetry from view navigation events.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ApplicationInsights.WindowsCollectors.UnhandledException">
+            <summary>
+            Auto collection of application crashes from unhandled exception handler. 
+            </summary>
+        </member>
+    </members>
+</doc>

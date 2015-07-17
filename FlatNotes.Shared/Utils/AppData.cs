@@ -106,7 +106,7 @@ namespace FlatNotes.Utils
             if (note == null || note.IsEmpty()) return false;
 
             Debug.WriteLine("Create note: " + note.Title);
-            GoogleAnalytics.EasyTracker.GetTracker().SendEvent("app_data", "create", "note", 0);
+            App.TelemetryClient.TrackEvent("NoteCreated");
 
             Notes.Insert(0, note);
 
@@ -127,7 +127,7 @@ namespace FlatNotes.Utils
             bool isNoteArchived = ArchivedNotes.Where<Note>(x => x.ID == note.ID).FirstOrDefault<Note>() != null;
 
             Debug.WriteLine("Update note: " + note.Title);
-            GoogleAnalytics.EasyTracker.GetTracker().SendEvent("app_data", "update", isNoteArchived ? "archived_note" : "note", 0);
+            App.TelemetryClient.TrackEvent("NoteUpdated");
 
             bool success = isNoteArchived ? await SaveArchivedNotes() : await SaveNotes();
             if (!success) return false;
@@ -145,7 +145,7 @@ namespace FlatNotes.Utils
             if (note == null) return false;
 
             Debug.WriteLine("Archive note: " + note.Title);
-            GoogleAnalytics.EasyTracker.GetTracker().SendEvent("app_data", "archive", "note", 0);
+            App.TelemetryClient.TrackEvent("NoteArchived");
 
             bool noteExists = Notes.Where<Note>(x => x.ID == note.ID).FirstOrDefault<Note>() != null;
             if (!noteExists) return false;
@@ -174,7 +174,7 @@ namespace FlatNotes.Utils
             if (note == null) return false;
 
             Debug.WriteLine("Restore note: " + note.Title);
-            GoogleAnalytics.EasyTracker.GetTracker().SendEvent("app_data", "restore", "archived_note", 0);
+            App.TelemetryClient.TrackEvent("ArchivedNoteRestored");
 
             bool noteAlreadyArchived = ArchivedNotes.Where<Note>(x => x.ID == note.ID).FirstOrDefault<Note>() != null;
             if (!noteAlreadyArchived) return false;
@@ -202,10 +202,10 @@ namespace FlatNotes.Utils
             if (note == null) return false;
 
             Debug.WriteLine("Remove note: " + note.Title);
-            GoogleAnalytics.EasyTracker.GetTracker().SendEvent("app_data", "remove", "note", 0);
+            App.TelemetryClient.TrackEvent("NoteRemoved");
 
             //remove note images from disk
-            if(!isArchiving)
+            if (!isArchiving)
                 await RemoveNoteImages(note.Images);
 
             bool noteExists = Notes.Where<Note>(x => x.ID == note.ID).FirstOrDefault<Note>() != null;
@@ -230,10 +230,10 @@ namespace FlatNotes.Utils
             if (note == null) return false;
 
             Debug.WriteLine("Remove archived note: " + note.Title);
-            GoogleAnalytics.EasyTracker.GetTracker().SendEvent("app_data", "remove", "archived_note", 0);
+            App.TelemetryClient.TrackEvent("ArchivedNoteRemoved");
 
             //remove note images from disk
-            if(!isRestoring)
+            if (!isRestoring)
                 await RemoveNoteImages(note.Images);
 
             bool isArchived = ArchivedNotes.Where<Note>(x => x.ID == note.ID).FirstOrDefault<Note>() != null;

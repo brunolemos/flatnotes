@@ -4,16 +4,10 @@ using FlatNotes.Utils;
 using FlatNotes.ViewModels;
 using System;
 using System.Diagnostics;
-using System.Threading.Tasks;
-using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Resources;
-using Windows.Foundation;
-using Windows.Storage;
 using Windows.UI;
-using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
@@ -103,8 +97,6 @@ namespace FlatNotes.Views
 
         private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
-            GoogleAnalytics.EasyTracker.GetTracker().SendView("NoteEditPage");
-
             if (e.NavigationParameter != null && e.NavigationParameter is Note)
                 viewModel.Note = e.NavigationParameter as Note;
             else

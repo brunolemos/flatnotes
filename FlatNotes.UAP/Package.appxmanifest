@@ -9,7 +9,7 @@
   <Identity
     Name="3afb9f09-2002-430d-ab5f-fba9abecb8cf2"
     Publisher="CN=Bruno Lemos"
-    Version="2.0.0.0" />
+    Version="0.0.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="3afb9f09-2002-430d-ab5f-fba9abecb8cf" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 

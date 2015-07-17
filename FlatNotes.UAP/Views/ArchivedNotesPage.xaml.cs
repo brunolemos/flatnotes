@@ -3,10 +3,10 @@ using FlatNotes.Models;
 using FlatNotes.Utils;
 using FlatNotes.ViewModels;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Windows.UI;
 using Windows.UI.Core;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
@@ -34,15 +34,11 @@ namespace FlatNotes.Views
 
         private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
-            GoogleAnalytics.EasyTracker.GetTracker().SendView("ArchivedNotesPage");
-            
             App.RootFrame.Background = LayoutRoot.Background;
         }
 
         private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
         {
-            GoogleAnalytics.EasyTracker.GetTracker().SetCustomMetric(1, AppData.Notes.Count);
-            GoogleAnalytics.EasyTracker.GetTracker().SetCustomMetric(2, AppData.ArchivedNotes.Count);
         }
 
         #region NavigationHelper registration
@@ -66,7 +62,8 @@ namespace FlatNotes.Views
             Note originalNote = AppData.ArchivedNotes.Where<Note>(n => n.ID == note.ID).FirstOrDefault();
             if (originalNote == null)
             {
-                GoogleAnalytics.EasyTracker.GetTracker().SendException(string.Format("Failed to load tapped archived note ({0})", Newtonsoft.Json.JsonConvert.SerializeObject(AppData.ArchivedNotes)), false);
+                var exceptionProperties = new Dictionary<string, string>() { { "Details", "Failed to load tapped archived note" }, { "id", note.ID } };
+                App.TelemetryClient.TrackException(null, exceptionProperties);
                 return;
             }
 

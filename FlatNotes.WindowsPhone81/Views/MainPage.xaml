@@ -59,7 +59,7 @@
             </CommandBar.PrimaryCommands>
 
             <CommandBar.SecondaryCommands>
-                <AppBarButton x:Uid="ToggleSingleColumnAppBarButton" x:Name="ToggleSingleColumnAppBarButton" Label="toggle single column view" Command="{Binding ToggleSingleColumnCommand}" ToolTipService.ToolTip="Open archived notes page"/>
+                <AppBarButton x:Uid="ToggleSingleColumnViewAppBarButton" x:Name="ToggleSingleColumnViewAppBarButton" Label="toggle single column view" Command="{Binding ToggleSingleColumnViewCommand}"/>
                 <AppBarButton x:Uid="ArchivedNotesAppBarButton" Icon="Preview" Label="archived notes" Command="{Binding OpenArchivedNotesCommand}"/>
                 <AppBarButton x:Uid="SettingsAppBarButton" Icon="Setting" Label="settings" Command="{Binding OpenSettingsCommand}"/>
             </CommandBar.SecondaryCommands>

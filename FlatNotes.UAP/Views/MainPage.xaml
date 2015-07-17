@@ -27,7 +27,7 @@
                         <Setter Target="NotesControl.ItemWidth" Value="150"/>
                         <Setter Target="NotesControl.Padding" Value="8"/>
                         <Setter Target="NotesControl.AllowSingleColumn" Value="True"/>
-                        <Setter Target="ToggleSingleColumnAppBarButton.Visibility" Value="Visible"/>
+                        <Setter Target="ToggleSingleColumnViewAppBarButton.Visibility" Value="Visible"/>
                     </VisualState.Setters>
                 </VisualState>
 
@@ -42,7 +42,7 @@
                         <Setter Target="NotesControl.ItemWidth" Value="260"/>
                         <Setter Target="NotesControl.Padding" Value="24"/>
                         <Setter Target="NotesControl.AllowSingleColumn" Value="False"/>
-                        <Setter Target="ToggleSingleColumnAppBarButton.Visibility" Value="Collapsed"/>
+                        <Setter Target="ToggleSingleColumnViewAppBarButton.Visibility" Value="Collapsed"/>
                     </VisualState.Setters>
                 </VisualState>
 
@@ -57,7 +57,7 @@
                         <Setter Target="NotesControl.ItemWidth" Value="260"/>
                         <Setter Target="NotesControl.Padding" Value="24"/>
                         <Setter Target="NotesControl.AllowSingleColumn" Value="False"/>
-                        <Setter Target="ToggleSingleColumnAppBarButton.Visibility" Value="Collapsed"/>
+                        <Setter Target="ToggleSingleColumnViewAppBarButton.Visibility" Value="Collapsed"/>
                     </VisualState.Setters>
                 </VisualState>
 
@@ -72,7 +72,7 @@
                         <Setter Target="NotesControl.ItemWidth" Value="260"/>
                         <Setter Target="NotesControl.Padding" Value="80,24"/>
                         <Setter Target="NotesControl.AllowSingleColumn" Value="False"/>
-                        <Setter Target="ToggleSingleColumnAppBarButton.Visibility" Value="Collapsed"/>
+                        <Setter Target="ToggleSingleColumnViewAppBarButton.Visibility" Value="Collapsed"/>
                     </VisualState.Setters>
                 </VisualState>
 
@@ -87,7 +87,7 @@
                         <Setter Target="NotesControl.ItemWidth" Value="300"/>
                         <Setter Target="NotesControl.Padding" Value="120,24"/>
                         <Setter Target="NotesControl.AllowSingleColumn" Value="False"/>
-                        <Setter Target="ToggleSingleColumnAppBarButton.Visibility" Value="Collapsed"/>
+                        <Setter Target="ToggleSingleColumnViewAppBarButton.Visibility" Value="Collapsed"/>
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
@@ -122,7 +122,7 @@
             </CommandBar.PrimaryCommands>
 
             <CommandBar.SecondaryCommands>
-                <AppBarButton x:Uid="ToggleSingleColumnAppBarButton" x:Name="ToggleSingleColumnAppBarButton" Label="Toggle single column view" Command="{Binding ToggleSingleColumnCommand}" ToolTipService.ToolTip="Open archived notes page"/>
+                <AppBarButton x:Uid="ToggleSingleColumnViewAppBarButton" x:Name="ToggleSingleColumnViewAppBarButton" Label="Toggle single column view" Command="{Binding ToggleSingleColumnViewCommand}" ToolTipService.ToolTip="Toggle single column view"/>
                 <AppBarButton x:Uid="ArchivedNotesAppBarButton" Icon="Preview" Label="Archived notes" Command="{Binding OpenArchivedNotesCommand}" ToolTipService.ToolTip="Open archived notes page"/>
                 <AppBarButton x:Uid="SettingsAppBarButton" Icon="Setting" Label="Settings" Command="{Binding OpenSettingsCommand}" ToolTipService.ToolTip="Open settings page"/>
             </CommandBar.SecondaryCommands>

@@ -144,7 +144,7 @@ namespace FlatNotes.ViewModels
 
         private async void OpenImagePicker()
         {
-            GoogleAnalytics.EasyTracker.GetTracker().SendEvent("ui_action", "execute_command", "open_image_picker", 1);
+            App.TelemetryClient.TrackEvent("OpenImagePicker_NoteEditViewModel");
 
             FileOpenPicker picker = new FileOpenPicker();
             picker.ViewMode = PickerViewMode.Thumbnail;
@@ -157,6 +157,7 @@ namespace FlatNotes.ViewModels
             picker.FileTypeFilter.Add(".gif");
 
 #if WINDOWS_PHONE_APP
+            await Task.Delay(0);
             //open
             picker.PickSingleFileAndContinue();
 #elif WINDOWS_UAP
@@ -173,7 +174,7 @@ namespace FlatNotes.ViewModels
         private async void handleImageFromFilePicker(IReadOnlyList<StorageFile> files)
         {
             if (files == null || files.Count <= 0) return;
-            string error = "";
+            bool error = false;
 
             try
             {
@@ -200,13 +201,26 @@ namespace FlatNotes.ViewModels
                     break;
                 }
             }
-            catch (Exception e) { error = e.Message; }
-
-            if (!String.IsNullOrEmpty(error))
+            catch (Exception e)
             {
-                GoogleAnalytics.EasyTracker.GetTracker().SendException(String.Format("Failed to save image ({0})", error), false);
-                await(new MessageDialog("Failed to save image. Try again.", "Sorry")).ShowAsync();
+                error = true;
 
+                var exceptionProperties = new Dictionary<string, string>() { { "Details", "Failed to save images" } };
+
+                var exceptionMetrics = new Dictionary<string, double>();
+                exceptionMetrics.Add("Image count", Note.Images.Count);
+                for (int i = 0; i < Note.Images.Count; i++)
+                {
+                    exceptionMetrics.Add(string.Format("Image[{0}] Width", i), Note.Images[i].Size.Width);
+                    exceptionMetrics.Add(string.Format("Image[{0}] Height", i), Note.Images[i].Size.Height);
+                }
+
+                App.TelemetryClient.TrackException(e, exceptionProperties, exceptionMetrics);
+            }
+
+            if (error)
+            {
+                //await(new MessageDialog("Failed to save image. Try again.", "Sorry")).ShowAsync();
                 return;
             }
 
@@ -216,13 +230,13 @@ namespace FlatNotes.ViewModels
 
         private void ToggleChecklist()
         {
-            GoogleAnalytics.EasyTracker.GetTracker().SendEvent("ui_action", "execute_command", "toggle_checklist", 0);
+            App.TelemetryClient.TrackEvent("ToggleChecklist_NoteEditViewModel");
             Note.ToggleChecklist();
         }
 
         private async void Pin()
         {
-            GoogleAnalytics.EasyTracker.GetTracker().SendEvent("ui_action", "execute_command", "pin", 0);
+            App.TelemetryClient.TrackEvent("Pin_EditViewModel");
 
             if (Note.IsEmpty()) return;
 
@@ -234,7 +248,7 @@ namespace FlatNotes.ViewModels
 
         private void Unpin()
         {
-            GoogleAnalytics.EasyTracker.GetTracker().SendEvent("ui_action", "execute_command", "unpin", 0);
+            App.TelemetryClient.TrackEvent("Unpin_NoteEditViewModel");
 
             TileManager.RemoveTileIfExists(Note);
             Note.IsPinned = false;// SecondaryTile.Exists(Note.ID);

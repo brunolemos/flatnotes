@@ -3,11 +3,6 @@ using FlatNotes.Models;
 using FlatNotes.Utils;
 using FlatNotes.Views;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using Windows.Foundation;
-using Windows.Storage;
-using Windows.Storage.Pickers;
 using Windows.UI.Xaml.Controls;
 
 namespace FlatNotes.ViewModels
@@ -18,7 +13,7 @@ namespace FlatNotes.ViewModels
         public event EventHandler ReorderModeDisabled;
 
         public RelayCommand NewNoteCommand { get; private set; }
-        public RelayCommand ToggleSingleColumnCommand { get; private set; }
+        public RelayCommand ToggleSingleColumnViewCommand { get; private set; }
         public RelayCommand OpenArchivedNotesCommand { get; private set; }
         public RelayCommand OpenSettingsCommand { get; private set; }
 
@@ -46,7 +41,7 @@ namespace FlatNotes.ViewModels
         public MainViewModel()
         {
             NewNoteCommand = new RelayCommand(CreateTextNote);
-            ToggleSingleColumnCommand = new RelayCommand(ToggleSingleColumn, CanToggleSingleColumn);
+            ToggleSingleColumnViewCommand = new RelayCommand(ToggleSingleColumnView, CanToggleSingleColumn);
             OpenArchivedNotesCommand = new RelayCommand(OpenArchivedNotes);
             OpenSettingsCommand = new RelayCommand(App.OpenSettings);
 
@@ -54,19 +49,20 @@ namespace FlatNotes.ViewModels
             AppSettings.Instance.ColumnsChanged += (s, e) =>
             {
                 NotifyPropertyChanged("Columns");
-                ToggleSingleColumnCommand.RaiseCanExecuteChanged();
+                ToggleSingleColumnViewCommand.RaiseCanExecuteChanged();
             };
         }
 
 #region COMMANDS_ACTIONS
         private void CreateTextNote()
         {
-            GoogleAnalytics.EasyTracker.GetTracker().SendEvent("ui_action", "execute_command", "create_new_note", 0);
+            App.TelemetryClient.TrackEvent("CreateNote_MainViewModel");
             App.RootFrame.Navigate(typeof(NoteEditPage), new Note());
         }
 
-        private void ToggleSingleColumn()
+        private void ToggleSingleColumnView()
         {
+            App.TelemetryClient.TrackEvent("ToggleSingleColumnView_MainViewModel");
             IsSingleColumnEnabled = !IsSingleColumnEnabled;
         }
 

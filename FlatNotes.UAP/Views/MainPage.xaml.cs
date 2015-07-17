@@ -3,6 +3,7 @@ using FlatNotes.Models;
 using FlatNotes.Utils;
 using FlatNotes.ViewModels;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Windows.UI.Core;
 using Windows.UI.Xaml.Controls;
@@ -61,7 +62,8 @@ namespace FlatNotes.Views
             Note originalNote = AppData.Notes.Where<Note>(n => n.ID == note.ID).FirstOrDefault();
             if (originalNote == null)
             {
-                GoogleAnalytics.EasyTracker.GetTracker().SendException(string.Format("Failed to load tapped note ({0})", Newtonsoft.Json.JsonConvert.SerializeObject(AppData.Notes)), false);
+                var exceptionProperties = new Dictionary<string, string>() { { "Details", "Failed to load tapped note" }, { "id", note.ID } };
+                App.TelemetryClient.TrackException(null, exceptionProperties);
                 return;
             }
 

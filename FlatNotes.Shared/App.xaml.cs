@@ -2,6 +2,7 @@
 using FlatNotes.Utils;
 using FlatNotes.ViewModels;
 using FlatNotes.Views;
+using Microsoft.ApplicationInsights;
 using System;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
@@ -24,6 +25,11 @@ namespace FlatNotes
 {
     public sealed partial class App : Application
     {
+        /// <summary>
+        /// Allows tracking page views, exceptions and other telemetry through the Microsoft Application Insights service.
+        /// </summary>
+        public static TelemetryClient TelemetryClient;
+
 #if WINDOWS_PHONE_APP
         private TransitionCollection transitions;
         public static ContinuationManager ContinuationManager { get; private set; }
@@ -39,6 +45,10 @@ namespace FlatNotes
 
         public App()
         {
+            //application insights
+            WindowsAppInitializer.InitializeAsync();
+            TelemetryClient = new TelemetryClient();
+
             this.InitializeComponent();
 
             this.Suspending += this.OnSuspending;
@@ -56,7 +66,7 @@ namespace FlatNotes
 
         private async void App_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-            GoogleAnalytics.EasyTracker.GetTracker().SendException(String.Format("{0} (Stack trace: {1})", e.Message, e.Exception.StackTrace), true);
+            App.TelemetryClient.TrackException(e.Exception);
 
             if (!e.Handled)
             {
@@ -135,8 +145,10 @@ namespace FlatNotes
             UpdateTheme(AppSettings.Instance.Theme);
 
             //user preferences
-            GoogleAnalytics.EasyTracker.GetTracker().SetCustomDimension(1, AppSettings.Instance.Theme.ToString());
-            GoogleAnalytics.EasyTracker.GetTracker().SetCustomDimension(2, AppSettings.Instance.Columns.ToString());
+            App.TelemetryClient.TrackMetric("Theme", AppSettings.Instance.Theme == ElementTheme.Light ? 1 : 2);
+            App.TelemetryClient.TrackMetric("Single Column", AppSettings.Instance.IsSingleColumnEnabled ? 1 : 0);
+            App.TelemetryClient.TrackMetric("Transparent Tile", AppSettings.Instance.TransparentTile ? 1 : 0);
+            App.TelemetryClient.TrackMetric("Transparent Note Tile", AppSettings.Instance.TransparentNoteTile ? 1 : 0);
 
             if (RootFrame.Content == null)
             {
@@ -194,6 +206,9 @@ namespace FlatNotes
             //save data
             if (AppData.HasUnsavedChangesOnNotes) await AppData.SaveNotes();
             if (AppData.HasUnsavedChangesOnArchivedNotes) await AppData.SaveArchivedNotes();
+
+            App.TelemetryClient.TrackMetric("Notes Count", AppData.Notes.Count);
+            App.TelemetryClient.TrackMetric("Archived Notes Count", AppData.ArchivedNotes.Count);
 
             deferral.Complete();
         }

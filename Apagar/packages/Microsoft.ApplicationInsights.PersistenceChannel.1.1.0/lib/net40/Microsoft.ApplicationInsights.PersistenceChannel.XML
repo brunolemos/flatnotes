@@ -1,0 +1,462 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Microsoft.ApplicationInsights.PersistenceChannel</name>
+    </assembly>
+    <members>
+        <member name="F:Microsoft.ApplicationInsights.Channel.StorageBase.peekedTransmissions">
+            <summary>
+            Peeked transmissions dictionary (maps file name to its full path). Holds all the transmissions that were peeked.
+            </summary>
+            <remarks>
+            Note: The value (=file's full path) is not required in the Storage implementation. 
+            If there was a concurrent Abstract Data Type Set it would have been used instead. 
+            However, since there is no concurrent Set, dictionary is used and the second value is ignored.    
+            </remarks>
+        </member>
+        <member name="P:Microsoft.ApplicationInsights.Channel.StorageBase.CapacityInBytes">
+            <summary>
+            Gets or sets the maximum size of the storage in bytes. When limit is reached, the Enqueue method will drop new transmissions. 
+            </summary>
+        </member>
+        <member name="P:Microsoft.ApplicationInsights.Channel.StorageBase.MaxFiles">
+            <summary>
+            Gets or sets the maximum number of files. When limit is reached, the Enqueue method will drop new transmissions. 
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Channel.Storage.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.ApplicationInsights.Channel.Storage"/> class.
+            </summary>
+            <param name="uniqueFolderName">A folder name. Under this folder all the transmissions will be saved.</param>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Channel.Storage.Peek">
+            <summary>
+            Reads an item from the storage. Order is Last-In-First-Out. 
+            When the Transmission is no longer needed (it was either sent or failed with a non-retriable error) it should be disposed. 
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Channel.Storage.GetFiles(System.String)">
+            <summary>
+            Get files from <see cref="F:Microsoft.ApplicationInsights.Channel.Storage.storageFolder"/>.
+            </summary>        
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Channel.Storage.DeleteObsoleteFiles">
+            <summary>
+            Enqueue is saving a transmission to a <c>tmp</c> file and after a successful write operation it renames it to a <c>trn</c> file. 
+            A file without a <c>trn</c> extension is ignored by Storage.Peek(), so if a process is taken down before rename happens 
+            it will stay on the disk forever. 
+            This method deletes files with the <c>tmp</c> extension that exists on disk for more than 5 minutes.
+            </summary>
+        </member>
+        <member name="P:Microsoft.ApplicationInsights.Channel.Storage.FolderName">
+            <summary>
+            Gets the storage's folder name.
+            </summary>
+        </member>
+        <member name="P:Microsoft.ApplicationInsights.Channel.Storage.StorageFolder">
+            <summary>
+            Gets the storage folder. 
+            </summary>
+        </member>
+        <member name="T:Microsoft.ApplicationInsights.Channel.FlushManager">
+            <summary>
+            This class handles all the logic for flushing the In Memory buffer to the persistent storage. 
+            </summary>
+        </member>
+        <member name="F:Microsoft.ApplicationInsights.Channel.FlushManager.telemetryBuffer">
+            <summary>
+            The memory buffer. 
+            </summary>
+        </member>
+        <member name="F:Microsoft.ApplicationInsights.Channel.FlushManager.flushWaitHandle">
+            <summary>
+            A wait handle that signals when a flush is required. 
+            </summary>
+        </member>
+        <member name="F:Microsoft.ApplicationInsights.Channel.FlushManager.storage">
+            <summary>
+            The storage that is used to persist all the transmissions. 
+            </summary>
+        </member>
+        <member name="F:Microsoft.ApplicationInsights.Channel.FlushManager.disposeCount">
+            <summary>
+            The number of times this object was disposed.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ApplicationInsights.Channel.FlushManager.flushLoopEnabled">
+            <summary>
+            A boolean value that determines if the long running thread that runs flush in a loop will stay alive. 
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Channel.FlushManager.#ctor(Microsoft.ApplicationInsights.Channel.StorageBase,Microsoft.ApplicationInsights.Channel.TelemetryBuffer,System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.ApplicationInsights.Channel.FlushManager"/> class.
+            </summary>        
+            <param name="storage">The storage that persists the telemetries.</param>
+            <param name="telemetryBuffer">In memory buffer that holds telemetries.</param>
+            <param name="supportAutoFlush">A boolean value that determines if flush will happen automatically. Used by unit tests.</param>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Channel.FlushManager.Dispose">
+            <summary>
+            Disposes the object.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Channel.FlushManager.Flush">
+            <summary>
+            Persist the in-memory telemetry items.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Channel.FlushManager.FlushLoop">
+            <summary>
+            Flushes in intervals set by <see cref="P:Microsoft.ApplicationInsights.Channel.FlushManager.FlushDelay"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Channel.FlushManager.OnTelemetryBufferFull">
+            <summary>
+            Handles the full event coming from the TelemetryBuffer.
+            </summary>
+        </member>
+        <member name="P:Microsoft.ApplicationInsights.Channel.FlushManager.FlushDelay">
+            <summary>
+            Gets or sets the maximum telemetry batching interval. Once the interval expires, <see cref="T:Microsoft.ApplicationInsights.Channel.PersistenceTransmitter"/> 
+            persists the accumulated telemetry items.
+            </summary>
+        </member>
+        <member name="P:Microsoft.ApplicationInsights.Channel.FlushManager.EndpointAddress">
+            <summary>
+            Gets or sets the service endpoint. 
+            </summary>
+            <remarks>
+            Q: Why flushManager knows about the endpoint? 
+            A: Storage stores <see cref="T:Microsoft.ApplicationInsights.Channel.Transmission"/> objects and Transmission objects contain the endpoint address.
+            </remarks>
+        </member>
+        <member name="T:Microsoft.ApplicationInsights.Channel.PersistenceChannel">
+            <summary>
+            Represents a communication channel for sending telemetry to Application Insights via HTTPS.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Channel.PersistenceChannel.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.ApplicationInsights.Channel.PersistenceChannel"/> class.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Channel.PersistenceChannel.#ctor(System.String,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.ApplicationInsights.Channel.PersistenceChannel"/> class.
+            </summary>
+            <param name="storageFolderName">
+            A folder name. Under this folder all the transmissions will be saved. 
+            Setting this value groups channels, even from different processes. 
+            If 2 (or more) channels has the same <c>storageFolderName</c> only one channel will perform the sending even if the channel is in a different process/AppDomain/Thread.  
+            </param>
+            <param name="sendersCount">
+            Defines the number of senders. A sender is a long-running thread that sends telemetry batches in intervals defined by <see cref="P:Microsoft.ApplicationInsights.Channel.PersistenceChannel.SendingInterval"/>. 
+            So the amount of senders also defined the maximum amount of http channels opened at the same time.
+            </param>        
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Channel.PersistenceChannel.Dispose">
+            <summary>
+            Releases unmanaged and - optionally - managed resources.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Channel.PersistenceChannel.Send(Microsoft.ApplicationInsights.Channel.ITelemetry)">
+            <summary>
+            Sends an instance of ITelemetry through the channel.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Channel.PersistenceChannel.Flush">
+            <summary>
+            Flushes the in-memory buffer to disk. 
+            </summary>
+        </member>
+        <member name="P:Microsoft.ApplicationInsights.Channel.PersistenceChannel.StorageUniqueFolder">
+            <summary>
+            Gets the storage unique folder.
+            </summary>
+        </member>
+        <member name="P:Microsoft.ApplicationInsights.Channel.PersistenceChannel.DeveloperMode">
+            <summary>
+            Gets or sets a value indicating whether developer mode of telemetry transmission is enabled.
+            When developer mode is True, <see cref="T:Microsoft.ApplicationInsights.Channel.PersistenceChannel"/> sends telemetry to Application Insights immediately 
+            during the entire lifetime of the application. When developer mode is False, <see cref="T:Microsoft.ApplicationInsights.Channel.PersistenceChannel"/>
+            respects production sending policies defined by other properties.
+            </summary>
+        </member>
+        <member name="P:Microsoft.ApplicationInsights.Channel.PersistenceChannel.SendingInterval">
+            <summary>
+            Gets or sets an interval between each successful sending.
+            </summary>
+            <remarks>On error scenario this value is ignored and the interval will be defined using an exponential back-off algorithm.</remarks>
+        </member>
+        <member name="P:Microsoft.ApplicationInsights.Channel.PersistenceChannel.FlushInterval">
+            <summary>
+            Gets or sets the interval between each flush to disk. 
+            </summary>
+        </member>
+        <member name="P:Microsoft.ApplicationInsights.Channel.PersistenceChannel.EndpointAddress">
+            <summary>
+            Gets or sets the HTTP address where the telemetry is sent.
+            </summary>
+        </member>
+        <member name="P:Microsoft.ApplicationInsights.Channel.PersistenceChannel.MaxTelemetryBufferCapacity">
+            <summary>
+            Gets or sets the maximum number of telemetry items that will accumulate in a memory before 
+            <see cref="T:Microsoft.ApplicationInsights.Channel.PersistenceChannel"/> persists them to disk.
+            </summary>
+        </member>
+        <member name="P:Microsoft.ApplicationInsights.Channel.PersistenceChannel.MaxTransmissionStorageCapacity">
+            <summary>
+            Gets or sets the maximum amount of disk space, in bytes, that <see cref="T:Microsoft.ApplicationInsights.Channel.PersistenceChannel"/> will 
+            use for storage.
+            </summary>
+        </member>
+        <member name="P:Microsoft.ApplicationInsights.Channel.PersistenceChannel.MaxTransmissionStorageFilesCapacity">
+            <summary>
+            Gets or sets the maximum amount of files allowed in storage. When the limit is reached telemetries will be dropped.
+            </summary>
+        </member>
+        <member name="P:Microsoft.ApplicationInsights.Channel.PersistenceChannel.StopUploadAfterIntervalInSeconds">
+            <summary>
+            Gets or sets the amount of time, in seconds, after application is started when the 
+            <see cref="T:Microsoft.ApplicationInsights.Channel.PersistenceChannel"/> will send telemetry to ApplicationInsights. Once the specified 
+            amount of time runs out, telemetry will be stored on disk until the application is started again.
+            </summary>
+        </member>
+        <member name="P:Microsoft.ApplicationInsights.Channel.PersistenceChannel.DataUploadIntervalInSeconds">
+            <summary>
+            Gets or sets the maximum telemetry batching interval. Once the interval expires, <see cref="T:Microsoft.ApplicationInsights.Channel.PersistenceChannel"/> 
+            persists the accumulated telemetry items.
+            </summary>
+        </member>
+        <member name="P:Microsoft.ApplicationInsights.Channel.PersistenceChannel.MaxTransmissionBufferCapacity">
+            <summary>
+            Gets or sets the maximum amount of memory, in bytes, that <see cref="T:Microsoft.ApplicationInsights.Channel.PersistenceChannel"/> will use 
+            to buffer transmissions before sending them to Application Insights.
+            </summary>
+        </member>
+        <member name="P:Microsoft.ApplicationInsights.Channel.PersistenceChannel.MaxTransmissionSenderCapacity">
+            <summary>
+            Gets or sets the maximum number of telemetry transmissions that <see cref="T:Microsoft.ApplicationInsights.Channel.PersistenceChannel"/> will 
+            send to Application Insights at the same time.
+            </summary>
+        </member>
+        <member name="T:Microsoft.ApplicationInsights.Channel.PersistenceTransmitter">
+            <summary>
+            Implements throttled and persisted transmission of telemetry to Application Insights. 
+            </summary>
+        </member>
+        <member name="F:Microsoft.ApplicationInsights.Channel.PersistenceTransmitter.senders">
+            <summary>
+            A list of senders that sends transmissions. 
+            </summary>
+        </member>
+        <member name="F:Microsoft.ApplicationInsights.Channel.PersistenceTransmitter.storage">
+            <summary>
+            The storage that is used to persist all the transmissions. 
+            </summary>
+        </member>
+        <member name="F:Microsoft.ApplicationInsights.Channel.PersistenceTransmitter.sendingCancellationTokenSource">
+            <summary>
+            Cancels the sending. 
+            </summary>
+        </member>
+        <member name="F:Microsoft.ApplicationInsights.Channel.PersistenceTransmitter.mutex">
+            <summary>
+            A mutex that will be used as a name mutex to synchronize transmitters even from different processes.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ApplicationInsights.Channel.PersistenceTransmitter.disposeCount">
+            <summary>
+            The number of times this object was disposed.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ApplicationInsights.Channel.PersistenceTransmitter.eventToKeepMutexThreadAlive">
+            <summary>
+            Mutex is released once the thread that acquired it is ended. This event keeps the long running thread that acquire the mutex alive until dispose is called.    
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Channel.PersistenceTransmitter.#ctor(Microsoft.ApplicationInsights.Channel.StorageBase,System.Int32,System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.ApplicationInsights.Channel.PersistenceTransmitter"/> class.
+            </summary>
+            <param name="storage">The transmissions storage.</param>
+            <param name="sendersCount">The number of senders to create.</param>
+            <param name="createSenders">A boolean value that indicates if this class should try and create senders. This is a workaround for unit tests purposes only.</param>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Channel.PersistenceTransmitter.Dispose">
+            <summary>
+            Disposes the object.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Channel.PersistenceTransmitter.SendForDeveloperMode(Microsoft.ApplicationInsights.Channel.ITelemetry,System.String)">
+            <summary>
+            Sending the item to the endpoint immediately without persistence.
+            </summary>
+            <param name="item">Telemetry item.</param>
+            <param name="endpointAddress">Server endpoint address.</param>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Channel.PersistenceTransmitter.AcquireMutex(System.Action)">
+            <summary>
+            Make sure that <paramref name="action"/> happens only once even if it is executed on different processes. 
+            On every given time only one channel will acquire the mutex, even if the channel is on a different process.        
+            This method is using a named mutex to achieve that. Once the mutex is acquired <paramref name="action"/> will be executed.
+            </summary>
+            <param name="action">The action to perform once the mutex is acquired.</param>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Channel.PersistenceTransmitter.CreateSenders(System.Int32)">
+            <summary>
+            Create senders to send telemetries. 
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Channel.PersistenceTransmitter.StopSenders">
+            <summary>
+            Stops the senders.  
+            </summary>
+            <remarks>As long as there is no Start implementation, this method should only be called from Dispose.</remarks>
+        </member>
+        <member name="P:Microsoft.ApplicationInsights.Channel.PersistenceTransmitter.StorageUniqueFolder">
+            <summary>
+            Gets a unique folder name. This folder will be used to store the transmission files.
+            </summary>
+        </member>
+        <member name="P:Microsoft.ApplicationInsights.Channel.PersistenceTransmitter.SendingInterval">
+            <summary>
+            Gets or sets the interval between each successful sending. 
+            </summary>
+        </member>
+        <member name="T:Microsoft.ApplicationInsights.Channel.Sender">
+            <summary>
+            Fetch transmissions from the storage and sends it. 
+            </summary>
+        </member>
+        <member name="F:Microsoft.ApplicationInsights.Channel.Sender.DelayHandler">
+            <summary>
+            A wait handle that flags the sender when to start sending again. The type is protected for unit test.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ApplicationInsights.Channel.Sender.sendingIntervalOnNoData">
+            <summary>
+            When storage is empty it will be queried again after this interval. 
+            </summary>
+        </member>
+        <member name="F:Microsoft.ApplicationInsights.Channel.Sender.maxIntervalBetweenRetries">
+            <summary>
+            Holds the maximum time for the exponential back-off algorithm. The sending interval will grow on every HTTP Exception until this max value.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ApplicationInsights.Channel.Sender.stoppedHandler">
+            <summary>
+            A wait handle that is being set when Sender is no longer sending.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ApplicationInsights.Channel.Sender.defaultSendingInterval">
+            <summary>
+            The default sending interval.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ApplicationInsights.Channel.Sender.stopped">
+            <summary>
+            A boolean value that indicates if the sender should be stopped. The sender's while loop is checking this boolean value.  
+            </summary>
+        </member>
+        <member name="F:Microsoft.ApplicationInsights.Channel.Sender.drainingTimeout">
+            <summary>
+            The amount of time to wait, in the stop method, until the last transmission is sent. 
+            If time expires, the stop method will return even if the transmission hasn't been sent. 
+            </summary>
+        </member>
+        <member name="F:Microsoft.ApplicationInsights.Channel.Sender.storage">
+            <summary>
+            The transmissions storage.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ApplicationInsights.Channel.Sender.disposeCount">
+            <summary>
+            The number of times this object was disposed.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ApplicationInsights.Channel.Sender.transmitter">
+            <summary>
+            Holds the transmitter.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Channel.Sender.#ctor(Microsoft.ApplicationInsights.Channel.StorageBase,Microsoft.ApplicationInsights.Channel.PersistenceTransmitter,System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.ApplicationInsights.Channel.Sender"/> class.
+            </summary>
+            <param name="storage">The storage that holds the transmissions to send.</param>
+            <param name="transmitter">
+            The persistence transmitter that manages this Sender. 
+            The transmitter will be used as a configuration class, it exposes properties like SendingInterval that will be read by Sender.
+            </param>
+            <param name="startSending">A boolean value that determines if Sender should start sending immediately. This is only used for unit tests.</param>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Channel.Sender.Dispose">
+            <summary>
+            Disposes the managed objects.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Channel.Sender.StopAsync">
+            <summary>
+            Stops the sender. 
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Channel.Sender.SendLoop">
+            <summary>
+            Send transmissions in a loop. 
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Channel.Sender.Send(Microsoft.ApplicationInsights.Channel.StorageTransmission,System.TimeSpan@)">
+            <summary>
+            Sends a transmission and handle errors.
+            </summary>
+            <param name="transmission">The transmission to send.</param>
+            <param name="nextSendInterval">When this value returns it will hold a recommendation for when to start the next sending iteration.</param>
+            <returns>A boolean value that indicates if there was a retriable error.</returns>        
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Channel.Sender.LogInterval(System.TimeSpan,System.TimeSpan)">
+            <summary>
+            Log next interval. Only log the interval when it changes by more then a minute. So if interval grow by 1 minute or decreased by 1 minute it will be logged. 
+            Logging every interval will just make the log noisy. 
+            </summary>        
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Channel.Sender.GetStatusCode(System.Net.WebException)">
+            <summary>
+            Return the status code from the web exception or null if no such code exists. 
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Channel.Sender.IsRetryable(System.Nullable{System.Int32},System.Net.WebExceptionStatus)">
+            <summary>
+            Returns true if <paramref name="httpStatusCode" /> or <paramref name="webExceptionStatus" /> are retriable.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Channel.Sender.CalculateNextInterval(System.Nullable{System.Int32},System.TimeSpan,System.TimeSpan)">
+            <summary>
+            Calculates the next interval using exponential back-off algorithm (with the exceptions of few error codes that reset the interval to <see cref="P:Microsoft.ApplicationInsights.Channel.Sender.SendingInterval"/>.
+            </summary>        
+        </member>
+        <member name="P:Microsoft.ApplicationInsights.Channel.Sender.SendingInterval">
+            <summary>
+            Gets the interval between each successful sending.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Channel.StorageTransmission.Dispose">
+            <summary>
+            Disposing the storage transmission.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Channel.StorageTransmission.CreateFromStreamAsync(System.IO.Stream,System.String)">
+            <summary>
+            Creates a new transmission from the specified <paramref name="stream"/>.
+            </summary>
+            <returns>Return transmission loaded from file; return null if the file is corrupted.</returns>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Channel.StorageTransmission.SaveAsync(Microsoft.ApplicationInsights.Channel.Transmission,System.IO.Stream)">
+            <summary>
+            Saves the transmission to the specified <paramref name="stream"/>.
+            </summary>
+        </member>
+    </members>
+</doc>

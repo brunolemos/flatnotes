@@ -28,7 +28,6 @@ namespace FlatNotes
 
         private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
-            GoogleAnalytics.EasyTracker.GetTracker().SendView("SettingsPage");
         }
 
         private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)

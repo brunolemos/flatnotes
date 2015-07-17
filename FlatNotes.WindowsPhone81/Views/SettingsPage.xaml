@@ -25,13 +25,13 @@
     <Page.BottomAppBar>
         <CommandBar x:Name="CommandBar">
             <CommandBar.PrimaryCommands>
-                <AppBarButton x:Uid="PraiseAppBarButton" Icon="Favorite" Label="rate" Command="{Binding SendFeedbackCommand}"/>
-                <AppBarButton x:Uid="SupportAppBarButton" Icon="Mail" Label="support" Command="{Binding SuggestFeatureOrReportBugCommand}"/>
+                <AppBarButton x:Uid="PraiseAppBarButton" Icon="Favorite" Label="rate" Command="{Binding RateAppCommand}"/>
+                <AppBarButton x:Uid="SupportAppBarButton" Icon="Mail" Label="support" Command="{Binding ContactSupportCommand}"/>
             </CommandBar.PrimaryCommands>
             
             <!--<CommandBar.SecondaryCommands>
-                <AppBarButton x:Uid="FeedbackAppBarButton" Icon="Like" Label="send a nice feedback" Command="{Binding SendFeedbackCommand}"/>
-                <AppBarButton x:Uid="RequestFeatureOrReportBugAppBarButton" Icon="Mail" Label="request feature / report bug" Command="{Binding SuggestFeatureOrReportBugCommand}"/>
+                <AppBarButton x:Uid="FeedbackAppBarButton" Icon="Like" Label="send a nice feedback" Command="{Binding RateAppCommand}"/>
+                <AppBarButton x:Uid="RequestFeatureOrReportBugAppBarButton" Icon="Mail" Label="request feature / report bug" Command="{Binding ContactSupportCommand}"/>
             </CommandBar.SecondaryCommands>-->
         </CommandBar>
     </Page.BottomAppBar>

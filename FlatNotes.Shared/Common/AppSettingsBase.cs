@@ -1,10 +1,8 @@
-﻿using Windows.Storage;
-using Windows.ApplicationModel;
+﻿using Newtonsoft.Json;
 using System;
-using Newtonsoft.Json;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using System.IO;
+using Windows.Storage;
 
 namespace FlatNotes.Common
 {
@@ -32,7 +30,7 @@ namespace FlatNotes.Common
             }
             catch (Exception e)
             {
-                GoogleAnalytics.EasyTracker.GetTracker().SendException(e.Message, false);
+                App.TelemetryClient.TrackException(e);
                 return defaultValue;
             }
         }
@@ -50,7 +48,7 @@ namespace FlatNotes.Common
             }
             catch (Exception e)
             {
-                GoogleAnalytics.EasyTracker.GetTracker().SendException(e.Message, false);
+                App.TelemetryClient.TrackException(e);
                 return false;
             }
         }
@@ -68,7 +66,7 @@ namespace FlatNotes.Common
             }
             catch (Exception e)
             {
-                GoogleAnalytics.EasyTracker.GetTracker().SendException(e.Message, false);
+                App.TelemetryClient.TrackException(e);
                 return defaultValue;
             }
         }
@@ -87,7 +85,7 @@ namespace FlatNotes.Common
             }
             catch (Exception e)
             {
-                GoogleAnalytics.EasyTracker.GetTracker().SendException(e.Message, false);
+                App.TelemetryClient.TrackException(e);
                 return false;
             }
         }
