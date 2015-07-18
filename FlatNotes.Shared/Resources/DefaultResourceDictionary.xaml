@@ -33,15 +33,15 @@
     <SolidColorBrush x:Key="TextBlockDisabledForegroundThemeBrush" Color="#70000000"/>
 
     <SolidColorBrush x:Key="CommandBarBackgroundThemeBrush" Color="{StaticResource AppMainColor}"/>
-    <SolidColorBrush x:Key="CommandBarForegroundThemeBrush" Color="{StaticResource AppMainForegroundColor}"/>
+    <!--<SolidColorBrush x:Key="CommandBarForegroundThemeBrush" Color="{StaticResource AppMainForegroundColor}"/>-->
 
     <Style TargetType="CommandBar">
         <Setter Property="Background" Value="{StaticResource CommandBarBackgroundThemeBrush}"/>
-        <Setter Property="Foreground" Value="{StaticResource CommandBarForegroundThemeBrush}"/>
+        <!--<Setter Property="Foreground" Value="{StaticResource CommandBarForegroundThemeBrush}"/>-->
         <Setter Property="RequestedTheme" Value="Dark"/>
     </Style>
 
-    <Style TargetType="AppBarButton">
+    <!--<Style TargetType="AppBarButton">
         <Setter Property="Foreground" Value="{StaticResource CommandBarForegroundThemeBrush}"/>
         <Setter Property="RequestedTheme" Value="Light"/>
     </Style>
@@ -49,7 +49,7 @@
     <Style TargetType="AppBarToggleButton">
         <Setter Property="Foreground" Value="{StaticResource CommandBarForegroundThemeBrush}"/>
         <Setter Property="RequestedTheme" Value="Light"/>
-    </Style>
+    </Style>-->
 
     <Style TargetType="FlyoutPresenter">
         <Setter Property="RequestedTheme" Value="Dark"/>

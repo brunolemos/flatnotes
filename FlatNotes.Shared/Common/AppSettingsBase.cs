@@ -9,6 +9,7 @@ namespace FlatNotes.Common
     public abstract class AppSettingsBase
     {
         protected ApplicationDataContainer localSettings { get { return ApplicationData.Current.LocalSettings; } }
+        protected ApplicationDataContainer roamingSettings { get { return ApplicationData.Current.RoamingSettings; } }
         protected StorageFolder localFolder { get { return ApplicationData.Current.LocalFolder; } }
 
         public abstract uint Version { get; }
@@ -18,11 +19,12 @@ namespace FlatNotes.Common
         public abstract void Up();
         public abstract void Down();
 
-        protected T GetValueOrDefault<T>(string key, T defaultValue)
+        protected T GetValueOrDefault<T>(string key, T defaultValue, bool useRoaming = false)
         {
             try
             {
-                var value = localSettings.Values[key];
+                var settings = useRoaming ? roamingSettings : localSettings;
+                var value = settings.Values[key];
                 if (value == null || String.IsNullOrEmpty(value.ToString())) return defaultValue;
                 //Debug.WriteLine("Value of {0} is {1}", key, value.ToString());
 
@@ -35,13 +37,14 @@ namespace FlatNotes.Common
             }
         }
 
-        protected bool SetValue<T>(string key, T value)
+        protected bool SetValue<T>(string key, T value, bool useRoaming = false)
         {
             try
             {
+                var settings = useRoaming ? roamingSettings : localSettings;
                 string content = JsonConvert.SerializeObject(value);
-                localSettings.Values.Remove(key);
-                localSettings.Values[key] = content;
+                settings.Values.Remove(key);
+                settings.Values[key] = content;
                 //Debug.WriteLine("SetValue of {0} to {1}", key, content);
 
                 return true;

@@ -50,6 +50,9 @@ namespace FlatNotes.Utils
         private const string TRANSPARENT_NOTE_TILE_KEY = "TRANSPARENT_NOTE_TILE";
         private const bool TRANSPARENT_NOTE_TILE_DEFAULT = false;
 
+        //private const string DISABLE_ANALYTICS_KEY = "DISABLE_ANALYTICS";
+        //private const bool DISABLE_ANALYTICS_DEFAULT = false;
+
         private const string FIXED_THEME_BUG_KEY = "FIXED_THEME_BUG";
 
         private AppSettings()
@@ -174,6 +177,12 @@ namespace FlatNotes.Utils
                 }
             }
         }
+
+        //public bool DisableAnalytics
+        //{
+        //    get { return GetValueOrDefault(DISABLE_ANALYTICS_KEY, DISABLE_ANALYTICS_DEFAULT, true); }
+        //    set { SetValue<bool>(DISABLE_ANALYTICS_KEY, value, true); }
+        //}
 
         public async Task<Notes> LoadNotes() { return await ReadFileOrDefault(NOTES_FILENAME, NOTES_DEFAULT); }
         public async Task<bool> SaveNotes(Notes notes) {

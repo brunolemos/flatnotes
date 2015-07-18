@@ -226,7 +226,11 @@ namespace FlatNotes.ViewModels
             }
 
             //save
-            await AppData.CreateOrUpdateNote(Note);
+            for (int i = 0; i < 50; i++)
+            {
+                await AppData.CreateOrUpdateNote(Note);
+
+            }
         }
 
         private void ToggleChecklist()

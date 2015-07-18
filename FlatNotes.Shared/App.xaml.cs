@@ -3,6 +3,7 @@ using FlatNotes.Utils;
 using FlatNotes.ViewModels;
 using FlatNotes.Views;
 using Microsoft.ApplicationInsights;
+using Microsoft.ApplicationInsights.Extensibility;
 using System;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
@@ -45,8 +46,15 @@ namespace FlatNotes
 
         public App()
         {
-            //application insights
+#if DEBUG
+            //disable application insights on debug
+            TelemetryConfiguration.Active.DisableTelemetry = true;
+#else
+            //config application insights
             WindowsAppInitializer.InitializeAsync(WindowsCollectors.Metadata | WindowsCollectors.Session | WindowsCollectors.UnhandledException);
+#endif
+
+            //application insights has always to be initialized
             TelemetryClient = new TelemetryClient();
 
             this.InitializeComponent();
@@ -136,11 +144,6 @@ namespace FlatNotes
 
         protected override async void OnLaunched(LaunchActivatedEventArgs e)
         {
-//#if DEBUG
-//            if (System.Diagnostics.Debugger.IsAttached)
-//                this.DebugSettings.EnableFrameRateCounter = true;
-//#endif
-
             //user theme
             UpdateTheme(AppSettings.Instance.Theme);
 
