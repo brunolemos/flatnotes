@@ -12,7 +12,8 @@ namespace FlatNotes.ViewModels
         public event EventHandler ReorderModeEnabled;
         public event EventHandler ReorderModeDisabled;
 
-        public RelayCommand NewNoteCommand { get; private set; }
+        public RelayCommand CreateTextNoteCommand { get; private set; }
+        public RelayCommand CreateChecklistNoteCommand { get; private set; }
         public RelayCommand ToggleSingleColumnViewCommand { get; private set; }
         public RelayCommand OpenArchivedNotesCommand { get; private set; }
         public RelayCommand OpenSettingsCommand { get; private set; }
@@ -40,7 +41,8 @@ namespace FlatNotes.ViewModels
 
         public MainViewModel()
         {
-            NewNoteCommand = new RelayCommand(CreateTextNote);
+            CreateTextNoteCommand = new RelayCommand(CreateTextNote);
+            CreateChecklistNoteCommand = new RelayCommand(CreateChecklistNote);
             ToggleSingleColumnViewCommand = new RelayCommand(ToggleSingleColumnView, CanToggleSingleColumn);
             OpenArchivedNotesCommand = new RelayCommand(OpenArchivedNotes);
             OpenSettingsCommand = new RelayCommand(App.OpenSettings);
@@ -58,6 +60,12 @@ namespace FlatNotes.ViewModels
         {
             App.TelemetryClient.TrackEvent("CreateNote_MainViewModel");
             App.RootFrame.Navigate(typeof(NoteEditPage), new Note());
+        }
+
+        private void CreateChecklistNote()
+        {
+            App.TelemetryClient.TrackEvent("CreateChecklistNote_MainViewModel");
+            App.RootFrame.Navigate(typeof(NoteEditPage), new Note(true));
         }
 
         private void ToggleSingleColumnView()
