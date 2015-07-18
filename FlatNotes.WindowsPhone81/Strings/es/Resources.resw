@@ -177,7 +177,7 @@
   <data name="NoteTextType.Label" xml:space="preserve">
     <value>texto</value>
   </data>
-  <data name="PendingChangesTextBox.Text" xml:space="preserve">
+  <data name="PendingChangesTextBlock.Text" xml:space="preserve">
     <value>cambios pendientes</value>
   </data>
   <data name="PhotoAppBarButton.Label" xml:space="preserve">

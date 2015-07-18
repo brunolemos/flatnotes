@@ -135,7 +135,7 @@
   <data name="DeleteAppBarButton.Label" xml:space="preserve">
     <value>删除</value>
   </data>
-  <data name="PendingChangesTextBox.Text" xml:space="preserve">
+  <data name="PendingChangesTextBlock.Text" xml:space="preserve">
     <value>变更未处理</value>
   </data>
   <data name="FeedbackAppBarButton.Label" xml:space="preserve">

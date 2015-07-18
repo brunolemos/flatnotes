@@ -16,11 +16,11 @@ namespace FlatNotes.Models
 
         public string Text { get { return text; } set { text = value; NotifyPropertyChanged("Text"); } }
         [DataMember(Name = "Text")]
-        public string text;
+        public string text = "";
 
-        public bool IsChecked { get { return isChecked; } set { isChecked = value; NotifyPropertyChanged("IsChecked"); } }
+        public bool? IsChecked { get { return isChecked; } set { isChecked = value; NotifyPropertyChanged("IsChecked"); } }
         [DataMember(Name = "IsChecked")]
-        private bool isChecked;
+        private bool? isChecked = false;
 
         public ChecklistItem() { }
 
@@ -50,7 +50,7 @@ namespace FlatNotes.Models
 
         public string ToString(bool showCheckedMark = false)
         {
-            string checkMark = showCheckedMark ? (IsChecked ? CHECKED_SYMBOL + " " : UNCHECKED_SYMBOL + " ") : "";
+            string checkMark = showCheckedMark ? (IsChecked == true ? CHECKED_SYMBOL + " " : UNCHECKED_SYMBOL + " ") : "";
             string str = checkMark + Text;
 
             return str.Trim();

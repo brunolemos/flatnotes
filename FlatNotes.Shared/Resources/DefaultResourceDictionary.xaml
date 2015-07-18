@@ -71,6 +71,11 @@
         <Setter Property="FontSize" Value="16"/>
     </Style>
 
+    <Style TargetType="TextBox">
+        <Setter Property="ScrollViewer.HorizontalScrollMode" Value="Disabled"/>
+        <Setter Property="ScrollViewer.VerticalScrollMode" Value="Disabled"/>
+    </Style>
+
     <Style x:Key="NavigationBackButtonNormalStyle" TargetType="Button">
         <Setter Property="Visibility" Value="Visible"/>
     </Style>

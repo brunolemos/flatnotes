@@ -177,7 +177,7 @@
   <data name="NoteTextType.Label" xml:space="preserve">
     <value>पाठ</value>
   </data>
-  <data name="PendingChangesTextBox.Text" xml:space="preserve">
+  <data name="PendingChangesTextBlock.Text" xml:space="preserve">
     <value>लंबित परिवर्तन</value>
   </data>
   <data name="PhotoAppBarButton.Label" xml:space="preserve">

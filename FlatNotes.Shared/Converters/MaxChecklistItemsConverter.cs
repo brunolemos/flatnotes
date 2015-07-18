@@ -29,7 +29,7 @@ namespace FlatNotes.Converters
 
                 if (list == null || MaxItems <= 0 || list.Count <= 1) return value;
 
-                var orderedList = list.OrderBy<ChecklistItem, bool>(item => item.IsChecked).ToList<ChecklistItem>();
+                var orderedList = list.OrderBy<ChecklistItem, bool>(item => item.IsChecked == true).ToList<ChecklistItem>();
                 if (orderedList.Count <= MaxItems) return orderedList;
 
                 IsTrimmed = true;
