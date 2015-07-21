@@ -1,4 +1,4 @@
-﻿<ViewModels:MainViewModel IsWindows="True"  xmlns:ViewModels="using:FlatNotes.ViewModels" xmlns:Models="using:FlatNotes.Models">
+﻿<ViewModels:MainViewModel xmlns:ViewModels="using:FlatNotes.ViewModels" xmlns:Models="using:FlatNotes.Models">
     <ViewModels:MainViewModel.Columns>-1</ViewModels:MainViewModel.Columns>
     <ViewModels:MainViewModel.Notes>
         <Models:Note IsText="False" IsChecklist="True" Title="Title" Text="Hi">

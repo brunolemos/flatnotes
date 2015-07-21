@@ -19,6 +19,9 @@ namespace FlatNotes.ViewModels
 {
     public class NoteEditViewModel : ViewModelBase
     {
+        public static NoteEditViewModel Instance { get { if (instance == null) instance = new NoteEditViewModel(); return instance; } }
+        private static NoteEditViewModel instance = null;
+
         public event EventHandler ReorderModeEnabled;
         public event EventHandler ReorderModeDisabled;
 
@@ -31,7 +34,7 @@ namespace FlatNotes.ViewModels
         public RelayCommand DeleteNoteCommand { get; private set; }
         public RelayCommand DeleteNoteImageCommand { get; private set; }
 
-        public NoteEditViewModel()
+        private NoteEditViewModel()
         {
             OpenImagePickerCommand = new RelayCommand(OpenImagePicker);
             ToggleChecklistCommand = new RelayCommand(ToggleChecklist);
@@ -255,12 +258,13 @@ namespace FlatNotes.ViewModels
         {
             App.TelemetryClient.TrackEvent("Unpin_NoteEditViewModel");
 
-            TileManager.RemoveTileIfExists(Note);
+            TileManager.RemoveTileIfExists(Note.ID);
             Note.IsPinned = false;// SecondaryTile.Exists(Note.ID);
         }
 
         private async void ArchiveNote()
         {
+            App.TelemetryClient.TrackEvent("Archive_NoteEditViewModel");
             await AppData.ArchiveNote(Note);
             note = null;
 
@@ -272,6 +276,7 @@ namespace FlatNotes.ViewModels
 
         private async void RestoreNote()
         {
+            App.TelemetryClient.TrackEvent("Restore_NoteEditViewModel");
             await AppData.RestoreNote(Note);
             note = null;
 
@@ -283,6 +288,7 @@ namespace FlatNotes.ViewModels
 
         private async void DeleteNote()
         {
+            App.TelemetryClient.TrackEvent("Delete_NoteEditViewModel");
             bool success = Note.IsArchived ? await AppData.RemoveArchivedNote(Note) : await AppData.RemoveNote(Note);
             if (!success) return;
 
@@ -298,6 +304,7 @@ namespace FlatNotes.ViewModels
 
         public async void DeleteNoteImage()
         {
+            App.TelemetryClient.TrackEvent("DeleteNoteImage_NoteEditViewModel");
             if (TempNoteImage == null) return;
 
             bool success = await AppData.RemoveNoteImage(TempNoteImage);

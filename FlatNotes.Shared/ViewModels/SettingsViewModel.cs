@@ -10,6 +10,9 @@ namespace FlatNotes.ViewModels
 {
     public class SettingsViewModel : ViewModelBase
     {
+        public static SettingsViewModel Instance { get { if (instance == null) instance = new SettingsViewModel(); return instance; } }
+        private static SettingsViewModel instance = null;
+
         public RelayCommand DownloadAppCommand { get; private set; }
         public RelayCommand OpenDeveloperTwitterCommand { get; private set; }
         public RelayCommand RateAppCommand { get; private set; }
@@ -19,7 +22,7 @@ namespace FlatNotes.ViewModels
         public static string AppVersion { get { return App.Version; } }
         public static bool IsBeta { get { return App.IsBeta; } }
 
-        public SettingsViewModel()
+        private SettingsViewModel()
         {
             DownloadAppCommand = new RelayCommand(DownloadApp);
             OpenDeveloperTwitterCommand = new RelayCommand(OpenDeveloperTwitter);

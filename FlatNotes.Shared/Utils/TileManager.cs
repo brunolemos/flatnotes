@@ -17,6 +17,8 @@ namespace FlatNotes.Utils
     {
         public static void UpdateDefaultTile(bool transparentTile = false)
         {
+            App.TelemetryClient.TrackMetric("Transparent Tile", transparentTile ? 1 : 0);
+
             var tileSubFolder = transparentTile ? "Transparent" :  "Solid";
 #if WINDOWS_UAP
 #else
@@ -195,6 +197,8 @@ namespace FlatNotes.Utils
 
         public static async void UpdateAllNoteTilesBackgroundColor(bool transparentTile = false)
         {
+            App.TelemetryClient.TrackMetric("Transparent Note Tile", transparentTile ? 1 : 0);
+
             var tiles = await SecondaryTile.FindAllAsync();
             if (tiles == null) return;
 
@@ -209,12 +213,12 @@ namespace FlatNotes.Utils
             }
         }
 
-        public static async void RemoveTileIfExists(Note note)
+        public static async void RemoveTileIfExists(string tileId)
         {
             //must exists
-            if (!SecondaryTile.Exists(note.ID)) return;
+            if (!SecondaryTile.Exists(tileId)) return;
 
-            var tile = new SecondaryTile(note.ID);
+            var tile = new SecondaryTile(tileId);
             await tile.RequestDeleteAsync();
         }
 

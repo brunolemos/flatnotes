@@ -15,11 +15,11 @@
 
     <Page.Resources>
         <DataTemplate x:Key="NotePreviewListViewControlTemplate">
-            <local:NotePreview Tapped="OnNoteTapped" Loaded="OnNoteLoaded" Unloaded="OnNoteUnloaded" FontSize="17"/>
+            <local:NotePreview FontSize="17"/>
         </DataTemplate>
 
         <ItemsPanelTemplate x:Key="FluidItemsPanelTemplate" x:Name="FluidItemsPanelTemplate">
-            <local:FluidGrid x:Name="NotesFluidGrid" Margin="8" ItemWidth="150" Columns="{Binding Columns, Mode=OneWay, TargetNullValue=-1, FallbackValue=-1}" ItemStretch="True" AllowSingleColumn="True"/>
+            <local:FluidGrid x:Name="NotesFluidGrid" Margin="8" ItemWidth="160" Columns="{Binding Columns, Mode=OneWay, TargetNullValue=-1, FallbackValue=-1}" ItemStretch="True" AllowSingleColumn="True"/>
         </ItemsPanelTemplate>
     </Page.Resources>
 
@@ -35,12 +35,12 @@
                             <Polygon Fill="#10000000" Points="0,0 30,0, 0,30" StrokeThickness="0" Margin="70,70,0,0" />
                         </Canvas>
                     </Viewbox>
-                    
+
                     <TextBlock x:Uid="EmptyArchivedNotesMessageTextBox" Margin="10,24" Text="Archived notes appear here" Foreground="{ThemeResource PhoneMidBrush}" FontSize="{StaticResource EmptyNotesMessageFontSize}" TextWrapping="Wrap" TextAlignment="Center"/>
                 </StackPanel>
             </Grid>
-            
-            <local:MyListView x:Name="NotesListView" ItemsSource="{Binding Notes, Mode=OneWay}" ItemsPanel="{StaticResource FluidItemsPanelTemplate}" ItemTemplate="{StaticResource NotePreviewListViewControlTemplate}" ScrollViewer.VerticalScrollMode="Enabled" VerticalAlignment="Stretch" CanDragItems="True" ReorderMode="{Binding ReorderMode, Mode=TwoWay}"/>
+
+            <ListView x:Name="NotesListView" ItemsSource="{Binding Notes, Mode=OneWay}" IsItemClickEnabled="True" ItemClick="OnNoteClick" ItemsPanel="{StaticResource FluidItemsPanelTemplate}" ItemTemplate="{StaticResource NotePreviewListViewControlTemplate}" ScrollViewer.VerticalScrollMode="Enabled" VerticalAlignment="Stretch" CanDragItems="False"/>
         </Grid>
     </Grid>
 </Page>

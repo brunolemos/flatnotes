@@ -18,7 +18,7 @@ namespace FlatNotes.Utils
         public event EventHandler NotesSaved;
         public event EventHandler ArchivedNotesSaved;
         public event EventHandler<ThemeEventArgs> ThemeChanged;
-        public event EventHandler<ColumnsEventArgs> ColumnsChanged;
+        //public event EventHandler<ColumnsEventArgs> ColumnsChanged;
         public event EventHandler<IsSingleColumnEnabledEventArgs> IsSingleColumnEnabledChanged;
         public event EventHandler<TransparentTileEventArgs> TransparentTileChanged;
         public event EventHandler<TransparentTileEventArgs> TransparentNoteTileChanged;

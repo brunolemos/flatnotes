@@ -3,6 +3,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <x:Double x:Key="TextControlBackgroundFocusedOpacity">0</x:Double>
+    <Thickness x:Key="CheckBoxBorderThemeThickness">1</Thickness>
+    <x:Double x:Key="CheckBoxCheckedStrokeThickness">1</x:Double>
 
     <Style x:Key="CheckBoxWithoutContentStyle" TargetType="CheckBox">
         <Setter Property="Background" Value="Transparent"/>
@@ -30,19 +32,20 @@
                                 <VisualState x:Name="UncheckedNormal"/>
                                 <VisualState x:Name="UncheckedPointerOver">
                                     <Storyboard>
-                                        <DoubleAnimation Duration="0" To="0.6" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="NormalRectangle"/>
+                                        <!--<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Stroke" Storyboard.TargetName="NormalRectangle">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightBaseHighBrush}"/>
+                                        </ObjectAnimationUsingKeyFrames>-->
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="UncheckedPressed">
                                     <Storyboard>
                                         <!--<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Fill" Storyboard.TargetName="NormalRectangle">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="Transparent"/>
-                                        </ObjectAnimationUsingKeyFrames-->
-                                        <!--<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Stroke" Storyboard.TargetName="NormalRectangle">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightBaseMediumBrush}"/>
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlBackgroundBaseMediumBrush}"/>
                                         </ObjectAnimationUsingKeyFrames>-->
-                                        <!--<DoubleAnimation Duration="0" To="{ThemeResource CheckBoxCheckedStrokeThickness}" Storyboard.TargetProperty="StrokeThickness" Storyboard.TargetName="NormalRectangle"/>-->
-                                        <DoubleAnimation Duration="0" To="0.6" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="NormalRectangle"/>
+                                        <!--<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Stroke" Storyboard.TargetName="NormalRectangle">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightTransparentBrush}"/>
+                                        </ObjectAnimationUsingKeyFrames>-->
+                                        <DoubleAnimation Duration="0" To="{ThemeResource CheckBoxCheckedStrokeThickness}" Storyboard.TargetProperty="StrokeThickness" Storyboard.TargetName="NormalRectangle"/>
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="UncheckedDisabled">
@@ -60,39 +63,37 @@
                                 </VisualState>
                                 <VisualState x:Name="CheckedNormal">
                                     <Storyboard>
-                                        <!--<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Fill" Storyboard.TargetName="NormalRectangle">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="Transparent"/>
-                                        </ObjectAnimationUsingKeyFrames>-->
-                                        <!--<DoubleAnimation Duration="0" To="{ThemeResource CheckBoxCheckedStrokeThickness}" Storyboard.TargetProperty="StrokeThickness" Storyboard.TargetName="NormalRectangle"/>--><!--{ThemeResource SystemControlHighlightAccentBrush}-->
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Fill" Storyboard.TargetName="NormalRectangle">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="Transparent"/><!--{ThemeResource SystemControlHighlightAccentBrush}-->
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <DoubleAnimation Duration="0" To="{ThemeResource CheckBoxCheckedStrokeThickness}" Storyboard.TargetProperty="StrokeThickness" Storyboard.TargetName="NormalRectangle"/>
                                         <!--<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Stroke" Storyboard.TargetName="NormalRectangle">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{TemplateBinding BorderBrush}"/>--><!--{ThemeResource SystemControlHighlightAltTransparentBrush}--><!--
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightBaseHighBrush}"/>--><!--{ThemeResource SystemControlHighlightAltTransparentBrush}--><!--
                                         </ObjectAnimationUsingKeyFrames>-->
                                         <DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="CheckGlyph"/>
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="CheckedPointerOver">
                                     <Storyboard>
-                                        <!--<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Fill" Storyboard.TargetName="NormalRectangle">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="Transparent"/>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Fill" Storyboard.TargetName="NormalRectangle">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="Transparent"/><!--{ThemeResource SystemControlHighlightAccentBrush}-->
                                         </ObjectAnimationUsingKeyFrames>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Stroke" Storyboard.TargetName="NormalRectangle">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightBaseMediumBrush}"/>
+                                        <!--<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Stroke" Storyboard.TargetName="NormalRectangle">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightBaseHighBrush}"/>
                                         </ObjectAnimationUsingKeyFrames>-->
                                         <DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="CheckGlyph"/>
-                                        <DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="NormalRectangle"/>
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="CheckedPressed">
                                     <Storyboard>
                                         <!--<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Fill" Storyboard.TargetName="NormalRectangle">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="Transparent"/>
-                                        </ObjectAnimationUsingKeyFrames>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Stroke" Storyboard.TargetName="NormalRectangle">
                                             <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightBaseMediumBrush}"/>
-                                        </ObjectAnimationUsingKeyFrames>
-                                        --><!--<DoubleAnimation Duration="0" To="{ThemeResource CheckBoxCheckedStrokeThickness}" Storyboard.TargetProperty="StrokeThickness" Storyboard.TargetName="NormalRectangle"/>-->
-                                        <DoubleAnimation Duration="0" To="0.6" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="CheckGlyph"/>
-                                        <DoubleAnimation Duration="0" To="0.6" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="NormalRectangle"/>
+                                        </ObjectAnimationUsingKeyFrames>-->
+                                        <!--<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Stroke" Storyboard.TargetName="NormalRectangle">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightTransparentBrush}"/>
+                                        </ObjectAnimationUsingKeyFrames>-->
+                                        <DoubleAnimation Duration="0" To="{ThemeResource CheckBoxCheckedStrokeThickness}" Storyboard.TargetProperty="StrokeThickness" Storyboard.TargetName="NormalRectangle"/>
+                                        <DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="CheckGlyph"/>
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="CheckedDisabled">
@@ -200,6 +201,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ListViewItem">
+                    <!--{TemplateBinding ContentTransitions}-->
                     <ListViewItemPresenter 
                             HorizontalAlignment="Stretch" 
                             HorizontalContentAlignment="Stretch" 
@@ -211,7 +213,7 @@
                             ContentMargin="0"
                             MinHeight="10"
                             Height="Auto"
-                            ContentTransitions="{TemplateBinding ContentTransitions}"
+                            ContentTransitions="{x:Null}"
                             DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}"
                             DragBackground="{ThemeResource ListViewItemDragBackgroundThemeBrush}"
                             DragForeground="{ThemeResource ListViewItemDragForegroundThemeBrush}"

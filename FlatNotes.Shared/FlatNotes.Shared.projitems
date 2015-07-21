@@ -21,10 +21,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)Common\SuspensionManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\TrullyObservableCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\FluidGrid.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Controls\MyListView.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\NotePreview.xaml.cs">
       <DependentUpon>NotePreview.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\IsMobileToGridRowConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\LocalizedResourcesConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\StringFormatConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\MaxChecklistItemsConverter.cs" />
@@ -37,6 +37,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Events\NoteColorEventArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Events\ColumnsEventArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Events\IsSingleColumnEnabledEventArgs.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Events\NoteIdEventArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Events\TransparentTileEventArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Events\ThemeEventArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Events\NoteEventArgs.cs" />
@@ -62,11 +63,13 @@
     <Compile Include="$(MSBuildThisFileDirectory)Utils\Migration\Versions\v1\Models\UserPreferences.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\TileManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ArchivedNotesViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\NotesControlViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\SettingsViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ViewModelBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\NoteEditViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MainViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\Partials\NoteEditPage_KeyDownHandlers.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Partials\NoteEditPage_Swipe.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="$(MSBuildThisFileDirectory)Assets\Logo.png" />

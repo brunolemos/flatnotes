@@ -5,12 +5,10 @@ using FlatNotes.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
 
 namespace FlatNotes.Views
@@ -18,12 +16,10 @@ namespace FlatNotes.Views
     public partial class ArchivedNotesPage : Page
     {
         public ArchivedNotesViewModel viewModel { get { return _viewModel; } }
-        private static ArchivedNotesViewModel _viewModel = new ArchivedNotesViewModel();
+        private static ArchivedNotesViewModel _viewModel = ArchivedNotesViewModel.Instance;
 
         public NavigationHelper NavigationHelper { get { return this.navigationHelper; } }
         private NavigationHelper navigationHelper;
-
-        private static NoteSwipeFeature noteSwipeFeature = new NoteSwipeFeature();
 
         public ArchivedNotesPage()
         {
@@ -34,7 +30,13 @@ namespace FlatNotes.Views
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
 
-            this.Loaded += (s, e) => App.ChangeStatusBarColor(Color.FromArgb(0xff, 0x44, 0x59, 0x63), Color.FromArgb(0xff, 0xff, 0xff, 0xfe));
+            Loaded += OnLoaded;
+        }
+
+        private async void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            App.ChangeStatusBarColor(Color.FromArgb(0xff, 0x44, 0x59, 0x63), Color.FromArgb(0xff, 0xff, 0xff, 0xfe));
+            await AppData.LoadArchivedNotesIfNecessary();
         }
 
         private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
@@ -61,13 +63,9 @@ namespace FlatNotes.Views
 
         #endregion
 
-        private async void OnNoteTapped(object sender, TappedRoutedEventArgs e)
+        private async void OnNoteClick(object sender, ItemClickEventArgs e)
         {
-#if WINDOWS_PHONE_APP
-            if (viewModel.ReorderMode == ListViewReorderMode.Enabled) return;
-#endif
-
-            Note note = (e.OriginalSource as FrameworkElement).DataContext as Note;
+            Note note = e.ClickedItem as Note;
             if (note == null) return;
 
             //it can be trimmed, so get the original
@@ -84,39 +82,6 @@ namespace FlatNotes.Views
             {
                 Frame.Navigate(typeof(NoteEditPage), originalNote);
             });
-        }
-
-        //swipe feature
-        private void OnNoteLoaded(object sender, RoutedEventArgs e)
-        {
-#if WINDOWS_PHONE_APP
-            FrameworkElement element = sender as FrameworkElement;
-            FrameworkElement referenceFrame = NotesListView;
-
-            if (viewModel.ReorderMode != ListViewReorderMode.Enabled)
-                noteSwipeFeature.EnableSwipeFeature(element, referenceFrame);
-
-            noteSwipeFeature.enableSwipeEventHandlers[element] = (s, _e) => { noteSwipeFeature.EnableSwipeFeature(element, referenceFrame); };
-            noteSwipeFeature.disableSwipeEventHandlers[element] = (s, _e) => { noteSwipeFeature.DisableSwipeFeature(element); };
-
-            if (noteSwipeFeature.enableSwipeEventHandlers.ContainsKey(element)) viewModel.ReorderModeDisabled += noteSwipeFeature.enableSwipeEventHandlers[element];
-            if (noteSwipeFeature.disableSwipeEventHandlers.ContainsKey(element)) viewModel.ReorderModeEnabled += noteSwipeFeature.disableSwipeEventHandlers[element];
-#endif
-        }
-
-        private void OnNoteUnloaded(object sender, RoutedEventArgs e)
-        {
-#if WINDOWS_PHONE_APP
-            FrameworkElement element = sender as FrameworkElement;
-
-            if (noteSwipeFeature.enableSwipeEventHandlers.ContainsKey(element)) viewModel.ReorderModeDisabled -= noteSwipeFeature.enableSwipeEventHandlers[element];
-            if (noteSwipeFeature.disableSwipeEventHandlers.ContainsKey(element)) viewModel.ReorderModeEnabled -= noteSwipeFeature.disableSwipeEventHandlers[element];
-
-            noteSwipeFeature.enableSwipeEventHandlers.Remove(element);
-            noteSwipeFeature.disableSwipeEventHandlers.Remove(element);
-
-            noteSwipeFeature.DisableSwipeFeature(element);
-#endif
         }
     }
 }

@@ -64,20 +64,6 @@
     </Page.Resources>
 
     <Grid x:Name="LayoutRoot" RequestedTheme="Light" Background="{Binding Note.Color.Color}">
-        <!--<Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-
-        <Grid Grid.Row="0" Height="140" Visibility="{Binding IsWindows, Converter={StaticResource BooleanToVisibilityConverter}}">
-            <Button x:Name="backButton" Margin="39,59,39,0" Command="{Binding NavigationHelper.GoBackCommand, ElementName=Root}"
-                    Style="{StaticResource NavigationBackButtonNormalStyle}"
-                    VerticalAlignment="Top"
-                    AutomationProperties.Name="Back"
-                    AutomationProperties.AutomationId="BackButton"
-                    AutomationProperties.ItemType="Navigation Button"/>
-        </Grid>-->
-
         <Grid x:Name="ContentRoot" MaxWidth="1000">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
@@ -91,7 +77,7 @@
                     </Grid>
 
                     <TextBox x:Uid="TitleTextBox" x:Name="NoteTitleTextBox" PlaceholderText="Title" Text="{Binding Note.Title, Mode=TwoWay}" Foreground="{StaticResource AppNoteForegroundBrush}" InputScope="Chat" Background="Transparent" BorderThickness="0" FontSize="{Binding ElementName=Root, Path=FontSize}" Margin="0" Padding="12" FontWeight="Bold" MaxLength="50" TextWrapping="Wrap" KeyDown="NoteTitleTextBox_KeyDown" ScrollViewer.HorizontalScrollMode="Disabled"/>
-                    <TextBox x:Uid="TextTextBox" x:Name="NoteTextTextBox" PlaceholderText="Text" Text="{Binding Note.Text, Mode=TwoWay}" MinHeight="150" Foreground="{StaticResource AppNoteForegroundBrush}" InputScope="Chat" Background="Transparent" BorderThickness="0" FontSize="{Binding ElementName=Root, Path=FontSize}" Margin="0" Padding="12,4" FontWeight="Normal" AcceptsReturn="True" TextWrapping="Wrap" Visibility="{Binding Note.IsText, Converter={StaticResource BooleanToVisibilityConverter}}" ScrollViewer.HorizontalScrollMode="Disabled" />
+                    <TextBox x:Uid="TextTextBox" x:Name="NoteTextTextBox" PlaceholderText="Text" Text="{Binding Note.Text, Mode=TwoWay}" MinHeight="220" Foreground="{StaticResource AppNoteForegroundBrush}" InputScope="Chat" Background="Transparent" BorderThickness="0" FontSize="{Binding ElementName=Root, Path=FontSize}" Margin="0" Padding="12,4" FontWeight="Normal" AcceptsReturn="True" TextWrapping="Wrap" Visibility="{Binding Note.IsText, Converter={StaticResource BooleanToVisibilityConverter}}" ScrollViewer.HorizontalScrollMode="Disabled" />
 
                     <StackPanel Visibility="{Binding Note.IsChecklist, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
                         <ListView x:Name="NoteChecklistListView" Margin="0" Padding="0" ItemsSource="{Binding Note.Checklist}" AllowDrop="True" CanDragItems="True" ItemTemplate="{StaticResource NoteChecklistListViewControlTemplate}" Holding="NoteChecklistListView_Holding" SelectionMode="None" IsItemClickEnabled="False" IsTapEnabled="False" HorizontalContentAlignment="Stretch" ScrollViewer.HorizontalScrollMode="Disabled" ScrollViewer.VerticalScrollMode="Disabled"/>

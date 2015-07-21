@@ -18,7 +18,7 @@ namespace FlatNotes.Views
     public sealed partial class NoteEditPage : Page
     {
         public NoteEditViewModel viewModel { get { return _viewModel; } }
-        private static NoteEditViewModel _viewModel = new NoteEditViewModel();
+        private static NoteEditViewModel _viewModel = NoteEditViewModel.Instance;
 
         public NavigationHelper NavigationHelper { get { return this.navigationHelper; } }
         private NavigationHelper navigationHelper;

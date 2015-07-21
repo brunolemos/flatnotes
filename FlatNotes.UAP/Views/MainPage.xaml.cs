@@ -5,7 +5,6 @@ using FlatNotes.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Windows.UI.Core;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -15,7 +14,7 @@ namespace FlatNotes.Views
     public sealed partial class MainPage : Page
     {
         public MainViewModel viewModel { get { return _viewModel; } }
-        private static MainViewModel _viewModel = new MainViewModel();
+        private static MainViewModel _viewModel = MainViewModel.Instance;
 
         public NavigationHelper NavigationHelper { get { return this.navigationHelper; } }
         private NavigationHelper navigationHelper;
@@ -29,12 +28,17 @@ namespace FlatNotes.Views
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
 
-            Loaded += (s, e) => { App.ResetStatusBar(); };
+            Loaded += OnLoaded;
+        }
+
+        private async void OnLoaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            App.ResetStatusBar();
+            await AppData.LoadNotesIfNecessary();
         }
 
         private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
-            App.ResetStatusBar();
         }
 
         private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)

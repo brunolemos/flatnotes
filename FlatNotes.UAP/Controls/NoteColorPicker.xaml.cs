@@ -31,18 +31,7 @@ namespace FlatNotes.Controls
         }
         private NoteColor selectedNoteColor = null;
 
-        public NoteColors Colors { get { return colors; } }
-        private NoteColors colors = new NoteColors()
-        {
-            NoteColor.DEFAULT,
-            NoteColor.RED,
-            NoteColor.ORANGE,
-            NoteColor.YELLOW,
-            NoteColor.GRAY,
-            NoteColor.BLUE,
-            NoteColor.TEAL,
-            NoteColor.GREEN
-        };
+        public NoteColors Colors { get { return NoteColor.Colors; } }
 
         public NoteColorPicker()
         {

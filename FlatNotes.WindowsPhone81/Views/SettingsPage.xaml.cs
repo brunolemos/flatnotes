@@ -8,7 +8,7 @@ namespace FlatNotes
     public sealed partial class SettingsPage : Page
     {
         public SettingsViewModel viewModel { get { return _viewModel; } }
-        private static SettingsViewModel _viewModel = new SettingsViewModel();
+        private static SettingsViewModel _viewModel = SettingsViewModel.Instance;
 
         public NavigationHelper NavigationHelper { get { return this.navigationHelper; } }
         private NavigationHelper navigationHelper;

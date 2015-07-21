@@ -23,7 +23,7 @@
 
                     <VisualState.Setters>
                         <Setter Target="NotesControl.ItemStretch" Value="True"/>
-                        <Setter Target="NotesControl.ItemWidth" Value="150"/>
+                        <Setter Target="NotesControl.ItemWidth" Value="160"/>
                         <Setter Target="NotesControl.Padding" Value="8"/>
                     </VisualState.Setters>
                 </VisualState>

@@ -16,7 +16,7 @@ namespace FlatNotes.Views
     public partial class ArchivedNotesPage : Page
     {
         public ArchivedNotesViewModel viewModel { get { return _viewModel; } }
-        private static ArchivedNotesViewModel _viewModel = new ArchivedNotesViewModel();
+        private static ArchivedNotesViewModel _viewModel = ArchivedNotesViewModel.Instance;
 
         public NavigationHelper NavigationHelper { get { return this.navigationHelper; } }
         private NavigationHelper navigationHelper;
@@ -30,7 +30,13 @@ namespace FlatNotes.Views
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
 
-            this.Loaded += (s, e) => App.ChangeStatusBarColor(Color.FromArgb(0xff, 0x44, 0x59, 0x63), Color.FromArgb(0xff, 0xff, 0xff, 0xfe));
+            Loaded += OnLoaded;
+        }
+
+        private async void OnLoaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            App.ChangeStatusBarColor(Color.FromArgb(0xff, 0x44, 0x59, 0x63), Color.FromArgb(0xff, 0xff, 0xff, 0xfe));
+            await AppData.LoadArchivedNotesIfNecessary();
         }
 
         private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)

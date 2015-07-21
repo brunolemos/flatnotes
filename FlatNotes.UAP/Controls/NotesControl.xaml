@@ -14,45 +14,49 @@
     
     <UserControl.Resources>
         <MenuFlyout x:Key="NoteMenuFlyout">
-            <MenuFlyoutItem Text="Archive"/>
-            <MenuFlyoutItem Text="Delete"/>
-            <MenuFlyoutItem Text="Pin to start"/>
+            <MenuFlyoutItem Text="Archive" Command="{x:Bind viewModel.ArchiveNoteCommand}" CommandParameter="{Binding}" Visibility="{Binding AlreadyExists, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+            <MenuFlyoutItem Text="Restore" Command="{x:Bind viewModel.RestoreNoteCommand}" CommandParameter="{Binding}" Visibility="{Binding IsArchived, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+            <MenuFlyoutItem Text="Delete" Command="{x:Bind viewModel.DeleteNoteCommand}" CommandParameter="{Binding}"/>
+            <MenuFlyoutItem Text="Pin to start" Command="{x:Bind viewModel.PinCommand}" CommandParameter="{Binding}" Visibility="{Binding IsPinned, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=True}"/>
+            <MenuFlyoutItem Text="Unpin from start" Command="{x:Bind viewModel.UnpinCommand}" CommandParameter="{Binding}" Visibility="{Binding IsPinned, Converter={StaticResource BooleanToVisibilityConverter}}"/>
             <MenuFlyoutSubItem Text="Change color">
-                <MenuFlyoutItem/>
-                <MenuFlyoutItem/>
-                <MenuFlyoutItem/>
-                <MenuFlyoutItem/>
-                <MenuFlyoutItem/>
-                <MenuFlyoutItem/>
-                <MenuFlyoutItem/>
-                <MenuFlyoutItem/>
+                <MenuFlyoutItem Background="{x:Bind viewModel.Colors[0].Color}" Click="OnChangeColorClick" CommandParameter="{x:Bind viewModel.Colors[0]}"/>
+                <MenuFlyoutItem Background="{x:Bind viewModel.Colors[1].Color}" Click="OnChangeColorClick" CommandParameter="{x:Bind viewModel.Colors[1]}"/>
+                <MenuFlyoutItem Background="{x:Bind viewModel.Colors[2].Color}" Click="OnChangeColorClick" CommandParameter="{x:Bind viewModel.Colors[2]}"/>
+                <MenuFlyoutItem Background="{x:Bind viewModel.Colors[3].Color}" Click="OnChangeColorClick" CommandParameter="{x:Bind viewModel.Colors[3]}"/>
+                <MenuFlyoutItem Background="{x:Bind viewModel.Colors[4].Color}" Click="OnChangeColorClick" CommandParameter="{x:Bind viewModel.Colors[4]}"/>
+                <MenuFlyoutItem Background="{x:Bind viewModel.Colors[5].Color}" Click="OnChangeColorClick" CommandParameter="{x:Bind viewModel.Colors[5]}"/>
+                <MenuFlyoutItem Background="{x:Bind viewModel.Colors[6].Color}" Click="OnChangeColorClick" CommandParameter="{x:Bind viewModel.Colors[6]}"/>
+                <MenuFlyoutItem Background="{x:Bind viewModel.Colors[7].Color}" Click="OnChangeColorClick" CommandParameter="{x:Bind viewModel.Colors[7]}"/>
             </MenuFlyoutSubItem>
-            <MenuFlyoutSeparator/>
+            <!--<MenuFlyoutSeparator/>
             <MenuFlyoutItem Text="Share..."/>
-            <MenuFlyoutItem Text="Reorder..."/>
+            <MenuFlyoutItem Text="Reorder..."/>-->
         </MenuFlyout>
     </UserControl.Resources>
     
-    <GridView HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
+    <GridView x:Name="NotesGridView"
+              HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
               ItemsSource="{Binding}" DataContext="{Binding ItemsSource, ElementName=Root}"
-              SelectionMode="None" CanReorderItems="False" CanDragItems="False" AllowDrop="False" 
-              IsItemClickEnabled="True" ItemClick="GridView_ItemClick">
+              SelectionMode="None" CanReorderItems="True" CanDragItems="True" AllowDrop="True"  
+              IsItemClickEnabled="True" ItemClick="GridView_ItemClick" Holding="GridView_Holding">
         
         <GridView.ItemContainerTransitions>
             <TransitionCollection>
                 <EntranceThemeTransition IsStaggeringEnabled="True" FromVerticalOffset="200" FromHorizontalOffset="0"/>
-                <NavigationThemeTransition/>
-                        <ContentThemeTransition/>
-                        <AddDeleteThemeTransition/>
-                        <ReorderThemeTransition/>
+                <!--<NavigationThemeTransition/>
+                <ContentThemeTransition/>-->
+                <AddDeleteThemeTransition/>
+                <ReorderThemeTransition/>
+                <RepositionThemeTransition />
             </TransitionCollection>
         </GridView.ItemContainerTransitions>
 
         <GridView.ItemsPanel>
             <ItemsPanelTemplate>
                 <local:FluidGrid x:Name="NotesFluidGrid" Margin="{Binding ElementName=Root, Path=Padding}" ItemWidth="{Binding ElementName=Root, Path=ItemWidth}" ItemStretch="{Binding ElementName=Root, Path=ItemStretch}" Columns="{Binding ElementName=Root, Path=Columns}" AllowSingleColumn="{Binding ElementName=Root, Path=AllowSingleColumn}" HorizontalAlignment="Center"/>
-                <!--<RelativePanel Margin="-6" AllowDrop="False"/>-->
-                <!--<ItemsWrapGrid AllowDrop="True" ItemWidth="200" MaximumRowsOrColumns="4" Orientation="Horizontal"/>-->
+                <!--<StackPanel Margin="-6" AllowDrop="True"/>-->
+                <!--<ItemsWrapGrid AllowDrop="True" ItemWidth="{Binding ElementName=Root, Path=ItemWidth}" Orientation="Horizontal" HorizontalAlignment="Center"/>-->
             </ItemsPanelTemplate>
         </GridView.ItemsPanel>
 

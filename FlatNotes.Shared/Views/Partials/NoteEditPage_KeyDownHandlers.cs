@@ -1,5 +1,6 @@
 ﻿using FlatNotes.Models;
 using System;
+using System.Diagnostics;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
@@ -63,19 +64,23 @@ namespace FlatNotes.Views
             int position = (NoteChecklistListView.ItemsSource as Checklist).IndexOf(item);
             int count = NoteChecklistListView.Items.Count;
 
-            if (String.IsNullOrEmpty((sender as TextBox).Text))
+            FrameworkElement listViewItem = NoteChecklistListView.ContainerFromIndex(position) as FrameworkElement;
+            TextBox textBox = FindFirstElementInVisualTree<TextBox>(listViewItem);
+
+            if (string.IsNullOrEmpty((sender as TextBox).Text))
             {
                 if (e.Key == Windows.System.VirtualKey.Back)
                 {
                     if (count > 1)
                     {
                         int new_position = position > 0 ? position - 1 : position + 1;
-                        FrameworkElement listViewItem = NoteChecklistListView.ContainerFromIndex(new_position) as FrameworkElement;
-                        TextBox textBox = FindFirstElementInVisualTree<TextBox>(listViewItem);
-                        if (textBox != null)
+                        FrameworkElement listViewItem2 = NoteChecklistListView.ContainerFromIndex(new_position) as FrameworkElement;
+                        TextBox textBox2 = FindFirstElementInVisualTree<TextBox>(listViewItem2);
+
+                        if (textBox2 != null)
                         {
-                            textBox.Select(textBox.Text.Length, 0);
-                            textBox.Focus(FocusState.Programmatic);
+                            textBox2.Select(textBox.Text.Length, 0);
+                            textBox2.Focus(FocusState.Programmatic);
                         }
 
                         (NoteChecklistListView.ItemsSource as Checklist).Remove(item);
@@ -94,9 +99,8 @@ namespace FlatNotes.Views
                     (NoteChecklistListView.ItemsSource as Checklist).Insert(position + 1, new ChecklistItem());
                     NoteChecklistListView.UpdateLayout();
 
-                    FrameworkElement listViewItem = NoteChecklistListView.ContainerFromIndex(position) as FrameworkElement;
-                    TextBox textBox = FindFirstElementInVisualTree<TextBox>(listViewItem);
                     CheckBox checkBox = FindFirstElementInVisualTree<CheckBox>(listViewItem);
+
                     if (textBox != null)
                     {
                         e.Handled = true;
@@ -127,11 +131,9 @@ namespace FlatNotes.Views
                 {
                     if (position <= 0) return;
 
-                    FrameworkElement listViewItem = NoteChecklistListView.ContainerFromIndex(position) as FrameworkElement;
-                    TextBox textBox = FindFirstElementInVisualTree<TextBox>(listViewItem);
                     if (textBox != null)
                     {
-                        System.Diagnostics.Debug.WriteLine("textBox.SelectionStart " + textBox.SelectionStart);
+                        //System.Diagnostics.Debug.WriteLine("textBox.SelectionStart " + textBox.SelectionStart);
                         if (textBox.SelectionStart > 0) return;
 
                         FrameworkElement listViewItem2 = NoteChecklistListView.ContainerFromIndex(position - 1) as FrameworkElement;
@@ -166,6 +168,30 @@ namespace FlatNotes.Views
                 viewModel.Note.Checklist.Add(new ChecklistItem(text));
 
                 NewChecklistItemTextBox.Text = String.Empty;
+            }
+        }
+
+        private void NoteChecklistItemTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            ChecklistItem item = textBox.DataContext as ChecklistItem;
+
+            if (string.IsNullOrEmpty(textBox.Text))
+            {
+                int count = NoteChecklistListView.Items.Count;
+                int position = (NoteChecklistListView.ItemsSource as Checklist).IndexOf(item);
+                int new_position = position > 0 ? position - 1 : position + 1;
+
+                if (new_position > 0 && new_position < count)
+                {
+                    FrameworkElement listViewItem = NoteChecklistListView.ContainerFromIndex(new_position) as FrameworkElement;
+                    TextBox textBox2 = FindFirstElementInVisualTree<TextBox>(listViewItem);
+
+                    textBox2.Select(textBox2.Text.Length, 0);
+                    textBox2.Focus(FocusState.Programmatic);
+                }
+
+                (NoteChecklistListView.ItemsSource as Checklist).Remove(item);
             }
         }
     }

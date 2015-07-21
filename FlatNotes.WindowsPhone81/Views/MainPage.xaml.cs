@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
 
 namespace FlatNotes.Views
@@ -17,7 +16,7 @@ namespace FlatNotes.Views
     public partial class MainPage : Page
     {
         public MainViewModel viewModel { get { return _viewModel; } }
-        private static MainViewModel _viewModel = new MainViewModel();
+        private static MainViewModel _viewModel = MainViewModel.Instance;
 
         public NavigationHelper NavigationHelper { get { return this.navigationHelper; } }
         private NavigationHelper navigationHelper;
@@ -34,10 +33,16 @@ namespace FlatNotes.Views
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
             
-            this.Loaded += (s, e) => App.ResetStatusBar();
+            Loaded += OnLoaded;
+            Unloaded += (s, e) => DisableReorderFeature();
+        }
 
-            this.Loaded += (s, e) => EnableReorderFeature();
-            this.Unloaded += (s, e) => DisableReorderFeature();
+        private async void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            App.ResetStatusBar();
+            EnableReorderFeature();
+
+            await AppData.LoadNotesIfNecessary();
         }
 
         partial void EnableReorderFeature();
@@ -85,14 +90,14 @@ namespace FlatNotes.Views
 
 
         #endregion
-        
-        private async void OnNoteTapped(object sender, TappedRoutedEventArgs e)
-        {
-            #if WINDOWS_PHONE_APP
-            if (viewModel.ReorderMode == ListViewReorderMode.Enabled) return;
-            #endif
 
-            Note note = (e.OriginalSource as FrameworkElement).DataContext as Note;
+        private async void OnNoteTapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        {
+#if WINDOWS_PHONE_APP
+            if (viewModel.ReorderMode == ListViewReorderMode.Enabled) return;
+#endif
+
+            Note note = (sender as FrameworkElement).DataContext as Note;
             if (note == null) return;
 
             //it can be trimmed, so get the original

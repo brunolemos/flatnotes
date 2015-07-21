@@ -17,7 +17,7 @@ namespace FlatNotes.Views
     public sealed partial class NoteEditPage : Page
     {
         public NoteEditViewModel viewModel { get { return _viewModel; } }
-        private static NoteEditViewModel _viewModel = new NoteEditViewModel();
+        private static NoteEditViewModel _viewModel = NoteEditViewModel.Instance;
 
         public NavigationHelper NavigationHelper { get { return this.navigationHelper; } }
         private NavigationHelper navigationHelper;
@@ -180,42 +180,36 @@ namespace FlatNotes.Views
 
         private void NoteChecklistListView_Holding(object sender, HoldingRoutedEventArgs e)
         {
-#if WINDOWS_PHONE_APP
             NoteChecklistListView.ReorderMode = ListViewReorderMode.Enabled;
-#endif
         }
 
         //swipe feature
         private void OnChecklistItemLoaded(object sender, RoutedEventArgs e)
         {
-#if WINDOWS_PHONE_APP
-            FrameworkElement element = sender as FrameworkElement;
-            FrameworkElement referenceFrame = NoteChecklistListView;
+            //FrameworkElement element = sender as FrameworkElement;
+            //FrameworkElement referenceFrame = NoteChecklistListView;
 
-            //workaround to fix a bug
-            element.Opacity = 1;
+            ////workaround to fix a bug
+            //element.Opacity = 1;
 
-            if(viewModel.ReorderMode != ListViewReorderMode.Enabled)
-                EnableSwipeFeature(element, referenceFrame);
+            //if(viewModel.ReorderMode != ListViewReorderMode.Enabled)
+            //    EnableSwipeFeature(element, referenceFrame);
 
-            enableSwipeEventHandlers[element] = (s, _e) => { EnableSwipeFeature(element, referenceFrame); };
-            disableSwipeEventHandlers[element] = (s, _e) => { DisableSwipeFeature(element); };
+            //enableSwipeEventHandlers[element] = (s, _e) => { EnableSwipeFeature(element, referenceFrame); };
+            //disableSwipeEventHandlers[element] = (s, _e) => { DisableSwipeFeature(element); };
 
-            viewModel.ReorderModeDisabled += enableSwipeEventHandlers[element];
-            viewModel.ReorderModeEnabled += disableSwipeEventHandlers[element];
-#endif
+            //viewModel.ReorderModeDisabled += enableSwipeEventHandlers[element];
+            //viewModel.ReorderModeEnabled += disableSwipeEventHandlers[element];
         }
 
         private void OnChecklistItemUnloaded(object sender, RoutedEventArgs e)
         {
-#if WINDOWS_PHONE_APP
-            FrameworkElement element = sender as FrameworkElement;
+            //FrameworkElement element = sender as FrameworkElement;
 
-            viewModel.ReorderModeDisabled -= enableSwipeEventHandlers[element];
-            viewModel.ReorderModeEnabled -= disableSwipeEventHandlers[element];
+            //viewModel.ReorderModeDisabled -= enableSwipeEventHandlers[element];
+            //viewModel.ReorderModeEnabled -= disableSwipeEventHandlers[element];
 
-            DisableSwipeFeature(element);
-#endif
+            //DisableSwipeFeature(element);
         }
 
         private void DeleteNoteImageMenuFlyoutItem_Click(object sender, RoutedEventArgs e)

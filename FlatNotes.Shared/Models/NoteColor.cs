@@ -24,7 +24,7 @@ namespace FlatNotes.Models
         public static readonly NoteColor TEAL       = new NoteColor("TEAL",     "#1ce8b5", "#1ce8b5", "#11c19f");
         public static readonly NoteColor GREEN      = new NoteColor("GREEN",    "#8ac249", "#8ac249", "#679e37");
 
-        public static readonly Dictionary<string, NoteColor> Colors = new Dictionary<string, NoteColor>()
+        private static readonly Dictionary<string, NoteColor> colorsDictionary = new Dictionary<string, NoteColor>()
         {
             { DEFAULT.Key, DEFAULT},
             { RED.Key, RED},
@@ -34,6 +34,18 @@ namespace FlatNotes.Models
             { BLUE.Key, BLUE},
             { TEAL.Key, TEAL},
             { GREEN.Key, GREEN},
+        };
+
+        public static NoteColors Colors = new NoteColors()
+        {
+            NoteColor.DEFAULT,
+            NoteColor.RED,
+            NoteColor.ORANGE,
+            NoteColor.YELLOW,
+            NoteColor.GRAY,
+            NoteColor.BLUE,
+            NoteColor.TEAL,
+            NoteColor.GREEN
         };
 
         public NoteColor()
@@ -46,12 +58,12 @@ namespace FlatNotes.Models
 
         public NoteColor( string key )
         {
-            if (!Colors.ContainsKey(key)) key = "DEFAULT";
+            if (!colorsDictionary.ContainsKey(key)) key = "DEFAULT";
 
-            this.Key = Colors[key].Key;
-            this.Color = Colors[key].Color;
-            this.DarkColor1 = Colors[key].DarkColor1;
-            this.DarkColor2 = Colors[key].DarkColor2;
+            this.Key = colorsDictionary[key].Key;
+            this.Color = colorsDictionary[key].Color;
+            this.DarkColor1 = colorsDictionary[key].DarkColor1;
+            this.DarkColor2 = colorsDictionary[key].DarkColor2;
         }
 
         private NoteColor(string key, string color)

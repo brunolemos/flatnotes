@@ -2,6 +2,7 @@
 using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
 
 namespace FlatNotes.Controls
 {
@@ -9,7 +10,7 @@ namespace FlatNotes.Controls
     {
         private int[] childrenColumns;
         private Size[] childrenSizes;
-        private double itemWidth = 150;
+        private double itemWidth = 160;
         private int columns = -1;
 
         protected override Size MeasureOverride(Size totalSize)
@@ -28,18 +29,18 @@ namespace FlatNotes.Controls
             //System.Diagnostics.Debug.WriteLine("MeasureOverride ItemWidth: {0}, Stretch: {1}, Columns: {2}", itemWidth, ItemStretch, columns);
             Size resultSize = new Size(columns * itemWidth, 100);
 
-            int i, columnWithLowerY = 0;
+            int columnWithLowerY = 0;
             BiggerItemHeight= 0;
 
             double[] lastYInColumn = new double[columns];
-            for (i = 0; i < columns; i++) lastYInColumn[i] = 0;
+            for (int i = 0; i < columns; i++) lastYInColumn[i] = 0;
 
             childrenColumns = new int[Children.Count];
             childrenSizes = new Size[Children.Count];
 
             for (int pos = 0; pos < Children.Count; pos++)
             {
-                for (i = columns - 1; i >= 0; i--)
+                for (int i = columns - 1; i >= 0; i--)
                     if (lastYInColumn[i] <= lastYInColumn[columnWithLowerY])
                         columnWithLowerY = i;
 
@@ -58,29 +59,56 @@ namespace FlatNotes.Controls
             if (Double.IsPositiveInfinity(resultSize.Width)) resultSize.Width = 0;
             if (Double.IsPositiveInfinity(resultSize.Height)) resultSize.Height = 0;
 
-            for (i = 0; i < columns; i++)
+            for (int i = 0; i < columns; i++)
                 resultSize.Height = Math.Max(resultSize.Height, lastYInColumn[i]);
 
             return resultSize;
         }
 
-        protected override Size ArrangeOverride( Size totalSize )
+        protected override Size ArrangeOverride(Size totalSize)
         {
             if (childrenColumns.Length != Children.Count || childrenSizes.Length != Children.Count) return totalSize;
-            
-            double[] lastYInColumn = new double[columns];
-            for (int i = 0; i < columns; i++) lastYInColumn[i] = 0;
 
-            for (int pos = 0; pos < Children.Count; pos++)
+            double[] lastYInColumn = new double[columns];
+
+            for (int i = 0; i < columns; i++)
+                lastYInColumn[i] = 0;
+
+//#if WINDOWS_UAP
+//            UIElement[] lastElementInColumn = new UIElement[columns];
+
+//            for (int i = 0; i < Children.Count; i++)
+//            {
+//                var item = Children[i];
+
+//                if (i < columns)
+//                {
+//                    lastElementInColumn[i] = item;
+//                    if (i > 0) RelativePanel.SetRightOf(item, Children[i - 1]);
+//                    continue;
+//                }
+
+//                Size childSize = childrenSizes[i];
+//                int childColumn = childrenColumns[i];
+
+//                RelativePanel.SetBelow(item, lastElementInColumn[childColumn]);
+//                RelativePanel.SetAlignHorizontalCenterWith(item, lastElementInColumn[childColumn]);
+
+//                lastElementInColumn[childColumn] = item;
+//                lastYInColumn[childColumn] += childSize.Height;
+//            }
+//#else
+            for (int i = 0; i < Children.Count; i++)
             {
-                Size childSize = childrenSizes[pos];
-                int childColumn = childrenColumns[pos];
+                Size childSize = childrenSizes[i];
+                int childColumn = childrenColumns[i];
 
                 Point startPoint = new Point(childSize.Width * childColumn, lastYInColumn[childColumn]);
-                Children[pos].Arrange(new Rect(startPoint, childSize));
+                Children[i].Arrange(new Rect(startPoint, childSize));
 
                 lastYInColumn[childColumn] += childSize.Height;
             }
+//#endif
 
             return totalSize;
         }
@@ -92,7 +120,7 @@ namespace FlatNotes.Controls
             set { SetValue(ColumnsProperty, value); }
         }
 
-        public static readonly DependencyProperty ItemWidthProperty = DependencyProperty.Register("ItemWidth", typeof(double), typeof(FluidGrid), new PropertyMetadata(150.0, OnPropertyChanged));
+        public static readonly DependencyProperty ItemWidthProperty = DependencyProperty.Register("ItemWidth", typeof(double), typeof(FluidGrid), new PropertyMetadata(160.0, OnPropertyChanged));
         public double ItemWidth
         {
             get { return (double)GetValue(ItemWidthProperty); }

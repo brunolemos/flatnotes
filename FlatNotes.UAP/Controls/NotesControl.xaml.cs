@@ -1,4 +1,6 @@
-﻿using System;
+﻿using FlatNotes.Models;
+using FlatNotes.ViewModels;
+using System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -6,8 +8,11 @@ namespace FlatNotes.Controls
 {
     public sealed partial class NotesControl : UserControl
     {
+        public NotesControlViewModel viewModel { get { return _viewModel; } }
+        private static NotesControlViewModel _viewModel = NotesControlViewModel.Instance;
+
         public event EventHandler<ItemClickEventArgs> ItemClick;
-        public const double ITEM_MIN_WIDTH = 150;
+        public const double ITEM_MIN_WIDTH = 160;
 
         public static readonly DependencyProperty ItemsSourceProperty = DependencyProperty.Register("ItemsSource", typeof(Object), typeof(NotesControl), new PropertyMetadata(-1));
         public Object ItemsSource { get { return (Object)GetValue(ItemsSourceProperty); } set { SetValue(ItemsSourceProperty, value); } }
@@ -52,6 +57,25 @@ namespace FlatNotes.Controls
         {
             if (element == null) return;
             Flyout.ShowAttachedFlyout(element);
+        }
+
+        private void GridView_Holding(object sender, Windows.UI.Xaml.Input.HoldingRoutedEventArgs e)
+        {
+            NotesGridView.ReorderMode = ListViewReorderMode.Enabled;
+        }
+
+        public void OnChangeColorClick(object sender, RoutedEventArgs e)
+        {
+            var menuItem = sender as MenuFlyoutItem;
+            if (menuItem == null) return;
+
+            var note = menuItem.DataContext as Note;
+            if (note == null) return;
+
+            var newColor = menuItem.CommandParameter as NoteColor;
+            if (newColor == null) return;
+
+            viewModel.ChangeColor(note, newColor);
         }
     }
 }

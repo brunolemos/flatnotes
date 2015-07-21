@@ -17,15 +17,11 @@
                 <ResourceDictionary x:Key="Default" Source="ms-appx:///Resources/Themes/DarkThemeResourceDictionary.xaml"/>
                 <ResourceDictionary x:Key="Light" Source="ms-appx:///Resources/Themes/LightThemeResourceDictionary.xaml"/>
             </ResourceDictionary.ThemeDictionaries>
-        
-            <ViewModels:MainViewModel x:Key="MainViewModel" />
-            <ViewModels:ArchivedNotesViewModel x:Key="ArchivedNotesViewModel" />
-            <ViewModels:NoteEditViewModel x:Key="NoteEditViewModel" />
-            <ViewModels:SettingsViewModel x:Key="SettingsViewModel" />
 
             <Converters:NullableToVisibilityConverter x:Key="NullableToVisibilityConverter"/>
             <Converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
             <Converters:PositiveIntToVisibilityConverter x:Key="PositiveIntToVisibilityConverter"/>
+            <Converters:IsMobileToGridRowConverter x:Key="IsMobileToGridRowConverter"/>
             <Converters:StringFormatConverter x:Key="StringFormatConverter"/>
             <Converters:LocalizedResourcesConverter x:Key="LocalizedResourcesConverter"/>
         </ResourceDictionary>

@@ -1,4 +1,4 @@
-﻿<ViewModels:NoteEditViewModel IsWindows="False" IsWindowsPhone="True" xmlns:ViewModels="using:FlatNotes.ViewModels" xmlns:Models="using:FlatNotes.Models" xmlns:System="using:System">
+﻿<ViewModels:NoteEditViewModel IsMobile="True" xmlns:ViewModels="using:FlatNotes.ViewModels" xmlns:Models="using:FlatNotes.Models" xmlns:System="using:System">
     <ViewModels:NoteEditViewModel.Note>
         <Models:Note Title="Sample note" Text="" IsChecklist="True" UpdatedAt="2015-01-01T00:00:00.2801964Z">
             <Models:Note.Color>

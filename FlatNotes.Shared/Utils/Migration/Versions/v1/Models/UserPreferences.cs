@@ -10,7 +10,7 @@ namespace FlatNotes.Utils.Migration.Versions.v1.Models
     {
         public const Double ITEM_MIN_WIDTH_MIN_VALUE = 100;
         public const Double ITEM_MIN_WIDTH_MAX_VALUE = 600;
-        public const Double ITEM_MIN_WIDTH_DEFAULT_VALUE = 150;
+        public const Double ITEM_MIN_WIDTH_DEFAULT_VALUE = 160;
 
         public int Columns { get { return columns; } set { Debug.WriteLine("Changed columns to: " + value); if (columns != value) { columns = value; NotifyPropertyChanged("Columns"); } } }
         [DataMember(Name = "Columns")]

@@ -22,9 +22,8 @@
                     </VisualState.StateTriggers>
 
                     <VisualState.Setters>
-                        <Setter Target="CommandBar.(Grid.Row)" Value="2"/>
                         <Setter Target="NotesControl.ItemStretch" Value="True"/>
-                        <Setter Target="NotesControl.ItemWidth" Value="150"/>
+                        <Setter Target="NotesControl.ItemWidth" Value="160"/>
                         <Setter Target="NotesControl.Padding" Value="8"/>
                         <Setter Target="NotesControl.AllowSingleColumn" Value="True"/>
                         <Setter Target="ToggleSingleColumnViewAppBarButton.Visibility" Value="Visible"/>
@@ -33,16 +32,15 @@
 
                 <VisualState>
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="600" />
+                        <AdaptiveTrigger MinWindowWidth="500" />
                     </VisualState.StateTriggers>
 
                     <VisualState.Setters>
-                        <Setter Target="CommandBar.(Grid.Row)" Value="0"/>
                         <Setter Target="NotesControl.ItemStretch" Value="False"/>
-                        <Setter Target="NotesControl.ItemWidth" Value="260"/>
+                        <Setter Target="NotesControl.ItemWidth" Value="220"/>
                         <Setter Target="NotesControl.Padding" Value="24"/>
-                        <Setter Target="NotesControl.AllowSingleColumn" Value="False"/>
-                        <Setter Target="ToggleSingleColumnViewAppBarButton.Visibility" Value="Collapsed"/>
+                        <Setter Target="NotesControl.AllowSingleColumn" Value="True"/>
+                        <Setter Target="ToggleSingleColumnViewAppBarButton.Visibility" Value="Visible"/>
                     </VisualState.Setters>
                 </VisualState>
 
@@ -52,9 +50,8 @@
                     </VisualState.StateTriggers>
 
                     <VisualState.Setters>
-                        <Setter Target="CommandBar.(Grid.Row)" Value="0"/>
                         <Setter Target="NotesControl.ItemStretch" Value="False"/>
-                        <Setter Target="NotesControl.ItemWidth" Value="260"/>
+                        <Setter Target="NotesControl.ItemWidth" Value="250"/>
                         <Setter Target="NotesControl.Padding" Value="24"/>
                         <Setter Target="NotesControl.AllowSingleColumn" Value="False"/>
                         <Setter Target="ToggleSingleColumnViewAppBarButton.Visibility" Value="Collapsed"/>
@@ -67,7 +64,6 @@
                     </VisualState.StateTriggers>
 
                     <VisualState.Setters>
-                        <Setter Target="CommandBar.(Grid.Row)" Value="0"/>
                         <Setter Target="NotesControl.ItemStretch" Value="False"/>
                         <Setter Target="NotesControl.ItemWidth" Value="260"/>
                         <Setter Target="NotesControl.Padding" Value="80,24"/>
@@ -82,7 +78,6 @@
                     </VisualState.StateTriggers>
 
                     <VisualState.Setters>
-                        <Setter Target="CommandBar.(Grid.Row)" Value="0"/>
                         <Setter Target="NotesControl.ItemStretch" Value="False"/>
                         <Setter Target="NotesControl.ItemWidth" Value="300"/>
                         <Setter Target="NotesControl.Padding" Value="120,24"/>
@@ -116,7 +111,7 @@
 
         <local:NotesControl Grid.Row="1" x:Name="NotesControl" ItemsSource="{Binding Notes}" Columns="{Binding Columns}" d:DataContext="{Binding Notes}" ItemClick="OnNoteClick"/>
 
-        <CommandBar Grid.Row="2" x:Name="CommandBar">
+        <CommandBar Grid.Row="{Binding IsMobile, Converter={StaticResource IsMobileToGridRowConverter}}">
             <CommandBar.PrimaryCommands>
                 <!--<AppBarButton x:Uid="NewAppBarButton" Label="New" Icon="Add" Command="{Binding CreateTextNoteCommand}" ToolTipService.ToolTip="New note"/>-->
                 <AppBarButton x:Uid="TextAppBarButton" Label="Text" Command="{Binding CreateTextNoteCommand}" ToolTipService.ToolTip="New text note">

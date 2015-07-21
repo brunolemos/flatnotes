@@ -64,12 +64,12 @@ namespace FlatNotes
 
             AppSettings.Instance.NotesSaved += (s, e) => SimulateStatusBarProgressComplete();
             AppSettings.Instance.ArchivedNotesSaved += (s, e) => SimulateStatusBarProgressComplete();
-            AppSettings.Instance.ThemeChanged += (s, e) => UpdateTheme(e.Theme);
+            AppSettings.Instance.ThemeChanged += (s, e) => { UpdateTheme(e.Theme); App.TelemetryClient.TrackMetric("Theme", AppSettings.Instance.Theme == ElementTheme.Light ? 1 : 2); };
             AppSettings.Instance.TransparentTileChanged += (s, e) => TileManager.UpdateDefaultTile(e.TransparentTile);
             AppSettings.Instance.TransparentNoteTileChanged += (s, e) => TileManager.UpdateAllNoteTilesBackgroundColor(e.TransparentTile);
-
-            AppData.NoteArchived += (s, _e) => { TileManager.RemoveTileIfExists(_e.Note); };
-            AppData.NoteRemoved += (s, _e) => { TileManager.RemoveTileIfExists(_e.Note); };
+            
+            AppData.NoteArchived += (s, _e) => { TileManager.RemoveTileIfExists(_e.Note.ID); };
+            AppData.NoteRemoved += (s, _e) => { TileManager.RemoveTileIfExists(_e.NoteId); };
         }
 
         private async void App_UnhandledException(object sender, UnhandledExceptionEventArgs e)
@@ -165,7 +165,7 @@ namespace FlatNotes
 #endif
 
                 //load app data
-                await AppData.Load();
+                await AppData.Init();
 
                 // When the navigation stack isn't restored navigate to the first page,
                 // configuring the new page by passing required information as a navigation
@@ -207,10 +207,6 @@ namespace FlatNotes
             //user preferences and useful data
             App.TelemetryClient.TrackMetric("Notes Count", AppData.Notes.Count);
             App.TelemetryClient.TrackMetric("Archived Notes Count", AppData.ArchivedNotes.Count);
-            App.TelemetryClient.TrackMetric("Theme", AppSettings.Instance.Theme == ElementTheme.Light ? 1 : 2);
-            App.TelemetryClient.TrackMetric("Single Column", AppSettings.Instance.IsSingleColumnEnabled ? 1 : 0);
-            App.TelemetryClient.TrackMetric("Transparent Tile", AppSettings.Instance.TransparentTile ? 1 : 0);
-            App.TelemetryClient.TrackMetric("Transparent Note Tile", AppSettings.Instance.TransparentNoteTile ? 1 : 0);
 
             deferral.Complete();
         }

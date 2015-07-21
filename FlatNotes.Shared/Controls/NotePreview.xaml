@@ -57,7 +57,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Grid x:Name="NoteContainer" Margin="4" Background="{Binding ElementName=Root, Path=Background}" RequestedTheme="Light">
+    <Grid x:Name="NoteContainer" Margin="4" Background="{Binding ElementName=Root, Path=Background}" RequestedTheme="Light" CacheMode="BitmapCache">
         <StackPanel Margin="0">
             <Grid Visibility="{Binding ElementName=Root, Path=HideImage, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=True}">
                 <Grid MaxHeight="120" Background="{StaticResource PhoneDarkLowBrush}" Visibility="{Binding Images.Count, Converter={StaticResource PositiveIntToVisibilityConverter}}">

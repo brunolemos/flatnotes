@@ -16,7 +16,7 @@ namespace FlatNotes.Utils
         public static event EventHandler<NoteEventArgs> NoteChanged;
         public static event EventHandler<NoteEventArgs> NoteArchived;
         public static event EventHandler<NoteEventArgs> NoteRestored;
-        public static event EventHandler<NoteEventArgs> NoteRemoved;
+        public static event EventHandler<NoteIdEventArgs> NoteRemoved;
 
         public static bool HasUnsavedChangesOnNotes;
         public static bool HasUnsavedChangesOnArchivedNotes;
@@ -35,6 +35,7 @@ namespace FlatNotes.Utils
             }
         }
         private static Notes notes = new Notes();
+        private static bool isNotesLoaded = false;
 
         public static Notes ArchivedNotes
         {
@@ -50,6 +51,7 @@ namespace FlatNotes.Utils
             }
         }
         private static Notes archivedNotes = new Notes();
+        private static bool isArchivedNotesLoaded = false;
 
         //public AppData()
         //{
@@ -57,20 +59,28 @@ namespace FlatNotes.Utils
         //    Notes.CollectionChanged += (s, e) => NotesChanged(s, e);
         //}
 
-        public static async Task Load()
+        public static async Task Init()
         {
-#if WINDOWS_UAP
-#else
             //versioning -- migrate app data structure when necessary
             await Migration.Migration.Migrate(AppSettings.Instance.Version);
-#endif
-
-            //load notes
-            AppData.Notes = await AppSettings.Instance.LoadNotes();
-
-            //load archived notes
-            AppData.ArchivedNotes = await AppSettings.Instance.LoadArchivedNotes();
         }
+
+        public static async Task LoadNotesIfNecessary()
+        {
+            if (isNotesLoaded) return;
+
+            AppData.Notes = await AppSettings.Instance.LoadNotes();
+            isNotesLoaded = true;
+        }
+
+        public static async Task LoadArchivedNotesIfNecessary()
+        {
+            if (isArchivedNotesLoaded) return;
+
+            AppData.ArchivedNotes = await AppSettings.Instance.LoadArchivedNotes();
+            isArchivedNotesLoaded = true;
+        }
+
 
         public static async Task<bool> SaveNotes()
         {
@@ -104,6 +114,7 @@ namespace FlatNotes.Utils
         private static async Task<bool> CreateNote(Note note)
         {
             if (note == null || note.IsEmpty()) return false;
+            await LoadNotesIfNecessary();
 
             Debug.WriteLine("Create note: " + note.Title);
             App.TelemetryClient.TrackEvent("NoteCreated");
@@ -114,6 +125,7 @@ namespace FlatNotes.Utils
             if (!success) return false;
 
             note.Changed = false;
+            note.AlreadyExists = true;
 
             var handler = NoteCreated;
             if (handler != null) handler(null, new NoteEventArgs(note));
@@ -127,7 +139,7 @@ namespace FlatNotes.Utils
             bool isNoteArchived = ArchivedNotes.Where<Note>(x => x.ID == note.ID).FirstOrDefault<Note>() != null;
 
             Debug.WriteLine("Update note: " + note.Title);
-            App.TelemetryClient.TrackEvent("NoteUpdated");
+            //App.TelemetryClient.TrackEvent("NoteUpdated");
 
             bool success = isNoteArchived ? await SaveArchivedNotes() : await SaveNotes();
             if (!success) return false;
@@ -144,12 +156,13 @@ namespace FlatNotes.Utils
         {
             if (note == null) return false;
 
-            Debug.WriteLine("Archive note: " + note.Title);
-            App.TelemetryClient.TrackEvent("NoteArchived");
-
             bool noteExists = Notes.Where<Note>(x => x.ID == note.ID).FirstOrDefault<Note>() != null;
             if (!noteExists) return false;
 
+            Debug.WriteLine("Archive note: " + note.Title);
+            //App.TelemetryClient.TrackEvent("NoteArchived");
+
+            await LoadArchivedNotesIfNecessary();
             bool noteAlreadyArchived = ArchivedNotes.Where<Note>(x => x.ID == note.ID).FirstOrDefault<Note>() != null;
 
             if (!noteAlreadyArchived)
@@ -161,6 +174,7 @@ namespace FlatNotes.Utils
                 if (!success) return false;
             }
 
+            note.IsArchived = true;
             await RemoveNote(note, true);
 
             var handler = NoteArchived;
@@ -172,9 +186,10 @@ namespace FlatNotes.Utils
         public static async Task<bool> RestoreNote(Note note)
         {
             if (note == null) return false;
+            await LoadArchivedNotesIfNecessary();
 
             Debug.WriteLine("Restore note: " + note.Title);
-            App.TelemetryClient.TrackEvent("ArchivedNoteRestored");
+            //App.TelemetryClient.TrackEvent("ArchivedNoteRestored");
 
             bool noteAlreadyArchived = ArchivedNotes.Where<Note>(x => x.ID == note.ID).FirstOrDefault<Note>() != null;
             if (!noteAlreadyArchived) return false;
@@ -189,6 +204,8 @@ namespace FlatNotes.Utils
                 if (!success) return false;
             }
 
+            note.AlreadyExists = true;
+            note.IsArchived = false;
             await RemoveArchivedNote(note, true);
 
             var handler = NoteRestored;
@@ -200,15 +217,16 @@ namespace FlatNotes.Utils
         public static async Task<bool> RemoveNote(Note note, bool isArchiving = false)
         {
             if (note == null) return false;
+            string id = note.ID;
 
             Debug.WriteLine("Remove note: " + note.Title);
-            App.TelemetryClient.TrackEvent("NoteRemoved");
+            //App.TelemetryClient.TrackEvent("NoteRemoved");
 
             //remove note images from disk
             if (!isArchiving)
                 await RemoveNoteImages(note.Images);
 
-            bool noteExists = Notes.Where<Note>(x => x.ID == note.ID).FirstOrDefault<Note>() != null;
+            bool noteExists = Notes.Where<Note>(x => x.ID == id).FirstOrDefault<Note>() != null;
             if (!noteExists) return true;
 
             Notes.Remove(note);
@@ -219,7 +237,7 @@ namespace FlatNotes.Utils
             if (!isArchiving)
             {
                 var handler = NoteRemoved;
-                if (handler != null) handler(null, new NoteEventArgs(note));
+                if (handler != null) handler(null, new NoteIdEventArgs(id));
             }
 
             return true;
@@ -228,15 +246,16 @@ namespace FlatNotes.Utils
         public static async Task<bool> RemoveArchivedNote(Note note, bool isRestoring = false)
         {
             if (note == null) return false;
+            string id = note.ID;
 
             Debug.WriteLine("Remove archived note: " + note.Title);
-            App.TelemetryClient.TrackEvent("ArchivedNoteRemoved");
+            //App.TelemetryClient.TrackEvent("ArchivedNoteRemoved");
 
             //remove note images from disk
             if (!isRestoring)
                 await RemoveNoteImages(note.Images);
 
-            bool isArchived = ArchivedNotes.Where<Note>(x => x.ID == note.ID).FirstOrDefault<Note>() != null;
+            bool isArchived = ArchivedNotes.Where<Note>(x => x.ID == id).FirstOrDefault<Note>() != null;
             if (!isArchived) return true;
 
             ArchivedNotes.Remove(note);
@@ -247,7 +266,7 @@ namespace FlatNotes.Utils
             if(!isRestoring)
             {
                 var handler = NoteRemoved;
-                if (handler != null) handler(null, new NoteEventArgs(note));
+                if (handler != null) handler(null, new NoteIdEventArgs(id));
             }
 
             return true;
