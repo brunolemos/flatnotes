@@ -103,7 +103,7 @@ namespace FlatNotes.Views
                 viewModel.Note = new Note();
 
             viewModel.Note.Changed = false;
-            viewModel.Note.Images.CollectionChanged += Images_CollectionChanged;
+            //viewModel.Note.Images.CollectionChanged += Images_CollectionChanged;
             viewModel.Note.Checklist.CollectionChanged += Checklist_CollectionChanged;
             viewModel.Note.Checklist.CollectionItemChanged += Checklist_CollectionItemChanged;
 
@@ -122,7 +122,7 @@ namespace FlatNotes.Views
             if (viewModel.Note == null) return;
 
             //remove change binding
-            viewModel.Note.Images.CollectionChanged -= Images_CollectionChanged;
+            //viewModel.Note.Images.CollectionChanged -= Images_CollectionChanged;
             viewModel.Note.Checklist.CollectionChanged -= Checklist_CollectionChanged;
             viewModel.Note.Checklist.CollectionItemChanged -= Checklist_CollectionItemChanged;
 
@@ -169,6 +169,21 @@ namespace FlatNotes.Views
             Debug.WriteLine("Checklist_CollectionChanged");
             checklistChanged = true;
             viewModel.Note.Touch();
+
+            if(e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Remove)
+            {
+                try
+                {
+                    var list = (object[])e.OldItems.SyncRoot;
+                    var checklistItem = list[0] as ChecklistItem;
+
+                    if (checklistItem != null)
+                        AppData.DB.Delete<ChecklistItem>(checklistItem.ID);
+                }
+                catch (Exception)
+                {
+                }
+            }
         }
 
         private void Checklist_CollectionItemChanged(object sender, EventArgs e)

@@ -63,14 +63,14 @@ namespace FlatNotes.Views
             SaveNotesIfReordered();
         }
 
-        private async void SaveNotesIfReordered()
+        private void SaveNotesIfReordered()
         {
-            Debug.WriteLine("SaveNotesIfReordered");
+            Debug.WriteLine("SaveNotesIfReordered -- TODO");
 
-            //save notes if reordered
-            if (viewModel.ReorderedNotes)
-                if (await AppData.SaveNotes())
-                    viewModel.ReorderedNotes = false;
+            ////save notes if reordered
+            //if (viewModel.ReorderedNotes)
+            //    if (await AppData.SaveNotes())
+            //        viewModel.ReorderedNotes = false;
         }
 
         private void NotesListView_Holding(object sender, Windows.UI.Xaml.Input.HoldingRoutedEventArgs e)

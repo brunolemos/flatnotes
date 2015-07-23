@@ -1,18 +1,15 @@
-﻿using SQLite.Net.Attributes;
-using SQLiteNetExtensions.Attributes;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Linq;
 using System.Runtime.Serialization;
 using Windows.UI.StartScreen;
 
-namespace FlatNotes.Models
+namespace FlatNotes.Utils.Migration.Versions.v2.Models
 {
     public class Notes : ObservableCollection<Note>
     {
-        public static implicit operator Notes(FlatNotes.Utils.Migration.Versions.v2.Models.Notes _notes)
+        public static implicit operator Notes(FlatNotes.Utils.Migration.Versions.v1.Models.Notes _notes)
         {
             var notes = new Notes();
             foreach (var item in _notes)
@@ -21,18 +18,27 @@ namespace FlatNotes.Models
             return notes;
         }
 
-        public static implicit operator Notes(List<Note> _notes)
+        public static implicit operator FlatNotes.Utils.Migration.Versions.v1.Models.Notes(Notes _notes)
         {
-            var notes = new Notes();
+            var notes = new FlatNotes.Utils.Migration.Versions.v1.Models.Notes();
             foreach (var item in _notes)
                 notes.Add(item);
 
             return notes;
         }
 
-        public static implicit operator FlatNotes.Utils.Migration.Versions.v2.Models.Notes(Notes _notes)
+        public static implicit operator FlatNotes.Utils.Migration.Versions.v2.Models.Notes(List<Note> _notes)
         {
             var notes = new FlatNotes.Utils.Migration.Versions.v2.Models.Notes();
+            foreach (var item in _notes)
+                notes.Add(item);
+
+            return notes;
+        }
+
+        public static implicit operator List<Note>(FlatNotes.Utils.Migration.Versions.v2.Models.Notes _notes)
+        {
+            var notes = new List<Note>();
             foreach (var item in _notes)
                 notes.Add(item);
 
@@ -43,26 +49,19 @@ namespace FlatNotes.Models
     [DataContract]
     public class Note : ModelBase
     {
-        [PrimaryKey]
         public string ID { get { return id; } set { id = value; } }
         [DataMember(Name = "_id")]
         private string id = Guid.NewGuid().ToString();
 
         [IgnoreDataMember]
-        [Ignore]
         public bool Changed { get { return changed; } set { if (changed != value) { changed = value; NotifyPropertyChanged("Changed"); } } }
         private bool changed = false;
-
-        public bool IsArchived { get { return isArchived; } set { isArchived = value; NotifyPropertyChanged("IsArchived"); } }
-        [DataMember(Name = "IsArchived")]
-        private bool isArchived;
 
         public bool IsChecklist { get { return isChecklist; } set { if (isChecklist != value) { isChecklist = value; if (value) EnableChecklist(); else DisableChecklist(); NotifyPropertyChanged("IsChecklist"); NotifyPropertyChanged("IsText"); } } }
         [DataMember(Name = "IsChecklist")]
         private bool isChecklist;
 
         [IgnoreDataMember]
-        [Ignore]
         public bool IsText { get { return !IsChecklist; } }
 
         public string Title { get { return title; } set { if (title != value) { title = value; NotifyPropertyChanged("Title"); } } }
@@ -73,38 +72,28 @@ namespace FlatNotes.Models
         [DataMember(Name = "Text")]
         private string text;
 
-        [OneToMany(CascadeOperations = CascadeOperation.All)]
-        public List<NoteImage> _ignore1 { get { return images; } set { images = value; } }
-
-        [Ignore]
-        public NoteImages Images { get { return images; } private set { images = value; NotifyPropertyChanged("Images"); } }
+        public NoteImages Images { get { return images; } set { images = value; NotifyPropertyChanged("Images"); } }
         [DataMember(Name = "Images")]
         private NoteImages images { get { return _images; } set { replaceNoteImages(value); } }
         private NoteImages _images = new NoteImages();
 
-        [OneToMany(CascadeOperations = CascadeOperation.All)]
-        public List<ChecklistItem> _ignore2 { get { return checklist; } set { checklist = value; } }
-
-        [Ignore]
         public Checklist Checklist { get { return checklist; } private set { checklist = value; NotifyPropertyChanged("Checklist"); } }
         [DataMember(Name = "Checklist")]
         private Checklist checklist { get { return _checklist; } set { replaceChecklist(value); } }
-        private Checklist _checklist = new List<ChecklistItem>();
+        private Checklist _checklist = new Checklist();
 
         [IgnoreDataMember]
-        [Ignore]
         public NoteColor Color { get { return color; } set { var newValue = value is NoteColor ? value : NoteColor.DEFAULT; if (color.Key != newValue.Key) { color = newValue; NotifyPropertyChanged("Color"); } } }
         private NoteColor color = NoteColor.DEFAULT;
 
         [DataMember(Name = "Color")]
-        [Column("Color")]
-        public string _color { get { return Color.Key; } set { color = new NoteColor(value); } }
+        private string _color { get { return Color.Key; } set { color = new NoteColor(value); } }
 
-        public DateTime CreatedAt { get { return createdAt; } protected set { createdAt = value; NotifyPropertyChanged("CreatedAt"); } }
+        public DateTime CreatedAt { get { return createdAt; } private set { createdAt = value; NotifyPropertyChanged("CreatedAt"); } }
         [DataMember(Name = "CreatedAt")]
         private DateTime createdAt = DateTime.UtcNow;
 
-        public DateTime UpdatedAt { get { return updatedAt; } protected set { updatedAt = value; NotifyPropertyChanged("UpdatedAt"); } }
+        public DateTime UpdatedAt { get { return updatedAt; } set { updatedAt = value; NotifyPropertyChanged("UpdatedAt"); } }
         [DataMember(Name = "UpdatedAt")]
         private DateTime updatedAt = DateTime.UtcNow;
 
@@ -113,12 +102,24 @@ namespace FlatNotes.Models
         private DateTime? archivedAt;
 
         [IgnoreDataMember]
-        [Ignore]
         public bool IsPinned { get { return isPinned; } set { isPinned = value; NotifyPropertyChanged("IsPinned"); } }
         private bool isPinned;
 
+        [IgnoreDataMember]
+        public bool AlreadyExists { get { return alreadyExists; } set { alreadyExists = value; IsNewNote = !AlreadyExists && !IsArchived; NotifyPropertyChanged("AlreadyExists"); } }
+        private bool alreadyExists;
+
+        [IgnoreDataMember]
+        public bool IsArchived { get { return isArchived; } set { isArchived = value; IsNewNote = !AlreadyExists && !IsArchived; NotifyPropertyChanged("IsArchived"); } }
+        private bool isArchived;
+
+        [IgnoreDataMember]
+        public bool IsNewNote { get { return isNewNote; } private set { isNewNote = value; NotifyPropertyChanged("IsNewNote"); } }
+        private bool isNewNote;
+
         public Note()
         {
+            PropertyChanged += Note_PropertyChanged;
             IsPinned = SecondaryTile.Exists(ID);
         }
 
@@ -134,7 +135,7 @@ namespace FlatNotes.Models
             this.color = color is NoteColor ? color : NoteColor.DEFAULT;
         }
 
-        public Note(string title, List<ChecklistItem> checklist, NoteColor color = null) : this()
+        public Note(string title, Checklist checklist, NoteColor color = null) : this()
         {
             this.title = title;
             this.text = "";
@@ -144,7 +145,7 @@ namespace FlatNotes.Models
             this.checklist = checklist;
         }
 
-        public Note(string title, string text, List<ChecklistItem> checklist, List<NoteImage> images, NoteColor color, DateTime createdAt, DateTime updatedAt, DateTime? archivedAt) : this()
+        public Note(string title, string text, Checklist checklist, NoteImages images, NoteColor color, DateTime createdAt, DateTime updatedAt, DateTime? archivedAt) : this()
         {
             this.isChecklist = checklist != null && checklist.Count > 0;
 
@@ -157,12 +158,30 @@ namespace FlatNotes.Models
             this.updatedAt = updatedAt;
             this.archivedAt = archivedAt;
         }
-        
+
+        //public Note(string id, bool isChecklist, string title, string text, Checklist checklist, 
+        //notes.Add(new Note() { ID = note.ID, IsChecklist = note.IsChecklist, Title = note.Title, Text = note.Text, Checklist = note.Checklist, Color = note.Color, CreatedAt = note.CreatedAt, UpdatedAt = note.UpdatedAt  });
+
+        void Note_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (!(e.PropertyName == "IsChecklist"
+                || e.PropertyName == "Title" || e.PropertyName == "Text"
+                || e.PropertyName == "Checklist" || e.PropertyName == "Images"
+                || e.PropertyName == "Color" || e.PropertyName == "UpdatedAt")) return;
+
+            Debug.WriteLine("Note_PropertyChanged " + e.PropertyName);
+            Changed = true;
+
+            if (e.PropertyName == "UpdatedAt") return;
+            Touch();
+        }
+
         public void Touch()
         {
             UpdatedAt = DateTime.UtcNow;
         }
-        
+
+
         public bool ToggleChecklist()
         {
             if (!this.IsChecklist)
@@ -248,46 +267,35 @@ namespace FlatNotes.Models
                 return;
 
             foreach (var item in list)
-            {
-                item.NoteId = ID;
                 Images.Add(item);
-            }
 
             return;
         }
 
-        private void replaceChecklist(IList<ChecklistItem> list)
+        private void replaceChecklist(Checklist list)
         {
+            if (Checklist.Count <= 0 && (list == null || list.Count <= 0))
+                return;
+
             Checklist.Clear();
 
             if (list == null || list.Count <= 0)
                 return;
 
             foreach (var item in list)
-            {
-                item.NoteId = ID;
                 Checklist.Add(item);
-            }
 
             return;
         }
 
-        public static implicit operator Note(FlatNotes.Utils.Migration.Versions.v2.Models.Note _note)
+        public static implicit operator FlatNotes.Utils.Migration.Versions.v1.Models.Note(Note _note)
         {
-            var note = new Note(_note.Title, _note.Text, ((Checklist)_note.Checklist).ToList(), (NoteImages)_note.Images, _note.Color, _note.CreatedAt, _note.UpdatedAt, _note.ArchivedAt);
-
-            foreach (var item in note.Checklist)
-                item.NoteId = note.ID;
-
-            foreach (var item in note.Images)
-                item.NoteId = note.ID;
-
-            return note;
+            return new FlatNotes.Utils.Migration.Versions.v1.Models.Note(_note.Title, _note.Text, (Checklist)_note.Checklist, _note.Color, _note.CreatedAt, _note.UpdatedAt);
         }
 
-        public static implicit operator FlatNotes.Utils.Migration.Versions.v2.Models.Note(Note _note)
+        public static implicit operator Note(FlatNotes.Utils.Migration.Versions.v1.Models.Note _note)
         {
-            return new FlatNotes.Utils.Migration.Versions.v2.Models.Note(_note.Title, _note.Text, (Checklist)_note.Checklist, (NoteImages)_note.Images, _note.Color, _note.CreatedAt, _note.UpdatedAt, _note.ArchivedAt);
+            return new Note(_note.Title, _note.Text, (Checklist)_note.Checklist, _note.Images, _note.Color, _note.CreatedAt, _note.UpdatedAt, null);
         }
     }
 }

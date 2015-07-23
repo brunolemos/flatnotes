@@ -204,7 +204,7 @@ namespace FlatNotes.Utils
 
             foreach (var tile in tiles)
             {
-                Note note = AppData.Notes.FirstOrDefault(n => n.ID == tile.TileId);
+                Note note = AppData.DB.Get<Note>(tile.TileId);
                 if (note == null) continue;
 
                 //var tile = new SecondaryTile(t.TileId);
@@ -241,7 +241,7 @@ namespace FlatNotes.Utils
                 return null;
             }
 
-            return AppData.Notes.FirstOrDefault(n => n.ID == noteId);
+            return AppData.DB.Get<Note>(noteId);
         }
 
         private static string GenerateNavigationArgumentFromNote(Note note)

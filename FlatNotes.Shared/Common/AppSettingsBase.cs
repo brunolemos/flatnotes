@@ -16,8 +16,10 @@ namespace FlatNotes.Common
 
         protected AppSettingsBase() { }
 
-        public abstract void Up();
-        public abstract void Down();
+        public void ClearLocalSettings()
+        {
+            localSettings.Values.Clear();
+        }
 
         protected T GetValueOrDefault<T>(string key, T defaultValue, bool useRoaming = false)
         {

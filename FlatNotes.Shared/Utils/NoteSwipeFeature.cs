@@ -59,27 +59,15 @@ namespace FlatNotes.Views
             }
         }
 
-        private async void OnItemSwiped(object sender, EventArgs e)
+        private void OnItemSwiped(object sender, EventArgs e)
         {
             Note note = (sender as FrameworkElement).DataContext as Note;
-            if (note == null) return;
+            if (note == null || note.IsArchived) return;
 
-            bool isArchived = AppData.ArchivedNotes.Where<Note>(x => x.ID == note.ID).FirstOrDefault<Note>() != null;
+            Debug.WriteLine("Swiped note " + note.Title);
+            App.TelemetryClient.TrackEvent("NoteSwiped");
 
-            if (isArchived)
-            {
-                Debug.WriteLine("Swiped archived note " + note.Title);
-                App.TelemetryClient.TrackEvent("ArchivedNoteSwiped");
-
-                await AppData.RemoveArchivedNote(note);
-            }
-            else
-            {
-                Debug.WriteLine("Swiped note " + note.Title);
-                App.TelemetryClient.TrackEvent("NoteSwiped");
-
-                await AppData.ArchiveNote(note);
-            }
+            AppData.ArchiveNote(note);
         }
     }
 }

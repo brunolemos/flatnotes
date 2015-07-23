@@ -1,7 +1,11 @@
 ﻿using FlatNotes.Events;
 using FlatNotes.Models;
+using SQLite.Net;
+using SQLiteNetExtensions.Extensions;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.Storage;
@@ -17,115 +21,106 @@ namespace FlatNotes.Utils
         public static event EventHandler<NoteEventArgs> NoteArchived;
         public static event EventHandler<NoteEventArgs> NoteRestored;
         public static event EventHandler<NoteIdEventArgs> NoteRemoved;
+        public static event EventHandler<NoteColorEventArgs> NoteColorChanged;
 
-        public static bool HasUnsavedChangesOnNotes;
-        public static bool HasUnsavedChangesOnArchivedNotes;
+        public static SQLiteConnection DB { get { if (db == null) InitDB(); return db; } }
+        private static SQLiteConnection db;
 
-        public static Notes Notes
-        {
-            get { return notes; }
+        public static Notes Notes { get { if (notes == null) LoadNotesIfNecessary(); return notes; } private set { notes = value; } }
+        private static Notes notes;
 
-            set
-            {
-                notes.Clear();
-                if (value != null) foreach (var item in value) notes.Add(item);
-
-                var handler = NotesChanged;
-                if (handler != null) handler(null, EventArgs.Empty);
-            }
-        }
-        private static Notes notes = new Notes();
-        private static bool isNotesLoaded = false;
-
-        public static Notes ArchivedNotes
-        {
-            get { return archivedNotes; }
-
-            set
-            {
-                archivedNotes.Clear();
-                if (value != null) foreach (var item in value) archivedNotes.Add(item);
-
-                var handler = ArchivedNotesChanged;
-                if (handler != null) handler(null, EventArgs.Empty);
-            }
-        }
-        private static Notes archivedNotes = new Notes();
-        private static bool isArchivedNotesLoaded = false;
-
-        //public AppData()
-        //{
-        //    NotesChanged += (s, e) => Debug.WriteLine("Notes changed");
-        //    Notes.CollectionChanged += (s, e) => NotesChanged(s, e);
-        //}
+        public static Notes ArchivedNotes { get { if (archivedNotes == null) LoadArchivedNotesIfNecessary(); return archivedNotes; } private set { archivedNotes = value; } }
+        private static Notes archivedNotes;
 
         public static async Task Init()
         {
             //versioning -- migrate app data structure when necessary
             await Migration.Migration.Migrate(AppSettings.Instance.Version);
+
+            if(db == null)
+                InitDB();
         }
 
-        public static async Task LoadNotesIfNecessary()
+        private static void InitDB()
         {
-            if (isNotesLoaded) return;
-
-            AppData.Notes = await AppSettings.Instance.LoadNotes();
-            isNotesLoaded = true;
+            ConnectDB();
+            CreateTables();
         }
 
-        public static async Task LoadArchivedNotesIfNecessary()
+        private static void ConnectDB()
         {
-            if (isArchivedNotesLoaded) return;
-
-            AppData.ArchivedNotes = await AppSettings.Instance.LoadArchivedNotes();
-            isArchivedNotesLoaded = true;
+            var path = Path.Combine(Windows.Storage.ApplicationData.Current.LocalFolder.Path, "app.db");
+            db = new SQLiteConnection(new SQLite.Net.Platform.WinRT.SQLitePlatformWinRT(), path);
         }
 
-
-        public static async Task<bool> SaveNotes()
+        private static void CreateTables()
         {
-            Debug.WriteLine("Save notes");
-            var success = await AppSettings.Instance.SaveNotes(Notes);
+            DB.Execute("PRAGMA foreign_keys = ON;");
 
-            if (success) HasUnsavedChangesOnNotes = false;
-            return success;
+            //create just the primary keys / foreign keys due to sqlite limitation
+            DB.Execute(@"CREATE TABLE IF NOT EXISTS Note (ID varchar PRIMARY KEY NOT NULL)");
+            DB.Execute(@"CREATE TABLE IF NOT EXISTS ChecklistItem (ID varchar PRIMARY KEY NOT NULL, NoteId varchar REFERENCES Note (ID) ON DELETE CASCADE)");
+            DB.Execute(@"CREATE TABLE IF NOT EXISTS NoteImage (ID varchar PRIMARY KEY NOT NULL, NoteId varchar REFERENCES Note (ID) ON DELETE CASCADE)");
+
+            //create indexes (another sqlite limitation)
+            DB.CreateIndex("ChecklistItem", "NoteId");
+            DB.CreateIndex("NoteImage", "NoteId");
+
+            //create rest of the table (if not exists)
+            DB.CreateTable<ChecklistItem>();
+            DB.CreateTable<NoteImage>();
+            DB.CreateTable<Note>();
         }
 
-        public static async Task<bool> SaveArchivedNotes()
+        private static void LoadNotesIfNecessary()
         {
-            Debug.WriteLine("Save archived notes");
-            var success = await AppSettings.Instance.SaveArchivedNotes(ArchivedNotes);
+            if (notes != null && notes.Count > 0) return;
 
-            if (success) HasUnsavedChangesOnArchivedNotes = false;
-            return success;
+            notes = DB.GetAllWithChildren<Note>(x => x.IsArchived != true).ToList();
+        }
+
+        private static void LoadArchivedNotesIfNecessary()
+        {
+            if (archivedNotes != null && archivedNotes.Count > 0) return;
+
+            archivedNotes = DB.GetAllWithChildren<Note>(x => x.IsArchived == true).ToList();
         }
 
         public static async Task<bool> CreateOrUpdateNote(Note note)
         {
-            bool noteAlreadyExists = Notes.Where<Note>(x => x.ID == note.ID).FirstOrDefault<Note>() != null;
-            bool isNoteArchived = ArchivedNotes.Where<Note>(x => x.ID == note.ID).FirstOrDefault<Note>() != null;
+            if (note == null) return false;
+
+            bool alreadyExists = DB.Find<Note>(note.ID) != null;
             
             if (note.IsEmpty())
-                return noteAlreadyExists ? await RemoveNote(note) : (isNoteArchived ? await RemoveArchivedNote(note) : false);
+                return await RemoveNote(note);
             else
-                return noteAlreadyExists || isNoteArchived ? await UpdateNote(note) : await CreateNote(note);
+                return alreadyExists ? UpdateNote(note) : CreateNote(note);
         }
 
-        private static async Task<bool> CreateNote(Note note)
+        private static bool CreateNote(Note note)
         {
             if (note == null || note.IsEmpty()) return false;
-            await LoadNotesIfNecessary();
 
             Debug.WriteLine("Create note: " + note.Title);
-            App.TelemetryClient.TrackEvent("NoteCreated");
+            //App.TelemetryClient.TrackEvent("NoteCreated");
 
-            Notes.Insert(0, note);
+            //associate with note
+            foreach (var item in note.Checklist) item.NoteId = note.ID;
+            foreach (var item in note.Images) item.NoteId = note.ID;
 
-            bool success = await SaveNotes();
-            if (!success) return false;
+            DB.InsertWithChildren(note);
+            //bool success = DB.InsertOrReplace(note) == 1;
+            //if (!success) return false;
+
+            //if (note.Checklist != null && note.Checklist.Count > 0)
+            //    DB.InsertOrReplaceAll(note.Checklist);
+
+            //if (note.Images != null && note.Images.Count > 0)
+            //    DB.InsertOrReplaceAll(note.Images);
 
             note.Changed = false;
-            note.AlreadyExists = true;
+            AppData.Notes.Insert(0, note);
 
             var handler = NoteCreated;
             if (handler != null) handler(null, new NoteEventArgs(note));
@@ -133,16 +128,24 @@ namespace FlatNotes.Utils
             return true;
         }
 
-        private static async Task<bool> UpdateNote(Note note)
+        private static bool UpdateNote(Note note)
         {
             if (note == null) return false;
-            bool isNoteArchived = ArchivedNotes.Where<Note>(x => x.ID == note.ID).FirstOrDefault<Note>() != null;
 
             Debug.WriteLine("Update note: " + note.Title);
             //App.TelemetryClient.TrackEvent("NoteUpdated");
 
-            bool success = isNoteArchived ? await SaveArchivedNotes() : await SaveNotes();
+            //associate with note
+            foreach (var item in note.Checklist) item.NoteId = note.ID;
+            foreach (var item in note.Images) item.NoteId = note.ID;
+
+            //DB.UpdateWithChildren(note);
+            bool success = DB.Update(note) == 1;
             if (!success) return false;
+
+            //update checklist items and note images
+            if (note.Checklist.Count > 0) DB.InsertOrReplaceAll(note.Checklist);
+            if (note.Images.Count > 0) DB.InsertOrReplaceAll(note.Images);
 
             note.Changed = false;
 
@@ -152,30 +155,21 @@ namespace FlatNotes.Utils
             return true;
         }
 
-        public static async Task<bool> ArchiveNote(Note note)
+        public static bool ArchiveNote(Note note)
         {
             if (note == null) return false;
-
-            bool noteExists = Notes.Where<Note>(x => x.ID == note.ID).FirstOrDefault<Note>() != null;
-            if (!noteExists) return false;
 
             Debug.WriteLine("Archive note: " + note.Title);
             //App.TelemetryClient.TrackEvent("NoteArchived");
 
-            await LoadArchivedNotesIfNecessary();
-            bool noteAlreadyArchived = ArchivedNotes.Where<Note>(x => x.ID == note.ID).FirstOrDefault<Note>() != null;
-
-            if (!noteAlreadyArchived)
-            {
-                note.ArchivedAt = DateTime.UtcNow;
-                ArchivedNotes.Insert(0, note);
-
-                bool success = await SaveArchivedNotes();
-                if (!success) return false;
-            }
-
             note.IsArchived = true;
-            await RemoveNote(note, true);
+            note.ArchivedAt = DateTime.UtcNow;
+
+            bool success = DB.Update(note) == 1;
+            if (!success) return false;
+
+            AppData.Notes.Remove(note);
+            AppData.ArchivedNotes.Insert(0, note);
 
             var handler = NoteArchived;
             if (handler != null) handler(null, new NoteEventArgs(note));
@@ -183,30 +177,20 @@ namespace FlatNotes.Utils
             return true;
         }
 
-        public static async Task<bool> RestoreNote(Note note)
+        public static bool RestoreNote(Note note)
         {
             if (note == null) return false;
-            await LoadArchivedNotesIfNecessary();
 
             Debug.WriteLine("Restore note: " + note.Title);
             //App.TelemetryClient.TrackEvent("ArchivedNoteRestored");
 
-            bool noteAlreadyArchived = ArchivedNotes.Where<Note>(x => x.ID == note.ID).FirstOrDefault<Note>() != null;
-            if (!noteAlreadyArchived) return false;
-
-            bool noteExists = Notes.Where<Note>(x => x.ID == note.ID).FirstOrDefault<Note>() != null;
-
-            if (!noteExists)
-            {
-                Notes.Insert(0, note);
-
-                bool success = await SaveNotes();
-                if (!success) return false;
-            }
-
-            note.AlreadyExists = true;
             note.IsArchived = false;
-            await RemoveArchivedNote(note, true);
+
+            bool success = DB.Update(note) == 1;
+            if (!success) return false;
+
+            AppData.Notes.Insert(0, note);
+            AppData.ArchivedNotes.Remove(note);
 
             var handler = NoteRestored;
             if (handler != null) handler(null, new NoteEventArgs(note));
@@ -214,76 +198,58 @@ namespace FlatNotes.Utils
             return true;
         }
 
-        public static async Task<bool> RemoveNote(Note note, bool isArchiving = false)
+        public static bool ChangeNoteColor(Note note, NoteColor newColor)
         {
             if (note == null) return false;
-            string id = note.ID;
+
+            Debug.WriteLine("Change note color: " + newColor.Key);
+            //App.TelemetryClient.TrackEvent("NoteColorChanged");
+
+            note.Color = newColor;
+
+            bool success = DB.Update(note) == 1;
+            if (!success) return false;
+
+            var handler = NoteColorChanged;
+            if (handler != null) handler(null, new NoteColorEventArgs(note, newColor));
+
+            return true;
+        }
+
+        public static async Task<bool> RemoveNote(Note note)
+        {
+            if (note == null) return false;
 
             Debug.WriteLine("Remove note: " + note.Title);
             //App.TelemetryClient.TrackEvent("NoteRemoved");
 
             //remove note images from disk
-            if (!isArchiving)
-                await RemoveNoteImages(note.Images);
+            await RemoveNoteImages(note.Images);
 
-            bool noteExists = Notes.Where<Note>(x => x.ID == id).FirstOrDefault<Note>() != null;
-            if (!noteExists) return true;
-
-            Notes.Remove(note);
-            bool success = await SaveNotes();
-
+            bool success = DB.Delete(note) == 1;
             if (!success) return false;
 
-            if (!isArchiving)
-            {
-                var handler = NoteRemoved;
-                if (handler != null) handler(null, new NoteIdEventArgs(id));
-            }
+            AppData.Notes.Remove(note);
+            AppData.ArchivedNotes.Remove(note);
+
+            var handler = NoteRemoved;
+            if (handler != null) handler(null, new NoteIdEventArgs(note.ID));
 
             return true;
         }
 
-        public static async Task<bool> RemoveArchivedNote(Note note, bool isRestoring = false)
-        {
-            if (note == null) return false;
-            string id = note.ID;
-
-            Debug.WriteLine("Remove archived note: " + note.Title);
-            //App.TelemetryClient.TrackEvent("ArchivedNoteRemoved");
-
-            //remove note images from disk
-            if (!isRestoring)
-                await RemoveNoteImages(note.Images);
-
-            bool isArchived = ArchivedNotes.Where<Note>(x => x.ID == id).FirstOrDefault<Note>() != null;
-            if (!isArchived) return true;
-
-            ArchivedNotes.Remove(note);
-            bool success = await SaveArchivedNotes();
-
-            if (!success) return false;
-
-            if(!isRestoring)
-            {
-                var handler = NoteRemoved;
-                if (handler != null) handler(null, new NoteIdEventArgs(id));
-            }
-
-            return true;
-        }
-
-        public static async Task<bool> RemoveNoteImages(NoteImages noteImages)
+        public static async Task<bool> RemoveNoteImages(IList<NoteImage> noteImages, bool deleteFromDB = true)
         {
             if (noteImages == null || noteImages.Count <= 0) return true;
             bool success = true;
 
             foreach (var noteImage in noteImages)
-                success &= await RemoveNoteImage(noteImage);
+                success &= await RemoveNoteImage(noteImage, deleteFromDB);
 
             return success;
         }
 
-        public static async Task<bool> RemoveNoteImage(NoteImage noteImage)
+        public static async Task<bool> RemoveNoteImage(NoteImage noteImage, bool deleteFromDB = true)
         {
             if (noteImage == null) return true;
             bool success = true;
@@ -293,6 +259,9 @@ namespace FlatNotes.Utils
                 Debug.WriteLine("Delete {0}", noteImage.URL);
                 var file = await StorageFile.GetFileFromPathAsync(noteImage.URL);
                 await file.DeleteAsync();
+
+                if (deleteFromDB)
+                    DB.Delete(noteImage);
             }
             catch (Exception)
             {

@@ -4,11 +4,13 @@ using Windows.Storage;
 using Newtonsoft.Json;
 using FlatNotes.Utils.Migration.Versions.v1.Models;
 
-namespace FlatNotes.Utils.Migration.Versions.v1
+namespace FlatNotes.Utils.Migration.Versions.v1.Utils
 {
     public class AppSettings
     {
-        public static readonly AppSettings Instance = new AppSettings();
+        public static AppSettings Instance { get { if (instance == null) instance = new AppSettings(); return instance; } }
+        private static AppSettings instance;
+
         private ApplicationDataContainer localSettings;
 
         // The key names of our settings
@@ -17,14 +19,22 @@ namespace FlatNotes.Utils.Migration.Versions.v1
         // The default value of our settings
         public User LOGGEDUSER_DEFAULT = new User();
 
-        public void Up()
+        /// <summary>
+        /// Migrate to v1 -- nothing need to be done
+        /// </summary>
+        public static void Up()
         {
-            return;
         }
 
-        public async void Down()
+        /// <summary>
+        /// Migrate from v1 to nothing -- deletes everything
+        /// </summary>
+        public static void Down()
         {
-            await ApplicationData.Current.ClearAsync();
+            Task.Run(async () =>
+            {
+                await ApplicationData.Current.ClearAsync();
+            }).Wait();
         }
 
         private AppSettings()

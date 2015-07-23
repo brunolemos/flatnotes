@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Runtime.Serialization;
-using FlatNotes.Models;
 
 namespace FlatNotes.Utils.Migration.Versions.v1.Models
 {

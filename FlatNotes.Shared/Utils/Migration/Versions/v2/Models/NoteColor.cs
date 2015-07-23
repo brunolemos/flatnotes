@@ -2,22 +2,13 @@
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 
-namespace FlatNotes.Models
+namespace FlatNotes.Utils.Migration.Versions.v2.Models
 {
     public class NoteColors : List<NoteColor>
     {
-        public static implicit operator NoteColors(FlatNotes.Utils.Migration.Versions.v2.Models.NoteColors _noteColors)
+        public static implicit operator FlatNotes.Utils.Migration.Versions.v1.Models.NoteColors(NoteColors _noteColors)
         {
-            var noteColors = new NoteColors();
-            foreach (var item in _noteColors)
-                noteColors.Add(item);
-
-            return noteColors;
-        }
-
-        public static implicit operator FlatNotes.Utils.Migration.Versions.v2.Models.NoteColors(NoteColors _noteColors)
-        {
-            var noteColors = new FlatNotes.Utils.Migration.Versions.v2.Models.NoteColors();
+            var noteColors = new FlatNotes.Utils.Migration.Versions.v1.Models.NoteColors();
             foreach (var item in _noteColors)
                 noteColors.Add(item);
 
@@ -77,7 +68,7 @@ namespace FlatNotes.Models
 
         public NoteColor( string key )
         {
-            if (string.IsNullOrEmpty(key) || !colorsDictionary.ContainsKey(key)) key = "DEFAULT";
+            if (!colorsDictionary.ContainsKey(key)) key = "DEFAULT";
 
             this.Key = colorsDictionary[key].Key;
             this.Color = colorsDictionary[key].Color;
@@ -106,14 +97,14 @@ namespace FlatNotes.Models
             return this.Color.ToString();
         }
 
-        public static implicit operator NoteColor(FlatNotes.Utils.Migration.Versions.v2.Models.NoteColor noteColor)
+        public static implicit operator NoteColor(FlatNotes.Utils.Migration.Versions.v1.Models.NoteColor noteColor)
         {
             return new NoteColor(noteColor.Key);
         }
 
-        public static implicit operator FlatNotes.Utils.Migration.Versions.v2.Models.NoteColor(NoteColor noteColor)
+        public static implicit operator FlatNotes.Utils.Migration.Versions.v1.Models.NoteColor(NoteColor noteColor)
         {
-            return new FlatNotes.Utils.Migration.Versions.v2.Models.NoteColor(noteColor.Key);
+            return new FlatNotes.Utils.Migration.Versions.v1.Models.NoteColor(noteColor.Key);
         }
     }
 }

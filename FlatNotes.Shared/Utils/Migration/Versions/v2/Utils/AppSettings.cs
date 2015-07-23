@@ -1,15 +1,13 @@
 ﻿using FlatNotes.Common;
-using FlatNotes.Events;
-using FlatNotes.Models;
-using SQLiteNetExtensions.Extensions;
+using FlatNotes.Utils.Migration.Versions.v2.Events;
+using FlatNotes.Utils.Migration.Versions.v2.Models;
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.Storage;
 using Windows.UI.Xaml;
 
-namespace FlatNotes.Utils
+namespace FlatNotes.Utils.Migration.Versions.v2.Utils
 {
     public class AppSettings : AppSettingsBase
     {
@@ -19,21 +17,28 @@ namespace FlatNotes.Utils
         public event EventHandler NotesSaved;
         public event EventHandler ArchivedNotesSaved;
         public event EventHandler<ThemeEventArgs> ThemeChanged;
+        public event EventHandler<ColumnsEventArgs> ColumnsChanged;
         public event EventHandler<IsSingleColumnEnabledEventArgs> IsSingleColumnEnabledChanged;
         public event EventHandler<TransparentTileEventArgs> TransparentTileChanged;
         public event EventHandler<TransparentTileEventArgs> TransparentNoteTileChanged;
 
         public override uint Version { get { return VERSION; } }
-        private const uint VERSION = 3;
+        private const uint VERSION = 2;
 
         public StorageFolder ImagesFolder { get; private set; }
         private const string IMAGES_FOLDER_NAME = "Images";
 
+        private const string NOTES_FILENAME = "notes.json";
+        private static Notes NOTES_DEFAULT = new Notes();
+
+        private const string ARCHIVED_NOTES_FILENAME = "notes_archived.json";
+        private static Notes ARCHIVED_NOTES_DEFAULT = new Notes();
+
         private const string THEME_KEY = "THEME";
         private const ElementTheme THEME_DEFAULT = ElementTheme.Light;
 
-        private const string IS_SINGLE_COLUMN_ENABLED_KEY = "IS_SINGLE_COLUMN_ENABLED";
-        private const bool IS_SINGLE_COLUMN_ENABLED_DEFAULT = false;
+        private const string COLUMNS_KEY = "COLUMNS";
+        private const int COLUMNS_DEFAULT = -1;
 
         private const string TRANSPARENT_TILE_KEY = "TRANSPARENT_TILE";
         private const bool TRANSPARENT_TILE_DEFAULT = false;
@@ -52,63 +57,52 @@ namespace FlatNotes.Utils
         {
             if (DesignMode.DesignModeEnabled) return;
             ImagesFolder = await localFolder.CreateFolderAsync(IMAGES_FOLDER_NAME, CreationCollisionOption.OpenIfExists);
+
+            //fix theme bug
+            if (localSettings.Values[THEME_KEY] == null || localSettings.Values[THEME_KEY].ToString().Length > 1 || localSettings.Values[THEME_KEY].ToString() == "0")
+                Theme = THEME_DEFAULT;
         }
 
         /// <summary>
-        /// Migrate from v2 to v3
+        /// Migrate from v1 to v2
         /// </summary>
         public static void Up()
         {
             Task.Run(async () =>
             {
+                if (v1.Utils.AppSettings.Instance.LoggedUser.Notes.Count <= 0)
+                    return;
+
                 //import notes
-                Notes allNotes = await Migration.Versions.v2.Utils.AppSettings.Instance.LoadNotes();
-                if (allNotes == null) allNotes = new Notes();
+                Notes notes = new Notes();
+                foreach (var note in v1.Utils.AppSettings.Instance.LoggedUser.Notes)
+                    notes.Add(new Note(note.Title, note.Text, (Checklist)note.Checklist, note.Images, note.Color, note.CreatedAt, note.UpdatedAt, null));
 
-                Notes archivedNotes = await Migration.Versions.v2.Utils.AppSettings.Instance.LoadArchivedNotes();
-                if (allNotes.Count <= 0 && (archivedNotes == null || archivedNotes.Count <= 0)) return;
+                //import archived
+                Notes archivedNotes = new Notes();
+                foreach (var note in v1.Utils.AppSettings.Instance.LoggedUser.ArchivedNotes)
+                    notes.Add(new Note(note.Title, note.Text, (Checklist)note.Checklist, note.Images, note.Color, note.CreatedAt, note.UpdatedAt, note.UpdatedAt));
 
-                //merge archived notes
-                if(archivedNotes != null)
-                    foreach (var note in archivedNotes)
-                    {
-                        note.IsArchived = true;
-                        allNotes.Add(note);
-                    }
+                bool success = await Instance.SaveNotes(notes);
+                await Instance.SaveArchivedNotes(archivedNotes);
 
-                foreach (var note in allNotes)
-                {
-                    if (note.Checklist != null && note.Checklist.Count > 0)
-                        foreach (var checklistItem in note.Checklist)
-                            checklistItem.NoteId = note.ID;
+                if (success) Instance.ClearLocalSettings();
 
-                    if (note.Images != null && note.Images.Count > 0)
-                        foreach (var noteImage in note.Images)
-                            noteImage.NoteId = note.ID;
-                }
-
-                //insert in db
-                AppData.DB.InsertOrReplaceAllWithChildren(allNotes);
-
-                allNotes = null;
+                Instance.Theme = v1.Utils.AppSettings.Instance.LoggedUser.Preferences.Theme;
             }).Wait();
         }
 
         /// <summary>
-        /// Migrate from v3 back to v2
+        /// Migrate from v2 back to v1
         /// </summary>
         public static void Down()
         {
             Task.Run(async () =>
             {
-                //import notes
-                Notes notes = AppData.DB.GetAllWithChildren<Note>(x => x.IsArchived != true).ToList();
-                Notes archivedNotes = AppData.DB.GetAllWithChildren<Note>(x => x.IsArchived == true).ToList();
-
-                bool success = await Migration.Versions.v2.Utils.AppSettings.Instance.SaveNotes(notes);
-                success &= await Migration.Versions.v2.Utils.AppSettings.Instance.SaveArchivedNotes(archivedNotes);
-
-                if (success) AppData.DB.DeleteAll<Note>();
+                v1.Utils.AppSettings.Instance.LoggedUser.Preferences.Theme = Instance.Theme;
+                v1.Utils.AppSettings.Instance.LoggedUser.Preferences.Columns = Instance.Columns;
+                v1.Utils.AppSettings.Instance.LoggedUser.Notes = await Instance.LoadNotes();
+                v1.Utils.AppSettings.Instance.LoggedUser.ArchivedNotes = await Instance.LoadArchivedNotes();
             }).Wait();
         }
 
@@ -128,15 +122,17 @@ namespace FlatNotes.Utils
             }
         }
 
-        public bool IsSingleColumnEnabled
+        public int Columns
         {
-            get { return GetValueOrDefault(IS_SINGLE_COLUMN_ENABLED_KEY, IS_SINGLE_COLUMN_ENABLED_DEFAULT); }
+            get { return GetValueOrDefault(COLUMNS_KEY, COLUMNS_DEFAULT); }
             set
             {
-                if (SetValue<bool>(IS_SINGLE_COLUMN_ENABLED_KEY, value))
+                if (SetValue<int>(COLUMNS_KEY, value))
                 {
-                    var handler = IsSingleColumnEnabledChanged;
-                    if (handler != null) handler(this, new IsSingleColumnEnabledEventArgs(value));
+                    var handler = ColumnsChanged;
+                    if (handler != null) handler(this, new ColumnsEventArgs(value));
+
+                    App.TelemetryClient.TrackMetric("Columns", value);
                 }
             }
         }
@@ -165,6 +161,33 @@ namespace FlatNotes.Utils
                     if (handler != null) handler(this, new TransparentTileEventArgs(value));
                 }
             }
+        }
+
+        public async Task<Notes> LoadNotes() { return await ReadFileOrDefault(NOTES_FILENAME, NOTES_DEFAULT); }
+        public async Task<bool> SaveNotes(Notes notes) {
+            var success = await SaveFile(NOTES_FILENAME, notes);
+
+            if(success)
+            {
+                var handler = NotesSaved;
+                if (handler != null) handler(this, EventArgs.Empty);
+            }
+
+            return success;
+        }
+
+        public async Task<Notes> LoadArchivedNotes() { return await ReadFileOrDefault(ARCHIVED_NOTES_FILENAME, ARCHIVED_NOTES_DEFAULT); }
+        public async Task<bool> SaveArchivedNotes(Notes notes)
+        {
+            var success = await SaveFile(ARCHIVED_NOTES_FILENAME, notes);
+
+            if (success)
+            {
+                var handler = ArchivedNotesSaved;
+                if (handler != null) handler(this, EventArgs.Empty);
+            }
+
+            return success;
         }
 
         public async Task<StorageFile> SaveImage(StorageFile file, string noteId, string noteImageId)

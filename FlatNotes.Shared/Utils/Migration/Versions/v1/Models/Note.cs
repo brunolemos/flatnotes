@@ -87,6 +87,18 @@ namespace FlatNotes.Utils.Migration.Versions.v1.Models
             this.Checklist = checklist;
         }
 
+        public Note(string title, string text, Checklist checklist, NoteColor color, DateTime createdAt, DateTime updatedAt) : this()
+        {
+            this.title = title;
+            this.text = text;
+            this.checklist = checklist;
+            this.color = color is NoteColor ? color : NoteColor.DEFAULT;
+            this.createdAt = createdAt;
+            this.updatedAt = updatedAt;
+
+            this.isChecklist = checklist != null;
+        }
+
         void Note_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             //Debug.WriteLine("Note_PropertyChanged " + e.PropertyName);

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Windows.Storage;
 
@@ -7,18 +6,20 @@ namespace FlatNotes.Utils.Migration
 {
     public static class Migration
     {
-        static List<Action> UpList = new List<Action>()
+        static Action[] UpList = new Action[4]
         {
             null,
-            Versions.v1.AppSettings.Instance.Up,
-            AppSettings.Instance.Up
+            Versions.v1.Utils.AppSettings.Up,
+            Versions.v2.Utils.AppSettings.Up,
+            AppSettings.Up
         };
 
-        static List<Action> DownList = new List<Action>()
+        static Action[] DownList = new Action[4]
         {
             null,
-            Versions.v1.AppSettings.Instance.Down,
-            AppSettings.Instance.Down
+            Versions.v1.Utils.AppSettings.Down,
+            Versions.v2.Utils.AppSettings.Down,
+            AppSettings.Down
         };
 
         public static async Task Migrate(uint desiredVersion)
@@ -26,10 +27,12 @@ namespace FlatNotes.Utils.Migration
             //versioning
             await ApplicationData.Current.SetVersionAsync(desiredVersion, (setVersionRequest) =>
                 {
-                    //fix current version (because v1 was not especified before)
-                    uint currentVersion = setVersionRequest.CurrentVersion;
-                    if (currentVersion == 0 && Versions.v1.AppSettings.Instance.LoggedUser.Notes.Count > 0)
-                        currentVersion = 1;
+                    int currentVersion = (int)setVersionRequest.CurrentVersion;
+                    
+                    //disabled because nobody is in the first version anymore -- irrelevant
+                    ////fix current version (because v1 was not especified before)
+                    //if (currentVersion == 0 && Versions.v1.Utils.AppSettings.Instance.LoggedUser.Notes.Count > 0)
+                    //    currentVersion = 1;
 
                     //no data to migrate or already in the desired version, do nothing
                     if (currentVersion <= 0 || setVersionRequest.DesiredVersion == currentVersion)
@@ -37,12 +40,12 @@ namespace FlatNotes.Utils.Migration
 
                     //execute migrations (UPs)
                     if (currentVersion < setVersionRequest.DesiredVersion)
-                        for (int i = (int)currentVersion; i <= setVersionRequest.DesiredVersion; i++)
+                        for (int i = currentVersion; i <= setVersionRequest.DesiredVersion; i++)
                             if (UpList[i] != null) UpList[i]();
 
                     //execute migrations (DOWNs)
                     if (currentVersion > setVersionRequest.DesiredVersion)
-                        for (int i = (int)setVersionRequest.DesiredVersion; i >= currentVersion; i--)
+                        for (int i = (int)currentVersion; i >= setVersionRequest.DesiredVersion; i--)
                             if (DownList[i] != null) DownList[i]();
                 }
             );

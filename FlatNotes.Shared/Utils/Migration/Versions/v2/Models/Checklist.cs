@@ -1,33 +1,12 @@
 ﻿using FlatNotes.Common;
-using SQLite.Net.Attributes;
-using SQLiteNetExtensions.Attributes;
-using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 
-namespace FlatNotes.Models
+namespace FlatNotes.Utils.Migration.Versions.v2.Models
 {
     public class Checklist : TrulyObservableCollection<ChecklistItem>
     {
         public Checklist() : base(false) { }
-
-        public static implicit operator Checklist(FlatNotes.Utils.Migration.Versions.v2.Models.Checklist _checklist)
-        {
-            var checklist = new Checklist();
-            foreach (var item in _checklist)
-                checklist.Add(item);
-
-            return checklist;
-        }
-
-        public static implicit operator FlatNotes.Utils.Migration.Versions.v2.Models.Checklist(Checklist _checklist)
-        {
-            var checklist = new FlatNotes.Utils.Migration.Versions.v2.Models.Checklist();
-            foreach (var item in _checklist)
-                checklist.Add(item);
-
-            return checklist;
-        }
 
         public static implicit operator Checklist(List<ChecklistItem> _checklist)
         {
@@ -46,6 +25,24 @@ namespace FlatNotes.Models
 
             return checklist;
         }
+
+        public static implicit operator Checklist(FlatNotes.Utils.Migration.Versions.v1.Models.Checklist _checklist)
+        {
+            var checklist = new Checklist();
+            foreach (var item in _checklist)
+                checklist.Add(item);
+
+            return checklist;
+        }
+
+        public static implicit operator FlatNotes.Utils.Migration.Versions.v1.Models.Checklist(Checklist _checklist)
+        {
+            var checklist = new FlatNotes.Utils.Migration.Versions.v1.Models.Checklist();
+            foreach (var item in _checklist)
+                checklist.Add(item);
+
+            return checklist;
+        }
     }
 
     [DataContract]
@@ -53,14 +50,6 @@ namespace FlatNotes.Models
     {
         public const char CHECKED_SYMBOL = '☑';//▣
         public const char UNCHECKED_SYMBOL = '⬜';
-
-        [PrimaryKey]
-        public string ID { get { return id; } set { id = value; } }
-        [DataMember(Name = "_id")]
-        private string id = Guid.NewGuid().ToString();
-
-        [ForeignKey(typeof(Note))]
-        public string NoteId { get; set; }
 
         public string Text { get { return text; } set { text = value; NotifyPropertyChanged("Text"); } }
         [DataMember(Name = "Text")]
@@ -104,14 +93,14 @@ namespace FlatNotes.Models
             return str.Trim();
         }
 
-        public static implicit operator ChecklistItem(FlatNotes.Utils.Migration.Versions.v2.Models.ChecklistItem item)
+        public static implicit operator ChecklistItem(FlatNotes.Utils.Migration.Versions.v1.Models.ChecklistItem item)
         {
             return new ChecklistItem(item.Text, item.IsChecked == true);
         }
 
-        public static implicit operator FlatNotes.Utils.Migration.Versions.v2.Models.ChecklistItem(ChecklistItem item)
+        public static implicit operator FlatNotes.Utils.Migration.Versions.v1.Models.ChecklistItem(ChecklistItem item)
         {
-            return new FlatNotes.Utils.Migration.Versions.v2.Models.ChecklistItem(item.Text, item.IsChecked == true);
+            return new FlatNotes.Utils.Migration.Versions.v1.Models.ChecklistItem(item.Text, item.IsChecked == true);
         }
     }
 }

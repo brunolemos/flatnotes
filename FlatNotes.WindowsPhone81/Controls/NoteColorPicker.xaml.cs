@@ -1,6 +1,7 @@
 ﻿using FlatNotes.Events;
 using FlatNotes.Models;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -33,18 +34,7 @@ namespace FlatNotes.Controls
         }
         private NoteColor selectedNoteColor = null;
 
-        public NoteColors Colors { get { return colors; } }
-        private NoteColors colors = new NoteColors()
-        {
-            NoteColor.DEFAULT,
-            NoteColor.RED,
-            NoteColor.ORANGE,
-            NoteColor.YELLOW,
-            NoteColor.GRAY,
-            NoteColor.BLUE,
-            NoteColor.TEAL,
-            NoteColor.GREEN
-        };
+        public List<NoteColor> Colors { get { return NoteColor.Colors; } }
 
         public NoteColorPicker()
         {

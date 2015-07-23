@@ -14,8 +14,8 @@
     
     <UserControl.Resources>
         <MenuFlyout x:Key="NoteMenuFlyout">
-            <MenuFlyoutItem Text="Archive" Command="{x:Bind viewModel.ArchiveNoteCommand}" CommandParameter="{Binding}" Visibility="{Binding AlreadyExists, Converter={StaticResource BooleanToVisibilityConverter}}"/>
             <MenuFlyoutItem Text="Restore" Command="{x:Bind viewModel.RestoreNoteCommand}" CommandParameter="{Binding}" Visibility="{Binding IsArchived, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+            <MenuFlyoutItem Text="Archive" Command="{x:Bind viewModel.ArchiveNoteCommand}" CommandParameter="{Binding}" Visibility="{Binding IsArchived, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=True}"/>
             <MenuFlyoutItem Text="Delete" Command="{x:Bind viewModel.DeleteNoteCommand}" CommandParameter="{Binding}"/>
             <MenuFlyoutItem Text="Pin to start" Command="{x:Bind viewModel.PinCommand}" CommandParameter="{Binding}" Visibility="{Binding IsPinned, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=True}"/>
             <MenuFlyoutItem Text="Unpin from start" Command="{x:Bind viewModel.UnpinCommand}" CommandParameter="{Binding}" Visibility="{Binding IsPinned, Converter={StaticResource BooleanToVisibilityConverter}}"/>

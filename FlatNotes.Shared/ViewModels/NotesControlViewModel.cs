@@ -42,20 +42,20 @@ namespace FlatNotes.ViewModels
 
         #region COMMANDS_ACTIONS
 
-        private async void ArchiveNote(Note note)
+        private void ArchiveNote(Note note)
         {
             if (note == null) return;
             App.TelemetryClient.TrackEvent("Archive_NotesControlViewModel");
 
-            await AppData.ArchiveNote(note);
+            AppData.ArchiveNote(note);
         }
 
-        private async void RestoreNote(Note note)
+        private void RestoreNote(Note note)
         {
             if (note == null) return;
             App.TelemetryClient.TrackEvent("Restore_NotesControlViewModel");
 
-            await AppData.RestoreNote(note);
+            AppData.RestoreNote(note);
         }
 
         private async void DeleteNote(Note note)
@@ -63,21 +63,13 @@ namespace FlatNotes.ViewModels
             if (note == null) return;
             App.TelemetryClient.TrackEvent("Delete_NotesControlViewModel");
 
-            if (note.IsArchived)
-                await AppData.RemoveArchivedNote(note);
-            else
-                await AppData.RemoveNote(note);
+            await AppData.RemoveNote(note);
         }
 
         private async void Pin(Note note)
         {
-            if (note == null) return;
+            if (note == null || note.IsEmpty()) return;
             App.TelemetryClient.TrackEvent("Pin_NotesControlViewModel");
-
-            if (note.IsEmpty()) return;
-
-            if (note.IsNewNote)
-                await AppData.CreateOrUpdateNote(note);
 
             note.IsPinned = await TileManager.CreateOrUpdateNoteTile(note, AppSettings.Instance.TransparentNoteTile);
         }
@@ -91,17 +83,13 @@ namespace FlatNotes.ViewModels
             note.IsPinned = false;// SecondaryTile.Exists(Note.ID);
         }
 
-        public async void ChangeColor(Note note, NoteColor newColor)
+        public void ChangeColor(Note note, NoteColor newColor)
         {
             if (note == null || newColor == null) return;
             App.TelemetryClient.TrackEvent("ChangeColor_NoteNotesControlViewModel");
 
             note.Color = newColor;
-
-            if (note.IsArchived)
-                await AppData.SaveArchivedNotes();
-            else
-                await AppData.SaveNotes();
+            AppData.DB.Update(note);
         }
 
         #endregion

@@ -58,41 +58,12 @@ namespace FlatNotes.ViewModels
                 CurrentNoteBeingEdited = Note;
                 if (Note == null) return;
 
-                Note.AlreadyExists = AppData.Notes.Where<Note>(x => x.ID == Note.ID).FirstOrDefault<Note>() != null;
-                Note.IsArchived = AppData.ArchivedNotes.Where<Note>(x => x.ID == Note.ID).FirstOrDefault<Note>() != null;
+                IsNewNote = AppData.DB.Find<Note>(Note.ID) != null;
                 Note.IsPinned = SecondaryTile.Exists(Note.ID);
 
                 NotifyPropertyChanged("ArchivedAtFormatedString");
                 NotifyPropertyChanged("UpdatedAtFormatedString");
                 NotifyPropertyChanged("CreatedAtFormatedString");
-
-                Note.PropertyChanged += (s, _e) =>
-                {
-                    //Debug.WriteLine("PROPPPRPROR: " + _e.PropertyName);
-
-                    switch (_e.PropertyName)
-                    {
-                        case "Changed":
-                            if (Note.AlreadyExists)
-                                AppData.HasUnsavedChangesOnNotes = Note.Changed;
-                            else if (Note.IsArchived)
-                                AppData.HasUnsavedChangesOnArchivedNotes = Note.Changed;
-
-                            break;
-
-                        case "ArchivedAt":
-                            NotifyPropertyChanged("ArchivedAtFormatedString");
-                            break;
-
-                        case "UpdatedAt":
-                            NotifyPropertyChanged("UpdatedAtFormatedString");
-                            break;
-
-                        case "CreatedAt":
-                            NotifyPropertyChanged("CreatedAtFormatedString");
-                            break;
-                    }
-                };
             }
         }
 
@@ -119,8 +90,23 @@ namespace FlatNotes.ViewModels
         public static Note CurrentNoteBeingEdited { get; set; }
         private static FriendlyTimeConverter friendlyTimeConverter = new FriendlyTimeConverter();
 
-        public Note Note { get { return note; } set { note = value == null ? new Note() : value; NotifyPropertyChanged("Note"); } }
-        private static Note note = new Note();
+        public Note Note {
+            get {
+                if (note == null) Note = new Note();
+                return note;
+            }
+            set {
+                if(note != null) note.PropertyChanged -= OnNotePropertyChanged;
+                note = value == null ? new Note() : value;
+                note.PropertyChanged += OnNotePropertyChanged;
+
+                NotifyPropertyChanged("Note");
+            }
+        }
+        private static Note note;
+
+        public bool IsNewNote { get { return isNewNote; } set { isNewNote = value; NotifyPropertyChanged("IsNewNote"); } }
+        private bool isNewNote;
 
         public NoteImage TempNoteImage { get { return tempNoteImage; } set { tempNoteImage = value; } }
         private static NoteImage tempNoteImage = null;
@@ -198,12 +184,16 @@ namespace FlatNotes.ViewModels
                     StorageFile savedImage = await AppSettings.Instance.SaveImage(file, Note.ID, noteImage.ID);
 
                     var imageProperties = await savedImage.Properties.GetImagePropertiesAsync();
+                    noteImage.NoteId = Note.ID;
                     noteImage.URL = savedImage.Path;
-                    noteImage.Size = new Size(imageProperties.Width, imageProperties.Height);
+                    noteImage.Width = imageProperties.Width;
+                    noteImage.Height = imageProperties.Height;
 
                     Note.Images.Add(noteImage);
                     break;
                 }
+
+                Note.NotifyPropertyChanged("Images");
             }
             catch (Exception e)
             {
@@ -215,8 +205,8 @@ namespace FlatNotes.ViewModels
                 exceptionMetrics.Add("Image count", Note.Images.Count);
                 for (int i = 0; i < Note.Images.Count; i++)
                 {
-                    exceptionMetrics.Add(string.Format("Image[{0}] Width", i), Note.Images[i].Size.Width);
-                    exceptionMetrics.Add(string.Format("Image[{0}] Height", i), Note.Images[i].Size.Height);
+                    exceptionMetrics.Add(string.Format("Image[{0}] Width", i), Note.Images[i].Width);
+                    exceptionMetrics.Add(string.Format("Image[{0}] Height", i), Note.Images[i].Height);
                 }
 
                 App.TelemetryClient.TrackException(e, exceptionProperties, exceptionMetrics);
@@ -229,11 +219,7 @@ namespace FlatNotes.ViewModels
             }
 
             //save
-            for (int i = 0; i < 50; i++)
-            {
-                await AppData.CreateOrUpdateNote(Note);
-
-            }
+            await AppData.CreateOrUpdateNote(Note);
         }
 
         private void ToggleChecklist()
@@ -248,7 +234,7 @@ namespace FlatNotes.ViewModels
 
             if (Note.IsEmpty()) return;
 
-            if (Note.IsNewNote)
+            if (IsNewNote)
                 await AppData.CreateOrUpdateNote(Note);
 
             Note.IsPinned = await TileManager.CreateOrUpdateNoteTile(Note, AppSettings.Instance.TransparentNoteTile);
@@ -262,10 +248,10 @@ namespace FlatNotes.ViewModels
             Note.IsPinned = false;// SecondaryTile.Exists(Note.ID);
         }
 
-        private async void ArchiveNote()
+        private void ArchiveNote()
         {
             App.TelemetryClient.TrackEvent("Archive_NoteEditViewModel");
-            await AppData.ArchiveNote(Note);
+            AppData.ArchiveNote(Note);
             note = null;
 
             if (App.RootFrame.CanGoBack)
@@ -274,10 +260,10 @@ namespace FlatNotes.ViewModels
                 App.RootFrame.Navigate(typeof(MainPage));
         }
 
-        private async void RestoreNote()
+        private void RestoreNote()
         {
             App.TelemetryClient.TrackEvent("Restore_NoteEditViewModel");
-            await AppData.RestoreNote(Note);
+            AppData.RestoreNote(Note);
             note = null;
 
             if (App.RootFrame.CanGoBack)
@@ -289,7 +275,7 @@ namespace FlatNotes.ViewModels
         private async void DeleteNote()
         {
             App.TelemetryClient.TrackEvent("Delete_NoteEditViewModel");
-            bool success = Note.IsArchived ? await AppData.RemoveArchivedNote(Note) : await AppData.RemoveNote(Note);
+            bool success = await AppData.RemoveNote(Note);
             if (!success) return;
 
             note = null;
@@ -312,14 +298,38 @@ namespace FlatNotes.ViewModels
 
             Note.Images.Remove(TempNoteImage);
             TempNoteImage = null;
-
-            //save
-            if (Note.IsArchived)
-                await AppData.SaveArchivedNotes();
-            else
-                await AppData.SaveNotes();
         }
 
-#endregion
+        #endregion
+
+        void OnNotePropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            switch (e.PropertyName)
+            {
+                case "ArchivedAt":
+                    NotifyPropertyChanged("ArchivedAtFormatedString");
+                    break;
+
+                case "UpdatedAt":
+                    NotifyPropertyChanged("UpdatedAtFormatedString");
+                    break;
+
+                case "CreatedAt":
+                    NotifyPropertyChanged("CreatedAtFormatedString");
+                    break;
+            }
+
+            if (!(e.PropertyName == "IsChecklist"
+                || e.PropertyName == "Title" || e.PropertyName == "Text"
+                || e.PropertyName == "Checklist" || e.PropertyName == "Images"
+                || e.PropertyName == "Color" || e.PropertyName == "UpdatedAt"))
+                return;
+
+            Debug.WriteLine("Note_PropertyChanged " + e.PropertyName);
+            Note.Changed = true;
+
+            if (e.PropertyName == "UpdatedAt") return;
+            Note.Touch();
+        }
     }
 }

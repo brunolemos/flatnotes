@@ -33,10 +33,18 @@ namespace FlatNotes.Views
             Loaded += OnLoaded;
         }
 
-        private async void OnLoaded(object sender, RoutedEventArgs e)
+        private void OnLoaded(object sender, RoutedEventArgs e)
         {
             App.ChangeStatusBarColor(Color.FromArgb(0xff, 0x44, 0x59, 0x63), Color.FromArgb(0xff, 0xff, 0xff, 0xfe));
-            await AppData.LoadArchivedNotesIfNecessary();
+
+            if (viewModel.IsLoaded)
+                return;
+
+            viewModel.IsLoading = true;
+            viewModel.Notes = AppData.ArchivedNotes;
+
+            viewModel.IsLoaded = true;
+            viewModel.IsLoading = false;
         }
 
         private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
@@ -68,19 +76,19 @@ namespace FlatNotes.Views
             Note note = e.ClickedItem as Note;
             if (note == null) return;
 
-            //it can be trimmed, so get the original
-            Note originalNote = AppData.ArchivedNotes.Where<Note>(n => n.ID == note.ID).FirstOrDefault();
-            if (originalNote == null)
-            {
-                var exceptionProperties = new Dictionary<string, string>() { { "Details", "Failed to load tapped archived note" }, { "id", note.ID } };
-                App.TelemetryClient.TrackException(null, exceptionProperties);
-                return;
-            }
+            ////it can be trimmed, so get the original
+            //Note originalNote = AppData.DB.GetWithChildren<Note>(note.ID);
+            //if (originalNote == null)
+            //{
+            //    var exceptionProperties = new Dictionary<string, string>() { { "Details", "Failed to load tapped archived note" }, { "id", note.ID } };
+            //    App.TelemetryClient.TrackException(null, exceptionProperties);
+            //    return;
+            //}
 
             //this dispatcher fixes crash error (access violation on wp preview for developers)
             await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
-                Frame.Navigate(typeof(NoteEditPage), originalNote);
+                Frame.Navigate(typeof(NoteEditPage), note);
             });
         }
     }

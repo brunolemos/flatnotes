@@ -163,8 +163,9 @@ namespace FlatNotes
                 RootFrame.ContentTransitions = null;
                 RootFrame.Navigated += this.RootFrame_FirstNavigated;
 #endif
+                await Windows.Storage.ApplicationData.Current.SetVersionAsync(AppSettings.Instance.Version-1, (req) => { });
 
-                //load app data
+                //prepare app data
                 await AppData.Init();
 
                 // When the navigation stack isn't restored navigate to the first page,
@@ -198,15 +199,8 @@ namespace FlatNotes
             await SuspensionManager.SaveAsync();
 
             //update tile
-            if (NoteEditViewModel.CurrentNoteBeingEdited != null) await TileManager.UpdateNoteTileIfExists(NoteEditViewModel.CurrentNoteBeingEdited, AppSettings.Instance.TransparentNoteTile);
-
-            //save data
-            if (AppData.HasUnsavedChangesOnNotes) await AppData.SaveNotes();
-            if (AppData.HasUnsavedChangesOnArchivedNotes) await AppData.SaveArchivedNotes();
-
-            //user preferences and useful data
-            App.TelemetryClient.TrackMetric("Notes Count", AppData.Notes.Count);
-            App.TelemetryClient.TrackMetric("Archived Notes Count", AppData.ArchivedNotes.Count);
+            if (NoteEditViewModel.CurrentNoteBeingEdited != null)
+                await TileManager.UpdateNoteTileIfExists(NoteEditViewModel.CurrentNoteBeingEdited, AppSettings.Instance.TransparentNoteTile);
 
             deferral.Complete();
         }

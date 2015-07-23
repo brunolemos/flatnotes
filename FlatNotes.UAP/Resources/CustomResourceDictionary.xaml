@@ -198,6 +198,8 @@
     </Style>
 
     <Style TargetType="ListViewItem">
+        <Setter Property="MinHeight" Value="10"/>
+        
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ListViewItem">

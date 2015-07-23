@@ -1,16 +1,14 @@
-﻿using SQLite.Net.Attributes;
-using SQLiteNetExtensions.Attributes;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using Windows.Foundation;
 
-namespace FlatNotes.Models
+namespace FlatNotes.Utils.Migration.Versions.v2.Models
 {
     public class NoteImages : ObservableCollection<NoteImage>
     {
-        public static implicit operator NoteImages(FlatNotes.Utils.Migration.Versions.v2.Models.NoteImages _noteImages)
+        public static implicit operator NoteImages(FlatNotes.Utils.Migration.Versions.v1.Models.NoteImages _noteImages)
         {
             var noteImages = new NoteImages();
             foreach (var item in _noteImages)
@@ -19,9 +17,9 @@ namespace FlatNotes.Models
             return noteImages;
         }
 
-        public static implicit operator FlatNotes.Utils.Migration.Versions.v2.Models.NoteImages(NoteImages _noteImages)
+        public static implicit operator FlatNotes.Utils.Migration.Versions.v1.Models.NoteImages(NoteImages _noteImages)
         {
-            var noteImages = new FlatNotes.Utils.Migration.Versions.v2.Models.NoteImages();
+            var noteImages = new FlatNotes.Utils.Migration.Versions.v1.Models.NoteImages();
             foreach (var item in _noteImages)
                 noteImages.Add(item);
 
@@ -50,28 +48,16 @@ namespace FlatNotes.Models
     [DataContract]
     public class NoteImage : ModelBase
     {
-        [PrimaryKey]
-        public string ID { get { return id; } set { id = value; } }
-        [DataMember(Name = "_id")]
-        private string id = Guid.NewGuid().ToString();
-
-        [ForeignKey(typeof(Note))]
-        public string NoteId { get; set; }
-
         public String URL { get { return url; } set { if ( url != value ) { url = value; NotifyPropertyChanged("URL"); } } }
         [DataMember(Name = "URL")]
         private String url;
 
-        public double Width { get { return width; } set { width = value; NotifyPropertyChanged("Width"); } }
-        [DataMember(Name = "Width")]
-        private double width;
-
-        public double Height { get { return height; } set { height = value; NotifyPropertyChanged("Height"); } }
-        [DataMember(Name = "Height")]
-        private double height;
+        public Size Size { get { return size; } set { size = value; NotifyPropertyChanged("Size"); } }
+        [DataMember(Name = "Size")]
+        private Size size;
 
         [DataMember]
-        public Double Proportion { get { return Height / Width; } }
+        public Double Proportion { get { return Size.Height / Size.Width; } }
 
         public DateTime CreatedAt { get { return createdAt; } private set { createdAt = value; } }
         [DataMember(Name = "CreatedAt")]
@@ -81,28 +67,27 @@ namespace FlatNotes.Models
 
         public NoteImage(string url)
         {
-            this.URL = url;
+            this.url = url;
         }
 
-        public NoteImage(string url, double width, double height)
+        public NoteImage(string url, Size size)
         {
-            this.URL = url;
-            this.width = width;
-            this.height = height;
+            this.url = url;
+            this.size = size;
         }
 
-        public NoteImage(string url, Size size) : this(url, size.Width, size.Height)
+        public NoteImage(string url, double width, double height) : this(url, new Size(width, height))
         {
         }
 
-        public static implicit operator NoteImage(FlatNotes.Utils.Migration.Versions.v2.Models.NoteImage noteImage)
+        public static implicit operator NoteImage(FlatNotes.Utils.Migration.Versions.v1.Models.NoteImage noteImage)
         {
             return new NoteImage(noteImage.URL, noteImage.Size);
         }
 
-        public static implicit operator FlatNotes.Utils.Migration.Versions.v2.Models.NoteImage(NoteImage noteImage)
+        public static implicit operator FlatNotes.Utils.Migration.Versions.v1.Models.NoteImage(NoteImage noteImage)
         {
-            return new FlatNotes.Utils.Migration.Versions.v2.Models.NoteImage(noteImage.URL, noteImage.Width, noteImage.Height);
+            return new FlatNotes.Utils.Migration.Versions.v1.Models.NoteImage(noteImage.URL, noteImage.Size);
         }
     }
 }
