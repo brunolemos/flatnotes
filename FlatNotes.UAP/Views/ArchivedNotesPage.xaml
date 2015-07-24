@@ -100,5 +100,8 @@
         </Grid>
 
         <local:NotesControl Grid.Row="1" x:Name="NotesControl" ItemsSource="{Binding Notes}" Columns="-1" d:DataContext="{Binding Notes}" ItemClick="OnNoteClick"/>
+
+        <CommandBar Grid.Row="{Binding IsMobile, Converter={StaticResource IsMobileToGridRowConverter}}" Opacity="0" IsHitTestVisible="False">
+        </CommandBar>
     </Grid>
 </Page>

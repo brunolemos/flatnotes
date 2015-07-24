@@ -71,12 +71,6 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <Grid.Transitions>
-                <TransitionCollection>
-                    <ContentThemeTransition HorizontalOffset="50" VerticalOffset="0"/>
-                </TransitionCollection>
-            </Grid.Transitions>
-
             <ScrollViewer Grid.Row="0" ScrollViewer.VerticalScrollMode="Enabled" ScrollViewer.HorizontalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Hidden">
                 <StackPanel>
                     <Grid MaxHeight="220" Background="{StaticResource PhoneDarkLowBrush}" Visibility="{Binding Note.Images.Count, Converter={StaticResource PositiveIntToVisibilityConverter}}">

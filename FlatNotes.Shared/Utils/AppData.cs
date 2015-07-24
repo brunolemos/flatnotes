@@ -76,14 +76,14 @@ namespace FlatNotes.Utils
         {
             if (notes != null && notes.Count > 0) return;
 
-            notes = DB.GetAllWithChildren<Note>(x => x.IsArchived != true).ToList();
+            notes = DB.GetAllWithChildren<Note>(x => x.IsArchived != true).OrderByDescending(x => x.CreatedAt).ToList();
         }
 
         public static void LoadArchivedNotesIfNecessary()
         {
             if (archivedNotes != null && archivedNotes.Count > 0) return;
 
-            archivedNotes = DB.GetAllWithChildren<Note>(x => x.IsArchived == true).ToList();
+            archivedNotes = DB.GetAllWithChildren<Note>(x => x.IsArchived == true).OrderByDescending(x => x.CreatedAt).ToList();
         }
 
         public static async Task<bool> CreateOrUpdateNote(Note note)

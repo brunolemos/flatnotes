@@ -65,7 +65,7 @@ namespace FlatNotes.Views
 
         private async void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
-            App.RootFrame.Background = LayoutRoot.Background;
+            App.RootFrame.Background = this.Background;
 
             //received a note via parameter (from secondary tile)
             if (RedirectToNote != null)

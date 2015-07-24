@@ -15,12 +15,6 @@
     DataContext="{Binding viewModel, RelativeSource={RelativeSource Mode=Self}}"
     d:DataContext="{d:DesignData /SampleData/NoteEditViewModelSampleData.xaml}">
 
-    <Page.Transitions>
-        <TransitionCollection>
-            <EntranceThemeTransition/>
-        </TransitionCollection>
-    </Page.Transitions>
-
     <Page.Resources>
         <ResourceDictionary>
             <Converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>

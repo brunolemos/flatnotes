@@ -50,7 +50,7 @@ namespace FlatNotes.Views
 
         private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
-            App.RootFrame.Background = LayoutRoot.Background;
+            App.RootFrame.Background = this.Background;
         }
 
         private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)

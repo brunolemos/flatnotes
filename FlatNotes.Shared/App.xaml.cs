@@ -183,11 +183,7 @@ namespace FlatNotes
         private void RootFrame_FirstNavigated(object sender, NavigationEventArgs e)
         {
             var rootFrame = sender as Frame;
-//#if WINDOWS_PHONE_APP
-            rootFrame.ContentTransitions = null;
-//#elif WINDOWS_UAP
-            //rootFrame.ContentTransitions = this.transitions ?? new TransitionCollection() { new NavigationThemeTransition() };
-//#endif
+            rootFrame.ContentTransitions = this.transitions ?? new TransitionCollection() { new ContentThemeTransition() { HorizontalOffset = 50, VerticalOffset = 0 } };
             rootFrame.Navigated -= this.RootFrame_FirstNavigated;
         }
 
