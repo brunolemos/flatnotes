@@ -3,7 +3,6 @@ using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-#if WINDOWS_PHONE_APP
 /// <summary> 
 /// ContinuationManager is used to detect if the most recent activation was due 
 /// to a continuation such as the FileOpenPicker or WebAuthenticationBroker 
@@ -183,5 +182,3 @@ interface IWebAuthenticationContinuable
     /// <param name="args">Activated event args object that contains returned authentication token</param> 
     void ContinueWebAuthentication(WebAuthenticationBrokerContinuationEventArgs args);
 }
-
-#endif

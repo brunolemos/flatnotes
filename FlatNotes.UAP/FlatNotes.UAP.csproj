@@ -111,6 +111,7 @@
     <Compile Include="Views\NoteEditPage.xaml.cs">
       <DependentUpon>NoteEditPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Partials\NoteEditPage_KeyDownHandlers.cs" />
     <Compile Include="Views\SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
     </Compile>

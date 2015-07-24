@@ -199,9 +199,35 @@
         </Setter>
     </Style>
 
+    <Style TargetType="ListView">
+        <Setter Property="Transitions">
+            <Setter.Value>
+                <TransitionCollection/>
+            </Setter.Value>
+        </Setter>
+        
+        <Setter Property="ItemContainerTransitions">
+            <Setter.Value>
+                <TransitionCollection/>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <Style TargetType="ListViewItem">
         <Setter Property="MinHeight" Value="10"/>
         
+        <Setter Property="Transitions">
+            <Setter.Value>
+                <TransitionCollection/>
+            </Setter.Value>
+        </Setter>
+        
+        <Setter Property="ContentTransitions">
+            <Setter.Value>
+                <TransitionCollection/>
+            </Setter.Value>
+        </Setter>
+
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ListViewItem">
@@ -217,7 +243,7 @@
                             ContentMargin="0"
                             MinHeight="10"
                             Height="Auto"
-                            ContentTransitions="{x:Null}"
+                            ContentTransitions="{TemplateBinding ContentTransitions}"
                             DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}"
                             DragBackground="{ThemeResource ListViewItemDragBackgroundThemeBrush}"
                             DragForeground="{ThemeResource ListViewItemDragForegroundThemeBrush}"

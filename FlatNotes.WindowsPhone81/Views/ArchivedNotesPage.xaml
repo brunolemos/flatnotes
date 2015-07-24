@@ -40,7 +40,7 @@
                 </StackPanel>
             </Grid>
 
-            <ListView x:Name="NotesListView" ItemsSource="{Binding Notes, Mode=OneWay}" IsItemClickEnabled="True" ItemClick="OnNoteClick" ItemsPanel="{StaticResource FluidItemsPanelTemplate}" ItemTemplate="{StaticResource NotePreviewListViewControlTemplate}" ScrollViewer.VerticalScrollMode="Enabled" VerticalAlignment="Stretch" CanDragItems="False"/>
+            <ListView x:Name="NotesControl" ItemsSource="{Binding Notes, Mode=OneWay}" IsItemClickEnabled="True" ItemClick="OnNoteClick" ItemsPanel="{StaticResource FluidItemsPanelTemplate}" ItemTemplate="{StaticResource NotePreviewListViewControlTemplate}" ScrollViewer.VerticalScrollMode="Enabled" VerticalAlignment="Stretch" CanDragItems="False"/>
         </Grid>
     </Grid>
 </Page>

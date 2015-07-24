@@ -31,10 +31,8 @@ namespace FlatNotes
         /// </summary>
         public static TelemetryClient TelemetryClient;
 
-#if WINDOWS_PHONE_APP
-        private TransitionCollection transitions;
+        private TransitionCollection transitions = null;
         public static ContinuationManager ContinuationManager { get; private set; }
-#endif
 
         public static bool IsBeta = Package.Current.Id.Name.Contains("Beta");
         public static string Name = IsBeta ? "Flat Notes Beta" : "Flat Notes";
@@ -127,7 +125,6 @@ namespace FlatNotes
             base.OnActivated(e);
             await RestoreStatusAsync(e.PreviousExecutionState);
 
-#if WINDOWS_PHONE_APP
             ContinuationManager = new ContinuationManager();
 
             var continuationEventArgs = e as IContinuationActivatedEventArgs;
@@ -137,7 +134,6 @@ namespace FlatNotes
                 if (RootFrame != null)
                     ContinuationManager.Continue(continuationEventArgs, RootFrame);
             }
-#endif
 
             Window.Current.Activate();
         }
@@ -149,7 +145,6 @@ namespace FlatNotes
 
             if (RootFrame.Content == null)
             {
-#if WINDOWS_PHONE_APP
                 // Removes the turnstile navigation for startup.
                 if (RootFrame.ContentTransitions != null)
                 {
@@ -162,12 +157,12 @@ namespace FlatNotes
 
                 RootFrame.ContentTransitions = null;
                 RootFrame.Navigated += this.RootFrame_FirstNavigated;
-#endif
 
                 //await Windows.Storage.ApplicationData.Current.SetVersionAsync(AppSettings.Instance.Version-1, (req) => { });
 
                 //prepare app data
                 await AppData.Init();
+                AppData.LoadNotesIfNecessary();
 
                 // When the navigation stack isn't restored navigate to the first page,
                 // configuring the new page by passing required information as a navigation
@@ -185,14 +180,16 @@ namespace FlatNotes
             Window.Current.Activate();
         }
 
-#if WINDOWS_PHONE_APP
         private void RootFrame_FirstNavigated(object sender, NavigationEventArgs e)
         {
             var rootFrame = sender as Frame;
-            rootFrame.ContentTransitions = null;//this.transitions ?? new TransitionCollection() { new NavigationThemeTransition() };
+//#if WINDOWS_PHONE_APP
+            rootFrame.ContentTransitions = null;
+//#elif WINDOWS_UAP
+            //rootFrame.ContentTransitions = this.transitions ?? new TransitionCollection() { new NavigationThemeTransition() };
+//#endif
             rootFrame.Navigated -= this.RootFrame_FirstNavigated;
         }
-#endif
 
         private async void OnSuspending(object sender, SuspendingEventArgs e)
         {

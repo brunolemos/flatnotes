@@ -74,15 +74,6 @@ namespace FlatNotes.Views
             Note note = e.ClickedItem as Note;
             if (note == null) return;
 
-            ////it can be trimmed, so get the original
-            //Note originalNote = AppData.DB.GetWithChildren<Note>(note.ID);
-            //if (originalNote == null)
-            //{
-            //    var exceptionProperties = new Dictionary<string, string>() { { "Details", "Failed to load tapped archived note" }, { "id", note.ID } };
-            //    App.TelemetryClient.TrackException(null, exceptionProperties);
-            //    return;
-            //}
-
             //this dispatcher fixes crash error (access violation on wp preview for developers)
             await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {

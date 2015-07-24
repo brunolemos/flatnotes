@@ -3,6 +3,7 @@ using System;
 using System.Diagnostics;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 
@@ -37,21 +38,27 @@ namespace FlatNotes.Views
             if (e.Key == Windows.System.VirtualKey.Enter)
             {
                 if (!viewModel.Note.IsChecklist)
+                {
                     NoteTextTextBox.Focus(FocusState.Programmatic);
+                    NoteTextTextBox.Select(NoteTextTextBox.Text.Length, 0);
+                }
                 else
                 {
                     int count = NoteChecklistListView.Items.Count;
 
                     if (count <= 0)
+                    {
                         NewChecklistItemTextBox.Focus(FocusState.Programmatic);
+                        NewChecklistItemTextBox.Select(NewChecklistItemTextBox.Text.Length, 0);
+                    }
                     else
                     {
                         FrameworkElement listViewItem = NoteChecklistListView.ContainerFromIndex(0) as FrameworkElement;
                         TextBox textBox = FindFirstElementInVisualTree<TextBox>(listViewItem);
                         if (textBox != null)
                         {
-                            textBox.Select(textBox.Text.Length, 0);
                             textBox.Focus(FocusState.Programmatic);
+                            textBox.Select(textBox.Text.Length, 0);
                         }
                     }
                 }
@@ -79,10 +86,11 @@ namespace FlatNotes.Views
 
                         if (textBox2 != null)
                         {
-                            textBox2.Select(textBox.Text.Length, 0);
                             textBox2.Focus(FocusState.Programmatic);
+                            textBox2.Select(textBox2.Text.Length, 0);
                         }
 
+                        textBox.ClearValue(TextBox.TextProperty);
                         (NoteChecklistListView.ItemsSource as Checklist).Remove(item);
                     }
                 }
@@ -116,6 +124,7 @@ namespace FlatNotes.Views
                             textBox2.Text = text2;
 
                             textBox2.Focus(FocusState.Programmatic);
+                            textBox2.Select(textBox2.Text.Length, 0);
                         }
 
                         FrameworkElement checkBoxItem2 = NoteChecklistListView.ContainerFromIndex(position + 1) as FrameworkElement;
@@ -149,9 +158,10 @@ namespace FlatNotes.Views
                             int pos = textBox2.Text.Length;
 
                             textBox2.Text += textBox.Text;
-                            textBox2.Select(pos, 0);
                             textBox2.Focus(FocusState.Programmatic);
+                            textBox2.Select(pos, 0);
 
+                            textBox.ClearValue(TextBox.TextProperty);
                             (NoteChecklistListView.ItemsSource as Checklist).Remove(item);
                         }
                     }
@@ -176,22 +186,30 @@ namespace FlatNotes.Views
             TextBox textBox = sender as TextBox;
             ChecklistItem item = textBox.DataContext as ChecklistItem;
 
+            int position = (NoteChecklistListView.ItemsSource as Checklist).IndexOf(item);
+
             if (string.IsNullOrEmpty(textBox.Text))
             {
                 int count = NoteChecklistListView.Items.Count;
-                int position = (NoteChecklistListView.ItemsSource as Checklist).IndexOf(item);
                 int new_position = position > 0 ? position - 1 : position + 1;
 
                 if (new_position > 0 && new_position < count)
                 {
-                    FrameworkElement listViewItem = NoteChecklistListView.ContainerFromIndex(new_position) as FrameworkElement;
-                    TextBox textBox2 = FindFirstElementInVisualTree<TextBox>(listViewItem);
+                    FrameworkElement listViewItem2 = NoteChecklistListView.ContainerFromIndex(new_position) as FrameworkElement;
+                    TextBox textBox2 = FindFirstElementInVisualTree<TextBox>(listViewItem2);
 
-                    textBox2.Select(textBox2.Text.Length, 0);
-                    textBox2.Focus(FocusState.Programmatic);
+                    if(textBox2 != null)
+                    {
+                        textBox2.Focus(FocusState.Programmatic);
+                        textBox2.Select(textBox2.Text.Length, 0);
+                    }
                 }
 
-                (NoteChecklistListView.ItemsSource as Checklist).Remove(item);
+                if(count > 1)
+                {
+                    textBox.ClearValue(TextBox.TextProperty);
+                    (NoteChecklistListView.ItemsSource as Checklist).Remove(item);
+                }
             }
         }
     }

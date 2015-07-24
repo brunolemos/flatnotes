@@ -38,14 +38,14 @@
     <GridView x:Name="NotesGridView"
               HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
               ItemsSource="{Binding}" DataContext="{Binding ItemsSource, ElementName=Root}"
-              SelectionMode="None" CanReorderItems="True" CanDragItems="True" AllowDrop="True"  
+              SelectionMode="None" CanReorderItems="False" CanDragItems="False" AllowDrop="False"  
               IsItemClickEnabled="True" ItemClick="GridView_ItemClick" Holding="GridView_Holding">
         
         <GridView.ItemContainerTransitions>
             <TransitionCollection>
                 <EntranceThemeTransition IsStaggeringEnabled="True" FromVerticalOffset="200" FromHorizontalOffset="0"/>
-                <!--<NavigationThemeTransition/>
-                <ContentThemeTransition/>-->
+                <NavigationThemeTransition/>
+                <ContentThemeTransition/>
                 <AddDeleteThemeTransition/>
                 <ReorderThemeTransition/>
                 <RepositionThemeTransition />

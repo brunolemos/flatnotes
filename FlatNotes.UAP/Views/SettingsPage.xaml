@@ -12,12 +12,6 @@
     DataContext="{x:Bind Path=viewModel}"
     d:DataContext="{d:DesignData /SampleData/SettingsViewModelSampleData.xaml}">
     <!--Background="{ThemeResource AppStatusBarBackgroundBrush}"-->
-
-    <!--<Page.Transitions>
-        <TransitionCollection>
-            <EntranceThemeTransition/>
-        </TransitionCollection>
-    </Page.Transitions>-->
     
     <Page.Resources>
         <Converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>

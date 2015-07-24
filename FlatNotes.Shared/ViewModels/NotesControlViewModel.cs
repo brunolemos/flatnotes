@@ -29,6 +29,9 @@ namespace FlatNotes.ViewModels
         public RelayCommand<Note> PinCommand { get; private set; }
         public RelayCommand<Note> UnpinCommand { get; private set; }
 
+        public event EventHandler ReorderModeEnabled;
+        public event EventHandler ReorderModeDisabled;
+
         private NotesControlViewModel()
         {
             ArchiveNoteCommand = new RelayCommand<Note>(ArchiveNote);
@@ -39,6 +42,24 @@ namespace FlatNotes.ViewModels
         }
 
         public NoteColors Colors { get { return NoteColor.Colors; } }
+
+        public ListViewReorderMode ReorderMode
+        {
+            get { return reorderMode; }
+            set
+            {
+                if (reorderMode == value) return;
+
+                reorderMode = value;
+                NotifyPropertyChanged("ReorderMode");
+
+                var handler = value == ListViewReorderMode.Enabled ? ReorderModeEnabled : ReorderModeDisabled;
+                if (handler != null) handler(this, EventArgs.Empty);
+            }
+        }
+
+        public ListViewReorderMode reorderMode = ListViewReorderMode.Disabled;
+        public bool ReorderedNotes { get; set; }
 
         #region COMMANDS_ACTIONS
 

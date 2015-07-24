@@ -12,7 +12,7 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     DataContext="{x:Bind Path=viewModel}"
     d:DataContext="{d:DesignData /SampleData/MainViewModelSampleData.xaml}">
-
+    
     <Grid x:Name="LayoutRoot">
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
@@ -94,8 +94,8 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="1" Visibility="{Binding Notes.Count, Converter={StaticResource PositiveIntToVisibilityConverter}, ConverterParameter=True}">
-            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Grid x:Name="ContentRoot" Grid.Row="1">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding Notes.Count, Converter={StaticResource PositiveIntToVisibilityConverter}, ConverterParameter=True}">
                 <Viewbox Width="160">
                     <Canvas Width="100" Height="100" HorizontalAlignment="Center">
                         <Rectangle Fill="{ThemeResource PhoneLowBrush}" Width="100" Height="70" StrokeThickness="0"/>
@@ -107,9 +107,9 @@
 
                 <TextBlock x:Uid="EmptyNotesMessageTextBox" Margin="10,24" Text="Notes you add appear here" Foreground="{ThemeResource PhoneMidBrush}" FontSize="{StaticResource EmptyNotesMessageFontSize}" TextWrapping="Wrap" TextAlignment="Center"/>
             </StackPanel>
-        </Grid>
 
-        <local:NotesControl Grid.Row="1" x:Name="NotesControl" ItemsSource="{Binding Notes}" Columns="{Binding Columns}" d:DataContext="{Binding Notes}" ItemClick="OnNoteClick"/>
+            <local:NotesControl x:Name="NotesControl" ItemsSource="{Binding Notes}" Columns="{Binding Columns}" d:DataContext="{Binding Notes}" ItemClick="OnNoteClick" VerticalAlignment="Stretch"/>
+        </Grid>
 
         <CommandBar Grid.Row="{Binding IsMobile, Converter={StaticResource IsMobileToGridRowConverter}}">
             <CommandBar.PrimaryCommands>

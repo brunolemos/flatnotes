@@ -14,13 +14,13 @@ namespace FlatNotes.Views
             navigationHelper.LoadState += NavigationHelper_LoadState1;
             navigationHelper.SaveState += NavigationHelper_SaveState1;
 
-            NotesListView.Holding += NotesListView_Holding;
-            NotesListView.DragItemsStarting += NotesListView_DragItemsStarting;
-            NotesListView.DragOver += NotesListView_DragOver;
-            NotesListView.Drop += NotesListView_Drop;
+            NotesControl.Holding += NotesListView_Holding;
+            NotesControl.DragOver += NotesListView_DragOver;
+            NotesControl.Drop += NotesListView_Drop;
+            viewModel.ReorderModeDisabled += OnReorderModeDisabled;
 
 #if WINDOWS_PHONE_APP
-            viewModel.ReorderModeDisabled += OnReorderModeDisabled;
+            NotesControl.DragItemsStarting += NotesListView_DragItemsStarting;
 #endif
         }
 
@@ -29,23 +29,23 @@ namespace FlatNotes.Views
             navigationHelper.LoadState -= NavigationHelper_LoadState1;
             navigationHelper.SaveState -= NavigationHelper_SaveState1;
 
-            if (NotesListView != null)
+            if (NotesControl != null)
             {
-                NotesListView.Holding -= NotesListView_Holding;
-                NotesListView.DragItemsStarting -= NotesListView_DragItemsStarting;
-                NotesListView.DragOver -= NotesListView_DragOver;
-                NotesListView.Drop -= NotesListView_Drop;
+                NotesControl.Holding -= NotesListView_Holding;
+                NotesControl.DragOver -= NotesListView_DragOver;
+                NotesControl.Drop -= NotesListView_Drop;
+                viewModel.ReorderModeDisabled -= OnReorderModeDisabled;
             }
 
 #if WINDOWS_PHONE_APP
-            viewModel.ReorderModeDisabled -= OnReorderModeDisabled;
+                NotesControl.DragItemsStarting -= NotesListView_DragItemsStarting;
 #endif
         }
 
         private void NavigationHelper_LoadState1(object sender, LoadStateEventArgs e)
         {
             #if WINDOWS_PHONE_APP
-            NotesListView.ReorderMode = ListViewReorderMode.Disabled;
+            NotesControl.ReorderMode = ListViewReorderMode.Disabled;
             #endif
 
             viewModel.ReorderedNotes = false;
@@ -54,7 +54,7 @@ namespace FlatNotes.Views
         private void NavigationHelper_SaveState1(object sender, SaveStateEventArgs e)
         {
             #if WINDOWS_PHONE_APP
-            NotesListView.ReorderMode = ListViewReorderMode.Disabled;
+            NotesControl.ReorderMode = ListViewReorderMode.Disabled;
             #endif
         }
 
@@ -76,14 +76,16 @@ namespace FlatNotes.Views
         private void NotesListView_Holding(object sender, Windows.UI.Xaml.Input.HoldingRoutedEventArgs e)
         {
             #if WINDOWS_PHONE_APP
-            NotesListView.ReorderMode = NotesListView.Items.Count > 1 ? ListViewReorderMode.Enabled : ListViewReorderMode.Disabled;
+            NotesControl.ReorderMode = NotesControl.Items.Count > 1 ? ListViewReorderMode.Enabled : ListViewReorderMode.Disabled;
             #endif
         }
 
+#if WINDOWS_PHONE_APP
         private void NotesListView_DragItemsStarting(object sender, DragItemsStartingEventArgs e)
         {
             e.Data.Properties["sourceItem"] = e.Items[0];
         }
+#endif
 
         private void NotesListView_DragOver(object sender, DragEventArgs e)
         {

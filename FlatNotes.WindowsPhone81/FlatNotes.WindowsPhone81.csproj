@@ -128,23 +128,31 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\FlatNotes.UAP\Views\ArchivedNotesPage.xaml.cs">
+      <Link>Views\ArchivedNotesPage.xaml.cs</Link>
+      <DependentUpon>ArchivedNotesPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="..\FlatNotes.UAP\Views\MainPage.xaml.cs">
+      <Link>Views\MainPage.xaml.cs</Link>
+      <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="..\FlatNotes.UAP\Views\NoteEditPage.xaml.cs">
+      <Link>Views\NoteEditPage.xaml.cs</Link>
+      <DependentUpon>NoteEditPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="..\FlatNotes.UAP\Views\Partials\NoteEditPage_KeyDownHandlers.cs">
+      <Link>Views\Partials\NoteEditPage_KeyDownHandlers.cs</Link>
+    </Compile>
+    <Compile Include="..\FlatNotes.UAP\Views\SettingsPage.xaml.cs">
+      <Link>Views\SettingsPage.xaml.cs</Link>
+      <DependentUpon>SettingsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\NoteColorPicker.xaml.cs">
       <DependentUpon>NoteColorPicker.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Views\ArchivedNotesPage.xaml.cs">
-      <DependentUpon>ArchivedNotesPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\MainPage.xaml.cs">
-      <DependentUpon>MainPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\NoteEditPage.xaml.cs">
-      <DependentUpon>NoteEditPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\Partials\MainPage_NoteReorder.xaml.cs" />
-    <Compile Include="Views\SettingsPage.xaml.cs">
-      <DependentUpon>SettingsPage.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="Views\Partials\NoteEditPage_Swipe.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">

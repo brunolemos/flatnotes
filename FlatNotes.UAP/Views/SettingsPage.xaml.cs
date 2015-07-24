@@ -1,11 +1,7 @@
-﻿using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Navigation;
-using FlatNotes.Common;
+﻿using FlatNotes.Common;
 using FlatNotes.ViewModels;
-using FlatNotes.Utils;
-using Windows.UI.Xaml.Media;
-using Windows.UI;
-using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Navigation;
 
 namespace FlatNotes
 {
@@ -48,13 +44,5 @@ namespace FlatNotes
         }
 
         #endregion
-
-        //private void Pivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        //{
-        //    if ((e.AddedItems[0] as PivotItem).Tag.ToString() == "about")
-        //        CommandBar.ClosedDisplayMode = AppBarClosedDisplayMode.Compact;
-        //    else
-        //        CommandBar.ClosedDisplayMode = AppBarClosedDisplayMode.Minimal;
-        //}
     }
 }
