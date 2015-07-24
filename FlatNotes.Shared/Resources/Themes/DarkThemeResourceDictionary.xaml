@@ -2,14 +2,11 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <Color x:Key="PhoneBackgroundColor">#2e3132</Color><!--aeries:2d3132-->
-    <Color x:Key="PhoneForegroundColor">#ffffff</Color>
+    <Color x:Key="PhoneBackgroundColor">#2d3132</Color><!--aeries:2d3132-->
+    <Color x:Key="PhoneForegroundColor">#A0ffffff</Color>
     <Color x:Key="PhoneChromeColor">#DDDDDD</Color>
     <Color x:Key="PhoneMidColor">#40FFFFFF</Color>
     <Color x:Key="PhoneLowColor">#10FFFFFF</Color>
-    
-    <SolidColorBrush x:Key="AppStatusBarBackgroundBrush" Color="{ThemeResource PhoneBackgroundColor}"/>
-    <SolidColorBrush x:Key="AppStatusBarForegroundBrush" Color="#c9cdd1"/>
     
     <SolidColorBrush x:Key="ApplicationPageBackgroundThemeBrush" Color="{ThemeResource PhoneBackgroundColor}"/>
     <SolidColorBrush x:Key="PhoneBackgroundBrush" Color="{ThemeResource PhoneBackgroundColor}"/>

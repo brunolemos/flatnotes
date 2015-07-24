@@ -6,10 +6,7 @@
     <Color x:Key="PhoneForegroundColor">#C0000000</Color>
     <Color x:Key="PhoneChromeColor">#FFDDDDDD</Color>
     <Color x:Key="PhoneMidColor">#40000000</Color>
-    <Color x:Key="PhoneLowColor">#20000000</Color>
-    
-    <!--<SolidColorBrush x:Key="AppStatusBarBackgroundBrush" Color="{ThemeResource PhoneBackgroundColor}"/>
-    <SolidColorBrush x:Key="AppStatusBarForegroundBrush" Color="#404040"/>-->
+    <Color x:Key="PhoneLowColor">#10000000</Color>
     
     <SolidColorBrush x:Key="ApplicationPageBackgroundThemeBrush" Color="{ThemeResource PhoneBackgroundColor}"/>
     <SolidColorBrush x:Key="PhoneBackgroundBrush" Color="{ThemeResource PhoneBackgroundColor}"/>

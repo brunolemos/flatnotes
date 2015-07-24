@@ -163,7 +163,8 @@ namespace FlatNotes
                 RootFrame.ContentTransitions = null;
                 RootFrame.Navigated += this.RootFrame_FirstNavigated;
 #endif
-                await Windows.Storage.ApplicationData.Current.SetVersionAsync(AppSettings.Instance.Version-1, (req) => { });
+
+                //await Windows.Storage.ApplicationData.Current.SetVersionAsync(AppSettings.Instance.Version-1, (req) => { });
 
                 //prepare app data
                 await AppData.Init();
@@ -215,7 +216,7 @@ namespace FlatNotes
             });
         }
 
-        public async static void ResetStatusBar()
+        public static void ResetStatusBar()
         {
             Color mainColor = Color.FromArgb(0xff, 0xff, 0xbb, 0x00);
             //Color mainDarkenColor = Color.FromArgb(0xff, 0xf9, 0x9f, 0x00);
@@ -228,14 +229,14 @@ namespace FlatNotes
             bool hasStatusBar = Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar");
             if (!hasStatusBar) return;
 #endif
-            await StatusBar.GetForCurrentView().HideAsync();
+            //await StatusBar.GetForCurrentView().HideAsync();
 #endif
         }
 
         public static void ChangeStatusBarColor(Color backgroundColor, Color? foregroundColor = null)
         {
             if (foregroundColor == null)
-                foregroundColor = Colors.White;
+                foregroundColor = Color.FromArgb(0xA0, 0x00, 0x00, 0x00);
 
 #if WINDOWS_APP
 #else

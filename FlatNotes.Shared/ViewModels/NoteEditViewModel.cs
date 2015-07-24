@@ -40,7 +40,7 @@ namespace FlatNotes.ViewModels
             ToggleChecklistCommand = new RelayCommand(ToggleChecklist);
             PinCommand = new RelayCommand(Pin);
             UnpinCommand = new RelayCommand(Unpin);
-            ArchiveNoteCommand = new RelayCommand(ArchiveNote);
+            ArchiveNoteCommand = new RelayCommand(ArchiveNote, CanArchiveNote);
             RestoreNoteCommand = new RelayCommand(RestoreNote);
             DeleteNoteCommand = new RelayCommand(DeleteNote);
             DeleteNoteImageCommand = new RelayCommand(DeleteNoteImage);
@@ -58,12 +58,13 @@ namespace FlatNotes.ViewModels
                 CurrentNoteBeingEdited = Note;
                 if (Note == null) return;
 
-                IsNewNote = AppData.DB.Find<Note>(Note.ID) != null;
+                IsNewNote = AppData.DB.Find<Note>(Note.ID) == null;
                 Note.IsPinned = SecondaryTile.Exists(Note.ID);
 
                 NotifyPropertyChanged("ArchivedAtFormatedString");
                 NotifyPropertyChanged("UpdatedAtFormatedString");
                 NotifyPropertyChanged("CreatedAtFormatedString");
+                ArchiveNoteCommand.RaiseCanExecuteChanged();
             }
         }
 
@@ -130,6 +131,7 @@ namespace FlatNotes.ViewModels
             }
         }
         public ListViewReorderMode reorderMode = ListViewReorderMode.Disabled;
+        
         #region COMMANDS_ACTIONS
 
         private async void OpenImagePicker()
@@ -152,16 +154,16 @@ namespace FlatNotes.ViewModels
             picker.PickSingleFileAndContinue();
 #elif WINDOWS_UAP
             var file = await picker.PickSingleFileAsync();
-            handleImageFromFilePicker(file);
+            HandleImageFromFilePicker(file);
 #endif
         }
 
-        private void handleImageFromFilePicker(StorageFile file)
+        public void HandleImageFromFilePicker(StorageFile file)
         {
-            handleImageFromFilePicker(new List<StorageFile>() { file });
+            HandleImageFromFilePicker(new List<StorageFile>() { file });
         }
 
-        private async void handleImageFromFilePicker(IReadOnlyList<StorageFile> files)
+        public async void HandleImageFromFilePicker(IReadOnlyList<StorageFile> files)
         {
             if (files == null || files.Count <= 0) return;
             bool error = false;
@@ -177,6 +179,7 @@ namespace FlatNotes.ViewModels
                 //add new images
                 foreach (var file in files)
                 {
+                    if (file == null) continue;
                     Debug.WriteLine("Picked photo: " + file.Path);
 
                     NoteImage noteImage = new NoteImage();
@@ -193,7 +196,7 @@ namespace FlatNotes.ViewModels
                     break;
                 }
 
-                Note.NotifyPropertyChanged("Images");
+                //Note.NotifyPropertyChanged("Images");
             }
             catch (Exception e)
             {
@@ -219,7 +222,8 @@ namespace FlatNotes.ViewModels
             }
 
             //save
-            await AppData.CreateOrUpdateNote(Note);
+            bool success = await AppData.CreateOrUpdateNote(Note);
+            if (success) IsNewNote = false;
         }
 
         private void ToggleChecklist()
@@ -260,6 +264,13 @@ namespace FlatNotes.ViewModels
                 App.RootFrame.Navigate(typeof(MainPage));
         }
 
+        private bool CanArchiveNote()
+        {
+            if (Note == null || Note.IsArchived) return false;
+
+            return !IsNewNote;
+        }
+
         private void RestoreNote()
         {
             App.TelemetryClient.TrackEvent("Restore_NoteEditViewModel");
@@ -275,8 +286,7 @@ namespace FlatNotes.ViewModels
         private async void DeleteNote()
         {
             App.TelemetryClient.TrackEvent("Delete_NoteEditViewModel");
-            bool success = await AppData.RemoveNote(Note);
-            if (!success) return;
+            await AppData.RemoveNote(Note);
 
             note = null;
 
@@ -316,6 +326,10 @@ namespace FlatNotes.ViewModels
 
                 case "CreatedAt":
                     NotifyPropertyChanged("CreatedAtFormatedString");
+                    break;
+
+                case "IsNewNote":
+                    ArchiveNoteCommand.RaiseCanExecuteChanged();
                     break;
             }
 

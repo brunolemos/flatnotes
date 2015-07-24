@@ -6,8 +6,11 @@
 
     <Color x:Key="AppMainColor">#ffbb00</Color>
     <Color x:Key="AppMainDarkenColor">#f99f00</Color>
-    <Color x:Key="AppMainForegroundColor">White</Color><!--664B00-->
+    <Color x:Key="AppMainForegroundColor">#A0000000</Color><!--664B00-->
     <Color x:Key="PhoneAccentColor">#f99f00</Color>
+
+    <SolidColorBrush x:Key="AppStatusBarBackgroundBrush" Color="{StaticResource AppMainColor}"/>
+    <SolidColorBrush x:Key="AppStatusBarForegroundBrush" Color="{StaticResource AppMainForegroundColor}"/><!--c9cdd1-->
 
     <SolidColorBrush x:Key="AppMainBrush" Color="{StaticResource AppMainColor}"/>
     <SolidColorBrush x:Key="AppMainDarkenBrush" Color="{StaticResource AppMainDarkenColor}"/>
@@ -33,15 +36,15 @@
     <SolidColorBrush x:Key="TextBlockDisabledForegroundThemeBrush" Color="#70000000"/>
 
     <SolidColorBrush x:Key="CommandBarBackgroundThemeBrush" Color="{StaticResource AppMainColor}"/>
-    <!--<SolidColorBrush x:Key="CommandBarForegroundThemeBrush" Color="{StaticResource AppMainForegroundColor}"/>-->
+    <SolidColorBrush x:Key="CommandBarForegroundThemeBrush" Color="{StaticResource AppMainForegroundColor}"/>
 
     <Style TargetType="CommandBar">
         <Setter Property="Background" Value="{StaticResource CommandBarBackgroundThemeBrush}"/>
-        <!--<Setter Property="Foreground" Value="{StaticResource CommandBarForegroundThemeBrush}"/>-->
+        <Setter Property="Foreground" Value="{StaticResource CommandBarForegroundThemeBrush}"/>
         <Setter Property="RequestedTheme" Value="Dark"/>
     </Style>
 
-    <!--<Style TargetType="AppBarButton">
+    <Style TargetType="AppBarButton">
         <Setter Property="Foreground" Value="{StaticResource CommandBarForegroundThemeBrush}"/>
         <Setter Property="RequestedTheme" Value="Light"/>
     </Style>
@@ -49,7 +52,7 @@
     <Style TargetType="AppBarToggleButton">
         <Setter Property="Foreground" Value="{StaticResource CommandBarForegroundThemeBrush}"/>
         <Setter Property="RequestedTheme" Value="Light"/>
-    </Style>-->
+    </Style>
 
     <Style TargetType="FlyoutPresenter">
         <Setter Property="RequestedTheme" Value="Dark"/>
@@ -64,8 +67,6 @@
         <Setter Property="Padding" Value="0"/>
         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
     </Style>
-
-    <x:Double x:Key="EmptyNotesMessageFontSize">24</x:Double>
 
     <Style TargetType="TextBlock">
         <Setter Property="FontSize" Value="16"/>

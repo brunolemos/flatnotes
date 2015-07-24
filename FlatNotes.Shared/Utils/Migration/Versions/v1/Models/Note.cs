@@ -14,8 +14,8 @@ namespace FlatNotes.Utils.Migration.Versions.v1.Models
     {
         public bool Changed = false;
         public String GetID() { return ID; }
-        public DateTime GetCreatedAt() { return CreatedAt; }
-        public DateTime GetUpdatedAt() { return UpdatedAt; }
+        public DateTime? GetCreatedAt() { return CreatedAt; }
+        public DateTime? GetUpdatedAt() { return UpdatedAt; }
 
         public bool IsPinned { get { isPinned = SecondaryTile.Exists(this.ID); return isPinned; } set { if (isPinned != value) { isPinned = value; NotifyPropertyChanged("IsPinned"); } } }
         private bool isPinned { get { return isPinned_value; } set { if (isPinned_value != value) { isPinned_value = value; NotifyPropertyChanged("IsPinned"); } } }
@@ -56,13 +56,13 @@ namespace FlatNotes.Utils.Migration.Versions.v1.Models
         [DataMember(Name = "Color")]
         private string _color { get { return Color.Key; } set { color = new NoteColor(value); } }
 
-        public DateTime CreatedAt { get { return createdAt; } private set { createdAt = value; } }
+        public DateTime? CreatedAt { get { return createdAt; } private set { createdAt = value; } }
         [DataMember(Name = "CreatedAt")]
-        private DateTime createdAt = DateTime.Now;
+        private DateTime? createdAt;
 
-        public DateTime UpdatedAt { get { return updatedAt; } set { updatedAt = value; } }
+        public DateTime? UpdatedAt { get { return updatedAt; } set { updatedAt = value; } }
         [DataMember(Name = "UpdatedAt")]
-        private DateTime updatedAt = DateTime.Now;
+        private DateTime? updatedAt;
         
         public Note() {
             PropertyChanged += Note_PropertyChanged;
@@ -87,7 +87,7 @@ namespace FlatNotes.Utils.Migration.Versions.v1.Models
             this.Checklist = checklist;
         }
 
-        public Note(string title, string text, Checklist checklist, NoteColor color, DateTime createdAt, DateTime updatedAt) : this()
+        public Note(string title, string text, Checklist checklist, NoteColor color, DateTime? createdAt, DateTime? updatedAt) : this()
         {
             this.title = title;
             this.text = text;

@@ -72,14 +72,14 @@ namespace FlatNotes.Utils
             DB.CreateTable<Note>();
         }
 
-        private static void LoadNotesIfNecessary()
+        public static void LoadNotesIfNecessary()
         {
             if (notes != null && notes.Count > 0) return;
 
             notes = DB.GetAllWithChildren<Note>(x => x.IsArchived != true).ToList();
         }
 
-        private static void LoadArchivedNotesIfNecessary()
+        public static void LoadArchivedNotesIfNecessary()
         {
             if (archivedNotes != null && archivedNotes.Count > 0) return;
 
@@ -108,6 +108,9 @@ namespace FlatNotes.Utils
             //associate with note
             foreach (var item in note.Checklist) item.NoteId = note.ID;
             foreach (var item in note.Images) item.NoteId = note.ID;
+
+            if (note.CreatedAt == null) note.TouchCreatedAt();
+            if (note.UpdatedAt == null) note.Touch();
 
             DB.InsertWithChildren(note);
             //bool success = DB.InsertOrReplace(note) == 1;
@@ -162,8 +165,9 @@ namespace FlatNotes.Utils
             Debug.WriteLine("Archive note: " + note.Title);
             //App.TelemetryClient.TrackEvent("NoteArchived");
 
+            LoadArchivedNotesIfNecessary();
             note.IsArchived = true;
-            note.ArchivedAt = DateTime.UtcNow;
+            note.TouchArchivedAt();
 
             bool success = DB.Update(note) == 1;
             if (!success) return false;
@@ -226,8 +230,7 @@ namespace FlatNotes.Utils
             //remove note images from disk
             await RemoveNoteImages(note.Images);
 
-            bool success = DB.Delete(note) == 1;
-            if (!success) return false;
+            DB.Delete(note);
 
             AppData.Notes.Remove(note);
             AppData.ArchivedNotes.Remove(note);

@@ -62,13 +62,13 @@ namespace FlatNotes.Models
         [ForeignKey(typeof(Note))]
         public string NoteId { get; set; }
 
-        public string Text { get { return text; } set { text = value; NotifyPropertyChanged("Text"); } }
+        public string Text { get { return text; } set { if (text != value) { text = value; NotifyPropertyChanged("Text"); } } }
         [DataMember(Name = "Text")]
         public string text = "";
 
-        public bool? IsChecked { get { return isChecked; } set { isChecked = value; NotifyPropertyChanged("IsChecked"); } }
+        public bool? IsChecked { get { return isChecked; } set { if (isChecked != (value == true)) { isChecked = value == true; NotifyPropertyChanged("IsChecked"); } } }
         [DataMember(Name = "IsChecked")]
-        private bool? isChecked = false;
+        private bool isChecked = false;
 
         public ChecklistItem() { }
 

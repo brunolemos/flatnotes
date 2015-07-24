@@ -34,20 +34,7 @@ namespace FlatNotes.Views
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
 
-            //Color Picker
-            NoteColorPicker.NoteColorChanged += (s, _e) => { viewModel.Note.Color = _e.NoteColor; };
-
-            this.Loaded += OnLoaded;
-            viewModel.PropertyChanged += OnViewModelPropertyChanged;
-            viewModel.Note.PropertyChanged += OnNotePropertyChanged;
-        }
-
-        private void OnLoaded(object sender, RoutedEventArgs e)
-        {
-            UpdateStatusBarColor();
-
-            //if(viewModel.Note.IsNewNote && AppData.Notes.Count > 0)
-            //    NoteTitleTextBox.Focus(FocusState.Programmatic);
+            this.Loaded += (s, e) => UpdateStatusBarColor();
         }
 
         private void OnViewModelPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -103,28 +90,35 @@ namespace FlatNotes.Views
                 viewModel.Note = new Note();
 
             viewModel.Note.Changed = false;
-            //viewModel.Note.Images.CollectionChanged += Images_CollectionChanged;
+            viewModel.Note.Images.CollectionChanged += Images_CollectionChanged;
             viewModel.Note.Checklist.CollectionChanged += Checklist_CollectionChanged;
             viewModel.Note.Checklist.CollectionItemChanged += Checklist_CollectionItemChanged;
+            viewModel.Note.PropertyChanged += OnNotePropertyChanged;
+            viewModel.PropertyChanged += OnViewModelPropertyChanged;
 
             previousBackground = App.RootFrame.Background;
             App.RootFrame.Background = new SolidColorBrush().fromHex(viewModel.Note.Color.Color);
 
+            //Color Picker
             NoteColorPicker.SelectedNoteColor = viewModel.Note.Color;
+            NoteColorPicker.NoteColorChanged += (s, _e) => { viewModel.Note.Color = _e.NoteColor; };
         }
 
         private async void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
         {
             App.RootFrame.Background = previousBackground;
+            CommandBar.Focus(FocusState.Programmatic);
             CommandBar.IsOpen = false;
 
             //deleted
             if (viewModel.Note == null) return;
 
             //remove change binding
-            //viewModel.Note.Images.CollectionChanged -= Images_CollectionChanged;
+            viewModel.Note.Images.CollectionChanged -= Images_CollectionChanged;
             viewModel.Note.Checklist.CollectionChanged -= Checklist_CollectionChanged;
             viewModel.Note.Checklist.CollectionItemChanged -= Checklist_CollectionItemChanged;
+            viewModel.Note.PropertyChanged -= OnNotePropertyChanged;
+            viewModel.PropertyChanged -= OnViewModelPropertyChanged;
 
             //trim
             viewModel.Note.Trim();
@@ -139,7 +133,6 @@ namespace FlatNotes.Views
             //checklist changed (fix cache problem with converter)
             if (checklistChanged) viewModel.Note.NotifyChanges();
 
-            //await Task.Delay(0300);
             //viewModel.Note = null;
             NoteEditViewModel.CurrentNoteBeingEdited = null;
         }

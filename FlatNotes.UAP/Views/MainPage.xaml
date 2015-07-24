@@ -96,12 +96,12 @@
 
         <Grid Grid.Row="1" Visibility="{Binding Notes.Count, Converter={StaticResource PositiveIntToVisibilityConverter}, ConverterParameter=True}">
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Viewbox Width="180">
+                <Viewbox Width="160">
                     <Canvas Width="100" Height="100" HorizontalAlignment="Center">
                         <Rectangle Fill="{ThemeResource PhoneLowBrush}" Width="100" Height="70" StrokeThickness="0"/>
                         <Rectangle Fill="{ThemeResource PhoneLowBrush}" Width="70" Height="30" StrokeThickness="0" Margin="0,70,0,0"/>
                         <Polygon Fill="{ThemeResource PhoneLowBrush}" Points="0,0 30,0, 0,30" StrokeThickness="0" Margin="70,70,0,0" />
-                        <Polygon Fill="#10000000" Points="0,0 30,0, 0,30" StrokeThickness="0" Margin="70,70,0,0" />
+                        <Polygon Fill="#0A000000" Points="0,0 30,0, 0,30" StrokeThickness="0" Margin="70,70,0,0" />
                     </Canvas>
                 </Viewbox>
 

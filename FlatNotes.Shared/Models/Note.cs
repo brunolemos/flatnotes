@@ -100,15 +100,15 @@ namespace FlatNotes.Models
         [Column("Color")]
         public string _color { get { return Color.Key; } set { color = new NoteColor(value); } }
 
-        public DateTime CreatedAt { get { return createdAt; } protected set { createdAt = value; NotifyPropertyChanged("CreatedAt"); } }
+        public DateTime? CreatedAt { get { return createdAt; } protected set { createdAt = value; NotifyPropertyChanged("CreatedAt"); } }
         [DataMember(Name = "CreatedAt")]
-        private DateTime createdAt = DateTime.UtcNow;
+        private DateTime? createdAt;
 
-        public DateTime UpdatedAt { get { return updatedAt; } protected set { updatedAt = value; NotifyPropertyChanged("UpdatedAt"); } }
+        public DateTime? UpdatedAt { get { return updatedAt; } protected set { updatedAt = value; NotifyPropertyChanged("UpdatedAt"); } }
         [DataMember(Name = "UpdatedAt")]
-        private DateTime updatedAt = DateTime.UtcNow;
+        private DateTime? updatedAt;
 
-        public DateTime? ArchivedAt { get { return archivedAt; } set { archivedAt = value; NotifyPropertyChanged("ArchivedAt"); } }
+        public DateTime? ArchivedAt { get { return archivedAt; } protected set { archivedAt = value; NotifyPropertyChanged("ArchivedAt"); } }
         [DataMember(Name = "ArchivedAt")]
         private DateTime? archivedAt;
 
@@ -144,7 +144,7 @@ namespace FlatNotes.Models
             this.checklist = checklist;
         }
 
-        public Note(string title, string text, List<ChecklistItem> checklist, List<NoteImage> images, NoteColor color, DateTime createdAt, DateTime updatedAt, DateTime? archivedAt) : this()
+        public Note(string title, string text, List<ChecklistItem> checklist, List<NoteImage> images, NoteColor color, DateTime? createdAt, DateTime? updatedAt, DateTime? archivedAt) : this()
         {
             this.isChecklist = checklist != null && checklist.Count > 0;
 
@@ -162,7 +162,17 @@ namespace FlatNotes.Models
         {
             UpdatedAt = DateTime.UtcNow;
         }
-        
+
+        public void TouchCreatedAt()
+        {
+            CreatedAt = DateTime.UtcNow;
+        }
+
+        public void TouchArchivedAt()
+        {
+            ArchivedAt = DateTime.UtcNow;
+        }
+
         public bool ToggleChecklist()
         {
             if (!this.IsChecklist)

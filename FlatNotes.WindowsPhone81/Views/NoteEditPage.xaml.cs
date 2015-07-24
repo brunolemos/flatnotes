@@ -4,6 +4,7 @@ using FlatNotes.Utils;
 using FlatNotes.ViewModels;
 using System;
 using System.Diagnostics;
+using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Resources;
 using Windows.UI;
 using Windows.UI.Xaml;
@@ -15,7 +16,11 @@ using Windows.UI.Xaml.Navigation;
 
 namespace FlatNotes.Views
 {
+#if WINDOWS_PHONE_APP
+    public sealed partial class NoteEditPage : Page, IFileOpenPickerContinuable
+#else
     public sealed partial class NoteEditPage : Page
+#endif
     {
         public NoteEditViewModel viewModel { get { return _viewModel; } }
         private static NoteEditViewModel _viewModel = NoteEditViewModel.Instance;
@@ -43,7 +48,7 @@ namespace FlatNotes.Views
             NoteColorPicker.Closed += (s, _e) => { ColorPickerAppBarToggleButton.IsChecked = false; };
             NoteColorPicker.NoteColorChanged += (s, _e) => { viewModel.Note.Color = _e.NoteColor; };
 
-            this.Loaded += (s, _e) => App.ChangeStatusBarColor(Colors.Transparent, Colors.Black);
+            this.Loaded += (s, _e) => App.ChangeStatusBarColor(new Color().FromHex(viewModel.Note.Color.DarkColor2));
             viewModel.PropertyChanged += OnPropertyChanged;
         }
 
@@ -202,5 +207,12 @@ namespace FlatNotes.Views
             viewModel.TempNoteImage = (e.OriginalSource as FrameworkElement).DataContext as NoteImage;
             viewModel.DeleteNoteImageCommand.Execute(viewModel.TempNoteImage);
         }
+
+#if WINDOWS_PHONE_APP
+        public void ContinueFileOpenPicker(FileOpenPickerContinuationEventArgs args)
+        {
+            viewModel.HandleImageFromFilePicker(args.Files);
+        }
+#endif
     }
 }

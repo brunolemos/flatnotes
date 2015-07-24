@@ -89,13 +89,13 @@ namespace FlatNotes.Utils.Migration.Versions.v2.Models
         [DataMember(Name = "Color")]
         private string _color { get { return Color.Key; } set { color = new NoteColor(value); } }
 
-        public DateTime CreatedAt { get { return createdAt; } private set { createdAt = value; NotifyPropertyChanged("CreatedAt"); } }
+        public DateTime? CreatedAt { get { return createdAt; } private set { createdAt = value; NotifyPropertyChanged("CreatedAt"); } }
         [DataMember(Name = "CreatedAt")]
-        private DateTime createdAt = DateTime.UtcNow;
+        private DateTime? createdAt;
 
-        public DateTime UpdatedAt { get { return updatedAt; } set { updatedAt = value; NotifyPropertyChanged("UpdatedAt"); } }
+        public DateTime? UpdatedAt { get { return updatedAt; } set { updatedAt = value; NotifyPropertyChanged("UpdatedAt"); } }
         [DataMember(Name = "UpdatedAt")]
-        private DateTime updatedAt = DateTime.UtcNow;
+        private DateTime? updatedAt;
 
         public DateTime? ArchivedAt { get { return archivedAt; } set { archivedAt = value; NotifyPropertyChanged("ArchivedAt"); } }
         [DataMember(Name = "ArchivedAt")]
@@ -145,7 +145,7 @@ namespace FlatNotes.Utils.Migration.Versions.v2.Models
             this.checklist = checklist;
         }
 
-        public Note(string title, string text, Checklist checklist, NoteImages images, NoteColor color, DateTime createdAt, DateTime updatedAt, DateTime? archivedAt) : this()
+        public Note(string title, string text, Checklist checklist, NoteImages images, NoteColor color, DateTime? createdAt, DateTime? updatedAt, DateTime? archivedAt) : this()
         {
             this.isChecklist = checklist != null && checklist.Count > 0;
 

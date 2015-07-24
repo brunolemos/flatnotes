@@ -12,8 +12,8 @@ namespace FlatNotes.Utils.Migration.Versions.v1.Models
     public class Device : BaseModel, IIdentifiableModelInterface
     {
         public String GetID() { return DeviceUniqueId; }
-        public DateTime GetCreatedAt() { return CreatedAt; }
-        public DateTime GetUpdatedAt() { return UpdatedAt; }
+        public DateTime? GetCreatedAt() { return CreatedAt; }
+        public DateTime? GetUpdatedAt() { return UpdatedAt; }
 
         public string DeviceUniqueId { get { return DeviceController.DeviceID; } }
         public string DeviceManufacturer { get { return ""/*DeviceStatus.DeviceManufacturer*/; } }
@@ -23,13 +23,13 @@ namespace FlatNotes.Utils.Migration.Versions.v1.Models
         public string DeviceHardwareVersion { get { return ""/*DeviceStatus.DeviceHardwareVersion*/; } }
         public Size PhysicalScreenResolution { get { return DeviceController.PhysicalScreenResolution; } }
 
-        public DateTime CreatedAt { get { return createdAt; } private set { createdAt = value; } }
+        public DateTime? CreatedAt { get { return createdAt; } private set { createdAt = value; } }
         [DataMember(Name = "CreatedAt")]
-        private DateTime createdAt = DateTime.Now;
+        private DateTime? createdAt = DateTime.Now;
 
-        public DateTime UpdatedAt { get { return updatedAt; } set { updatedAt = value; } }
+        public DateTime? UpdatedAt { get { return updatedAt; } set { updatedAt = value; } }
         [DataMember(Name = "UpdatedAt")]
-        private DateTime updatedAt = DateTime.Now;
+        private DateTime? updatedAt = DateTime.Now;
 
         public void Touch()
         {
