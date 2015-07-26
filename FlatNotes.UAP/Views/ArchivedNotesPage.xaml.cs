@@ -37,15 +37,6 @@ namespace FlatNotes.Views
         private void OnLoaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             App.ChangeStatusBarColor(Color.FromArgb(0xff, 0x44, 0x59, 0x63), Color.FromArgb(0xff, 0xff, 0xff, 0xfe));
-
-            if (viewModel.IsLoaded)
-                return;
-
-            viewModel.IsLoading = true;
-            viewModel.Notes = AppData.ArchivedNotes;
-
-            viewModel.IsLoaded = true;
-            viewModel.IsLoading = false;
         }
 
         private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)

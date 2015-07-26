@@ -70,7 +70,9 @@ namespace FlatNotes.Views
             viewModel.PropertyChanged += OnViewModelPropertyChanged;
 
             previousBackground = App.RootFrame.Background;
-            App.RootFrame.Background = new SolidColorBrush().fromHex(viewModel.Note.Color.Color);
+            var xxx = new SolidColorBrush(Colors.Transparent);
+            xxx.Opacity = 0;
+            App.RootFrame.Background = xxx;// new SolidColorBrush().fromHex(viewModel.Note.Color.Color);
 
             //Color Picker
             NoteColorPicker.SelectedNoteColor = viewModel.Note.Color;

@@ -31,7 +31,6 @@ namespace FlatNotes
         /// </summary>
         public static TelemetryClient TelemetryClient;
 
-        private TransitionCollection transitions = null;
         public static ContinuationManager ContinuationManager { get; private set; }
 
         public static bool IsBeta = Package.Current.Id.Name.Contains("Beta");
@@ -145,16 +144,6 @@ namespace FlatNotes
 
             if (RootFrame.Content == null)
             {
-                // Removes the turnstile navigation for startup.
-                if (RootFrame.ContentTransitions != null)
-                {
-                    this.transitions = new TransitionCollection();
-                    foreach (var c in RootFrame.ContentTransitions)
-                    {
-                        this.transitions.Add(c);
-                    }
-                }
-
                 RootFrame.ContentTransitions = null;
                 RootFrame.Navigated += this.RootFrame_FirstNavigated;
 
@@ -183,7 +172,7 @@ namespace FlatNotes
         private void RootFrame_FirstNavigated(object sender, NavigationEventArgs e)
         {
             var rootFrame = sender as Frame;
-            rootFrame.ContentTransitions = this.transitions ?? new TransitionCollection() { new ContentThemeTransition() { HorizontalOffset = 50, VerticalOffset = 0 } };
+            rootFrame.ContentTransitions = null;// transitions ?? new TransitionCollection() { new EntranceThemeTransition() { FromHorizontalOffset = 50, FromVerticalOffset = 0, IsStaggeringEnabled = false } };
             rootFrame.Navigated -= this.RootFrame_FirstNavigated;
         }
 

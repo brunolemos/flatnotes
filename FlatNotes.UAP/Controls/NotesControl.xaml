@@ -29,44 +29,42 @@
                 <MenuFlyoutItem Background="{x:Bind viewModel.Colors[6].Color}" Click="OnChangeColorClick" CommandParameter="{x:Bind viewModel.Colors[6]}"/>
                 <MenuFlyoutItem Background="{x:Bind viewModel.Colors[7].Color}" Click="OnChangeColorClick" CommandParameter="{x:Bind viewModel.Colors[7]}"/>
             </MenuFlyoutSubItem>
-            <!--<MenuFlyoutSeparator/>
+            <MenuFlyoutSeparator/>
             <MenuFlyoutItem Text="Share..."/>
-            <MenuFlyoutItem Text="Reorder..."/>-->
+            <MenuFlyoutItem Text="Reorder..."/>
         </MenuFlyout>
     </UserControl.Resources>
-    
-    <GridView x:Name="NotesGridView"
+
+    <ListView x:Name="NotesGridView"
               HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
-              ItemsSource="{Binding}" DataContext="{Binding ItemsSource, ElementName=Root}"
-              SelectionMode="None" CanReorderItems="False" CanDragItems="False" AllowDrop="False"  
+              ItemsSource="{x:Bind ItemsSource, Mode=OneWay}"
+              SelectionMode="None" CanReorderItems="True" CanDragItems="True" AllowDrop="True"  
               IsItemClickEnabled="True" ItemClick="GridView_ItemClick" Holding="GridView_Holding">
-        
-        <GridView.ItemContainerTransitions>
+
+        <ListView.ItemContainerTransitions>
             <TransitionCollection>
-                <EntranceThemeTransition IsStaggeringEnabled="True" FromVerticalOffset="200" FromHorizontalOffset="0"/>
-                <NavigationThemeTransition/>
-                <ContentThemeTransition/>
+                <EntranceThemeTransition FromVerticalOffset="200" IsStaggeringEnabled="True"/>
+                <RepositionThemeTransition/>
                 <AddDeleteThemeTransition/>
                 <ReorderThemeTransition/>
-                <RepositionThemeTransition />
+                <NavigationThemeTransition/>
             </TransitionCollection>
-        </GridView.ItemContainerTransitions>
+        </ListView.ItemContainerTransitions>
 
-        <GridView.ItemsPanel>
+        <ListView.ItemsPanel>
             <ItemsPanelTemplate>
-                <local:FluidGrid x:Name="NotesFluidGrid" Margin="{Binding ElementName=Root, Path=Padding}" ItemWidth="{Binding ElementName=Root, Path=ItemWidth}" ItemStretch="{Binding ElementName=Root, Path=ItemStretch}" Columns="{Binding ElementName=Root, Path=Columns}" AllowSingleColumn="{Binding ElementName=Root, Path=AllowSingleColumn}" HorizontalAlignment="Center"/>
-                <!--<StackPanel Margin="-6" AllowDrop="True"/>-->
-                <!--<ItemsWrapGrid AllowDrop="True" ItemWidth="{Binding ElementName=Root, Path=ItemWidth}" Orientation="Horizontal" HorizontalAlignment="Center"/>-->
+                <local:FluidGrid x:Name="NotesFluidGrid" Margin="{Binding Padding, ElementName=Root}" ItemWidth="{Binding ItemWidth, ElementName=Root}" ItemStretch="{Binding ItemStretch, ElementName=Root}" Columns="{Binding Columns, ElementName=Root}" AllowSingleColumn="{Binding AllowSingleColumn, ElementName=Root}" HorizontalAlignment="Center" ParentListView="{Binding ElementName=NotesGridView}"/>
+                <!--<ItemsWrapGrid AllowDrop="True" ItemWidth="{Binding ItemWidth, ElementName=Root}" Orientation="Horizontal" HorizontalAlignment="Center"/>-->
             </ItemsPanelTemplate>
-        </GridView.ItemsPanel>
+        </ListView.ItemsPanel>
 
-        <GridView.ItemTemplate>
+        <ListView.ItemTemplate>
             <DataTemplate x:DataType="models:Note">
                 <local:NotePreview Holding="NotePreview_Holding" RightTapped="NotePreview_RightTapped" RequestedTheme="Dark" FlyoutBase.AttachedFlyout="{StaticResource NoteMenuFlyout}"/>
             </DataTemplate>
-        </GridView.ItemTemplate>
+        </ListView.ItemTemplate>
         
-        <GridView.ItemContainerStyle>
+        <!--<ListView.ItemContainerStyle>
             <Style TargetType="GridViewItem">
                 <Setter Property="Margin" Value="0"/>
                 <Setter Property="HorizontalAlignment" Value="Stretch"/>
@@ -105,6 +103,6 @@
                     </Setter.Value>
                 </Setter>
             </Style>
-        </GridView.ItemContainerStyle>
-    </GridView>
+        </ListView.ItemContainerStyle>-->
+    </ListView>
 </UserControl>

@@ -12,12 +12,12 @@
     d:DesignWidth="400">
 
     <UserControl.Resources>
-        <DataTemplate x:Key="NoteColorTemplate">
-            <Grid Background="{Binding Color}"/>
+        <DataTemplate x:Key="NoteColorTemplate" x:DataType="models:NoteColor">
+            <Grid Background="{x:Bind Color}"/>
         </DataTemplate>
 
-        <DataTemplate x:Key="SelectedNoteColorTemplate">
-            <Grid Background="{Binding Color}">
+        <DataTemplate x:Key="SelectedNoteColorTemplate" x:DataType="models:NoteColor">
+            <Grid Background="{x:Bind Color}">
                 <Border Margin="4" BorderThickness="2" BorderBrush="White"/>
             </Grid>
         </DataTemplate>
@@ -67,9 +67,8 @@
     </UserControl.Resources>
 
     <ListView x:Name="ColorPickerListView" Margin="12" 
-              SelectionMode="Single" ItemsSource="{Binding}" 
+              SelectionMode="Single" ItemsSource="{x:Bind Colors}" 
               ItemTemplateSelector="{StaticResource NoteColorPickerItemTemplateSelector}"
-              DataContext="{Binding Colors, ElementName=Root}" 
               d:DataContext="{d:DesignData /SampleData/NoteColorsSampleData.xaml}" 
-              SelectedValue="{Binding ElementName=Root, Path=SelectedNoteColor, Mode=TwoWay}"/>
+              SelectedValue="{Binding SelectedNoteColor, ElementName=Root, Mode=TwoWay}"/>
 </UserControl>

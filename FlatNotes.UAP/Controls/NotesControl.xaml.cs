@@ -1,6 +1,8 @@
 ﻿using FlatNotes.Models;
 using FlatNotes.ViewModels;
 using System;
+using System.Diagnostics;
+using Windows.ApplicationModel.DataTransfer;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -45,7 +47,7 @@ namespace FlatNotes.Controls
 
         private void NotePreview_Holding(object sender, Windows.UI.Xaml.Input.HoldingRoutedEventArgs e)
         {
-            ShowNoteFlyout(sender as FrameworkElement);
+            //ShowNoteFlyout(sender as FrameworkElement);
         }
 
         private void NotePreview_RightTapped(object sender, Windows.UI.Xaml.Input.RightTappedRoutedEventArgs e)

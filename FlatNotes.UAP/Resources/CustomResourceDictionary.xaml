@@ -5,7 +5,7 @@
     <x:Double x:Key="EmptyNotesMessageFontSize">22</x:Double>
 
     <x:Double x:Key="TextControlBackgroundFocusedOpacity">0</x:Double>
-    <Thickness x:Key="CheckBoxBorderThemeThickness">1</Thickness>
+    <x:Double x:Key="CheckBoxBorderThemeThickness">1</x:Double>
     <x:Double x:Key="CheckBoxCheckedStrokeThickness">1</x:Double>
 
     <Style x:Key="CheckBoxWithoutContentStyle" TargetType="CheckBox">
@@ -189,7 +189,7 @@
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
                         <Grid VerticalAlignment="Top">
-                            <Rectangle x:Name="NormalRectangle" Fill="Transparent" Height="20" Stroke="{TemplateBinding BorderBrush}" StrokeThickness="{ThemeResource CheckBoxBorderThemeThickness}" UseLayoutRounding="False" Width="20"/>
+                            <Rectangle x:Name="NormalRectangle" Fill="Transparent" Height="20" Stroke="{TemplateBinding BorderBrush}" StrokeThickness="{StaticResource CheckBoxBorderThemeThickness}" UseLayoutRounding="False" Width="20"/>
                             <FontIcon x:Name="CheckGlyph" Foreground="{TemplateBinding Foreground}" FontSize="20" FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE001;" Opacity="0"/><!--SystemControlHighlightAltChromeWhiteBrush-->
                         </Grid>
                         <ContentPresenter x:Name="ContentPresenter" Visibility="Collapsed" AutomationProperties.AccessibilityView="Raw" ContentTemplate="{TemplateBinding ContentTemplate}" ContentTransitions="{TemplateBinding ContentTransitions}" Content="{TemplateBinding Content}" Grid.Column="1" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" TextWrapping="Wrap" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
@@ -200,12 +200,14 @@
     </Style>
 
     <Style TargetType="ListView">
-        <Setter Property="Transitions">
+        <Setter Property="ItemContainerTransitions">
             <Setter.Value>
                 <TransitionCollection/>
             </Setter.Value>
         </Setter>
-        
+    </Style>
+
+    <Style TargetType="GridView">
         <Setter Property="ItemContainerTransitions">
             <Setter.Value>
                 <TransitionCollection/>
@@ -215,23 +217,10 @@
 
     <Style TargetType="ListViewItem">
         <Setter Property="MinHeight" Value="10"/>
-        
-        <Setter Property="Transitions">
-            <Setter.Value>
-                <TransitionCollection/>
-            </Setter.Value>
-        </Setter>
-        
-        <Setter Property="ContentTransitions">
-            <Setter.Value>
-                <TransitionCollection/>
-            </Setter.Value>
-        </Setter>
 
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ListViewItem">
-                    <!--{TemplateBinding ContentTransitions}-->
                     <ListViewItemPresenter 
                             HorizontalAlignment="Stretch" 
                             HorizontalContentAlignment="Stretch" 

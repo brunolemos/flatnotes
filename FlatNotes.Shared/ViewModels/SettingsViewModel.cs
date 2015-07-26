@@ -18,9 +18,9 @@ namespace FlatNotes.ViewModels
         public RelayCommand RateAppCommand { get; private set; }
         public RelayCommand ContactSupportCommand { get; private set; }
 
-        public static string AppName { get { return App.Name; } }
-        public static string AppVersion { get { return App.Version; } }
-        public static bool IsBeta { get { return App.IsBeta; } }
+        public string AppName { get { return App.Name; } }
+        public string AppVersion { get { return App.Version; } }
+        public bool IsBeta { get { return App.IsBeta; } }
 
         private SettingsViewModel()
         {

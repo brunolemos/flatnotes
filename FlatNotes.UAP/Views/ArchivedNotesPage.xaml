@@ -10,7 +10,6 @@
     mc:Ignorable="d"
     NavigationCacheMode="Required"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-    DataContext="{x:Bind Path=viewModel}"
     d:DataContext="{d:DesignData /SampleData/MainViewModelSampleData.xaml}">
 
     <Grid x:Name="LayoutRoot">
@@ -30,12 +29,12 @@
 
                 <VisualState>
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="600" />
+                        <AdaptiveTrigger MinWindowWidth="500" />
                     </VisualState.StateTriggers>
 
                     <VisualState.Setters>
                         <Setter Target="NotesControl.ItemStretch" Value="False"/>
-                        <Setter Target="NotesControl.ItemWidth" Value="260"/>
+                        <Setter Target="NotesControl.ItemWidth" Value="220"/>
                         <Setter Target="NotesControl.Padding" Value="24"/>
                     </VisualState.Setters>
                 </VisualState>
@@ -47,7 +46,7 @@
 
                     <VisualState.Setters>
                         <Setter Target="NotesControl.ItemStretch" Value="False"/>
-                        <Setter Target="NotesControl.ItemWidth" Value="260"/>
+                        <Setter Target="NotesControl.ItemWidth" Value="250"/>
                         <Setter Target="NotesControl.Padding" Value="24"/>
                     </VisualState.Setters>
                 </VisualState>
@@ -84,7 +83,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         
-        <Grid Grid.Row="1" Visibility="{Binding Notes.Count, Converter={StaticResource PositiveIntToVisibilityConverter}, ConverterParameter=True}">
+        <Grid Grid.Row="1" Visibility="{x:Bind viewModel.Notes.Count, Converter={StaticResource PositiveIntToVisibilityConverter}, ConverterParameter=True}">
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Viewbox Width="160">
                     <Canvas Width="100" Height="100" HorizontalAlignment="Center">
@@ -99,9 +98,9 @@
             </StackPanel>
         </Grid>
 
-        <local:NotesControl Grid.Row="1" x:Name="NotesControl" ItemsSource="{Binding Notes}" Columns="-1" d:DataContext="{Binding Notes}" ItemClick="OnNoteClick"/>
+        <local:NotesControl Grid.Row="1" x:Name="NotesControl" ItemsSource="{Binding}" Columns="-1" DataContext="{x:Bind viewModel.Notes, Mode=OneWay}" d:DataContext="{Binding Notes}" ItemClick="OnNoteClick"/>
 
-        <CommandBar Grid.Row="{Binding IsMobile, Converter={StaticResource IsMobileToGridRowConverter}}" Opacity="0" IsHitTestVisible="False">
+        <CommandBar Grid.Row="{x:Bind viewModel.IsMobile, Converter={StaticResource IsMobileToGridRowConverter}}" Opacity="0" IsHitTestVisible="False">
         </CommandBar>
     </Grid>
 </Page>

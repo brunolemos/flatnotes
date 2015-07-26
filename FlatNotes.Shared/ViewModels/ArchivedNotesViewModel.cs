@@ -10,7 +10,7 @@ namespace FlatNotes.ViewModels
         private static ArchivedNotesViewModel instance = null;
 
         public Notes Notes { get { return notes; } set { notes = value; NotifyPropertyChanged("Notes"); } }
-        public Notes notes = null;
+        public Notes notes = AppData.ArchivedNotes;
 
         public int Columns { get { return -1; } }// AppSettings.Instance.Columns; } internal set { AppSettings.Instance.Columns = value; } }
 

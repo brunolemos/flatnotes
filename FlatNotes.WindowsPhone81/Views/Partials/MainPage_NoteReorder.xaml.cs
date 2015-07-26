@@ -4,6 +4,8 @@ using FlatNotes.Utils;
 using System.Diagnostics;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
+using Windows.UI.Xaml.Media.Animation;
 
 namespace FlatNotes.Views
 {
@@ -89,7 +91,15 @@ namespace FlatNotes.Views
 
         private void NotesListView_DragOver(object sender, DragEventArgs e)
         {
-            e.Data.Properties["targetItem"] = (e.OriginalSource as FrameworkElement).DataContext;
+            var item = (e.OriginalSource as FrameworkElement).DataContext as Note;
+            if (item == null) return;
+
+            e.Data.Properties["targetItem"] = item;
+
+            var itemContainer = (sender as ItemsControl).ContainerFromItem(item) as Control;
+            if (itemContainer == null) return;
+
+            VisualStateManager.GoToState(itemContainer, "BottomReorderHint", true);
         }
 
         private void NotesListView_Drop(object sender, DragEventArgs e)

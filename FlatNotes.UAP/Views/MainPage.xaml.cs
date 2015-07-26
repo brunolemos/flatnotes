@@ -35,11 +35,11 @@ namespace FlatNotes.Views
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
-            
-//#if WINDOWS_PHONE_APP
-//            Loaded += (s, e) => EnableReorderFeature();
-//            Unloaded += (s, e) => DisableReorderFeature();
-//#endif
+
+#if WINDOWS_PHONE_APP
+            Loaded += (s, e) => EnableReorderFeature();
+            Unloaded += (s, e) => DisableReorderFeature();
+#endif
 
             Loaded += OnLoaded;
         }
@@ -52,15 +52,6 @@ namespace FlatNotes.Views
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
             App.ResetStatusBar();
-
-            if (viewModel.IsLoaded)
-                return;
-
-            viewModel.IsLoading = true;
-            viewModel.Notes = AppData.Notes;
-
-            viewModel.IsLoaded = true;
-            viewModel.IsLoading = false;
         }
 
         private async void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)

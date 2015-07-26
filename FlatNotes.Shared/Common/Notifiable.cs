@@ -3,7 +3,7 @@ using System.ComponentModel;
 
 namespace FlatNotes.Common
 {
-    public class Notifiable : INotifyPropertyChanged
+    public class Notifiable : Object, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 

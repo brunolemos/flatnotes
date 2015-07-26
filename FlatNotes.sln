@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "FlatNotes.Shared", "FlatNotes.Shared\FlatNotes.Shared.shproj", "{1E0BAA61-7286-4953-8CD3-0808109979DE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlatNotes.WindowsPhone81", "FlatNotes.WindowsPhone81\FlatNotes.WindowsPhone81.csproj", "{86FF2A6F-71DB-46EC-B67F-35FB7F8573C1}"
+	ProjectSection(ProjectDependencies) = postProject
+		{7D55F9B3-B9AC-4FCA-9ACE-BF655193094A} = {7D55F9B3-B9AC-4FCA-9ACE-BF655193094A}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlatNotes.UAP", "FlatNotes.UAP\FlatNotes.UAP.csproj", "{7D55F9B3-B9AC-4FCA-9ACE-BF655193094A}"
 EndProject
