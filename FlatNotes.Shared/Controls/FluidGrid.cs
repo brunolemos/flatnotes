@@ -23,6 +23,7 @@ namespace FlatNotes.Controls
         List<UIElement> elements;
         private bool isReordering = false;
         private int draggingItemIndex_original = -1;
+        private int draggingItemIndex_elements = -1;
         private int dropAtIndex_original = -1;
         private int dropAtIndex_elements = -1;
         private Point? lastDragOverPosition = null;
@@ -89,12 +90,13 @@ namespace FlatNotes.Controls
 
             if (isReordering && draggingItemIndex_original >= 0 && dropAtIndex_original >= 0 && draggingItemIndex_original < elements.Count && dropAtIndex_original < elements.Count)
             {
-                var _draggingItemIndex = elements.IndexOf(Children[draggingItemIndex_original]);
-                var _dropAtIndex = elements.IndexOf(Children[dropAtIndex_original]);
+                draggingItemIndex_elements = elements.IndexOf(Children[draggingItemIndex_original]);
 
-                var temp = elements[_draggingItemIndex];
+                var temp = elements[draggingItemIndex_elements];
                 elements.Remove(temp);
-                elements.Insert(_dropAtIndex, temp);
+                elements.Insert(dropAtIndex_elements, temp);
+
+                draggingItemIndex_elements = elements.IndexOf(Children[draggingItemIndex_original]);
             }
 
             int columnWithLowerY = 0;
@@ -181,7 +183,9 @@ namespace FlatNotes.Controls
                 int childColumn = childrenColumns[i];
 
                 Point startPoint = new Point(childSize.Width * childColumn, lastYInColumn[childColumn]);
-                elements[i].Arrange(new Rect(startPoint, childSize));
+
+                if (!(isReordering && i == draggingItemIndex_elements))
+                    elements[i].Arrange(new Rect(startPoint, childSize));
 
                 lastYInColumn[childColumn] += childSize.Height;
             }
@@ -247,12 +251,14 @@ namespace FlatNotes.Controls
 #endif
 
             draggingItemIndex_original = -1;
+            draggingItemIndex_elements = -1;
             if (e.Items.Count < 1) return;
 
             var itemContainer = (sender as ListViewBase).ContainerFromItem(e.Items[0]) as UIElement;
             if (itemContainer == null) return;
 
             draggingItemIndex_original = (sender as ListViewBase).IndexFromContainer(itemContainer);
+            draggingItemIndex_elements = draggingItemIndex_original;
             //Debug.WriteLine("OnDragItemsStarting. Sender: {0}, Item: {1} = {2}", sender, draggingItemIndex_original, e.Items[0]);
 
             isReordering = true;
@@ -265,7 +271,7 @@ namespace FlatNotes.Controls
 
             //Get the list of items under the current position
             var position = e.GetPosition(null);
-            var hitContainers = VisualTreeHelper.FindElementsInHostCoordinates(position, this).OfType<SelectorItem>().ToArray();
+            var hitContainers = VisualTreeHelper.FindElementsInHostCoordinates(position, this, false).OfType<SelectorItem>().ToArray();
 
             int newDropAtIndex = (hitContainers == null || hitContainers.Count() <= 0)
                             ? -1
@@ -276,7 +282,7 @@ namespace FlatNotes.Controls
             //prevent mess: disable reorder on same position (prevent infinite reordering)
             if(lastDragOverPosition != null)
             {
-                hitContainers = VisualTreeHelper.FindElementsInHostCoordinates((Point)lastDragOverPosition, this).OfType<SelectorItem>().ToArray();
+                hitContainers = VisualTreeHelper.FindElementsInHostCoordinates((Point)lastDragOverPosition, this, false).OfType<SelectorItem>().ToArray();
                 var index = (hitContainers == null || hitContainers.Count() <= 0)
                                 ? -1
                                 : ParentListView.IndexFromContainer(hitContainers[0]);
@@ -315,6 +321,7 @@ namespace FlatNotes.Controls
 
             lastDragOverPosition = null;
             draggingItemIndex_original = -1;
+            draggingItemIndex_elements = -1;
             dropAtIndex_original = -1;
             dropAtIndex_elements = -1;
         }
@@ -327,6 +334,7 @@ namespace FlatNotes.Controls
             isReordering = false;
             lastDragOverPosition = null;
             draggingItemIndex_original = -1;
+            draggingItemIndex_elements = -1;
             dropAtIndex_original = -1;
             dropAtIndex_elements = -1;
         }

@@ -42,6 +42,7 @@ namespace FlatNotes.Views
         private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
             App.RootFrame.Background = this.Background;
+            if (viewModel.Notes == null || viewModel.Notes.Count <= 0) viewModel.Notes = AppData.ArchivedNotes;
         }
 
         private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)

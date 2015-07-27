@@ -61,7 +61,7 @@
         <StackPanel Margin="0" IsHitTestVisible="False">
             <Grid Visibility="{Binding ElementName=Root, Path=HideImage, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=True}">
                 <Grid MaxHeight="120" Background="{StaticResource PhoneDarkLowBrush}" Visibility="{Binding Images.Count, Converter={StaticResource PositiveIntToVisibilityConverter}}">
-                    <ListView x:Name="NoteImagesListView" ItemsSource="{Binding Images}" Margin="0" Padding="0" BorderThickness="0" ItemTemplate="{StaticResource NoteImagesListViewControlTemplate}" SelectionMode="None" IsTapEnabled="False" IsItemClickEnabled="False" HorizontalContentAlignment="Stretch"/>
+                    <ListView x:Name="NoteImagesListView" ItemsSource="{Binding Images}" Margin="0" Padding="0" BorderThickness="0" ItemTemplate="{StaticResource NoteImagesListViewControlTemplate}" SelectionMode="None" IsTapEnabled="False" IsItemClickEnabled="False" HorizontalContentAlignment="Stretch" IsHitTestVisible="False"/>
                 </Grid>
             </Grid>
             
@@ -70,7 +70,7 @@
                 <TextBlock Text="{Binding Text, Mode=OneWay}" Foreground="{Binding ElementName=Root, Path=Foreground}" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" Margin="0,0,0,4" FontWeight="SemiLight" FontSize="{Binding ElementName=Root, Path=FontSize}" MaxLines="4" Visibility="{Binding Text, Converter={StaticResource NullableToVisibilityConverter}}" />
 
                 <StackPanel Visibility="{Binding IsChecklist, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
-                    <ListView x:Name="NoteChecklistListView" Margin="0,0,0,4" ItemsSource="{Binding Checklist, Converter={StaticResource MaxChecklistItemsConverter}}" ItemContainerStyle="{StaticResource NotePreviewChecklistItem}" ItemTemplate="{StaticResource NoteChecklistListViewControlTemplate}" IsTapEnabled="False" IsItemClickEnabled="False" />
+                    <ListView x:Name="NoteChecklistListView" Margin="0,0,0,4" ItemsSource="{Binding Checklist, Converter={StaticResource MaxChecklistItemsConverter}}" ItemContainerStyle="{StaticResource NotePreviewChecklistItem}" ItemTemplate="{StaticResource NoteChecklistListViewControlTemplate}" IsTapEnabled="False" IsItemClickEnabled="False" IsHitTestVisible="False" />
 
                     <Grid x:Name="TrimIndicator" Margin="0,-8,0,0" Visibility="{Binding Source={StaticResource MaxChecklistItemsConverter}, Path=IsTrimmed, Converter={StaticResource BooleanToVisibilityConverter}}">
                         <Grid.ColumnDefinitions>

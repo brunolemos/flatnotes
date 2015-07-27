@@ -9,10 +9,10 @@
     xmlns:Converters="using:FlatNotes.Converters"
     mc:Ignorable="d"
     NavigationCacheMode="Required"
-    Background="#445963"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     DataContext="{Binding viewModel, RelativeSource={RelativeSource Mode=Self}}"
     d:DataContext="{d:DesignData /SampleData/MainViewModelSampleData.xaml}">
-
+    
     <Page.Resources>
         <DataTemplate x:Key="NotePreviewListViewControlTemplate">
             <local:NotePreview FontSize="17"/>
@@ -22,6 +22,10 @@
             <local:FluidGrid x:Name="NotesFluidGrid" Margin="8" ItemWidth="160" Columns="{Binding Columns, Mode=OneWay, TargetNullValue=-1, FallbackValue=-1}" ItemStretch="True" AllowSingleColumn="True"/>
         </ItemsPanelTemplate>
     </Page.Resources>
+    
+    <Page.BottomAppBar>
+        <CommandBar Opacity="0" IsHitTestVisible="False"/>
+    </Page.BottomAppBar>
 
     <Grid x:Name="LayoutRoot" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid x:Name="ContentRoot" MaxWidth="1000">
@@ -40,7 +44,7 @@
                 </StackPanel>
             </Grid>
 
-            <ListView x:Name="NotesControl" ItemsSource="{Binding Notes, Mode=OneWay}" IsItemClickEnabled="True" ItemClick="OnNoteClick" ItemsPanel="{StaticResource FluidItemsPanelTemplate}" ItemTemplate="{StaticResource NotePreviewListViewControlTemplate}" ScrollViewer.VerticalScrollMode="Enabled" VerticalAlignment="Stretch" CanDragItems="False"/>
+            <ListView x:Name="NotesControl" ItemsSource="{Binding Notes, Mode=OneWay}" IsItemClickEnabled="True" ItemClick="OnNoteClick" ItemsPanel="{StaticResource FluidItemsPanelTemplate}" ItemTemplate="{StaticResource NotePreviewListViewControlTemplate}" ScrollViewer.VerticalScrollMode="Enabled" VerticalAlignment="Stretch" CanReorderItems="False" CanDragItems="False" AllowDrop="False"/>
         </Grid>
     </Grid>
 </Page>

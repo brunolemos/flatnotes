@@ -66,6 +66,12 @@
 
             <ScrollViewer Grid.Row="0" ScrollViewer.VerticalScrollMode="Enabled" ScrollViewer.HorizontalScrollMode="Disabled">
                 <StackPanel>
+                    <StackPanel.ChildrenTransitions>
+                        <TransitionCollection>
+                            <EntranceThemeTransition FromHorizontalOffset="0" FromVerticalOffset="10" IsStaggeringEnabled="True" />
+                        </TransitionCollection>
+                    </StackPanel.ChildrenTransitions>
+                    
                     <Grid MaxHeight="220" Background="{StaticResource PhoneDarkLowBrush}" Visibility="{Binding Note.Images.Count, Converter={StaticResource PositiveIntToVisibilityConverter}}">
                         <ListView x:Name="NoteImagesListView" ItemsSource="{Binding Note.Images}" ItemTemplate="{StaticResource NoteImagesListViewControlTemplate}" SelectionMode="None"/>
                     </Grid>
@@ -100,6 +106,12 @@
             <ScrollViewer Grid.Row="1" Margin="0,12,0,0" Height="40">
                 <!-- Visibility="{Binding Note.IsNewNote, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=True}"-->
                 <StackPanel Margin="12,12,12,0">
+                    <StackPanel.ChildrenTransitions>
+                        <TransitionCollection>
+                            <EntranceThemeTransition FromHorizontalOffset="0" FromVerticalOffset="10" IsStaggeringEnabled="True" />
+                        </TransitionCollection>
+                    </StackPanel.ChildrenTransitions>
+                    
                     <Grid Visibility="{Binding Note.IsArchived, Converter={StaticResource BooleanToVisibilityConverter}}">
 
                         <Grid Margin="0,0,0,12" Visibility="{Binding Note.ArchivedAt, Converter={StaticResource NullableToVisibilityConverter}}">

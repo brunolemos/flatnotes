@@ -201,43 +201,41 @@
     <MainPackageIdentityName>29428BrunoLemos.StellarLite</MainPackageIdentityName>
     <MainPackageIdentityName>29428BrunoLemos.5123029690F68</MainPackageIdentityName>
   </AccountPackageIdentityNames>
-  <PackageInfoList LandingUrl="https://dev.windowsphone.com/AppSubmission/AssociationLanding?windowsProductId=5ce343c3-5530-455c-bfcf-998a516b50ad">
-    <BundleInfo>
-      <PackageInfo>
-        <OsMinVersion>6.3.0.0</OsMinVersion>
-        <PackageArchitecture></PackageArchitecture>
-        <PackageMaxArchitectureVersion>1.9.6.3</PackageMaxArchitectureVersion>
-      </PackageInfo>
-      <PackageInfo>
-        <OsMinVersion>6.3.0.0</OsMinVersion>
-        <PackageArchitecture></PackageArchitecture>
-        <PackageMaxArchitectureVersion>1.9.6.3</PackageMaxArchitectureVersion>
-      </PackageInfo>
-      <PackageInfo>
-        <OsMinVersion>6.3.0.0</OsMinVersion>
-        <PackageArchitecture></PackageArchitecture>
-        <PackageMaxArchitectureVersion>1.9.6.3</PackageMaxArchitectureVersion>
-      </PackageInfo>
-      <PackageInfo>
-        <OsMinVersion>6.3.0.0</OsMinVersion>
-        <PackageArchitecture></PackageArchitecture>
-        <PackageMaxArchitectureVersion>1.9.6.3</PackageMaxArchitectureVersion>
-      </PackageInfo>
-      <PackageInfo>
-        <OsMinVersion>6.3.0.0</OsMinVersion>
-        <PackageArchitecture></PackageArchitecture>
-        <PackageMaxArchitectureVersion>1.9.6.3</PackageMaxArchitectureVersion>
-      </PackageInfo>
-      <PackageInfo>
-        <OsMinVersion>6.3.0.0</OsMinVersion>
-        <PackageArchitecture>neutral</PackageArchitecture>
-        <PackageMaxArchitectureVersion>1.9.6.3</PackageMaxArchitectureVersion>
-      </PackageInfo>
-      <PackageInfo>
-        <OsMinVersion>6.3.0.0</OsMinVersion>
-        <PackageArchitecture></PackageArchitecture>
-        <PackageMaxArchitectureVersion>1.9.6.3</PackageMaxArchitectureVersion>
-      </PackageInfo>
-    </BundleInfo>
+  <PackageInfoList LandingUrl="https://dev.windows.com/dashboard/Application?appId=9WZDNCRDD0XV">
+    <PackageInfo>
+      <OsMinVersion>6.3.0.0</OsMinVersion>
+      <PackageArchitecture>Unknown</PackageArchitecture>
+      <PackageMaxArchitectureVersion>2015.224.2028.2594</PackageMaxArchitectureVersion>
+    </PackageInfo>
+    <PackageInfo>
+      <OsMinVersion>6.3.0.0</OsMinVersion>
+      <PackageArchitecture>Unknown</PackageArchitecture>
+      <PackageMaxArchitectureVersion>2015.224.2028.2594</PackageMaxArchitectureVersion>
+    </PackageInfo>
+    <PackageInfo>
+      <OsMinVersion>6.3.0.0</OsMinVersion>
+      <PackageArchitecture>Unknown</PackageArchitecture>
+      <PackageMaxArchitectureVersion>2015.224.2028.2594</PackageMaxArchitectureVersion>
+    </PackageInfo>
+    <PackageInfo>
+      <OsMinVersion>6.3.0.0</OsMinVersion>
+      <PackageArchitecture>Unknown</PackageArchitecture>
+      <PackageMaxArchitectureVersion>2015.224.2028.2594</PackageMaxArchitectureVersion>
+    </PackageInfo>
+    <PackageInfo>
+      <OsMinVersion>6.3.0.0</OsMinVersion>
+      <PackageArchitecture>Unknown</PackageArchitecture>
+      <PackageMaxArchitectureVersion>2015.224.2028.2594</PackageMaxArchitectureVersion>
+    </PackageInfo>
+    <PackageInfo>
+      <OsMinVersion>6.3.0.0</OsMinVersion>
+      <PackageArchitecture>Neutral</PackageArchitecture>
+      <PackageMaxArchitectureVersion>2015.224.2028.2594</PackageMaxArchitectureVersion>
+    </PackageInfo>
+    <PackageInfo>
+      <OsMinVersion>6.3.0.0</OsMinVersion>
+      <PackageArchitecture>Unknown</PackageArchitecture>
+      <PackageMaxArchitectureVersion>2015.224.2028.2594</PackageMaxArchitectureVersion>
+    </PackageInfo>
   </PackageInfoList>
 </StoreAssociation>

@@ -21,7 +21,7 @@
         </DataTemplate>
 
         <ItemsPanelTemplate x:Key="FluidItemsPanelTemplate" x:Name="FluidItemsPanelTemplate">
-            <local:FluidGrid x:Name="NotesFluidGrid" Margin="8" ItemWidth="160" Columns="{Binding Columns, Mode=OneWay, TargetNullValue=-1, FallbackValue=-1}" ItemStretch="True" AllowSingleColumn="True"/>
+            <local:FluidGrid x:Name="NotesFluidGrid" Margin="8" ItemWidth="160" Columns="{Binding Columns, Mode=OneWay, TargetNullValue=-1, FallbackValue=-1}" ItemStretch="True" AllowSingleColumn="True" ParentListView="{Binding ElementName=NotesControl}" ItemsReordered="OnItemsReordered"/>
         </ItemsPanelTemplate>
     </Page.Resources>
 
@@ -42,7 +42,7 @@
                 </StackPanel>
             </Grid>
 
-            <ListView x:Name="NotesControl" ItemsSource="{Binding Notes, Mode=OneWay}" IsItemClickEnabled="False" ItemsPanel="{StaticResource FluidItemsPanelTemplate}" ItemTemplate="{StaticResource NotePreviewListViewControlTemplate}" ScrollViewer.VerticalScrollMode="Enabled" VerticalAlignment="Stretch" SelectionMode="None" CanDragItems="True" ReorderMode="{Binding ReorderMode, Mode=TwoWay}">
+            <ListView x:Name="NotesControl" ItemsSource="{Binding Notes, Mode=OneWay}" IsItemClickEnabled="False" ItemsPanel="{StaticResource FluidItemsPanelTemplate}" ItemTemplate="{StaticResource NotePreviewListViewControlTemplate}" ScrollViewer.VerticalScrollMode="Enabled" VerticalAlignment="Stretch" SelectionMode="None" CanReorderItems="True" CanDragItems="True" AllowDrop="True" ReorderMode="{Binding ReorderMode, Mode=TwoWay}">
                 <ListView.ItemContainerTransitions>
                     <TransitionCollection>
                         <EntranceThemeTransition IsStaggeringEnabled="True" FromVerticalOffset="200" FromHorizontalOffset="0"/>

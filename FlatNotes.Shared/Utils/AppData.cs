@@ -77,6 +77,7 @@ namespace FlatNotes.Utils
             if (notes != null && notes.Count > 0) return;
 
             notes = DB.GetAllWithChildren<Note>(x => x.IsArchived != true).OrderByDescending(x => x.Order).ThenByDescending(x => x.CreatedAt).ToList();
+            if (notes == null) notes = new Notes();
         }
 
         public static void LoadArchivedNotesIfNecessary()
@@ -84,6 +85,7 @@ namespace FlatNotes.Utils
             if (archivedNotes != null && archivedNotes.Count > 0) return;
 
             archivedNotes = DB.GetAllWithChildren<Note>(x => x.IsArchived == true).OrderByDescending(x => x.ArchivedAt).ToList();
+            if (archivedNotes == null) archivedNotes = new Notes();
         }
 
         public static async Task<bool> CreateOrUpdateNote(Note note)
@@ -167,6 +169,7 @@ namespace FlatNotes.Utils
 
             AppData.Notes.Remove(note);
             AppData.ArchivedNotes.Insert(0, note);
+            Debug.WriteLine("AppData.ArchivedNotes.Insert(0, note);");
 
             var handler = NoteArchived;
             if (handler != null) handler(null, new NoteEventArgs(note));
