@@ -21,8 +21,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Common\SuspensionManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\TrullyObservableCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\FluidGrid.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Controls\ListViewEx.cs" />
-    <None Include="$(MSBuildThisFileDirectory)Controls\GridViewEx.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\NotePreview.xaml.cs">
       <DependentUpon>NotePreview.xaml</DependentUpon>
     </Compile>
@@ -39,6 +37,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Events\NoteColorEventArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Events\ColumnsEventArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Events\IsSingleColumnEnabledEventArgs.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Events\ItemsReorderedEventArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Events\NoteIdEventArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Events\TransparentTileEventArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Events\ThemeEventArgs.cs" />

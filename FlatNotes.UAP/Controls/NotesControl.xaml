@@ -29,17 +29,19 @@
                 <MenuFlyoutItem Background="{x:Bind viewModel.Colors[6].Color}" Click="OnChangeColorClick" CommandParameter="{x:Bind viewModel.Colors[6]}"/>
                 <MenuFlyoutItem Background="{x:Bind viewModel.Colors[7].Color}" Click="OnChangeColorClick" CommandParameter="{x:Bind viewModel.Colors[7]}"/>
             </MenuFlyoutSubItem>
-            <MenuFlyoutSeparator/>
-            <MenuFlyoutItem Text="Share..."/>
-            <MenuFlyoutItem Text="Reorder..."/>
+            <!--<MenuFlyoutSeparator/>
+            <MenuFlyoutItem Text="Share..."/>-->
         </MenuFlyout>
     </UserControl.Resources>
 
     <ListView x:Name="NotesGridView"
               HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
               ItemsSource="{x:Bind ItemsSource, Mode=OneWay}"
-              SelectionMode="None" CanReorderItems="True" CanDragItems="True" AllowDrop="True"  
-              IsItemClickEnabled="True" ItemClick="GridView_ItemClick" Holding="GridView_Holding">
+              CanReorderItems="{x:Bind CanReorderItems, Mode=OneWay}" 
+              CanDragItems="{x:Bind CanDragItems, Mode=OneWay}" 
+              AllowDrop="{x:Bind AllowDrop, Mode=OneWay}"  
+              SelectionMode="None" 
+              IsItemClickEnabled="True" ItemClick="GridView_ItemClick" Holding="GridView_Holding" DragItemsStarting="NotesGridView_DragItemsStarting">
 
         <ListView.ItemContainerTransitions>
             <TransitionCollection>
@@ -53,7 +55,7 @@
 
         <ListView.ItemsPanel>
             <ItemsPanelTemplate>
-                <local:FluidGrid x:Name="NotesFluidGrid" Margin="{Binding Padding, ElementName=Root}" ItemWidth="{Binding ItemWidth, ElementName=Root}" ItemStretch="{Binding ItemStretch, ElementName=Root}" Columns="{Binding Columns, ElementName=Root}" AllowSingleColumn="{Binding AllowSingleColumn, ElementName=Root}" HorizontalAlignment="Center" ParentListView="{Binding ElementName=NotesGridView}"/>
+                <local:FluidGrid x:Name="NotesFluidGrid" Margin="{Binding Padding, ElementName=Root}" ItemWidth="{Binding ItemWidth, ElementName=Root}" ItemStretch="{Binding ItemStretch, ElementName=Root}" Columns="{Binding Columns, ElementName=Root}" AllowSingleColumn="{Binding AllowSingleColumn, ElementName=Root}" HorizontalAlignment="Center" ParentListView="{Binding ElementName=NotesGridView}" ItemsReordered="NotesFluidGrid_ItemsReordered"/>
                 <!--<ItemsWrapGrid AllowDrop="True" ItemWidth="{Binding ItemWidth, ElementName=Root}" Orientation="Horizontal" HorizontalAlignment="Center"/>-->
             </ItemsPanelTemplate>
         </ListView.ItemsPanel>

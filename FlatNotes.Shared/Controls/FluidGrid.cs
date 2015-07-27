@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FlatNotes.Events;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -12,6 +13,8 @@ namespace FlatNotes.Controls
 {
     public class FluidGrid : Panel
     {
+        public event EventHandler<ItemsReorderedEventArgs> ItemsReordered;
+
         private int[] childrenColumns;
         private Size[] childrenSizes;
         private double itemWidth = 160;
@@ -19,8 +22,10 @@ namespace FlatNotes.Controls
 
         List<UIElement> elements;
         private bool isReordering = false;
-        private int draggingItemIndex = -1;
-        private int dropAtIndex = -1;
+        private int draggingItemIndex_original = -1;
+        private int dropAtIndex_original = -1;
+        private int dropAtIndex_elements = -1;
+        private Point? lastDragOverPosition = null;
 
         public FluidGrid()
         {
@@ -36,6 +41,10 @@ namespace FlatNotes.Controls
                 ParentListView.DragItemsStarting += OnDragItemsStarting;
                 ParentListView.DragOver += OnDragOver;
                 ParentListView.Drop += OnDrop;
+
+#if WINDOWS_UAP
+                ParentListView.DragItemsCompleted += OnDragItemsCompleted;
+#endif
             }
         }
 
@@ -47,6 +56,10 @@ namespace FlatNotes.Controls
                 ParentListView.DragItemsStarting -= OnDragItemsStarting;
                 ParentListView.DragOver -= OnDragOver;
                 ParentListView.Drop -= OnDrop;
+
+#if WINDOWS_UAP
+                ParentListView.DragItemsCompleted -= OnDragItemsCompleted;
+#endif
             }
         }
 
@@ -74,10 +87,10 @@ namespace FlatNotes.Controls
                 foreach (var item in Children)
                     elements.Add(item);
 
-            if (isReordering && draggingItemIndex >= 0 && dropAtIndex >= 0 && draggingItemIndex < elements.Count && dropAtIndex < elements.Count)
+            if (isReordering && draggingItemIndex_original >= 0 && dropAtIndex_original >= 0 && draggingItemIndex_original < elements.Count && dropAtIndex_original < elements.Count)
             {
-                var _draggingItemIndex = elements.IndexOf(Children[draggingItemIndex]);
-                var _dropAtIndex = elements.IndexOf(Children[dropAtIndex]);
+                var _draggingItemIndex = elements.IndexOf(Children[draggingItemIndex_original]);
+                var _dropAtIndex = elements.IndexOf(Children[dropAtIndex_original]);
 
                 var temp = elements[_draggingItemIndex];
                 elements.Remove(temp);
@@ -233,38 +246,51 @@ namespace FlatNotes.Controls
             e.Data.RequestedOperation = Windows.ApplicationModel.DataTransfer.DataPackageOperation.Move;
 #endif
 
-            draggingItemIndex = -1;
+            draggingItemIndex_original = -1;
             if (e.Items.Count < 1) return;
 
             var itemContainer = (sender as ListViewBase).ContainerFromItem(e.Items[0]) as UIElement;
             if (itemContainer == null) return;
 
-            draggingItemIndex = (sender as ListViewBase).IndexFromContainer(itemContainer);
-            //draggingItemIndex = elements.IndexOf(itemContainer);
-            Debug.WriteLine("OnDragItemsStarting. Sender: {0}, Item: {1} = {2}", sender, draggingItemIndex, e.Items[0]);
+            draggingItemIndex_original = (sender as ListViewBase).IndexFromContainer(itemContainer);
+            //Debug.WriteLine("OnDragItemsStarting. Sender: {0}, Item: {1} = {2}", sender, draggingItemIndex_original, e.Items[0]);
 
             isReordering = true;
         }
 
         private void OnDragOver(object sender, DragEventArgs e)
         {
-            if (!isReordering || draggingItemIndex == -1) return;
-
-            int oldDropIndex = dropAtIndex;
+            if (!isReordering || draggingItemIndex_original == -1) return;
+            e.Handled = true;
 
             //Get the list of items under the current position
             var position = e.GetPosition(null);
             var hitContainers = VisualTreeHelper.FindElementsInHostCoordinates(position, this).OfType<SelectorItem>().ToArray();
 
-            dropAtIndex = (hitContainers == null || hitContainers.Count() <= 0)
+            int newDropAtIndex = (hitContainers == null || hitContainers.Count() <= 0)
                             ? -1
                             : ParentListView.IndexFromContainer(hitContainers[0]);//elements.IndexOf(hitContainers[0]);
 
-            if (dropAtIndex == oldDropIndex || dropAtIndex == draggingItemIndex) return;
+            if (newDropAtIndex == draggingItemIndex_original) return;
 
-            if (dropAtIndex < 0) return;
-            Debug.WriteLine("OnDragOver. Drag: {0}, Drop: {1}, OldDrop: {2}", draggingItemIndex, dropAtIndex, oldDropIndex);
-            e.Handled = true;
+            //prevent mess: disable reorder on same position (prevent infinite reordering)
+            if(lastDragOverPosition != null)
+            {
+                hitContainers = VisualTreeHelper.FindElementsInHostCoordinates((Point)lastDragOverPosition, this).OfType<SelectorItem>().ToArray();
+                var index = (hitContainers == null || hitContainers.Count() <= 0)
+                                ? -1
+                                : ParentListView.IndexFromContainer(hitContainers[0]);
+
+                if (index == newDropAtIndex) return;
+                lastDragOverPosition = null;
+            }
+
+            if (newDropAtIndex < 0) return;
+
+            lastDragOverPosition = position;
+            dropAtIndex_elements = elements.IndexOf(Children[newDropAtIndex]);
+            //Debug.WriteLine("OnDragOver. Drag: {0}, Drop: {1}, OldDrop: {2}", draggingItemIndex_original, dropAtIndex_elements, dropAtIndex_original);
+            dropAtIndex_original = newDropAtIndex;
 
 #if WINDOWS_UAP
             e.AcceptedOperation = Windows.ApplicationModel.DataTransfer.DataPackageOperation.Move;
@@ -274,14 +300,36 @@ namespace FlatNotes.Controls
 
         private void OnDrop(object sender, DragEventArgs e)
         {
-            Debug.WriteLine("OnDrop. Drag: {0}, Drop: {1}", draggingItemIndex, dropAtIndex);
+            //Debug.WriteLine("OnDrop. Drag: {0}, Drop: {1}", draggingItemIndex_original, dropAtIndex_elements);
+            if (!isReordering) return;
+            if (draggingItemIndex_original == -1 || dropAtIndex_elements == -1) return;
+            if (draggingItemIndex_original >= Children.Count || dropAtIndex_elements >= Children.Count) return;
+            
             isReordering = false;
 
-            if (draggingItemIndex == -1 || dropAtIndex == -1) return;
-            if (draggingItemIndex >= Children.Count || dropAtIndex >= Children.Count) return;
+            //if(draggingItemIndex_original != dropAtIndex_elements)
+            //{
+                var handler = ItemsReordered;
+                if (handler != null) handler(this, new ItemsReorderedEventArgs(draggingItemIndex_original, dropAtIndex_elements));
+            //}
 
-            draggingItemIndex = -1;
-            dropAtIndex = -1;
+            lastDragOverPosition = null;
+            draggingItemIndex_original = -1;
+            dropAtIndex_original = -1;
+            dropAtIndex_elements = -1;
         }
+
+#if WINDOWS_UAP
+        private void OnDragItemsCompleted(ListViewBase sender, DragItemsCompletedEventArgs args)
+        {
+            //Debug.WriteLine("OnDragItemsCompleted. Drag: {0}, Drop: {1}", draggingItemIndex_original, dropAtIndex_elements);
+
+            isReordering = false;
+            lastDragOverPosition = null;
+            draggingItemIndex_original = -1;
+            dropAtIndex_original = -1;
+            dropAtIndex_elements = -1;
+        }
+#endif
     }
 }

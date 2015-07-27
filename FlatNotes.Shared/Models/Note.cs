@@ -53,6 +53,10 @@ namespace FlatNotes.Models
         public bool Changed { get { return changed; } set { if (changed != value) { changed = value; NotifyPropertyChanged("Changed"); } } }
         private bool changed = false;
 
+        public int Order { get { return order; } set { if (order != value) { order = value; NotifyPropertyChanged("Order"); } } }
+        [DataMember(Name = "Order")]
+        private int order;
+
         public bool IsArchived { get { return isArchived; } set { isArchived = value; NotifyPropertyChanged("IsArchived"); } }
         [DataMember(Name = "IsArchived")]
         private bool isArchived;

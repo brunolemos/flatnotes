@@ -107,7 +107,7 @@
                 <TextBlock x:Uid="EmptyNotesMessageTextBox" Margin="10,24" Text="Notes you add appear here" Foreground="{ThemeResource PhoneMidBrush}" FontSize="{StaticResource EmptyNotesMessageFontSize}" TextWrapping="Wrap" TextAlignment="Center"/>
             </StackPanel>
 
-            <local:NotesControl x:Name="NotesControl" ItemsSource="{Binding}" Columns="{x:Bind viewModel.Columns, Mode=OneWay}" DataContext="{x:Bind viewModel.Notes, Mode=OneWay}" d:DataContext="{Binding Notes}" ItemClick="OnNoteClick" VerticalAlignment="Stretch"/>
+            <local:NotesControl x:Name="NotesControl" ItemsSource="{Binding}" Columns="{x:Bind viewModel.Columns, Mode=OneWay}" DataContext="{x:Bind viewModel.Notes, Mode=OneWay}" d:DataContext="{Binding Notes}" VerticalAlignment="Stretch" CanReorderItems="True" CanDragItems="True" AllowDrop="True" ItemClick="OnNoteClick" ItemsReordered="OnItemsReordered"/>
         </Grid>
 
         <CommandBar Grid.Row="{x:Bind viewModel.IsMobile, Converter={StaticResource IsMobileToGridRowConverter}}" EntranceNavigationTransitionInfo.IsTargetElement="False" CommonNavigationTransitionInfo.IsStaggerElement="False"  ContinuumNavigationTransitionInfo.IsEntranceElement="False" ContinuumNavigationTransitionInfo.IsExitElement="False" >

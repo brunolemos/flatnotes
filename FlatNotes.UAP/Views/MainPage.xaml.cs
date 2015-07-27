@@ -153,5 +153,23 @@ namespace FlatNotes.Views
             noteSwipeFeature.DisableSwipeFeature(element);
         }
 #endif
+
+        private void OnItemsReordered(object sender, Events.ItemsReorderedEventArgs e)
+        {
+            System.Diagnostics.Debug.WriteLine("OnItemsReordered from {0} to {1}", e.OldItemIndex, e.NewItemIndex);
+            if (e.OldItemIndex < 0 || e.NewItemIndex < 0) return;
+            if (e.OldItemIndex > viewModel.Notes.Count || e.NewItemIndex > viewModel.Notes.Count) return;
+
+            viewModel.Notes.Move(e.OldItemIndex, e.NewItemIndex);
+
+            int pos = viewModel.Notes.Count - 1;
+            foreach (var note in viewModel.Notes)
+            {
+                note.Order = pos;
+                pos--;
+            }
+
+            AppData.DB.UpdateAll(viewModel.Notes);
+        }
     }
 }

@@ -1,15 +1,19 @@
-﻿using FlatNotes.Models;
+﻿using FlatNotes.Events;
+using FlatNotes.Models;
 using FlatNotes.ViewModels;
 using System;
 using System.Diagnostics;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
 
 namespace FlatNotes.Controls
 {
     public sealed partial class NotesControl : UserControl
     {
+        public event EventHandler<ItemsReorderedEventArgs> ItemsReordered;
+
         public NotesControlViewModel viewModel { get { return _viewModel; } }
         private static NotesControlViewModel _viewModel = NotesControlViewModel.Instance;
 
@@ -34,6 +38,14 @@ namespace FlatNotes.Controls
         public static readonly DependencyProperty BiggerItemHeightProperty = DependencyProperty.Register("BiggerItemHeight", typeof(double), typeof(NotesControl), new PropertyMetadata(0));
         public double BiggerItemHeight { get { return (double)GetValue(BiggerItemHeightProperty); } private set { SetValue(BiggerItemHeightProperty, value); } }
 
+        public static readonly DependencyProperty CanReorderItemsProperty = DependencyProperty.Register("CanReorderItems", typeof(bool), typeof(NotesControl), new PropertyMetadata(false));
+        public bool CanReorderItems { get { return (bool)GetValue(CanReorderItemsProperty); } set { SetValue(CanReorderItemsProperty, value); } }
+
+        public static readonly DependencyProperty CanDragItemsProperty = DependencyProperty.Register("CanDragItems", typeof(bool), typeof(NotesControl), new PropertyMetadata(false));
+        public bool CanDragItems { get { return (bool)GetValue(CanDragItemsProperty); } set { SetValue(CanDragItemsProperty, value); } }
+
+        FlyoutBase openedFlyout = null;
+
         public NotesControl()
         {
             this.InitializeComponent();
@@ -47,7 +59,7 @@ namespace FlatNotes.Controls
 
         private void NotePreview_Holding(object sender, Windows.UI.Xaml.Input.HoldingRoutedEventArgs e)
         {
-            //ShowNoteFlyout(sender as FrameworkElement);
+            ShowNoteFlyout(sender as FrameworkElement);
         }
 
         private void NotePreview_RightTapped(object sender, Windows.UI.Xaml.Input.RightTappedRoutedEventArgs e)
@@ -59,6 +71,17 @@ namespace FlatNotes.Controls
         {
             if (element == null) return;
             Flyout.ShowAttachedFlyout(element);
+
+            openedFlyout = Flyout.GetAttachedFlyout(element);
+            openedFlyout.Closed += OpenedFlyout_Closed;
+        }
+
+        private void OpenedFlyout_Closed(object sender, object e)
+        {
+            if(openedFlyout != null)
+                openedFlyout.Closed -= OpenedFlyout_Closed;
+
+            openedFlyout = null;
         }
 
         private void GridView_Holding(object sender, Windows.UI.Xaml.Input.HoldingRoutedEventArgs e)
@@ -78,6 +101,18 @@ namespace FlatNotes.Controls
             if (newColor == null) return;
 
             viewModel.ChangeColor(note, newColor);
+        }
+
+        private void NotesFluidGrid_ItemsReordered(object sender, Events.ItemsReorderedEventArgs e)
+        {
+            var handler = ItemsReordered;
+            if (handler != null) handler(sender, e);
+        }
+
+        private void NotesGridView_DragItemsStarting(object sender, DragItemsStartingEventArgs e)
+        {
+            if (openedFlyout != null)
+                openedFlyout.Hide();
         }
     }
 }

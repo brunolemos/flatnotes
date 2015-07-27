@@ -66,7 +66,7 @@
             </Grid>
             
             <StackPanel Margin="8,8,8,16">
-                <TextBlock Text="{Binding Title, Mode=OneWay}" Foreground="{Binding ElementName=Root, Path=Foreground}" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" Margin="0,0,0,4" FontWeight="Bold" FontSize="{Binding ElementName=Root, Path=FontSize}" MaxLines="2" Visibility="{Binding Title, Converter={StaticResource NullableToVisibilityConverter}}"/>
+                <TextBlock Text="{Binding Title, Mode=OneWay}" Foreground="{Binding ElementName=Root, Path=Foreground}" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" Margin="0,0,0,4" FontWeight="Bold" FontSize="{Binding ElementName=Root, Path=FontSize}" MaxLines="1" Visibility="{Binding Title, Converter={StaticResource NullableToVisibilityConverter}}"/>
                 <TextBlock Text="{Binding Text, Mode=OneWay}" Foreground="{Binding ElementName=Root, Path=Foreground}" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" Margin="0,0,0,4" FontWeight="SemiLight" FontSize="{Binding ElementName=Root, Path=FontSize}" MaxLines="4" Visibility="{Binding Text, Converter={StaticResource NullableToVisibilityConverter}}" />
 
                 <StackPanel Visibility="{Binding IsChecklist, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">

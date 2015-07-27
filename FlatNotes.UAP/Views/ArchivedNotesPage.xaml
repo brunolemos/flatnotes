@@ -98,7 +98,7 @@
             </StackPanel>
         </Grid>
 
-        <local:NotesControl Grid.Row="1" x:Name="NotesControl" ItemsSource="{Binding}" Columns="-1" DataContext="{x:Bind viewModel.Notes, Mode=OneWay}" d:DataContext="{Binding Notes}" ItemClick="OnNoteClick"/>
+        <local:NotesControl Grid.Row="1" x:Name="NotesControl" ItemsSource="{Binding}" Columns="-1" DataContext="{x:Bind viewModel.Notes, Mode=OneWay}" d:DataContext="{Binding Notes}" CanReorderItems="False" CanDrag="False" AllowDrop="False" ItemClick="OnNoteClick"/>
 
         <CommandBar Grid.Row="{x:Bind viewModel.IsMobile, Converter={StaticResource IsMobileToGridRowConverter}}" Opacity="0" IsHitTestVisible="False">
         </CommandBar>

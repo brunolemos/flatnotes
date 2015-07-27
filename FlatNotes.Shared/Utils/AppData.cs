@@ -76,14 +76,14 @@ namespace FlatNotes.Utils
         {
             if (notes != null && notes.Count > 0) return;
 
-            notes = DB.GetAllWithChildren<Note>(x => x.IsArchived != true).OrderByDescending(x => x.CreatedAt).ToList();
+            notes = DB.GetAllWithChildren<Note>(x => x.IsArchived != true).OrderByDescending(x => x.Order).ThenByDescending(x => x.CreatedAt).ToList();
         }
 
         public static void LoadArchivedNotesIfNecessary()
         {
             if (archivedNotes != null && archivedNotes.Count > 0) return;
 
-            archivedNotes = DB.GetAllWithChildren<Note>(x => x.IsArchived == true).OrderByDescending(x => x.CreatedAt).ToList();
+            archivedNotes = DB.GetAllWithChildren<Note>(x => x.IsArchived == true).OrderByDescending(x => x.ArchivedAt).ToList();
         }
 
         public static async Task<bool> CreateOrUpdateNote(Note note)
@@ -112,18 +112,11 @@ namespace FlatNotes.Utils
             if (note.CreatedAt == null) note.TouchCreatedAt();
             if (note.UpdatedAt == null) note.Touch();
 
-            DB.InsertWithChildren(note);
-            //bool success = DB.InsertOrReplace(note) == 1;
-            //if (!success) return false;
-
-            //if (note.Checklist != null && note.Checklist.Count > 0)
-            //    DB.InsertOrReplaceAll(note.Checklist);
-
-            //if (note.Images != null && note.Images.Count > 0)
-            //    DB.InsertOrReplaceAll(note.Images);
-
             note.Changed = false;
+            note.Order = Notes.Count;
             AppData.Notes.Insert(0, note);
+
+            DB.InsertWithChildren(note);
 
             var handler = NoteCreated;
             if (handler != null) handler(null, new NoteEventArgs(note));
@@ -189,6 +182,7 @@ namespace FlatNotes.Utils
             //App.TelemetryClient.TrackEvent("ArchivedNoteRestored");
 
             note.IsArchived = false;
+            note.Order = Notes.Count;
 
             bool success = DB.Update(note) == 1;
             if (!success) return false;
