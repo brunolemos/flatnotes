@@ -76,12 +76,16 @@ namespace FlatNotes.Utils.Migration.Versions.v2.Utils
                 //import notes
                 Notes notes = new Notes();
                 foreach (var note in v1.Utils.AppSettings.Instance.LoggedUser.Notes)
-                    notes.Add(new Note(note.Title, note.Text, (Checklist)note.Checklist, note.Images, note.Color, note.CreatedAt, note.UpdatedAt, null));
+                    notes.Add(note);
 
                 //import archived
                 Notes archivedNotes = new Notes();
                 foreach (var note in v1.Utils.AppSettings.Instance.LoggedUser.ArchivedNotes)
-                    notes.Add(new Note(note.Title, note.Text, (Checklist)note.Checklist, note.Images, note.Color, note.CreatedAt, note.UpdatedAt, note.UpdatedAt));
+                {
+                    var convertedNote = (Note)note;
+                    convertedNote.ArchivedAt = convertedNote.UpdatedAt;
+                    notes.Add(convertedNote);
+                }
 
                 bool success = await Instance.SaveNotes(notes);
                 await Instance.SaveArchivedNotes(archivedNotes);

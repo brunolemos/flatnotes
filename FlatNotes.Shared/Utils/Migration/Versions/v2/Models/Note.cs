@@ -145,10 +145,11 @@ namespace FlatNotes.Utils.Migration.Versions.v2.Models
             this.checklist = checklist;
         }
 
-        public Note(string title, string text, Checklist checklist, NoteImages images, NoteColor color, DateTime? createdAt, DateTime? updatedAt, DateTime? archivedAt) : this()
+        internal Note(string id, string title, string text, Checklist checklist, NoteImages images, NoteColor color, DateTime? createdAt, DateTime? updatedAt, DateTime? archivedAt) : this()
         {
             this.isChecklist = checklist != null && checklist.Count > 0;
 
+            this.id = id;
             this.title = title;
             this.text = this.isChecklist ? "" : text;
             this.checklist = checklist;
@@ -290,12 +291,12 @@ namespace FlatNotes.Utils.Migration.Versions.v2.Models
 
         public static implicit operator FlatNotes.Utils.Migration.Versions.v1.Models.Note(Note _note)
         {
-            return new FlatNotes.Utils.Migration.Versions.v1.Models.Note(_note.Title, _note.Text, (Checklist)_note.Checklist, _note.Color, _note.CreatedAt, _note.UpdatedAt);
+            return new FlatNotes.Utils.Migration.Versions.v1.Models.Note(_note.ID, _note.Title, _note.Text, (Checklist)_note.Checklist, _note.Color, _note.CreatedAt, _note.UpdatedAt);
         }
 
         public static implicit operator Note(FlatNotes.Utils.Migration.Versions.v1.Models.Note _note)
         {
-            return new Note(_note.Title, _note.Text, (Checklist)_note.Checklist, _note.Images, _note.Color, _note.CreatedAt, _note.UpdatedAt, null);
+            return new Note(_note.ID, _note.Title, _note.Text, (Checklist)_note.Checklist, _note.Images, _note.Color, _note.CreatedAt, _note.UpdatedAt, null);
         }
     }
 }

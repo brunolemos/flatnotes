@@ -87,8 +87,9 @@ namespace FlatNotes.Utils.Migration.Versions.v1.Models
             this.Checklist = checklist;
         }
 
-        public Note(string title, string text, Checklist checklist, NoteColor color, DateTime? createdAt, DateTime? updatedAt) : this()
+        internal Note(string id, string title, string text, Checklist checklist, NoteColor color, DateTime? createdAt, DateTime? updatedAt) : this()
         {
+            this.id = id;
             this.title = title;
             this.text = text;
             this.checklist = checklist;
