@@ -57,6 +57,8 @@ namespace FlatNotes.Views
 
         private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
+            viewModel.PropertyChanged += OnViewModelPropertyChanged;
+
             if (e.NavigationParameter != null && e.NavigationParameter is Note)
                 viewModel.Note = e.NavigationParameter as Note;
             else
@@ -67,7 +69,6 @@ namespace FlatNotes.Views
             viewModel.Note.Checklist.CollectionChanged += Checklist_CollectionChanged;
             viewModel.Note.Checklist.CollectionItemChanged += Checklist_CollectionItemChanged;
             viewModel.Note.PropertyChanged += OnNotePropertyChanged;
-            viewModel.PropertyChanged += OnViewModelPropertyChanged;
 
             previousBackground = App.RootFrame.Background;
             var xxx = new SolidColorBrush(Colors.Transparent);
@@ -151,11 +152,12 @@ namespace FlatNotes.Views
             App.ChangeStatusBarColor(new Color().FromHex(viewModel.Note.Color.DarkColor2));
         }
 
-        private void UpdateIsPinnedStatus()
+        private void UpdateIsPinnedStatus(bool? forceStatus = null)
         {
             if (viewModel.Note == null) return;
+            bool isPinned = forceStatus != null ? (bool)forceStatus : viewModel.Note.IsPinned;
 
-            if (viewModel.Note.IsPinned)
+            if (isPinned)
             {
                 TogglePinAppBarButton.Icon = new SymbolIcon(Symbol.UnPin);
                 TogglePinAppBarButton.Command = viewModel.UnpinCommand;

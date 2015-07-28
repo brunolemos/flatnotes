@@ -59,7 +59,7 @@ namespace FlatNotes.ViewModels
                 if (Note == null) return;
 
                 IsNewNote = AppData.DB.Find<Note>(Note.ID) == null;
-                Note.IsPinned = SecondaryTile.Exists(Note.ID);
+                Note.NotifyPropertyChanged("IsPinned");
 
                 NotifyPropertyChanged("ArchivedAtFormatedString");
                 NotifyPropertyChanged("UpdatedAtFormatedString");
@@ -241,15 +241,19 @@ namespace FlatNotes.ViewModels
             if (IsNewNote)
                 await AppData.CreateOrUpdateNote(Note);
 
-            Note.IsPinned = await TileManager.CreateOrUpdateNoteTile(Note, AppSettings.Instance.TransparentNoteTile);
+            await TileManager.CreateOrUpdateNoteTile(Note, AppSettings.Instance.TransparentNoteTile);
+            Note.NotifyPropertyChanged("IsPinned");
         }
 
-        private void Unpin()
+        private async void Unpin()
         {
             App.TelemetryClient.TrackEvent("Unpin_NoteEditViewModel");
 
             TileManager.RemoveTileIfExists(Note.ID);
-            Note.IsPinned = false;// SecondaryTile.Exists(Note.ID);
+            Note.NotifyPropertyChanged("IsPinned");
+
+            await Task.Delay(0500);
+            Note.NotifyPropertyChanged("IsPinned");
         }
 
         private void ArchiveNote()

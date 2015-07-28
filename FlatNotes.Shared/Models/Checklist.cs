@@ -51,7 +51,7 @@ namespace FlatNotes.Models
     [DataContract]
     public class ChecklistItem : ModelBase
     {
-        public const char CHECKED_SYMBOL = '☑';//▣
+        public const char CHECKED_SYMBOL = '✓';//☑▣✓✔
         public const char UNCHECKED_SYMBOL = '⬜';
 
         [PrimaryKey]

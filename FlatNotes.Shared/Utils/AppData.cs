@@ -87,6 +87,17 @@ namespace FlatNotes.Utils
             archivedNotes = DB.GetAllWithChildren<Note>(x => x.IsArchived == true).OrderByDescending(x => x.ArchivedAt).ToList();
             if (archivedNotes == null) archivedNotes = new Notes();
         }
+        
+        public static Note TryGetNoteById(string id)
+        {
+            if(notes != null && notes.Count > 0)
+            {
+                var note = notes.FirstOrDefault(x => x.ID == id);
+                if (note != null) return note;
+            }
+
+            return DB.GetWithChildren<Note>(id);
+        }
 
         public static async Task<bool> CreateOrUpdateNote(Note note)
         {

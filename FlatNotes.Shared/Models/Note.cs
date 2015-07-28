@@ -118,12 +118,10 @@ namespace FlatNotes.Models
 
         [IgnoreDataMember]
         [Ignore]
-        public bool IsPinned { get { return isPinned; } set { isPinned = value; NotifyPropertyChanged("IsPinned"); } }
-        private bool isPinned;
+        public bool IsPinned { get { return SecondaryTile.Exists(ID); } }
 
         public Note()
         {
-            IsPinned = SecondaryTile.Exists(ID);
         }
 
         public Note(bool isChecklist = false) : this()
@@ -211,7 +209,7 @@ namespace FlatNotes.Models
         {
             this.isChecklist = false;
 
-            Text = GetTextFromChecklist();
+            Text = GetTextFromChecklist(false);
 
             Checklist.Clear();
         }
@@ -221,9 +219,9 @@ namespace FlatNotes.Models
             return string.IsNullOrEmpty(Title) && ((!IsChecklist && string.IsNullOrEmpty(Text)) || (IsChecklist && Checklist.Count <= 0)) && Images.Count <= 0;
         }
 
-        public string GetContent(bool showCheckedMark = false, bool includeTitle = false)
+        public string GetContent(bool showCheckedMark = false, bool includeTitle = false, int maxChecklistItem = 4)
         {
-            string content = IsChecklist ? GetTextFromChecklist(showCheckedMark) : Text;
+            string content = IsChecklist ? GetTextFromChecklist(showCheckedMark, maxChecklistItem) : Text;
             if (includeTitle && !string.IsNullOrEmpty(Title)) content = Title + Environment.NewLine + content;
 
             return content;
@@ -244,12 +242,13 @@ namespace FlatNotes.Models
                 }
         }
 
-        protected string GetTextFromChecklist(bool showCheckedMark = false)
+        protected string GetTextFromChecklist(bool showCheckedMark, int maxChecklistItem = 4)
         {
             string txt = "";
+            if (Checklist == null || Checklist.Count <= 0) return txt;
 
-            foreach (ChecklistItem item in Checklist)
-                txt += item.ToString(showCheckedMark) + Environment.NewLine.ToString();
+            for (int i = 0; i < Checklist.Count && i < maxChecklistItem; i++)
+                txt += Checklist[i].ToString(showCheckedMark) + Environment.NewLine.ToString();
 
             return txt.Trim();
         }

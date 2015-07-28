@@ -92,16 +92,20 @@ namespace FlatNotes.ViewModels
             if (note == null || note.IsEmpty()) return;
             App.TelemetryClient.TrackEvent("Pin_NotesControlViewModel");
 
-            note.IsPinned = await TileManager.CreateOrUpdateNoteTile(note, AppSettings.Instance.TransparentNoteTile);
+            await TileManager.CreateOrUpdateNoteTile(note, AppSettings.Instance.TransparentNoteTile);
+            note.NotifyPropertyChanged("IsPinned");
         }
 
-        private void Unpin(Note note)
+        private async void Unpin(Note note)
         {
             if (note == null) return;
             App.TelemetryClient.TrackEvent("Unpin_NoteNotesControlViewModel");
 
             TileManager.RemoveTileIfExists(note.ID);
-            note.IsPinned = false;// SecondaryTile.Exists(Note.ID);
+            note.NotifyPropertyChanged("IsPinned");
+
+            await Task.Delay(0500);
+            note.NotifyPropertyChanged("IsPinned");
         }
 
         public void ChangeColor(Note note, NoteColor newColor)

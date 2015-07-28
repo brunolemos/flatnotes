@@ -43,15 +43,16 @@ namespace FlatNotes.Utils
             tileWideContent.Image.Src = String.Format("ms-appx:///Assets/Tiles/{0}/WideLogo.png", tileSubFolder);
             tileWideContent.Square150x150Content = tileSquare150Content;
 
-#if WINDOWS_PHONE_APP
             biggerTile = tileWideContent;
-#else
-            var tileSquare310Content = TileContentFactory.CreateTileSquare310x310Image();
-            tileSquare310Content.Image.Src = String.Format("ms-appx:///Assets/Tiles/{0}/Square310x310Logo.png", tileSubFolder);
-            tileSquare310Content.Wide310x150Content = tileWideContent;
+//#if WINDOWS_PHONE_APP
+//            biggerTile = tileWideContent;
+//#else
+//            var tileSquare310Content = TileContentFactory.CreateTileSquare310x310Image();
+//            tileSquare310Content.Image.Src = String.Format("ms-appx:///Assets/Tiles/{0}/Square310x310Logo.png", tileSubFolder);
+//            tileSquare310Content.Wide310x150Content = tileWideContent;
 
-            biggerTile = tileSquare310Content;
-#endif
+//            biggerTile = tileSquare310Content;
+//#endif
 
             TileUpdateManager.CreateTileUpdaterForApplication().Update(biggerTile.CreateNotification());
         }
@@ -110,6 +111,8 @@ namespace FlatNotes.Utils
             //update background
             await UpdateNoteTileBackgroundColor(note, transparentTile);
 
+            string contentWithoutTitle = note.GetContent(true, false, 4);
+
 #if WINDOWS_UAP
             ISquare71x71TileNotificationContent tileSquare71Content = null;
 #else
@@ -130,7 +133,7 @@ namespace FlatNotes.Utils
 
                 var _tileSquare150Content = tileSquare150Content as ITileSquare150x150PeekImageAndText02;
                 _tileSquare150Content.TextHeading.Text = note.Title;
-                _tileSquare150Content.TextBodyWrap.Text = note.GetContent(true);
+                _tileSquare150Content.TextBodyWrap.Text = contentWithoutTitle;
                 _tileSquare150Content.Image.Src = note.Images[0].URL;
                 _tileSquare150Content.Square71x71Content = tileSquare71Content;
             }
@@ -140,7 +143,7 @@ namespace FlatNotes.Utils
 
                 var _tileSquare150Content = tileSquare150Content as ITileSquare150x150Text02;
                 _tileSquare150Content.TextHeading.Text = note.Title;
-                _tileSquare150Content.TextBodyWrap.Text = note.GetContent(true);
+                _tileSquare150Content.TextBodyWrap.Text = contentWithoutTitle;
                 _tileSquare150Content.Square71x71Content = tileSquare71Content;
             }
 
@@ -148,13 +151,12 @@ namespace FlatNotes.Utils
             IWide310x150TileNotificationContent tileWideContent;
             if (note.Images.Count > 0)
             {
-                tileWideContent = TileContentFactory.CreateTileWide310x150PeekImage05();
+                tileWideContent = TileContentFactory.CreateTileWide310x150PeekImage01();
 
-                var _tileWideContent = tileWideContent as ITileWide310x150PeekImage05;
+                var _tileWideContent = tileWideContent as ITileWide310x150PeekImage01;
                 _tileWideContent.TextHeading.Text = note.Title;
-                _tileWideContent.TextBodyWrap.Text = note.GetContent(true);
-                _tileWideContent.ImageMain.Src = note.Images[0].URL;
-                _tileWideContent.ImageSecondary.Src = note.Images[0].URL;
+                _tileWideContent.TextBodyWrap.Text = contentWithoutTitle;
+                _tileWideContent.Image.Src = note.Images[0].URL;
                 _tileWideContent.Square150x150Content = tileSquare150Content;
             }
             else
@@ -163,18 +165,12 @@ namespace FlatNotes.Utils
 
                 var _tileWideContent = tileWideContent as ITileWide310x150Text09;
                 _tileWideContent.TextHeading.Text = note.Title;
-                _tileWideContent.TextBodyWrap.Text = note.GetContent(true);
+                _tileWideContent.TextBodyWrap.Text = contentWithoutTitle;
                 _tileWideContent.Square150x150Content = tileSquare150Content;
             }
 
-            var tileSquare310Content = TileContentFactory.CreateTileSquare310x310ImageAndTextOverlay02();
-            tileSquare310Content.TextHeadingWrap.Text = note.Title;
-            tileSquare310Content.TextBodyWrap.Text = note.GetContent(true);
-            tileSquare310Content.Image.Src = note.Images.Count > 0 ? note.Images[0].URL : null;
-            tileSquare310Content.Wide310x150Content = tileWideContent;
-
             //create notification
-            var notification = tileSquare310Content.CreateNotification();
+            var notification = tileWideContent.CreateNotification();
             notification.Tag = note.ID.Substring(0, 16);
 
             //update
@@ -204,7 +200,7 @@ namespace FlatNotes.Utils
 
             foreach (var tile in tiles)
             {
-                Note note = AppData.DB.Get<Note>(tile.TileId);
+                Note note = AppData.TryGetNoteById(tile.TileId);
                 if (note == null) continue;
 
                 //var tile = new SecondaryTile(t.TileId);
@@ -241,7 +237,7 @@ namespace FlatNotes.Utils
                 return null;
             }
 
-            return AppData.DB.Get<Note>(noteId);
+            return AppData.TryGetNoteById(noteId);
         }
 
         private static string GenerateNavigationArgumentFromNote(Note note)
