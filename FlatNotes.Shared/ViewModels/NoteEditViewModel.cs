@@ -152,7 +152,7 @@ namespace FlatNotes.ViewModels
             await Task.Delay(0);
             //open
             picker.PickSingleFileAndContinue();
-#elif WINDOWS_UAP
+#elif WINDOWS_UWP
             var file = await picker.PickSingleFileAsync();
             HandleImageFromFilePicker(file);
 #endif

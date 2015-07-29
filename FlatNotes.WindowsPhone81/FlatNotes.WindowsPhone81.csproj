@@ -128,25 +128,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\FlatNotes.UAP\Views\ArchivedNotesPage.xaml.cs">
-      <Link>Views\ArchivedNotesPage.xaml.cs</Link>
-      <DependentUpon>ArchivedNotesPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="..\FlatNotes.UAP\Views\MainPage.xaml.cs">
-      <Link>Views\MainPage.xaml.cs</Link>
-      <DependentUpon>MainPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="..\FlatNotes.UAP\Views\NoteEditPage.xaml.cs">
-      <Link>Views\NoteEditPage.xaml.cs</Link>
-      <DependentUpon>NoteEditPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="..\FlatNotes.UAP\Views\Partials\NoteEditPage_KeyDownHandlers.cs">
-      <Link>Views\Partials\NoteEditPage_KeyDownHandlers.cs</Link>
-    </Compile>
-    <Compile Include="..\FlatNotes.UAP\Views\SettingsPage.xaml.cs">
-      <Link>Views\SettingsPage.xaml.cs</Link>
-      <DependentUpon>SettingsPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Controls\NoteColorPicker.xaml.cs">
       <DependentUpon>NoteColorPicker.xaml</DependentUpon>
     </Compile>
@@ -239,8 +220,8 @@
     <SDKReference Include="Microsoft.VCLibs, Version=12.0">
       <Name>Microsoft Visual C++ 2013 Runtime Package for Windows Phone</Name>
     </SDKReference>
-    <SDKReference Include="SQLite.WP81, Version=3.8.10.2">
-      <Name>SQLite for Windows Phone 8.1</Name>
+    <SDKReference Include="SQLite.WP81, Version=3.8.11.1">
+      <Name>SQLite for Windows Phone 8.1 %28SQLite.WP81, Version=3.8.11.1%29</Name>
     </SDKReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">

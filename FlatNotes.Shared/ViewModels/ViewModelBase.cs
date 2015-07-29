@@ -16,7 +16,7 @@ namespace FlatNotes.ViewModels
 
 #if WINDOWS_PHONE_APP
         public bool IsMobile { get { return true; } }
-#elif WINDOWS_UAP
+#elif WINDOWS_UWP
         public bool IsMobile { get; } = ApiInformation.IsApiContractPresent("Windows.Phone.PhoneContract", 1);
 #endif
     }

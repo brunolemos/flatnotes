@@ -253,7 +253,7 @@ namespace FlatNotes.Views
             ShowNoteImageFlyout((FrameworkElement)sender);
         }
 
-#if WINDOWS_UAP
+#if WINDOWS_UWP
         private void NoteImageContainer_RightTapped(object sender, RightTappedRoutedEventArgs e)
         {
             ShowNoteImageFlyout((FrameworkElement)sender);

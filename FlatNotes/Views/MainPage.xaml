@@ -11,8 +11,49 @@
     NavigationCacheMode="Required"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     d:DataContext="{d:DesignData /SampleData/MainViewModelSampleData.xaml}">
-    
+
     <Grid x:Name="LayoutRoot">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid x:Name="ContentRoot" Grid.Row="1">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{x:Bind viewModel.Notes.Count, Converter={StaticResource PositiveIntToVisibilityConverter}, ConverterParameter=True}">
+                <Viewbox Width="160">
+                    <Canvas Width="100" Height="100" HorizontalAlignment="Center">
+                        <Rectangle Fill="{ThemeResource PhoneLowBrush}" Width="100" Height="70" StrokeThickness="0"/>
+                        <Rectangle Fill="{ThemeResource PhoneLowBrush}" Width="70" Height="30" StrokeThickness="0" Margin="0,70,0,0"/>
+                        <Polygon Fill="{ThemeResource PhoneLowBrush}" Points="0,0 30,0, 0,30" StrokeThickness="0" Margin="70,70,0,0" />
+                        <Polygon Fill="#0A000000" Points="0,0 30,0, 0,30" StrokeThickness="0" Margin="70,70,0,0" />
+                    </Canvas>
+                </Viewbox>
+
+                <TextBlock x:Uid="EmptyNotesMessageTextBox" Margin="10,24" Text="Notes you add appear here" Foreground="{ThemeResource PhoneMidBrush}" FontSize="{StaticResource EmptyNotesMessageFontSize}" TextWrapping="Wrap" TextAlignment="Center"/>
+            </StackPanel>
+
+            <local:NotesControl x:Name="NotesControl" ItemsSource="{Binding}" Columns="{x:Bind viewModel.Columns, Mode=OneWay}" DataContext="{x:Bind viewModel.Notes, Mode=OneWay}" d:DataContext="{Binding Notes}" VerticalAlignment="Stretch" CanReorderItems="True" CanDragItems="True" AllowDrop="True" ItemClick="OnNoteClick" ItemsReordered="OnItemsReordered"/>
+        </Grid>
+
+        <CommandBar Grid.Row="{x:Bind viewModel.IsMobile, Converter={StaticResource IsMobileToGridRowConverter}}" EntranceNavigationTransitionInfo.IsTargetElement="False" CommonNavigationTransitionInfo.IsStaggerElement="False"  ContinuumNavigationTransitionInfo.IsEntranceElement="False" ContinuumNavigationTransitionInfo.IsExitElement="False" >
+            <CommandBar.PrimaryCommands>
+                <AppBarButton x:Uid="TextAppBarButton" Label="Text" Command="{x:Bind viewModel.CreateTextNoteCommand}" ToolTipService.ToolTip="New text note">
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="T" FontSize="20" FontFamily="Segoe UI Light" FontWeight="Light"/>
+                    </AppBarButton.Icon>
+                </AppBarButton>
+                <AppBarButton x:Uid="ChecklistAppBarButton" Label="Checklist" Command="{x:Bind viewModel.CreateChecklistNoteCommand}" Icon="List" ToolTipService.ToolTip="New checklist note"/>
+            </CommandBar.PrimaryCommands>
+
+            <CommandBar.SecondaryCommands>
+                <AppBarButton x:Uid="ToggleSingleColumnViewAppBarButton" x:Name="ToggleSingleColumnViewAppBarButton" Label="Toggle single column view" Command="{x:Bind viewModel.ToggleSingleColumnViewCommand}" ToolTipService.ToolTip="Toggle single column view"/>
+                <AppBarButton x:Uid="ArchivedNotesAppBarButton" Icon="Preview" Label="Archived notes" Command="{x:Bind viewModel.OpenArchivedNotesCommand}" ToolTipService.ToolTip="Open archived notes page"/>
+                <AppBarButton x:Uid="SettingsAppBarButton" Icon="Setting" Label="Settings" Command="{x:Bind viewModel.OpenSettingsCommand}" ToolTipService.ToolTip="Open settings page"/>
+            </CommandBar.SecondaryCommands>
+        </CommandBar>
+
+
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
                 <VisualState>
@@ -86,45 +127,5 @@
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
-
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-
-        <Grid x:Name="ContentRoot" Grid.Row="1">
-            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{x:Bind viewModel.Notes.Count, Converter={StaticResource PositiveIntToVisibilityConverter}, ConverterParameter=True}">
-                <Viewbox Width="160">
-                    <Canvas Width="100" Height="100" HorizontalAlignment="Center">
-                        <Rectangle Fill="{ThemeResource PhoneLowBrush}" Width="100" Height="70" StrokeThickness="0"/>
-                        <Rectangle Fill="{ThemeResource PhoneLowBrush}" Width="70" Height="30" StrokeThickness="0" Margin="0,70,0,0"/>
-                        <Polygon Fill="{ThemeResource PhoneLowBrush}" Points="0,0 30,0, 0,30" StrokeThickness="0" Margin="70,70,0,0" />
-                        <Polygon Fill="#0A000000" Points="0,0 30,0, 0,30" StrokeThickness="0" Margin="70,70,0,0" />
-                    </Canvas>
-                </Viewbox>
-
-                <TextBlock x:Uid="EmptyNotesMessageTextBox" Margin="10,24" Text="Notes you add appear here" Foreground="{ThemeResource PhoneMidBrush}" FontSize="{StaticResource EmptyNotesMessageFontSize}" TextWrapping="Wrap" TextAlignment="Center"/>
-            </StackPanel>
-
-            <local:NotesControl x:Name="NotesControl" ItemsSource="{Binding}" Columns="{x:Bind viewModel.Columns, Mode=OneWay}" DataContext="{x:Bind viewModel.Notes, Mode=OneWay}" d:DataContext="{Binding Notes}" VerticalAlignment="Stretch" CanReorderItems="True" CanDragItems="True" AllowDrop="True" ItemClick="OnNoteClick" ItemsReordered="OnItemsReordered"/>
-        </Grid>
-
-        <CommandBar Grid.Row="{x:Bind viewModel.IsMobile, Converter={StaticResource IsMobileToGridRowConverter}}" EntranceNavigationTransitionInfo.IsTargetElement="False" CommonNavigationTransitionInfo.IsStaggerElement="False"  ContinuumNavigationTransitionInfo.IsEntranceElement="False" ContinuumNavigationTransitionInfo.IsExitElement="False" >
-            <CommandBar.PrimaryCommands>
-                <AppBarButton x:Uid="TextAppBarButton" Label="Text" Command="{x:Bind viewModel.CreateTextNoteCommand}" ToolTipService.ToolTip="New text note">
-                    <AppBarButton.Icon>
-                        <FontIcon Glyph="T" FontSize="20" FontFamily="Segoe UI Light" FontWeight="Light"/>
-                    </AppBarButton.Icon>
-                </AppBarButton>
-                <AppBarButton x:Uid="ChecklistAppBarButton" Label="Checklist" Command="{x:Bind viewModel.CreateChecklistNoteCommand}" Icon="List" ToolTipService.ToolTip="New checklist note"/>
-            </CommandBar.PrimaryCommands>
-
-            <CommandBar.SecondaryCommands>
-                <AppBarButton x:Uid="ToggleSingleColumnViewAppBarButton" x:Name="ToggleSingleColumnViewAppBarButton" Label="Toggle single column view" Command="{x:Bind viewModel.ToggleSingleColumnViewCommand}" ToolTipService.ToolTip="Toggle single column view"/>
-                <AppBarButton x:Uid="ArchivedNotesAppBarButton" Icon="Preview" Label="Archived notes" Command="{x:Bind viewModel.OpenArchivedNotesCommand}" ToolTipService.ToolTip="Open archived notes page"/>
-                <AppBarButton x:Uid="SettingsAppBarButton" Icon="Setting" Label="Settings" Command="{x:Bind viewModel.OpenSettingsCommand}" ToolTipService.ToolTip="Open settings page"/>
-            </CommandBar.SecondaryCommands>
-        </CommandBar>
     </Grid>
 </Page>

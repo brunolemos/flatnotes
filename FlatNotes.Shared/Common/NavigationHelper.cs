@@ -80,7 +80,7 @@ namespace FlatNotes.Common
             {
 #if WINDOWS_PHONE_APP
                 bool hasHardwareBackButton = true;
-#elif WINDOWS_UAP
+#elif WINDOWS_UWP
                 bool hasHardwareBackButton = ApiInformation.IsTypePresent("Windows.Phone.UI.Input.HardwareButtons");
 
                 SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = this.GoBackCommand.CanExecute(null) ? AppViewBackButtonVisibility.Visible : AppViewBackButtonVisibility.Collapsed;
@@ -112,7 +112,7 @@ namespace FlatNotes.Common
             {
 #if WINDOWS_PHONE_APP
                 bool hasHardwareBackButton = true;
-#elif WINDOWS_UAP
+#elif WINDOWS_UWP
                 bool hasHardwareBackButton = ApiInformation.IsTypePresent("Windows.Phone.UI.Input.HardwareButtons");
 
                 if(!hasHardwareBackButton)
@@ -309,7 +309,7 @@ namespace FlatNotes.Common
             }
         }
 
-#if WINDOWS_UAP
+#if WINDOWS_UWP
         private void NavigationHelper_BackRequested(object sender, BackRequestedEventArgs e)
         {
             if (this.GoBackCommand.CanExecute(null))

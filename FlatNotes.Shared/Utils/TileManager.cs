@@ -20,7 +20,7 @@ namespace FlatNotes.Utils
             App.TelemetryClient.TrackMetric("Transparent Tile", transparentTile ? 1 : 0);
 
             var tileSubFolder = transparentTile ? "Transparent" :  "Solid";
-#if WINDOWS_UAP
+#if WINDOWS_UWP
 #else
             var tileSquare71Content = TileContentFactory.CreateTileSquare71x71Image();
 #endif
@@ -34,7 +34,7 @@ namespace FlatNotes.Utils
 
             var tileSquare150Content = TileContentFactory.CreateTileSquare150x150Image();
             tileSquare150Content.Image.Src = String.Format("ms-appx:///Assets/Tiles/{0}/Logo.png", tileSubFolder);
-#if WINDOWS_UAP
+#if WINDOWS_UWP
 #else
             tileSquare150Content.Square71x71Content = tileSquare71Content;
 #endif
@@ -91,7 +91,7 @@ namespace FlatNotes.Utils
 
             tile.RoamingEnabled = true;
 
-#if WINDOWS_UAP
+#if WINDOWS_UWP
 #elif WINDOWS_PHONE_APP
             tile.VisualElements.Square30x30Logo = new Uri("ms-appx:///Assets/Tiles/Transparent/Square71x71Logo.png");
             tile.VisualElements.Square71x71Logo = new Uri("ms-appx:///Assets/Tiles/Transparent/Square71x71Logo.png");
@@ -113,7 +113,7 @@ namespace FlatNotes.Utils
 
             string contentWithoutTitle = note.GetContent(true, false, 4);
 
-#if WINDOWS_UAP
+#if WINDOWS_UWP
             ISquare71x71TileNotificationContent tileSquare71Content = null;
 #else
             var tileSquare71Content = TileContentFactory.CreateTileSquare71x71Image();

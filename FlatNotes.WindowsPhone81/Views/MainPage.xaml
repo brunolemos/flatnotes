@@ -42,7 +42,7 @@
                 </StackPanel>
             </Grid>
 
-            <ListView x:Name="NotesControl" ItemsSource="{Binding Notes, Mode=OneWay}" IsItemClickEnabled="False" ItemsPanel="{StaticResource FluidItemsPanelTemplate}" ItemTemplate="{StaticResource NotePreviewListViewControlTemplate}" ScrollViewer.VerticalScrollMode="Enabled" VerticalAlignment="Stretch" SelectionMode="None" CanReorderItems="True" CanDragItems="True" AllowDrop="True" ReorderMode="{Binding ReorderMode, Mode=TwoWay}">
+            <ListView x:Name="NotesControl" ItemsSource="{Binding Notes, Mode=OneWay}" IsItemClickEnabled="False" ItemsPanel="{StaticResource FluidItemsPanelTemplate}" ItemTemplate="{StaticResource NotePreviewListViewControlTemplate}" ScrollViewer.VerticalScrollMode="Enabled" VerticalAlignment="Stretch" SelectionMode="None" CanDragItems="True" AllowDrop="True" ReorderMode="{Binding ReorderMode, Mode=TwoWay}">
                 <ListView.ItemContainerTransitions>
                     <TransitionCollection>
                         <EntranceThemeTransition IsStaggeringEnabled="True" FromVerticalOffset="200" FromHorizontalOffset="0"/>

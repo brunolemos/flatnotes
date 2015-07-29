@@ -43,7 +43,7 @@ namespace FlatNotes.Controls
                 ParentListView.DragOver += OnDragOver;
                 ParentListView.Drop += OnDrop;
 
-#if WINDOWS_UAP
+#if WINDOWS_UWP
                 ParentListView.DragItemsCompleted += OnDragItemsCompleted;
 #endif
             }
@@ -58,7 +58,7 @@ namespace FlatNotes.Controls
                 ParentListView.DragOver -= OnDragOver;
                 ParentListView.Drop -= OnDrop;
 
-#if WINDOWS_UAP
+#if WINDOWS_UWP
                 ParentListView.DragItemsCompleted -= OnDragItemsCompleted;
 #endif
             }
@@ -153,7 +153,7 @@ namespace FlatNotes.Controls
             for (int i = 0; i < columns; i++)
                 lastYInColumn[i] = 0;
 
-            //#if WINDOWS_UAP
+            //#if WINDOWS_UWP
             //            UIElement[] lastElementInColumn = new UIElement[columns];
 
             //            for (int i = 0; i < elements.Count; i++)
@@ -246,7 +246,7 @@ namespace FlatNotes.Controls
         {
             isReordering = false;
 
-#if WINDOWS_UAP
+#if WINDOWS_UWP
             e.Data.RequestedOperation = Windows.ApplicationModel.DataTransfer.DataPackageOperation.Move;
 #endif
 
@@ -298,7 +298,7 @@ namespace FlatNotes.Controls
             //Debug.WriteLine("OnDragOver. Drag: {0}, Drop: {1}, OldDrop: {2}", draggingItemIndex_original, dropAtIndex_elements, dropAtIndex_original);
             dropAtIndex_original = newDropAtIndex;
 
-#if WINDOWS_UAP
+#if WINDOWS_UWP
             e.AcceptedOperation = Windows.ApplicationModel.DataTransfer.DataPackageOperation.Move;
 #endif
             InvalidateMeasure();
@@ -326,7 +326,7 @@ namespace FlatNotes.Controls
             dropAtIndex_elements = -1;
         }
 
-#if WINDOWS_UAP
+#if WINDOWS_UWP
         private void OnDragItemsCompleted(ListViewBase sender, DragItemsCompletedEventArgs args)
         {
             //Debug.WriteLine("OnDragItemsCompleted. Drag: {0}, Drop: {1}", draggingItemIndex_original, dropAtIndex_elements);

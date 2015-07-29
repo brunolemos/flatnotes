@@ -206,7 +206,7 @@ namespace FlatNotes
 
 #if WINDOWS_APP
 #else
-#if WINDOWS_UAP
+#if WINDOWS_UWP
 
             bool hasStatusBar = Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar");
             if (!hasStatusBar) return;
@@ -222,7 +222,7 @@ namespace FlatNotes
 
 #if WINDOWS_APP
 #else
-#if WINDOWS_UAP
+#if WINDOWS_UWP
         var titleBar = ApplicationView.GetForCurrentView().TitleBar;
 
         titleBar.BackgroundColor = backgroundColor;

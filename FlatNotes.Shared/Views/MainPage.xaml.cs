@@ -98,7 +98,7 @@ namespace FlatNotes.Views
 
 #endregion
 
-#if WINDOWS_UAP
+#if WINDOWS_UWP
         private async void OnNoteClick(object sender, ItemClickEventArgs e)
         {
             Note note = e.ClickedItem as Note;
