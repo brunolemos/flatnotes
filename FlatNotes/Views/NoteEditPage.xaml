@@ -44,8 +44,8 @@
             </DataTemplate>
 
             <MenuFlyout x:Key="NoteImageMenuFlyout" Placement="Bottom">
-                <MenuFlyoutItem x:Uid="SaveMenuFlyoutItem" Text="Save" IsEnabled="False"/>
-                <MenuFlyoutItem x:Uid="ShareMenuFlyoutItem" Text="Share" IsEnabled="False"/>
+                <!--<MenuFlyoutItem x:Uid="SaveMenuFlyoutItem" Text="Save" IsEnabled="False"/>
+                <MenuFlyoutItem x:Uid="ShareMenuFlyoutItem" Text="Share" IsEnabled="False"/>-->
                 <MenuFlyoutItem x:Uid="DeleteMenuFlyoutItem" Text="Delete" Click="DeleteNoteImageMenuFlyoutItem_Click"/>
             </MenuFlyout>
 
@@ -64,7 +64,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="1" x:Name="ContentRoot" MaxWidth="1000">
+        <Grid Grid.Row="1" x:Name="ContentRoot">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
@@ -187,5 +187,59 @@
                 </AppBarButton>
             </CommandBar.SecondaryCommands>
         </CommandBar>
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+
+                    <VisualState.Setters>
+                        <Setter Target="ContentRoot.Margin" Value="0"/>
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="500" />
+                    </VisualState.StateTriggers>
+
+                    <VisualState.Setters>
+                        <Setter Target="ContentRoot.Margin" Value="0"/>
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="800" />
+                    </VisualState.StateTriggers>
+
+                    <VisualState.Setters>
+                        <Setter Target="ContentRoot.Margin" Value="12"/>
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="1200" />
+                    </VisualState.StateTriggers>
+
+                    <VisualState.Setters>
+                        <Setter Target="ContentRoot.Margin" Value="80,24"/>
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="1500" />
+                    </VisualState.StateTriggers>
+
+                    <VisualState.Setters>
+                        <Setter Target="ContentRoot.Margin" Value="120,24"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
     </Grid>
 </Page>

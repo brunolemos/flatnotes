@@ -16,8 +16,6 @@ namespace FlatNotes.Utils
         public static AppSettings Instance { get { if (instance == null) instance = new AppSettings(); return instance; } }
         private static AppSettings instance;
 
-        public event EventHandler NotesSaved;
-        public event EventHandler ArchivedNotesSaved;
         public event EventHandler<ThemeEventArgs> ThemeChanged;
         public event EventHandler<IsSingleColumnEnabledEventArgs> IsSingleColumnEnabledChanged;
         public event EventHandler<TransparentTileEventArgs> TransparentTileChanged;

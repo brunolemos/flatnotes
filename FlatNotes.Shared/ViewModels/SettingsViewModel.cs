@@ -14,7 +14,6 @@ namespace FlatNotes.ViewModels
         private static SettingsViewModel instance = null;
 
         public RelayCommand DownloadAppCommand { get; private set; }
-        public RelayCommand OpenDeveloperTwitterCommand { get; private set; }
         public RelayCommand RateAppCommand { get; private set; }
         public RelayCommand ContactSupportCommand { get; private set; }
 
@@ -25,7 +24,6 @@ namespace FlatNotes.ViewModels
         private SettingsViewModel()
         {
             DownloadAppCommand = new RelayCommand(DownloadApp);
-            OpenDeveloperTwitterCommand = new RelayCommand(OpenDeveloperTwitter);
             RateAppCommand = new RelayCommand(RateApp);
             ContactSupportCommand = new RelayCommand(ContactSupport);
         }
@@ -35,10 +33,10 @@ namespace FlatNotes.ViewModels
         public bool IsSolidColorDefaultTile { get { return !AppSettings.Instance.TransparentTile; } set { AppSettings.Instance.TransparentTile = !value; } }
         public bool IsSolidColorNoteTile { get { return !AppSettings.Instance.TransparentNoteTile; } set { AppSettings.Instance.TransparentNoteTile = !value; } }
 
-        private async void OpenDeveloperTwitter()
+        public void DeveloperTwitterHyperlink_OnClick()
         {
             App.TelemetryClient.TrackEvent("OpenDeveloperTwitter_SettingsViewModel");
-            await Launcher.LaunchUriAsync(new Uri("http://twitter.com/brunolemos"));
+            //await Launcher.LaunchUriAsync(new Uri("http://twitter.com/brunolemos"));
         }
 
         public static async void DownloadApp()

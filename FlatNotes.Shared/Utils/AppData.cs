@@ -14,6 +14,7 @@ namespace FlatNotes.Utils
 {
     public static class AppData
     {
+        public static event EventHandler NotesSaved;
         public static event EventHandler NotesChanged;
         public static event EventHandler ArchivedNotesChanged;
         public static event EventHandler<NoteEventArgs> NoteCreated;
@@ -134,6 +135,9 @@ namespace FlatNotes.Utils
             var handler = NoteCreated;
             if (handler != null) handler(null, new NoteEventArgs(note));
 
+            var handler2 = NotesSaved;
+            if (handler2 != null) handler2(null, EventArgs.Empty);
+
             return true;
         }
 
@@ -161,6 +165,9 @@ namespace FlatNotes.Utils
             var handler = NoteChanged;
             if (handler != null) handler(null, new NoteEventArgs(note));
 
+            var handler2 = NotesSaved;
+            if (handler2 != null) handler2(null, EventArgs.Empty);
+
             return true;
         }
 
@@ -185,6 +192,9 @@ namespace FlatNotes.Utils
             var handler = NoteArchived;
             if (handler != null) handler(null, new NoteEventArgs(note));
 
+            var handler2 = NotesSaved;
+            if (handler2 != null) handler2(null, EventArgs.Empty);
+
             return true;
         }
 
@@ -207,6 +217,9 @@ namespace FlatNotes.Utils
             var handler = NoteRestored;
             if (handler != null) handler(null, new NoteEventArgs(note));
 
+            var handler2 = NotesSaved;
+            if (handler2 != null) handler2(null, EventArgs.Empty);
+
             return true;
         }
 
@@ -224,6 +237,9 @@ namespace FlatNotes.Utils
 
             var handler = NoteColorChanged;
             if (handler != null) handler(null, new NoteColorEventArgs(note, newColor));
+
+            var handler2 = NotesSaved;
+            if (handler2 != null) handler2(null, EventArgs.Empty);
 
             return true;
         }
@@ -245,6 +261,9 @@ namespace FlatNotes.Utils
 
             var handler = NoteRemoved;
             if (handler != null) handler(null, new NoteIdEventArgs(note.ID));
+
+            var handler2 = NotesSaved;
+            if (handler2 != null) handler2(null, EventArgs.Empty);
 
             return true;
         }
@@ -277,6 +296,12 @@ namespace FlatNotes.Utils
             catch (Exception)
             {
                 success = false;
+            }
+
+            if(deleteFromDB)
+            {
+                var handler2 = NotesSaved;
+                if (handler2 != null) handler2(null, EventArgs.Empty);
             }
 
             return success;

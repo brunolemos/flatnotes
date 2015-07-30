@@ -20,7 +20,7 @@
         </Grid.RowDefinitions>
 
         <Grid x:Name="ContentRoot" Grid.Row="1">
-            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{x:Bind viewModel.Notes.Count, Converter={StaticResource PositiveIntToVisibilityConverter}, ConverterParameter=True}">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{x:Bind viewModel.Notes.Count, Mode=OneWay, Converter={StaticResource PositiveIntToVisibilityConverter}, ConverterParameter=True}">
                 <Viewbox Width="160">
                     <Canvas Width="100" Height="100" HorizontalAlignment="Center">
                         <Rectangle Fill="{ThemeResource PhoneLowBrush}" Width="100" Height="70" StrokeThickness="0"/>
@@ -53,7 +53,6 @@
             </CommandBar.SecondaryCommands>
         </CommandBar>
 
-
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
                 <VisualState>
@@ -64,7 +63,7 @@
                     <VisualState.Setters>
                         <Setter Target="NotesControl.ItemStretch" Value="True"/>
                         <Setter Target="NotesControl.ItemWidth" Value="160"/>
-                        <Setter Target="NotesControl.Padding" Value="8"/>
+                        <Setter Target="NotesControl.Padding" Value="12"/>
                         <Setter Target="NotesControl.AllowSingleColumn" Value="True"/>
                         <Setter Target="ToggleSingleColumnViewAppBarButton.Visibility" Value="Visible"/>
                     </VisualState.Setters>
@@ -72,29 +71,15 @@
 
                 <VisualState>
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="500" />
+                        <AdaptiveTrigger MinWindowWidth="600" />
                     </VisualState.StateTriggers>
 
                     <VisualState.Setters>
                         <Setter Target="NotesControl.ItemStretch" Value="False"/>
                         <Setter Target="NotesControl.ItemWidth" Value="220"/>
                         <Setter Target="NotesControl.Padding" Value="24"/>
-                        <Setter Target="NotesControl.AllowSingleColumn" Value="True"/>
-                        <Setter Target="ToggleSingleColumnViewAppBarButton.Visibility" Value="Visible"/>
-                    </VisualState.Setters>
-                </VisualState>
-
-                <VisualState>
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="800" />
-                    </VisualState.StateTriggers>
-
-                    <VisualState.Setters>
-                        <Setter Target="NotesControl.ItemStretch" Value="False"/>
-                        <Setter Target="NotesControl.ItemWidth" Value="250"/>
-                        <Setter Target="NotesControl.Padding" Value="24"/>
                         <Setter Target="NotesControl.AllowSingleColumn" Value="False"/>
-                        <Setter Target="ToggleSingleColumnViewAppBarButton.Visibility" Value="Collapsed"/>
+                        <Setter Target="ToggleSingleColumnViewAppBarButton.Visibility" Value="Visible"/>
                     </VisualState.Setters>
                 </VisualState>
 

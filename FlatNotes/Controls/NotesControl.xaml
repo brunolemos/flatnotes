@@ -41,6 +41,7 @@
               CanDragItems="{x:Bind CanDragItems, Mode=OneWay}" 
               AllowDrop="{x:Bind AllowDrop, Mode=OneWay}"  
               SelectionMode="None" 
+              Margin="-4"
               IsItemClickEnabled="True" ItemClick="GridView_ItemClick" Holding="GridView_Holding" DragItemsStarting="NotesGridView_DragItemsStarting">
 
         <ListView.ItemContainerTransitions>

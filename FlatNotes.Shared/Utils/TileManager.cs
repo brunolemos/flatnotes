@@ -182,8 +182,13 @@ namespace FlatNotes.Utils
             return true;
         }
 
-        private static async Task UpdateNoteTileBackgroundColor(Note note, bool transparentTile = false)
+        public static async Task UpdateNoteTileBackgroundColor(Note note, bool transparentTile = false)
         {
+            if (string.IsNullOrEmpty(note?.ID)) return;
+
+            //must exists
+            if (!SecondaryTile.Exists(note.ID)) return;
+
             var tile = new SecondaryTile(note.ID);
             if (tile == null) return;
 

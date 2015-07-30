@@ -47,8 +47,7 @@ namespace FlatNotes.ViewModels
 
             PropertyChanged += OnPropertyChanged;
 
-            AppSettings.Instance.NotesSaved += OnNotesSaved;
-            AppSettings.Instance.ArchivedNotesSaved += OnArchivedNotesSaved;
+            AppData.NotesSaved += OnNotesSaved;
         }
 
         private void OnPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -73,19 +72,9 @@ namespace FlatNotes.ViewModels
             NotifyPropertyChanged("Note");
             if (Note == null) return;
 
-            if (!Note.IsArchived)
-                Note.Changed = false;
+            Note.Changed = false;
 
             await TileManager.UpdateNoteTileIfExists(Note, AppSettings.Instance.TransparentNoteTile);
-        }
-
-        private void OnArchivedNotesSaved(object sender, EventArgs e)
-        {
-            NotifyPropertyChanged("Note");
-            if (Note == null) return;
-
-            if (Note.IsArchived)
-                Note.Changed = false;
         }
 
         public static Note CurrentNoteBeingEdited { get; set; }

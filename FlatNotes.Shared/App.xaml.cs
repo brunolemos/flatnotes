@@ -59,14 +59,14 @@ namespace FlatNotes
             this.Suspending += this.OnSuspending;
             this.UnhandledException += App_UnhandledException;
 
-            AppSettings.Instance.NotesSaved += (s, e) => SimulateStatusBarProgressComplete();
-            AppSettings.Instance.ArchivedNotesSaved += (s, e) => SimulateStatusBarProgressComplete();
             AppSettings.Instance.ThemeChanged += (s, e) => { UpdateTheme(e.Theme); App.TelemetryClient.TrackMetric("Theme", AppSettings.Instance.Theme == ElementTheme.Light ? 1 : 2); };
             AppSettings.Instance.TransparentTileChanged += (s, e) => TileManager.UpdateDefaultTile(e.TransparentTile);
             AppSettings.Instance.TransparentNoteTileChanged += (s, e) => TileManager.UpdateAllNoteTilesBackgroundColor(e.TransparentTile);
             
+            AppData.NotesSaved += (s, e) => SimulateStatusBarProgressComplete();
             AppData.NoteArchived += (s, _e) => { TileManager.RemoveTileIfExists(_e.Note.ID); };
             AppData.NoteRemoved += (s, _e) => { TileManager.RemoveTileIfExists(_e.NoteId); };
+            AppData.NoteColorChanged += async (s, _e) => { await TileManager.UpdateNoteTileBackgroundColor(_e.Note, AppSettings.Instance.TransparentNoteTile); };
         }
 
         private async void App_UnhandledException(object sender, UnhandledExceptionEventArgs e)
@@ -203,16 +203,6 @@ namespace FlatNotes
             Color mainColor = Color.FromArgb(0xff, 0xff, 0xbb, 0x00);
             //Color mainDarkenColor = Color.FromArgb(0xff, 0xf9, 0x9f, 0x00);
             ChangeStatusBarColor(mainColor);
-
-#if WINDOWS_APP
-#else
-#if WINDOWS_UWP
-
-            bool hasStatusBar = Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar");
-            if (!hasStatusBar) return;
-#endif
-            //await StatusBar.GetForCurrentView().HideAsync();
-#endif
         }
 
         public static void ChangeStatusBarColor(Color backgroundColor, Color? foregroundColor = null)
@@ -220,39 +210,40 @@ namespace FlatNotes
             if (foregroundColor == null)
                 foregroundColor = Color.FromArgb(0x8C, 0x00, 0x00, 0x00);
 
-#if WINDOWS_APP
-#else
 #if WINDOWS_UWP
             var titleBar = ApplicationView.GetForCurrentView().TitleBar;
 
-        titleBar.BackgroundColor = backgroundColor;
-        titleBar.ForegroundColor = foregroundColor;
+            titleBar.BackgroundColor = backgroundColor;
+            titleBar.ForegroundColor = foregroundColor;
 
-        titleBar.ButtonBackgroundColor = backgroundColor;
-        titleBar.ButtonForegroundColor = foregroundColor;
+            titleBar.ButtonBackgroundColor = backgroundColor;
+            titleBar.ButtonForegroundColor = foregroundColor;
 
-        titleBar.ButtonInactiveBackgroundColor = backgroundColor;
-        titleBar.ButtonInactiveForegroundColor = Colors.LightGray;
+            titleBar.ButtonInactiveBackgroundColor = backgroundColor;
+            titleBar.ButtonInactiveForegroundColor = Colors.LightGray;
 
-        titleBar.ButtonHoverBackgroundColor = backgroundColor.Add(Color.FromArgb(0x10, 0xff, 0xff, 0xff));
-        titleBar.ButtonHoverForegroundColor = titleBar.ButtonForegroundColor;
+            titleBar.ButtonHoverBackgroundColor = backgroundColor.Add(Color.FromArgb(0x10, 0xff, 0xff, 0xff));
+            titleBar.ButtonHoverForegroundColor = titleBar.ButtonForegroundColor;
 
-        titleBar.ButtonPressedBackgroundColor = backgroundColor.Add(Color.FromArgb(0x20, 0xff, 0xff, 0xff));
-        titleBar.ButtonPressedForegroundColor = foregroundColor;
+            titleBar.ButtonPressedBackgroundColor = backgroundColor.Add(Color.FromArgb(0x20, 0xff, 0xff, 0xff));
+            titleBar.ButtonPressedForegroundColor = foregroundColor;
 
-        bool hasStatusBar = Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar");
-        if (!hasStatusBar) return;
+            bool hasStatusBar = Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar");
+            if (!hasStatusBar) return;
 #endif
 
-        StatusBar.GetForCurrentView().BackgroundOpacity = backgroundColor.A;
-        StatusBar.GetForCurrentView().BackgroundColor = backgroundColor;
-        StatusBar.GetForCurrentView().ForegroundColor = foregroundColor;
-#endif
+            StatusBar.GetForCurrentView().BackgroundOpacity = backgroundColor.A;
+            StatusBar.GetForCurrentView().BackgroundColor = backgroundColor;
+            StatusBar.GetForCurrentView().ForegroundColor = foregroundColor;
         }
-
-#if WINDOWS_PHONE_APP
+        
         public static async void SimulateStatusBarProgressComplete()
         {
+#if WINDOWS_UWP
+            bool hasStatusBar = Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar");
+            if (!hasStatusBar) return;
+#endif
+
             StatusBar.GetForCurrentView().ProgressIndicator.ProgressValue = 0;
             await StatusBar.GetForCurrentView().ProgressIndicator.ShowAsync();
 
@@ -263,40 +254,6 @@ namespace FlatNotes
             }
 
             await StatusBar.GetForCurrentView().ProgressIndicator.HideAsync();
-        }
-#else
-        public static void SimulateStatusBarProgressComplete() { }
-#endif
-
-#if WINDOWS_APP
-        protected override void OnWindowCreated(WindowCreatedEventArgs args)
-        {
-            SettingsPane.GetForCurrentView().CommandsRequested += OnCommandsRequested;
-        }
-
-        private void OnCommandsRequested(SettingsPane sender, SettingsPaneCommandsRequestedEventArgs args)
-        {
-            var preferencesSettings = new SettingsCommand("preferences_settings", "Preferences", (handler) => { new PreferencesSettingsFlyout().Show(); });
-            var aboutSettings = new SettingsCommand("about_settings", "About", (handler) => { new AboutSettingsFlyout().Show(); });
-            var feedbackSettings = new SettingsCommand("feedback_settings", "Send a nice feedback", (handler) => SettingsViewModel.SendFeedback());
-            var reportBugSettings = new SettingsCommand("report_bug_settings", "Report bug / Suggest feature", (handler) => SettingsViewModel.SuggestFeatureOrReportBug());
-            var downloadWindowsPhoneSettings = new SettingsCommand("download_wp_settings", "Download app for Windows Phone", (handler) => SettingsViewModel.DownloadWindowsPhoneApp());
-
-            args.Request.ApplicationCommands.Add(preferencesSettings);
-            args.Request.ApplicationCommands.Add(aboutSettings);
-            args.Request.ApplicationCommands.Add(feedbackSettings);
-            args.Request.ApplicationCommands.Add(reportBugSettings);
-            args.Request.ApplicationCommands.Add(downloadWindowsPhoneSettings);
-        }
-#endif
-
-        public static void OpenSettings()
-        {
-#if WINDOWS_APP
-            new PreferencesSettingsFlyout().Show();
-#else
-            RootFrame.Navigate(typeof(SettingsPage));
-#endif
         }
     }
 }

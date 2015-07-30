@@ -83,7 +83,7 @@ namespace FlatNotes.Views
         private async void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
         {
             App.RootFrame.Background = previousBackground;
-            this.CommandBar.Focus(FocusState.Programmatic);
+            this.Focus(FocusState.Programmatic);
             this.CommandBar.IsOpen = false;
 
             //deleted

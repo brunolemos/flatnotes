@@ -113,8 +113,7 @@ namespace FlatNotes.ViewModels
             if (note == null || newColor == null) return;
             App.TelemetryClient.TrackEvent("ChangeColor_NoteNotesControlViewModel");
 
-            note.Color = newColor;
-            AppData.DB.Update(note);
+            AppData.ChangeNoteColor(note, newColor);
         }
 
         #endregion

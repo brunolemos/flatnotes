@@ -49,8 +49,8 @@ namespace FlatNotes.ViewModels
             CreateTextNoteCommand = new RelayCommand(CreateTextNote);
             CreateChecklistNoteCommand = new RelayCommand(CreateChecklistNote);
             ToggleSingleColumnViewCommand = new RelayCommand(ToggleSingleColumnView);
-            OpenArchivedNotesCommand = new RelayCommand(OpenArchivedNotes);
-            OpenSettingsCommand = new RelayCommand(App.OpenSettings);
+            OpenArchivedNotesCommand = new RelayCommand(OpenArchivedNotesPage);
+            OpenSettingsCommand = new RelayCommand(OpenSettingsPage);
 
             AppData.NotesChanged += (s, e) => NotifyPropertyChanged("Notes");
             //AppSettings.Instance.ColumnsChanged += (s, e) =>
@@ -81,10 +81,16 @@ namespace FlatNotes.ViewModels
             App.TelemetryClient.TrackMetric("Single Column", IsSingleColumnEnabled ? 1 : 0);
         }
 
-        private void OpenArchivedNotes()
+        private void OpenArchivedNotesPage()
         {
             App.RootFrame.Navigate(typeof(ArchivedNotesPage));
         }
+
+        private void OpenSettingsPage()
+        {
+            App.RootFrame.Navigate(typeof(SettingsPage));
+        }
+
 #endregion
     }
 }
