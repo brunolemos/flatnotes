@@ -218,12 +218,12 @@ namespace FlatNotes
         public static void ChangeStatusBarColor(Color backgroundColor, Color? foregroundColor = null)
         {
             if (foregroundColor == null)
-                foregroundColor = Color.FromArgb(0xA0, 0x00, 0x00, 0x00);
+                foregroundColor = Color.FromArgb(0x8C, 0x00, 0x00, 0x00);
 
 #if WINDOWS_APP
 #else
 #if WINDOWS_UWP
-        var titleBar = ApplicationView.GetForCurrentView().TitleBar;
+            var titleBar = ApplicationView.GetForCurrentView().TitleBar;
 
         titleBar.BackgroundColor = backgroundColor;
         titleBar.ForegroundColor = foregroundColor;
@@ -243,14 +243,6 @@ namespace FlatNotes
         bool hasStatusBar = Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar");
         if (!hasStatusBar) return;
 #endif
-
-        //if (foregroundColor == null)
-        //{
-        //    if (AppSettings.Instance.Theme == ElementTheme.Light && App.Current.RequestedTheme == ApplicationTheme.Dark)
-        //        foregroundColor = new Color().FromHex("#404040");
-        //    else if (AppSettings.Instance.Theme != ElementTheme.Light && App.Current.RequestedTheme == ApplicationTheme.Light)
-        //        foregroundColor = new Color().FromHex("#c9cdd1");
-        //}
 
         StatusBar.GetForCurrentView().BackgroundOpacity = backgroundColor.A;
         StatusBar.GetForCurrentView().BackgroundColor = backgroundColor;

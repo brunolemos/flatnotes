@@ -7,7 +7,7 @@
 
     <Color x:Key="AppMainColor">#ffbb00</Color>
     <Color x:Key="AppMainDarkenColor">#f99f00</Color>
-    <Color x:Key="AppMainForegroundColor">#A0000000</Color><!--664B00-->
+    <Color x:Key="AppMainForegroundColor">#8C000000</Color><!--735400 / 664B00-->
     <Color x:Key="PhoneAccentColor">#f99f00</Color>
 
     <SolidColorBrush x:Key="AppStatusBarBackgroundBrush" Color="{StaticResource AppMainColor}"/>
