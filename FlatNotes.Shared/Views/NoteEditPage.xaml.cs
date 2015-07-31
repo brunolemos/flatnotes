@@ -144,7 +144,7 @@ namespace FlatNotes.Views
 
         private void OnNotePropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == "IsPinned")
+            if (e.PropertyName == "IsPinned" || e.PropertyName == "CanPin")
                 UpdateIsPinnedStatus();
             else if (e.PropertyName == "Color")
                 UpdateStatusBarColor();
@@ -172,6 +172,7 @@ namespace FlatNotes.Views
                 TogglePinAppBarButton.Icon = new SymbolIcon(Symbol.Pin);
                 TogglePinAppBarButton.Command = viewModel.PinCommand;
                 TogglePinAppBarButton.Label = ResourceLoader.GetForCurrentView().GetString("Pin");
+                TogglePinAppBarButton.IsEnabled = viewModel.Note.CanPin;
             }
         }
 

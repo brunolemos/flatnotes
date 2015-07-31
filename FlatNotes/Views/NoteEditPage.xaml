@@ -10,7 +10,6 @@
     xmlns:Models="using:FlatNotes.Models"
     mc:Ignorable="d"
     NavigationCacheMode="Required"
-    FontSize="18"
     Background="{x:Bind viewModel.Note.Color.Color, Mode=OneWay}"
     Foreground="{StaticResource AppNoteForegroundBrush}"
     d:DataContext="{d:DesignData /SampleData/NoteEditViewModelSampleData.xaml}">
@@ -23,7 +22,7 @@
             <Converters:ReorderModeToVisibilityConverter x:Key="ReorderModeToVisibilityConverter"/>
             <Converters:ReorderModeToBooleanConverter x:Key="ReorderModeToBooleanConverter"/>
             <Converters:PositiveIntToVisibilityConverter x:Key="PositiveIntToVisibilityConverter"/>
-
+            
             <DataTemplate x:Key="NoteChecklistListViewControlTemplate" x:DataType="Models:ChecklistItem">
                 <Grid>
                     <Grid Margin="12,2">

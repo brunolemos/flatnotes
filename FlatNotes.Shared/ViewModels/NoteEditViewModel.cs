@@ -59,6 +59,7 @@ namespace FlatNotes.ViewModels
 
                 IsNewNote = AppData.DB.Find<Note>(Note.ID) == null;
                 Note.NotifyPropertyChanged("IsPinned");
+                Note.NotifyPropertyChanged("CanPin");
 
                 NotifyPropertyChanged("ArchivedAtFormatedString");
                 NotifyPropertyChanged("UpdatedAtFormatedString");
@@ -232,6 +233,7 @@ namespace FlatNotes.ViewModels
 
             await TileManager.CreateOrUpdateNoteTile(Note, AppSettings.Instance.TransparentNoteTile);
             Note.NotifyPropertyChanged("IsPinned");
+            Note.NotifyPropertyChanged("CanPin");
         }
 
         private async void Unpin()
@@ -243,6 +245,7 @@ namespace FlatNotes.ViewModels
 
             await Task.Delay(0500);
             Note.NotifyPropertyChanged("IsPinned");
+            Note.NotifyPropertyChanged("CanPin");
         }
 
         private void ArchiveNote()

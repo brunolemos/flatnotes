@@ -20,10 +20,6 @@
             <Converters:NullableToVisibilityConverter x:Key="NullableToVisibilityConverter"/>
             <Converters:MaxChecklistItemsConverter x:Key="MaxChecklistItemsConverter"/>
             <Converters:PositiveIntToVisibilityConverter x:Key="PositiveIntToVisibilityConverter"/>
-
-            <Style TargetType="TextBlock">
-                <Setter Property="FontSize" Value="{Binding ElementName=Root, Path=FontSize}"/>
-            </Style>
             
             <Style x:Key="NotePreviewChecklistItem" TargetType="ListViewItem">
                 <Setter Property="Margin" Value="0"/>

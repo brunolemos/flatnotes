@@ -181,7 +181,7 @@ namespace FlatNotes.Utils
             //update
             var tileUpdater = TileUpdateManager.CreateTileUpdaterForSecondaryTile(note.ID);
             tileUpdater.Clear();
-            tileUpdater.EnableNotificationQueue(false);
+            //tileUpdater.EnableNotificationQueue(false); //crashing on w10mobile
             tileUpdater.Update(notification);
 
             return true;

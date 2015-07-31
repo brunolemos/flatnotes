@@ -68,7 +68,7 @@
 
                     <VisualState.Setters>
                         <Setter Target="NotesControl.ItemStretch" Value="True"/>
-                        <Setter Target="NotesControl.ItemWidth" Value="160"/>
+                        <Setter Target="NotesControl.ItemWidth" Value="150"/>
                         <Setter Target="NotesControl.Padding" Value="12"/>
                         <Setter Target="NotesControl.AllowSingleColumn" Value="True"/>
                         <Setter Target="ToggleSingleColumnViewAppBarButton.Visibility" Value="True"/>

@@ -94,6 +94,7 @@ namespace FlatNotes.ViewModels
 
             await TileManager.CreateOrUpdateNoteTile(note, AppSettings.Instance.TransparentNoteTile);
             note.NotifyPropertyChanged("IsPinned");
+            note.NotifyPropertyChanged("CanPin");
         }
 
         private async void Unpin(Note note)
@@ -106,6 +107,7 @@ namespace FlatNotes.ViewModels
 
             await Task.Delay(0500);
             note.NotifyPropertyChanged("IsPinned");
+            note.NotifyPropertyChanged("CanPin");
         }
 
         public void ChangeColor(Note note, NoteColor newColor)

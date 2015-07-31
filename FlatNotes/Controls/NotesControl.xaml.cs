@@ -36,7 +36,7 @@ namespace FlatNotes.Controls
         public static readonly DependencyProperty ItemStretchProperty = DependencyProperty.Register("ItemStretch", typeof(bool), typeof(NotesControl), new PropertyMetadata(false));
         public bool ItemStretch { get { return (bool)GetValue(ItemStretchProperty); } set { SetValue(ItemStretchProperty, value); } }
 
-        public static readonly DependencyProperty AllowSingleColumnProperty = DependencyProperty.Register("AllowSingleColumn", typeof(bool), typeof(NotesControl), new PropertyMetadata(false));
+        public static readonly DependencyProperty AllowSingleColumnProperty = DependencyProperty.Register("AllowSingleColumn", typeof(bool), typeof(NotesControl), new PropertyMetadata(true));
         public bool AllowSingleColumn { get { return (bool)GetValue(AllowSingleColumnProperty); } set { SetValue(AllowSingleColumnProperty, value); } }
 
         public static readonly DependencyProperty BiggerItemHeightProperty = DependencyProperty.Register("BiggerItemHeight", typeof(double), typeof(NotesControl), new PropertyMetadata(0));
