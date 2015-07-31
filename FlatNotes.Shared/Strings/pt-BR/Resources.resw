@@ -253,7 +253,7 @@ Algumas funcionalidades:
     <value>Alternar modo de coluna única</value>
   </data>
   <data name="TransparentDefaultTileToggleSwitch.Header" xml:space="preserve">
-    <value>Fundo da live tile padrão</value>
+    <value>Fundo da tile padrão</value>
   </data>
   <data name="TransparentDefaultTileToggleSwitch.OffContent" xml:space="preserve">
     <value>Transparente</value>

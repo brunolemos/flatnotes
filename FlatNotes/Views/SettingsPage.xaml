@@ -34,10 +34,9 @@
                 <Image Height="80" Source="ms-appx:///Assets/Logo.png" VerticalAlignment="Top" HorizontalAlignment="Center"/>
                 <TextBlock Margin="0,0,0,24" Text="{x:Bind viewModel.AppName}" HorizontalAlignment="Center" Style="{StaticResource SubheaderTextBlockStyle}"/>
                 
-                <ToggleSwitch x:Uid="ThemeToggleSwitch" Margin="0,12,0,24" Header="theme" OffContent="light" OnContent="dark" IsOn="{x:Bind viewModel.IsDarkTheme, Mode=TwoWay}"/>
-                <!--<ToggleSwitch x:Uid="TransparentDefaultTileToggleSwitch" Margin="0,0,0,24" Header="default tile" OffContent="transparent" OnContent="solid color" IsOn="{x:Bind viewModel.IsSolidColorDefaultTile, Mode=TwoWay}"/>-->
-                <ToggleSwitch x:Uid="TransparentNoteTileToggleSwitch" Margin="0,0,0,24" Header="note live tile" OffContent="transparent" OnContent="solid color" IsOn="{x:Bind viewModel.IsSolidColorNoteTile, Mode=TwoWay}"/>
-                <!--<Slider x:Uid="ColumnsSlider" Margin="0,0,0,24" Header="columns" Minimum="0" Maximum="4" LargeChange="1" TickFrequency="1" Value="{x:Bind viewModel.Columns, Mode=TwoWay}" />-->
+                <ToggleSwitch x:Uid="ThemeToggleSwitch" Margin="0,12,0,24" Header="Theme" OffContent="Light" OnContent="Dark" IsOn="{x:Bind viewModel.IsDarkTheme, Mode=TwoWay}"/>
+                <ToggleSwitch x:Uid="TransparentDefaultTileToggleSwitch" Margin="0,0,0,24" Header="Default tile background" OffContent="Transparent" OnContent="Solid color" IsOn="{x:Bind viewModel.IsSolidColorDefaultTile, Mode=TwoWay}"/>
+                <ToggleSwitch x:Uid="TransparentNoteTileToggleSwitch" Margin="0,0,0,24" Header="Note live tile background" OffContent="Transparent" OnContent="Solid color" IsOn="{x:Bind viewModel.IsSolidColorNoteTile, Mode=TwoWay}" Visibility="{x:Bind viewModel.IsMobile, Converter={StaticResource BooleanToVisibilityConverter}}"/>
 
                 <TextBlock Margin="0,24,0,6">
                     <Run x:Uid="AppVersionTextBlock" Text="Version"/>

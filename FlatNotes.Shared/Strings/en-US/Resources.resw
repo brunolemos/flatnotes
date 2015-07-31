@@ -244,7 +244,7 @@
     <value>Unpin</value>
   </data>
   <data name="TransparentDefaultTileToggleSwitch.Header" xml:space="preserve">
-    <value>Default live tile background</value>
+    <value>Default tile background</value>
   </data>
   <data name="TransparentDefaultTileToggleSwitch.OffContent" xml:space="preserve">
     <value>Transparent</value>

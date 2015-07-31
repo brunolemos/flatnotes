@@ -16,7 +16,7 @@
   </Resources>
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="FlatNotes.WindowsPhone81.App">
-      <m3:VisualElements DisplayName="Flat Notes Beta" Square150x150Logo="Assets\Tiles\Solid\Logo.png" Square44x44Logo="Assets\SmallLogo.png" Description="Flat Notes is the most beautiful notes app for Windows Phone!" ForegroundText="light" BackgroundColor="transparent">
+      <m3:VisualElements DisplayName="Flat Notes Beta" Square150x150Logo="Assets\Tiles\Solid\Logo.png" Square44x44Logo="Assets\Tiles\Solid\Square44x44Logo.png" Description="Flat Notes is the most beautiful notes app for Windows Phone!" ForegroundText="light" BackgroundColor="transparent">
         <m3:DefaultTile Wide310x150Logo="Assets\Tiles\Solid\WideLogo.png" Square71x71Logo="Assets\Tiles\Solid\Square71x71Logo.png">
           <m3:ShowNameOnTiles>
             <m3:ShowOn Tile="square150x150Logo" />

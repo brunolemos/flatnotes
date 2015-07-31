@@ -144,33 +144,12 @@
     <Content Include="Assets\BadgeLogo.scale-100.png" />
     <Content Include="Assets\BadgeLogo.scale-140.png" />
     <Content Include="Assets\BadgeLogo.scale-240.png" />
-    <Content Include="Assets\Tiles\Solid\Logo.scale-100.png" />
-    <Content Include="Assets\Tiles\Solid\Logo.scale-140.png" />
-    <Content Include="Assets\Tiles\Solid\Logo.scale-240.png" />
-    <Content Include="Assets\SmallLogo.scale-100.png" />
-    <Content Include="Assets\SmallLogo.scale-140.png" />
-    <Content Include="Assets\SmallLogo.scale-240.png" />
     <Content Include="Assets\SplashScreenVertical.scale-100.png" />
     <Content Include="Assets\SplashScreenVertical.scale-140.png" />
     <Content Include="Assets\SplashScreenVertical.scale-240.png" />
-    <Content Include="Assets\Tiles\Solid\Square71x71Logo.scale-100.png" />
-    <Content Include="Assets\Tiles\Solid\Square71x71Logo.scale-140.png" />
-    <Content Include="Assets\Tiles\Solid\Square71x71Logo.scale-240.png" />
     <Content Include="Assets\StoreLogo.scale-100.png" />
     <Content Include="Assets\StoreLogo.scale-140.png" />
     <Content Include="Assets\StoreLogo.scale-240.png" />
-    <Content Include="Assets\Tiles\Transparent\Logo.scale-100.png" />
-    <Content Include="Assets\Tiles\Transparent\Logo.scale-140.png" />
-    <Content Include="Assets\Tiles\Transparent\Logo.scale-240.png" />
-    <Content Include="Assets\Tiles\Transparent\Square71x71Logo.scale-100.png" />
-    <Content Include="Assets\Tiles\Transparent\Square71x71Logo.scale-140.png" />
-    <Content Include="Assets\Tiles\Transparent\Square71x71Logo.scale-240.png" />
-    <Content Include="Assets\Tiles\Transparent\WideLogo.scale-100.png" />
-    <Content Include="Assets\Tiles\Transparent\WideLogo.scale-140.png" />
-    <Content Include="Assets\Tiles\Transparent\WideLogo.scale-240.png" />
-    <Content Include="Assets\Tiles\Solid\WideLogo.scale-100.png" />
-    <Content Include="Assets\Tiles\Solid\WideLogo.scale-140.png" />
-    <Content Include="Assets\Tiles\Solid\WideLogo.scale-240.png" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

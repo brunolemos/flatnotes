@@ -72,60 +72,46 @@
 
             <ScrollViewer Grid.Row="0" ScrollViewer.VerticalScrollMode="Enabled" ScrollViewer.HorizontalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Hidden">
                 <StackPanel>
+                    <StackPanel.ChildrenTransitions>
+                        <TransitionCollection>
+                            <EntranceThemeTransition FromHorizontalOffset="0" FromVerticalOffset="10" IsStaggeringEnabled="True" />
+                        </TransitionCollection>
+                    </StackPanel.ChildrenTransitions>
+                    
                     <Grid MaxHeight="220" Background="{StaticResource PhoneDarkLowBrush}" Visibility="{x:Bind viewModel.Note.Images.Count, Mode=OneWay, Converter={StaticResource PositiveIntToVisibilityConverter}}">
-                        <Grid.Transitions>
-                            <TransitionCollection>
-                                <EntranceThemeTransition FromHorizontalOffset="0" FromVerticalOffset="0"/>
-                            </TransitionCollection>
-                        </Grid.Transitions>
-                        
                         <ListView x:Name="NoteImagesListView" ItemsSource="{Binding}" ItemTemplate="{StaticResource NoteImagesListViewControlTemplate}" SelectionMode="None" DataContext="{x:Bind viewModel.Note.Images, Mode=OneWay}" d:DataContext="{Binding Images}"/>
                     </Grid>
 
-                    <StackPanel>
-                        <StackPanel.Transitions>
-                            <TransitionCollection>
-                                <EntranceThemeTransition/>
-                            </TransitionCollection>
-                        </StackPanel.Transitions>
-                        
-                        <StackPanel.ChildrenTransitions>
-                            <TransitionCollection>
-                                <EntranceThemeTransition FromHorizontalOffset="0" FromVerticalOffset="10" IsStaggeringEnabled="True" />
-                            </TransitionCollection>
-                        </StackPanel.ChildrenTransitions>
+                    <TextBox x:Uid="TitleTextBox" x:Name="NoteTitleTextBox" PlaceholderText="Title" Text="{x:Bind viewModel.Note.Title, Mode=TwoWay, TargetNullValue=''}" Foreground="{StaticResource AppNoteForegroundBrush}" InputScope="Chat" Background="Transparent" BorderThickness="0" FontSize="{x:Bind FontSize}" Margin="0" Padding="12" FontWeight="Bold" MaxLength="50" TextWrapping="NoWrap" KeyDown="NoteTitleTextBox_KeyDown" ScrollViewer.HorizontalScrollMode="Auto" ScrollViewer.VerticalScrollBarVisibility="Disabled"/>
+                    <TextBox x:Uid="TextTextBox" x:Name="NoteTextTextBox" PlaceholderText="Text" Text="{x:Bind viewModel.Note.Text, Mode=TwoWay, TargetNullValue=''}" Foreground="{StaticResource AppNoteForegroundBrush}" InputScope="Chat" Background="Transparent" BorderThickness="0" FontSize="{x:Bind FontSize}" Margin="0" Padding="12,4" FontWeight="Normal" AcceptsReturn="True" TextWrapping="Wrap" Visibility="{x:Bind viewModel.Note.IsText, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" ScrollViewer.HorizontalScrollMode="Disabled" ScrollViewer.VerticalScrollMode="Disabled" />
 
-                        <TextBox x:Uid="TitleTextBox" x:Name="NoteTitleTextBox" PlaceholderText="Title" Text="{x:Bind viewModel.Note.Title, Mode=TwoWay, TargetNullValue=''}" Foreground="{StaticResource AppNoteForegroundBrush}" InputScope="Chat" Background="Transparent" BorderThickness="0" FontSize="{x:Bind FontSize}" Margin="0" Padding="12" FontWeight="Bold" MaxLength="50" TextWrapping="NoWrap" KeyDown="NoteTitleTextBox_KeyDown" ScrollViewer.HorizontalScrollMode="Auto" ScrollViewer.VerticalScrollBarVisibility="Disabled"/>
-                        <TextBox x:Uid="TextTextBox" x:Name="NoteTextTextBox" PlaceholderText="Text" Text="{x:Bind viewModel.Note.Text, Mode=TwoWay, TargetNullValue=''}" Foreground="{StaticResource AppNoteForegroundBrush}" InputScope="Chat" Background="Transparent" BorderThickness="0" FontSize="{x:Bind FontSize}" Margin="0" Padding="12,4" FontWeight="Normal" AcceptsReturn="True" TextWrapping="Wrap" Visibility="{x:Bind viewModel.Note.IsText, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" ScrollViewer.HorizontalScrollMode="Disabled" ScrollViewer.VerticalScrollMode="Disabled" />
+                    <StackPanel Visibility="{x:Bind viewModel.Note.IsChecklist, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
+                        <ListView x:Name="NoteChecklistListView" Margin="0" Padding="0" ItemsSource="{Binding}" ItemTemplate="{StaticResource NoteChecklistListViewControlTemplate}" SelectionMode="None" IsItemClickEnabled="True" CanReorderItems="True" CanDragItems="True" AllowDrop="True" Holding="NoteChecklistListView_Holding" ScrollViewer.HorizontalScrollMode="Disabled" ScrollViewer.VerticalScrollMode="Disabled" DataContext="{x:Bind viewModel.Note.Checklist, Mode=OneWay}" d:DataContext="{Binding Checklist}">
+                            <ListView.ItemContainerTransitions>
+                                <TransitionCollection>
+                                    <EntranceThemeTransition FromHorizontalOffset="0" FromVerticalOffset="10" IsStaggeringEnabled="True" />
+                                </TransitionCollection>
+                            </ListView.ItemContainerTransitions>
+                        </ListView>
 
-                        <StackPanel Visibility="{x:Bind viewModel.Note.IsChecklist, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
-                            <ListView x:Name="NoteChecklistListView" Margin="0" Padding="0" ItemsSource="{Binding}" ItemTemplate="{StaticResource NoteChecklistListViewControlTemplate}" SelectionMode="None" IsItemClickEnabled="True" CanReorderItems="True" CanDragItems="True" AllowDrop="True" Holding="NoteChecklistListView_Holding" ScrollViewer.HorizontalScrollMode="Disabled" ScrollViewer.VerticalScrollMode="Disabled" DataContext="{x:Bind viewModel.Note.Checklist, Mode=OneWay}" d:DataContext="{Binding Checklist}">
-                                <ListView.ItemContainerTransitions>
-                                    <TransitionCollection>
-                                        <EntranceThemeTransition FromHorizontalOffset="0" FromVerticalOffset="10" IsStaggeringEnabled="True" />
-                                    </TransitionCollection>
-                                </ListView.ItemContainerTransitions>
-                            </ListView>
-                        
-                            <Grid Margin="12,2">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
+                        <Grid Margin="12,2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
 
-                                <Grid>
-                                    <Viewbox Margin="0,3,0,0" Height="20" HorizontalAlignment="Center" VerticalAlignment="Top" IsHitTestVisible="False" Opacity="0">
-                                        <CheckBox Style="{StaticResource CheckBoxWithoutContentStyle}" IsEnabled="False" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                                    </Viewbox>
+                            <Grid>
+                                <Viewbox Margin="0,3,0,0" Height="20" HorizontalAlignment="Center" VerticalAlignment="Top" IsHitTestVisible="False" Opacity="0">
+                                    <CheckBox Style="{StaticResource CheckBoxWithoutContentStyle}" IsEnabled="False" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                </Viewbox>
 
-                                    <Viewbox Margin="2,5,0,0" Width="16" HorizontalAlignment="Center" VerticalAlignment="Top" IsHitTestVisible="False">
-                                        <SymbolIcon Symbol="Add" Foreground="{StaticResource PhoneDarkMidBrush}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                                    </Viewbox>
-                                </Grid>
-
-                                <TextBox Grid.Column="1" x:Uid="NewItemTextBox" x:Name="NewChecklistItemTextBox" PlaceholderText="New item" Text="" Margin="0" Padding="8,0" Foreground="{StaticResource AppNoteForegroundBrush}" InputScope="Chat" Background="Transparent" BorderThickness="0" FontSize="{x:Bind FontSize}" FontWeight="Normal" AcceptsReturn="False" TextWrapping="NoWrap" KeyDown="NewChecklistItemTextBox_KeyDown" IsEnabled="{Binding ReorderMode, ElementName=NoteChecklistListView, Converter={StaticResource ReorderModeToBooleanConverter}, ConverterParameter=True}" ScrollViewer.HorizontalScrollMode="Auto" ScrollViewer.VerticalScrollMode="Disabled" />
+                                <Viewbox Margin="2,5,0,0" Width="16" HorizontalAlignment="Center" VerticalAlignment="Top" IsHitTestVisible="False">
+                                    <SymbolIcon Symbol="Add" Foreground="{StaticResource PhoneDarkMidBrush}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                </Viewbox>
                             </Grid>
-                        </StackPanel>
+
+                            <TextBox Grid.Column="1" x:Uid="NewItemTextBox" x:Name="NewChecklistItemTextBox" PlaceholderText="New item" Text="" Margin="0" Padding="8,0" Foreground="{StaticResource AppNoteForegroundBrush}" InputScope="Chat" Background="Transparent" BorderThickness="0" FontSize="{x:Bind FontSize}" FontWeight="Normal" AcceptsReturn="False" TextWrapping="NoWrap" KeyDown="NewChecklistItemTextBox_KeyDown" IsEnabled="{Binding ReorderMode, ElementName=NoteChecklistListView, Converter={StaticResource ReorderModeToBooleanConverter}, ConverterParameter=True}" ScrollViewer.HorizontalScrollMode="Auto" ScrollViewer.VerticalScrollMode="Disabled" />
+                        </Grid>
                     </StackPanel>
                 </StackPanel>
             </ScrollViewer>

@@ -15,8 +15,8 @@
   </Resources>
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="FlatNotes.App">
-      <uap:VisualElements DisplayName="Flat Notes" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="FlatNotes" BackgroundColor="transparent">
-        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" ShortName="Flat Notes" Square310x310Logo="Assets\Wide310x310Logo.png">
+      <uap:VisualElements DisplayName="Flat Notes" Square150x150Logo="Assets\Tiles\Solid\Square150x150Logo.png" Square44x44Logo="Assets\Tiles\Solid\Square44x44Logo.png" Description="FlatNotes" BackgroundColor="transparent">
+        <uap:DefaultTile Wide310x150Logo="Assets\Tiles\Solid\Wide310x150Logo.png" ShortName="Flat Notes" Square310x310Logo="Assets\Tiles\Solid\Square310x310Logo.png" Square71x71Logo="Assets\Tiles\Solid\Square71x71Logo.png">
           <uap:ShowNameOnTiles>
             <uap:ShowOn Tile="square150x150Logo" />
             <uap:ShowOn Tile="wide310x150Logo" />

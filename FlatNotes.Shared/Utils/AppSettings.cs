@@ -118,10 +118,10 @@ namespace FlatNotes.Utils
                 if (value != ElementTheme.Light && value != ElementTheme.Dark) value = THEME_DEFAULT;
 
                 if (SetValue<ElementTheme>(THEME_KEY, value)) {
+                    App.TelemetryClient.TrackMetric("Theme", (int)value);
+
                     var handler = ThemeChanged;
                     if (handler != null) handler(this, new ThemeEventArgs(value));
-
-                    App.TelemetryClient.TrackMetric("Theme", value == ElementTheme.Light ? 1 : 2);
                 }
             }
         }
@@ -133,6 +133,8 @@ namespace FlatNotes.Utils
             {
                 if (SetValue<bool>(IS_SINGLE_COLUMN_ENABLED_KEY, value))
                 {
+                    App.TelemetryClient.TrackMetric("Single Column", value ? 1 : 0);
+
                     var handler = IsSingleColumnEnabledChanged;
                     if (handler != null) handler(this, new IsSingleColumnEnabledEventArgs(value));
                 }
@@ -146,6 +148,8 @@ namespace FlatNotes.Utils
             {
                 if (SetValue<bool>(TRANSPARENT_TILE_KEY, value))
                 {
+                    App.TelemetryClient.TrackMetric("Transparent Tile", value ? 1 : 0);
+
                     var handler = TransparentTileChanged;
                     if (handler != null) handler(this, new TransparentTileEventArgs(value));
                 }
@@ -159,6 +163,8 @@ namespace FlatNotes.Utils
             {
                 if (SetValue<bool>(TRANSPARENT_NOTE_TILE_KEY, value))
                 {
+                    App.TelemetryClient.TrackMetric("Transparent Note Tile", value ? 1 : 0);
+
                     var handler = TransparentNoteTileChanged;
                     if (handler != null) handler(this, new TransparentTileEventArgs(value));
                 }

@@ -95,6 +95,33 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="$(MSBuildThisFileDirectory)Assets\Logo.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Square150x150Logo.scale-200.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Square44x44Logo.scale-200.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Square44x44Logo.targetsize-24.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Square44x44Logo.targetsize-48.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Tiles\Solid\Square150x150Logo.scale-100.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Tiles\Solid\Square150x150Logo.scale-200.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Tiles\Solid\Square310x310Logo.scale-200.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Tiles\Solid\Square44x44Logo.scale-100.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Tiles\Solid\Square44x44Logo.scale-200.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Tiles\Solid\Square44x44Logo.targetsize-24.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Tiles\Solid\Square44x44Logo.targetsize-48.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Tiles\Solid\Square71x71Logo.scale-100.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Tiles\Solid\Square71x71Logo.scale-200.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Tiles\Solid\Wide310x150Logo.scale-100.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Tiles\Solid\Wide310x150Logo.scale-200.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Tiles\Solid\WideLogo.scale-100.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Tiles\Transparent\Square150x150Logo.scale-200.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Tiles\Transparent\Square44x44Logo.scale-100.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Tiles\Transparent\Square44x44Logo.scale-200.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Tiles\Transparent\Square44x44Logo.targetsize-24_altform-unplated.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Tiles\Transparent\Square44x44Logo.targetsize-48_altform-unplated.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Tiles\Transparent\Square71x71Logo.scale-200.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Tiles\Transparent\Wide310x150Logo.scale-100.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Tiles\Transparent\Wide310x150Logo.scale-200.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Tiles\Transparent\Square310x310Logo.scale-200.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Wide310x150Logo.scale-200.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Wide310x310Logo.scale-200.png" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="$(MSBuildThisFileDirectory)Controls\NotePreview.xaml">
@@ -124,5 +151,17 @@
     <PRIResource Include="$(MSBuildThisFileDirectory)Strings\hi\Resources.resw" />
     <PRIResource Include="$(MSBuildThisFileDirectory)Strings\pt-BR\Resources.resw" />
     <PRIResource Include="$(MSBuildThisFileDirectory)Strings\zh-CN\Resources.resw" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)Assets\PSD\LockScreenLogo.scale-200.psd" />
+    <None Include="$(MSBuildThisFileDirectory)Assets\PSD\logo_noborder.psb" />
+    <None Include="$(MSBuildThisFileDirectory)Assets\PSD\logo_noborder_phone.psb" />
+    <None Include="$(MSBuildThisFileDirectory)Assets\PSD\SplashScreen.scale-200.psd" />
+    <None Include="$(MSBuildThisFileDirectory)Assets\PSD\Square150x150Logo.scale-200.psd" />
+    <None Include="$(MSBuildThisFileDirectory)Assets\PSD\Square44x44Logo.scale-200.psd" />
+    <None Include="$(MSBuildThisFileDirectory)Assets\PSD\Square44x44Logo.targetsize-24_altform-unplated.psd" />
+    <None Include="$(MSBuildThisFileDirectory)Assets\PSD\StoreLogo.scale-200.psd" />
+    <None Include="$(MSBuildThisFileDirectory)Assets\PSD\Wide310x150Logo.scale-200.psd" />
+    <None Include="$(MSBuildThisFileDirectory)Assets\PSD\Square310x310Logo.scale-200.psd" />
   </ItemGroup>
 </Project>

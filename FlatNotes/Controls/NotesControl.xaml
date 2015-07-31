@@ -17,7 +17,7 @@
             <MenuFlyoutItem x:Uid="RestoreMenuFlyoutItem" Text="Restore" Command="{x:Bind viewModel.RestoreNoteCommand}" CommandParameter="{Binding}" Visibility="{Binding IsArchived, Converter={StaticResource BooleanToVisibilityConverter}}"/>
             <MenuFlyoutItem x:Uid="ArchiveMenuFlyoutItem" Text="Archive" Command="{x:Bind viewModel.ArchiveNoteCommand}" CommandParameter="{Binding}" Visibility="{Binding IsArchived, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=True}"/>
             <MenuFlyoutItem x:Uid="DeleteMenuFlyoutItem" Text="Delete" Command="{x:Bind viewModel.DeleteNoteCommand}" CommandParameter="{Binding}"/>
-            <MenuFlyoutItem x:Uid="PinToStartMenuFlyoutItem" Text="Pin to start" Command="{x:Bind viewModel.PinCommand}" CommandParameter="{Binding}" Visibility="{Binding IsPinned, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=True}"/>
+            <MenuFlyoutItem x:Uid="PinToStartMenuFlyoutItem" Text="Pin to start" Command="{x:Bind viewModel.PinCommand}" CommandParameter="{Binding}" Visibility="{Binding CanPin, Converter={StaticResource BooleanToVisibilityConverter}}"/>
             <MenuFlyoutItem x:Uid="UnpinFromStartMenuFlyoutItem" Text="Unpin from start" Command="{x:Bind viewModel.UnpinCommand}" CommandParameter="{Binding}" Visibility="{Binding IsPinned, Converter={StaticResource BooleanToVisibilityConverter}}"/>
             <MenuFlyoutSubItem x:Uid="ChangeColorMenuFlyoutItem" Text="Change color">
                 <MenuFlyoutItem Background="{x:Bind viewModel.Colors[0].Color}" Click="OnChangeColorClick" CommandParameter="{x:Bind viewModel.Colors[0]}"/>

@@ -75,10 +75,8 @@ namespace FlatNotes.ViewModels
 
         private void ToggleSingleColumnView()
         {
-            IsSingleColumnEnabled = !IsSingleColumnEnabled;
-
             App.TelemetryClient.TrackEvent("ToggleSingleColumnView_MainViewModel");
-            App.TelemetryClient.TrackMetric("Single Column", IsSingleColumnEnabled ? 1 : 0);
+            IsSingleColumnEnabled = !IsSingleColumnEnabled;
         }
 
         private void OpenArchivedNotesPage()

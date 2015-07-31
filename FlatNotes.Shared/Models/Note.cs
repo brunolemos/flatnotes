@@ -120,6 +120,10 @@ namespace FlatNotes.Models
         [Ignore]
         public bool IsPinned { get { return SecondaryTile.Exists(ID); } }
 
+        [IgnoreDataMember]
+        [Ignore]
+        public bool CanPin { get { return !IsPinned && !IsArchived; } }
+
         public Note()
         {
         }
