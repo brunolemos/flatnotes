@@ -19,6 +19,12 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         
+        <Grid.Transitions>
+            <TransitionCollection>
+                <EntranceThemeTransition/>
+            </TransitionCollection>
+        </Grid.Transitions>
+
         <Grid Grid.Row="1" Visibility="{x:Bind viewModel.Notes.Count, Mode=OneWay, Converter={StaticResource PositiveIntToVisibilityConverter}, ConverterParameter=True}">
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Viewbox Width="160">
@@ -54,7 +60,7 @@
 
                 <VisualState>
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="600" />
+                        <AdaptiveTrigger MinWindowWidth="500" />
                     </VisualState.StateTriggers>
 
                     <VisualState.Setters>

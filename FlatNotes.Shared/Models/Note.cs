@@ -71,11 +71,11 @@ namespace FlatNotes.Models
 
         public string Title { get { return title; } set { if (title != value) { title = value; NotifyPropertyChanged("Title"); } } }
         [DataMember(Name = "Title")]
-        private string title;
+        private string title = "";
 
         public string Text { get { return text; } set { if (text != value) { text = value; NotifyPropertyChanged("Text"); } } }
         [DataMember(Name = "Text")]
-        private string text;
+        private string text = "";
 
         [OneToMany(CascadeOperations = CascadeOperation.All)]
         public List<NoteImage> _ignore1 { get { return images; } set { images = value; } }

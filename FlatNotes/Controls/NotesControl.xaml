@@ -45,7 +45,7 @@
 
         <ListView.ItemContainerTransitions>
             <TransitionCollection>
-                <EntranceThemeTransition FromHorizontalOffset="0" FromVerticalOffset="400" IsStaggeringEnabled="True"/>
+                <EntranceThemeTransition FromHorizontalOffset="0" FromVerticalOffset="200" IsStaggeringEnabled="True"/>
                 <RepositionThemeTransition/>
                 <AddDeleteThemeTransition/>
                 <ReorderThemeTransition/>

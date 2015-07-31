@@ -20,6 +20,12 @@
         </Grid.RowDefinitions>
 
         <Grid x:Name="ContentRoot" Grid.Row="1">
+            <Grid.Transitions>
+                <TransitionCollection>
+                    <EntranceThemeTransition/>
+                </TransitionCollection>
+            </Grid.Transitions>
+            
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{x:Bind viewModel.Notes.Count, Mode=OneWay, Converter={StaticResource PositiveIntToVisibilityConverter}, ConverterParameter=True}">
                 <Viewbox Width="160">
                     <Canvas Width="100" Height="100" HorizontalAlignment="Center">
@@ -36,7 +42,7 @@
             <local:NotesControl x:Name="NotesControl" ItemsSource="{Binding}" Columns="{x:Bind viewModel.Columns, Mode=OneWay}" DataContext="{x:Bind viewModel.Notes, Mode=OneWay}" d:DataContext="{Binding Notes}" VerticalAlignment="Stretch" CanReorderItems="True" CanDragItems="True" AllowDrop="True" ItemClick="OnNoteClick" ItemsReordered="OnItemsReordered"/>
         </Grid>
 
-        <CommandBar Grid.Row="{x:Bind viewModel.IsMobile, Converter={StaticResource IsMobileToGridRowConverter}}" EntranceNavigationTransitionInfo.IsTargetElement="False" CommonNavigationTransitionInfo.IsStaggerElement="False"  ContinuumNavigationTransitionInfo.IsEntranceElement="False" ContinuumNavigationTransitionInfo.IsExitElement="False" >
+        <CommandBar Grid.Row="{x:Bind viewModel.IsMobile, Converter={StaticResource IsMobileToGridRowConverter}}">
             <CommandBar.PrimaryCommands>
                 <AppBarButton x:Uid="TextAppBarButton" Label="Text" Command="{x:Bind viewModel.CreateTextNoteCommand}" ToolTipService.ToolTip="{Binding Label, RelativeSource={RelativeSource Mode=Self}}">
                     <AppBarButton.Icon>
@@ -65,7 +71,21 @@
                         <Setter Target="NotesControl.ItemWidth" Value="160"/>
                         <Setter Target="NotesControl.Padding" Value="12"/>
                         <Setter Target="NotesControl.AllowSingleColumn" Value="True"/>
-                        <Setter Target="ToggleSingleColumnViewAppBarButton.Visibility" Value="Visible"/>
+                        <Setter Target="ToggleSingleColumnViewAppBarButton.Visibility" Value="True"/>
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="500" />
+                    </VisualState.StateTriggers>
+
+                    <VisualState.Setters>
+                        <Setter Target="NotesControl.ItemStretch" Value="False"/>
+                        <Setter Target="NotesControl.ItemWidth" Value="220"/>
+                        <Setter Target="NotesControl.Padding" Value="24"/>
+                        <Setter Target="NotesControl.AllowSingleColumn" Value="True"/>
+                        <Setter Target="ToggleSingleColumnViewAppBarButton.IsEnabled" Value="True"/>
                     </VisualState.Setters>
                 </VisualState>
 
@@ -79,7 +99,7 @@
                         <Setter Target="NotesControl.ItemWidth" Value="220"/>
                         <Setter Target="NotesControl.Padding" Value="24"/>
                         <Setter Target="NotesControl.AllowSingleColumn" Value="False"/>
-                        <Setter Target="ToggleSingleColumnViewAppBarButton.Visibility" Value="Visible"/>
+                        <Setter Target="ToggleSingleColumnViewAppBarButton.IsEnabled" Value="False"/>
                     </VisualState.Setters>
                 </VisualState>
 
@@ -93,7 +113,7 @@
                         <Setter Target="NotesControl.ItemWidth" Value="260"/>
                         <Setter Target="NotesControl.Padding" Value="80,24"/>
                         <Setter Target="NotesControl.AllowSingleColumn" Value="False"/>
-                        <Setter Target="ToggleSingleColumnViewAppBarButton.Visibility" Value="Collapsed"/>
+                        <Setter Target="ToggleSingleColumnViewAppBarButton.IsEnabled" Value="False"/>
                     </VisualState.Setters>
                 </VisualState>
 
@@ -107,7 +127,7 @@
                         <Setter Target="NotesControl.ItemWidth" Value="300"/>
                         <Setter Target="NotesControl.Padding" Value="120,24"/>
                         <Setter Target="NotesControl.AllowSingleColumn" Value="False"/>
-                        <Setter Target="ToggleSingleColumnViewAppBarButton.Visibility" Value="Collapsed"/>
+                        <Setter Target="ToggleSingleColumnViewAppBarButton.IsEnabled" Value="False"/>
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>

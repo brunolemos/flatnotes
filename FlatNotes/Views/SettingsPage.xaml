@@ -24,11 +24,15 @@
         </Grid.RowDefinitions>
 
         <Grid x:Name="ContentRoot" Grid.Row="1">
+            <Grid.Transitions>
+                <TransitionCollection>
+                    <EntranceThemeTransition/>
+                </TransitionCollection>
+            </Grid.Transitions>
+            
             <StackPanel>
                 <Image Height="80" Source="ms-appx:///Assets/Logo.png" VerticalAlignment="Top" HorizontalAlignment="Center"/>
-                <TextBlock Margin="0,0,0,12" Text="{x:Bind viewModel.AppName}" HorizontalAlignment="Center" Style="{StaticResource SubheaderTextBlockStyle}"/>
-
-                <Button Margin="0,0,0,24" Content="Download Flat Notes" HorizontalAlignment="Stretch" Command="{x:Bind viewModel.DownloadAppCommand}" Visibility="{x:Bind viewModel.IsBeta, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                <TextBlock Margin="0,0,0,24" Text="{x:Bind viewModel.AppName}" HorizontalAlignment="Center" Style="{StaticResource SubheaderTextBlockStyle}"/>
                 
                 <ToggleSwitch x:Uid="ThemeToggleSwitch" Margin="0,12,0,24" Header="theme" OffContent="light" OnContent="dark" IsOn="{x:Bind viewModel.IsDarkTheme, Mode=TwoWay}"/>
                 <!--<ToggleSwitch x:Uid="TransparentDefaultTileToggleSwitch" Margin="0,0,0,24" Header="default tile" OffContent="transparent" OnContent="solid color" IsOn="{x:Bind viewModel.IsSolidColorDefaultTile, Mode=TwoWay}"/>-->
@@ -44,6 +48,8 @@
                     <Run x:Uid="DevelopedByTextBlock" Text="Developed by"/>
                     <Hyperlink NavigateUri="http://twitter.com/brunolemos" Click="{x:Bind viewModel.DeveloperTwitterHyperlink_OnClick}">@brunolemos</Hyperlink>
                 </TextBlock>
+
+                <Button Margin="0,6,0,6" Content="Download Flat Notes" HorizontalAlignment="Left" Command="{x:Bind viewModel.DownloadAppCommand}" Visibility="{x:Bind viewModel.IsBeta, Converter={StaticResource BooleanToVisibilityConverter}}"/>
             </StackPanel>
         </Grid>
         
@@ -69,16 +75,6 @@
                 <VisualState>
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="500" />
-                    </VisualState.StateTriggers>
-
-                    <VisualState.Setters>
-                        <Setter Target="ContentRoot.Margin" Value="24"/>
-                    </VisualState.Setters>
-                </VisualState>
-
-                <VisualState>
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="800" />
                     </VisualState.StateTriggers>
 
                     <VisualState.Setters>

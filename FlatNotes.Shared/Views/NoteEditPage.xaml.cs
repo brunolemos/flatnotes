@@ -4,6 +4,7 @@ using FlatNotes.Utils;
 using FlatNotes.ViewModels;
 using System;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Resources;
 using Windows.UI;
@@ -83,8 +84,11 @@ namespace FlatNotes.Views
         private async void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
         {
             App.RootFrame.Background = previousBackground;
-            this.Focus(FocusState.Programmatic);
+
+            //prevent from losing changes when navigating with textbox focused
+            this.CommandBar.Focus(FocusState.Programmatic);
             this.CommandBar.IsOpen = false;
+            await Task.Delay(0200);
 
             //deleted
             if (viewModel.Note == null) return;

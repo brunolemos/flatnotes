@@ -172,7 +172,7 @@ namespace FlatNotes
         private void RootFrame_FirstNavigated(object sender, NavigationEventArgs e)
         {
             var rootFrame = sender as Frame;
-            rootFrame.ContentTransitions = null;// transitions ?? new TransitionCollection() { new EntranceThemeTransition() { FromHorizontalOffset = 50, FromVerticalOffset = 0, IsStaggeringEnabled = false } };
+            rootFrame.ContentTransitions = null;// new TransitionCollection() { new NavigationThemeTransition() { } };
             rootFrame.Navigated -= this.RootFrame_FirstNavigated;
         }
 
