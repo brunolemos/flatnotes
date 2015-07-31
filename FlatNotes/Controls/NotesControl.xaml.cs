@@ -2,11 +2,15 @@
 using FlatNotes.Models;
 using FlatNotes.ViewModels;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
+using Windows.UI.Xaml.Data;
+using Windows.UI.Xaml.Media;
 
 namespace FlatNotes.Controls
 {
@@ -20,8 +24,8 @@ namespace FlatNotes.Controls
         public event EventHandler<ItemClickEventArgs> ItemClick;
         public const double ITEM_MIN_WIDTH = 160;
 
-        public static readonly DependencyProperty ItemsSourceProperty = DependencyProperty.Register("ItemsSource", typeof(Object), typeof(NotesControl), new PropertyMetadata(-1));
-        public Object ItemsSource { get { return (Object)GetValue(ItemsSourceProperty); } set { SetValue(ItemsSourceProperty, value); } }
+        public static readonly DependencyProperty ItemsSourceProperty = DependencyProperty.Register("ItemsSource", typeof(object), typeof(NotesControl), new PropertyMetadata(-1));
+        public object ItemsSource { get { return (object)GetValue(ItemsSourceProperty); } set { SetValue(ItemsSourceProperty, value); } }
 
         public static readonly DependencyProperty ColumnsProperty = DependencyProperty.Register("Columns", typeof(int), typeof(NotesControl), new PropertyMetadata(-1));
         public int Columns { get { return (int)GetValue(ColumnsProperty); } set { SetValue(ColumnsProperty, value); } }
@@ -49,6 +53,19 @@ namespace FlatNotes.Controls
         public NotesControl()
         {
             this.InitializeComponent();
+            Loaded += (s, e) => CreateItemsSourceBindingIfNecessary();
+        }
+
+        private async void CreateItemsSourceBindingIfNecessary()
+        {
+            var items = ItemsSource as IEnumerable<object>;
+            if (items == null || NotesGridView.Items.Count > 0) return;
+
+            foreach (var item in items)
+                NotesGridView.Items.Add(item);
+
+            await Task.Delay(1000);
+            NotesGridView.SetBinding(ItemsControl.ItemsSourceProperty, new Binding() { Source = this, Path = new PropertyPath("ItemsSource"), Mode = BindingMode.OneWay });
         }
 
         private void GridView_ItemClick(object sender, ItemClickEventArgs e)
@@ -113,6 +130,11 @@ namespace FlatNotes.Controls
         {
             if (openedFlyout != null)
                 openedFlyout.Hide();
+        }
+
+        private void NotesFluidGrid_Loaded(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

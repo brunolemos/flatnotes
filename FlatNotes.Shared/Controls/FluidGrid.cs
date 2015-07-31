@@ -1,7 +1,6 @@
 ﻿using FlatNotes.Events;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using Windows.Foundation;
 using Windows.UI.Xaml;
@@ -36,7 +35,7 @@ namespace FlatNotes.Controls
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
-            //Debug.WriteLine("Loaded " + ParentListView);
+            //Debug.WriteLine("Loaded " + Children?.Count);
             if (ParentListView != null)
             {
                 ParentListView.DragItemsStarting += OnDragItemsStarting;
@@ -51,7 +50,7 @@ namespace FlatNotes.Controls
 
         private void OnUnloaded(object sender, RoutedEventArgs e)
         {
-            //Debug.WriteLine("Unloaded " + ParentListView);
+            //Debug.WriteLine("Unloaded " + this);
             if (ParentListView != null)
             {
                 ParentListView.DragItemsStarting -= OnDragItemsStarting;
@@ -66,7 +65,8 @@ namespace FlatNotes.Controls
 
         protected override Size MeasureOverride(Size totalSize)
         {
-            //Debug.WriteLine("MeasureOverride");
+            //Debug.WriteLine("MeasureOverride " + totalSize);
+
             itemWidth = Math.Min(ItemWidth, totalSize.Width);
             columns = Columns < 1 || (Columns == 1 && !AllowSingleColumn)
                     ? Math.Max(1, (int)Math.Floor(totalSize.Width / itemWidth))
@@ -137,7 +137,7 @@ namespace FlatNotes.Controls
 
         protected override Size ArrangeOverride(Size totalSize)
         {
-            //Debug.WriteLine("ArrangeOverride");
+            //Debug.WriteLine("ArrangeOverride " + totalSize);
 
             if (elements == null) elements = new List<UIElement>();
             if (!isReordering) elements.Clear();

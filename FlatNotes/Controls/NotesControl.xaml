@@ -36,7 +36,6 @@
 
     <ListView x:Name="NotesGridView"
               HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
-              ItemsSource="{x:Bind ItemsSource, Mode=OneWay}"
               CanReorderItems="{x:Bind CanReorderItems, Mode=OneWay}" 
               CanDragItems="{x:Bind CanDragItems, Mode=OneWay}" 
               AllowDrop="{x:Bind AllowDrop, Mode=OneWay}"  
@@ -46,7 +45,7 @@
 
         <ListView.ItemContainerTransitions>
             <TransitionCollection>
-                <EntranceThemeTransition FromVerticalOffset="200" IsStaggeringEnabled="True"/>
+                <EntranceThemeTransition FromHorizontalOffset="0" FromVerticalOffset="400" IsStaggeringEnabled="True"/>
                 <RepositionThemeTransition/>
                 <AddDeleteThemeTransition/>
                 <ReorderThemeTransition/>
@@ -66,46 +65,5 @@
                 <local:NotePreview Holding="NotePreview_Holding" RightTapped="NotePreview_RightTapped" RequestedTheme="Dark" FlyoutBase.AttachedFlyout="{StaticResource NoteMenuFlyout}"/>
             </DataTemplate>
         </ListView.ItemTemplate>
-        
-        <!--<ListView.ItemContainerStyle>
-            <Style TargetType="GridViewItem">
-                <Setter Property="Margin" Value="0"/>
-                <Setter Property="HorizontalAlignment" Value="Stretch"/>
-                <Setter Property="VerticalAlignment" Value="Stretch"/>
-                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                <Setter Property="VerticalContentAlignment" Value="Stretch"/>
-
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate TargetType="GridViewItem">
-                            <GridViewItemPresenter 
-                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" 
-                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                            CheckBrush="{ThemeResource ListViewItemCheckThemeBrush}"
-                            CheckHintBrush="{ThemeResource ListViewItemCheckHintThemeBrush}"
-                            CheckSelectingBrush="{ThemeResource ListViewItemCheckSelectingThemeBrush}"
-                            ContentMargin="0"
-                            ContentTransitions="{TemplateBinding ContentTransitions}"
-                            DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}"
-                            DragBackground="{ThemeResource ListViewItemDragBackgroundThemeBrush}"
-                            DragForeground="{ThemeResource ListViewItemDragForegroundThemeBrush}"
-                            DragOpacity="{ThemeResource ListViewItemDragThemeOpacity}"
-                            FocusBorderBrush="{ThemeResource ListViewItemFocusBorderThemeBrush}"
-                            Padding="{TemplateBinding Padding}"
-                            PlaceholderBackground="{ThemeResource ListViewItemPlaceholderBackgroundThemeBrush}"
-                            PointerOverBackground="Transparent"
-                            PointerOverBackgroundMargin="1"
-                            ReorderHintOffset="{ThemeResource ListViewItemReorderHintThemeOffset}"
-                            SelectedBackground="{ThemeResource ListViewItemSelectedBackgroundThemeBrush}"
-                            SelectedBorderThickness="{ThemeResource ListViewItemCompactSelectedBorderThemeThickness}"
-                            SelectedForeground="{ThemeResource ListViewItemSelectedForegroundThemeBrush}"
-                            SelectedPointerOverBackground="{ThemeResource ListViewItemSelectedPointerOverBackgroundThemeBrush}"
-                            SelectedPointerOverBorderBrush="{ThemeResource ListViewItemSelectedPointerOverBorderThemeBrush}"
-                            SelectionCheckMarkVisualEnabled="False" />
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-            </Style>
-        </ListView.ItemContainerStyle>-->
     </ListView>
 </UserControl>

@@ -50,7 +50,7 @@ namespace FlatNotes.Utils
 
         private static void ConnectDB()
         {
-            var path = Path.Combine(Windows.Storage.ApplicationData.Current.RoamingFolder.Path, "app.db");
+            var path = Path.Combine(ApplicationData.Current.LocalFolder.Path, "app.db");
             db = new SQLiteConnection(new SQLite.Net.Platform.WinRT.SQLitePlatformWinRT(), path);
         }
 

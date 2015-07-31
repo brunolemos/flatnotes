@@ -20,6 +20,10 @@
             <Converters:NullableToVisibilityConverter x:Key="NullableToVisibilityConverter"/>
             <Converters:MaxChecklistItemsConverter x:Key="MaxChecklistItemsConverter"/>
             <Converters:PositiveIntToVisibilityConverter x:Key="PositiveIntToVisibilityConverter"/>
+
+            <Style TargetType="TextBlock">
+                <Setter Property="FontSize" Value="{Binding ElementName=Root, Path=FontSize}"/>
+            </Style>
             
             <Style x:Key="NotePreviewChecklistItem" TargetType="ListViewItem">
                 <Setter Property="Margin" Value="0"/>
@@ -45,7 +49,7 @@
                         <CheckBox Grid.Column="0" IsChecked="{Binding IsChecked, Mode=TwoWay}" Style="{StaticResource CheckBoxWithoutContentStyle}" BorderBrush="{StaticResource AppNoteForegroundBrush}" Foreground="{StaticResource AppNoteForegroundBrush}" FontWeight="SemiLight" ClickMode="Release" IsTapEnabled="False"/>
                     </Viewbox>
 
-                    <TextBlock Grid.Column="1" Margin="0" Padding="4,0" Text="{Binding Text, Mode=OneWay}" Foreground="{Binding ElementName=Root, Path=Foreground}" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" FontSize="{Binding ElementName=Root, Path=FontSize}" FontWeight="SemiLight" MaxLines="1" VerticalAlignment="Top" />
+                    <TextBlock Grid.Column="1" Margin="0" Padding="4,0" Text="{Binding Text, Mode=OneWay}" Foreground="{Binding ElementName=Root, Path=Foreground}" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" FontWeight="SemiLight" MaxLines="1" VerticalAlignment="Top" />
                 </Grid>
             </DataTemplate>
             
@@ -66,10 +70,10 @@
             </Grid>
             
             <StackPanel Margin="8,8,8,16">
-                <TextBlock Text="{Binding Title, Mode=OneWay}" Foreground="{Binding ElementName=Root, Path=Foreground}" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" Margin="0,0,0,4" FontWeight="Bold" FontSize="{Binding ElementName=Root, Path=FontSize}" MaxLines="1" Visibility="{Binding Title, Converter={StaticResource NullableToVisibilityConverter}}"/>
-                <TextBlock Text="{Binding Text, Mode=OneWay}" Foreground="{Binding ElementName=Root, Path=Foreground}" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" Margin="0,0,0,4" FontWeight="SemiLight" FontSize="{Binding ElementName=Root, Path=FontSize}" MaxLines="4" Visibility="{Binding Text, Converter={StaticResource NullableToVisibilityConverter}}" />
+                <TextBlock Text="{Binding Title, Mode=OneWay}" Foreground="{Binding ElementName=Root, Path=Foreground}" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" Margin="0,0,0,4" FontWeight="Bold" MaxLines="1" Visibility="{Binding Title, Converter={StaticResource NullableToVisibilityConverter}}"/>
+                <TextBlock Text="{Binding Text, Mode=OneWay}" Foreground="{Binding ElementName=Root, Path=Foreground}" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" Margin="0,0,0,4" FontWeight="SemiLight" MaxLines="4" Visibility="{Binding Text, Converter={StaticResource NullableToVisibilityConverter}}" />
 
-                <StackPanel Visibility="{Binding IsChecklist, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <StackPanel Visibility="{Binding Title, Converter={StaticResource NullableToVisibilityConverter}}">
                     <ListView x:Name="NoteChecklistListView" Margin="0,0,0,4" ItemsSource="{Binding Checklist, Converter={StaticResource MaxChecklistItemsConverter}}" ItemContainerStyle="{StaticResource NotePreviewChecklistItem}" ItemTemplate="{StaticResource NoteChecklistListViewControlTemplate}" IsTapEnabled="False" IsItemClickEnabled="False" IsHitTestVisible="False" />
 
                     <Grid x:Name="TrimIndicator" Margin="0,-8,0,0" Visibility="{Binding Source={StaticResource MaxChecklistItemsConverter}, Path=IsTrimmed, Converter={StaticResource BooleanToVisibilityConverter}}">
@@ -82,7 +86,7 @@
                             <CheckBox Grid.Column="0" Style="{StaticResource CheckBoxWithoutContentStyle}" IsTapEnabled="False"/>
                         </Viewbox>
 
-                        <TextBlock Grid.Column="1" Text="..." Margin="0" Padding="8,0" Foreground="{Binding ElementName=Root, Path=Foreground}" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" FontSize="{Binding ElementName=Root, Path=FontSize}" FontWeight="Normal" MaxLines="1"  />
+                        <TextBlock Grid.Column="1" Text="..." Margin="0" Padding="8,0" Foreground="{Binding ElementName=Root, Path=Foreground}" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" FontWeight="Normal" MaxLines="1"  />
                     </Grid>
                 </StackPanel>
             </StackPanel>
