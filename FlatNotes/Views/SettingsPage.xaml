@@ -49,8 +49,8 @@
         
         <CommandBar Grid.Row="{x:Bind viewModel.IsMobile, Converter={StaticResource IsMobileToGridRowConverter}}" EntranceNavigationTransitionInfo.IsTargetElement="False" CommonNavigationTransitionInfo.IsStaggerElement="False"  ContinuumNavigationTransitionInfo.IsEntranceElement="False" ContinuumNavigationTransitionInfo.IsExitElement="False" >
             <CommandBar.PrimaryCommands>
-                <AppBarButton x:Uid="RateAppbarButton" Icon="OutlineStar" Label="Rate" Command="{x:Bind viewModel.RateAppCommand}"/>
-                <AppBarButton x:Uid="SupportAppBarButton" Icon="Mail" Label="Support" Command="{x:Bind viewModel.ContactSupportCommand}"/>
+                <AppBarButton x:Uid="RateAppbarButton" Icon="OutlineStar" Label="Rate" Command="{x:Bind viewModel.RateAppCommand}" ToolTipService.ToolTip="{Binding Label, RelativeSource={RelativeSource Mode=Self}}"/>
+                <AppBarButton x:Uid="SupportAppBarButton" Icon="Mail" Label="Support" Command="{x:Bind viewModel.ContactSupportCommand}" ToolTipService.ToolTip="{Binding Label, RelativeSource={RelativeSource Mode=Self}}"/>
             </CommandBar.PrimaryCommands>
         </CommandBar>
 

@@ -61,12 +61,12 @@
         <CommandBar IsSticky="True">
             <CommandBar.PrimaryCommands>
                 <!--<AppBarButton x:Uid="NewAppBarButton" Label="new" Command="{Binding CreateTextNoteCommand}" Icon="Add"/>-->
-                <AppBarButton x:Uid="TextAppBarButton" Label="text" Command="{Binding CreateTextNoteCommand}" ToolTipService.ToolTip="New text note">
+                <AppBarButton x:Uid="TextAppBarButton" Label="text" Command="{Binding CreateTextNoteCommand}" ToolTipService.ToolTip="{Binding Label, RelativeSource={RelativeSource Mode=Self}}">
                     <AppBarButton.Icon>
                         <FontIcon Glyph="T" FontSize="20" FontFamily="Segoe UI" FontWeight="Normal"/>
                     </AppBarButton.Icon>
                 </AppBarButton>
-                <AppBarButton x:Uid="ChecklistAppBarButton" Label="checklist" Command="{Binding CreateChecklistNoteCommand}" Icon="List" ToolTipService.ToolTip="New checklist note"/>
+                <AppBarButton x:Uid="ChecklistAppBarButton" Label="checklist" Command="{Binding CreateChecklistNoteCommand}" Icon="List" ToolTipService.ToolTip="{Binding Label, RelativeSource={RelativeSource Mode=Self}}"/>
             </CommandBar.PrimaryCommands>
 
             <CommandBar.SecondaryCommands>

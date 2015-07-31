@@ -19,8 +19,8 @@
     <Page.BottomAppBar>
         <CommandBar x:Name="CommandBar">
             <CommandBar.PrimaryCommands>
-                <AppBarButton x:Uid="PraiseAppBarButton" Icon="Favorite" Label="rate" Command="{Binding RateAppCommand}"/>
-                <AppBarButton x:Uid="SupportAppBarButton" Icon="Mail" Label="support" Command="{Binding ContactSupportCommand}"/>
+                <AppBarButton x:Uid="RateAppbarButton" Icon="Favorite" Label="rate" Command="{Binding RateAppCommand}" ToolTipService.ToolTip="{Binding Label, RelativeSource={RelativeSource Mode=Self}}"/>
+                <AppBarButton x:Uid="SupportAppBarButton" Icon="Mail" Label="support" Command="{Binding ContactSupportCommand}" ToolTipService.ToolTip="{Binding Label, RelativeSource={RelativeSource Mode=Self}}"/>
             </CommandBar.PrimaryCommands>
             
             <!--<CommandBar.SecondaryCommands>

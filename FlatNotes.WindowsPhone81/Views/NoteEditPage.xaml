@@ -149,15 +149,15 @@
     <Page.BottomAppBar>
         <CommandBar x:Name="CommandBar" IsSticky="True" Background="{Binding Note.Color.DarkColor2}" Foreground="{StaticResource AppNoteCommandBarForegroundThemeBrush}">
             <CommandBar.PrimaryCommands>
-                <AppBarToggleButton x:Uid="ColorAppBarButton" x:Name="ColorPickerAppBarToggleButton"  Label="color">
+                <AppBarToggleButton x:Uid="ColorAppBarButton" x:Name="ColorPickerAppBarToggleButton"  Label="Color" ToolTipService.ToolTip="{Binding Label, RelativeSource={RelativeSource Mode=Self}}">
                     <AppBarToggleButton.Icon>
                         <FontIcon Glyph="&#xE2B1;"/>
                     </AppBarToggleButton.Icon>
                 </AppBarToggleButton>
 
-                <AppBarButton x:Uid="PhotoAppBarButton" Icon="Camera" Label="photo" Command="{Binding OpenImagePickerCommand}"/>
-                <!--<AppBarButton x:Uid="AudioAppBarButton" Icon="Microphone" Label="audio" IsEnabled="False"/>-->
-                <AppBarButton x:Name="TogglePinAppBarButton" Icon="Pin" Label="pin to start" Command="{Binding PinCommand}" Visibility="{Binding Note.IsArchived, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=True}"/>
+                <AppBarButton x:Uid="PhotoAppBarButton" Icon="Camera" Label="photo" Command="{Binding OpenImagePickerCommand}" ToolTipService.ToolTip="{Binding Label, RelativeSource={RelativeSource Mode=Self}}"/>
+                <!--<AppBarButton x:Uid="AudioAppBarButton" Icon="Microphone" Label="audio" IsEnabled="False" ToolTipService.ToolTip="{Binding Label, RelativeSource={RelativeSource Mode=Self}}"/>-->
+                <AppBarButton x:Name="TogglePinAppBarButton" Icon="Pin" Label="pin to start" Command="{Binding PinCommand}" Visibility="{Binding Note.IsArchived, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=True}" ToolTipService.ToolTip="{Binding Label, RelativeSource={RelativeSource Mode=Self}}"/>
             </CommandBar.PrimaryCommands>
 
             <CommandBar.SecondaryCommands>

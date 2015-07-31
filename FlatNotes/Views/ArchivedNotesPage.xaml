@@ -30,7 +30,7 @@
                     </Canvas>
                 </Viewbox>
                     
-                <TextBlock x:Uid="EmptyArchivedNotesMessageTextBox" Margin="10,24" Text="Archived notes appear here" Foreground="{ThemeResource PhoneMidBrush}" FontSize="{StaticResource EmptyNotesMessageFontSize}" TextWrapping="Wrap" TextAlignment="Center"/>
+                <TextBlock x:Uid="EmptyArchivedNotesMessageTextBox" Margin="8,24" Text="Archived notes appear here" Foreground="{ThemeResource PhoneMidBrush}" FontSize="{StaticResource EmptyNotesMessageFontSize}" TextWrapping="Wrap" TextAlignment="Center"/>
             </StackPanel>
         </Grid>
 
@@ -54,24 +54,12 @@
 
                 <VisualState>
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="500" />
+                        <AdaptiveTrigger MinWindowWidth="600" />
                     </VisualState.StateTriggers>
 
                     <VisualState.Setters>
                         <Setter Target="NotesControl.ItemStretch" Value="False"/>
                         <Setter Target="NotesControl.ItemWidth" Value="220"/>
-                        <Setter Target="NotesControl.Padding" Value="24"/>
-                    </VisualState.Setters>
-                </VisualState>
-
-                <VisualState>
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="800" />
-                    </VisualState.StateTriggers>
-
-                    <VisualState.Setters>
-                        <Setter Target="NotesControl.ItemStretch" Value="False"/>
-                        <Setter Target="NotesControl.ItemWidth" Value="250"/>
                         <Setter Target="NotesControl.Padding" Value="24"/>
                     </VisualState.Setters>
                 </VisualState>

@@ -158,7 +158,7 @@
 
         <CommandBar x:Name="CommandBar" Grid.Row="{x:Bind viewModel.IsMobile, Converter={StaticResource IsMobileToGridRowConverter}}" Background="{x:Bind viewModel.Note.Color.DarkColor2, Mode=OneWay}">
             <CommandBar.PrimaryCommands>
-                <AppBarButton x:Uid="ColorAppBarButton" x:Name="ColorPickerAppBarToggleButton"  Label="color">
+                <AppBarButton x:Uid="ColorAppBarButton" x:Name="ColorPickerAppBarToggleButton" Label="Color" ToolTipService.ToolTip="{Binding Label, RelativeSource={RelativeSource Mode=Self}}">
                     <AppBarButton.Icon>
                         <FontIcon Glyph="&#xE2B1;"/>
                     </AppBarButton.Icon>
@@ -170,9 +170,9 @@
                     </AppBarButton.Flyout>
                 </AppBarButton>
 
-                <AppBarButton x:Uid="PhotoAppBarButton" Icon="Camera" Label="Photo" Command="{x:Bind viewModel.OpenImagePickerCommand}"/>
-                <!--<AppBarButton x:Uid="AudioAppBarButton" Icon="Microphone" Label="Audio" IsEnabled="False"/>-->
-                <AppBarButton x:Name="TogglePinAppBarButton" Icon="Pin" Label="Pin to start" Command="{x:Bind viewModel.PinCommand}" Visibility="{x:Bind viewModel.Note.IsArchived, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=True}"/>
+                <AppBarButton x:Uid="PhotoAppBarButton" Icon="Camera" Label="Photo" Command="{x:Bind viewModel.OpenImagePickerCommand}" ToolTipService.ToolTip="{Binding Label, RelativeSource={RelativeSource Mode=Self}}"/>
+                <!--<AppBarButton x:Uid="AudioAppBarButton" Icon="Microphone" Label="Audio" IsEnabled="False" ToolTipService.ToolTip="{Binding Label, RelativeSource={RelativeSource Mode=Self}}"/>-->
+                <AppBarButton x:Name="TogglePinAppBarButton" Icon="Pin" Label="Pin to start" Command="{x:Bind viewModel.PinCommand}" Visibility="{x:Bind viewModel.Note.IsArchived, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=True}" ToolTipService.ToolTip="{Binding Label, RelativeSource={RelativeSource Mode=Self}}"/>
             </CommandBar.PrimaryCommands>
 
             <CommandBar.SecondaryCommands>

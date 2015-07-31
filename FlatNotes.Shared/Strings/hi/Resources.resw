@@ -171,10 +171,10 @@
   <data name="NewItemTextBox.PlaceholderText" xml:space="preserve">
     <value>नए आइटम</value>
   </data>
-  <data name="NoteChecklistType.Label" xml:space="preserve">
+  <data name="ChecklistAppBarButton.Label" xml:space="preserve">
     <value>चेकलिस्ट</value>
   </data>
-  <data name="NoteTextType.Label" xml:space="preserve">
+  <data name="TextAppBarButton.Label" xml:space="preserve">
     <value>पाठ</value>
   </data>
   <data name="PendingChangesTextBlock.Text" xml:space="preserve">
@@ -186,7 +186,7 @@
   <data name="Pin" xml:space="preserve">
     <value>ठीक कर</value>
   </data>
-  <data name="PraiseAppBarButton.Label" xml:space="preserve">
+  <data name="RateAppBarButton.Label" xml:space="preserve">
     <value>तारीफ</value>
   </data>
   <data name="PreferencesPivotItem.Header" xml:space="preserve">
@@ -293,5 +293,8 @@
   </data>
   <data name="TransparentNoteTileToggleSwitch.OnContent" xml:space="preserve">
     <value>ठोस रंग</value>
+  </data>
+  <data name="ToggleSingleColumnViewAppBarButton.Label" xml:space="preserve">
+    <value>टॉगल एकल स्तंभ देखें</value>
   </data>
 </root>

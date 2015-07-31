@@ -177,11 +177,6 @@
     <None Include="app.config" />
     <None Include="Package.StoreAssociation.xml" />
     <None Include="packages.config" />
-    <PRIResource Include="Strings\zh-CN\Resources.resw" />
-    <PRIResource Include="Strings\pt-BR\Resources.resw" />
-    <PRIResource Include="Strings\hi\Resources.resw" />
-    <PRIResource Include="Strings\es\Resources.resw" />
-    <PRIResource Include="Strings\en-US\Resources.resw" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.ApplicationInsights, Version=1.1.0.1899, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">

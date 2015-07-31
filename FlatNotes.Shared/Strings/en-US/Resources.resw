@@ -117,181 +117,166 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AboutPivotItem.Header" xml:space="preserve">
-    <value>acerca de</value>
-  </data>
-  <data name="AppDescription" xml:space="preserve">
-    <value>Flat Notes es la más hermosa aplicación de notas para Windows Phone!</value>
-  </data>
-  <data name="AppVersionTextBlock.Text" xml:space="preserve">
-    <value>versión</value>
-  </data>
-  <data name="ArchiveAppBarButton.Label" xml:space="preserve">
-    <value>archivo</value>
-  </data>
-  <data name="ArchivedAtFormatString" xml:space="preserve">
-    <value>archivado {0}</value>
-  </data>
-  <data name="ArchivedNotesAppBarButton.Label" xml:space="preserve">
-    <value>archivadas</value>
-  </data>
   <data name="AudioAppBarButton.Label" xml:space="preserve">
-    <value>audio</value>
-  </data>
-  <data name="BackupPivotItem.Header" xml:space="preserve">
-    <value>backup</value>
-  </data>
-  <data name="Brazil" xml:space="preserve">
-    <value>Brasil</value>
-  </data>
-  <data name="ColorAppBarButton.Label" xml:space="preserve">
-    <value>color</value>
-  </data>
-  <data name="ColumnsSlider.Header" xml:space="preserve">
-    <value>columnas</value>
-  </data>
-  <data name="CreatedAtFormatString" xml:space="preserve">
-    <value>creado {0}</value>
-  </data>
-  <data name="DeleteAppBarButton.Label" xml:space="preserve">
-    <value>borrar</value>
-  </data>
-  <data name="DevelopedByTextBlock.Text" xml:space="preserve">
-    <value>desarrollado por</value>
-  </data>
-  <data name="EmptyArchivedNotesMessageTextBox.Text" xml:space="preserve">
-    <value>notas archivadas aparecen aquí</value>
-  </data>
-  <data name="EmptyNotesMessageTextBox.Text" xml:space="preserve">
-    <value>notas añadidas aparecen aquí</value>
-  </data>
-  <data name="FeedbackAppBarButton.Label" xml:space="preserve">
-    <value>enviar una reacción agradable</value>
-  </data>
-  <data name="NewItemTextBox.PlaceholderText" xml:space="preserve">
-    <value>Nuevo elemento</value>
-  </data>
-  <data name="NoteChecklistType.Label" xml:space="preserve">
-    <value>lista</value>
-  </data>
-  <data name="NoteTextType.Label" xml:space="preserve">
-    <value>texto</value>
-  </data>
-  <data name="PendingChangesTextBlock.Text" xml:space="preserve">
-    <value>cambios pendientes</value>
+    <value>Audio</value>
   </data>
   <data name="PhotoAppBarButton.Label" xml:space="preserve">
-    <value>foto</value>
+    <value>Photo</value>
+  </data>
+  <data name="ColorAppBarButton.Label" xml:space="preserve">
+    <value>Color</value>
+  </data>
+  <data name="CreatedAtFormatString" xml:space="preserve">
+    <value>created {0}</value>
+  </data>
+  <data name="DeleteAppBarButton.Label" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="PendingChangesTextBlock.Text" xml:space="preserve">
+    <value>pending changes</value>
+  </data>
+  <data name="NewItemTextBox.PlaceholderText" xml:space="preserve">
+    <value>New item</value>
   </data>
   <data name="Pin" xml:space="preserve">
-    <value>perno</value>
-  </data>
-  <data name="PraiseAppBarButton.Label" xml:space="preserve">
-    <value>elogiar</value>
-  </data>
-  <data name="PreferencesPivotItem.Header" xml:space="preserve">
-    <value>preferencias</value>
+    <value>Pin to start</value>
   </data>
   <data name="PrettyDate_AMinuteAgo" xml:space="preserve">
-    <value>hace un minuto</value>
+    <value>a minute ago</value>
   </data>
   <data name="PrettyDate_AMonthAgo" xml:space="preserve">
-    <value>hace un mes</value>
+    <value>one month ago</value>
   </data>
   <data name="PrettyDate_AnHourAgo" xml:space="preserve">
-    <value>hace una hora</value>
+    <value>an hour ago</value>
   </data>
   <data name="PrettyDate_AWeekAgo" xml:space="preserve">
-    <value>hace una semana</value>
+    <value>one week ago</value>
   </data>
   <data name="PrettyDate_AYearAgo" xml:space="preserve">
-    <value>hace un año</value>
+    <value>one year ago</value>
   </data>
   <data name="PrettyDate_JustNow" xml:space="preserve">
-    <value>ahora</value>
+    <value>just now</value>
   </data>
   <data name="PrettyDate_NDaysAgo" xml:space="preserve">
-    <value>hace {0} días</value>
+    <value>{0} days ago</value>
   </data>
   <data name="PrettyDate_NHoursAgo" xml:space="preserve">
-    <value>hace {0} horas</value>
+    <value>{0} hours ago</value>
   </data>
   <data name="PrettyDate_NMinutesAgo" xml:space="preserve">
-    <value>hace {0} minutos</value>
+    <value>{0} minutes ago</value>
   </data>
   <data name="PrettyDate_NMonthsAgo" xml:space="preserve">
-    <value>hace {0} meses</value>
+    <value>{0} months ago</value>
   </data>
   <data name="PrettyDate_NWeeksAgo" xml:space="preserve">
-    <value>hace {0} semanas</value>
+    <value>{0} weeks ago</value>
   </data>
   <data name="PrettyDate_NYearsAgo" xml:space="preserve">
-    <value>hace {0} años</value>
+    <value>{0} years ago</value>
   </data>
   <data name="PrettyDate_Yesterday" xml:space="preserve">
-    <value>ayer</value>
-  </data>
-  <data name="RequestFeatureOrReportBugAppBarButton.Label" xml:space="preserve">
-    <value>enviar sugestión / reportar bug</value>
-  </data>
-  <data name="RestoreAppBarButton.Label" xml:space="preserve">
-    <value>restaurar</value>
+    <value>yesterday</value>
   </data>
   <data name="SettingsAppBarButton.Label" xml:space="preserve">
-    <value>ajustes</value>
-  </data>
-  <data name="SettingsTextBlock.Text" xml:space="preserve">
-    <value>ajustes</value>
+    <value>Settings</value>
   </data>
   <data name="ShareAppBarButton.Label" xml:space="preserve">
-    <value>compartir...</value>
-  </data>
-  <data name="SupportAppBarButton.Label" xml:space="preserve">
-    <value>soporte</value>
+    <value>Share</value>
   </data>
   <data name="TextTextBox.PlaceholderText" xml:space="preserve">
-    <value>Texto</value>
+    <value>Text</value>
   </data>
   <data name="ThemeToggleSwitch.Header" xml:space="preserve">
-    <value>tema</value>
-  </data>
-  <data name="ThemeToggleSwitch.OffContent" xml:space="preserve">
-    <value>claro</value>
-  </data>
-  <data name="ThemeToggleSwitch.OnContent" xml:space="preserve">
-    <value>oscuro</value>
+    <value>Theme</value>
   </data>
   <data name="TitleTextBox.PlaceholderText" xml:space="preserve">
-    <value>Título</value>
+    <value>Title</value>
   </data>
   <data name="ToggleChecklistAppBarButton.Label" xml:space="preserve">
-    <value>mostrar / ocultar lista</value>
-  </data>
-  <data name="TransparentDefaultTileToggleSwitch.Header" xml:space="preserve">
-    <value>bloque dinámico estándar</value>
-  </data>
-  <data name="TransparentDefaultTileToggleSwitch.OffContent" xml:space="preserve">
-    <value>transparente</value>
-  </data>
-  <data name="TransparentDefaultTileToggleSwitch.OnContent" xml:space="preserve">
-    <value>color sólido</value>
-  </data>
-  <data name="Unpin" xml:space="preserve">
-    <value>desanclar</value>
+    <value>Toggle checklist</value>
   </data>
   <data name="UpdatedAtFormatString" xml:space="preserve">
-    <value>actualizado {0}</value>
+    <value>updated {0}</value>
+  </data>
+  <data name="ArchiveAppBarButton.Label" xml:space="preserve">
+    <value>Archive</value>
+  </data>
+  <data name="ArchivedNotesAppBarButton.Label" xml:space="preserve">
+    <value>Archived notes</value>
+  </data>
+  <data name="EmptyNotesMessageTextBox.Text" xml:space="preserve">
+    <value>Notes you add appear here</value>
+  </data>
+  <data name="EmptyArchivedNotesMessageTextBox.Text" xml:space="preserve">
+    <value>Archived notes appear here</value>
+  </data>
+  <data name="RestoreAppBarButton.Label" xml:space="preserve">
+    <value>Restore</value>
+  </data>
+  <data name="ArchivedAtFormatString" xml:space="preserve">
+    <value>archived {0}</value>
   </data>
   <data name="YourMessageGoesHere" xml:space="preserve">
-    <value>[ESCRIBA AQUÍ SU MENSAJE]</value>
+    <value>[YOUR MESSAGE GOES HERE]</value>
+  </data>
+  <data name="ThemeToggleSwitch.OffContent" xml:space="preserve">
+    <value>Light</value>
+  </data>
+  <data name="ThemeToggleSwitch.OnContent" xml:space="preserve">
+    <value>Dark</value>
+  </data>
+  <data name="AppVersionTextBlock.Text" xml:space="preserve">
+    <value>Version</value>
+  </data>
+  <data name="DevelopedByTextBlock.Text" xml:space="preserve">
+    <value>Developed by</value>
+  </data>
+  <data name="RateAppBarButton.Label" xml:space="preserve">
+    <value>Rate</value>
+  </data>
+  <data name="SupportAppBarButton.Label" xml:space="preserve">
+    <value>Support</value>
+  </data>
+  <data name="Unpin" xml:space="preserve">
+    <value>Unpin</value>
+  </data>
+  <data name="TransparentDefaultTileToggleSwitch.Header" xml:space="preserve">
+    <value>Default live tile background</value>
+  </data>
+  <data name="TransparentDefaultTileToggleSwitch.OffContent" xml:space="preserve">
+    <value>Transparent</value>
+  </data>
+  <data name="TransparentDefaultTileToggleSwitch.OnContent" xml:space="preserve">
+    <value>Solid color</value>
+  </data>
+  <data name="AppDescription" xml:space="preserve">
+    <value>Flat Notes is the most beautiful notes app for Windows Phone!
+
+Some features:
+- Unique design
+- Pin notes to start screen
+- Image upload
+- Choose the light or dark theme</value>
   </data>
   <data name="TransparentNoteTileToggleSwitch.Header" xml:space="preserve">
-    <value>bloque dinámico de las notas</value>
+    <value>Note live tile background</value>
   </data>
   <data name="TransparentNoteTileToggleSwitch.OffContent" xml:space="preserve">
-    <value>transparente</value>
+    <value>Transparent</value>
   </data>
   <data name="TransparentNoteTileToggleSwitch.OnContent" xml:space="preserve">
-    <value>color sólido</value>
+    <value>Solid color</value>
+  </data>
+  <data name="ChecklistAppBarButton.Label" xml:space="preserve">
+    <value>Checklist</value>
+  </data>
+  <data name="TextAppBarButton.Label" xml:space="preserve">
+    <value>Text</value>
+  </data>
+  <data name="ToggleSingleColumnViewAppBarButton.Label" xml:space="preserve">
+    <value>Toggle single column view</value>
   </data>
 </root>
