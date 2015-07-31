@@ -273,4 +273,28 @@
   <data name="ToggleSingleColumnViewAppBarButton.Label" xml:space="preserve">
     <value>Alternar vista de columna única</value>
   </data>
+  <data name="ArchiveMenuFlyoutItem.Text" xml:space="preserve">
+    <value>Archivar</value>
+  </data>
+  <data name="ChangeColorMenuFlyoutItem.Text" xml:space="preserve">
+    <value>Cambiar color</value>
+  </data>
+  <data name="DeleteMenuFlyoutItem.Text" xml:space="preserve">
+    <value>Borrar</value>
+  </data>
+  <data name="PinToStartMenuFlyoutItem.Text" xml:space="preserve">
+    <value>Fijar em la pantalla inicial</value>
+  </data>
+  <data name="RestoreMenuFlyoutItem.Text" xml:space="preserve">
+    <value>Restaurar</value>
+  </data>
+  <data name="SaveMenuFlyoutItem.Text" xml:space="preserve">
+    <value>Guardar</value>
+  </data>
+  <data name="ShareMenuFlyoutItem.Text" xml:space="preserve">
+    <value>Compartir</value>
+  </data>
+  <data name="UnpinFromStartMenuFlyoutItem.Text" xml:space="preserve">
+    <value>Desanclar em la pantalla inicial</value>
+  </data>
 </root>

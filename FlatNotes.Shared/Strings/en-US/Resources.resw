@@ -279,4 +279,28 @@ Some features:
   <data name="ToggleSingleColumnViewAppBarButton.Label" xml:space="preserve">
     <value>Toggle single column view</value>
   </data>
+  <data name="ArchiveMenuFlyoutItem.Text" xml:space="preserve">
+    <value>Archive</value>
+  </data>
+  <data name="ChangeColorMenuFlyoutItem.Text" xml:space="preserve">
+    <value>Change color</value>
+  </data>
+  <data name="DeleteMenuFlyoutItem.Text" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="PinToStartMenuFlyoutItem.Text" xml:space="preserve">
+    <value>Pin to start</value>
+  </data>
+  <data name="RestoreMenuFlyoutItem.Text" xml:space="preserve">
+    <value>Restore</value>
+  </data>
+  <data name="SaveMenuFlyoutItem.Text" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="ShareMenuFlyoutItem.Text" xml:space="preserve">
+    <value>Share</value>
+  </data>
+  <data name="UnpinFromStartMenuFlyoutItem.Text" xml:space="preserve">
+    <value>Unpin from start</value>
+  </data>
 </root>

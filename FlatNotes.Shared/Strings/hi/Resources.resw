@@ -117,9 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AboutPivotItem.Header" xml:space="preserve">
-    <value>अबाउट</value>
-  </data>
   <data name="AppDescription" xml:space="preserve">
     <value>Flat Notes विंडोज फोन के लिए सबसे सुंदर नोट्स app है!</value>
   </data>
@@ -138,17 +135,8 @@
   <data name="AudioAppBarButton.Label" xml:space="preserve">
     <value>ऑडियो</value>
   </data>
-  <data name="BackupPivotItem.Header" xml:space="preserve">
-    <value>बैकअप</value>
-  </data>
-  <data name="Brazil" xml:space="preserve">
-    <value>ब्राज़िल</value>
-  </data>
   <data name="ColorAppBarButton.Label" xml:space="preserve">
     <value>रंग</value>
-  </data>
-  <data name="ColumnsSlider.Header" xml:space="preserve">
-    <value>कॉलम</value>
   </data>
   <data name="CreatedAtFormatString" xml:space="preserve">
     <value>बनाया {0}</value>
@@ -164,9 +152,6 @@
   </data>
   <data name="EmptyNotesMessageTextBox.Text" xml:space="preserve">
     <value>जोड़ा नोटों यहां प्रदर्शित</value>
-  </data>
-  <data name="FeedbackAppBarButton.Label" xml:space="preserve">
-    <value>सकारात्मक प्रतिक्रिया भेजें</value>
   </data>
   <data name="NewItemTextBox.PlaceholderText" xml:space="preserve">
     <value>नए आइटम</value>
@@ -188,9 +173,6 @@
   </data>
   <data name="RateAppBarButton.Label" xml:space="preserve">
     <value>तारीफ</value>
-  </data>
-  <data name="PreferencesPivotItem.Header" xml:space="preserve">
-    <value>पसंद</value>
   </data>
   <data name="PrettyDate_AMinuteAgo" xml:space="preserve">
     <value>एक मिनट पहले</value>
@@ -231,20 +213,14 @@
   <data name="PrettyDate_Yesterday" xml:space="preserve">
     <value>यस्टरडे</value>
   </data>
-  <data name="RequestFeatureOrReportBugAppBarButton.Label" xml:space="preserve">
-    <value>सुझाव / बग रिपोर्ट भेजने</value>
-  </data>
   <data name="RestoreAppBarButton.Label" xml:space="preserve">
     <value>बहाल</value>
   </data>
   <data name="SettingsAppBarButton.Label" xml:space="preserve">
     <value>सेटिंग्स</value>
   </data>
-  <data name="SettingsTextBlock.Text" xml:space="preserve">
-    <value>सेटिंग्स</value>
-  </data>
   <data name="ShareAppBarButton.Label" xml:space="preserve">
-    <value>शेयर ...</value>
+    <value>शेयर </value>
   </data>
   <data name="SupportAppBarButton.Label" xml:space="preserve">
     <value>धारक</value>
@@ -296,5 +272,29 @@
   </data>
   <data name="ToggleSingleColumnViewAppBarButton.Label" xml:space="preserve">
     <value>टॉगल एकल स्तंभ देखें</value>
+  </data>
+  <data name="ArchiveMenuFlyoutItem.Text" xml:space="preserve">
+    <value>पुरालेख</value>
+  </data>
+  <data name="ChangeColorMenuFlyoutItem.Text" xml:space="preserve">
+    <value>改變顏色</value>
+  </data>
+  <data name="DeleteMenuFlyoutItem.Text" xml:space="preserve">
+    <value>मिटाएँ</value>
+  </data>
+  <data name="PinToStartMenuFlyoutItem.Text" xml:space="preserve">
+    <value>ठीक कर</value>
+  </data>
+  <data name="RestoreMenuFlyoutItem.Text" xml:space="preserve">
+    <value>बहाल</value>
+  </data>
+  <data name="SaveMenuFlyoutItem.Text" xml:space="preserve">
+    <value>保存</value>
+  </data>
+  <data name="ShareMenuFlyoutItem.Text" xml:space="preserve">
+    <value>शेयर</value>
+  </data>
+  <data name="UnpinFromStartMenuFlyoutItem.Text" xml:space="preserve">
+    <value>अनपिन</value>
   </data>
 </root>

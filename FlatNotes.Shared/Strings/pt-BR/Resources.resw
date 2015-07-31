@@ -271,12 +271,36 @@ Algumas funcionalidades:
     <value>Cor sólida</value>
   </data>
   <data name="Unpin" xml:space="preserve">
-    <value>Desfixar</value>
+    <value>Desafixar</value>
   </data>
   <data name="UpdatedAtFormatString" xml:space="preserve">
     <value>atualizado {0}</value>
   </data>
   <data name="YourMessageGoesHere" xml:space="preserve">
     <value>[ESCREVA SUA MENSAGEM AQUI]</value>
+  </data>
+  <data name="ArchiveMenuFlyoutItem.Text" xml:space="preserve">
+    <value>Arquivar</value>
+  </data>
+  <data name="ChangeColorMenuFlyoutItem.Text" xml:space="preserve">
+    <value>Alterar cor</value>
+  </data>
+  <data name="DeleteMenuFlyoutItem.Text" xml:space="preserve">
+    <value>Deletar</value>
+  </data>
+  <data name="PinToStartMenuFlyoutItem.Text" xml:space="preserve">
+    <value>Fixar na tela inicial</value>
+  </data>
+  <data name="RestoreMenuFlyoutItem.Text" xml:space="preserve">
+    <value>Restaurar</value>
+  </data>
+  <data name="SaveMenuFlyoutItem.Text" xml:space="preserve">
+    <value>Salvar</value>
+  </data>
+  <data name="ShareMenuFlyoutItem.Text" xml:space="preserve">
+    <value>Compartilhar</value>
+  </data>
+  <data name="UnpinFromStartMenuFlyoutItem.Text" xml:space="preserve">
+    <value>Desafixar da tela inicial</value>
   </data>
 </root>

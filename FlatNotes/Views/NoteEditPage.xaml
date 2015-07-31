@@ -180,11 +180,11 @@
                 <AppBarButton x:Uid="RestoreAppBarButton" Icon="Undo" Label="Restore" Command="{x:Bind viewModel.RestoreNoteCommand}" Visibility="{x:Bind viewModel.Note.IsArchived, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" />
                 <AppBarButton x:Uid="ArchiveAppBarButton" Icon="Remove" Label="Archive" Command="{x:Bind viewModel.ArchiveNoteCommand}" Visibility="{x:Bind viewModel.Note.IsArchived, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=True}" />
                 <AppBarButton x:Uid="DeleteAppBarButton" Icon="Delete" Label="Delete" Command="{x:Bind viewModel.DeleteNoteCommand}" />
-                <AppBarButton x:Uid="ShareAppBarButton" Label="Share..." IsEnabled="False">
+                <!--<AppBarButton x:Uid="ShareAppBarButton" Label="Share" IsEnabled="False">
                     <AppBarButton.Icon>
                         <FontIcon Glyph="&#xE72D;"/>
                     </AppBarButton.Icon>
-                </AppBarButton>
+                </AppBarButton>-->
             </CommandBar.SecondaryCommands>
         </CommandBar>
 

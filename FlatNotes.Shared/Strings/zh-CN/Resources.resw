@@ -126,9 +126,6 @@
   <data name="ColorAppBarButton.Label" xml:space="preserve">
     <value>颜色</value>
   </data>
-  <data name="ColumnsSlider.Header" xml:space="preserve">
-    <value>栏目数</value>
-  </data>
   <data name="CreatedAtFormatString" xml:space="preserve">
     <value>创建于{0}</value>
   </data>
@@ -137,9 +134,6 @@
   </data>
   <data name="PendingChangesTextBlock.Text" xml:space="preserve">
     <value>变更未处理</value>
-  </data>
-  <data name="FeedbackAppBarButton.Label" xml:space="preserve">
-    <value>向我反馈</value>
   </data>
   <data name="NewItemTextBox.PlaceholderText" xml:space="preserve">
     <value>新建项目</value>
@@ -192,9 +186,6 @@
   <data name="SettingsAppBarButton.Label" xml:space="preserve">
     <value>设置</value>
   </data>
-  <data name="SettingsTextBlock.Text" xml:space="preserve">
-    <value>设置</value>
-  </data>
   <data name="ShareAppBarButton.Label" xml:space="preserve">
     <value>共享</value>
   </data>
@@ -231,20 +222,8 @@
   <data name="ArchivedAtFormatString" xml:space="preserve">
     <value>存档于{0}</value>
   </data>
-  <data name="RequestFeatureOrReportBugAppBarButton.Label" xml:space="preserve">
-    <value>请求新功能 / 报告bug</value>
-  </data>
   <data name="YourMessageGoesHere" xml:space="preserve">
     <value>[在这里输入消息]</value>
-  </data>
-  <data name="AboutPivotItem.Header" xml:space="preserve">
-    <value>关于</value>
-  </data>
-  <data name="BackupPivotItem.Header" xml:space="preserve">
-    <value>备份</value>
-  </data>
-  <data name="PreferencesPivotItem.Header" xml:space="preserve">
-    <value>首选项</value>
   </data>
   <data name="ThemeToggleSwitch.OffContent" xml:space="preserve">
     <value>亮色</value>
@@ -263,9 +242,6 @@
   </data>
   <data name="SupportAppBarButton.Label" xml:space="preserve">
     <value>支持</value>
-  </data>
-  <data name="Brazil" xml:space="preserve">
-    <value>巴西</value>
   </data>
   <data name="Unpin" xml:space="preserve">
     <value>删除磁贴</value>
@@ -302,5 +278,29 @@
   </data>
   <data name="ToggleSingleColumnViewAppBarButton.Label" xml:space="preserve">
     <value>切换单列视图</value>
+  </data>
+  <data name="ArchiveMenuFlyoutItem.Text" xml:space="preserve">
+    <value>存档</value>
+  </data>
+  <data name="ChangeColorMenuFlyoutItem.Text" xml:space="preserve">
+    <value>改變顏色</value>
+  </data>
+  <data name="DeleteMenuFlyoutItem.Text" xml:space="preserve">
+    <value>删除</value>
+  </data>
+  <data name="PinToStartMenuFlyoutItem.Text" xml:space="preserve">
+    <value>创建磁贴</value>
+  </data>
+  <data name="RestoreMenuFlyoutItem.Text" xml:space="preserve">
+    <value>还原</value>
+  </data>
+  <data name="SaveMenuFlyoutItem.Text" xml:space="preserve">
+    <value>保存</value>
+  </data>
+  <data name="ShareMenuFlyoutItem.Text" xml:space="preserve">
+    <value>共享</value>
+  </data>
+  <data name="UnpinFromStartMenuFlyoutItem.Text" xml:space="preserve">
+    <value>删除磁贴</value>
   </data>
 </root>
