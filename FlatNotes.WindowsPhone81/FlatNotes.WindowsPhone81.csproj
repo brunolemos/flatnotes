@@ -147,8 +147,6 @@
     <Content Include="Assets\SplashScreenVertical.scale-100.png" />
     <Content Include="Assets\SplashScreenVertical.scale-140.png" />
     <Content Include="Assets\SplashScreenVertical.scale-240.png" />
-    <Content Include="Assets\StoreLogo.scale-100.png" />
-    <Content Include="Assets\StoreLogo.scale-140.png" />
     <Content Include="Assets\StoreLogo.scale-240.png" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

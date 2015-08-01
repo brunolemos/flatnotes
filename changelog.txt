@@ -1,0 +1,27 @@
+v2.0 - 01/Aug/2015:
+- Windows 10 version!
+- Quick actions menu on hold items
+- New Reorder experience
+- Better memory management
+- Easier way to toggle single column view
+- Other small changes (Design tweaks, Bug fixes, ...)
+
+24/Fev/2015:
+- Pin notes to start
+- Design tweaks
+- New logo
+
+26/Jan/2015:
+- New branding: Flat Notes, due to Google Keep copyrights
+- Indicator of selected note color
+
+25/Jan/2015:
+- Fixes the app crash on tapping a note (happened in wp preview for developers)
+- Swipe to permanently delete an archived note
+
+21/Jan/2015:
+- Image upload
+
+20/Jan/2015:
+- Swipe to archive a note
+- App redesigned

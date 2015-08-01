@@ -15,7 +15,7 @@
   </Resources>
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="FlatNotes.App">
-      <uap:VisualElements DisplayName="Flat Notes" Square150x150Logo="Assets\Tiles\Solid\Square150x150Logo.png" Square44x44Logo="Assets\Tiles\Solid\Square44x44Logo.png" Description="FlatNotes" BackgroundColor="transparent">
+      <uap:VisualElements DisplayName="Flat Notes" Square150x150Logo="Assets\Tiles\Solid\Square150x150Logo.png" Square44x44Logo="Assets\Tiles\Solid\Square44x44Logo.png" Description="Flat Notes is a well designed notes app for Windows with a unique experience that you are gonna love! Based on Google Keep." BackgroundColor="transparent">
         <uap:DefaultTile Wide310x150Logo="Assets\Tiles\Solid\Wide310x150Logo.png" ShortName="Flat Notes" Square310x310Logo="Assets\Tiles\Solid\Square310x310Logo.png" Square71x71Logo="Assets\Tiles\Solid\Square71x71Logo.png">
           <uap:ShowNameOnTiles>
             <uap:ShowOn Tile="square150x150Logo" />

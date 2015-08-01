@@ -152,16 +152,4 @@
     <PRIResource Include="$(MSBuildThisFileDirectory)Strings\pt-BR\Resources.resw" />
     <PRIResource Include="$(MSBuildThisFileDirectory)Strings\zh-CN\Resources.resw" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="$(MSBuildThisFileDirectory)Assets\PSD\LockScreenLogo.scale-200.psd" />
-    <None Include="$(MSBuildThisFileDirectory)Assets\PSD\logo_noborder.psb" />
-    <None Include="$(MSBuildThisFileDirectory)Assets\PSD\logo_noborder_phone.psb" />
-    <None Include="$(MSBuildThisFileDirectory)Assets\PSD\SplashScreen.scale-200.psd" />
-    <None Include="$(MSBuildThisFileDirectory)Assets\PSD\Square150x150Logo.scale-200.psd" />
-    <None Include="$(MSBuildThisFileDirectory)Assets\PSD\Square44x44Logo.scale-200.psd" />
-    <None Include="$(MSBuildThisFileDirectory)Assets\PSD\Square44x44Logo.targetsize-24_altform-unplated.psd" />
-    <None Include="$(MSBuildThisFileDirectory)Assets\PSD\StoreLogo.scale-200.psd" />
-    <None Include="$(MSBuildThisFileDirectory)Assets\PSD\Wide310x150Logo.scale-200.psd" />
-    <None Include="$(MSBuildThisFileDirectory)Assets\PSD\Square310x310Logo.scale-200.psd" />
-  </ItemGroup>
 </Project>

@@ -259,13 +259,7 @@
     <value>清单</value>
   </data>
   <data name="AppDescription" xml:space="preserve">
-    <value>Flat Notes是Windows Phone上最赞的笔记APP!
-功能如下:
-- 极佳的可用性
-- 将笔记Pin到开始屏幕
-- 上传照片
-- 自定义栏目数
-- 选择亮色或暗色主题</value>
+    <value>Flat Notes是Windows Phone上最赞的笔记APP!</value>
   </data>
   <data name="TransparentNoteTileToggleSwitch.Header" xml:space="preserve">
     <value>动态磁贴 (笔记)</value>

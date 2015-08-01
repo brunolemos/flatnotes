@@ -253,13 +253,7 @@
     <value>Solid color</value>
   </data>
   <data name="AppDescription" xml:space="preserve">
-    <value>Flat Notes is the most beautiful notes app for Windows Phone!
-
-Some features:
-- Unique design
-- Pin notes to start screen
-- Image upload
-- Choose the light or dark theme</value>
+    <value>Flat Notes is a well designed notes app for Windows based on Google Keep.</value>
   </data>
   <data name="TransparentNoteTileToggleSwitch.Header" xml:space="preserve">
     <value>Note live tile background</value>
