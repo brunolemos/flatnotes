@@ -1,0 +1,300 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AppDescription" xml:space="preserve">
+    <value>Flat Notes विंडोज फोन के लिए सबसे सुंदर नोट्स app है!</value>
+  </data>
+  <data name="AppVersionTextBlock.Text" xml:space="preserve">
+    <value>संस्करण</value>
+  </data>
+  <data name="ArchiveAppBarButton.Label" xml:space="preserve">
+    <value>पुरालेख</value>
+  </data>
+  <data name="ArchivedAtFormatString" xml:space="preserve">
+    <value>आर्काइव्ड {0}</value>
+  </data>
+  <data name="ArchivedNotesAppBarButton.Label" xml:space="preserve">
+    <value>संग्रहीत नोट्स</value>
+  </data>
+  <data name="AudioAppBarButton.Label" xml:space="preserve">
+    <value>ऑडियो</value>
+  </data>
+  <data name="ColorAppBarButton.Label" xml:space="preserve">
+    <value>रंग</value>
+  </data>
+  <data name="CreatedAtFormatString" xml:space="preserve">
+    <value>बनाया {0}</value>
+  </data>
+  <data name="DeleteAppBarButton.Label" xml:space="preserve">
+    <value>मिटाएँ</value>
+  </data>
+  <data name="DevelopedByTextBlock.Text" xml:space="preserve">
+    <value>द्वारा विकसित</value>
+  </data>
+  <data name="EmptyArchivedNotesMessageTextBox.Text" xml:space="preserve">
+    <value>संग्रहीत नोट्स यहां प्रदर्शित</value>
+  </data>
+  <data name="EmptyNotesMessageTextBox.Text" xml:space="preserve">
+    <value>जोड़ा नोटों यहां प्रदर्शित</value>
+  </data>
+  <data name="NewItemTextBox.PlaceholderText" xml:space="preserve">
+    <value>नए आइटम</value>
+  </data>
+  <data name="ChecklistAppBarButton.Label" xml:space="preserve">
+    <value>चेकलिस्ट</value>
+  </data>
+  <data name="TextAppBarButton.Label" xml:space="preserve">
+    <value>पाठ</value>
+  </data>
+  <data name="PendingChangesTextBlock.Text" xml:space="preserve">
+    <value>लंबित परिवर्तन</value>
+  </data>
+  <data name="PhotoAppBarButton.Label" xml:space="preserve">
+    <value>चित्र</value>
+  </data>
+  <data name="Pin" xml:space="preserve">
+    <value>ठीक कर</value>
+  </data>
+  <data name="RateAppBarButton.Label" xml:space="preserve">
+    <value>तारीफ</value>
+  </data>
+  <data name="PrettyDate_AMinuteAgo" xml:space="preserve">
+    <value>एक मिनट पहले</value>
+  </data>
+  <data name="PrettyDate_AMonthAgo" xml:space="preserve">
+    <value>एक महीने पहले</value>
+  </data>
+  <data name="PrettyDate_AnHourAgo" xml:space="preserve">
+    <value>करीब एक घंटा पहले</value>
+  </data>
+  <data name="PrettyDate_AWeekAgo" xml:space="preserve">
+    <value>एक सप्ताह के लिए</value>
+  </data>
+  <data name="PrettyDate_AYearAgo" xml:space="preserve">
+    <value>एक साल</value>
+  </data>
+  <data name="PrettyDate_JustNow" xml:space="preserve">
+    <value>अभी</value>
+  </data>
+  <data name="PrettyDate_NDaysAgo" xml:space="preserve">
+    <value>{0} दिनों कर रहे हैं</value>
+  </data>
+  <data name="PrettyDate_NHoursAgo" xml:space="preserve">
+    <value>घंटे पहले {0}</value>
+  </data>
+  <data name="PrettyDate_NMinutesAgo" xml:space="preserve">
+    <value>{0} मिनट कर रहे हैं</value>
+  </data>
+  <data name="PrettyDate_NMonthsAgo" xml:space="preserve">
+    <value>महीने पहले {0}</value>
+  </data>
+  <data name="PrettyDate_NWeeksAgo" xml:space="preserve">
+    <value>हफ्ते पहले {0}</value>
+  </data>
+  <data name="PrettyDate_NYearsAgo" xml:space="preserve">
+    <value>साल पहले {0}</value>
+  </data>
+  <data name="PrettyDate_Yesterday" xml:space="preserve">
+    <value>यस्टरडे</value>
+  </data>
+  <data name="RestoreAppBarButton.Label" xml:space="preserve">
+    <value>बहाल</value>
+  </data>
+  <data name="SettingsAppBarButton.Label" xml:space="preserve">
+    <value>सेटिंग्स</value>
+  </data>
+  <data name="ShareAppBarButton.Label" xml:space="preserve">
+    <value>शेयर </value>
+  </data>
+  <data name="SupportAppBarButton.Label" xml:space="preserve">
+    <value>धारक</value>
+  </data>
+  <data name="TextTextBox.PlaceholderText" xml:space="preserve">
+    <value>पाठ</value>
+  </data>
+  <data name="ThemeToggleSwitch.Header" xml:space="preserve">
+    <value>विषय</value>
+  </data>
+  <data name="ThemeToggleSwitch.OffContent" xml:space="preserve">
+    <value>बेशक</value>
+  </data>
+  <data name="ThemeToggleSwitch.OnContent" xml:space="preserve">
+    <value>अंधेरा</value>
+  </data>
+  <data name="TitleTextBox.PlaceholderText" xml:space="preserve">
+    <value>शीर्षक</value>
+  </data>
+  <data name="ToggleChecklistAppBarButton.Label" xml:space="preserve">
+    <value>दिखाएँ / छुपाएँ चेकलिस्ट</value>
+  </data>
+  <data name="TransparentDefaultTileToggleSwitch.Header" xml:space="preserve">
+    <value>डायनामिक ब्लॉक पैटर्न</value>
+  </data>
+  <data name="TransparentDefaultTileToggleSwitch.OffContent" xml:space="preserve">
+    <value>पारदर्शक</value>
+  </data>
+  <data name="TransparentDefaultTileToggleSwitch.OnContent" xml:space="preserve">
+    <value>ठोस रंग</value>
+  </data>
+  <data name="Unpin" xml:space="preserve">
+    <value>अनपिन</value>
+  </data>
+  <data name="UpdatedAtFormatString" xml:space="preserve">
+    <value>अद्यतन {0}</value>
+  </data>
+  <data name="YourMessageGoesHere" xml:space="preserve">
+    <value>[यहां अपना संदेश लिखें]</value>
+  </data>
+  <data name="TransparentNoteTileToggleSwitch.Header" xml:space="preserve">
+    <value>नोट्स टाइल रहते हैं</value>
+  </data>
+  <data name="TransparentNoteTileToggleSwitch.OffContent" xml:space="preserve">
+    <value>पारदर्शक</value>
+  </data>
+  <data name="TransparentNoteTileToggleSwitch.OnContent" xml:space="preserve">
+    <value>ठोस रंग</value>
+  </data>
+  <data name="ToggleSingleColumnViewAppBarButton.Label" xml:space="preserve">
+    <value>टॉगल एकल स्तंभ देखें</value>
+  </data>
+  <data name="ArchiveMenuFlyoutItem.Text" xml:space="preserve">
+    <value>पुरालेख</value>
+  </data>
+  <data name="ChangeColorMenuFlyoutItem.Text" xml:space="preserve">
+    <value>改變顏色</value>
+  </data>
+  <data name="DeleteMenuFlyoutItem.Text" xml:space="preserve">
+    <value>मिटाएँ</value>
+  </data>
+  <data name="PinToStartMenuFlyoutItem.Text" xml:space="preserve">
+    <value>ठीक कर</value>
+  </data>
+  <data name="RestoreMenuFlyoutItem.Text" xml:space="preserve">
+    <value>बहाल</value>
+  </data>
+  <data name="SaveMenuFlyoutItem.Text" xml:space="preserve">
+    <value>保存</value>
+  </data>
+  <data name="ShareMenuFlyoutItem.Text" xml:space="preserve">
+    <value>शेयर</value>
+  </data>
+  <data name="UnpinFromStartMenuFlyoutItem.Text" xml:space="preserve">
+    <value>अनपिन</value>
+  </data>
+</root>

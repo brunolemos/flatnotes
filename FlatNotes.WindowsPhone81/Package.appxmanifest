@@ -23,7 +23,7 @@
             <m3:ShowOn Tile="wide310x150Logo" />
           </m3:ShowNameOnTiles>
         </m3:DefaultTile>
-        <m3:SplashScreen Image="Assets\SplashScreenVertical.png" BackgroundColor="#ffbb00" />
+        <m3:SplashScreen Image="Assets\SplashScreenVertical.png" BackgroundColor="transparent" />
         <m3:InitialRotationPreference>
           <m3:Rotation Preference="portrait" />
           <m3:Rotation Preference="landscape" />

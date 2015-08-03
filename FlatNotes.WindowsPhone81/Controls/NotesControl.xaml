@@ -1,0 +1,62 @@
+﻿<UserControl
+    x:Class="FlatNotes.Controls.NotesControl"
+    x:Name="Root"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:FlatNotes.Controls"
+    xmlns:models="using:FlatNotes.Models"
+    xmlns:viewModels="using:FlatNotes.ViewModels"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400"
+    Padding="12">
+
+    <ListView x:Name="NotesGridView"
+              HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
+              CanReorderItems="{Binding ElementName=Root, Path=CanReorderItems, Mode=OneWay}" 
+              CanDragItems="{Binding ElementName=Root, Path=CanDragItems, Mode=OneWay}" 
+              AllowDrop="{Binding ElementName=Root, Path=AllowDrop, Mode=OneWay}"  
+              ReorderMode="{Binding ElementName=Root, Path=ReorderMode, Mode=TwoWay}"  
+              SelectionMode="None" 
+              Margin="-4"
+              IsItemClickEnabled="True" ItemClick="GridView_ItemClick" Holding="GridView_Holding" DragItemsStarting="NotesGridView_DragItemsStarting"
+              DataContext="{Binding viewModel, ElementName=Root}"
+              d:DataContext="{Binding Notes, Source={d:DesignData /SampleData/MainViewModelSampleData.xaml}}">
+
+        <ListView.ItemContainerTransitions>
+            <TransitionCollection>
+                <EntranceThemeTransition FromHorizontalOffset="0" FromVerticalOffset="200" IsStaggeringEnabled="True"/>
+                <RepositionThemeTransition/>
+                <AddDeleteThemeTransition/>
+                <ReorderThemeTransition/>
+            </TransitionCollection>
+        </ListView.ItemContainerTransitions>
+
+        <ListView.ItemsPanel>
+            <ItemsPanelTemplate>
+                <local:FluidGrid x:Name="NotesFluidGrid" Margin="{Binding Padding, ElementName=Root}" ItemWidth="{Binding ItemWidth, ElementName=Root}" ItemStretch="{Binding ItemStretch, ElementName=Root}" Columns="{Binding Columns, ElementName=Root}" AllowSingleColumn="{Binding AllowSingleColumn, ElementName=Root}" HorizontalAlignment="Center" ParentListView="{Binding ElementName=NotesGridView}" ItemsReordered="NotesFluidGrid_ItemsReordered"/>
+                <!--<ItemsWrapGrid AllowDrop="True" ItemWidth="{Binding ItemWidth, ElementName=Root}" Orientation="Horizontal" HorizontalAlignment="Center"/>-->
+            </ItemsPanelTemplate>
+        </ListView.ItemsPanel>
+
+        <ListView.ItemTemplate>
+            <DataTemplate>
+                <local:NotePreview Loaded="OnNoteLoaded" Holding="NotePreview_Holding" RightTapped="NotePreview_RightTapped" FontSize="17" RequestedTheme="Dark">
+                    <FlyoutBase.AttachedFlyout>
+                        <MenuFlyout>
+                            <MenuFlyoutItem x:Uid="RestoreMenuFlyoutItem" Text="Restore" Command="{Binding viewModel.RestoreNoteCommand, ElementName=Root, Mode=OneWay}" CommandParameter="{Binding}" Visibility="{Binding IsArchived, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                            <MenuFlyoutItem x:Uid="ArchiveMenuFlyoutItem" Text="Archive" Command="{Binding ElementName=Root, Path=viewModel.ArchiveNoteCommand}" CommandParameter="{Binding}" Visibility="{Binding IsArchived, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=True}"/>
+                            <MenuFlyoutItem x:Uid="DeleteMenuFlyoutItem" Text="Delete" Command="{Binding ElementName=Root, Path=viewModel.DeleteNoteCommand}" CommandParameter="{Binding}"/>
+                            <MenuFlyoutItem x:Uid="PinToStartMenuFlyoutItem" Text="Pin to start" Command="{Binding ElementName=Root, Path=viewModel.PinCommand}" CommandParameter="{Binding}" Visibility="{Binding CanPin, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                            <MenuFlyoutItem x:Uid="UnpinFromStartMenuFlyoutItem" Text="Unpin from start" Command="{Binding ElementName=Root, Path=viewModel.UnpinCommand}" CommandParameter="{Binding}" Visibility="{Binding IsPinned, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                            <!--<MenuFlyoutSeparator/>
+                            <MenuFlyoutItem x:Uid="ShareMenuFlyoutItem" Text="share"/>-->
+                        </MenuFlyout>
+                    </FlyoutBase.AttachedFlyout>
+                </local:NotePreview>
+            </DataTemplate>
+        </ListView.ItemTemplate>
+    </ListView>
+</UserControl>

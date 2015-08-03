@@ -24,6 +24,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\NotePreview.xaml.cs">
       <DependentUpon>NotePreview.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\NotesControl.xaml.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\IsMobileToGridRowConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\LocalizedResourcesConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\StringFormatConverter.cs" />
@@ -144,12 +145,5 @@
     <ApplicationDefinition Include="$(MSBuildThisFileDirectory)App.xaml">
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-  </ItemGroup>
-  <ItemGroup>
-    <PRIResource Include="$(MSBuildThisFileDirectory)Strings\en-US\Resources.resw" />
-    <PRIResource Include="$(MSBuildThisFileDirectory)Strings\es\Resources.resw" />
-    <PRIResource Include="$(MSBuildThisFileDirectory)Strings\hi\Resources.resw" />
-    <PRIResource Include="$(MSBuildThisFileDirectory)Strings\pt-BR\Resources.resw" />
-    <PRIResource Include="$(MSBuildThisFileDirectory)Strings\zh-CN\Resources.resw" />
   </ItemGroup>
 </Project>

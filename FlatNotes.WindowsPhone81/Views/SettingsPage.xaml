@@ -22,11 +22,6 @@
                 <AppBarButton x:Uid="RateAppbarButton" Icon="Favorite" Label="rate" Command="{Binding RateAppCommand}" ToolTipService.ToolTip="{Binding Label, RelativeSource={RelativeSource Mode=Self}}"/>
                 <AppBarButton x:Uid="SupportAppBarButton" Icon="Mail" Label="support" Command="{Binding ContactSupportCommand}" ToolTipService.ToolTip="{Binding Label, RelativeSource={RelativeSource Mode=Self}}"/>
             </CommandBar.PrimaryCommands>
-            
-            <!--<CommandBar.SecondaryCommands>
-                <AppBarButton x:Uid="FeedbackAppBarButton" Icon="Like" Label="send a nice feedback" Command="{Binding RateAppCommand}"/>
-                <AppBarButton x:Uid="RequestFeatureOrReportBugAppBarButton" Icon="Mail" Label="request feature / report bug" Command="{Binding ContactSupportCommand}"/>
-            </CommandBar.SecondaryCommands>-->
         </CommandBar>
     </Page.BottomAppBar>
 
@@ -36,79 +31,35 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <Pivot HeaderTemplate="{StaticResource HeaderTemplate}">
-            <PivotItem x:Uid="PreferencesPivotItem" Header="preferences" Tag="preferences">
+        <Grid x:Name="ContentRoot" Margin="12">
+            <Grid.Transitions>
+                <TransitionCollection>
+                    <EntranceThemeTransition FromHorizontalOffset="0" FromVerticalOffset="10"/>
+                </TransitionCollection>
+            </Grid.Transitions>
+
+            <ScrollViewer VerticalScrollMode="Enabled" VerticalScrollBarVisibility="Hidden">
                 <StackPanel>
+                    <Image Height="80" Source="ms-appx:///Assets/Logo.png" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+                    <TextBlock Margin="0,0,0,24" Text="{Binding AppName}" HorizontalAlignment="Center" Style="{StaticResource SubheaderTextBlockStyle}" FontSize="26.667"/>
+
                     <ToggleSwitch x:Uid="ThemeToggleSwitch" Margin="0,0,0,24" Header="theme" OffContent="light" OnContent="dark" IsOn="{Binding IsDarkTheme, Mode=TwoWay}"/>
                     <ToggleSwitch x:Uid="TransparentDefaultTileToggleSwitch" Margin="0,0,0,24" Header="default tile" OffContent="transparent" OnContent="solid color" IsOn="{Binding IsSolidColorDefaultTile, Mode=TwoWay}"/>
                     <ToggleSwitch x:Uid="TransparentNoteTileToggleSwitch" Margin="0,0,0,24" Header="note live tile" OffContent="transparent" OnContent="solid color" IsOn="{Binding IsSolidColorNoteTile, Mode=TwoWay}"/>
-                    <!--<Slider x:Uid="ColumnsSlider" Margin="0,0,0,24" Header="columns" Minimum="0" Maximum="4" LargeChange="1" TickFrequency="1" Value="{Binding Columns, Mode=TwoWay}" />-->
+
+                    <TextBlock Margin="0,0,0,6" Style="{StaticResource BodyTextBlockStyle}">
+                        <Run x:Uid="AppVersionTextBlock" Text="Version "/>
+                        <Run Text="{Binding AppVersion}"/>
+                    </TextBlock>
+
+                    <TextBlock Margin="0" Style="{StaticResource BodyTextBlockStyle}">
+                        <Run x:Uid="DevelopedByTextBlock" Text="Developed by "/>
+                        <Hyperlink NavigateUri="http://twitter.com/brunolemos" Click="DeveloperTwitterHyperlink_OnClick" Foreground="{StaticResource AppMainBrush}">@brunolemos</Hyperlink>
+                    </TextBlock>
+
+                    <Button Margin="0,12,0,12" Content="Download Flat Notes" HorizontalAlignment="Left" Command="{Binding DownloadAppCommand}" Visibility="{Binding IsBeta, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                 </StackPanel>
-            </PivotItem>
-
-            <!--<PivotItem x:Uid="BackupPivotItem" Header="backup" Tag="backup">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-
-                    <ScrollViewer>
-                        <StackPanel>
-                            <TextBlock Text=""/>
-                        </StackPanel>
-                    </ScrollViewer>
-
-                    <Grid Grid.Row="1" Margin="24">
-                        <TextBlock x:Uid="NoGoogleKeepIntegrationMessageTextBox" Text="This app does not integrate with official Google Keep because unfortunately it's not possible" TextWrapping="Wrap" HorizontalAlignment="Center" TextAlignment="Center" Foreground="{ThemeResource PhoneMidBrush}"/>
-                    </Grid>
-                </Grid>
-            </PivotItem>-->
-
-            <PivotItem x:Uid="AboutPivotItem" Header="about" Tag="about">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-                    
-                    <ScrollViewer>
-                        <StackPanel>
-                            <Image Width="80" Source="ms-appx:///Assets/Logo.png" VerticalAlignment="Top" HorizontalAlignment="Center"/>
-                            <TextBlock Margin="0,0,0,24" Text="{Binding AppName}" HorizontalAlignment="Center" Style="{StaticResource SubheaderTextBlockStyle}"/>
-                        
-                            <StackPanel Margin="0,0,0,24">
-                                <TextBlock x:Uid="AppVersionTextBlock" Grid.Row="0" Margin="0,0,0,6" Text="version" Style="{StaticResource ControlHeaderTextBlockStyle}"/>
-                                <TextBlock Grid.Row="1" Margin="0,0,0,12" Text="{Binding AppVersion}"/>
-                            </StackPanel>
-                    
-                            <Grid Margin="0,0,0,24">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-                            
-                                <StackPanel VerticalAlignment="Center">
-                                    <TextBlock x:Uid="DevelopedByTextBlock" Grid.Row="0" Margin="0,0,0,6" Text="developed by" Style="{StaticResource ControlHeaderTextBlockStyle}"/>
-                                    <TextBlock Grid.Row="1">
-                                        <Run Text="@brunolemos ("/><Run
-                                            Text="{Binding Converter={StaticResource LocalizedResourcesConverter}, ConverterParameter='Brazil', FallbackValue='Brazil', TargetNullValue='Brazil'}"/><Run
-                                            Text=")"/>
-                                    </TextBlock>
-                                </StackPanel>
-                            
-                                <Button Grid.RowSpan="2" Grid.Column="1" x:Name="TwitterButton" Margin="12,0,0,0" Command="{Binding OpenDeveloperTwitterCommand}" VerticalAlignment="Center">
-                                    <Viewbox Height="24" Margin="24,6" VerticalAlignment="Center">
-	                                    <Path Stretch="Fill" Fill="{Binding Foreground, ElementName=TwitterButton}" Data="F1 M 59.7481,27.0756C 58.2644,27.7337 56.6696,28.1784 54.9961,28.3784C 56.704,27.3544 58.0162,25.7329 58.634,23.8008C 57.0352,24.749 55.2645,25.4376 53.3797,25.8086C 51.8705,24.2005 49.7202,23.1958 47.3403,23.1958C 42.771,23.1958 39.0661,26.9003 39.0661,31.4697C 39.0661,32.1181 39.1393,32.7497 39.2804,33.3553C 32.4039,33.0102 26.3071,29.7162 22.2263,24.7102C 21.514,25.9322 21.106,27.3535 21.106,28.8699C 21.106,31.7405 22.5667,34.2731 24.7869,35.7569C 23.4307,35.7138 22.1547,35.3416 21.0392,34.7219C 21.0385,34.7565 21.0385,34.791 21.0385,34.826C 21.0385,38.8348 23.8906,42.1789 27.6756,42.9392C 26.9814,43.1282 26.2504,43.2294 25.4958,43.2294C 24.9626,43.2294 24.4443,43.1775 23.939,43.081C 24.992,46.368 28.0476,48.7603 31.6683,48.8269C 28.8365,51.0462 25.2689,52.369 21.3923,52.369C 20.7245,52.369 20.0659,52.3297 19.4186,52.2533C 23.0802,54.6008 27.4295,55.9708 32.102,55.9708C 47.321,55.9708 55.6436,43.363 55.6436,32.4291C 55.6436,32.0704 55.6353,31.7136 55.6194,31.3586C 57.2362,30.192 58.6389,28.7348 59.7481,27.0756 Z " Margin="0,4,0,0"/>
-                                    </Viewbox>
-                                </Button>
-                            </Grid>
-                        </StackPanel>
-                    </ScrollViewer>
-                        
-                     <Button Grid.Row="1" Margin="0,24,0,12" Content="Download Flat Notes" HorizontalAlignment="Stretch" Command="{Binding DownloadAppCommand}" Visibility="{Binding IsBeta, Converter={StaticResource BooleanToVisibilityConverter}}"/>
-                </Grid>
-            </PivotItem>
-        </Pivot>
+            </ScrollViewer>
+        </Grid>
     </Grid>
 </Page>

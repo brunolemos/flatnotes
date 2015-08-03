@@ -1,11 +1,13 @@
 ﻿using FlatNotes.Events;
 using FlatNotes.Models;
 using FlatNotes.ViewModels;
+using FlatNotes.Views;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.DataTransfer;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -22,7 +24,9 @@ namespace FlatNotes.Controls
         private static NotesControlViewModel _viewModel = NotesControlViewModel.Instance;
 
         public event EventHandler<ItemClickEventArgs> ItemClick;
-        public const double ITEM_MIN_WIDTH = 160;
+        public const double ITEM_MIN_WIDTH = 150;
+
+        private static NoteSwipeFeature noteSwipeFeature = new NoteSwipeFeature();
 
         public static readonly DependencyProperty ItemsSourceProperty = DependencyProperty.Register("ItemsSource", typeof(object), typeof(NotesControl), new PropertyMetadata(-1));
         public object ItemsSource { get { return (object)GetValue(ItemsSourceProperty); } set { SetValue(ItemsSourceProperty, value); } }
@@ -33,7 +37,7 @@ namespace FlatNotes.Controls
         public static readonly DependencyProperty ItemWidthProperty = DependencyProperty.Register("ItemWidth", typeof(double), typeof(NotesControl), new PropertyMetadata(ITEM_MIN_WIDTH));
         public double ItemWidth { get { return (double)GetValue(ItemWidthProperty); } set { SetValue(ItemWidthProperty, value); } }
 
-        public static readonly DependencyProperty ItemStretchProperty = DependencyProperty.Register("ItemStretch", typeof(bool), typeof(NotesControl), new PropertyMetadata(false));
+        public static readonly DependencyProperty ItemStretchProperty = DependencyProperty.Register("ItemStretch", typeof(bool), typeof(NotesControl), new PropertyMetadata(true));
         public bool ItemStretch { get { return (bool)GetValue(ItemStretchProperty); } set { SetValue(ItemStretchProperty, value); } }
 
         public static readonly DependencyProperty AllowSingleColumnProperty = DependencyProperty.Register("AllowSingleColumn", typeof(bool), typeof(NotesControl), new PropertyMetadata(true));
@@ -47,6 +51,15 @@ namespace FlatNotes.Controls
 
         public static readonly DependencyProperty CanDragItemsProperty = DependencyProperty.Register("CanDragItems", typeof(bool), typeof(NotesControl), new PropertyMetadata(false));
         public bool CanDragItems { get { return (bool)GetValue(CanDragItemsProperty); } set { SetValue(CanDragItemsProperty, value); } }
+
+        public static readonly DependencyProperty CanSwipeItemsProperty = DependencyProperty.Register("CanSwipeItems", typeof(bool), typeof(NotesControl), new PropertyMetadata(false));
+        public bool CanSwipeItems { get { return (bool)GetValue(CanSwipeItemsProperty); } set { SetValue(CanSwipeItemsProperty, value); } }
+
+        public static readonly DependencyProperty IsNoteFlyoutEnabledProperty = DependencyProperty.Register("IsNoteFlyoutEnabled", typeof(bool), typeof(NotesControl), new PropertyMetadata(true));
+        public bool IsNoteFlyoutEnabled { get { return (bool)GetValue(IsNoteFlyoutEnabledProperty); } set { SetValue(IsNoteFlyoutEnabledProperty, value); } }
+
+        public static readonly DependencyProperty ReorderModeProperty = DependencyProperty.Register("ReorderMode", typeof(ListViewReorderMode), typeof(NotesControl), new PropertyMetadata(ListViewReorderMode.Disabled));
+        public ListViewReorderMode ReorderMode { get { return (ListViewReorderMode)GetValue(ReorderModeProperty); } set { SetValue(ReorderModeProperty, value); } }
 
         FlyoutBase openedFlyout = null;
 
@@ -70,32 +83,41 @@ namespace FlatNotes.Controls
 
         private void GridView_ItemClick(object sender, ItemClickEventArgs e)
         {
+            if (NotesGridView.ReorderMode == ListViewReorderMode.Enabled)
+                return;
+
             var handler = ItemClick;
             if (handler != null) handler(sender, e);
         }
 
         private void NotePreview_Holding(object sender, Windows.UI.Xaml.Input.HoldingRoutedEventArgs e)
         {
-            ShowNoteFlyout(sender as FrameworkElement);
+            if (IsNoteFlyoutEnabled)
+                ShowNoteFlyout(sender as FrameworkElement);
         }
 
         private void NotePreview_RightTapped(object sender, Windows.UI.Xaml.Input.RightTappedRoutedEventArgs e)
         {
-            ShowNoteFlyout(sender as FrameworkElement);
+            if (IsNoteFlyoutEnabled)
+                ShowNoteFlyout(sender as FrameworkElement);
         }
 
         private void ShowNoteFlyout(FrameworkElement element)
         {
+            if (!IsNoteFlyoutEnabled) return;
             if (element == null) return;
-            Flyout.ShowAttachedFlyout(element);
 
             openedFlyout = Flyout.GetAttachedFlyout(element);
+            if (openedFlyout == null) return;
+
             openedFlyout.Closed += OpenedFlyout_Closed;
+
+            Flyout.ShowAttachedFlyout(element);
         }
 
         private void OpenedFlyout_Closed(object sender, object e)
         {
-            if(openedFlyout != null)
+            if (openedFlyout != null)
                 openedFlyout.Closed -= OpenedFlyout_Closed;
 
             openedFlyout = null;
@@ -103,9 +125,11 @@ namespace FlatNotes.Controls
 
         private void GridView_Holding(object sender, Windows.UI.Xaml.Input.HoldingRoutedEventArgs e)
         {
-            NotesGridView.ReorderMode = ListViewReorderMode.Enabled;
+            if (CanReorderItems)
+                NotesGridView.ReorderMode = ListViewReorderMode.Enabled;
         }
 
+#if WINDOWS_UWP
         public void OnChangeColorClick(object sender, RoutedEventArgs e)
         {
             var menuItem = sender as MenuFlyoutItem;
@@ -119,6 +143,7 @@ namespace FlatNotes.Controls
 
             viewModel.ChangeColor(note, newColor);
         }
+#endif
 
         private void NotesFluidGrid_ItemsReordered(object sender, Events.ItemsReorderedEventArgs e)
         {
@@ -132,9 +157,47 @@ namespace FlatNotes.Controls
                 openedFlyout.Hide();
         }
 
-        private void NotesFluidGrid_Loaded(object sender, RoutedEventArgs e)
+        private void OnNoteLoaded(object sender, RoutedEventArgs e)
         {
+            if (!CanSwipeItems) return;
 
+            FrameworkElement element = NotesGridView.ContainerFromItem((sender as FrameworkElement).DataContext) as FrameworkElement;
+            if (element == null) return;
+
+            EnableSwipeForElement(element);
+        }
+
+        private void EnableSwipeForElement(FrameworkElement element)
+        {
+            if (!CanSwipeItems) return;
+            if (element == null) return;
+
+            FrameworkElement referenceFrame = NotesGridView;
+
+            if (viewModel.ReorderMode != ListViewReorderMode.Enabled)
+                noteSwipeFeature.EnableSwipeFeature(element, referenceFrame);
+
+            noteSwipeFeature.enableSwipeEventHandlers[element] = (s, _e) => { noteSwipeFeature.EnableSwipeFeature(element, referenceFrame); };
+            noteSwipeFeature.disableSwipeEventHandlers[element] = (s, _e) => { noteSwipeFeature.DisableSwipeFeature(element); };
+
+            viewModel.ReorderModeDisabled += noteSwipeFeature.enableSwipeEventHandlers[element];
+            viewModel.ReorderModeEnabled += noteSwipeFeature.disableSwipeEventHandlers[element];
+
+            element.Unloaded += (s, e) => DisableSwipeForElement(s as FrameworkElement);
+        }
+
+        private void DisableSwipeForElement(FrameworkElement element)
+        {
+            if (!CanSwipeItems) return;
+            if (element == null) return;
+
+            if (noteSwipeFeature.enableSwipeEventHandlers.ContainsKey(element)) viewModel.ReorderModeDisabled -= noteSwipeFeature.enableSwipeEventHandlers[element];
+            if (noteSwipeFeature.disableSwipeEventHandlers.ContainsKey(element)) viewModel.ReorderModeEnabled -= noteSwipeFeature.disableSwipeEventHandlers[element];
+
+            noteSwipeFeature.enableSwipeEventHandlers.Remove(element);
+            noteSwipeFeature.disableSwipeEventHandlers.Remove(element);
+
+            noteSwipeFeature.DisableSwipeFeature(element);
         }
     }
 }

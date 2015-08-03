@@ -28,7 +28,7 @@
                 <Setter Property="Template">
                   <Setter.Value>
                      <ControlTemplate TargetType="ListViewItem">
-                            <ContentPresenter Margin="0" MinHeight="10" HorizontalAlignment="Stretch" VerticalAlignment="Top"/>
+                            <ContentPresenter Margin="0" MinHeight="10" FontSize="{Binding ElementName=Root, Path=FontSize, Mode=OneTime}" HorizontalAlignment="Stretch" VerticalAlignment="Top"/>
                         </ControlTemplate>
                   </Setter.Value>
                 </Setter>    

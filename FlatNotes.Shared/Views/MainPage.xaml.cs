@@ -23,10 +23,6 @@ namespace FlatNotes.Views
 
         private Note RedirectToNote = null;
 
-#if WINDOWS_PHONE_APP
-        private static NoteSwipeFeature noteSwipeFeature = new NoteSwipeFeature();
-#endif
-
         public MainPage()
         {
             this.InitializeComponent();
@@ -97,8 +93,7 @@ namespace FlatNotes.Views
         }
 
 #endregion
-
-#if WINDOWS_UWP
+        
         private async void OnNoteClick(object sender, ItemClickEventArgs e)
         {
             Note note = e.ClickedItem as Note;
@@ -110,51 +105,6 @@ namespace FlatNotes.Views
                 Frame.Navigate(typeof(NoteEditPage), note);
             });
         }
-
-#elif WINDOWS_PHONE_APP
-        private async void OnNoteTapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
-        {
-            if (viewModel.ReorderMode == ListViewReorderMode.Enabled) return;
-
-            Note note = (sender as FrameworkElement).DataContext as Note;
-            if (note == null) return;
-
-            //this dispatcher fixes crash error (access violation on wp preview for developers)
-            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-            {
-                Frame.Navigate(typeof(NoteEditPage), note);
-            });
-        }
-
-        //swipe feature
-        private void OnNoteLoaded(object sender, RoutedEventArgs e)
-        {
-            FrameworkElement element = sender as FrameworkElement;
-            FrameworkElement referenceFrame = NotesControl;
-
-            if(viewModel.ReorderMode != ListViewReorderMode.Enabled)
-                noteSwipeFeature.EnableSwipeFeature(element, referenceFrame);
-
-            noteSwipeFeature.enableSwipeEventHandlers[element] = (s, _e) => { noteSwipeFeature.EnableSwipeFeature(element, referenceFrame); };
-            noteSwipeFeature.disableSwipeEventHandlers[element] = (s, _e) => { noteSwipeFeature.DisableSwipeFeature(element); };
-
-            viewModel.ReorderModeDisabled += noteSwipeFeature.enableSwipeEventHandlers[element];
-            viewModel.ReorderModeEnabled += noteSwipeFeature.disableSwipeEventHandlers[element];
-        }
-
-        private void OnNoteUnloaded(object sender, RoutedEventArgs e)
-        {
-            FrameworkElement element = sender as FrameworkElement;
-
-            if (noteSwipeFeature.enableSwipeEventHandlers.ContainsKey(element)) viewModel.ReorderModeDisabled -= noteSwipeFeature.enableSwipeEventHandlers[element];
-            if (noteSwipeFeature.disableSwipeEventHandlers.ContainsKey(element)) viewModel.ReorderModeEnabled -= noteSwipeFeature.disableSwipeEventHandlers[element];
-
-            noteSwipeFeature.enableSwipeEventHandlers.Remove(element);
-            noteSwipeFeature.disableSwipeEventHandlers.Remove(element);
-
-            noteSwipeFeature.DisableSwipeFeature(element);
-        }
-#endif
 
         private void OnItemsReordered(object sender, Events.ItemsReorderedEventArgs e)
         {

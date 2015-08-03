@@ -13,21 +13,17 @@
     DataContext="{Binding viewModel, RelativeSource={RelativeSource Mode=Self}}"
     d:DataContext="{d:DesignData /SampleData/MainViewModelSampleData.xaml}">
     
-    <Page.Resources>
-        <DataTemplate x:Key="NotePreviewListViewControlTemplate">
-            <local:NotePreview FontSize="17"/>
-        </DataTemplate>
-
-        <ItemsPanelTemplate x:Key="FluidItemsPanelTemplate" x:Name="FluidItemsPanelTemplate">
-            <local:FluidGrid x:Name="NotesFluidGrid" Margin="8" ItemWidth="160" Columns="{Binding Columns, Mode=OneWay, TargetNullValue=-1, FallbackValue=-1}" ItemStretch="True" AllowSingleColumn="True"/>
-        </ItemsPanelTemplate>
-    </Page.Resources>
-    
     <Page.BottomAppBar>
         <CommandBar Opacity="0" IsHitTestVisible="False"/>
     </Page.BottomAppBar>
 
     <Grid x:Name="LayoutRoot" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.Transitions>
+            <TransitionCollection>
+                <EntranceThemeTransition FromHorizontalOffset="0" FromVerticalOffset="10"/>
+            </TransitionCollection>
+        </Grid.Transitions>
+        
         <Grid x:Name="ContentRoot" MaxWidth="1000">
             <Grid Visibility="{Binding Notes.Count, Converter={StaticResource PositiveIntToVisibilityConverter}, ConverterParameter=True}">
                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -44,7 +40,7 @@
                 </StackPanel>
             </Grid>
 
-            <ListView x:Name="NotesControl" ItemsSource="{Binding Notes, Mode=OneWay}" IsItemClickEnabled="True" ItemClick="OnNoteClick" ItemsPanel="{StaticResource FluidItemsPanelTemplate}" ItemTemplate="{StaticResource NotePreviewListViewControlTemplate}" ScrollViewer.VerticalScrollMode="Enabled" VerticalAlignment="Stretch" CanDragItems="False" AllowDrop="False"/>
+            <local:NotesControl x:Name="NotesControl" ItemsSource="{Binding Notes, Mode=OneWay}" Columns="{Binding Columns, Mode=OneWay}" VerticalAlignment="Stretch" CanReorderItems="False" CanDragItems="False" AllowDrop="False" CanSwipeItems="False" IsNoteFlyoutEnabled="True" ItemClick="OnNoteClick"/>
         </Grid>
     </Grid>
 </Page>

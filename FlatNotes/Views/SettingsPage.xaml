@@ -23,10 +23,10 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <Grid x:Name="ContentRoot" Grid.Row="1">
+        <Grid x:Name="ContentRoot" Grid.Row="1" Margin="12">
             <Grid.Transitions>
                 <TransitionCollection>
-                    <EntranceThemeTransition/>
+                    <EntranceThemeTransition FromHorizontalOffset="0" FromVerticalOffset="10"/>
                 </TransitionCollection>
             </Grid.Transitions>
 
@@ -44,12 +44,12 @@
                         <Run Text="{x:Bind viewModel.AppVersion}"/>
                     </TextBlock>
 
-                    <TextBlock Margin="0,0,0,6">
+                    <TextBlock Margin="0">
                         <Run x:Uid="DevelopedByTextBlock" Text="Developed by "/>
-                        <Hyperlink NavigateUri="http://twitter.com/brunolemos" Click="{x:Bind viewModel.DeveloperTwitterHyperlink_OnClick}">@brunolemos</Hyperlink>
+                        <Hyperlink NavigateUri="http://twitter.com/brunolemos" Click="{x:Bind viewModel.DeveloperTwitterHyperlink_OnClick}" Foreground="{StaticResource AppMainBrush}">@brunolemos</Hyperlink>
                     </TextBlock>
 
-                    <Button Margin="0,0,0,12" Content="Download Flat Notes" HorizontalAlignment="Left" Command="{x:Bind viewModel.DownloadAppCommand}" Visibility="{x:Bind viewModel.IsBeta, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                    <Button Margin="0,12" Content="Download Flat Notes" HorizontalAlignment="Left" Command="{x:Bind viewModel.DownloadAppCommand}" Visibility="{x:Bind viewModel.IsBeta, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                 </StackPanel>
             </ScrollViewer>
         </Grid>

@@ -15,18 +15,16 @@
     <Page.Resources>
         <Converters:PositiveIntToVisibilityConverter x:Key="PositiveIntToVisibilityConverter"/>
         <Converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
-
-        <DataTemplate x:Key="NotePreviewListViewControlTemplate">
-            <local:NotePreview Tapped="OnNoteTapped" Loaded="OnNoteLoaded" Unloaded="OnNoteUnloaded" FontSize="17"/>
-        </DataTemplate>
-
-        <ItemsPanelTemplate x:Key="FluidItemsPanelTemplate" x:Name="FluidItemsPanelTemplate">
-            <local:FluidGrid x:Name="NotesFluidGrid" Margin="8" ItemWidth="160" Columns="{Binding Columns, Mode=OneWay, TargetNullValue=-1, FallbackValue=-1}" ItemStretch="True" AllowSingleColumn="True" ParentListView="{Binding ElementName=NotesControl}" ItemsReordered="OnItemsReordered"/>
-        </ItemsPanelTemplate>
     </Page.Resources>
 
     <Grid x:Name="LayoutRoot" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid x:Name="ContentRoot" MaxWidth="1000">
+            <Grid.Transitions>
+                <TransitionCollection>
+                    <EntranceThemeTransition FromHorizontalOffset="0" FromVerticalOffset="10"/>
+                </TransitionCollection>
+            </Grid.Transitions>
+            
             <Grid Visibility="{Binding Notes.Count, Converter={StaticResource PositiveIntToVisibilityConverter}, ConverterParameter=True}">
                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                     <Viewbox Width="180">
@@ -42,18 +40,7 @@
                 </StackPanel>
             </Grid>
 
-            <ListView x:Name="NotesControl" ItemsSource="{Binding Notes, Mode=OneWay}" IsItemClickEnabled="False" ItemsPanel="{StaticResource FluidItemsPanelTemplate}" ItemTemplate="{StaticResource NotePreviewListViewControlTemplate}" ScrollViewer.VerticalScrollMode="Enabled" VerticalAlignment="Stretch" SelectionMode="None" CanDragItems="True" AllowDrop="True" ReorderMode="{Binding ReorderMode, Mode=TwoWay}">
-                <ListView.ItemContainerTransitions>
-                    <TransitionCollection>
-                        <EntranceThemeTransition IsStaggeringEnabled="True" FromVerticalOffset="200" FromHorizontalOffset="0"/>
-                        <NavigationThemeTransition/>
-                        <ContentThemeTransition/>
-                        <AddDeleteThemeTransition/>
-                        <ReorderThemeTransition/>
-                        <RepositionThemeTransition />
-                    </TransitionCollection>
-                </ListView.ItemContainerTransitions>
-            </ListView>
+            <local:NotesControl x:Name="NotesControl" ItemsSource="{Binding Notes, Mode=OneWay}" Columns="{Binding Columns, Mode=OneWay}" VerticalAlignment="Stretch" CanReorderItems="True" CanDragItems="True" AllowDrop="True" CanSwipeItems="True" IsNoteFlyoutEnabled="False" ItemClick="OnNoteClick" ItemsReordered="OnItemsReordered"  ReorderMode="{Binding ReorderMode, Mode=TwoWay}"/>
         </Grid>
     </Grid>
     

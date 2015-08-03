@@ -182,10 +182,11 @@ namespace FlatNotes.Controls
                 Size childSize = childrenSizes[i];
                 int childColumn = childrenColumns[i];
 
-                Point startPoint = new Point(childSize.Width * childColumn, lastYInColumn[childColumn]);
-
                 if (!(isReordering && i == draggingItemIndex_elements))
+                {
+                    Point startPoint = new Point(childSize.Width * childColumn, lastYInColumn[childColumn]);
                     elements[i].Arrange(new Rect(startPoint, childSize));
+                }
 
                 lastYInColumn[childColumn] += childSize.Height;
             }
@@ -307,18 +308,19 @@ namespace FlatNotes.Controls
         private void OnDrop(object sender, DragEventArgs e)
         {
             //Debug.WriteLine("OnDrop. Drag: {0}, Drop: {1}", draggingItemIndex_original, dropAtIndex_elements);
-            if (!isReordering) return;
-            if (draggingItemIndex_original == -1 || dropAtIndex_elements == -1) return;
-            if (draggingItemIndex_original >= Children.Count || dropAtIndex_elements >= Children.Count) return;
-            
-            isReordering = false;
 
-            //if(draggingItemIndex_original != dropAtIndex_elements)
-            //{
+            bool success = true;
+            if (!isReordering) success = false;
+            if (draggingItemIndex_original == -1 || dropAtIndex_elements == -1) success = false;
+            if (draggingItemIndex_original >= Children.Count || dropAtIndex_elements >= Children.Count) success = false;
+            
+            if (success)//&& draggingItemIndex_original != dropAtIndex_elements)
+            {
                 var handler = ItemsReordered;
                 if (handler != null) handler(this, new ItemsReorderedEventArgs(draggingItemIndex_original, dropAtIndex_elements));
-            //}
+            }
 
+            isReordering = false;
             lastDragOverPosition = null;
             draggingItemIndex_original = -1;
             draggingItemIndex_elements = -1;

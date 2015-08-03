@@ -44,5 +44,12 @@ namespace FlatNotes
         }
 
         #endregion
+
+#if WINDOWS_PHONE_APP
+        private void DeveloperTwitterHyperlink_OnClick(Windows.UI.Xaml.Documents.Hyperlink sender, Windows.UI.Xaml.Documents.HyperlinkClickEventArgs args)
+        {
+            viewModel.DeveloperTwitterHyperlink_OnClick();
+        }
+#endif
     }
 }

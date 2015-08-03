@@ -10,7 +10,7 @@
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400"
-    d:DataContext="{Binding Notes, Source={d:DesignData /SampleData/MainViewModelSampleData.xaml}}">
+    Padding="12">
     
     <UserControl.Resources>
         <MenuFlyout x:Key="NoteMenuFlyout">
@@ -39,6 +39,7 @@
               CanReorderItems="{x:Bind CanReorderItems, Mode=OneWay}" 
               CanDragItems="{x:Bind CanDragItems, Mode=OneWay}" 
               AllowDrop="{x:Bind AllowDrop, Mode=OneWay}"  
+              ReorderMode="{x:Bind ReorderMode, Mode=TwoWay}"  
               SelectionMode="None" 
               Margin="-4"
               IsItemClickEnabled="True" ItemClick="GridView_ItemClick" Holding="GridView_Holding" DragItemsStarting="NotesGridView_DragItemsStarting">
@@ -49,7 +50,6 @@
                 <RepositionThemeTransition/>
                 <AddDeleteThemeTransition/>
                 <ReorderThemeTransition/>
-                <NavigationThemeTransition/>
             </TransitionCollection>
         </ListView.ItemContainerTransitions>
 
@@ -62,7 +62,7 @@
 
         <ListView.ItemTemplate>
             <DataTemplate x:DataType="models:Note">
-                <local:NotePreview Holding="NotePreview_Holding" RightTapped="NotePreview_RightTapped" RequestedTheme="Dark" FlyoutBase.AttachedFlyout="{StaticResource NoteMenuFlyout}"/>
+                <local:NotePreview Loaded="OnNoteLoaded" Holding="NotePreview_Holding" RightTapped="NotePreview_RightTapped" RequestedTheme="Dark" FlyoutBase.AttachedFlyout="{StaticResource NoteMenuFlyout}"/>
             </DataTemplate>
         </ListView.ItemTemplate>
     </ListView>
