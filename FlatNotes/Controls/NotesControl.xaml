@@ -42,7 +42,8 @@
               ReorderMode="{x:Bind ReorderMode, Mode=TwoWay}"  
               SelectionMode="None" 
               Margin="-4"
-              IsItemClickEnabled="True" ItemClick="GridView_ItemClick" Holding="GridView_Holding" DragItemsStarting="NotesGridView_DragItemsStarting">
+              IsItemClickEnabled="True" ItemClick="GridView_ItemClick" 
+              DragItemsStarting="NotesGridView_DragItemsStarting" DragItemsCompleted="NotesGridView_DragItemsCompleted">
 
         <ListView.ItemContainerTransitions>
             <TransitionCollection>

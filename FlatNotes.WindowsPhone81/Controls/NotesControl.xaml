@@ -18,10 +18,10 @@
               CanReorderItems="{Binding ElementName=Root, Path=CanReorderItems, Mode=OneWay}" 
               CanDragItems="{Binding ElementName=Root, Path=CanDragItems, Mode=OneWay}" 
               AllowDrop="{Binding ElementName=Root, Path=AllowDrop, Mode=OneWay}"  
-              ReorderMode="{Binding ElementName=Root, Path=ReorderMode, Mode=TwoWay}"  
+              ReorderMode="{Binding ElementName=Root, Path=viewModel.ReorderMode, Mode=TwoWay}"  
               SelectionMode="None" 
               Margin="-4"
-              IsItemClickEnabled="True" ItemClick="GridView_ItemClick" Holding="GridView_Holding" DragItemsStarting="NotesGridView_DragItemsStarting"
+              IsItemClickEnabled="True" ItemClick="GridView_ItemClick" DragItemsStarting="NotesGridView_DragItemsStarting"
               DataContext="{Binding viewModel, ElementName=Root}"
               d:DataContext="{Binding Notes, Source={d:DesignData /SampleData/MainViewModelSampleData.xaml}}">
 
@@ -43,14 +43,15 @@
 
         <ListView.ItemTemplate>
             <DataTemplate>
-                <local:NotePreview Loaded="OnNoteLoaded" Holding="NotePreview_Holding" RightTapped="NotePreview_RightTapped" FontSize="17" RequestedTheme="Dark">
+                <local:NotePreview Loaded="OnNoteLoaded" Holding="NotePreview_Holding" RightTapped="NotePreview_RightTapped" FontSize="18" RequestedTheme="Dark">
                     <FlyoutBase.AttachedFlyout>
                         <MenuFlyout>
-                            <MenuFlyoutItem x:Uid="RestoreMenuFlyoutItem" Text="Restore" Command="{Binding viewModel.RestoreNoteCommand, ElementName=Root, Mode=OneWay}" CommandParameter="{Binding}" Visibility="{Binding IsArchived, Converter={StaticResource BooleanToVisibilityConverter}}"/>
-                            <MenuFlyoutItem x:Uid="ArchiveMenuFlyoutItem" Text="Archive" Command="{Binding ElementName=Root, Path=viewModel.ArchiveNoteCommand}" CommandParameter="{Binding}" Visibility="{Binding IsArchived, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=True}"/>
-                            <MenuFlyoutItem x:Uid="DeleteMenuFlyoutItem" Text="Delete" Command="{Binding ElementName=Root, Path=viewModel.DeleteNoteCommand}" CommandParameter="{Binding}"/>
-                            <MenuFlyoutItem x:Uid="PinToStartMenuFlyoutItem" Text="Pin to start" Command="{Binding ElementName=Root, Path=viewModel.PinCommand}" CommandParameter="{Binding}" Visibility="{Binding CanPin, Converter={StaticResource BooleanToVisibilityConverter}}"/>
-                            <MenuFlyoutItem x:Uid="UnpinFromStartMenuFlyoutItem" Text="Unpin from start" Command="{Binding ElementName=Root, Path=viewModel.UnpinCommand}" CommandParameter="{Binding}" Visibility="{Binding IsPinned, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                            <MenuFlyoutItem x:Uid="RestoreMenuFlyoutItem" Text="restore" Command="{Binding viewModel.RestoreNoteCommand, ElementName=Root, Mode=OneWay}" CommandParameter="{Binding}" Visibility="{Binding IsArchived, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                            <MenuFlyoutItem x:Uid="ArchiveMenuFlyoutItem" Text="archive" Command="{Binding ElementName=Root, Path=viewModel.ArchiveNoteCommand}" CommandParameter="{Binding}" Visibility="{Binding IsArchived, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=True}"/>
+                            <MenuFlyoutItem x:Uid="DeleteMenuFlyoutItem" Text="delete" Command="{Binding ElementName=Root, Path=viewModel.DeleteNoteCommand}" CommandParameter="{Binding}"/>
+                            <MenuFlyoutItem x:Uid="PinToStartMenuFlyoutItem" Text="pin to start" Command="{Binding ElementName=Root, Path=viewModel.PinCommand}" CommandParameter="{Binding}" Visibility="{Binding CanPin, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                            <MenuFlyoutItem x:Uid="UnpinFromStartMenuFlyoutItem" Text="unpin from start" Command="{Binding ElementName=Root, Path=viewModel.UnpinCommand}" CommandParameter="{Binding}" Visibility="{Binding IsPinned, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                            <MenuFlyoutItem x:Uid="ReorderMenuFlyoutItem" Text="reorder" Command="{Binding ElementName=Root, Path=viewModel.ReorderCommand}" Visibility="{Binding CanReorderItems, ElementName=Root, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                             <!--<MenuFlyoutSeparator/>
                             <MenuFlyoutItem x:Uid="ShareMenuFlyoutItem" Text="share"/>-->
                         </MenuFlyout>

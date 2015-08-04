@@ -207,8 +207,8 @@ namespace FlatNotes
 
         public static void ChangeStatusBarColor(Color backgroundColor, Color? foregroundColor = null)
         {
-            if (foregroundColor == null)
-                foregroundColor = Color.FromArgb(0x8C, 0x00, 0x00, 0x00);
+            //if (foregroundColor == null)
+            //    foregroundColor = Color.FromArgb(0x8C, 0x00, 0x00, 0x00);
 
 #if WINDOWS_UWP
             var titleBar = ApplicationView.GetForCurrentView().TitleBar;

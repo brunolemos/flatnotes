@@ -32,8 +32,8 @@
 
             <ScrollViewer VerticalScrollMode="Enabled" VerticalScrollBarVisibility="Hidden">
                 <StackPanel>
-                    <Image Height="80" Source="ms-appx:///Assets/Logo.png" VerticalAlignment="Top" HorizontalAlignment="Center"/>
-                    <TextBlock Margin="0,0,0,24" Text="{x:Bind viewModel.AppName}" HorizontalAlignment="Center" Style="{StaticResource SubheaderTextBlockStyle}" FontSize="26.667"/>
+                    <Image Height="80" Source="ms-appx:///Assets/Logo.png" Margin="0,0,0,6" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+                    <TextBlock Text="{x:Bind viewModel.AppName}" Margin="0,0,0,24" Padding="0" HorizontalAlignment="Center" Style="{StaticResource SubheaderTextBlockStyle}" FontSize="26"/>
                 
                     <ToggleSwitch x:Uid="ThemeToggleSwitch" Margin="0,0,0,16" Header="Theme" OffContent="Light" OnContent="Dark" IsOn="{x:Bind viewModel.IsDarkTheme, Mode=TwoWay}"/>
                     <ToggleSwitch x:Uid="TransparentDefaultTileToggleSwitch" Margin="0,0,0,16" Header="Default tile background" OffContent="Transparent" OnContent="Solid color" IsOn="{x:Bind viewModel.IsSolidColorDefaultTile, Mode=TwoWay}"/>

@@ -51,16 +51,11 @@ namespace FlatNotes.Utils
             //update content
             if (SecondaryTile.Exists(note.ID)) return await UpdateNoteTileIfExists(note, transparentTile);
 
-#if WINDOWS_PHONE_APP
-            //create (and suspend)
-            return await CreateNoteTile(note, transparentTile);
-#else
-            //create and update
+            //create and update (and suspend if is 8.1)
             var success = await CreateNoteTile(note, transparentTile);
-            await UpdateNoteTileIfExists(note, transparentTile);
+            success &= await UpdateNoteTileIfExists(note, transparentTile);
 
             return success;
-#endif
         }
 
         private static async Task<bool> CreateNoteTile(Note note, bool transparentTile = false)

@@ -193,7 +193,7 @@
     <value>theme</value>
   </data>
   <data name="TitleTextBox.PlaceholderText" xml:space="preserve">
-    <value>title</value>
+    <value>Title</value>
   </data>
   <data name="ToggleChecklistAppBarButton.Label" xml:space="preserve">
     <value>toggle checklist</value>

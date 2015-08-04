@@ -26,7 +26,9 @@ namespace FlatNotes.Controls
         public event EventHandler<ItemClickEventArgs> ItemClick;
         public const double ITEM_MIN_WIDTH = 150;
 
+#if WINDOWS_PHONE_APP
         private static NoteSwipeFeature noteSwipeFeature = new NoteSwipeFeature();
+#endif
 
         public static readonly DependencyProperty ItemsSourceProperty = DependencyProperty.Register("ItemsSource", typeof(object), typeof(NotesControl), new PropertyMetadata(-1));
         public object ItemsSource { get { return (object)GetValue(ItemsSourceProperty); } set { SetValue(ItemsSourceProperty, value); } }
@@ -58,7 +60,13 @@ namespace FlatNotes.Controls
         public static readonly DependencyProperty IsNoteFlyoutEnabledProperty = DependencyProperty.Register("IsNoteFlyoutEnabled", typeof(bool), typeof(NotesControl), new PropertyMetadata(true));
         public bool IsNoteFlyoutEnabled { get { return (bool)GetValue(IsNoteFlyoutEnabledProperty); } set { SetValue(IsNoteFlyoutEnabledProperty, value); } }
 
-        public static readonly DependencyProperty ReorderModeProperty = DependencyProperty.Register("ReorderMode", typeof(ListViewReorderMode), typeof(NotesControl), new PropertyMetadata(ListViewReorderMode.Disabled));
+        public static readonly DependencyProperty ReorderModeProperty = DependencyProperty.Register("ReorderMode", typeof(ListViewReorderMode), typeof(NotesControl), new PropertyMetadata(ListViewReorderMode.Disabled, onReorderModeChanged));
+
+        private static void onReorderModeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            (d as NotesControl).viewModel.reorderMode = (ListViewReorderMode)e.NewValue;
+        }
+
         public ListViewReorderMode ReorderMode { get { return (ListViewReorderMode)GetValue(ReorderModeProperty); } set { SetValue(ReorderModeProperty, value); } }
 
         FlyoutBase openedFlyout = null;
@@ -66,7 +74,10 @@ namespace FlatNotes.Controls
         public NotesControl()
         {
             this.InitializeComponent();
+
             Loaded += (s, e) => CreateItemsSourceBindingIfNecessary();
+            viewModel.ReorderModeEnabled += (s, e) => ReorderMode = ListViewReorderMode.Enabled;
+            viewModel.ReorderModeDisabled += (s, e) => ReorderMode = ListViewReorderMode.Disabled;
         }
 
         private async void CreateItemsSourceBindingIfNecessary()
@@ -92,19 +103,18 @@ namespace FlatNotes.Controls
 
         private void NotePreview_Holding(object sender, Windows.UI.Xaml.Input.HoldingRoutedEventArgs e)
         {
-            if (IsNoteFlyoutEnabled)
-                ShowNoteFlyout(sender as FrameworkElement);
+            ShowNoteFlyoutIfEnabled(sender as FrameworkElement);
         }
 
         private void NotePreview_RightTapped(object sender, Windows.UI.Xaml.Input.RightTappedRoutedEventArgs e)
         {
-            if (IsNoteFlyoutEnabled)
-                ShowNoteFlyout(sender as FrameworkElement);
+            ShowNoteFlyoutIfEnabled(sender as FrameworkElement);
         }
 
-        private void ShowNoteFlyout(FrameworkElement element)
+        private void ShowNoteFlyoutIfEnabled(FrameworkElement element)
         {
             if (!IsNoteFlyoutEnabled) return;
+            if (ReorderMode == ListViewReorderMode.Enabled) return;
             if (element == null) return;
 
             openedFlyout = Flyout.GetAttachedFlyout(element);
@@ -121,12 +131,6 @@ namespace FlatNotes.Controls
                 openedFlyout.Closed -= OpenedFlyout_Closed;
 
             openedFlyout = null;
-        }
-
-        private void GridView_Holding(object sender, Windows.UI.Xaml.Input.HoldingRoutedEventArgs e)
-        {
-            if (CanReorderItems)
-                NotesGridView.ReorderMode = ListViewReorderMode.Enabled;
         }
 
 #if WINDOWS_UWP
@@ -147,26 +151,43 @@ namespace FlatNotes.Controls
 
         private void NotesFluidGrid_ItemsReordered(object sender, Events.ItemsReorderedEventArgs e)
         {
+#if WINDOWS_UWP
+            ReorderMode = ListViewReorderMode.Disabled;
+#endif
+
             var handler = ItemsReordered;
             if (handler != null) handler(sender, e);
         }
 
         private void NotesGridView_DragItemsStarting(object sender, DragItemsStartingEventArgs e)
         {
+            if(CanReorderItems)
+                ReorderMode = ListViewReorderMode.Enabled;
+
             if (openedFlyout != null)
                 openedFlyout.Hide();
         }
 
+#if WINDOWS_UWP
+        private void NotesGridView_DragItemsCompleted(object sender, DragItemsCompletedEventArgs args)
+        {
+            ReorderMode = ListViewReorderMode.Disabled;
+        }
+#endif
+
         private void OnNoteLoaded(object sender, RoutedEventArgs e)
         {
+#if WINDOWS_PHONE_APP
             if (!CanSwipeItems) return;
 
             FrameworkElement element = NotesGridView.ContainerFromItem((sender as FrameworkElement).DataContext) as FrameworkElement;
             if (element == null) return;
 
             EnableSwipeForElement(element);
+#endif
         }
 
+#if WINDOWS_PHONE_APP
         private void EnableSwipeForElement(FrameworkElement element)
         {
             if (!CanSwipeItems) return;
@@ -199,5 +220,6 @@ namespace FlatNotes.Controls
 
             noteSwipeFeature.DisableSwipeFeature(element);
         }
+#endif
     }
 }

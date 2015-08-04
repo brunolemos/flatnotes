@@ -40,7 +40,7 @@
                 </StackPanel>
             </Grid>
 
-            <local:NotesControl x:Name="NotesControl" ItemsSource="{Binding Notes, Mode=OneWay}" Columns="{Binding Columns, Mode=OneWay}" VerticalAlignment="Stretch" CanReorderItems="True" CanDragItems="True" AllowDrop="True" CanSwipeItems="True" IsNoteFlyoutEnabled="False" ItemClick="OnNoteClick" ItemsReordered="OnItemsReordered"  ReorderMode="{Binding ReorderMode, Mode=TwoWay}"/>
+            <local:NotesControl x:Name="NotesControl" ItemsSource="{Binding Notes, Mode=OneWay}" Columns="{Binding Columns, Mode=OneWay}" VerticalAlignment="Stretch" CanReorderItems="True" CanDragItems="True" AllowDrop="True" CanSwipeItems="True" IsNoteFlyoutEnabled="True" ItemClick="OnNoteClick" ItemsReordered="OnItemsReordered"  ReorderMode="{Binding ReorderMode, Mode=TwoWay}"/>
         </Grid>
     </Grid>
     

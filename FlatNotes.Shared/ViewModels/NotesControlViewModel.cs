@@ -28,6 +28,7 @@ namespace FlatNotes.ViewModels
         public RelayCommand<Note> DeleteNoteCommand { get; private set; }
         public RelayCommand<Note> PinCommand { get; private set; }
         public RelayCommand<Note> UnpinCommand { get; private set; }
+        public RelayCommand ReorderCommand { get; private set; }
 
         public event EventHandler ReorderModeEnabled;
         public event EventHandler ReorderModeDisabled;
@@ -39,6 +40,7 @@ namespace FlatNotes.ViewModels
             DeleteNoteCommand = new RelayCommand<Note>(DeleteNote);
             PinCommand = new RelayCommand<Note>(Pin);
             UnpinCommand = new RelayCommand<Note>(Unpin);
+            ReorderCommand = new RelayCommand(ToggleReorder);
         }
 
         public NoteColors Colors { get { return NoteColor.Colors; } }
@@ -92,6 +94,12 @@ namespace FlatNotes.ViewModels
             if (note == null || note.IsEmpty()) return;
             App.TelemetryClient.TrackEvent("Pin_NotesControlViewModel");
 
+#if WINDOWS_PHONE_APP
+            //on wp81, the app will suspend after creating the note
+            //on app.xaml.cs the tile will be updated after suspension
+            NoteEditViewModel.CurrentNoteBeingEdited = note;
+#endif
+
             await TileManager.CreateOrUpdateNoteTile(note, AppSettings.Instance.TransparentNoteTile);
             note.NotifyPropertyChanged("IsPinned");
             note.NotifyPropertyChanged("CanPin");
@@ -118,6 +126,12 @@ namespace FlatNotes.ViewModels
             AppData.ChangeNoteColor(note, newColor);
         }
 
-        #endregion
+        private void ToggleReorder()
+        {
+            App.TelemetryClient.TrackEvent("Reorder_NoteNotesControlViewModel");
+            ReorderMode = ReorderMode == ListViewReorderMode.Enabled ? ListViewReorderMode.Disabled : ListViewReorderMode.Enabled;
+        }
+
+#endregion
     }
 }

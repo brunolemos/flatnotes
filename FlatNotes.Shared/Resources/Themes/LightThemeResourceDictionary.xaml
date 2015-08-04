@@ -10,23 +10,16 @@
     
     <SolidColorBrush x:Key="ApplicationPageBackgroundThemeBrush" Color="{ThemeResource PhoneBackgroundColor}"/>
     <SolidColorBrush x:Key="PhoneBackgroundBrush" Color="{ThemeResource PhoneBackgroundColor}"/>
-    <!--<SolidColorBrush x:Key="FlyoutBackgroundThemeBrush" Color="{ThemeResource PhoneBackgroundColor}"/>
-    <SolidColorBrush x:Key="ContentDialogBackgroundThemeBrush" Color="{ThemeResource PhoneBackgroundColor}"/>-->
 
     <SolidColorBrush x:Key="ApplicationPageForegroundThemeBrush" Color="{ThemeResource PhoneForegroundColor}"/>
     <SolidColorBrush x:Key="PhoneForegroundBrush" Color="{ThemeResource PhoneForegroundColor}"/>
-    <!--<SolidColorBrush x:Key="ComboBoxForegroundThemeBrush" Color="{ThemeResource PhoneForegroundColor}"/>
-    <SolidColorBrush x:Key="ComboBoxBorderThemeBrush" Color="{ThemeResource PhoneForegroundColor}"/>-->
 
     <SolidColorBrush x:Key="PhoneChromeBrush" Color="{ThemeResource PhoneChromeColor}"/>
     <SolidColorBrush x:Key="PhoneMidBrush" Color="{ThemeResource PhoneMidColor}"/>
     <SolidColorBrush x:Key="PhoneLowBrush" Color="{ThemeResource PhoneLowColor}"/>
 
-    <!--<SolidColorBrush x:Key="CommandBarBackgroundThemeBrush" Color="#ccc"/>-->
-
     <SolidColorBrush x:Key="ListViewItemPointerOverBackgroundThemeBrush" Color="#08000000"/>
     <SolidColorBrush x:Key="ListViewItemSelectedBackgroundThemeBrush" Color="#20000000"/>
     <SolidColorBrush x:Key="ListViewItemSelectedPointerOverBackgroundThemeBrush" Color="#2A000000"/>
     <SolidColorBrush x:Key="ListViewItemSelectedForegroundThemeBrush" Color="Black"/>
-    
 </ResourceDictionary>

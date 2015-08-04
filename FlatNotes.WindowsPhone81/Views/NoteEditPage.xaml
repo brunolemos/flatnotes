@@ -126,9 +126,9 @@
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
 
-                            <TextBlock Foreground="{StaticResource PhoneDarkMidBrush}" Text="{Binding ArchivedAtFormatedString}" FontSize="16"/>
+                            <TextBlock Foreground="{StaticResource PhoneDarkMidBrush}" Text="{Binding ArchivedAtFormatedString}" FontSize="18"/>
 
-                            <TextBlock Grid.Column="1" Text="↓" Foreground="{StaticResource PhoneDarkMidBrush}" FontSize="16"/>
+                            <TextBlock Grid.Column="1" Text="↓" Foreground="{StaticResource PhoneDarkMidBrush}" FontSize="18"/>
                         </Grid>
                     </Grid>
 
@@ -138,13 +138,13 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock Foreground="{StaticResource PhoneDarkMidBrush}" Text="{Binding UpdatedAtFormatedString}" FontSize="16" Visibility="{Binding Note.Changed, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=True}"/>
-                        <TextBlock x:Uid="PendingChangesTextBlock" Text="pending update" FontStyle="Italic" FontSize="16" Foreground="{StaticResource PhoneDarkMidBrush}" Visibility="{Binding Note.Changed, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                        <TextBlock Foreground="{StaticResource PhoneDarkMidBrush}" Text="{Binding UpdatedAtFormatedString}" FontSize="18" Visibility="{Binding Note.Changed, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=True}"/>
+                        <TextBlock x:Uid="PendingChangesTextBlock" Text="pending update" FontStyle="Italic" FontSize="18" Foreground="{StaticResource PhoneDarkMidBrush}" Visibility="{Binding Note.Changed, Converter={StaticResource BooleanToVisibilityConverter}}"/>
 
-                        <TextBlock Grid.Column="1" Text="↓" Foreground="{StaticResource PhoneDarkMidBrush}" FontSize="16" Visibility="{Binding Note.CreatedAt, Converter={StaticResource NullableToVisibilityConverter}}"/>
+                        <TextBlock Grid.Column="1" Text="↓" Foreground="{StaticResource PhoneDarkMidBrush}" FontSize="18" Visibility="{Binding Note.CreatedAt, Converter={StaticResource NullableToVisibilityConverter}}"/>
                     </Grid>
 
-                    <TextBlock Margin="0,0,0,12" Foreground="{StaticResource PhoneDarkMidBrush}" FontSize="16"  Visibility="{Binding Note.CreatedAt, Converter={StaticResource NullableToVisibilityConverter}}" Text="{Binding CreatedAtFormatedString}"/>
+                    <TextBlock Margin="0,0,0,12" Foreground="{StaticResource PhoneDarkMidBrush}" FontSize="18"  Visibility="{Binding Note.CreatedAt, Converter={StaticResource NullableToVisibilityConverter}}" Text="{Binding CreatedAtFormatedString}"/>
                 </StackPanel>
             </ScrollViewer>
         </Grid>

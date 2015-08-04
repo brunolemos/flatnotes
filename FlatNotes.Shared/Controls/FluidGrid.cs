@@ -272,21 +272,30 @@ namespace FlatNotes.Controls
 
             //Get the list of items under the current position
             var position = e.GetPosition(null);
-            var hitContainers = VisualTreeHelper.FindElementsInHostCoordinates(position, this, false).OfType<SelectorItem>().ToArray();
+            var hitContainer = VisualTreeHelper
+                .FindElementsInHostCoordinates(position, this, false)
+                .OfType<SelectorItem>()
+                .Where(x => x != Children[draggingItemIndex_original])
+                .FirstOrDefault();
 
-            int newDropAtIndex = (hitContainers == null || hitContainers.Count() <= 0)
+            int newDropAtIndex = (hitContainer == null)
                             ? -1
-                            : ParentListView.IndexFromContainer(hitContainers[0]);//elements.IndexOf(hitContainers[0]);
+                            : ParentListView.IndexFromContainer(hitContainer);//elements.IndexOf(hitContainers[0]);
 
             if (newDropAtIndex == draggingItemIndex_original) return;
 
             //prevent mess: disable reorder on same position (prevent infinite reordering)
             if(lastDragOverPosition != null)
             {
-                hitContainers = VisualTreeHelper.FindElementsInHostCoordinates((Point)lastDragOverPosition, this, false).OfType<SelectorItem>().ToArray();
-                var index = (hitContainers == null || hitContainers.Count() <= 0)
+                hitContainer = VisualTreeHelper
+                    .FindElementsInHostCoordinates((Point)lastDragOverPosition, this, false)
+                    .OfType<SelectorItem>()
+                    .Where(x => x != Children[draggingItemIndex_original])
+                    .FirstOrDefault();
+
+                var index = (hitContainer == null)
                                 ? -1
-                                : ParentListView.IndexFromContainer(hitContainers[0]);
+                                : ParentListView.IndexFromContainer(hitContainer);
 
                 if (index == newDropAtIndex) return;
                 lastDragOverPosition = null;

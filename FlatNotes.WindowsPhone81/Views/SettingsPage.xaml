@@ -40,8 +40,8 @@
 
             <ScrollViewer VerticalScrollMode="Enabled" VerticalScrollBarVisibility="Hidden">
                 <StackPanel>
-                    <Image Height="80" Source="ms-appx:///Assets/Logo.png" VerticalAlignment="Top" HorizontalAlignment="Center"/>
-                    <TextBlock Margin="0,0,0,24" Text="{Binding AppName}" HorizontalAlignment="Center" Style="{StaticResource SubheaderTextBlockStyle}" FontSize="26.667"/>
+                    <Image Height="80" Source="ms-appx:///Assets/Logo.png" Margin="0,0,0,6" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+                    <TextBlock Text="{Binding AppName}" Margin="0,0,0,24" Padding="0" HorizontalAlignment="Center" Style="{StaticResource SubheaderTextBlockStyle}" FontSize="26"/>
 
                     <ToggleSwitch x:Uid="ThemeToggleSwitch" Margin="0,0,0,24" Header="theme" OffContent="light" OnContent="dark" IsOn="{Binding IsDarkTheme, Mode=TwoWay}"/>
                     <ToggleSwitch x:Uid="TransparentDefaultTileToggleSwitch" Margin="0,0,0,24" Header="default tile" OffContent="transparent" OnContent="solid color" IsOn="{Binding IsSolidColorDefaultTile, Mode=TwoWay}"/>

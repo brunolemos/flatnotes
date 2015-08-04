@@ -48,12 +48,12 @@
 
     <Style TargetType="AppBarButton">
         <Setter Property="Foreground" Value="{StaticResource CommandBarForegroundThemeBrush}"/>
-        <Setter Property="RequestedTheme" Value="Light"/>
+        <!--<Setter Property="RequestedTheme" Value="Light"/>-->
     </Style>
 
     <Style TargetType="AppBarToggleButton">
         <Setter Property="Foreground" Value="{StaticResource CommandBarForegroundThemeBrush}"/>
-        <Setter Property="RequestedTheme" Value="Light"/>
+        <!--<Setter Property="RequestedTheme" Value="Light"/>-->
     </Style>
 
     <Style TargetType="FlyoutPresenter">
