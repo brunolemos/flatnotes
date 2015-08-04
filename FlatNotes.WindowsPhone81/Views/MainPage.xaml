@@ -45,7 +45,7 @@
     </Grid>
     
     <Page.BottomAppBar>
-        <CommandBar IsSticky="True">
+        <CommandBar x:Name="CommandBar" IsSticky="True">
             <CommandBar.PrimaryCommands>
                 <!--<AppBarButton x:Uid="NewAppBarButton" Label="new" Command="{Binding CreateTextNoteCommand}" Icon="Add"/>-->
                 <AppBarButton x:Uid="TextAppBarButton" Label="text" Command="{Binding CreateTextNoteCommand}" ToolTipService.ToolTip="{Binding Label, RelativeSource={RelativeSource Mode=Self}}">

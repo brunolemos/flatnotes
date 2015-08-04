@@ -72,9 +72,7 @@ namespace FlatNotes.Views
             viewModel.Note.PropertyChanged += OnNotePropertyChanged;
 
             previousBackground = App.RootFrame.Background;
-            var xxx = new SolidColorBrush(Colors.Transparent);
-            xxx.Opacity = 0;
-            App.RootFrame.Background = xxx;// new SolidColorBrush().fromHex(viewModel.Note.Color.Color);
+            App.RootFrame.Background = new SolidColorBrush().fromHex(viewModel.Note.Color.Color);
 
             //Color Picker
             NoteColorPicker.SelectedNoteColor = viewModel.Note.Color;
@@ -115,6 +113,7 @@ namespace FlatNotes.Views
 
             //viewModel.Note = null;
             NoteEditViewModel.CurrentNoteBeingEdited = null;
+            viewModel.Note = null;
         }
 
         #region NavigationHelper registration
@@ -136,7 +135,9 @@ namespace FlatNotes.Views
         {
             if (e.PropertyName == "Note" && viewModel.Note != null)
             {
-                viewModel.Note.PropertyChanged += OnNotePropertyChanged;
+                //viewModel.Note.PropertyChanged -= OnNotePropertyChanged;
+                //viewModel.Note.PropertyChanged += OnNotePropertyChanged;
+
                 UpdateStatusBarColor();
                 UpdateIsPinnedStatus();
             }

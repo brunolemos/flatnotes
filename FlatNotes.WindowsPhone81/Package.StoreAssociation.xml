@@ -184,58 +184,58 @@
     <Language Code="vi-vn" InMinimumRequirementSet="true" />
   </SupportedLocales>
   <ProductReservedInfo>
-    <MainPackageIdentityName>29428BrunoLemos.KeepBeta</MainPackageIdentityName>
+    <MainPackageIdentityName>29428BrunoLemos.Keep</MainPackageIdentityName>
     <ReservedNames>
-      <ReservedName>Flat Notes Beta</ReservedName>
-      <ReservedName>Google Keep Beta</ReservedName>
-      <ReservedName>Keep Notes Beta</ReservedName>
-      <ReservedName>Keep Beta</ReservedName>
+      <ReservedName>Flat Notes</ReservedName>
+      <ReservedName>Keep 8.1</ReservedName>
+      <ReservedName>Google Keep 8.1</ReservedName>
+      <ReservedName>Google Keep Alternative</ReservedName>
+      <ReservedName>#Keep</ReservedName>
     </ReservedNames>
   </ProductReservedInfo>
   <AccountPackageIdentityNames>
     <MainPackageIdentityName>29428BrunoLemos.6lack</MainPackageIdentityName>
-    <MainPackageIdentityName>29428BrunoLemos.Keep</MainPackageIdentityName>
+    <MainPackageIdentityName>29428BrunoLemos.KeepBeta</MainPackageIdentityName>
     <MainPackageIdentityName>29428BrunoLemos.GroupsforFacebook</MainPackageIdentityName>
-    <MainPackageIdentityName>29428BrunoLemos.Nubank</MainPackageIdentityName>
     <MainPackageIdentityName>29428BrunoLemos.PopcornNow</MainPackageIdentityName>
     <MainPackageIdentityName>29428BrunoLemos.StellarLite</MainPackageIdentityName>
     <MainPackageIdentityName>29428BrunoLemos.5123029690F68</MainPackageIdentityName>
   </AccountPackageIdentityNames>
-  <PackageInfoList LandingUrl="https://dev.windows.com/dashboard/Application?appId=9WZDNCRDD0XV">
+  <PackageInfoList LandingUrl="https://dev.windows.com/dashboard/Application?appId=9WZDNCRDD0XX">
     <PackageInfo>
       <OsMinVersion>6.3.0.0</OsMinVersion>
       <PackageArchitecture>Unknown</PackageArchitecture>
-      <PackageMaxArchitectureVersion>2015.224.2028.2594</PackageMaxArchitectureVersion>
+      <PackageMaxArchitectureVersion>2015.224.2026.5205</PackageMaxArchitectureVersion>
     </PackageInfo>
     <PackageInfo>
       <OsMinVersion>6.3.0.0</OsMinVersion>
       <PackageArchitecture>Unknown</PackageArchitecture>
-      <PackageMaxArchitectureVersion>2015.224.2028.2594</PackageMaxArchitectureVersion>
+      <PackageMaxArchitectureVersion>2015.224.2026.5205</PackageMaxArchitectureVersion>
     </PackageInfo>
     <PackageInfo>
       <OsMinVersion>6.3.0.0</OsMinVersion>
       <PackageArchitecture>Unknown</PackageArchitecture>
-      <PackageMaxArchitectureVersion>2015.224.2028.2594</PackageMaxArchitectureVersion>
+      <PackageMaxArchitectureVersion>2015.224.2026.5205</PackageMaxArchitectureVersion>
     </PackageInfo>
     <PackageInfo>
       <OsMinVersion>6.3.0.0</OsMinVersion>
       <PackageArchitecture>Unknown</PackageArchitecture>
-      <PackageMaxArchitectureVersion>2015.224.2028.2594</PackageMaxArchitectureVersion>
+      <PackageMaxArchitectureVersion>2015.224.2026.5205</PackageMaxArchitectureVersion>
     </PackageInfo>
     <PackageInfo>
       <OsMinVersion>6.3.0.0</OsMinVersion>
       <PackageArchitecture>Unknown</PackageArchitecture>
-      <PackageMaxArchitectureVersion>2015.224.2028.2594</PackageMaxArchitectureVersion>
+      <PackageMaxArchitectureVersion>2015.224.2026.5205</PackageMaxArchitectureVersion>
+    </PackageInfo>
+    <PackageInfo>
+      <OsMinVersion>6.3.0.0</OsMinVersion>
+      <PackageArchitecture>Unknown</PackageArchitecture>
+      <PackageMaxArchitectureVersion>2015.224.2026.5205</PackageMaxArchitectureVersion>
     </PackageInfo>
     <PackageInfo>
       <OsMinVersion>6.3.0.0</OsMinVersion>
       <PackageArchitecture>Neutral</PackageArchitecture>
-      <PackageMaxArchitectureVersion>2015.224.2028.2594</PackageMaxArchitectureVersion>
-    </PackageInfo>
-    <PackageInfo>
-      <OsMinVersion>6.3.0.0</OsMinVersion>
-      <PackageArchitecture>Unknown</PackageArchitecture>
-      <PackageMaxArchitectureVersion>2015.224.2028.2594</PackageMaxArchitectureVersion>
+      <PackageMaxArchitectureVersion>2015.224.2026.5205</PackageMaxArchitectureVersion>
     </PackageInfo>
   </PackageInfoList>
 </StoreAssociation>

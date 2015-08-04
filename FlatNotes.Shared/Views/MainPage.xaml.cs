@@ -70,9 +70,10 @@ namespace FlatNotes.Views
         private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
         {
             RedirectToNote = null;
+            this.CommandBar.IsOpen = false;
         }
 
-#region NavigationHelper registration
+        #region NavigationHelper registration
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {

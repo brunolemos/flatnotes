@@ -96,33 +96,25 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="$(MSBuildThisFileDirectory)Assets\Logo.png" />
-    <Content Include="$(MSBuildThisFileDirectory)Assets\Square150x150Logo.scale-200.png" />
-    <Content Include="$(MSBuildThisFileDirectory)Assets\Square44x44Logo.scale-200.png" />
-    <Content Include="$(MSBuildThisFileDirectory)Assets\Square44x44Logo.targetsize-24.png" />
-    <Content Include="$(MSBuildThisFileDirectory)Assets\Square44x44Logo.targetsize-48.png" />
-    <Content Include="$(MSBuildThisFileDirectory)Assets\Tiles\Solid\Square150x150Logo.scale-100.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Tiles\Solid\Square150x150Logo.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Tiles\Solid\Square150x150Logo.scale-200.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Tiles\Solid\Square310x310Logo.scale-200.png" />
-    <Content Include="$(MSBuildThisFileDirectory)Assets\Tiles\Solid\Square44x44Logo.scale-100.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Tiles\Solid\Square44x44Logo.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Tiles\Solid\Square44x44Logo.scale-200.png" />
-    <Content Include="$(MSBuildThisFileDirectory)Assets\Tiles\Solid\Square44x44Logo.targetsize-24.png" />
-    <Content Include="$(MSBuildThisFileDirectory)Assets\Tiles\Solid\Square44x44Logo.targetsize-48.png" />
-    <Content Include="$(MSBuildThisFileDirectory)Assets\Tiles\Solid\Square71x71Logo.scale-100.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Tiles\Solid\Square71x71Logo.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Tiles\Solid\Square71x71Logo.scale-200.png" />
-    <Content Include="$(MSBuildThisFileDirectory)Assets\Tiles\Solid\Wide310x150Logo.scale-100.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Tiles\Solid\Wide310x150Logo.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Tiles\Solid\Wide310x150Logo.scale-200.png" />
-    <Content Include="$(MSBuildThisFileDirectory)Assets\Tiles\Solid\WideLogo.scale-100.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Tiles\Solid\WideLogo.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Tiles\Transparent\Square150x150Logo.scale-200.png" />
-    <Content Include="$(MSBuildThisFileDirectory)Assets\Tiles\Transparent\Square44x44Logo.scale-100.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Tiles\Transparent\Square44x44Logo.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Tiles\Transparent\Square44x44Logo.scale-200.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Tiles\Transparent\Square44x44Logo.targetsize-24.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Tiles\Transparent\Square44x44Logo.targetsize-24_altform-unplated.png" />
-    <Content Include="$(MSBuildThisFileDirectory)Assets\Tiles\Transparent\Square44x44Logo.targetsize-48_altform-unplated.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Tiles\Transparent\Square71x71Logo.scale-200.png" />
-    <Content Include="$(MSBuildThisFileDirectory)Assets\Tiles\Transparent\Wide310x150Logo.scale-100.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Tiles\Transparent\Wide310x150Logo.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Tiles\Transparent\Wide310x150Logo.scale-200.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Tiles\Transparent\Square310x310Logo.scale-200.png" />
-    <Content Include="$(MSBuildThisFileDirectory)Assets\Wide310x150Logo.scale-200.png" />
-    <Content Include="$(MSBuildThisFileDirectory)Assets\Wide310x310Logo.scale-200.png" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="$(MSBuildThisFileDirectory)Controls\NotePreview.xaml">
