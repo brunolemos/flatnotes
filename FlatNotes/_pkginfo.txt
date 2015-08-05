@@ -1,1 +1,1 @@
-C:\Users\Bruno Lemos\Documents\Visual Studio 2015\Projects\flatnotes\FlatNotes\AppPackages\FlatNotes_2.0.0.0\FlatNotes_2.0.0.0_x86_x64_arm.appxbundle
+C:\Users\Bruno Lemos\Documents\Visual Studio 2015\Projects\flatnotes\FlatNotes\AppPackages\FlatNotes_2.0.4.0\FlatNotes_2.0.4.0_x86_x64_arm.appxbundle

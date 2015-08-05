@@ -1,2 +1,2 @@
-MainPackage=C:\Users\Bruno Lemos\Documents\Visual Studio 2015\Projects\flatnotes\FlatNotes\bin\x86\Release\FlatNotes_2.0.0.0_x86.appx
-SymbolPackage=C:\Users\Bruno Lemos\Documents\Visual Studio 2015\Projects\flatnotes\FlatNotes\AppPackages\FlatNotes_2.0.0.0\FlatNotes_2.0.0.0_x86.appxsym
+MainPackage=C:\Users\Bruno Lemos\Documents\Visual Studio 2015\Projects\flatnotes\FlatNotes\bin\x86\Release\FlatNotes_2.0.4.0_x86.appx
+SymbolPackage=C:\Users\Bruno Lemos\Documents\Visual Studio 2015\Projects\flatnotes\FlatNotes\AppPackages\FlatNotes_2.0.4.0\FlatNotes_2.0.4.0_x86.appxsym

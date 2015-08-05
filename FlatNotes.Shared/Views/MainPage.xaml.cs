@@ -48,13 +48,13 @@ namespace FlatNotes.Views
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
             App.ResetStatusBar();
-
         }
 
         private async void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
             App.RootFrame.Background = this.Background;
             if (viewModel.Notes == null || viewModel.Notes.Count <= 0) viewModel.Notes = AppData.Notes;
+            viewModel.ReorderMode = ListViewReorderMode.Disabled;
 
             //received a note via parameter (from secondary tile)
             if (RedirectToNote != null)
