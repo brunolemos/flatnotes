@@ -60,8 +60,17 @@ namespace FlatNotes.Utils
             Task.Run(async () =>
             {
                 //import notes
-                Notes allNotes = await Migration.Versions.v2.Utils.AppSettings.Instance.LoadNotes();
-                if (allNotes == null) allNotes = new Notes();
+                Notes allNotes = new Notes();
+                var notes = await Migration.Versions.v2.Utils.AppSettings.Instance.LoadNotes();
+                if(notes != null && notes.Count > 0)
+                {
+                    for (int i = 0; i < notes.Count - 1; i++)
+                    {
+                        var note = (Note)notes[i];
+                        note.Order = notes.Count - 1 - i;
+                        allNotes.Add(note);
+                    }
+                }
 
                 Notes archivedNotes = await Migration.Versions.v2.Utils.AppSettings.Instance.LoadArchivedNotes();
                 if (allNotes.Count <= 0 && (archivedNotes == null || archivedNotes.Count <= 0)) return;
@@ -100,8 +109,8 @@ namespace FlatNotes.Utils
             Task.Run(async () =>
             {
                 //import notes
-                Notes notes = AppData.DB.GetAllWithChildren<Note>(x => x.IsArchived != true).ToList();
-                Notes archivedNotes = AppData.DB.GetAllWithChildren<Note>(x => x.IsArchived == true).ToList();
+                Notes notes = AppData.DB.GetAllWithChildren<Note>(x => x.IsArchived != true).OrderByDescending(x => x.Order).ToList();
+                Notes archivedNotes = AppData.DB.GetAllWithChildren<Note>(x => x.IsArchived == true).OrderByDescending(x => x.ArchivedAt).ToList();
 
                 bool success = await Migration.Versions.v2.Utils.AppSettings.Instance.SaveNotes(notes);
                 success &= await Migration.Versions.v2.Utils.AppSettings.Instance.SaveArchivedNotes(archivedNotes);

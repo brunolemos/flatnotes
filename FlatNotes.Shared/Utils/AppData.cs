@@ -36,7 +36,7 @@ namespace FlatNotes.Utils
         public static async Task Init()
         {
             //versioning -- migrate app data structure when necessary
-            await Migration.Migration.Migrate(AppSettings.Instance.Version);
+            await Migration.Migration.Migrate(AppSettings.Instance.Version - 1);
 
             if(db == null)
                 InitDB();

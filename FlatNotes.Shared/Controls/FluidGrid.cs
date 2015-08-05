@@ -1,6 +1,7 @@
 ﻿using FlatNotes.Events;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Windows.Foundation;
 using Windows.UI.Xaml;
@@ -182,11 +183,11 @@ namespace FlatNotes.Controls
                 Size childSize = childrenSizes[i];
                 int childColumn = childrenColumns[i];
 
-                if (!(isReordering && i == draggingItemIndex_elements))
-                {
+                //if (!(isReordering && i == draggingItemIndex_elements))
+                //{
                     Point startPoint = new Point(childSize.Width * childColumn, lastYInColumn[childColumn]);
                     elements[i].Arrange(new Rect(startPoint, childSize));
-                }
+                //}
 
                 lastYInColumn[childColumn] += childSize.Height;
             }
@@ -245,6 +246,7 @@ namespace FlatNotes.Controls
 
         private void OnDragItemsStarting(object sender, DragItemsStartingEventArgs e)
         {
+            //Debug.WriteLine("OnDragItemsStarting");
             isReordering = false;
 
 #if WINDOWS_UWP
@@ -260,13 +262,13 @@ namespace FlatNotes.Controls
 
             draggingItemIndex_original = (sender as ListViewBase).IndexFromContainer(itemContainer);
             draggingItemIndex_elements = draggingItemIndex_original;
-            //Debug.WriteLine("OnDragItemsStarting. Sender: {0}, Item: {1} = {2}", sender, draggingItemIndex_original, e.Items[0]);
 
             isReordering = true;
         }
 
         private void OnDragOver(object sender, DragEventArgs e)
         {
+            //Debug.WriteLine("OnDragOver. IsReordering: {0}", isReordering);
             if (!isReordering || draggingItemIndex_original == -1) return;
             e.Handled = true;
 
@@ -316,25 +318,25 @@ namespace FlatNotes.Controls
 
         private void OnDrop(object sender, DragEventArgs e)
         {
-            //Debug.WriteLine("OnDrop. Drag: {0}, Drop: {1}", draggingItemIndex_original, dropAtIndex_elements);
+            //Debug.WriteLine("OnDrop. Drag: {0}, Drop: {1}, IsReordering: {2}", draggingItemIndex_original, dropAtIndex_elements, isReordering);
 
-            bool success = true;
-            if (!isReordering) success = false;
-            if (draggingItemIndex_original == -1 || dropAtIndex_elements == -1) success = false;
-            if (draggingItemIndex_original >= Children.Count || dropAtIndex_elements >= Children.Count) success = false;
-            
-            if (success)//&& draggingItemIndex_original != dropAtIndex_elements)
-            {
-                var handler = ItemsReordered;
-                if (handler != null) handler(this, new ItemsReorderedEventArgs(draggingItemIndex_original, dropAtIndex_elements));
-            }
+            int temp_draggingItemIndex_original = draggingItemIndex_original;
+            int temp_dropAtIndex_elements = dropAtIndex_elements;
 
-            isReordering = false;
             lastDragOverPosition = null;
             draggingItemIndex_original = -1;
             draggingItemIndex_elements = -1;
             dropAtIndex_original = -1;
             dropAtIndex_elements = -1;
+
+            if (!isReordering) return;
+            isReordering = false;
+
+            if (temp_draggingItemIndex_original == -1 || temp_dropAtIndex_elements == -1) return;
+            if (temp_draggingItemIndex_original >= Children.Count || temp_dropAtIndex_elements >= Children.Count) return;
+
+            var handler = ItemsReordered;
+            if (handler != null) handler(this, new ItemsReorderedEventArgs(temp_draggingItemIndex_original, temp_dropAtIndex_elements));
         }
 
 #if WINDOWS_UWP

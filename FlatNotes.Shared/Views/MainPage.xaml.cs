@@ -109,7 +109,7 @@ namespace FlatNotes.Views
 
         private void OnItemsReordered(object sender, Events.ItemsReorderedEventArgs e)
         {
-            System.Diagnostics.Debug.WriteLine("OnItemsReordered from {0} to {1}", e.OldItemIndex, e.NewItemIndex);
+            //System.Diagnostics.Debug.WriteLine("OnItemsReordered from {0} to {1}", e.OldItemIndex, e.NewItemIndex);
             if (e.OldItemIndex < 0 || e.NewItemIndex < 0) return;
             if (e.OldItemIndex > viewModel.Notes.Count || e.NewItemIndex > viewModel.Notes.Count) return;
 

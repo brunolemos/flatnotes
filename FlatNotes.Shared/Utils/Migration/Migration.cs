@@ -40,12 +40,12 @@ namespace FlatNotes.Utils.Migration
 
                     //execute migrations (UPs)
                     if (currentVersion < setVersionRequest.DesiredVersion)
-                        for (int i = currentVersion; i <= setVersionRequest.DesiredVersion; i++)
+                        for (int i = currentVersion + 1; i <= setVersionRequest.DesiredVersion; i++)
                             if (UpList[i] != null) UpList[i]();
 
                     //execute migrations (DOWNs)
                     if (currentVersion > setVersionRequest.DesiredVersion)
-                        for (int i = (int)currentVersion; i >= setVersionRequest.DesiredVersion; i--)
+                        for (int i = (int)currentVersion; i > setVersionRequest.DesiredVersion; i--)
                             if (DownList[i] != null) DownList[i]();
                 }
             );

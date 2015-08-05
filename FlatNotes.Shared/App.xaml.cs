@@ -148,7 +148,7 @@ namespace FlatNotes
                 RootFrame.ContentTransitions = null;
                 RootFrame.Navigated += this.RootFrame_FirstNavigated;
 
-                //await Windows.Storage.ApplicationData.Current.SetVersionAsync(AppSettings.Instance.Version-1, (req) => { });
+                //await Windows.Storage.ApplicationData.Current.SetVersionAsync(AppSettings.Instance.Version - 1, (req) => { });
 
                 //prepare app data
                 await AppData.Init();
