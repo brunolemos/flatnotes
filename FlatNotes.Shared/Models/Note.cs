@@ -224,7 +224,7 @@ namespace FlatNotes.Models
             return string.IsNullOrEmpty(Title) && ((!IsChecklist && string.IsNullOrEmpty(Text)) || (IsChecklist && Checklist.Count <= 0)) && Images.Count <= 0;
         }
 
-        public string GetContent(bool showCheckedMark = false, bool includeTitle = false, int maxChecklistItem = 4)
+        public string GetContent(bool showCheckedMark = false, bool includeTitle = false, int maxChecklistItem = -1)
         {
             string content = IsChecklist ? GetTextFromChecklist(showCheckedMark, maxChecklistItem) : Text;
             if (includeTitle && !string.IsNullOrEmpty(Title)) content = Title + Environment.NewLine + content;
@@ -247,12 +247,13 @@ namespace FlatNotes.Models
                 }
         }
 
-        protected string GetTextFromChecklist(bool showCheckedMark, int maxChecklistItem = 4)
+        protected string GetTextFromChecklist(bool showCheckedMark, int maxChecklistItem = -1)
         {
             string txt = "";
             if (Checklist == null || Checklist.Count <= 0) return txt;
 
-            for (int i = 0; i < Checklist.Count && i < maxChecklistItem; i++)
+            maxChecklistItem = maxChecklistItem <= 0 ? Checklist.Count : Math.Min(Checklist.Count, maxChecklistItem);
+            for (int i = 0; i < maxChecklistItem; i++)
                 txt += Checklist[i].ToString(showCheckedMark) + Environment.NewLine.ToString();
 
             return txt.Trim();
