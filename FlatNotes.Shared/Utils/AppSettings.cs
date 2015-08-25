@@ -115,7 +115,7 @@ namespace FlatNotes.Utils
                 bool success = await Migration.Versions.v2.Utils.AppSettings.Instance.SaveNotes(notes);
                 success &= await Migration.Versions.v2.Utils.AppSettings.Instance.SaveArchivedNotes(archivedNotes);
 
-                if (success) AppData.DB.DeleteAll<Note>();
+                //if (success) AppData.DB.DeleteAll<Note>();
             }).Wait();
         }
 

@@ -229,11 +229,14 @@ namespace FlatNotes
             titleBar.BackgroundColor = backgroundColor;
             titleBar.ForegroundColor = foregroundColor;
 
+            titleBar.InactiveBackgroundColor = backgroundColor;
+            titleBar.InactiveForegroundColor = foregroundColor;
+
             titleBar.ButtonBackgroundColor = backgroundColor;
             titleBar.ButtonForegroundColor = foregroundColor;
 
             titleBar.ButtonInactiveBackgroundColor = backgroundColor;
-            titleBar.ButtonInactiveForegroundColor = Colors.LightGray;
+            titleBar.ButtonInactiveForegroundColor = foregroundColor;
 
             titleBar.ButtonHoverBackgroundColor = backgroundColor.Add(Color.FromArgb(0x10, 0xff, 0xff, 0xff));
             titleBar.ButtonHoverForegroundColor = titleBar.ButtonForegroundColor;
