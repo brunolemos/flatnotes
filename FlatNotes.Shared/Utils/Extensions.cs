@@ -52,17 +52,19 @@ namespace FlatNotes.Utils
             return Color.FromArgb( a, r, g, b );
         }
 
-        //https://en.wikipedia.org/wiki/Alpha_compositing#Alpha%5Fblending
-        public static Color Add(this Color color_src, Color color_dst)
+        public static Color Add(this Color color_a, Color color_b)
         {
-            return color_src;
+            float b_opacity_percent = (float)color_b.A / 0xff;
+            float a_opacity_percent = 1 - b_opacity_percent;
+            
+            byte a = (byte)(0xff * Math.Min(a_opacity_percent + b_opacity_percent, 1));
+            byte r = (byte)(color_a.R * a_opacity_percent + color_b.R * b_opacity_percent);
+            byte g = (byte)(color_a.G * a_opacity_percent + color_b.G * b_opacity_percent);
+            byte b = (byte)(color_a.B * a_opacity_percent + color_b.B * b_opacity_percent);
 
-            //byte a = (byte)(color_src.A + (color_dst.A * (255 - color_src.A) / 255));
-            //byte r = (byte)((color_src.R * color_src.A / 255) + (color_dst.R * (color_dst.A / 255) * (255 - color_src.A) / 255) / a);
-            //byte g = (byte)((color_src.G * color_src.A / 255) + (color_dst.G * (color_dst.A / 255) * (255 - color_src.A) / 255) / a);
-            //byte b = (byte)((color_src.B * color_src.A / 255) + (color_dst.B * (color_dst.A / 255) * (255 - color_src.A) / 255) / a);
+            System.Diagnostics.Debug.WriteLine("Color {0} + {1} = {2}", color_a, color_b, Color.FromArgb(a, r, g, b));
 
-            //return Color.FromArgb(a, r, g, b);
+            return Color.FromArgb(a, r, g, b);
         }
     }
 }
