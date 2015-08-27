@@ -62,8 +62,6 @@ namespace FlatNotes.Utils
             byte g = (byte)(color_a.G * a_opacity_percent + color_b.G * b_opacity_percent);
             byte b = (byte)(color_a.B * a_opacity_percent + color_b.B * b_opacity_percent);
 
-            System.Diagnostics.Debug.WriteLine("Color {0} + {1} = {2}", color_a, color_b, Color.FromArgb(a, r, g, b));
-
             return Color.FromArgb(a, r, g, b);
         }
     }

@@ -67,17 +67,19 @@ namespace FlatNotes.Views
 
         private void NoteChecklistItemTextBox_KeyDown(object sender, KeyRoutedEventArgs e)
         {
-            ChecklistItem item = (sender as TextBox).DataContext as ChecklistItem;
+            TextBox textBox = sender as TextBox;
+            ChecklistItem item = textBox.DataContext as ChecklistItem;
             int position = (NoteChecklistListView.ItemsSource as Checklist).IndexOf(item);
             int count = NoteChecklistListView.Items.Count;
 
             FrameworkElement listViewItem = NoteChecklistListView.ContainerFromIndex(position) as FrameworkElement;
-            TextBox textBox = FindFirstElementInVisualTree<TextBox>(listViewItem);
 
             if (string.IsNullOrEmpty((sender as TextBox).Text))
             {
                 if (e.Key == Windows.System.VirtualKey.Back)
                 {
+                    if (!string.IsNullOrEmpty(textBox.Tag?.ToString())) return;
+
                     if (count > 1)
                     {
                         int new_position = position > 0 ? position - 1 : position + 1;
@@ -94,10 +96,10 @@ namespace FlatNotes.Views
                         (NoteChecklistListView.ItemsSource as Checklist).Remove(item);
                     }
                 }
-                //else if ( e.Key == System.Windows.Input.Key.Enter && position == count - 1 )
+                //else if (e.Key == Windows.System.VirtualKey.Enter && position == count - 1)
                 //{
-                //    ( NoteChecklistListView.ItemsSource as Checklist ).Remove( item );
-                //    NoteNewItemText.Focus();
+                //    (NoteChecklistListView.ItemsSource as Checklist).Remove(item);
+                //    NewChecklistItemTextBox.Focus();
                 //}
             }
             else
@@ -186,31 +188,56 @@ namespace FlatNotes.Views
             TextBox textBox = sender as TextBox;
             ChecklistItem item = textBox.DataContext as ChecklistItem;
 
-            int position = (NoteChecklistListView.ItemsSource as Checklist).IndexOf(item);
+            textBox.Tag = textBox.Text;
 
-            if (string.IsNullOrEmpty(textBox.Text))
-            {
-                int count = NoteChecklistListView.Items.Count;
-                int new_position = position > 0 ? position - 1 : position + 1;
+            //int position = (NoteChecklistListView.ItemsSource as Checklist).IndexOf(item);
 
-                if (new_position > 0 && new_position < count)
-                {
-                    FrameworkElement listViewItem2 = NoteChecklistListView.ContainerFromIndex(new_position) as FrameworkElement;
-                    TextBox textBox2 = FindFirstElementInVisualTree<TextBox>(listViewItem2);
+            //if (string.IsNullOrEmpty(textBox.Text))
+            //{
+            //    int count = NoteChecklistListView.Items.Count;
+            //    int new_position = position > 0 ? position - 1 : position + 1;
 
-                    if(textBox2 != null)
-                    {
-                        textBox2.Focus(FocusState.Programmatic);
-                        textBox2.Select(textBox2.Text.Length, 0);
-                    }
-                }
+            //    if (new_position > 0 && new_position < count)
+            //    {
+            //        FrameworkElement listViewItem2 = NoteChecklistListView.ContainerFromIndex(new_position) as FrameworkElement;
+            //        TextBox textBox2 = FindFirstElementInVisualTree<TextBox>(listViewItem2);
 
-                if(count > 1)
-                {
-                    textBox.ClearValue(TextBox.TextProperty);
-                    (NoteChecklistListView.ItemsSource as Checklist).Remove(item);
-                }
-            }
+            //        if (textBox2 != null)
+            //        {
+            //            textBox2.Focus(FocusState.Programmatic);
+            //            textBox2.Select(textBox2.Text.Length, 0);
+            //        }
+            //    }
+
+            //    if (count > 1)
+            //    {
+            //        textBox.ClearValue(TextBox.TextProperty);
+            //        (NoteChecklistListView.ItemsSource as Checklist).Remove(item);
+            //    }
+            //}
         }
+
+        //private void TextBox_Loaded(object sender, RoutedEventArgs e)
+        //{
+        //    TextBox textBox = sender as TextBox;
+        //    var deleteButton = FindFirstElementInVisualTree<Button>(textBox);
+        //    if (deleteButton != null && deleteButton.Name != "DeleteButton") return;
+
+        //    deleteButton.Click += DeleteButton_Click;
+        //}
+
+        //private void TextBox_Unloaded(object sender, RoutedEventArgs e)
+        //{
+        //    TextBox textBox = sender as TextBox;
+        //    var deleteButton = FindFirstElementInVisualTree<Button>(textBox);
+        //    if (deleteButton != null && deleteButton.Name != "DeleteButton") return;
+
+        //    deleteButton.Click -= DeleteButton_Click;
+        //}
+
+        //private void DeleteButton_Click(object sender, RoutedEventArgs e)
+        //{
+        //    Debug.WriteLine("DeleteButton_Click");
+        //}
     }
 }
