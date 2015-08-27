@@ -8,7 +8,7 @@
 
     <Color x:Key="AppMainColor">#ffbb00</Color>
     <Color x:Key="AppMainDarkenColor">#f99f00</Color>
-    <Color x:Key="AppMainForegroundColor">#8C000000</Color><!--735400 / 664B00-->
+    <Color x:Key="AppMainForegroundColor">#D0FFFFFF</Color><!--8C000000 / 735400 / 664B00-->
     <Color x:Key="PhoneAccentColor">#f99f00</Color>
 
     <SolidColorBrush x:Key="AppStatusBarBackgroundBrush" Color="{StaticResource AppMainColor}"/>
@@ -48,21 +48,21 @@
 
     <Style TargetType="AppBarButton">
         <Setter Property="Foreground" Value="{StaticResource CommandBarForegroundThemeBrush}"/>
-        <Setter Property="RequestedTheme" Value="Light"/>
+        <Setter Property="RequestedTheme" Value="Dark"/>
     </Style>
 
     <Style TargetType="AppBarToggleButton">
         <Setter Property="Foreground" Value="{StaticResource CommandBarForegroundThemeBrush}"/>
-        <Setter Property="RequestedTheme" Value="Light"/>
+        <Setter Property="RequestedTheme" Value="Dark"/>
     </Style>
 
-    <Style TargetType="FlyoutPresenter">
+    <!--<Style TargetType="FlyoutPresenter">
         <Setter Property="RequestedTheme" Value="Dark"/>
     </Style>
 
     <Style TargetType="MenuFlyoutPresenter">
         <Setter Property="RequestedTheme" Value="Dark"/>
-    </Style>
+    </Style>-->
 
     <Style TargetType="ListViewItem">
         <Setter Property="Margin" Value="0"/>

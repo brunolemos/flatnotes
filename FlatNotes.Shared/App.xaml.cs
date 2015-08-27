@@ -220,8 +220,19 @@ namespace FlatNotes
 
         public static void ChangeStatusBarColor(Color backgroundColor, Color? foregroundColor = null)
         {
-            //if (foregroundColor == null)
-            //    foregroundColor = Color.FromArgb(0x8C, 0x00, 0x00, 0x00);
+            if (foregroundColor == null)
+                foregroundColor = Color.FromArgb(0xD0, 0xff, 0xff, 0xff);
+
+            if (foregroundColor.Value.A < 0xff)
+                foregroundColor = backgroundColor.Add(foregroundColor.Value);
+
+
+            Color backgroundHoverColor = backgroundColor.Add(Color.FromArgb(0x20, 0xff, 0xff, 0xff)); //10%
+            Color foregroundHoverColor = foregroundColor.Value;
+            foregroundHoverColor.A = 0xff;
+
+            Color backgroundPressedColor = backgroundHoverColor.Add(Color.FromArgb(0x20, 0xff, 0xff, 0xff)); //10%
+            Color foregroundPressedColor = foregroundHoverColor;
 
 #if WINDOWS_UWP
             var titleBar = ApplicationView.GetForCurrentView().TitleBar;
@@ -238,11 +249,11 @@ namespace FlatNotes
             titleBar.ButtonInactiveBackgroundColor = backgroundColor;
             titleBar.ButtonInactiveForegroundColor = foregroundColor;
 
-            titleBar.ButtonHoverBackgroundColor = backgroundColor.Add(Color.FromArgb(0x10, 0xff, 0xff, 0xff));
-            titleBar.ButtonHoverForegroundColor = titleBar.ButtonForegroundColor;
+            titleBar.ButtonHoverBackgroundColor = backgroundHoverColor;
+            titleBar.ButtonHoverForegroundColor = foregroundHoverColor;
 
-            titleBar.ButtonPressedBackgroundColor = backgroundColor.Add(Color.FromArgb(0x20, 0xff, 0xff, 0xff));
-            titleBar.ButtonPressedForegroundColor = foregroundColor;
+            titleBar.ButtonPressedBackgroundColor = backgroundPressedColor;
+            titleBar.ButtonPressedForegroundColor = foregroundPressedColor;
 
             bool hasStatusBar = Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar");
             if (!hasStatusBar) return;
