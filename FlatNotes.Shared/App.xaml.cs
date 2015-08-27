@@ -48,7 +48,7 @@ namespace FlatNotes
             TelemetryConfiguration.Active.DisableTelemetry = true;
 #else
             //config application insights
-            WindowsAppInitializer.InitializeAsync(WindowsCollectors.Metadata | WindowsCollectors.Session | WindowsCollectors.UnhandledException);
+            WindowsAppInitializer.InitializeAsync();//WindowsCollectors.Metadata | WindowsCollectors.Session | WindowsCollectors.UnhandledException);
 #endif
 
             //application insights has always to be initialized

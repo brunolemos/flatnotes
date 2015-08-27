@@ -36,7 +36,9 @@ namespace FlatNotes.Views
 
         private void OnLoaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            App.ChangeStatusBarColor(Color.FromArgb(0xff, 0x44, 0x59, 0x63));//, Color.FromArgb(0xff, 0xff, 0xff, 0xfe));
+            var statusBarBackgroundColor = Color.FromArgb(0xff, 0x44, 0x59, 0x63);
+            var statusBarForegroundColor = Color.FromArgb(0xD0, 0xff, 0xff, 0xff);
+            App.ChangeStatusBarColor(statusBarBackgroundColor, statusBarForegroundColor);
         }
 
         private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)

@@ -18,31 +18,33 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        
-        <Grid.Transitions>
-            <TransitionCollection>
-                <EntranceThemeTransition FromHorizontalOffset="0" FromVerticalOffset="10"/>
-            </TransitionCollection>
-        </Grid.Transitions>
 
-        <Grid Grid.Row="1" Visibility="{x:Bind viewModel.Notes.Count, Mode=OneWay, Converter={StaticResource PositiveIntToVisibilityConverter}, ConverterParameter=True}">
-            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Viewbox Width="160">
-                    <Canvas Width="100" Height="100" HorizontalAlignment="Center">
-                        <Rectangle Fill="{ThemeResource PhoneLowBrush}" Width="100" Height="70" StrokeThickness="0"/>
-                        <Rectangle Fill="{ThemeResource PhoneLowBrush}" Width="70" Height="30" StrokeThickness="0" Margin="0,70,0,0"/>
-                        <Polygon Fill="{ThemeResource PhoneLowBrush}" Points="0,0 30,0, 0,30" StrokeThickness="0" Margin="70,70,0,0" />
-                        <Polygon Fill="#0A000000" Points="0,0 30,0, 0,30" StrokeThickness="0" Margin="70,70,0,0" />
-                    </Canvas>
-                </Viewbox>
-                    
-                <TextBlock x:Uid="EmptyArchivedNotesMessageTextBox" Margin="8,24" Text="Archived notes appear here" Foreground="{ThemeResource PhoneMidBrush}" FontSize="{StaticResource EmptyNotesMessageFontSize}" TextWrapping="Wrap" TextAlignment="Center"/>
-            </StackPanel>
+        <Grid x:Name="ContentRoot" Grid.Row="1">
+            <Grid.Transitions>
+                <TransitionCollection>
+                    <EntranceThemeTransition FromHorizontalOffset="0" FromVerticalOffset="10"/>
+                </TransitionCollection>
+            </Grid.Transitions>
+
+            <Grid Visibility="{x:Bind viewModel.Notes.Count, Mode=OneWay, Converter={StaticResource PositiveIntToVisibilityConverter}, ConverterParameter=True}">
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Viewbox Width="160">
+                        <Canvas Width="100" Height="100" HorizontalAlignment="Center">
+                            <Rectangle Fill="{ThemeResource PhoneLowBrush}" Width="100" Height="70" StrokeThickness="0"/>
+                            <Rectangle Fill="{ThemeResource PhoneLowBrush}" Width="70" Height="30" StrokeThickness="0" Margin="0,70,0,0"/>
+                            <Polygon Fill="{ThemeResource PhoneLowBrush}" Points="0,0 30,0, 0,30" StrokeThickness="0" Margin="70,70,0,0" />
+                            <Polygon Fill="#0A000000" Points="0,0 30,0, 0,30" StrokeThickness="0" Margin="70,70,0,0" />
+                        </Canvas>
+                    </Viewbox>
+
+                    <TextBlock x:Uid="EmptyArchivedNotesMessageTextBox" Margin="8,24" Text="Archived notes appear here" Foreground="{ThemeResource PhoneMidBrush}" FontSize="{StaticResource EmptyNotesMessageFontSize}" TextWrapping="Wrap" TextAlignment="Center"/>
+                </StackPanel>
+            </Grid>
+
+            <local:NotesControl x:Name="NotesControl" ItemsSource="{Binding}" Columns="-1" DataContext="{x:Bind viewModel.Notes, Mode=OneWay}" d:DataContext="{Binding Notes}" CanReorderItems="False" CanDrag="False" AllowDrop="False" CanSwipeItems="False" IsNoteFlyoutEnabled="True" ItemClick="OnNoteClick"/>
         </Grid>
 
-        <local:NotesControl Grid.Row="1" x:Name="NotesControl" ItemsSource="{Binding}" Columns="-1" DataContext="{x:Bind viewModel.Notes, Mode=OneWay}" d:DataContext="{Binding Notes}" CanReorderItems="False" CanDrag="False" AllowDrop="False" CanSwipeItems="False" IsNoteFlyoutEnabled="True" ItemClick="OnNoteClick"/>
-
-        <CommandBar Grid.Row="{x:Bind viewModel.IsMobile, Converter={StaticResource IsMobileToGridRowConverter}}" Opacity="0" IsHitTestVisible="False" />
+        <CommandBar x:Name="CommandBar" Grid.Row="{x:Bind viewModel.IsMobile, Converter={StaticResource IsMobileToGridRowConverter}}" Background="#445963" Foreground="#445963" IsHitTestVisible="False" />
         
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
