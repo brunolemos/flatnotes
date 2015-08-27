@@ -1,2 +1,0 @@
-MainPackage=C:\Users\Bruno Lemos\Documents\Visual Studio 2015\Projects\flatnotes\FlatNotes.WindowsPhone81\bin\ARM\Release\FlatNotes.WindowsPhone81_2.0.6.0_ARM.appx
-SymbolPackage=C:\Users\Bruno Lemos\Documents\Visual Studio 2015\Projects\flatnotes\FlatNotes.WindowsPhone81\AppPackages\FlatNotes.WindowsPhone81_2.0.6.0_Test\FlatNotes.WindowsPhone81_2.0.6.0_ARM.appxsym

@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest" xmlns:m3="http://schemas.microsoft.com/appx/2014/manifest" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest">
-  <Identity Name="29428BrunoLemos.Keep" Publisher="CN=0B66D0B0-F691-4768-B3EE-FC3873EB0D73" Version="2.0.6.0" />
-  <mp:PhoneIdentity PhoneProductId="eb656e8d-3e4e-4bf5-b30c-df78f2de891a" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
+  <Identity Name="29428BrunoLemos.Keep" Publisher="CN=0B66D0B0-F691-4768-B3EE-FC3873EB0D73" Version="2.0.6.2" />
+  <mp:PhoneIdentity PhoneProductId="8bc1703d-f2e7-4f4a-b1c2-de75bb8b9d29" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>Flat Notes</DisplayName>
     <PublisherDisplayName>Bruno Lemos</PublisherDisplayName>
