@@ -63,7 +63,7 @@
 
         <ListView.ItemTemplate>
             <DataTemplate x:DataType="models:Note">
-                <local:NotePreview Loaded="OnNoteLoaded" Holding="NotePreview_Holding" RightTapped="NotePreview_RightTapped" RequestedTheme="Dark" FlyoutBase.AttachedFlyout="{StaticResource NoteMenuFlyout}"/>
+                <local:NotePreview Loaded="OnNoteLoaded" Holding="NotePreview_Holding" RightTapped="NotePreview_RightTapped" FlyoutBase.AttachedFlyout="{StaticResource NoteMenuFlyout}"/>
             </DataTemplate>
         </ListView.ItemTemplate>
     </ListView>

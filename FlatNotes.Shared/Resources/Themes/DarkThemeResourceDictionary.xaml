@@ -22,4 +22,6 @@
     <SolidColorBrush x:Key="ListViewItemSelectedBackgroundThemeBrush" Color="#20000000"/>
     <SolidColorBrush x:Key="ListViewItemSelectedPointerOverBackgroundThemeBrush" Color="#2A000000"/>
     <SolidColorBrush x:Key="ListViewItemSelectedForegroundThemeBrush" Color="{ThemeResource AppMainColor}"/>
+
+    <SolidColorBrush x:Key="CommandBarForegroundThemeBrush" Color="#D0FFFFFF"/>
 </ResourceDictionary>

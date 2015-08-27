@@ -56,14 +56,14 @@
         </ResourceDictionary>
     </Page.Resources>
 
-    <Grid x:Name="LayoutRoot" RequestedTheme="Light" Background="{x:Bind viewModel.Note.Color.Color, Mode=OneWay}">
+    <Grid x:Name="LayoutRoot" Background="{x:Bind viewModel.Note.Color.Color, Mode=OneWay}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="1" x:Name="ContentRoot">
+        <Grid Grid.Row="1" x:Name="ContentRoot" RequestedTheme="Light">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>

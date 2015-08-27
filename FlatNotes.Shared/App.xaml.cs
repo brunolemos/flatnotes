@@ -220,18 +220,20 @@ namespace FlatNotes
 
         public static void ChangeStatusBarColor(Color backgroundColor, Color? foregroundColor = null)
         {
+            byte blackOrWhiteByte = AppSettings.Instance.Theme == ElementTheme.Light ? (byte)0x00 : (byte)0xff;
+
             if (foregroundColor == null)
-                foregroundColor = Color.FromArgb(0xD0, 0xff, 0xff, 0xff);
+                foregroundColor = Color.FromArgb(0xD0, blackOrWhiteByte, blackOrWhiteByte, blackOrWhiteByte);
 
             if (foregroundColor.Value.A < 0xff)
                 foregroundColor = backgroundColor.Add(foregroundColor.Value);
 
 
-            Color backgroundHoverColor = backgroundColor.Add(Color.FromArgb(0x20, 0xff, 0xff, 0xff)); //10%
+            Color backgroundHoverColor = backgroundColor.Add(Color.FromArgb(0x20, blackOrWhiteByte, blackOrWhiteByte, blackOrWhiteByte)); //10%
             Color foregroundHoverColor = foregroundColor.Value;
             foregroundHoverColor.A = 0xff;
 
-            Color backgroundPressedColor = backgroundHoverColor.Add(Color.FromArgb(0x20, 0xff, 0xff, 0xff)); //10%
+            Color backgroundPressedColor = backgroundHoverColor.Add(Color.FromArgb(0x20, blackOrWhiteByte, blackOrWhiteByte, blackOrWhiteByte)); //10%
             Color foregroundPressedColor = foregroundHoverColor;
 
 #if WINDOWS_UWP
