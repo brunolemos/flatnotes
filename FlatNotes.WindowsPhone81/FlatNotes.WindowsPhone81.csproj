@@ -97,6 +97,14 @@
   <ItemGroup>
     <Content Include="Assets\SplashScreen.scale-240.png" />
     <Content Include="Assets\StoreLogo.scale-240.png" />
+    <Content Include="Assets\Tiles\Solid\Square150x150Logo.png" />
+    <Content Include="Assets\Tiles\Solid\Square44x44Logo.png" />
+    <Content Include="Assets\Tiles\Solid\Square71x71Logo.png" />
+    <Content Include="Assets\Tiles\Solid\Wide310x150Logo.png" />
+    <Content Include="Assets\Tiles\Transparent\Square150x150Logo.png" />
+    <Content Include="Assets\Tiles\Transparent\Square44x44Logo.png" />
+    <Content Include="Assets\Tiles\Transparent\Square71x71Logo.png" />
+    <Content Include="Assets\Tiles\Transparent\Wide310x150Logo.png" />
     <None Include="app.config" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

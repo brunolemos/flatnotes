@@ -21,7 +21,7 @@
     <ApplicationInsightsResourceId>/subscriptions/0b3bf49d-6fe0-4921-aadd-eb466c243776/resourcegroups/FlatNotesGroup/providers/microsoft.insights/components/Flat Notes</ApplicationInsightsResourceId>
     <PackageCertificateThumbprint>FF2D528985271908F24F4212DB8E46D6B5ADBF35</PackageCertificateThumbprint>
     <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
-    <AppxBundlePlatforms>x86|x64|arm</AppxBundlePlatforms>
+    <AppxBundlePlatforms>x86|arm</AppxBundlePlatforms>
     <AppxBundle>Always</AppxBundle>
     <AppxSymbolPackageEnabled>True</AppxSymbolPackageEnabled>
   </PropertyGroup>
@@ -124,8 +124,26 @@
   <ItemGroup>
     <None Include="Package.StoreAssociation.xml" />
     <Content Include="Assets\StoreLogo.scale-400.png" />
+    <Content Include="Assets\Tiles\Solid\Square150x150Logo.scale-100.png" />
+    <Content Include="Assets\Tiles\Solid\Square150x150Logo.scale-200.png" />
+    <Content Include="Assets\Tiles\Solid\Square310x310Logo.scale-200.png" />
+    <Content Include="Assets\Tiles\Solid\Square44x44Logo.scale-100.png" />
+    <Content Include="Assets\Tiles\Solid\Square44x44Logo.scale-200.png" />
     <Content Include="Assets\Tiles\Solid\Square44x44Logo.targetsize-24_altform-unplated.png" />
     <Content Include="Assets\Tiles\Solid\Square44x44Logo.targetsize-48_altform-unplated.png" />
+    <Content Include="Assets\Tiles\Solid\Square71x71Logo.scale-100.png" />
+    <Content Include="Assets\Tiles\Solid\Square71x71Logo.scale-200.png" />
+    <Content Include="Assets\Tiles\Solid\Wide310x150Logo.scale-100.png" />
+    <Content Include="Assets\Tiles\Solid\Wide310x150Logo.scale-200.png" />
+    <Content Include="Assets\Tiles\Transparent\Square150x150Logo.scale-100.png" />
+    <Content Include="Assets\Tiles\Transparent\Square150x150Logo.scale-200.png" />
+    <Content Include="Assets\Tiles\Transparent\Square310x310Logo.scale-200.png" />
+    <Content Include="Assets\Tiles\Transparent\Square44x44Logo.scale-100.png" />
+    <Content Include="Assets\Tiles\Transparent\Square44x44Logo.scale-200.png" />
+    <Content Include="Assets\Tiles\Transparent\Square71x71Logo.scale-100.png" />
+    <Content Include="Assets\Tiles\Transparent\Square71x71Logo.scale-200.png" />
+    <Content Include="Assets\Tiles\Transparent\Wide310x150Logo.scale-100.png" />
+    <Content Include="Assets\Tiles\Transparent\Wide310x150Logo.scale-200.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
