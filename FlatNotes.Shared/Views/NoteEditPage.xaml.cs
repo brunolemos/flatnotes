@@ -82,15 +82,21 @@ namespace FlatNotes.Views
 
         private async void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
         {
+            System.Diagnostics.Debug.WriteLine("NavigationHelper_SaveState BEGIN {0}", NoteEditViewModel.CurrentNoteBeingEdited);
             App.RootFrame.Background = previousBackground;
 
+            System.Diagnostics.Debug.WriteLine("NavigationHelper_SaveState 1");
             //prevent from losing changes when navigating with textbox focused
             this.CommandBar.Focus(FocusState.Programmatic);
+            System.Diagnostics.Debug.WriteLine("NavigationHelper_SaveState 2");
             this.CommandBar.IsOpen = false;
-            await Task.Delay(0200);
+            System.Diagnostics.Debug.WriteLine("NavigationHelper_SaveState 3");
+            //await Task.Delay(0200);
+            System.Diagnostics.Debug.WriteLine("NavigationHelper_SaveState 4");
 
             //deleted
             if (viewModel.Note == null) return;
+            System.Diagnostics.Debug.WriteLine("NavigationHelper_SaveState 5");
 
             //remove change binding
             viewModel.Note.Images.CollectionChanged -= Images_CollectionChanged;
@@ -98,23 +104,28 @@ namespace FlatNotes.Views
             viewModel.Note.Checklist.CollectionItemChanged -= Checklist_CollectionItemChanged;
             viewModel.Note.PropertyChanged -= OnNotePropertyChanged;
             viewModel.PropertyChanged -= OnViewModelPropertyChanged;
+            System.Diagnostics.Debug.WriteLine("NavigationHelper_SaveState 6");
 
             //trim
             viewModel.Note.Trim();
+            System.Diagnostics.Debug.WriteLine("NavigationHelper_SaveState 7");
 
             //update tile
             if (viewModel.Note.Changed) await TileManager.UpdateNoteTileIfExists(viewModel.Note, AppSettings.Instance.TransparentNoteTile);
+            System.Diagnostics.Debug.WriteLine("NavigationHelper_SaveState 8");
 
             //save or remove if empty
             if (viewModel.Note.Changed || viewModel.Note.IsEmpty())
                 await AppData.CreateOrUpdateNote(viewModel.Note);
+            System.Diagnostics.Debug.WriteLine("NavigationHelper_SaveState 9");
 
             //checklist changed (fix cache problem with converter)
             if (checklistChanged) viewModel.Note.NotifyChanges();
+            System.Diagnostics.Debug.WriteLine("NavigationHelper_SaveState 10");
 
+            //NoteEditViewModel.CurrentNoteBeingEdited = null;
             //viewModel.Note = null;
-            NoteEditViewModel.CurrentNoteBeingEdited = null;
-            viewModel.Note = null;
+            System.Diagnostics.Debug.WriteLine("NavigationHelper_SaveState END {0}", NoteEditViewModel.CurrentNoteBeingEdited);
         }
 
         #region NavigationHelper registration

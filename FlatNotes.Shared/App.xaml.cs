@@ -179,12 +179,21 @@ namespace FlatNotes
 
         private async void OnSuspending(object sender, SuspendingEventArgs e)
         {
-            var deferral = e.SuspendingOperation.GetDeferral();
-            await SuspensionManager.SaveAsync();
+            var note = NoteEditViewModel.CurrentNoteBeingEdited;
+            System.Diagnostics.Debug.WriteLine("OnSuspending {0}", note);
 
             //update tile
-            if (NoteEditViewModel.CurrentNoteBeingEdited != null)
-                await TileManager.UpdateNoteTileIfExists(NoteEditViewModel.CurrentNoteBeingEdited, AppSettings.Instance.TransparentNoteTile);
+            if (note != null)
+            {
+                TileManager.UpdateNoteTileIfExists(note, AppSettings.Instance.TransparentNoteTile).ConfigureAwait(false);
+                
+                //save or remove if empty
+                if (note.Changed || note.IsEmpty())
+                    AppData.CreateOrUpdateNote(note).ConfigureAwait(false);
+            }
+
+            var deferral = e.SuspendingOperation.GetDeferral();
+            await SuspensionManager.SaveAsync();
 
             deferral.Complete();
         }
