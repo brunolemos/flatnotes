@@ -97,7 +97,14 @@ namespace FlatNotes.Utils
                 if (note != null) return note;
             }
 
-            return DB.GetWithChildren<Note>(id);
+            try
+            {
+                return DB.GetWithChildren<Note>(id);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         public static async Task<bool> CreateOrUpdateNote(Note note)

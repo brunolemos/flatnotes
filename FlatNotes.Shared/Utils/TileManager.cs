@@ -240,7 +240,10 @@ namespace FlatNotes.Utils
                 return null;
             }
 
-            return AppData.TryGetNoteById(noteId);
+            var note = AppData.TryGetNoteById(noteId);
+            if (note == null) RemoveTileIfExists(noteId);
+
+            return note;
         }
 
         private static string GenerateNavigationArgumentFromNote(Note note)
