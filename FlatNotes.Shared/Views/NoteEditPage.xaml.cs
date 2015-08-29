@@ -10,6 +10,7 @@ using Windows.ApplicationModel.Resources;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
@@ -45,7 +46,7 @@ namespace FlatNotes.Views
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
 
-            this.Loaded += (s, e) => UpdateStatusBarColor();
+            this.Loaded += (s, e) => OnColorChanged();
 
 #if WINDOWS_PHONE_APP
             //Color Picker WP81
@@ -138,7 +139,7 @@ namespace FlatNotes.Views
                 //viewModel.Note.PropertyChanged -= OnNotePropertyChanged;
                 //viewModel.Note.PropertyChanged += OnNotePropertyChanged;
 
-                UpdateStatusBarColor();
+                OnColorChanged();
                 UpdateIsPinnedStatus();
             }
         }
@@ -148,13 +149,25 @@ namespace FlatNotes.Views
             if (e.PropertyName == "IsPinned" || e.PropertyName == "CanPin")
                 UpdateIsPinnedStatus();
             else if (e.PropertyName == "Color")
-                UpdateStatusBarColor();
+                OnColorChanged();
         }
 
-        private void UpdateStatusBarColor()
+        private void OnColorChanged()
         {
             if (viewModel.Note == null) return;
             App.ChangeStatusBarColor(new Color().FromHex(viewModel.Note.Color.DarkColor2));
+
+            try
+            {
+                var style = new Style(typeof(FlyoutPresenter));
+                //style.Setters.Add(new Setter(FlyoutPresenter.BackgroundProperty, new Color().FromHex(viewModel.Note.Color.DarkColor2)));
+                style.Setters.Add(new Setter(FlyoutPresenter.BorderThicknessProperty, new Thickness(0)));
+
+                ColorPickerAppBarToggleButton.Flyout.SetValue(Flyout.FlyoutPresenterStyleProperty, style);
+            }
+            catch (Exception)
+            {
+            }
         }
 
         private void UpdateIsPinnedStatus(bool? forceStatus = null)

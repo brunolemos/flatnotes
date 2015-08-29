@@ -112,7 +112,6 @@
     <Compile Include="Controls\NoteColorPicker.xaml.cs">
       <DependentUpon>NoteColorPicker.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\NoteColorPickerItemTemplateSelector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
