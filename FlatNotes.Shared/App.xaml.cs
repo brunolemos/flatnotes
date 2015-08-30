@@ -35,7 +35,7 @@ namespace FlatNotes
 
         public static bool IsBeta = Package.Current.Id.Name.Contains("Beta");
         public static string Name = IsBeta ? "Flat Notes Beta" : "Flat Notes";
-        public static string Version = String.Format("{0}.{1}", Package.Current.Id.Version.Major, Package.Current.Id.Version.Minor);
+        public static string Version = String.Format("{0}.{1}.{2}", Package.Current.Id.Version.Major, Package.Current.Id.Version.Minor, Package.Current.Id.Version.Build);
         public static string PublishedMainAppId = "da5b3964-02d9-42c4-ab1d-5e58d1c06095";
 
         public static Frame RootFrame { get { if (rootFrame == null) rootFrame = CreateRootFrame(); return rootFrame; } }
