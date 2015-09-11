@@ -234,14 +234,8 @@ Algumas funcionalidades:
   <data name="TextTextBox.PlaceholderText" xml:space="preserve">
     <value>Texto</value>
   </data>
-  <data name="ThemeToggleSwitch.Header" xml:space="preserve">
-    <value>Tema</value>
-  </data>
-  <data name="ThemeToggleSwitch.OffContent" xml:space="preserve">
-    <value>Claro</value>
-  </data>
-  <data name="ThemeToggleSwitch.OnContent" xml:space="preserve">
-    <value>Escuro</value>
+  <data name="ThemeCheckbox.Content" xml:space="preserve">
+    <value>Tema escuro</value>
   </data>
   <data name="TitleTextBox.PlaceholderText" xml:space="preserve">
     <value>Título</value>
@@ -252,23 +246,11 @@ Algumas funcionalidades:
   <data name="ToggleSingleColumnViewAppBarButton.Label" xml:space="preserve">
     <value>Alternar modo de coluna única</value>
   </data>
-  <data name="TransparentDefaultTileToggleSwitch.Header" xml:space="preserve">
-    <value>Fundo da tile padrão</value>
+  <data name="AppDefaultTileBackgroundCheckbox.Content" xml:space="preserve">
+    <value>Fundo amarelo na live tile padrão</value>
   </data>
-  <data name="TransparentDefaultTileToggleSwitch.OffContent" xml:space="preserve">
-    <value>Transparente</value>
-  </data>
-  <data name="TransparentDefaultTileToggleSwitch.OnContent" xml:space="preserve">
-    <value>Cor sólida</value>
-  </data>
-  <data name="TransparentNoteTileToggleSwitch.Header" xml:space="preserve">
-    <value>Fundo da live tile das notas</value>
-  </data>
-  <data name="TransparentNoteTileToggleSwitch.OffContent" xml:space="preserve">
-    <value>Transparente</value>
-  </data>
-  <data name="TransparentNoteTileToggleSwitch.OnContent" xml:space="preserve">
-    <value>Cor sólida</value>
+  <data name="NoteTileBackgroundCheckbox.Content" xml:space="preserve">
+    <value>Fundo sólido nas live tiles das notas</value>
   </data>
   <data name="Unpin" xml:space="preserve">
     <value>Desafixar</value>

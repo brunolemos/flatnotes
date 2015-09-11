@@ -33,13 +33,13 @@
             <ScrollViewer VerticalScrollMode="Enabled" VerticalScrollBarVisibility="Hidden">
                 <StackPanel>
                     <Image Height="80" Source="ms-appx:///Assets/Logo.png" Margin="0,0,0,6" VerticalAlignment="Top" HorizontalAlignment="Center"/>
-                    <TextBlock Text="{x:Bind viewModel.AppName}" Margin="0,0,0,24" Padding="0" HorizontalAlignment="Center" Style="{StaticResource SubheaderTextBlockStyle}" FontSize="26"/>
+                    <TextBlock Text="{x:Bind viewModel.AppName}" Margin="0,0,0,24" Padding="0" HorizontalAlignment="Center" Style="{StaticResource SubheaderTextBlockStyle}" FontSize="24"/>
                 
-                    <ToggleSwitch x:Uid="ThemeToggleSwitch" Margin="0,0,0,16" Header="Theme" OffContent="Light" OnContent="Dark" IsOn="{x:Bind viewModel.IsDarkTheme, Mode=TwoWay}"/>
-                    <ToggleSwitch x:Uid="TransparentDefaultTileToggleSwitch" Margin="0,0,0,16" Header="Default tile background" OffContent="Transparent" OnContent="Solid color" IsOn="{x:Bind viewModel.IsSolidColorDefaultTile, Mode=TwoWay}"/>
-                    <ToggleSwitch x:Uid="TransparentNoteTileToggleSwitch" Margin="0,0,0,32" Header="Note live tile background" OffContent="Transparent" OnContent="Solid color" IsOn="{x:Bind viewModel.IsSolidColorNoteTile, Mode=TwoWay}" Visibility="{x:Bind viewModel.IsMobile, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                    <CheckBox x:Uid="ThemeCheckbox" Margin="0" Content="Dark theme" IsChecked="{x:Bind viewModel.IsDarkTheme, Mode=TwoWay}" IsThreeState="False"/>
+                    <CheckBox x:Uid="AppDefaultTileBackgroundCheckbox" Margin="0" Content="Yellow background on app live tile" IsChecked="{x:Bind viewModel.IsSolidColorDefaultTile, Mode=TwoWay}" IsThreeState="False"/>
+                    <CheckBox x:Uid="NoteTileBackgroundCheckbox" Margin="0" Content="Solid background on note live tile" IsChecked="{x:Bind viewModel.IsSolidColorNoteTile, Mode=TwoWay}" Visibility="{x:Bind viewModel.IsMobile, Converter={StaticResource BooleanToVisibilityConverter}}" IsThreeState="False"/>
 
-                    <TextBlock Margin="0,0,0,6">
+                    <TextBlock Margin="0,24,0,6">
                         <Run x:Uid="AppVersionTextBlock" Text="Version "/>
                         <Run Text="{x:Bind viewModel.AppVersion}"/>
                     </TextBlock>

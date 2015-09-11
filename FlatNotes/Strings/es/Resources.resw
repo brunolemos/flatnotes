@@ -189,9 +189,6 @@
   <data name="TextTextBox.PlaceholderText" xml:space="preserve">
     <value>Texto</value>
   </data>
-  <data name="ThemeToggleSwitch.Header" xml:space="preserve">
-    <value>Tema</value>
-  </data>
   <data name="TitleTextBox.PlaceholderText" xml:space="preserve">
     <value>Título</value>
   </data>
@@ -222,11 +219,8 @@
   <data name="YourMessageGoesHere" xml:space="preserve">
     <value>[ESCRIBA AQUÍ SU MENSAJE]</value>
   </data>
-  <data name="ThemeToggleSwitch.OffContent" xml:space="preserve">
-    <value>Claro</value>
-  </data>
-  <data name="ThemeToggleSwitch.OnContent" xml:space="preserve">
-    <value>Oscuro</value>
+  <data name="ThemeCheckbox.Content" xml:space="preserve">
+    <value>Tema oscuro</value>
   </data>
   <data name="AppVersionTextBlock.Text" xml:space="preserve">
     <value>Versión</value>
@@ -243,26 +237,14 @@
   <data name="Unpin" xml:space="preserve">
     <value>Desanclar</value>
   </data>
-  <data name="TransparentDefaultTileToggleSwitch.Header" xml:space="preserve">
-    <value>Bloque dinámico estándar</value>
-  </data>
-  <data name="TransparentDefaultTileToggleSwitch.OffContent" xml:space="preserve">
-    <value>Transparente</value>
-  </data>
-  <data name="TransparentDefaultTileToggleSwitch.OnContent" xml:space="preserve">
-    <value>Color sólida</value>
+  <data name="AppDefaultTileBackgroundCheckbox.Content" xml:space="preserve">
+    <value>Fondo amarillo en default bloque dinámico</value>
   </data>
   <data name="AppDescription" xml:space="preserve">
     <value>Flat Notes es la más hermosa aplicación de notas para Windows Phone!</value>
   </data>
-  <data name="TransparentNoteTileToggleSwitch.Header" xml:space="preserve">
-    <value>Bloque dinámico de las notas</value>
-  </data>
-  <data name="TransparentNoteTileToggleSwitch.OffContent" xml:space="preserve">
-    <value>Transparente</value>
-  </data>
-  <data name="TransparentNoteTileToggleSwitch.OnContent" xml:space="preserve">
-    <value>Color sólida</value>
+  <data name="NoteTileBackgroundCheckbox.Content" xml:space="preserve">
+    <value>Fondo sólido en los bloque dinámicos de las notas</value>
   </data>
   <data name="ChecklistAppBarButton.Label" xml:space="preserve">
     <value>Lista</value>

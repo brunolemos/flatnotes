@@ -104,7 +104,6 @@
     <None Include="Service References\Application Insights\ConnectedService.json" />
     <PRIResource Include="Strings\zh-CN\Resources.resw" />
     <PRIResource Include="Strings\pt-BR\Resources.resw" />
-    <PRIResource Include="Strings\hi\Resources.resw" />
     <PRIResource Include="Strings\es\Resources.resw" />
     <PRIResource Include="Strings\en-US\Resources.resw" />
   </ItemGroup>

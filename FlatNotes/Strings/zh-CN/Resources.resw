@@ -192,9 +192,6 @@
   <data name="TextTextBox.PlaceholderText" xml:space="preserve">
     <value>文本</value>
   </data>
-  <data name="ThemeToggleSwitch.Header" xml:space="preserve">
-    <value>主题</value>
-  </data>
   <data name="TitleTextBox.PlaceholderText" xml:space="preserve">
     <value>标题</value>
   </data>
@@ -225,11 +222,8 @@
   <data name="YourMessageGoesHere" xml:space="preserve">
     <value>[在这里输入消息]</value>
   </data>
-  <data name="ThemeToggleSwitch.OffContent" xml:space="preserve">
-    <value>亮色</value>
-  </data>
-  <data name="ThemeToggleSwitch.OnContent" xml:space="preserve">
-    <value>暗色</value>
+  <data name="ThemeCheckbox.Content" xml:space="preserve">
+    <value>黑暗的主题</value>
   </data>
   <data name="AppVersionTextBlock.Text" xml:space="preserve">
     <value>版本号</value>
@@ -246,29 +240,11 @@
   <data name="Unpin" xml:space="preserve">
     <value>删除磁贴</value>
   </data>
-  <data name="TransparentDefaultTileToggleSwitch.Header" xml:space="preserve">
-    <value>动态磁贴 (默认)</value>
-  </data>
-  <data name="TransparentDefaultTileToggleSwitch.OffContent" xml:space="preserve">
-    <value>透明</value>
-  </data>
-  <data name="TransparentDefaultTileToggleSwitch.OnContent" xml:space="preserve">
-    <value>纯色</value>
-  </data>
   <data name="ChecklistAppBarButton.Label" xml:space="preserve">
     <value>清单</value>
   </data>
   <data name="AppDescription" xml:space="preserve">
     <value>Flat Notes是Windows Phone上最赞的笔记APP!</value>
-  </data>
-  <data name="TransparentNoteTileToggleSwitch.Header" xml:space="preserve">
-    <value>动态磁贴 (笔记)</value>
-  </data>
-  <data name="TransparentNoteTileToggleSwitch.OffContent" xml:space="preserve">
-    <value>透明</value>
-  </data>
-  <data name="TransparentNoteTileToggleSwitch.OnContent" xml:space="preserve">
-    <value>纯色</value>
   </data>
   <data name="ToggleSingleColumnViewAppBarButton.Label" xml:space="preserve">
     <value>切换单列视图</value>
@@ -296,5 +272,11 @@
   </data>
   <data name="UnpinFromStartMenuFlyoutItem.Text" xml:space="preserve">
     <value>删除磁贴</value>
+  </data>
+  <data name="AppDefaultTileBackgroundCheckbox.Content" xml:space="preserve">
+    <value>在现场瓷砖图案黄色背景</value>
+  </data>
+  <data name="NoteTileBackgroundCheckbox.Content" xml:space="preserve">
+    <value>在现场的瓷砖笔记坚实的背景</value>
   </data>
 </root>

@@ -154,7 +154,8 @@ namespace FlatNotes.Views
         private void OnColorChanged()
         {
             if (viewModel.Note == null) return;
-            App.ChangeStatusBarColor(new Color().FromHex(viewModel.Note.Color.DarkColor2));
+            var statusBarColor = new Color().FromHex(viewModel.Note.Color.DarkColor2);//.Add(Color.FromArgb(0x10, 0, 0, 0));
+            App.ChangeStatusBarColor(statusBarColor);
 
             try
             {

@@ -189,9 +189,6 @@
   <data name="TextTextBox.PlaceholderText" xml:space="preserve">
     <value>Text</value>
   </data>
-  <data name="ThemeToggleSwitch.Header" xml:space="preserve">
-    <value>Theme</value>
-  </data>
   <data name="TitleTextBox.PlaceholderText" xml:space="preserve">
     <value>Title</value>
   </data>
@@ -222,11 +219,8 @@
   <data name="YourMessageGoesHere" xml:space="preserve">
     <value>[YOUR MESSAGE GOES HERE]</value>
   </data>
-  <data name="ThemeToggleSwitch.OffContent" xml:space="preserve">
-    <value>Light</value>
-  </data>
-  <data name="ThemeToggleSwitch.OnContent" xml:space="preserve">
-    <value>Dark</value>
+  <data name="ThemeCheckbox.Content" xml:space="preserve">
+    <value>Dark theme</value>
   </data>
   <data name="AppVersionTextBlock.Text" xml:space="preserve">
     <value>Version</value>
@@ -243,26 +237,14 @@
   <data name="Unpin" xml:space="preserve">
     <value>Unpin</value>
   </data>
-  <data name="TransparentDefaultTileToggleSwitch.Header" xml:space="preserve">
-    <value>Default tile background</value>
-  </data>
-  <data name="TransparentDefaultTileToggleSwitch.OffContent" xml:space="preserve">
-    <value>Transparent</value>
-  </data>
-  <data name="TransparentDefaultTileToggleSwitch.OnContent" xml:space="preserve">
-    <value>Solid color</value>
+  <data name="AppDefaultTileBackgroundCheckbox.Content" xml:space="preserve">
+    <value>Yellow background on app live tile</value>
   </data>
   <data name="AppDescription" xml:space="preserve">
     <value>Flat Notes is a well designed notes app for Windows based on Google Keep.</value>
   </data>
-  <data name="TransparentNoteTileToggleSwitch.Header" xml:space="preserve">
-    <value>Note live tile background</value>
-  </data>
-  <data name="TransparentNoteTileToggleSwitch.OffContent" xml:space="preserve">
-    <value>Transparent</value>
-  </data>
   <data name="TransparentNoteTileToggleSwitch.OnContent" xml:space="preserve">
-    <value>Solid color</value>
+    <value>Solid background on note live tile</value>
   </data>
   <data name="ChecklistAppBarButton.Label" xml:space="preserve">
     <value>Checklist</value>
