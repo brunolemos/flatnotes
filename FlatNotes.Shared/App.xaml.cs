@@ -142,6 +142,7 @@ namespace FlatNotes
             //user theme
             UpdateTheme(AppSettings.Instance.Theme);
             HideStatusBar();
+            TileManager.UpdateDefaultTile(AppSettings.Instance.TransparentTile);
 
             if (RootFrame.Content == null)
             {
@@ -222,14 +223,17 @@ namespace FlatNotes
 
         public static void ResetStatusBar()
         {
-            Color mainColor = Color.FromArgb(0xff, 0xff, 0xbb, 0x00);
-            //Color mainDarkenColor = Color.FromArgb(0xff, 0xf9, 0x9f, 0x00);
+            var mainColor = Color.FromArgb(0xff, 0xff, 0xbb, 0x00);
+            //var mainDarkenColor = Color.FromArgb(0xff, 0xf9, 0x9f, 0x00);
+
+            //var statusBarColor = mainColor.Add(Color.FromArgb(0x10, 255, 255, 255));
             ChangeStatusBarColor(mainColor);
         }
 
-        public static void ChangeStatusBarColor(Color backgroundColor, Color? foregroundColor = null)
+        public static void ChangeStatusBarColor(Color backgroundColor, Color? foregroundColor = null, ElementTheme? theme = null)
         {
-            byte blackOrWhiteByte = AppSettings.Instance.Theme == ElementTheme.Light ? (byte)0x00 : (byte)0xff;
+            theme = theme ?? AppSettings.Instance.Theme;
+            byte blackOrWhiteByte = theme == ElementTheme.Light ? (byte)0x00 : (byte)0xff;
 
             if (foregroundColor == null)
                 foregroundColor = Color.FromArgb(0xD0, blackOrWhiteByte, blackOrWhiteByte, blackOrWhiteByte);
