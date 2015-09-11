@@ -147,20 +147,22 @@ namespace FlatNotes.Utils
             ISquare310x310TileNotificationContent tileSquare310Content;
             if (note.Images != null && note.Images.Count > 0)
             {
-                tileSquare310Content = TileContentFactory.CreateTileSquare310x310ImageAndTextOverlay01();
+                tileSquare310Content = TileContentFactory.CreateTileSquare310x310ImageAndTextOverlay02();
 
-                var _tileSquare310Content = tileSquare310Content as ITileSquare310x310ImageAndTextOverlay01;
-                _tileSquare310Content.TextHeadingWrap.Text = contentWithTitle;
+                var _tileSquare310Content = tileSquare310Content as ITileSquare310x310ImageAndTextOverlay02;
+                _tileSquare310Content.TextHeadingWrap.Text = note.Title;
+                _tileSquare310Content.TextBodyWrap.Text = contentWithoutTitle;
                 _tileSquare310Content.Image.Src = note.Images[0].URL;
                 _tileSquare310Content.Wide310x150Content = tileWide310x150Content;
                 _tileSquare310Content.Branding = TileBranding.Name;
             }
             else
             {
-                tileSquare310Content = TileContentFactory.CreateTileSquare310x310ImageAndTextOverlay01();
+                tileSquare310Content = TileContentFactory.CreateTileSquare310x310ImageAndTextOverlay02();
 
-                var _tileSquare310Content = tileSquare310Content as ITileSquare310x310ImageAndTextOverlay01;
-                _tileSquare310Content.TextHeadingWrap.Text = contentWithTitle;
+                var _tileSquare310Content = tileSquare310Content as ITileSquare310x310ImageAndTextOverlay02;
+                _tileSquare310Content.TextHeadingWrap.Text = note.Title;
+                _tileSquare310Content.TextBodyWrap.Text = contentWithoutTitle;
                 _tileSquare310Content.Image.Src = "";
                 _tileSquare310Content.Wide310x150Content = tileWide310x150Content;
                 _tileSquare310Content.Branding = TileBranding.Name;
