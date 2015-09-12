@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Core;
+using Windows.Foundation;
 using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.Popups;
@@ -142,6 +143,12 @@ namespace FlatNotes
             //user theme
             UpdateTheme(AppSettings.Instance.Theme);
             //HideStatusBar();
+
+#if WINDOWS_UWP
+            ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size(320, 500));
+            ApplicationView.PreferredLaunchViewSize = new Size(380, 620);
+            ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.Auto;
+#endif
 
             //update default live tile (because I renamed the image, it was showing empty for some users)
             TileManager.UpdateDefaultTile(AppSettings.Instance.TransparentTile);
