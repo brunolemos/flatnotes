@@ -121,6 +121,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Package.StoreAssociation.xml" />
+    <Content Include="Assets\StoreLogo.scale-100.png" />
     <Content Include="Assets\StoreLogo.scale-400.png" />
     <Content Include="Assets\Tiles\Solid\Square150x150Logo.scale-100.png" />
     <Content Include="Assets\Tiles\Solid\Square150x150Logo.scale-200.png" />
