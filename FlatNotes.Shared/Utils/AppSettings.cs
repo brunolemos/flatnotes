@@ -64,7 +64,7 @@ namespace FlatNotes.Utils
                 var notes = await Migration.Versions.v2.Utils.AppSettings.Instance.LoadNotes();
                 if(notes != null && notes.Count > 0)
                 {
-                    for (int i = 0; i < notes.Count - 1; i++)
+                    for (int i = 0; i < notes.Count; i++)
                     {
                         var note = (Note)notes[i];
                         note.Order = notes.Count - 1 - i;
