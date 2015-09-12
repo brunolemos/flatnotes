@@ -157,6 +157,7 @@ namespace FlatNotes.Views
             var statusBarColor = new Color().FromHex(viewModel.Note.Color.DarkColor2);//.Add(Color.FromArgb(0x10, 0, 0, 0));
             App.ChangeStatusBarColor(statusBarColor);
 
+#if WINDOWS_UWP
             try
             {
                 var style = new Style(typeof(FlyoutPresenter));
@@ -168,6 +169,7 @@ namespace FlatNotes.Views
             catch (Exception)
             {
             }
+#endif
         }
 
         private void UpdateIsPinnedStatus(bool? forceStatus = null)

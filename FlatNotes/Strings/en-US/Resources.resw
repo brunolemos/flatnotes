@@ -243,7 +243,7 @@
   <data name="AppDescription" xml:space="preserve">
     <value>Flat Notes is a well designed notes app for Windows based on Google Keep.</value>
   </data>
-  <data name="TransparentNoteTileToggleSwitch.OnContent" xml:space="preserve">
+  <data name="NoteTileBackgroundCheckbox.Content" xml:space="preserve">
     <value>Solid background on note live tile</value>
   </data>
   <data name="ChecklistAppBarButton.Label" xml:space="preserve">

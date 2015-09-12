@@ -141,7 +141,9 @@ namespace FlatNotes
         {
             //user theme
             UpdateTheme(AppSettings.Instance.Theme);
-            HideStatusBar();
+            //HideStatusBar();
+
+            //update default live tile (because I renamed the image, it was showing empty for some users)
             TileManager.UpdateDefaultTile(AppSettings.Instance.TransparentTile);
 
             if (RootFrame.Content == null)
