@@ -11,6 +11,10 @@
     <Color x:Key="AppMainForegroundColor">#D0FFFFFF</Color><!--8C000000 / 735400 / 664B00-->
     <Color x:Key="PhoneAccentColor">#f99f00</Color>
 
+    <FontFamily x:Key="AppDefaultFontFamily">/Assets/Fonts/roboto-normal.ttf#Roboto</FontFamily>
+    <FontFamily x:Key="NoteTitleFontFamily">/Assets/Fonts/roboto-condensed-bold.ttf#Roboto Condensed</FontFamily>
+    <FontFamily x:Key="NoteTextFontFamily">/Assets/Fonts/roboto-slab-normal.ttf#Roboto Slab</FontFamily>
+
     <SolidColorBrush x:Key="AppStatusBarBackgroundBrush" Color="{StaticResource AppMainColor}"/>
     <SolidColorBrush x:Key="AppStatusBarForegroundBrush" Color="{StaticResource AppMainForegroundColor}"/><!--c9cdd1-->
 
@@ -29,7 +33,7 @@
     <SolidColorBrush x:Key="PhoneDarkLowBrush" Color="#20000000"/>
     <SolidColorBrush x:Key="PhoneDarkMidBrush" Color="#70000000"/>
     
-    <SolidColorBrush x:Key="AppNoteForegroundBrush" Color="#C0000000"/>
+    <SolidColorBrush x:Key="AppNoteForegroundBrush" Color="#CC000000"/>
     <SolidColorBrush x:Key="AppNoteCommandBarForegroundThemeBrush" Color="{StaticResource AppMainForegroundColor}"/>
             
     <SolidColorBrush x:Key="TextBoxFocusedBackgroundThemeBrush" Color="Transparent"/>
@@ -38,10 +42,12 @@
     <SolidColorBrush x:Key="TextBlockDisabledForegroundThemeBrush" Color="#70000000"/>
 
     <SolidColorBrush x:Key="CommandBarBackgroundThemeBrush" Color="{StaticResource AppMainColor}"/>
+    <!--<SolidColorBrush x:Key="CommandBarForegroundThemeBrush" Color="{StaticResource AppMainForegroundColor}"/>-->
 
     <Style TargetType="CommandBar">
         <Setter Property="Background" Value="{StaticResource CommandBarBackgroundThemeBrush}"/>
-        <Setter Property="Foreground" Value="{ThemeResource CommandBarForegroundThemeBrush}"/>
+        <!--<Setter Property="Foreground" Value="{ThemeResource CommandBarForegroundThemeBrush}"/>-->
+        <!--<Setter Property="RequestedTheme" Value="Dark"/>-->
     </Style>
 
     <Style TargetType="AppBarButton">
@@ -77,6 +83,7 @@
     <Style TargetType="TextBox">
         <Setter Property="ScrollViewer.HorizontalScrollMode" Value="Disabled"/>
         <Setter Property="ScrollViewer.VerticalScrollMode" Value="Disabled"/>
+        <Setter Property="FontFamily" Value="{StaticResource AppDefaultFontFamily}"/>
         <!--<Setter Property="FontSize" Value="{StaticResource DefaultFontSize}"/>-->
     </Style>
 

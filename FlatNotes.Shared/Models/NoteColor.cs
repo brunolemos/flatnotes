@@ -31,17 +31,15 @@ namespace FlatNotes.Models
         [DataMember]
         public string Key { get; internal set; }
         public string Color { get; internal set; }
-        public string DarkColor1 { get; internal set; }
-        public string DarkColor2 { get; internal set; }
         
-        public static readonly NoteColor DEFAULT    = new NoteColor("DEFAULT",  "#ffffff", "#aaaaaa", "#999999");
-        public static readonly NoteColor RED        = new NoteColor("RED",      "#ff6d3f", "#ff6d3f", "#ea5f39");
-        public static readonly NoteColor ORANGE     = new NoteColor("ORANGE",   "#ff9700", "#ff9700", "#f47b00");
-        public static readonly NoteColor YELLOW     = new NoteColor("YELLOW",   "#ffe900", "#ffc000", "#f4a800");
-        public static readonly NoteColor GRAY       = new NoteColor("GRAY",     "#b8c4c9", "#9badb6", "#8fa3ad");
-        public static readonly NoteColor BLUE       = new NoteColor("BLUE",     "#3fc3ff", "#3fc3ff", "#00afff");
-        public static readonly NoteColor TEAL       = new NoteColor("TEAL",     "#1ce8b5", "#1ce8b5", "#11c19f");
-        public static readonly NoteColor GREEN      = new NoteColor("GREEN",    "#8ac249", "#8ac249", "#679e37");
+        public static readonly NoteColor DEFAULT    = new NoteColor("DEFAULT",  "#FAFAFA");
+        public static readonly NoteColor RED        = new NoteColor("RED",      "#FF8A80");
+        public static readonly NoteColor ORANGE     = new NoteColor("ORANGE",   "#FFD180");
+        public static readonly NoteColor YELLOW     = new NoteColor("YELLOW",   "#FFFF8D");
+        public static readonly NoteColor GRAY       = new NoteColor("GRAY",     "#CFD8DC");
+        public static readonly NoteColor BLUE       = new NoteColor("BLUE",     "#80D8FF");
+        public static readonly NoteColor TEAL       = new NoteColor("TEAL",     "#A7FFEB");
+        public static readonly NoteColor GREEN      = new NoteColor("GREEN",    "#CCFF90");
 
         private static readonly Dictionary<string, NoteColor> colorsDictionary = new Dictionary<string, NoteColor>()
         {
@@ -71,8 +69,6 @@ namespace FlatNotes.Models
         {
             this.Key = NoteColor.DEFAULT.Key;
             this.Color = NoteColor.DEFAULT.Color;
-            this.DarkColor1 = NoteColor.DEFAULT.DarkColor1;
-            this.DarkColor2 = NoteColor.DEFAULT.DarkColor2;
         }
 
         public NoteColor( string key )
@@ -81,24 +77,12 @@ namespace FlatNotes.Models
 
             this.Key = colorsDictionary[key].Key;
             this.Color = colorsDictionary[key].Color;
-            this.DarkColor1 = colorsDictionary[key].DarkColor1;
-            this.DarkColor2 = colorsDictionary[key].DarkColor2;
         }
 
         private NoteColor(string key, string color)
         {
             this.Key = key;
             this.Color = color;
-            this.DarkColor1 = color;
-            this.DarkColor2 = color;
-        }
-
-        private NoteColor(string key, string color, string darkColor1, string darkColor2)
-        {
-            this.Key = key;
-            this.Color = color;
-            this.DarkColor1 = String.IsNullOrEmpty(darkColor1) ? Color : darkColor1;
-            this.DarkColor2 = String.IsNullOrEmpty(darkColor2) ? DarkColor1 : darkColor2;
         }
 
         public override string ToString()

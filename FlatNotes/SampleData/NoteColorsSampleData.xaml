@@ -1,10 +1,10 @@
 ﻿<Models:NoteColors xmlns:Models="using:FlatNotes.Models">
-    <Models:NoteColor Key="DEFAULT" Color="#f5f5f5" DarkColor1="#aaaaaa" DarkColor2="#999999"/>
-    <Models:NoteColor Key="RED"     Color="#ff6d3f" DarkColor1="#ff6d3f" DarkColor2="#ea5f39"/>
-    <Models:NoteColor Key="ORANGE"  Color="#ff9700" DarkColor1="#ff9700" DarkColor2="#f47b00"/>
-    <Models:NoteColor Key="YELLOW"  Color="#ffe900" DarkColor1="#ffe900" DarkColor2="#f4a800"/>
-    <Models:NoteColor Key="GRAY"    Color="#b8c4c9" DarkColor1="#9badb6" DarkColor2="#8fa3ad"/>
-    <Models:NoteColor Key="BLUE"    Color="#3fc3ff" DarkColor1="#3fc3ff" DarkColor2="#00afff"/>
-    <Models:NoteColor Key="TEAL"    Color="#1ce8b5" DarkColor1="#1ce8b5" DarkColor2="#11c19f"/>
-    <Models:NoteColor Key="GREEN"   Color="#8ac249" DarkColor1="#8ac249" DarkColor2="#679e37"/>
+    <Models:NoteColor Key="DEFAULT" Color="#FAFAFA"/>
+    <Models:NoteColor Key="RED"     Color="#FF8A80"/>
+    <Models:NoteColor Key="ORANGE"  Color="#FFD180"/>
+    <Models:NoteColor Key="YELLOW"  Color="#FFFF8D"/>
+    <Models:NoteColor Key="GRAY"    Color="#CFD8DC"/>
+    <Models:NoteColor Key="BLUE"    Color="#80D8FF"/>
+    <Models:NoteColor Key="TEAL"    Color="#A7FFEB"/>
+    <Models:NoteColor Key="GREEN"   Color="#CCFF90"/>
 </Models:NoteColors>

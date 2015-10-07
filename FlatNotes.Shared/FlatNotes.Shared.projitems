@@ -95,7 +95,11 @@
     <Compile Include="$(MSBuildThisFileDirectory)Views\SettingsPage.xaml.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Fonts\roboto-normal.ttf" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Fonts\roboto-slab-light.ttf" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Logo.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Fonts\roboto-condensed-bold.ttf" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Fonts\roboto-slab-normal.ttf" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="$(MSBuildThisFileDirectory)Controls\NotePreview.xaml">
@@ -118,5 +122,12 @@
     <ApplicationDefinition Include="$(MSBuildThisFileDirectory)App.xaml">
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)App.xaml" />
+    <None Include="$(MSBuildThisFileDirectory)Controls\NotePreview.xaml" />
+    <None Include="$(MSBuildThisFileDirectory)Resources\DefaultResourceDictionary.xaml" />
+    <None Include="$(MSBuildThisFileDirectory)Resources\Themes\DarkThemeResourceDictionary.xaml" />
+    <None Include="$(MSBuildThisFileDirectory)Resources\Themes\LightThemeResourceDictionary.xaml" />
   </ItemGroup>
 </Project>

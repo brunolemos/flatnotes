@@ -10,7 +10,8 @@
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400"
-    Padding="12">
+    Padding="12"
+    Margin="4">
     
     <UserControl.Resources>
         <MenuFlyout x:Key="NoteMenuFlyout">
@@ -41,7 +42,7 @@
               AllowDrop="{x:Bind AllowDrop, Mode=OneWay}"  
               ReorderMode="{x:Bind ReorderMode, Mode=TwoWay}"  
               SelectionMode="None" 
-              Margin="-4"
+              Margin="0"
               IsItemClickEnabled="True" ItemClick="GridView_ItemClick" 
               DragItemsStarting="NotesGridView_DragItemsStarting" DragItemsCompleted="NotesGridView_DragItemsCompleted">
 
@@ -63,7 +64,7 @@
 
         <ListView.ItemTemplate>
             <DataTemplate x:DataType="models:Note">
-                <local:NotePreview Loaded="OnNoteLoaded" Holding="NotePreview_Holding" RightTapped="NotePreview_RightTapped" FlyoutBase.AttachedFlyout="{StaticResource NoteMenuFlyout}"/>
+                <local:NotePreview Margin="{Binding Margin, ElementName=Root}" Loaded="OnNoteLoaded" Holding="NotePreview_Holding" RightTapped="NotePreview_RightTapped" FlyoutBase.AttachedFlyout="{StaticResource NoteMenuFlyout}"/>
             </DataTemplate>
         </ListView.ItemTemplate>
     </ListView>

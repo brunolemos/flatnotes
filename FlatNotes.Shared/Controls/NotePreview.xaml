@@ -41,11 +41,11 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
-                    <Viewbox Margin="0,4,0,0" Height="14" HorizontalAlignment="Left" VerticalAlignment="Top">
+                    <Viewbox Margin="0,8,0,0" Height="10" HorizontalAlignment="Left" VerticalAlignment="Top">
                         <CheckBox Grid.Column="0" IsChecked="{Binding IsChecked, Mode=TwoWay}" Style="{StaticResource CheckBoxWithoutContentStyle}" BorderBrush="{StaticResource AppNoteForegroundBrush}" Foreground="{StaticResource AppNoteForegroundBrush}" FontWeight="SemiLight" ClickMode="Release" IsTapEnabled="False"/>
                     </Viewbox>
 
-                    <TextBlock Grid.Column="1" Margin="0" Padding="4,0" Text="{Binding Text, Mode=OneWay}" Foreground="{Binding ElementName=Root, Path=Foreground}" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" FontWeight="SemiLight" MaxLines="1" VerticalAlignment="Top" />
+                    <TextBlock Grid.Column="1" Margin="0" Padding="8,0" Text="{Binding Text, Mode=OneWay}" Foreground="{Binding ElementName=Root, Path=Foreground}" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" FontWeight="SemiLight" FontFamily="{StaticResource NoteTextFontFamily}" MaxLines="3" VerticalAlignment="Top" />
                 </Grid>
             </DataTemplate>
             
@@ -57,37 +57,39 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Grid x:Name="NoteContainer" Margin="4" Background="{Binding ElementName=Root, Path=Background}" RequestedTheme="Light" CacheMode="BitmapCache">
-        <StackPanel Margin="0" IsHitTestVisible="False">
-            <Grid Visibility="{Binding ElementName=Root, Path=HideImage, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=True}">
-                <Grid MaxHeight="120" Background="{StaticResource PhoneDarkLowBrush}" Visibility="{Binding Images.Count, Converter={StaticResource PositiveIntToVisibilityConverter}}">
-                    <ListView x:Name="NoteImagesListView" ItemsSource="{Binding Images}" Margin="0" Padding="0" BorderThickness="0" ItemTemplate="{StaticResource NoteImagesListViewControlTemplate}" SelectionMode="None" IsTapEnabled="False" IsItemClickEnabled="False" HorizontalContentAlignment="Stretch" IsHitTestVisible="False"/>
-                </Grid>
-            </Grid>
-            
-            <StackPanel Margin="8,8,8,16">
-                <TextBlock Text="{Binding Title, Mode=OneWay}" Foreground="{Binding ElementName=Root, Path=Foreground}" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" Margin="0,0,0,4" FontWeight="Bold" MaxLines="1" Visibility="{Binding Title, Converter={StaticResource NullableToVisibilityConverter}}"/>
-                <TextBlock Text="{Binding Text, Mode=OneWay}" Foreground="{Binding ElementName=Root, Path=Foreground}" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" Margin="0,0,0,4" FontWeight="SemiLight" MaxLines="4" Visibility="{Binding Text, Converter={StaticResource NullableToVisibilityConverter}}" />
-
-                <StackPanel Visibility="{Binding IsChecklist, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
-                    <ListView x:Name="NoteChecklistListView" Margin="0,0,0,4" ItemsSource="{Binding Checklist, Converter={StaticResource MaxChecklistItemsConverter}}" ItemContainerStyle="{StaticResource NotePreviewChecklistItem}" ItemTemplate="{StaticResource NoteChecklistListViewControlTemplate}" IsTapEnabled="False" IsItemClickEnabled="False" IsHitTestVisible="False" />
-
-                    <Grid x:Name="TrimIndicator" Margin="0,-8,0,0" Visibility="{Binding Source={StaticResource MaxChecklistItemsConverter}, Path=IsTrimmed, Converter={StaticResource BooleanToVisibilityConverter}}">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-
-                        <Viewbox Margin="0,6,0,0" Height="12" HorizontalAlignment="Left" VerticalAlignment="Top" IsHitTestVisible="False" Opacity="0">
-                            <CheckBox Grid.Column="0" Style="{StaticResource CheckBoxWithoutContentStyle}" IsTapEnabled="False"/>
-                        </Viewbox>
-
-                        <TextBlock Grid.Column="1" Text="..." Margin="0" Padding="8,0" Foreground="{Binding ElementName=Root, Path=Foreground}" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" FontWeight="Normal" MaxLines="1"  />
+    <Border x:Name="NoteContainer" Margin="{Binding Margin, ElementName=Root}" RequestedTheme="Light" CacheMode="BitmapCache" BorderThickness="0.6,0,0.6,2" BorderBrush="#20000000">
+        <Grid Background="{Binding ElementName=Root, Path=Background}">
+            <StackPanel Margin="0" IsHitTestVisible="False">
+                <Grid Visibility="{Binding ElementName=Root, Path=HideImage, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=True}">
+                    <Grid MaxHeight="120" Background="{StaticResource PhoneDarkLowBrush}" Visibility="{Binding Images.Count, Converter={StaticResource PositiveIntToVisibilityConverter}}">
+                        <ListView x:Name="NoteImagesListView" ItemsSource="{Binding Images}" Margin="0" Padding="0" BorderThickness="0" ItemTemplate="{StaticResource NoteImagesListViewControlTemplate}" SelectionMode="None" IsTapEnabled="False" IsItemClickEnabled="False" HorizontalContentAlignment="Stretch" IsHitTestVisible="False"/>
                     </Grid>
+                </Grid>
+            
+                <StackPanel Margin="12,12,12,24">
+                    <TextBlock Text="{Binding Title, Mode=OneWay}" Foreground="{Binding ElementName=Root, Path=Foreground}" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" Margin="0,0,0,8" FontSize="16" FontWeight="Bold" FontFamily="{StaticResource NoteTitleFontFamily}" MaxLines="2" Visibility="{Binding Title, Converter={StaticResource NullableToVisibilityConverter}}"/>
+                    <TextBlock Text="{Binding Text, Mode=OneWay}" Foreground="{Binding ElementName=Root, Path=Foreground}" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" Margin="0,0,0,8" FontWeight="SemiLight" FontFamily="{StaticResource NoteTextFontFamily}" MaxLines="5" Visibility="{Binding Text, Converter={StaticResource NullableToVisibilityConverter}}"/>
+
+                    <StackPanel Visibility="{Binding IsChecklist, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
+                        <ListView x:Name="NoteChecklistListView" Margin="0,0,0,4" ItemsSource="{Binding Checklist, Converter={StaticResource MaxChecklistItemsConverter}}" ItemContainerStyle="{StaticResource NotePreviewChecklistItem}" ItemTemplate="{StaticResource NoteChecklistListViewControlTemplate}" IsTapEnabled="False" IsItemClickEnabled="False" IsHitTestVisible="False" />
+
+                        <Grid x:Name="TrimIndicator" Margin="0,-8,0,0" Visibility="{Binding Source={StaticResource MaxChecklistItemsConverter}, Path=IsTrimmed, Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Viewbox Margin="0,6,0,0" Height="12" HorizontalAlignment="Left" VerticalAlignment="Top" IsHitTestVisible="False" Opacity="0">
+                                <CheckBox Grid.Column="0" Style="{StaticResource CheckBoxWithoutContentStyle}" IsTapEnabled="False"/>
+                            </Viewbox>
+
+                            <TextBlock Grid.Column="1" Text="..." Margin="0" Padding="8,0" Foreground="{Binding ElementName=Root, Path=Foreground}" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" FontWeight="Normal" MaxLines="1"  />
+                        </Grid>
+                    </StackPanel>
                 </StackPanel>
             </StackPanel>
-        </StackPanel>
             
-        <Grid Background="Transparent"/>
-    </Grid>
+            <Grid Background="Transparent"/>
+        </Grid>
+    </Border>
 </UserControl>

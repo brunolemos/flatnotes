@@ -28,16 +28,16 @@
 
             <Grid Visibility="{x:Bind viewModel.Notes.Count, Mode=OneWay, Converter={StaticResource PositiveIntToVisibilityConverter}, ConverterParameter=True}">
                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <Viewbox Width="160">
+                    <Viewbox Width="150">
                         <Canvas Width="100" Height="100" HorizontalAlignment="Center">
                             <Rectangle Fill="{ThemeResource PhoneLowBrush}" Width="100" Height="70" StrokeThickness="0"/>
                             <Rectangle Fill="{ThemeResource PhoneLowBrush}" Width="70" Height="30" StrokeThickness="0" Margin="0,70,0,0"/>
                             <Polygon Fill="{ThemeResource PhoneLowBrush}" Points="0,0 30,0, 0,30" StrokeThickness="0" Margin="70,70,0,0" />
-                            <Polygon Fill="#0A000000" Points="0,0 30,0, 0,30" StrokeThickness="0" Margin="70,70,0,0" />
+                            <Polygon Fill="#07000000" Points="0,0 30,0, 0,30" StrokeThickness="0" Margin="70,70,0,0" />
                         </Canvas>
                     </Viewbox>
 
-                    <TextBlock x:Uid="EmptyArchivedNotesMessageTextBox" Margin="8,24" Text="Archived notes appear here" Foreground="{ThemeResource PhoneMidBrush}" FontSize="{StaticResource EmptyNotesMessageFontSize}" TextWrapping="Wrap" TextAlignment="Center"/>
+                    <TextBlock x:Uid="EmptyArchivedNotesMessageTextBox" Margin="4,24" Text="Archived notes appear here" Foreground="{ThemeResource PhoneMidBrush}" FontSize="{StaticResource EmptyNotesMessageFontSize}" TextWrapping="Wrap" TextAlignment="Center"/>
                 </StackPanel>
             </Grid>
 

@@ -239,7 +239,7 @@ namespace FlatNotes
             ChangeStatusBarColor(mainColor);
         }
 
-        public static void ChangeStatusBarColor(Color backgroundColor, Color? foregroundColor = null, ElementTheme? theme = null)
+        public static void ChangeStatusBarColor(Color backgroundColor, Color? foregroundColor = null, ElementTheme? theme = ElementTheme.Dark)
         {
             theme = theme ?? AppSettings.Instance.Theme;
             byte blackOrWhiteByte = theme == ElementTheme.Light ? (byte)0x00 : (byte)0xff;

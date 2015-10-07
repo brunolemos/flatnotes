@@ -154,14 +154,14 @@ namespace FlatNotes.Views
         private void OnColorChanged()
         {
             if (viewModel.Note == null) return;
-            var statusBarColor = new Color().FromHex(viewModel.Note.Color.DarkColor2);//.Add(Color.FromArgb(0x10, 0, 0, 0));
-            App.ChangeStatusBarColor(statusBarColor);
+            var statusBarColor = new Color().FromHex(viewModel.Note.Color.Color);//.Add(Color.FromArgb(0x10, 0, 0, 0));
+            App.ChangeStatusBarColor(statusBarColor, null, ElementTheme.Light);
 
 #if WINDOWS_UWP
             try
             {
                 var style = new Style(typeof(FlyoutPresenter));
-                //style.Setters.Add(new Setter(FlyoutPresenter.BackgroundProperty, new Color().FromHex(viewModel.Note.Color.DarkColor2)));
+                //style.Setters.Add(new Setter(FlyoutPresenter.BackgroundProperty, new Color().FromHex(viewModel.Note.Color.Color)));
                 style.Setters.Add(new Setter(FlyoutPresenter.BorderThicknessProperty, new Thickness(0)));
 
                 ColorPickerAppBarToggleButton.Flyout.SetValue(Flyout.FlyoutPresenterStyleProperty, style);

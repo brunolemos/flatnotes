@@ -27,22 +27,22 @@
             </Grid.Transitions>
             
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{x:Bind viewModel.Notes.Count, Mode=OneWay, Converter={StaticResource PositiveIntToVisibilityConverter}, ConverterParameter=True}">
-                <Viewbox Width="160">
+                <Viewbox Width="150">
                     <Canvas Width="100" Height="100" HorizontalAlignment="Center">
                         <Rectangle Fill="{ThemeResource PhoneLowBrush}" Width="100" Height="70" StrokeThickness="0"/>
                         <Rectangle Fill="{ThemeResource PhoneLowBrush}" Width="70" Height="30" StrokeThickness="0" Margin="0,70,0,0"/>
                         <Polygon Fill="{ThemeResource PhoneLowBrush}" Points="0,0 30,0, 0,30" StrokeThickness="0" Margin="70,70,0,0" />
-                        <Polygon Fill="#0A000000" Points="0,0 30,0, 0,30" StrokeThickness="0" Margin="70,70,0,0" />
+                        <Polygon Fill="#07000000" Points="0,0 30,0, 0,30" StrokeThickness="0" Margin="70,70,0,0" />
                     </Canvas>
                 </Viewbox>
 
-                <TextBlock x:Uid="EmptyNotesMessageTextBox" Margin="8,24" Text="Notes you add appear here" Foreground="{ThemeResource PhoneMidBrush}" FontSize="{StaticResource EmptyNotesMessageFontSize}" TextWrapping="Wrap" TextAlignment="Center"/>
+                <TextBlock x:Uid="EmptyNotesMessageTextBox" Margin="4,24" Text="Notes you add appear here" Foreground="{ThemeResource PhoneMidBrush}" FontSize="{StaticResource EmptyNotesMessageFontSize}" TextWrapping="Wrap" TextAlignment="Center"/>
             </StackPanel>
 
             <local:NotesControl x:Name="NotesControl" ItemsSource="{Binding}" Columns="{x:Bind viewModel.Columns, Mode=OneWay}" DataContext="{x:Bind viewModel.Notes, Mode=OneWay}" d:DataContext="{Binding Notes}" VerticalAlignment="Stretch" CanReorderItems="True" CanDragItems="True" AllowDrop="True" CanSwipeItems="True" IsNoteFlyoutEnabled="True" ItemClick="OnNoteClick" ItemsReordered="OnItemsReordered"/>
         </Grid>
 
-        <CommandBar x:Name="CommandBar" Grid.Row="{x:Bind viewModel.IsMobile, Converter={StaticResource IsMobileToGridRowConverter}}">
+        <CommandBar x:Name="CommandBar" Grid.Row="{x:Bind viewModel.IsMobile, Converter={StaticResource IsMobileToGridRowConverter}}" RequestedTheme="Dark">
             <CommandBar.PrimaryCommands>
                 <AppBarButton x:Uid="TextAppBarButton" Label="Text" Command="{x:Bind viewModel.CreateTextNoteCommand}" ToolTipService.ToolTip="{Binding Label, RelativeSource={RelativeSource Mode=Self}}">
                     <AppBarButton.Icon>
@@ -69,7 +69,8 @@
                     <VisualState.Setters>
                         <Setter Target="NotesControl.ItemStretch" Value="True"/>
                         <Setter Target="NotesControl.ItemWidth" Value="150"/>
-                        <Setter Target="NotesControl.Padding" Value="12"/>
+                        <Setter Target="NotesControl.Padding" Value="0"/>
+                        <Setter Target="NotesControl.Margin" Value="2"/>
                         <Setter Target="NotesControl.AllowSingleColumn" Value="True"/>
                         <Setter Target="ToggleSingleColumnViewAppBarButton.Visibility" Value="True"/>
                     </VisualState.Setters>
@@ -83,7 +84,8 @@
                     <VisualState.Setters>
                         <Setter Target="NotesControl.ItemStretch" Value="False"/>
                         <Setter Target="NotesControl.ItemWidth" Value="220"/>
-                        <Setter Target="NotesControl.Padding" Value="24"/>
+                        <Setter Target="NotesControl.Padding" Value="0"/>
+                        <Setter Target="NotesControl.Margin" Value="2"/>
                         <Setter Target="NotesControl.AllowSingleColumn" Value="True"/>
                         <Setter Target="ToggleSingleColumnViewAppBarButton.IsEnabled" Value="True"/>
                     </VisualState.Setters>
@@ -98,6 +100,7 @@
                         <Setter Target="NotesControl.ItemStretch" Value="False"/>
                         <Setter Target="NotesControl.ItemWidth" Value="220"/>
                         <Setter Target="NotesControl.Padding" Value="24"/>
+                        <Setter Target="NotesControl.Margin" Value="4"/>
                         <Setter Target="NotesControl.AllowSingleColumn" Value="False"/>
                         <Setter Target="ToggleSingleColumnViewAppBarButton.IsEnabled" Value="False"/>
                     </VisualState.Setters>
@@ -112,6 +115,7 @@
                         <Setter Target="NotesControl.ItemStretch" Value="False"/>
                         <Setter Target="NotesControl.ItemWidth" Value="260"/>
                         <Setter Target="NotesControl.Padding" Value="80,24"/>
+                        <Setter Target="NotesControl.Margin" Value="4"/>
                         <Setter Target="NotesControl.AllowSingleColumn" Value="False"/>
                         <Setter Target="ToggleSingleColumnViewAppBarButton.IsEnabled" Value="False"/>
                     </VisualState.Setters>
@@ -126,6 +130,7 @@
                         <Setter Target="NotesControl.ItemStretch" Value="False"/>
                         <Setter Target="NotesControl.ItemWidth" Value="300"/>
                         <Setter Target="NotesControl.Padding" Value="120,24"/>
+                        <Setter Target="NotesControl.Margin" Value="4"/>
                         <Setter Target="NotesControl.AllowSingleColumn" Value="False"/>
                         <Setter Target="ToggleSingleColumnViewAppBarButton.IsEnabled" Value="False"/>
                     </VisualState.Setters>
