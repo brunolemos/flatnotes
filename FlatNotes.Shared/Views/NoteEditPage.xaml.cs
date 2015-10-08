@@ -73,7 +73,7 @@ namespace FlatNotes.Views
             viewModel.Note.PropertyChanged += OnNotePropertyChanged;
 
             previousBackground = App.RootFrame.Background;
-            App.RootFrame.Background = new SolidColorBrush().fromHex(viewModel.Note.Color.Color);
+            App.RootFrame.Background = viewModel.Note.Color.Color;
 
             //Color Picker
             NoteColorPicker.SelectedNoteColor = viewModel.Note.Color;
@@ -154,7 +154,7 @@ namespace FlatNotes.Views
         private void OnColorChanged()
         {
             if (viewModel.Note == null) return;
-            var statusBarColor = new Color().FromHex(viewModel.Note.Color.Color);//.Add(Color.FromArgb(0x10, 0, 0, 0));
+            var statusBarColor = viewModel.Note.Color.Color.Color;//.Add(Color.FromArgb(0x10, 0, 0, 0));
             App.ChangeStatusBarColor(statusBarColor, null, ElementTheme.Light);
 
 #if WINDOWS_UWP

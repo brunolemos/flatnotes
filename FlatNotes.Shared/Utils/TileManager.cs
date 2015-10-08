@@ -64,7 +64,7 @@ namespace FlatNotes.Utils
                 new Uri("ms-appx:///Assets/Tiles/Transparent/Logo.png"), TileSize.Wide310x150);
 
             tile.VisualElements.ForegroundText = ForegroundText.Light;
-            tile.VisualElements.BackgroundColor = transparentTile ? Colors.Transparent : new Color().FromHex(note.Color.Color);
+            tile.VisualElements.BackgroundColor = transparentTile ? Colors.Transparent : note.Color.DarkColor.Color;
 
             tile.VisualElements.ShowNameOnSquare150x150Logo = true;
             tile.VisualElements.ShowNameOnWide310x150Logo = true;
@@ -194,7 +194,7 @@ namespace FlatNotes.Utils
             var tile = new SecondaryTile(note.ID);
             if (tile == null) return;
 
-            tile.VisualElements.BackgroundColor = transparentTile ? Colors.Transparent : new Color().FromHex(note.Color.Color);
+            tile.VisualElements.BackgroundColor = transparentTile ? Colors.Transparent : note.Color.DarkColor.Color;
             await tile.UpdateAsync();
         }
 
@@ -209,7 +209,7 @@ namespace FlatNotes.Utils
                 if (note == null) continue;
 
                 //var tile = new SecondaryTile(t.TileId);
-                tile.VisualElements.BackgroundColor = transparentTile ? Colors.Transparent : new Color().FromHex(note.Color.Color);
+                tile.VisualElements.BackgroundColor = transparentTile ? Colors.Transparent : note.Color.DarkColor.Color;
                 await tile.UpdateAsync();
             }
         }
