@@ -85,6 +85,6 @@ namespace FlatNotes.ViewModels
             App.RootFrame.Navigate(typeof(SettingsPage));
         }
 
-#endregion
+        #endregion
     }
 }

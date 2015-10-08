@@ -44,8 +44,15 @@
             <local:NotesControl x:Name="NotesControl" ItemsSource="{Binding}" Columns="{x:Bind viewModel.Columns, Mode=OneWay}" DataContext="{x:Bind viewModel.Notes, Mode=OneWay}" d:DataContext="{Binding Notes}" CanReorderItems="False" CanDrag="False" AllowDrop="False" CanSwipeItems="False" IsNoteFlyoutEnabled="True" ItemClick="OnNoteClick"/>
         </Grid>
 
-        <CommandBar x:Name="CommandBar" Grid.Row="{x:Bind viewModel.IsMobile, Converter={StaticResource IsMobileToGridRowConverter}}" Background="#445963" Foreground="{Binding Background, RelativeSource={RelativeSource Mode=Self}}" IsHitTestVisible="False" />
+        <CommandBar x:Name="CommandBar" Grid.Row="{x:Bind viewModel.IsMobile, Converter={StaticResource IsMobileToGridRowConverter}}" Background="#445963" RequestedTheme="Dark">
+            <CommandBar.PrimaryCommands>
+            </CommandBar.PrimaryCommands>
 
+            <CommandBar.SecondaryCommands>
+                <AppBarButton x:Uid="ToggleSingleColumnViewAppBarButton" x:Name="ToggleSingleColumnViewAppBarButton" Label="Toggle single column view" Command="{x:Bind viewModel.ToggleSingleColumnViewCommand}"/>
+            </CommandBar.SecondaryCommands>
+        </CommandBar>
+        
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
                 <VisualState>
