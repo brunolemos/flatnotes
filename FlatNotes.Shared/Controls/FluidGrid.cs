@@ -79,6 +79,10 @@ namespace FlatNotes.Controls
             //stretch on force or when when single column on small screen
             if (ItemStretch || columns == 1) itemWidth = totalSize.Width / columns; // && totalSize.Width < itemWidth * 2
 
+            //max item size
+            if (MaxItemWidth > 0 && itemWidth > MaxItemWidth)
+                itemWidth = Math.Min(MaxItemWidth, itemWidth);
+             
             //System.Diagnostics.Debug.WriteLine("MeasureOverride ItemWidth: {0}, Stretch: {1}, Columns: {2}", itemWidth, ItemStretch, columns);
             Size resultSize = new Size(columns * itemWidth, 100);
 
@@ -215,6 +219,13 @@ namespace FlatNotes.Controls
         {
             get { return (double)GetValue(ItemWidthProperty); }
             set { SetValue(ItemWidthProperty, value); }
+        }
+
+        public static readonly DependencyProperty MaxItemWidthProperty = DependencyProperty.Register("MaxItemWidth", typeof(double), typeof(FluidGrid), new PropertyMetadata(1024.0, OnPropertyChanged));
+        public double MaxItemWidth
+        {
+            get { return (double)GetValue(MaxItemWidthProperty); }
+            set { SetValue(MaxItemWidthProperty, value); }
         }
 
         public static readonly DependencyProperty ItemStretchProperty = DependencyProperty.Register("ItemStretch", typeof(bool), typeof(FluidGrid), new PropertyMetadata(false, OnPropertyChanged));

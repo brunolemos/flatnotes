@@ -1,6 +1,5 @@
 using FlatNotes.Models;
 using FlatNotes.Utils;
-using System.Collections.Generic;
 
 namespace FlatNotes.ViewModels
 {
@@ -12,13 +11,14 @@ namespace FlatNotes.ViewModels
         public Notes Notes { get { return notes; } set { notes = value; NotifyPropertyChanged("Notes"); } }
         public Notes notes = AppData.ArchivedNotes;
 
-        public int Columns { get { return -1; } }// AppSettings.Instance.Columns; } internal set { AppSettings.Instance.Columns = value; } }
+        public int Columns { get { return IsSingleColumnEnabled ? 1 : -1; } }
+        private bool IsSingleColumnEnabled { get { return AppSettings.Instance.IsSingleColumnEnabled; } set { AppSettings.Instance.IsSingleColumnEnabled = value; NotifyPropertyChanged("IsSingleColumnEnabled"); } }
 
 
         private ArchivedNotesViewModel()
         {
             AppData.ArchivedNotesChanged += (s, e) => NotifyPropertyChanged("Notes");
-            //AppSettings.Instance.ColumnsChanged += (s, e) => NotifyPropertyChanged("Columns");
+            AppSettings.Instance.IsSingleColumnEnabledChanged += (s, e) => { NotifyPropertyChanged("IsSingleColumnEnabled"); NotifyPropertyChanged("Columns"); };
         }
     }
 }

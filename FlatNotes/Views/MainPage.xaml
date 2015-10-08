@@ -68,11 +68,10 @@
 
                     <VisualState.Setters>
                         <Setter Target="NotesControl.ItemStretch" Value="True"/>
-                        <Setter Target="NotesControl.ItemWidth" Value="150"/>
+                        <Setter Target="NotesControl.ItemWidth" Value="180"/>
                         <Setter Target="NotesControl.Padding" Value="0"/>
                         <Setter Target="NotesControl.Margin" Value="2"/>
-                        <Setter Target="NotesControl.AllowSingleColumn" Value="True"/>
-                        <Setter Target="ToggleSingleColumnViewAppBarButton.Visibility" Value="True"/>
+                        <Setter Target="NotesControl.MaxItemWidth" Value="-1"/>
                     </VisualState.Setters>
                 </VisualState>
 
@@ -84,40 +83,37 @@
                     <VisualState.Setters>
                         <Setter Target="NotesControl.ItemStretch" Value="False"/>
                         <Setter Target="NotesControl.ItemWidth" Value="220"/>
-                        <Setter Target="NotesControl.Padding" Value="0"/>
+                        <Setter Target="NotesControl.Padding" Value="12"/>
                         <Setter Target="NotesControl.Margin" Value="2"/>
-                        <Setter Target="NotesControl.AllowSingleColumn" Value="True"/>
-                        <Setter Target="ToggleSingleColumnViewAppBarButton.IsEnabled" Value="True"/>
+                        <Setter Target="NotesControl.MaxItemWidth" Value="500"/>
                     </VisualState.Setters>
                 </VisualState>
 
                 <VisualState>
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="600" />
-                    </VisualState.StateTriggers>
-
-                    <VisualState.Setters>
-                        <Setter Target="NotesControl.ItemStretch" Value="False"/>
-                        <Setter Target="NotesControl.ItemWidth" Value="220"/>
-                        <Setter Target="NotesControl.Padding" Value="24"/>
-                        <Setter Target="NotesControl.Margin" Value="4"/>
-                        <Setter Target="NotesControl.AllowSingleColumn" Value="False"/>
-                        <Setter Target="ToggleSingleColumnViewAppBarButton.IsEnabled" Value="False"/>
-                    </VisualState.Setters>
-                </VisualState>
-
-                <VisualState>
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="1200" />
+                        <AdaptiveTrigger MinWindowWidth="768" />
                     </VisualState.StateTriggers>
 
                     <VisualState.Setters>
                         <Setter Target="NotesControl.ItemStretch" Value="False"/>
                         <Setter Target="NotesControl.ItemWidth" Value="260"/>
-                        <Setter Target="NotesControl.Padding" Value="80,24"/>
+                        <Setter Target="NotesControl.Padding" Value="12"/>
                         <Setter Target="NotesControl.Margin" Value="4"/>
-                        <Setter Target="NotesControl.AllowSingleColumn" Value="False"/>
-                        <Setter Target="ToggleSingleColumnViewAppBarButton.IsEnabled" Value="False"/>
+                        <Setter Target="NotesControl.MaxItemWidth" Value="768"/>
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="1024" />
+                    </VisualState.StateTriggers>
+
+                    <VisualState.Setters>
+                        <Setter Target="NotesControl.ItemStretch" Value="False"/>
+                        <Setter Target="NotesControl.ItemWidth" Value="260"/>
+                        <Setter Target="NotesControl.Padding" Value="24,24"/>
+                        <Setter Target="NotesControl.Margin" Value="4"/>
+                        <Setter Target="NotesControl.MaxItemWidth" Value="1024"/>
                     </VisualState.Setters>
                 </VisualState>
 
@@ -129,10 +125,9 @@
                     <VisualState.Setters>
                         <Setter Target="NotesControl.ItemStretch" Value="False"/>
                         <Setter Target="NotesControl.ItemWidth" Value="300"/>
-                        <Setter Target="NotesControl.Padding" Value="120,24"/>
+                        <Setter Target="NotesControl.Padding" Value="48,24"/>
                         <Setter Target="NotesControl.Margin" Value="4"/>
-                        <Setter Target="NotesControl.AllowSingleColumn" Value="False"/>
-                        <Setter Target="ToggleSingleColumnViewAppBarButton.IsEnabled" Value="False"/>
+                        <Setter Target="NotesControl.MaxItemWidth" Value="1200"/>
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>

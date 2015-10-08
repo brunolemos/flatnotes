@@ -42,7 +42,7 @@ namespace FlatNotes.ViewModels
         public ListViewReorderMode reorderMode = ListViewReorderMode.Disabled;
         public bool ReorderedNotes { get; set; }
         public int Columns { get { return IsSingleColumnEnabled ? 1 : -1; } }
-        private bool IsSingleColumnEnabled { get { return AppSettings.Instance.IsSingleColumnEnabled; } set { AppSettings.Instance.IsSingleColumnEnabled = value; NotifyPropertyChanged("IsSingleColumnEnabled"); NotifyPropertyChanged("Columns"); } }
+        private bool IsSingleColumnEnabled { get { return AppSettings.Instance.IsSingleColumnEnabled; } set { AppSettings.Instance.IsSingleColumnEnabled = value; NotifyPropertyChanged("IsSingleColumnEnabled"); } }
 
         private MainViewModel()
         {
@@ -53,14 +53,10 @@ namespace FlatNotes.ViewModels
             OpenSettingsCommand = new RelayCommand(OpenSettingsPage);
 
             AppData.NotesChanged += (s, e) => NotifyPropertyChanged("Notes");
-            //AppSettings.Instance.ColumnsChanged += (s, e) =>
-            //{
-            //    NotifyPropertyChanged("Columns");
-            //    ToggleSingleColumnViewCommand.RaiseCanExecuteChanged();
-            //};
+            AppSettings.Instance.IsSingleColumnEnabledChanged += (s, e) => { NotifyPropertyChanged("IsSingleColumnEnabled"); NotifyPropertyChanged("Columns"); };
         }
 
-#region COMMANDS_ACTIONS
+        #region COMMANDS_ACTIONS
         private void CreateTextNote()
         {
             App.TelemetryClient.TrackEvent("CreateNote_MainViewModel");

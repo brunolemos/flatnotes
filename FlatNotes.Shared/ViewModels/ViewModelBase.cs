@@ -21,5 +21,6 @@ namespace FlatNotes.ViewModels
         public bool IsMobile { get; } = ApiInformation.IsApiContractPresent("Windows.Phone.PhoneContract", 1);
         public string OSVersion { get { return "10"; } }
 #endif
+        public bool IsDesktop { get { return !IsMobile; } }
     }
 }

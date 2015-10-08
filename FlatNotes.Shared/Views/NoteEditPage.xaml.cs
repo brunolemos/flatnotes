@@ -87,7 +87,7 @@ namespace FlatNotes.Views
             //prevent from losing changes when navigating with textbox focused
             this.CommandBar.Focus(FocusState.Programmatic);
             this.CommandBar.IsOpen = false;
-            //await Task.Delay(0200);
+            await Task.Delay(0200);
 
             //deleted
             if (viewModel.Note == null) return;

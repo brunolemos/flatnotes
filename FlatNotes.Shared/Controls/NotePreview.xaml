@@ -41,7 +41,7 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
-                    <Viewbox Margin="0,8,0,0" Height="10" HorizontalAlignment="Left" VerticalAlignment="Top">
+                    <Viewbox Margin="0,6,0,0" Height="10" HorizontalAlignment="Left" VerticalAlignment="Top">
                         <CheckBox Grid.Column="0" IsChecked="{Binding IsChecked, Mode=TwoWay}" Style="{StaticResource CheckBoxWithoutContentStyle}" BorderBrush="{StaticResource AppNoteForegroundBrush}" Foreground="{StaticResource AppNoteForegroundBrush}" FontWeight="SemiLight" ClickMode="Release" IsTapEnabled="False"/>
                     </Viewbox>
 

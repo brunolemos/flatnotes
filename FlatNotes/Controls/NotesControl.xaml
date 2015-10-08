@@ -57,7 +57,7 @@
 
         <ListView.ItemsPanel>
             <ItemsPanelTemplate>
-                <local:FluidGrid x:Name="NotesFluidGrid" Margin="{Binding Padding, ElementName=Root}" ItemWidth="{Binding ItemWidth, ElementName=Root}" ItemStretch="{Binding ItemStretch, ElementName=Root}" Columns="{Binding Columns, ElementName=Root}" AllowSingleColumn="{Binding AllowSingleColumn, ElementName=Root}" HorizontalAlignment="Center" ParentListView="{Binding ElementName=NotesGridView}" ItemsReordered="NotesFluidGrid_ItemsReordered"/>
+                <local:FluidGrid x:Name="NotesFluidGrid" Margin="{Binding Padding, ElementName=Root}" ItemWidth="{Binding ItemWidth, ElementName=Root}" MaxItemWidth="{Binding MaxItemWidth, ElementName=Root}" ItemStretch="{Binding ItemStretch, ElementName=Root}" Columns="{Binding Columns, ElementName=Root}" AllowSingleColumn="{Binding AllowSingleColumn, ElementName=Root}" HorizontalAlignment="Center" ParentListView="{Binding ElementName=NotesGridView}" ItemsReordered="NotesFluidGrid_ItemsReordered"/>
                 <!--<ItemsWrapGrid AllowDrop="True" ItemWidth="{Binding ItemWidth, ElementName=Root}" Orientation="Horizontal" HorizontalAlignment="Center"/>-->
             </ItemsPanelTemplate>
         </ListView.ItemsPanel>

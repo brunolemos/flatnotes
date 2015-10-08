@@ -25,6 +25,7 @@ namespace FlatNotes.Controls
 
         public event EventHandler<ItemClickEventArgs> ItemClick;
         public const double ITEM_MIN_WIDTH = 150;
+        public const double ITEM_MAX_WIDTH = 1024;
 
 #if WINDOWS_PHONE_APP
         private static NoteSwipeFeature noteSwipeFeature = new NoteSwipeFeature();
@@ -38,6 +39,9 @@ namespace FlatNotes.Controls
 
         public static readonly DependencyProperty ItemWidthProperty = DependencyProperty.Register("ItemWidth", typeof(double), typeof(NotesControl), new PropertyMetadata(ITEM_MIN_WIDTH));
         public double ItemWidth { get { return (double)GetValue(ItemWidthProperty); } set { SetValue(ItemWidthProperty, value); } }
+
+        public static readonly DependencyProperty MaxItemWidthProperty = DependencyProperty.Register("MaxItemWidth", typeof(double), typeof(NotesControl), new PropertyMetadata(ITEM_MAX_WIDTH));
+        public double MaxItemWidth { get { return (double)GetValue(MaxItemWidthProperty); } set { SetValue(MaxItemWidthProperty, value); } }
 
         public static readonly DependencyProperty ItemStretchProperty = DependencyProperty.Register("ItemStretch", typeof(bool), typeof(NotesControl), new PropertyMetadata(true));
         public bool ItemStretch { get { return (bool)GetValue(ItemStretchProperty); } set { SetValue(ItemStretchProperty, value); } }
