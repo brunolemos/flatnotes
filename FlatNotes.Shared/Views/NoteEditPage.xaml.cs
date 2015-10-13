@@ -31,6 +31,7 @@ namespace FlatNotes.Views
 
         private static Brush previousBackground;
         private bool checklistChanged = false;
+        private bool openImagePicker = false;
 
 #if WINDOWS_PHONE_APP
         partial void EnableSwipeFeature(FrameworkElement element, FrameworkElement referenceFrame);
@@ -46,7 +47,7 @@ namespace FlatNotes.Views
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
 
-            this.Loaded += (s, e) => OnColorChanged();
+            this.Loaded += OnLoaded;
 
 #if WINDOWS_PHONE_APP
             //Color Picker WP81
@@ -57,14 +58,32 @@ namespace FlatNotes.Views
 #endif
         }
 
+        private void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            OnColorChanged();
+
+            if (openImagePicker)
+                viewModel.OpenImagePicker();
+        }
+
         private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
             viewModel.PropertyChanged += OnViewModelPropertyChanged;
+            openImagePicker = false;
 
             if (e.NavigationParameter != null && e.NavigationParameter is Note)
+            {
                 viewModel.Note = e.NavigationParameter as Note;
-            else
+            }
+            else if (e.NavigationParameter != null && e.NavigationParameter is NoteImage)
+            {
+                openImagePicker = true;
                 viewModel.Note = new Note();
+            }
+            else
+            {
+                viewModel.Note = new Note();
+            }
 
             viewModel.Note.Changed = false;
             viewModel.Note.Images.CollectionChanged += Images_CollectionChanged;

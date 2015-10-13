@@ -249,9 +249,6 @@
   <data name="ChecklistAppBarButton.Label" xml:space="preserve">
     <value>Checklist</value>
   </data>
-  <data name="TextAppBarButton.Label" xml:space="preserve">
-    <value>Text</value>
-  </data>
   <data name="ToggleSingleColumnViewAppBarButton.Label" xml:space="preserve">
     <value>Toggle single column view</value>
   </data>
@@ -278,5 +275,17 @@
   </data>
   <data name="UnpinFromStartMenuFlyoutItem.Text" xml:space="preserve">
     <value>Unpin from start</value>
+  </data>
+  <data name="ArchivedNotesPageNameButton.Content" xml:space="preserve">
+    <value>Archived</value>
+  </data>
+  <data name="NewNoteTextBlock.Text" xml:space="preserve">
+    <value>New note...</value>
+  </data>
+  <data name="NotesPageNameButton.Content" xml:space="preserve">
+    <value>Notes</value>
+  </data>
+  <data name="SettingsPageNameButton.Content" xml:space="preserve">
+    <value>Settings</value>
   </data>
 </root>

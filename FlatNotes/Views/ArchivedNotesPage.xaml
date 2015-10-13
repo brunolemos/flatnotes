@@ -44,15 +44,25 @@
             <local:NotesControl x:Name="NotesControl" ItemsSource="{Binding}" Columns="{x:Bind viewModel.Columns, Mode=OneWay}" DataContext="{x:Bind viewModel.Notes, Mode=OneWay}" d:DataContext="{Binding Notes}" CanReorderItems="False" CanDrag="False" AllowDrop="False" CanSwipeItems="False" IsNoteFlyoutEnabled="True" ItemClick="OnNoteClick"/>
         </Grid>
 
-        <CommandBar x:Name="CommandBar" Grid.Row="{x:Bind viewModel.IsMobile, Converter={StaticResource IsMobileToGridRowConverter}}" Background="#445963" RequestedTheme="Dark">
-            <CommandBar.PrimaryCommands>
-            </CommandBar.PrimaryCommands>
 
-            <CommandBar.SecondaryCommands>
-                <AppBarButton x:Uid="ToggleSingleColumnViewAppBarButton" x:Name="ToggleSingleColumnViewAppBarButton" Label="Toggle single column view" Command="{x:Bind viewModel.ToggleSingleColumnViewCommand}"/>
-            </CommandBar.SecondaryCommands>
-        </CommandBar>
-        
+        <Grid x:Name="CommandBar" Grid.Row="0" Background="#445963" RequestedTheme="Dark">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Column="0" x:Uid="NotesPageNameButton" Content="Notes" Margin="4,0,0,0" Background="Transparent" BorderThickness="0" VerticalAlignment="Stretch" Command="{x:Bind NavigationHelper.GoBackCommand}"/>
+            <Button Grid.Column="1" x:Uid="ArchivedNotesPageNameButton" Content="Archived notes" FontWeight="Bold" IsTapEnabled="False" Background="Transparent" BorderThickness="0" VerticalAlignment="Stretch"/>
+
+            <AppBarButton Grid.Column="3" x:Uid="ToggleSingleColumnViewAppBarButton" x:Name="ToggleSingleColumnViewAppBarButton" Label="Toggle single column view" IsCompact="True" Command="{x:Bind viewModel.ToggleSingleColumnViewCommand}" ToolTipService.ToolTip="{Binding Label, RelativeSource={RelativeSource Mode=Self}}">
+                <AppBarButton.Icon>
+                    <FontIcon Glyph="&#xE8A9;"/>
+                </AppBarButton.Icon>
+            </AppBarButton>
+        </Grid>
+
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
                 <VisualState>

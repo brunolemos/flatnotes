@@ -19,6 +19,7 @@ namespace FlatNotes.ViewModels
 
         public RelayCommand CreateTextNoteCommand { get; private set; }
         public RelayCommand CreateChecklistNoteCommand { get; private set; }
+        public RelayCommand CreateImageNoteCommand { get; private set; }
         public RelayCommand ToggleSingleColumnViewCommand { get; private set; }
         public RelayCommand OpenArchivedNotesCommand { get; private set; }
         public RelayCommand OpenSettingsCommand { get; private set; }
@@ -48,6 +49,7 @@ namespace FlatNotes.ViewModels
         {
             CreateTextNoteCommand = new RelayCommand(CreateTextNote);
             CreateChecklistNoteCommand = new RelayCommand(CreateChecklistNote);
+            CreateImageNoteCommand = new RelayCommand(CreateImageNote);
             ToggleSingleColumnViewCommand = new RelayCommand(ToggleSingleColumnView);
             OpenArchivedNotesCommand = new RelayCommand(OpenArchivedNotesPage);
             OpenSettingsCommand = new RelayCommand(OpenSettingsPage);
@@ -57,7 +59,7 @@ namespace FlatNotes.ViewModels
         }
 
         #region COMMANDS_ACTIONS
-        private void CreateTextNote()
+        public void CreateTextNote()
         {
             App.TelemetryClient.TrackEvent("CreateNote_MainViewModel");
             App.RootFrame.Navigate(typeof(NoteEditPage), new Note());
@@ -67,6 +69,12 @@ namespace FlatNotes.ViewModels
         {
             App.TelemetryClient.TrackEvent("CreateChecklistNote_MainViewModel");
             App.RootFrame.Navigate(typeof(NoteEditPage), new Note(true));
+        }
+
+        private void CreateImageNote()
+        {
+            App.TelemetryClient.TrackEvent("CreateImageNote_MainViewModel");
+            App.RootFrame.Navigate(typeof(NoteEditPage), new NoteImage());
         }
 
         private void ToggleSingleColumnView()

@@ -249,9 +249,6 @@
   <data name="ChecklistAppBarButton.Label" xml:space="preserve">
     <value>Lista</value>
   </data>
-  <data name="TextAppBarButton.Label" xml:space="preserve">
-    <value>Texto</value>
-  </data>
   <data name="ToggleSingleColumnViewAppBarButton.Label" xml:space="preserve">
     <value>Alternar vista de columna única</value>
   </data>
@@ -278,5 +275,17 @@
   </data>
   <data name="UnpinFromStartMenuFlyoutItem.Text" xml:space="preserve">
     <value>Desanclar em la pantalla inicial</value>
+  </data>
+  <data name="ArchivedNotesPageNameButton.Content" xml:space="preserve">
+    <value>Archivadas</value>
+  </data>
+  <data name="NewNoteTextBlock.Text" xml:space="preserve">
+    <value>Nueva nota...</value>
+  </data>
+  <data name="NotesPageNameButton.Content" xml:space="preserve">
+    <value>Notas</value>
+  </data>
+  <data name="SettingsPageNameButton.Content" xml:space="preserve">
+    <value>Ajustes</value>
   </data>
 </root>

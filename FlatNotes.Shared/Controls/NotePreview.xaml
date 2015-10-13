@@ -57,7 +57,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Border x:Name="NoteContainer" Margin="{Binding Margin, ElementName=Root}" RequestedTheme="Light" CacheMode="BitmapCache" BorderThickness="0.6,0,0.6,2" BorderBrush="#20000000">
+    <Grid x:Name="NoteContainer" Margin="{Binding Margin, ElementName=Root}" RequestedTheme="Light" CacheMode="BitmapCache" BorderThickness="1,0,1,2" BorderBrush="#10000000">
         <Grid Background="{Binding ElementName=Root, Path=Background}">
             <StackPanel Margin="0" IsHitTestVisible="False">
                 <Grid Visibility="{Binding ElementName=Root, Path=HideImage, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=True}">
@@ -91,5 +91,5 @@
             
             <Grid Background="Transparent"/>
         </Grid>
-    </Border>
+    </Grid>
 </UserControl>

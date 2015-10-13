@@ -36,7 +36,7 @@ namespace FlatNotes.ViewModels
 
         private NoteEditViewModel()
         {
-            OpenImagePickerCommand = new RelayCommand(OpenImagePicker);
+            OpenImagePickerCommand = new RelayCommand(_OpenImagePicker);
             ToggleChecklistCommand = new RelayCommand(ToggleChecklist);
             PinCommand = new RelayCommand(Pin);
             UnpinCommand = new RelayCommand(Unpin);
@@ -121,12 +121,18 @@ namespace FlatNotes.ViewModels
             }
         }
         public ListViewReorderMode reorderMode = ListViewReorderMode.Disabled;
-        
+
         #region COMMANDS_ACTIONS
 
-        private async void OpenImagePicker()
+
+        private void _OpenImagePicker()
         {
             App.TelemetryClient.TrackEvent("OpenImagePicker_NoteEditViewModel");
+            OpenImagePicker();
+        }
+
+        public async void OpenImagePicker()
+        {
 
             FileOpenPicker picker = new FileOpenPicker();
             picker.ViewMode = PickerViewMode.Thumbnail;

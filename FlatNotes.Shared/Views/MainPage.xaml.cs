@@ -37,7 +37,8 @@ namespace FlatNotes.Views
             Unloaded += (s, e) => DisableReorderFeature();
 #endif
 
-            Loaded += OnLoaded;
+            OnLoaded();
+            Loaded += (s, e) => OnLoaded();
         }
 
 #if WINDOWS_PHONE_APP
@@ -45,7 +46,7 @@ namespace FlatNotes.Views
         partial void DisableReorderFeature();
 #endif
 
-        private void OnLoaded(object sender, RoutedEventArgs e)
+        private void OnLoaded()
         {
             App.ResetStatusBar();
         }
@@ -70,7 +71,6 @@ namespace FlatNotes.Views
         private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
         {
             RedirectToNote = null;
-            this.CommandBar.IsOpen = false;
         }
 
         #region NavigationHelper registration
@@ -123,6 +123,11 @@ namespace FlatNotes.Views
             }
 
             AppData.DB.UpdateAll(viewModel.Notes);
+        }
+
+        private void Grid_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        {
+
         }
     }
 }

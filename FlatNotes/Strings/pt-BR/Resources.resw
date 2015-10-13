@@ -228,9 +228,6 @@ Algumas funcionalidades:
   <data name="SupportAppBarButton.Label" xml:space="preserve">
     <value>Suporte</value>
   </data>
-  <data name="TextAppBarButton.Label" xml:space="preserve">
-    <value>Texto</value>
-  </data>
   <data name="TextTextBox.PlaceholderText" xml:space="preserve">
     <value>Texto</value>
   </data>
@@ -284,5 +281,17 @@ Algumas funcionalidades:
   </data>
   <data name="UnpinFromStartMenuFlyoutItem.Text" xml:space="preserve">
     <value>Desafixar da tela inicial</value>
+  </data>
+  <data name="ArchivedNotesPageNameButton.Content" xml:space="preserve">
+    <value>Arquivadas</value>
+  </data>
+  <data name="NewNoteTextBlock.Text" xml:space="preserve">
+    <value>Nova nota...</value>
+  </data>
+  <data name="NotesPageNameButton.Content" xml:space="preserve">
+    <value>Notas</value>
+  </data>
+  <data name="SettingsPageNameButton.Content" xml:space="preserve">
+    <value>Configurações</value>
   </data>
 </root>

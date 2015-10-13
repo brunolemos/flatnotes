@@ -53,13 +53,20 @@
                 </StackPanel>
             </ScrollViewer>
         </Grid>
-        
-        <CommandBar Grid.Row="{x:Bind viewModel.IsMobile, Converter={StaticResource IsMobileToGridRowConverter}}" EntranceNavigationTransitionInfo.IsTargetElement="False" CommonNavigationTransitionInfo.IsStaggerElement="False"  ContinuumNavigationTransitionInfo.IsEntranceElement="False" ContinuumNavigationTransitionInfo.IsExitElement="False" RequestedTheme="Dark">
-            <CommandBar.PrimaryCommands>
-                <AppBarButton x:Uid="RateAppbarButton" Icon="OutlineStar" Label="Rate" Command="{x:Bind viewModel.RateAppCommand}" ToolTipService.ToolTip="{Binding Label, RelativeSource={RelativeSource Mode=Self}}"/>
-                <AppBarButton x:Uid="SupportAppBarButton" Icon="Mail" Label="Support" Command="{x:Bind viewModel.ContactSupportCommand}" ToolTipService.ToolTip="{Binding Label, RelativeSource={RelativeSource Mode=Self}}"/>
-            </CommandBar.PrimaryCommands>
-        </CommandBar>
+
+
+        <Grid x:Name="CommandBar" Grid.Row="0" Background="{StaticResource AppMainBrush}" RequestedTheme="Dark">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Column="0" x:Uid="SettingsPageNameButton" Content="Settings" Margin="4,0,0,0" FontWeight="Bold" IsTapEnabled="False" Background="Transparent" BorderThickness="0" VerticalAlignment="Stretch"/>
+            <AppBarButton Grid.Column="2" x:Uid="RateAppbarButton" Icon="OutlineStar" Label="Rate" IsCompact="True" Command="{x:Bind viewModel.RateAppCommand}" ToolTipService.ToolTip="{Binding Label, RelativeSource={RelativeSource Mode=Self}}"/>
+            <AppBarButton Grid.Column="3" x:Uid="SupportAppBarButton" Icon="Mail" Label="Support" IsCompact="True" Command="{x:Bind viewModel.ContactSupportCommand}" ToolTipService.ToolTip="{Binding Label, RelativeSource={RelativeSource Mode=Self}}"/>
+        </Grid>
 
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>

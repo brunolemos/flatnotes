@@ -279,4 +279,16 @@
   <data name="NoteTileBackgroundCheckbox.Content" xml:space="preserve">
     <value>在现场的瓷砖笔记坚实的背景</value>
   </data>
+  <data name="ArchivedNotesPageNameButton.Content" xml:space="preserve">
+    <value>存档</value>
+  </data>
+  <data name="NewNoteTextBlock.Text" xml:space="preserve">
+    <value>新笔记...</value>
+  </data>
+  <data name="NotesPageNameButton.Content" xml:space="preserve">
+    <value>票据</value>
+  </data>
+  <data name="SettingsPageNameButton.Content" xml:space="preserve">
+    <value>设置</value>
+  </data>
 </root>

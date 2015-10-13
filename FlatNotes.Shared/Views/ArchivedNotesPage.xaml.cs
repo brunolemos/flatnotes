@@ -31,10 +31,11 @@ namespace FlatNotes.Views
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
 
-            Loaded += OnLoaded;
+            OnLoaded();
+            Loaded += (s, e) => OnLoaded();
         }
 
-        private void OnLoaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private void OnLoaded()
         {
             var statusBarBackgroundColor = Color.FromArgb(0xff, 0x44, 0x59, 0x63);//.Add(Color.FromArgb(0x10, 0, 0, 0));
             var statusBarForegroundColor = Color.FromArgb(0xD0, 0xff, 0xff, 0xff);
