@@ -124,10 +124,5 @@ namespace FlatNotes.Views
 
             AppData.DB.UpdateAll(viewModel.Notes);
         }
-
-        private void Grid_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
-        {
-
-        }
     }
 }

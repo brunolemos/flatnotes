@@ -103,11 +103,6 @@ namespace FlatNotes.Views
         {
             App.RootFrame.Background = previousBackground;
 
-            //prevent from losing changes when navigating with textbox focused
-            this.CommandBar.Focus(FocusState.Programmatic);
-            this.CommandBar.IsOpen = false;
-            await Task.Delay(0200);
-
             //deleted
             if (viewModel.Note == null) return;
 
@@ -117,6 +112,11 @@ namespace FlatNotes.Views
             viewModel.Note.Checklist.CollectionItemChanged -= Checklist_CollectionItemChanged;
             viewModel.Note.PropertyChanged -= OnNotePropertyChanged;
             viewModel.PropertyChanged -= OnViewModelPropertyChanged;
+
+            //prevent from losing changes when navigating with textbox focused
+            this.CommandBar.Focus(FocusState.Programmatic);
+            this.CommandBar.IsOpen = false;
+            await Task.Delay(0200);
 
             //trim
             viewModel.Note.Trim();
@@ -131,8 +131,8 @@ namespace FlatNotes.Views
             //checklist changed (fix cache problem with converter)
             if (checklistChanged) viewModel.Note.NotifyChanges();
 
-            //NoteEditViewModel.CurrentNoteBeingEdited = null;
-            //viewModel.Note = null;
+            NoteEditViewModel.CurrentNoteBeingEdited = null;
+            viewModel.Note = null;
         }
 
         #region NavigationHelper registration

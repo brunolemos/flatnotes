@@ -288,6 +288,7 @@ namespace FlatNotes.ViewModels
         private async void DeleteNote()
         {
             App.TelemetryClient.TrackEvent("Delete_NoteEditViewModel");
+
             await AppData.RemoveNote(Note);
 
             note = null;

@@ -37,6 +37,8 @@ namespace FlatNotes.Views
         {
             if (e.Key == Windows.System.VirtualKey.Enter)
             {
+                e.Handled = true;
+
                 if (!viewModel.Note.IsChecklist)
                 {
                     NoteTextTextBox.Focus(FocusState.Programmatic);
