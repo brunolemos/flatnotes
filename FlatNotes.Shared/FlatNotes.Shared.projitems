@@ -96,7 +96,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="$(MSBuildThisFileDirectory)Assets\Fonts\roboto-normal.ttf" />
-    <Content Include="$(MSBuildThisFileDirectory)Assets\Fonts\roboto-slab-light.ttf" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Logo.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Fonts\roboto-condensed-bold.ttf" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Fonts\roboto-slab-normal.ttf" />

@@ -12,6 +12,7 @@
     NavigationCacheMode="Required"
     Background="{x:Bind viewModel.Note.Color.Color, Mode=OneWay}"
     Foreground="{StaticResource AppNoteForegroundBrush}"
+    FontSize="{StaticResource DefaultFontSize}"
     d:DataContext="{d:DesignData /SampleData/NoteEditViewModelSampleData.xaml}">
     
     <Page.Resources>
@@ -81,7 +82,7 @@
                         <ListView x:Name="NoteImagesListView" ItemsSource="{Binding}" ItemTemplate="{StaticResource NoteImagesListViewControlTemplate}" SelectionMode="None" DataContext="{x:Bind viewModel.Note.Images, Mode=OneWay}" d:DataContext="{Binding Images}"/>
                     </Grid>
 
-                    <TextBox x:Uid="TitleTextBox" x:Name="NoteTitleTextBox" PlaceholderText="Title" Text="{x:Bind viewModel.Note.Title, Mode=TwoWay, TargetNullValue=''}" Foreground="{StaticResource AppNoteForegroundBrush}" InputScope="Chat" Background="Transparent" BorderThickness="0" FontSize="{x:Bind FontSize}" Margin="0" Padding="12" FontWeight="Bold" FontFamily="{StaticResource NoteTitleFontFamily}" MaxLength="50" TextWrapping="NoWrap" KeyDown="NoteTitleTextBox_KeyDown" ScrollViewer.HorizontalScrollMode="Auto" ScrollViewer.VerticalScrollBarVisibility="Disabled"/>
+                    <TextBox x:Uid="TitleTextBox" x:Name="NoteTitleTextBox" PlaceholderText="Title" Text="{x:Bind viewModel.Note.Title, Mode=TwoWay, TargetNullValue=''}" Foreground="{StaticResource AppNoteForegroundBrush}" InputScope="Chat" Background="Transparent" BorderThickness="0" FontSize="16" Margin="0" Padding="12" FontWeight="Bold" FontFamily="{StaticResource NoteTitleFontFamily}" MaxLength="50" TextWrapping="NoWrap" KeyDown="NoteTitleTextBox_KeyDown" ScrollViewer.HorizontalScrollMode="Auto" ScrollViewer.VerticalScrollBarVisibility="Disabled"/>
                     <TextBox x:Uid="TextTextBox" x:Name="NoteTextTextBox" PlaceholderText="Text" Text="{x:Bind viewModel.Note.Text, Mode=TwoWay, TargetNullValue=''}" Foreground="{StaticResource AppNoteForegroundBrush}" InputScope="Chat" Background="Transparent" BorderThickness="0" FontSize="{x:Bind FontSize}" Margin="0" Padding="12,4" FontWeight="SemiLight" FontFamily="{StaticResource NoteTextFontFamily}" AcceptsReturn="True" TextWrapping="Wrap" Visibility="{x:Bind viewModel.Note.IsText, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" ScrollViewer.HorizontalScrollMode="Disabled" ScrollViewer.VerticalScrollMode="Disabled" />
 
                     <StackPanel Visibility="{x:Bind viewModel.Note.IsChecklist, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">

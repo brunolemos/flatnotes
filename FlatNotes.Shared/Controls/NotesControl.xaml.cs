@@ -24,7 +24,7 @@ namespace FlatNotes.Controls
         private static NotesControlViewModel _viewModel = NotesControlViewModel.Instance;
 
         public event EventHandler<ItemClickEventArgs> ItemClick;
-        public const double ITEM_MIN_WIDTH = 150;
+        public const double ITEM_MIN_WIDTH = 160;
         public const double ITEM_MAX_WIDTH = 1024;
 
 #if WINDOWS_PHONE_APP

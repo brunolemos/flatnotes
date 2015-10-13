@@ -4,7 +4,7 @@
     xmlns:local="using:FlatNotes.Controls">
 
     <x:String x:Key="AppName">Flat Notes</x:String>
-    <!--<x:Double x:Key="DefaultFontSize">18</x:Double>-->
+    <x:Double x:Key="DefaultFontSize">14</x:Double>
 
     <Color x:Key="AppMainColor">#ffbb00</Color>
     <Color x:Key="AppMainDarkenColor">#f99f00</Color>
@@ -12,7 +12,7 @@
     <Color x:Key="PhoneAccentColor">#f99f00</Color>
 
     <FontFamily x:Key="AppDefaultFontFamily">/Assets/Fonts/roboto-normal.ttf#Roboto</FontFamily>
-    <FontFamily x:Key="NoteTitleFontFamily">/Assets/Fonts/roboto-condensed-bold.ttf#Roboto Condensed</FontFamily>
+    <FontFamily x:Key="NoteTitleFontFamily">/Assets/Fonts/roboto-condensed-bold.ttf#Roboto</FontFamily>
     <FontFamily x:Key="NoteTextFontFamily">/Assets/Fonts/roboto-slab-normal.ttf#Roboto Slab</FontFamily>
 
     <SolidColorBrush x:Key="AppStatusBarBackgroundBrush" Color="{StaticResource AppMainColor}"/>
@@ -76,15 +76,24 @@
         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
     </Style>
 
-    <!--<Style TargetType="TextBlock">
+    <Style TargetType="ContentPresenter">
         <Setter Property="FontSize" Value="{StaticResource DefaultFontSize}"/>
-    </Style>-->
+        <Setter Property="FontFamily" Value="{StaticResource AppDefaultFontFamily}"/>
+    </Style>
+
+    <Style TargetType="CheckBox">
+        <Setter Property="FontSize" Value="{StaticResource DefaultFontSize}"/>
+        <Setter Property="FontFamily" Value="{StaticResource AppDefaultFontFamily}"/>
+    </Style>
+
+    <Style TargetType="Button">
+        <Setter Property="FontSize" Value="{StaticResource DefaultFontSize}"/>
+        <Setter Property="FontFamily" Value="{StaticResource AppDefaultFontFamily}"/>
+    </Style>
 
     <Style TargetType="TextBox">
         <Setter Property="ScrollViewer.HorizontalScrollMode" Value="Disabled"/>
         <Setter Property="ScrollViewer.VerticalScrollMode" Value="Disabled"/>
-        <Setter Property="FontFamily" Value="{StaticResource AppDefaultFontFamily}"/>
-        <!--<Setter Property="FontSize" Value="{StaticResource DefaultFontSize}"/>-->
     </Style>
 
     <Style x:Key="NavigationBackButtonNormalStyle" TargetType="Button">

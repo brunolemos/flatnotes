@@ -248,7 +248,8 @@
                             SelectedForeground="{ThemeResource ListViewItemSelectedForegroundThemeBrush}"
                             SelectedPointerOverBackground="{ThemeResource ListViewItemSelectedPointerOverBackgroundThemeBrush}"
                             SelectedPointerOverBorderBrush="{ThemeResource ListViewItemSelectedPointerOverBorderThemeBrush}"
-                            SelectionCheckMarkVisualEnabled="False" />
+                            SelectionCheckMarkVisualEnabled="False"
+                            FontSize="{StaticResource DefaultFontSize}"/>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

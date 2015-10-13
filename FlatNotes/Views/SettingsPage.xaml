@@ -9,6 +9,7 @@
     mc:Ignorable="d"
     NavigationCacheMode="Required"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    FontSize="{StaticResource DefaultFontSize}"
     d:DataContext="{d:DesignData /SampleData/SettingsViewModelSampleData.xaml}">
     <!--Background="{ThemeResource AppStatusBarBackgroundBrush}"-->
     

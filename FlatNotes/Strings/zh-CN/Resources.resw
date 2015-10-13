@@ -138,9 +138,6 @@
   <data name="NewItemTextBox.PlaceholderText" xml:space="preserve">
     <value>新建项目</value>
   </data>
-  <data name="TextAppBarButton.Label" xml:space="preserve">
-    <value>文本</value>
-  </data>
   <data name="Pin" xml:space="preserve">
     <value>创建磁贴</value>
   </data>

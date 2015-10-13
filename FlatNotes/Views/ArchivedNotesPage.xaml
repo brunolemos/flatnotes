@@ -10,6 +10,7 @@
     mc:Ignorable="d"
     NavigationCacheMode="Required"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    FontSize="{StaticResource DefaultFontSize}"
     d:DataContext="{d:DesignData /SampleData/MainViewModelSampleData.xaml}">
 
     <Grid x:Name="LayoutRoot">
@@ -72,7 +73,7 @@
 
                     <VisualState.Setters>
                         <Setter Target="NotesControl.ItemStretch" Value="True"/>
-                        <Setter Target="NotesControl.ItemWidth" Value="180"/>
+                        <Setter Target="NotesControl.ItemWidth" Value="160"/>
                         <Setter Target="NotesControl.Padding" Value="0"/>
                         <Setter Target="NotesControl.Margin" Value="2"/>
                         <Setter Target="NotesControl.MaxItemWidth" Value="-1"/>
