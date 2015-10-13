@@ -64,6 +64,9 @@ namespace FlatNotes.Views
 
             if (openImagePicker)
                 viewModel.OpenImagePicker();
+
+            if (viewModel.Note.IsEmpty() && !openImagePicker)
+                NoteTitleTextBox.Focus(FocusState.Programmatic);
         }
 
         private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
