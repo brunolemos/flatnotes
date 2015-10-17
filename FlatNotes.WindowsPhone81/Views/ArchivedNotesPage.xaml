@@ -10,37 +10,55 @@
     mc:Ignorable="d"
     NavigationCacheMode="Required"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    FontSize="{StaticResource AppDefaultFontSize}"
+    FontFamily="{StaticResource AppDefaultFontFamily}"
     DataContext="{Binding viewModel, RelativeSource={RelativeSource Mode=Self}}"
     d:DataContext="{d:DesignData /SampleData/MainViewModelSampleData.xaml}">
-    
-    <Page.BottomAppBar>
-        <CommandBar Opacity="0" IsHitTestVisible="False"/>
-    </Page.BottomAppBar>
 
     <Grid x:Name="LayoutRoot" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Grid.Transitions>
-            <TransitionCollection>
-                <EntranceThemeTransition FromHorizontalOffset="0" FromVerticalOffset="10"/>
-            </TransitionCollection>
-        </Grid.Transitions>
-        
-        <Grid x:Name="ContentRoot" MaxWidth="1000">
-            <Grid Visibility="{Binding Notes.Count, Converter={StaticResource PositiveIntToVisibilityConverter}, ConverterParameter=True}">
+            <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid x:Name="ContentRoot" Grid.Row="1" MaxWidth="1000">
+            <Grid.Transitions>
+                <TransitionCollection>
+                    <EntranceThemeTransition FromHorizontalOffset="0" FromVerticalOffset="10"/>
+                </TransitionCollection>
+            </Grid.Transitions>
+            
+            <Grid Visibility="{Binding Notes.Count, Mode=OneWay, Converter={StaticResource PositiveIntToVisibilityConverter}, ConverterParameter=True}">
                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <Viewbox Width="180">
+                    <Viewbox Width="150">
                         <Canvas Width="100" Height="100" HorizontalAlignment="Center">
                             <Rectangle Fill="{ThemeResource PhoneLowBrush}" Width="100" Height="70" StrokeThickness="0"/>
                             <Rectangle Fill="{ThemeResource PhoneLowBrush}" Width="70" Height="30" StrokeThickness="0" Margin="0,70,0,0"/>
                             <Polygon Fill="{ThemeResource PhoneLowBrush}" Points="0,0 30,0, 0,30" StrokeThickness="0" Margin="70,70,0,0" />
-                            <Polygon Fill="#10000000" Points="0,0 30,0, 0,30" StrokeThickness="0" Margin="70,70,0,0" />
+                            <Polygon Fill="#07000000" Points="0,0 30,0, 0,30" StrokeThickness="0" Margin="70,70,0,0" />
                         </Canvas>
                     </Viewbox>
 
-                    <TextBlock x:Uid="EmptyArchivedNotesMessageTextBox" Margin="10,24" Text="Archived notes appear here" Foreground="{ThemeResource PhoneMidBrush}" FontSize="{StaticResource EmptyNotesMessageFontSize}" TextWrapping="Wrap" TextAlignment="Center"/>
+                    <TextBlock x:Uid="EmptyArchivedNotesMessageTextBox" Margin="4,24" Text="Archived notes appear here" Foreground="{ThemeResource PhoneMidBrush}" FontSize="{StaticResource EmptyNotesMessageFontSize}" TextWrapping="Wrap" TextAlignment="Center"/>
                 </StackPanel>
             </Grid>
 
             <local:NotesControl x:Name="NotesControl" ItemsSource="{Binding Notes, Mode=OneWay}" Columns="{Binding Columns, Mode=OneWay}" VerticalAlignment="Stretch" CanReorderItems="False" CanDragItems="False" AllowDrop="False" CanSwipeItems="False" IsNoteFlyoutEnabled="True" ItemClick="OnNoteClick"/>
+        </Grid>
+
+        <Grid x:Name="CommandBar" Grid.Row="0" Background="#445963" RequestedTheme="Dark">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <AppBarButton Grid.Column="0" x:Uid="NotesPageNameButton" Width="Auto" Content="Notes" IsCompact="True" Height="{StaticResource AppBarThemeCompactHeight}" Margin="6,0,0,0" Padding="8,0" Background="Transparent" BorderThickness="0" VerticalAlignment="Stretch" Command="{Binding OpenMainPageCommand}" Style="{StaticResource Win10AppBarButtonStyle}"/>
+            <AppBarButton Grid.Column="1" x:Uid="ArchivedNotesPageNameButton" Width="Auto" Content="Archived notes" IsCompact="True" Height="{StaticResource AppBarThemeCompactHeight}" Padding="8,0" FontWeight="Bold" IsTapEnabled="False" Background="Transparent" BorderThickness="0" VerticalAlignment="Stretch" Style="{StaticResource Win10AppBarButtonStyle}"/>
+
+            <AppBarButton Grid.Column="3" x:Uid="ToggleSingleColumnViewAppBarButton" x:Name="ToggleSingleColumnViewAppBarButton" Label="Toggle single column view" IsCompact="True" Command="{Binding ToggleSingleColumnViewCommand}" ToolTipService.ToolTip="{Binding Label, RelativeSource={RelativeSource Mode=Self}}" Icon="ViewAll" Style="{StaticResource Win10AppBarButtonStyle}"/>
         </Grid>
     </Grid>
 </Page>

@@ -9,6 +9,8 @@
     mc:Ignorable="d"
     NavigationCacheMode="Required"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    FontSize="{StaticResource AppDefaultFontSize}"
+    FontFamily="{StaticResource AppDefaultFontFamily}"
     DataContext="{Binding viewModel, RelativeSource={RelativeSource Mode=Self}}"
     d:DataContext="{d:DesignData /SampleData/SettingsViewModelSampleData.xaml}">
 
@@ -16,22 +18,27 @@
         <Converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     </Page.Resources>
 
-    <Page.BottomAppBar>
-        <CommandBar x:Name="CommandBar">
-            <CommandBar.PrimaryCommands>
-                <AppBarButton x:Uid="RateAppbarButton" Icon="Favorite" Label="rate" Command="{Binding RateAppCommand}" ToolTipService.ToolTip="{Binding Label, RelativeSource={RelativeSource Mode=Self}}"/>
-                <AppBarButton x:Uid="SupportAppBarButton" Icon="Mail" Label="support" Command="{Binding ContactSupportCommand}" ToolTipService.ToolTip="{Binding Label, RelativeSource={RelativeSource Mode=Self}}"/>
-            </CommandBar.PrimaryCommands>
-        </CommandBar>
-    </Page.BottomAppBar>
-
     <Grid x:Name="LayoutRoot" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <Grid x:Name="ContentRoot" Margin="12">
+        <Grid x:Name="TopCommandBar" Grid.Row="0" Background="{StaticResource AppMainBrush}" RequestedTheme="Dark">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <AppBarButton Grid.Column="0" x:Uid="SettingsPageNameButton" Content="Settings" Height="{StaticResource AppBarThemeCompactHeight}" Width="Auto" Margin="6,0,0,0" Padding="8,0" FontWeight="Bold" IsTapEnabled="False" Background="Transparent" BorderThickness="0" VerticalAlignment="Stretch" Style="{StaticResource Win10AppBarButtonStyle}"/>
+            <AppBarButton Grid.Column="2" x:Uid="RateAppbarButton" Icon="OutlineStar" Label="Rate" IsCompact="True" Command="{Binding RateAppCommand}" ToolTipService.ToolTip="{Binding Label, RelativeSource={RelativeSource Mode=Self}}" Style="{StaticResource Win10AppBarButtonStyle}"/>
+            <AppBarButton Grid.Column="3" x:Uid="SupportAppBarButton" Icon="Mail" Label="Support" IsCompact="True" Command="{Binding ContactSupportCommand}" ToolTipService.ToolTip="{Binding Label, RelativeSource={RelativeSource Mode=Self}}" Style="{StaticResource Win10AppBarButtonStyle}"/>
+        </Grid>
+
+        <Grid x:Name="ContentRoot" Grid.Row="1" Margin="12">
             <Grid.Transitions>
                 <TransitionCollection>
                     <EntranceThemeTransition FromHorizontalOffset="0" FromVerticalOffset="10"/>

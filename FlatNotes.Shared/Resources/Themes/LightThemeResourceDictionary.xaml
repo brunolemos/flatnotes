@@ -18,10 +18,18 @@
     <SolidColorBrush x:Key="PhoneMidBrush" Color="{ThemeResource PhoneMidColor}"/>
     <SolidColorBrush x:Key="PhoneLowBrush" Color="{ThemeResource PhoneLowColor}"/>
 
+    <SolidColorBrush x:Key="SystemControlBackgroundAltHighBrush" Color="#ffffff"/>
+
     <SolidColorBrush x:Key="ListViewItemPointerOverBackgroundThemeBrush" Color="#08000000"/>
     <SolidColorBrush x:Key="ListViewItemSelectedBackgroundThemeBrush" Color="#20000000"/>
     <SolidColorBrush x:Key="ListViewItemSelectedPointerOverBackgroundThemeBrush" Color="#2A000000"/>
     <SolidColorBrush x:Key="ListViewItemSelectedForegroundThemeBrush" Color="Black"/>
 
     <SolidColorBrush x:Key="CommandBarForegroundThemeBrush" Color="#D0000000"/>
+
+    <SolidColorBrush x:Key="SystemControlForegroundBaseHighBrush" Color="#FF000000"/>
+    <SolidColorBrush x:Key="SystemControlHighlightListLowBrush" Color="#19000000"/>
+    <SolidColorBrush x:Key="SystemControlHighlightAltBaseHighBrush" Color="#FF000000"/>
+    <SolidColorBrush x:Key="SystemControlHighlightListMediumBrush" Color="#33000000"/>
+    <SolidColorBrush x:Key="SystemControlDisabledBaseLowBrush" Color="#33000000"/>
 </ResourceDictionary>

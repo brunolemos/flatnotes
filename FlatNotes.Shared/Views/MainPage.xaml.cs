@@ -124,5 +124,12 @@ namespace FlatNotes.Views
 
             AppData.DB.UpdateAll(viewModel.Notes);
         }
+
+#if WINDOWS_PHONE_APP
+        private void OnCreateNoteTapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        {
+            viewModel.CreateTextNote();
+        }
+#endif
     }
 }

@@ -1,6 +1,7 @@
 using FlatNotes.Common;
 using FlatNotes.Models;
 using FlatNotes.Utils;
+using FlatNotes.Views;
 
 namespace FlatNotes.ViewModels
 {
@@ -9,6 +10,7 @@ namespace FlatNotes.ViewModels
         public static ArchivedNotesViewModel Instance { get { if (instance == null) instance = new ArchivedNotesViewModel(); return instance; } }
         private static ArchivedNotesViewModel instance = null;
 
+        public RelayCommand OpenMainPageCommand { get; private set; }
         public RelayCommand ToggleSingleColumnViewCommand { get; private set; }
 
         public Notes Notes { get { return notes; } set { notes = value; NotifyPropertyChanged("Notes"); } }
@@ -20,6 +22,7 @@ namespace FlatNotes.ViewModels
 
         private ArchivedNotesViewModel()
         {
+            OpenMainPageCommand = new RelayCommand(OpenMainPage);
             ToggleSingleColumnViewCommand = new RelayCommand(ToggleSingleColumnView);
 
             AppData.ArchivedNotesChanged += (s, e) => NotifyPropertyChanged("Notes");
@@ -27,6 +30,11 @@ namespace FlatNotes.ViewModels
         }
 
         #region COMMANDS_ACTIONS
+
+        private void OpenMainPage()
+        {
+            App.RootFrame.Navigate(typeof(MainPage));
+        }
 
         private void ToggleSingleColumnView()
         {

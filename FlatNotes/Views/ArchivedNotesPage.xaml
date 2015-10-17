@@ -10,7 +10,8 @@
     mc:Ignorable="d"
     NavigationCacheMode="Required"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-    FontSize="{StaticResource DefaultFontSize}"
+    FontSize="{StaticResource AppDefaultFontSize}"
+    FontFamily="{StaticResource AppDefaultFontFamily}"
     d:DataContext="{d:DesignData /SampleData/MainViewModelSampleData.xaml}">
 
     <Grid x:Name="LayoutRoot">
@@ -54,7 +55,7 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
-            <Button Grid.Column="0" x:Uid="NotesPageNameButton" Content="Notes" Margin="4,0,0,0" Background="Transparent" BorderThickness="0" VerticalAlignment="Stretch" Command="{x:Bind NavigationHelper.GoBackCommand}"/>
+            <Button Grid.Column="0" x:Uid="NotesPageNameButton" Content="Notes" Margin="4,0,0,0" Background="Transparent" BorderThickness="0" VerticalAlignment="Stretch" Command="{x:Bind viewModel.OpenMainPageCommand}"/>
             <Button Grid.Column="1" x:Uid="ArchivedNotesPageNameButton" Content="Archived notes" FontWeight="Bold" IsTapEnabled="False" Background="Transparent" BorderThickness="0" VerticalAlignment="Stretch"/>
 
             <AppBarButton Grid.Column="3" x:Uid="ToggleSingleColumnViewAppBarButton" x:Name="ToggleSingleColumnViewAppBarButton" Label="Toggle single column view" IsCompact="True" Command="{x:Bind viewModel.ToggleSingleColumnViewCommand}" ToolTipService.ToolTip="{Binding Label, RelativeSource={RelativeSource Mode=Self}}">

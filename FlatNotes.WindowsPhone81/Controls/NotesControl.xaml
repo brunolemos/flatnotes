@@ -11,7 +11,8 @@
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400"
-    Padding="12">
+    Padding="0"
+    Margin="2">
 
     <ListView x:Name="NotesGridView"
               HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
@@ -20,7 +21,7 @@
               AllowDrop="{Binding ElementName=Root, Path=AllowDrop, Mode=OneWay}"  
               ReorderMode="{Binding ElementName=Root, Path=viewModel.ReorderMode, Mode=TwoWay}"  
               SelectionMode="None" 
-              Margin="-4"
+              Margin="0"
               IsItemClickEnabled="True" ItemClick="GridView_ItemClick" DragItemsStarting="NotesGridView_DragItemsStarting"
               DataContext="{Binding viewModel, ElementName=Root}"
               d:DataContext="{Binding Notes, Source={d:DesignData /SampleData/MainViewModelSampleData.xaml}}">
@@ -36,14 +37,14 @@
 
         <ListView.ItemsPanel>
             <ItemsPanelTemplate>
-                <local:FluidGrid x:Name="NotesFluidGrid" Margin="{Binding Padding, ElementName=Root}" ItemWidth="{Binding ItemWidth, ElementName=Root}" ItemStretch="{Binding ItemStretch, ElementName=Root}" Columns="{Binding Columns, ElementName=Root}" AllowSingleColumn="{Binding AllowSingleColumn, ElementName=Root}" HorizontalAlignment="Center" ParentListView="{Binding ElementName=NotesGridView}" ItemsReordered="NotesFluidGrid_ItemsReordered"/>
+                <local:FluidGrid x:Name="NotesFluidGrid" Margin="{Binding Padding, ElementName=Root}" ItemWidth="{Binding ItemWidth, ElementName=Root}" MaxItemWidth="{Binding MaxItemWidth, ElementName=Root}" ItemStretch="{Binding ItemStretch, ElementName=Root}" Columns="{Binding Columns, ElementName=Root}" AllowSingleColumn="{Binding AllowSingleColumn, ElementName=Root}" HorizontalAlignment="Center" ParentListView="{Binding ElementName=NotesGridView}" ItemsReordered="NotesFluidGrid_ItemsReordered"/>
                 <!--<ItemsWrapGrid AllowDrop="True" ItemWidth="{Binding ItemWidth, ElementName=Root}" Orientation="Horizontal" HorizontalAlignment="Center"/>-->
             </ItemsPanelTemplate>
         </ListView.ItemsPanel>
 
         <ListView.ItemTemplate>
             <DataTemplate>
-                <local:NotePreview Loaded="OnNoteLoaded" Holding="NotePreview_Holding" RightTapped="NotePreview_RightTapped" FontSize="18" RequestedTheme="Dark">
+                <local:NotePreview Margin="{Binding Margin, ElementName=Root}" FontSize="{Binding FontSize, ElementName=Root}" Loaded="OnNoteLoaded" Holding="NotePreview_Holding" RightTapped="NotePreview_RightTapped" RequestedTheme="Dark">
                     <FlyoutBase.AttachedFlyout>
                         <MenuFlyout>
                             <MenuFlyoutItem x:Uid="RestoreMenuFlyoutItem" Text="restore" Command="{Binding viewModel.RestoreNoteCommand, ElementName=Root, Mode=OneWay}" CommandParameter="{Binding}" Visibility="{Binding IsArchived, Converter={StaticResource BooleanToVisibilityConverter}}"/>

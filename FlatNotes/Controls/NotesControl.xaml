@@ -10,8 +10,8 @@
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400"
-    Padding="12"
-    Margin="4">
+    Padding="0"
+    Margin="2">
     
     <UserControl.Resources>
         <MenuFlyout x:Key="NoteMenuFlyout">

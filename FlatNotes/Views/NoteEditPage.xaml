@@ -12,7 +12,8 @@
     NavigationCacheMode="Required"
     Background="{x:Bind viewModel.Note.Color.Color, Mode=OneWay}"
     Foreground="{StaticResource AppNoteForegroundBrush}"
-    FontSize="{StaticResource DefaultFontSize}"
+    FontSize="{StaticResource AppDefaultFontSize}"
+    FontFamily="{StaticResource AppDefaultFontFamily}"
     d:DataContext="{d:DesignData /SampleData/NoteEditViewModelSampleData.xaml}">
     
     <Page.Resources>
@@ -26,7 +27,7 @@
             
             <DataTemplate x:Key="NoteChecklistListViewControlTemplate" x:DataType="Models:ChecklistItem">
                 <Grid>
-                    <Grid Margin="12,2">
+                    <Grid Margin="14,2">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
@@ -82,8 +83,8 @@
                         <ListView x:Name="NoteImagesListView" ItemsSource="{Binding}" ItemTemplate="{StaticResource NoteImagesListViewControlTemplate}" SelectionMode="None" DataContext="{x:Bind viewModel.Note.Images, Mode=OneWay}" d:DataContext="{Binding Images}"/>
                     </Grid>
 
-                    <TextBox x:Uid="TitleTextBox" x:Name="NoteTitleTextBox" PlaceholderText="Title" Text="{x:Bind viewModel.Note.Title, Mode=TwoWay, TargetNullValue=''}" Foreground="{StaticResource AppNoteForegroundBrush}" InputScope="Chat" Background="Transparent" BorderThickness="0" FontSize="16" Margin="0" Padding="12" FontWeight="Bold" FontFamily="{StaticResource NoteTitleFontFamily}" MaxLength="50" TextWrapping="NoWrap" KeyDown="NoteTitleTextBox_KeyDown" ScrollViewer.HorizontalScrollMode="Auto" ScrollViewer.VerticalScrollBarVisibility="Disabled"/>
-                    <TextBox x:Uid="TextTextBox" x:Name="NoteTextTextBox" PlaceholderText="Text" Text="{x:Bind viewModel.Note.Text, Mode=TwoWay, TargetNullValue=''}" Foreground="{StaticResource AppNoteForegroundBrush}" InputScope="Chat" Background="Transparent" BorderThickness="0" FontSize="{x:Bind FontSize}" Margin="0" Padding="12,4" FontWeight="SemiLight" FontFamily="{StaticResource NoteTextFontFamily}" AcceptsReturn="True" TextWrapping="Wrap" Visibility="{x:Bind viewModel.Note.IsText, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" ScrollViewer.HorizontalScrollMode="Disabled" ScrollViewer.VerticalScrollMode="Disabled" />
+                    <TextBox x:Uid="TitleTextBox" x:Name="NoteTitleTextBox" PlaceholderText="Title" Text="{x:Bind viewModel.Note.Title, Mode=TwoWay, TargetNullValue=''}" Foreground="{StaticResource AppNoteForegroundBrush}" InputScope="Chat" Background="Transparent" BorderThickness="0" FontSize="16" Margin="0" Padding="14" FontWeight="Bold" FontFamily="{StaticResource NoteTitleFontFamily}" MaxLength="50" TextWrapping="NoWrap" KeyDown="NoteTitleTextBox_KeyDown" ScrollViewer.HorizontalScrollMode="Auto" ScrollViewer.VerticalScrollBarVisibility="Disabled"/>
+                    <TextBox x:Uid="TextTextBox" x:Name="NoteTextTextBox" PlaceholderText="Text" Text="{x:Bind viewModel.Note.Text, Mode=TwoWay, TargetNullValue=''}" Foreground="{StaticResource AppNoteForegroundBrush}" InputScope="Chat" Background="Transparent" BorderThickness="0" FontSize="{x:Bind FontSize}" Margin="0" Padding="14,4" FontWeight="SemiLight" FontFamily="{StaticResource NoteTextFontFamily}" AcceptsReturn="True" TextWrapping="Wrap" Visibility="{x:Bind viewModel.Note.IsText, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" ScrollViewer.HorizontalScrollMode="Disabled" ScrollViewer.VerticalScrollMode="Disabled" />
 
                     <StackPanel Visibility="{x:Bind viewModel.Note.IsChecklist, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
                         <ListView x:Name="NoteChecklistListView" Margin="0" Padding="0" ItemsSource="{Binding}" ItemTemplate="{StaticResource NoteChecklistListViewControlTemplate}" SelectionMode="None" IsItemClickEnabled="True" CanReorderItems="True" CanDragItems="True" AllowDrop="True" Holding="NoteChecklistListView_Holding" ScrollViewer.HorizontalScrollMode="Disabled" ScrollViewer.VerticalScrollMode="Disabled" DataContext="{x:Bind viewModel.Note.Checklist, Mode=OneWay}" d:DataContext="{Binding Checklist}">
@@ -94,7 +95,7 @@
                             </ListView.ItemContainerTransitions>
                         </ListView>
 
-                        <Grid Margin="12,2">
+                        <Grid Margin="14,2">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="*"/>
@@ -105,7 +106,7 @@
                                     <CheckBox Style="{StaticResource CheckBoxWithoutContentStyle}" IsEnabled="False" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                                 </Viewbox>
 
-                                <Viewbox Margin="0,2,0,0" Width="12" HorizontalAlignment="Center" VerticalAlignment="Top" IsHitTestVisible="False">
+                                <Viewbox Margin="0,2,0,0" Width="14" HorizontalAlignment="Center" VerticalAlignment="Top" IsHitTestVisible="False">
                                     <SymbolIcon Symbol="Add" Foreground="{StaticResource PhoneDarkMidBrush}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                                 </Viewbox>
                             </Grid>
@@ -116,9 +117,9 @@
                 </StackPanel>
             </ScrollViewer>
 
-            <ScrollViewer Grid.Row="1" Margin="0,12,0,0" Height="36">
+            <ScrollViewer Grid.Row="1" Margin="0,14,0,0" Height="36">
                 <!-- Visibility="{x:Bind viewModel.Note.IsNewNote, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=True}"-->
-                <StackPanel Margin="12,8,12,0">
+                <StackPanel Margin="14,8,14,0">
                     <StackPanel.ChildrenTransitions>
                         <TransitionCollection>
                             <EntranceThemeTransition FromHorizontalOffset="0" FromVerticalOffset="10" IsStaggeringEnabled="True" />
@@ -133,7 +134,7 @@
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
 
-                            <TextBlock Foreground="{StaticResource PhoneDarkMidBrush}" Text="{x:Bind viewModel.ArchivedAtFormatedString, Mode=OneWay}"/>
+                            <TextBlock Margin="0,0,8,0" Text="{x:Bind viewModel.ArchivedAtFormatedString, Mode=OneWay}" Foreground="{StaticResource PhoneDarkMidBrush}" TextAlignment="Right"/>
 
                             <TextBlock Grid.Column="1" Text="↓" Foreground="{StaticResource PhoneDarkMidBrush}"/>
                         </Grid>
@@ -145,13 +146,13 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock Foreground="{StaticResource PhoneDarkMidBrush}" Text="{x:Bind viewModel.UpdatedAtFormatedString, Mode=OneWay}" Visibility="{x:Bind viewModel.Note.Changed, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=True}"/>
-                        <TextBlock x:Uid="PendingChangesTextBlock" Text="pending update" FontStyle="Italic" Foreground="{StaticResource PhoneDarkMidBrush}" Visibility="{x:Bind viewModel.Note.Changed, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                        <TextBlock Foreground="{StaticResource PhoneDarkMidBrush}" Margin="0,0,8,0" Text="{x:Bind viewModel.UpdatedAtFormatedString, Mode=OneWay}" Visibility="{x:Bind viewModel.Note.Changed, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=True}" TextAlignment="Right"/>
+                        <TextBlock x:Uid="PendingChangesTextBlock" Margin="0,0,8,0" Text="pending update" FontStyle="Italic" Foreground="{StaticResource PhoneDarkMidBrush}" Visibility="{x:Bind viewModel.Note.Changed, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" TextAlignment="Right"/>
 
                         <TextBlock Grid.Column="1" Text="↓" Foreground="{StaticResource PhoneDarkMidBrush}" Visibility="{x:Bind viewModel.Note.CreatedAt, Mode=OneWay, Converter={StaticResource NullableToVisibilityConverter}}"/>
                     </Grid>
 
-                    <TextBlock Margin="0,0,0,8" Foreground="{StaticResource PhoneDarkMidBrush}" Visibility="{x:Bind viewModel.Note.CreatedAt, Mode=OneWay, Converter={StaticResource NullableToVisibilityConverter}}" Text="{x:Bind viewModel.CreatedAtFormatedString, Mode=OneWay}"/>
+                    <TextBlock Margin="0,0,8,8" Foreground="{StaticResource PhoneDarkMidBrush}" Visibility="{x:Bind viewModel.Note.CreatedAt, Mode=OneWay, Converter={StaticResource NullableToVisibilityConverter}}" Text="{x:Bind viewModel.CreatedAtFormatedString, Mode=OneWay}" TextAlignment="Right"/>
                 </StackPanel>
             </ScrollViewer>
         </Grid>
@@ -206,7 +207,7 @@
                     </VisualState.StateTriggers>
 
                     <VisualState.Setters>
-                        <Setter Target="ContentRoot.Margin" Value="12"/>
+                        <Setter Target="ContentRoot.Margin" Value="14"/>
                     </VisualState.Setters>
                 </VisualState>
 

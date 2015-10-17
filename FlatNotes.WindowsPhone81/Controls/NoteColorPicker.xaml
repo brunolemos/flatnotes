@@ -14,14 +14,13 @@
     <UserControl.Resources>
         <DataTemplate x:Key="NoteColorTemplate">
             <Grid Margin="10">
-                <Ellipse Width="42"  Height="42" Fill="{Binding Color}" StrokeThickness="0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <Ellipse Width="42" Height="42" Fill="{Binding Color}" StrokeThickness="2" Stroke="Transparent" VerticalAlignment="Center" HorizontalAlignment="Center"/>
             </Grid>
         </DataTemplate>
         
         <DataTemplate x:Key="SelectedNoteColorTemplate">
             <Grid Margin="10">
-                <Ellipse Width="42"  Height="42" Fill="Transparent" StrokeThickness="3" Stroke="{Binding Color}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                <Ellipse x:Name="SelectedItemIndicator" Width="27"  Height="27" Fill="{Binding Color}" StrokeThickness="0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <Ellipse Width="42" Height="42" Fill="{Binding Color}" StrokeThickness="2" Stroke="#66000000" VerticalAlignment="Center" HorizontalAlignment="Center"/>
             </Grid>
         </DataTemplate>
 

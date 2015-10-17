@@ -4,7 +4,6 @@
     xmlns:local="using:FlatNotes.Controls">
 
     <x:String x:Key="AppName">Flat Notes</x:String>
-    <x:Double x:Key="DefaultFontSize">14</x:Double>
 
     <Color x:Key="AppMainColor">#ffbb00</Color>
     <Color x:Key="AppMainDarkenColor">#f99f00</Color>
@@ -77,17 +76,14 @@
     </Style>
 
     <Style TargetType="ContentPresenter">
-        <Setter Property="FontSize" Value="{StaticResource DefaultFontSize}"/>
         <Setter Property="FontFamily" Value="{StaticResource AppDefaultFontFamily}"/>
     </Style>
 
     <Style TargetType="CheckBox">
-        <Setter Property="FontSize" Value="{StaticResource DefaultFontSize}"/>
         <Setter Property="FontFamily" Value="{StaticResource AppDefaultFontFamily}"/>
     </Style>
 
     <Style TargetType="Button">
-        <Setter Property="FontSize" Value="{StaticResource DefaultFontSize}"/>
         <Setter Property="FontFamily" Value="{StaticResource AppDefaultFontFamily}"/>
     </Style>
 

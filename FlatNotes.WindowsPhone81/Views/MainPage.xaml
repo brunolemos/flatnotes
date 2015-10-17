@@ -9,6 +9,8 @@
     mc:Ignorable="d"
     NavigationCacheMode="Required"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    FontSize="{StaticResource AppDefaultFontSize}"
+    FontFamily="{StaticResource AppDefaultFontFamily}"
     DataContext="{Binding viewModel, RelativeSource={RelativeSource Mode=Self}}"
     d:DataContext="{d:DesignData /SampleData/MainViewModelSampleData.xaml}">
 
@@ -18,49 +20,63 @@
     </Page.Resources>
 
     <Grid x:Name="LayoutRoot" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Grid x:Name="ContentRoot" MaxWidth="1000">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid x:Name="CommandBar" Grid.Row="0" Background="{StaticResource AppMainBrush}" RequestedTheme="Dark">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <AppBarButton Grid.Column="0" x:Uid="NotesPageNameButton" Width="Auto" Content="Notes" IsCompact="True" Height="{StaticResource AppBarThemeCompactHeight}" Margin="6,0,0,0" Padding="8,0" FontWeight="Bold" IsTapEnabled="False" Background="Transparent" BorderThickness="0" VerticalAlignment="Stretch" Style="{StaticResource Win10AppBarButtonStyle}"/>
+            <AppBarButton Grid.Column="1" x:Uid="ArchivedNotesPageNameButton" Width="Auto" Content="Archived notes" IsCompact="True" Height="{StaticResource AppBarThemeCompactHeight}" Padding="8,0" Background="Transparent" BorderThickness="0" VerticalAlignment="Stretch" Command="{Binding OpenArchivedNotesCommand}" Style="{StaticResource Win10AppBarButtonStyle}"/>
+            
+            <AppBarButton Grid.Column="3" x:Uid="ToggleSingleColumnViewAppBarButton" x:Name="ToggleSingleColumnViewAppBarButton" Label="Toggle single column view" IsCompact="True" Command="{Binding ToggleSingleColumnViewCommand}" ToolTipService.ToolTip="{Binding Label, RelativeSource={RelativeSource Mode=Self}}" Icon="ViewAll" Style="{StaticResource Win10AppBarButtonStyle}"/>
+            <AppBarButton Grid.Column="4" x:Uid="SettingsAppBarButton" Icon="Setting" Label="Settings" IsCompact="True" Command="{Binding OpenSettingsCommand}" ToolTipService.ToolTip="{Binding Label, RelativeSource={RelativeSource Mode=Self}}" Style="{StaticResource Win10AppBarButtonStyle}"/>
+        </Grid>
+
+        <Grid x:Name="ContentRoot" Grid.Row="1" MaxWidth="1000">
             <Grid.Transitions>
                 <TransitionCollection>
                     <EntranceThemeTransition FromHorizontalOffset="0" FromVerticalOffset="10"/>
                 </TransitionCollection>
             </Grid.Transitions>
-            
-            <Grid Visibility="{Binding Notes.Count, Converter={StaticResource PositiveIntToVisibilityConverter}, ConverterParameter=True}">
-                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <Viewbox Width="180">
-                        <Canvas Width="100" Height="100" HorizontalAlignment="Center">
-                            <Rectangle Fill="{ThemeResource PhoneLowBrush}" Width="100" Height="70" StrokeThickness="0"/>
-                            <Rectangle Fill="{ThemeResource PhoneLowBrush}" Width="70" Height="30" StrokeThickness="0" Margin="0,70,0,0"/>
-                            <Polygon Fill="{ThemeResource PhoneLowBrush}" Points="0,0 30,0, 0,30" StrokeThickness="0" Margin="70,70,0,0" />
-                            <Polygon Fill="#10000000" Points="0,0 30,0, 0,30" StrokeThickness="0" Margin="70,70,0,0" />
-                        </Canvas>
-                    </Viewbox>
 
-                    <TextBlock x:Uid="EmptyNotesMessageTextBox" Margin="10,24" Text="Notes you add appear here" Foreground="{ThemeResource PhoneMidBrush}" FontSize="{StaticResource EmptyNotesMessageFontSize}" TextWrapping="Wrap" TextAlignment="Center"/>
-                </StackPanel>
-            </Grid>
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding Notes.Count, Converter={StaticResource PositiveIntToVisibilityConverter}, ConverterParameter=True}">
+                <Viewbox Width="150">
+                    <Canvas Width="100" Height="100" HorizontalAlignment="Center">
+                        <Rectangle Fill="{ThemeResource PhoneLowBrush}" Width="100" Height="70" StrokeThickness="0"/>
+                        <Rectangle Fill="{ThemeResource PhoneLowBrush}" Width="70" Height="30" StrokeThickness="0" Margin="0,70,0,0"/>
+                        <Polygon Fill="{ThemeResource PhoneLowBrush}" Points="0,0 30,0, 0,30" StrokeThickness="0" Margin="70,70,0,0" />
+                        <Polygon Fill="#07000000" Points="0,0 30,0, 0,30" StrokeThickness="0" Margin="70,70,0,0" />
+                    </Canvas>
+                </Viewbox>
+
+                <TextBlock x:Uid="EmptyNotesMessageTextBox" Margin="4,24" Text="Notes you add appear here" Foreground="{ThemeResource PhoneMidBrush}" FontSize="{StaticResource EmptyNotesMessageFontSize}" TextWrapping="Wrap" TextAlignment="Center"/>
+            </StackPanel>
 
             <local:NotesControl x:Name="NotesControl" ItemsSource="{Binding Notes, Mode=OneWay}" Columns="{Binding Columns, Mode=OneWay}" VerticalAlignment="Stretch" CanReorderItems="True" CanDragItems="True" AllowDrop="True" CanSwipeItems="True" IsNoteFlyoutEnabled="True" ItemClick="OnNoteClick" ItemsReordered="OnItemsReordered"  ReorderMode="{Binding ReorderMode, Mode=TwoWay}"/>
         </Grid>
-    </Grid>
-    
-    <Page.BottomAppBar>
-        <CommandBar x:Name="CommandBar" IsSticky="True">
-            <CommandBar.PrimaryCommands>
-                <!--<AppBarButton x:Uid="NewAppBarButton" Label="new" Command="{Binding CreateTextNoteCommand}" Icon="Add"/>-->
-                <AppBarButton x:Uid="TextAppBarButton" Label="text" Command="{Binding CreateTextNoteCommand}" ToolTipService.ToolTip="{Binding Label, RelativeSource={RelativeSource Mode=Self}}">
-                    <AppBarButton.Icon>
-                        <FontIcon Glyph="T" FontSize="20" FontFamily="Segoe UI" FontWeight="Normal"/>
-                    </AppBarButton.Icon>
-                </AppBarButton>
-                <AppBarButton x:Uid="ChecklistAppBarButton" Label="checklist" Command="{Binding CreateChecklistNoteCommand}" Icon="List" ToolTipService.ToolTip="{Binding Label, RelativeSource={RelativeSource Mode=Self}}"/>
-            </CommandBar.PrimaryCommands>
 
-            <CommandBar.SecondaryCommands>
-                <AppBarButton x:Uid="ToggleSingleColumnViewAppBarButton" x:Name="ToggleSingleColumnViewAppBarButton" Label="toggle single column view" Command="{Binding ToggleSingleColumnViewCommand}"/>
-                <AppBarButton x:Uid="ArchivedNotesAppBarButton" Icon="Preview" Label="archived notes" Command="{Binding OpenArchivedNotesCommand}"/>
-                <AppBarButton x:Uid="SettingsAppBarButton" Icon="Setting" Label="settings" Command="{Binding OpenSettingsCommand}"/>
-            </CommandBar.SecondaryCommands>
-        </CommandBar>
-    </Page.BottomAppBar>
+        <Grid x:Name="NoteQuickBox" Grid.Row="2" Background="{ThemeResource SystemControlBackgroundAltHighBrush}" HorizontalAlignment="Stretch">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0" Background="Transparent" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Tapped="OnCreateNoteTapped">
+                <TextBlock x:Name="NewNoteTextBlock" x:Uid="NewNoteTextBlock" Text="New note..." Margin="14,0" Foreground="{ThemeResource ApplicationForegroundThemeBrush}" VerticalAlignment="Center" HorizontalAlignment="Left" TextAlignment="Left" Opacity="0.6"/>
+            </Grid>
+            <AppBarButton Grid.Column="1" x:Uid="ChecklistAppBarButton" Label="Checklist" IsCompact="True" Command="{Binding CreateChecklistNoteCommand}" Icon="List" ToolTipService.ToolTip="{Binding Label, RelativeSource={RelativeSource Mode=Self}}" BorderThickness="0" BorderBrush="Transparent" Style="{StaticResource Win10AppBarButtonStyle}"/>
+            <AppBarButton Grid.Column="2" x:Uid="PhotoAppBarButton" Label="Image" IsCompact="True" Command="{Binding CreateImageNoteCommand}" Icon="Camera" ToolTipService.ToolTip="{Binding Label, RelativeSource={RelativeSource Mode=Self}}" BorderThickness="0" BorderBrush="Transparent" Style="{StaticResource Win10AppBarButtonStyle}"/>
+        </Grid>
+    </Grid>
 </Page>
