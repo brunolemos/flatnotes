@@ -30,12 +30,9 @@ namespace FlatNotes.Views
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
-
-            OnLoaded();
-            Loaded += (s, e) => OnLoaded();
         }
 
-        private void OnLoaded()
+        private void UpdateStatusBar()
         {
             var statusBarBackgroundColor = Color.FromArgb(0xff, 0x44, 0x59, 0x63);//.Add(Color.FromArgb(0x10, 0, 0, 0));
             var statusBarForegroundColor = Color.FromArgb(0xD0, 0xff, 0xff, 0xff);
@@ -44,7 +41,9 @@ namespace FlatNotes.Views
 
         private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
+            UpdateStatusBar();
             App.RootFrame.Background = this.Background;
+
             if (viewModel.Notes == null || viewModel.Notes.Count <= 0) viewModel.Notes = AppData.ArchivedNotes;
         }
 

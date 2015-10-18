@@ -19,8 +19,24 @@
             <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="48"/>
         </Grid.RowDefinitions>
+
+        <Grid x:Name="CommandBar" Grid.Row="0" Background="#445963" RequestedTheme="Dark">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <AppBarButton Grid.Column="0" x:Uid="NotesPageNameButton" Width="Auto" Content="Notes" IsCompact="True" Height="{StaticResource AppBarThemeCompactHeight}" Margin="6,0,0,0" Padding="8,0" Background="Transparent" BorderThickness="0" VerticalAlignment="Stretch" Command="{Binding OpenMainPageCommand}" Style="{StaticResource Win10AppBarButtonStyle}"/>
+            <AppBarButton Grid.Column="1" x:Uid="ArchivedNotesPageNameButton" Width="Auto" Content="Archived notes" IsCompact="True" Height="{StaticResource AppBarThemeCompactHeight}" Padding="8,0" FontWeight="Bold" IsTapEnabled="False" Background="Transparent" BorderThickness="0" VerticalAlignment="Stretch" Style="{StaticResource Win10AppBarButtonStyle}"/>
+
+            <AppBarButton Grid.Column="3" x:Uid="ToggleSingleColumnViewAppBarButton" Label="Toggle single column view" IsCompact="True" Command="{Binding ToggleSingleColumnViewCommand}" ToolTipService.ToolTip="{Binding Label, RelativeSource={RelativeSource Mode=Self}}" Icon="ViewAll" Style="{StaticResource Win10AppBarButtonStyle}"/>
+            <AppBarButton Grid.Column="4" x:Uid="SettingsAppBarButton" Icon="Setting" Label="Settings" IsCompact="True" Command="{Binding OpenSettingsCommand}" ToolTipService.ToolTip="{Binding Label, RelativeSource={RelativeSource Mode=Self}}" Style="{StaticResource Win10AppBarButtonStyle}"/>
+        </Grid>
 
         <Grid x:Name="ContentRoot" Grid.Row="1" MaxWidth="1000">
             <Grid.Transitions>
@@ -44,21 +60,7 @@
                 </StackPanel>
             </Grid>
 
-            <local:NotesControl x:Name="NotesControl" ItemsSource="{Binding Notes, Mode=OneWay}" Columns="{Binding Columns, Mode=OneWay}" VerticalAlignment="Stretch" CanReorderItems="False" CanDragItems="False" AllowDrop="False" CanSwipeItems="False" IsNoteFlyoutEnabled="True" ItemClick="OnNoteClick"/>
-        </Grid>
-
-        <Grid x:Name="CommandBar" Grid.Row="0" Background="#445963" RequestedTheme="Dark">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-
-            <AppBarButton Grid.Column="0" x:Uid="NotesPageNameButton" Width="Auto" Content="Notes" IsCompact="True" Height="{StaticResource AppBarThemeCompactHeight}" Margin="6,0,0,0" Padding="8,0" Background="Transparent" BorderThickness="0" VerticalAlignment="Stretch" Command="{Binding OpenMainPageCommand}" Style="{StaticResource Win10AppBarButtonStyle}"/>
-            <AppBarButton Grid.Column="1" x:Uid="ArchivedNotesPageNameButton" Width="Auto" Content="Archived notes" IsCompact="True" Height="{StaticResource AppBarThemeCompactHeight}" Padding="8,0" FontWeight="Bold" IsTapEnabled="False" Background="Transparent" BorderThickness="0" VerticalAlignment="Stretch" Style="{StaticResource Win10AppBarButtonStyle}"/>
-
-            <AppBarButton Grid.Column="3" x:Uid="ToggleSingleColumnViewAppBarButton" x:Name="ToggleSingleColumnViewAppBarButton" Label="Toggle single column view" IsCompact="True" Command="{Binding ToggleSingleColumnViewCommand}" ToolTipService.ToolTip="{Binding Label, RelativeSource={RelativeSource Mode=Self}}" Icon="ViewAll" Style="{StaticResource Win10AppBarButtonStyle}"/>
+            <local:NotesControl x:Name="NotesControl" ItemsSource="{Binding Notes, Mode=OneWay}" Columns="{Binding Columns, Mode=OneWay}" VerticalAlignment="Stretch" CanReorderItems="False" CanDragItems="False" AllowDrop="False" CanSwipeItems="False" IsNoteFlyoutEnabled="True" ItemClick="OnNoteClick" FontSize="{Binding FontSize, ElementName=Root}"/>
         </Grid>
     </Grid>
 </Page>

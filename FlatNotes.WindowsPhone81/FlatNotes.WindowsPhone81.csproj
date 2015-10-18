@@ -112,13 +112,6 @@
     <None Include="Package.StoreAssociation.xml" />
     <None Include="packages.config" />
     <None Include="Service References\Application Insights\ConnectedService.json" />
-    <PRIResource Include="Strings\zh-CN\Resources.resw" />
-    <PRIResource Include="Strings\pt-BR\Resources.resw" />
-    <PRIResource Include="Strings\hi\Resources.resw" />
-    <PRIResource Include="Strings\es\Resources.resw" />
-    <PRIResource Include="Strings\en-US\Resources.resw">
-      <SubType>Designer</SubType>
-    </PRIResource>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.ApplicationInsights, Version=2.0.0.1613, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">

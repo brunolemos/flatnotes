@@ -25,6 +25,7 @@ namespace FlatNotes
 
         private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
+            App.ResetStatusBar();
         }
 
         private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)

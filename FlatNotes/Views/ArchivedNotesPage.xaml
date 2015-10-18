@@ -28,7 +28,7 @@
                 </TransitionCollection>
             </Grid.Transitions>
 
-            <Grid Visibility="{x:Bind viewModel.Notes.Count, Mode=OneWay, Converter={StaticResource PositiveIntToVisibilityConverter}, ConverterParameter=True}">
+            <Grid Margin="0,0,0,48" Visibility="{x:Bind viewModel.Notes.Count, Mode=OneWay, Converter={StaticResource PositiveIntToVisibilityConverter}, ConverterParameter=True}">
                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                     <Viewbox Width="150">
                         <Canvas Width="100" Height="100" HorizontalAlignment="Center">
@@ -43,7 +43,7 @@
                 </StackPanel>
             </Grid>
 
-            <local:NotesControl x:Name="NotesControl" ItemsSource="{Binding}" Columns="{x:Bind viewModel.Columns, Mode=OneWay}" DataContext="{x:Bind viewModel.Notes, Mode=OneWay}" d:DataContext="{Binding Notes}" CanReorderItems="False" CanDrag="False" AllowDrop="False" CanSwipeItems="False" IsNoteFlyoutEnabled="True" ItemClick="OnNoteClick"/>
+            <local:NotesControl x:Name="NotesControl" ItemsSource="{Binding}" Columns="{x:Bind viewModel.Columns, Mode=OneWay}" DataContext="{x:Bind viewModel.Notes, Mode=OneWay}" d:DataContext="{Binding Notes}" CanReorderItems="False" CanDrag="False" AllowDrop="False" CanSwipeItems="False" IsNoteFlyoutEnabled="True" ItemClick="OnNoteClick" FontSize="{x:Bind FontSize}"/>
         </Grid>
 
 
@@ -52,6 +52,7 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
@@ -63,6 +64,7 @@
                     <FontIcon Glyph="&#xE8A9;"/>
                 </AppBarButton.Icon>
             </AppBarButton>
+            <AppBarButton Grid.Column="4" x:Uid="SettingsAppBarButton" Icon="Setting" Label="Settings" IsCompact="True" Command="{x:Bind viewModel.OpenSettingsCommand}" ToolTipService.ToolTip="{Binding Label, RelativeSource={RelativeSource Mode=Self}}"/>
         </Grid>
 
         <VisualStateManager.VisualStateGroups>
@@ -117,7 +119,7 @@
                     <VisualState.Setters>
                         <Setter Target="NotesControl.ItemStretch" Value="False"/>
                         <Setter Target="NotesControl.ItemWidth" Value="260"/>
-                        <Setter Target="NotesControl.Padding" Value="24,24"/>
+                        <Setter Target="NotesControl.Padding" Value="24,12"/>
                         <Setter Target="NotesControl.Margin" Value="4"/>
                         <Setter Target="NotesControl.MaxItemWidth" Value="1024"/>
                     </VisualState.Setters>
@@ -131,7 +133,7 @@
                     <VisualState.Setters>
                         <Setter Target="NotesControl.ItemStretch" Value="False"/>
                         <Setter Target="NotesControl.ItemWidth" Value="300"/>
-                        <Setter Target="NotesControl.Padding" Value="48,24"/>
+                        <Setter Target="NotesControl.Padding" Value="48,12"/>
                         <Setter Target="NotesControl.Margin" Value="4"/>
                         <Setter Target="NotesControl.MaxItemWidth" Value="1200"/>
                     </VisualState.Setters>

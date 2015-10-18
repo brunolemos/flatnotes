@@ -40,7 +40,7 @@
                 <TextBlock x:Uid="EmptyNotesMessageTextBox" Margin="4,24" Text="Notes you add appear here" Foreground="{ThemeResource PhoneMidBrush}" FontSize="{StaticResource EmptyNotesMessageFontSize}" TextWrapping="Wrap" TextAlignment="Center"/>
             </StackPanel>
 
-            <local:NotesControl x:Name="NotesControl" ItemsSource="{Binding}" Columns="{x:Bind viewModel.Columns, Mode=OneWay}" DataContext="{x:Bind viewModel.Notes, Mode=OneWay}" d:DataContext="{Binding Notes}" VerticalAlignment="Stretch" CanReorderItems="True" CanDragItems="True" AllowDrop="True" CanSwipeItems="True" IsNoteFlyoutEnabled="True" ItemClick="OnNoteClick" ItemsReordered="OnItemsReordered"/>
+            <local:NotesControl x:Name="NotesControl" ItemsSource="{Binding}" Columns="{x:Bind viewModel.Columns, Mode=OneWay}" DataContext="{x:Bind viewModel.Notes, Mode=OneWay}" d:DataContext="{Binding Notes}" VerticalAlignment="Stretch" CanReorderItems="True" CanDragItems="True" AllowDrop="True" CanSwipeItems="True" IsNoteFlyoutEnabled="True" ItemClick="OnNoteClick" ItemsReordered="OnItemsReordered" FontSize="{x:Bind FontSize}"/>
         </Grid>
 
         <Grid x:Name="CommandBar" Grid.Row="0" Background="{StaticResource AppMainBrush}" RequestedTheme="Dark">
@@ -92,8 +92,8 @@
                         <Setter Target="NotesControl.ItemWidth" Value="160"/>
                         <Setter Target="NotesControl.Padding" Value="0"/>
                         <Setter Target="NotesControl.Margin" Value="2"/>
-                        <Setter Target="NewNoteTextBlock.Margin" Value="0"/>
                         <Setter Target="NotesControl.MaxItemWidth" Value="-1"/>
+                        <Setter Target="NewNoteTextBlock.Margin" Value="0"/>
                     </VisualState.Setters>
                 </VisualState>
 
@@ -111,8 +111,8 @@
                         <Setter Target="NotesControl.ItemWidth" Value="220"/>
                         <Setter Target="NotesControl.Padding" Value="12"/>
                         <Setter Target="NotesControl.Margin" Value="2"/>
-                        <Setter Target="NewNoteTextBlock.Margin" Value="12,4"/>
                         <Setter Target="NotesControl.MaxItemWidth" Value="500"/>
+                        <Setter Target="NewNoteTextBlock.Margin" Value="12,4"/>
                     </VisualState.Setters>
                 </VisualState>
 
@@ -123,15 +123,15 @@
 
                     <VisualState.Setters>
                         <Setter Target="NoteQuickBox.Grid.Row" Value="1"/>
-                        <Setter Target="NoteQuickBox.Margin" Value="15"/>
+                        <Setter Target="NoteQuickBox.Margin" Value="15,15,15,0"/>
                         <Setter Target="NoteQuickBox.CornerRadius" Value="2"/>
                         <Setter Target="NoteQuickBox.MaxWidth" Value="500"/>
                         <Setter Target="NotesControl.ItemStretch" Value="False"/>
                         <Setter Target="NotesControl.ItemWidth" Value="260"/>
                         <Setter Target="NotesControl.Padding" Value="12"/>
                         <Setter Target="NotesControl.Margin" Value="4"/>
-                        <Setter Target="NewNoteTextBlock.Margin" Value="12,4"/>
                         <Setter Target="NotesControl.MaxItemWidth" Value="768"/>
+                        <Setter Target="NewNoteTextBlock.Margin" Value="12,4"/>
                     </VisualState.Setters>
                 </VisualState>
 
@@ -142,15 +142,15 @@
 
                     <VisualState.Setters>
                         <Setter Target="NoteQuickBox.Grid.Row" Value="1"/>
-                        <Setter Target="NoteQuickBox.Margin" Value="30"/>
+                        <Setter Target="NoteQuickBox.Margin" Value="30,30,30,0"/>
                         <Setter Target="NoteQuickBox.CornerRadius" Value="2"/>
                         <Setter Target="NoteQuickBox.MaxWidth" Value="768"/>
                         <Setter Target="NotesControl.ItemStretch" Value="False"/>
                         <Setter Target="NotesControl.ItemWidth" Value="260"/>
-                        <Setter Target="NotesControl.Padding" Value="24,24"/>
+                        <Setter Target="NotesControl.Padding" Value="24,12"/>
                         <Setter Target="NotesControl.Margin" Value="4"/>
-                        <Setter Target="NewNoteTextBlock.Margin" Value="12,4"/>
                         <Setter Target="NotesControl.MaxItemWidth" Value="1024"/>
+                        <Setter Target="NewNoteTextBlock.Margin" Value="12,4"/>
                     </VisualState.Setters>
                 </VisualState>
 
@@ -161,15 +161,15 @@
 
                     <VisualState.Setters>
                         <Setter Target="NoteQuickBox.Grid.Row" Value="1"/>
-                        <Setter Target="NoteQuickBox.Margin" Value="30"/>
+                        <Setter Target="NoteQuickBox.Margin" Value="30,30,30,0"/>
                         <Setter Target="NoteQuickBox.CornerRadius" Value="2"/>
                         <Setter Target="NoteQuickBox.MaxWidth" Value="1024"/>
                         <Setter Target="NotesControl.ItemStretch" Value="False"/>
                         <Setter Target="NotesControl.ItemWidth" Value="300"/>
-                        <Setter Target="NotesControl.Padding" Value="48,24"/>
+                        <Setter Target="NotesControl.Padding" Value="48,12"/>
                         <Setter Target="NotesControl.Margin" Value="4"/>
-                        <Setter Target="NewNoteTextBlock.Margin" Value="12,4"/>
                         <Setter Target="NotesControl.MaxItemWidth" Value="1200"/>
+                        <Setter Target="NewNoteTextBlock.Margin" Value="12,4"/>
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>

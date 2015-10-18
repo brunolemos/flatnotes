@@ -36,9 +36,6 @@ namespace FlatNotes.Views
             Loaded += (s, e) => EnableReorderFeature();
             Unloaded += (s, e) => DisableReorderFeature();
 #endif
-
-            OnLoaded();
-            Loaded += (s, e) => OnLoaded();
         }
 
 #if WINDOWS_PHONE_APP
@@ -46,14 +43,11 @@ namespace FlatNotes.Views
         partial void DisableReorderFeature();
 #endif
 
-        private void OnLoaded()
-        {
-            App.ResetStatusBar();
-        }
-
         private async void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
+            App.ResetStatusBar();
             App.RootFrame.Background = this.Background;
+
             if (viewModel.Notes == null || viewModel.Notes.Count <= 0) viewModel.Notes = AppData.Notes;
             viewModel.ReorderMode = ListViewReorderMode.Disabled;
 

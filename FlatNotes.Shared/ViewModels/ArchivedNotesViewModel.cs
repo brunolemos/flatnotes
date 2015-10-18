@@ -12,6 +12,7 @@ namespace FlatNotes.ViewModels
 
         public RelayCommand OpenMainPageCommand { get; private set; }
         public RelayCommand ToggleSingleColumnViewCommand { get; private set; }
+        public RelayCommand OpenSettingsCommand { get; private set; }
 
         public Notes Notes { get { return notes; } set { notes = value; NotifyPropertyChanged("Notes"); } }
         public Notes notes = AppData.ArchivedNotes;
@@ -24,6 +25,7 @@ namespace FlatNotes.ViewModels
         {
             OpenMainPageCommand = new RelayCommand(OpenMainPage);
             ToggleSingleColumnViewCommand = new RelayCommand(ToggleSingleColumnView);
+            OpenSettingsCommand = new RelayCommand(OpenSettingsPage);
 
             AppData.ArchivedNotesChanged += (s, e) => NotifyPropertyChanged("Notes");
             AppSettings.Instance.IsSingleColumnEnabledChanged += (s, e) => { NotifyPropertyChanged("IsSingleColumnEnabled"); NotifyPropertyChanged("Columns"); };
@@ -40,6 +42,11 @@ namespace FlatNotes.ViewModels
         {
             App.TelemetryClient.TrackEvent("ToggleSingleColumnView_ArchivedNotesViewModel");
             IsSingleColumnEnabled = !IsSingleColumnEnabled;
+        }
+
+        private void OpenSettingsPage()
+        {
+            App.RootFrame.Navigate(typeof(SettingsPage));
         }
 
         #endregion

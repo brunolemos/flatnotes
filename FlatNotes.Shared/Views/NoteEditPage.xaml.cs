@@ -47,7 +47,7 @@ namespace FlatNotes.Views
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
 
-            this.Loaded += OnLoaded;
+            this.Loaded += (s, e) => OnLoaded();
 
 #if WINDOWS_PHONE_APP
             //Color Picker WP81
@@ -58,10 +58,8 @@ namespace FlatNotes.Views
 #endif
         }
 
-        private void OnLoaded(object sender, RoutedEventArgs e)
+        private void OnLoaded()
         {
-            OnColorChanged();
-
             if (openImagePicker)
                 viewModel.OpenImagePicker();
 
@@ -71,8 +69,10 @@ namespace FlatNotes.Views
 
         private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
-            viewModel.PropertyChanged += OnViewModelPropertyChanged;
+            OnColorChanged();
             openImagePicker = false;
+
+            viewModel.PropertyChanged += OnViewModelPropertyChanged;
 
             if (e.NavigationParameter != null && e.NavigationParameter is Note)
             {
@@ -104,7 +104,7 @@ namespace FlatNotes.Views
 
         private async void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
         {
-            App.RootFrame.Background = previousBackground;
+            //App.RootFrame.Background = previousBackground;
 
             //deleted
             if (viewModel.Note == null) return;
