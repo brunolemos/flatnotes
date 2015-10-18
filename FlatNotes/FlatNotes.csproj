@@ -20,6 +20,9 @@
     <PackageCertificateKeyFile>FlatNotes_StoreKey.pfx</PackageCertificateKeyFile>
     <ApplicationInsightsResourceId>/subscriptions/0b3bf49d-6fe0-4921-aadd-eb466c243776/resourcegroups/FlatNotesGroup/providers/microsoft.insights/components/Flat Notes</ApplicationInsightsResourceId>
     <PackageCertificateThumbprint>986AD9CD770C6C7724FC0C6281C12E05DED1595A</PackageCertificateThumbprint>
+    <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
+    <AppxBundle>Always</AppxBundle>
+    <AppxBundlePlatforms>x86|arm</AppxBundlePlatforms>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
     <DebugSymbols>true</DebugSymbols>
@@ -114,8 +117,7 @@
   <ItemGroup>
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
-    <Content Include="Assets\StoreLogo.scale-100.png" />
-    <Content Include="Assets\StoreLogo.scale-400.png" />
+    <Content Include="Assets\StoreLogo.png" />
     <Content Include="Assets\Tiles\Solid\Square150x150Logo.scale-100.png" />
     <Content Include="Assets\Tiles\Solid\Square150x150Logo.scale-200.png" />
     <Content Include="Assets\Tiles\Solid\Square310x310Logo.scale-200.png" />
@@ -193,6 +195,9 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <SDKReference Include="Microsoft.VCLibs, Version=14.0">
+      <Name>Visual C++ 2015 Runtime for Universal Windows Platform Apps</Name>
+    </SDKReference>
     <SDKReference Include="Microsoft.VCLibs.120, Version=14.0">
       <Name>Microsoft Visual C++ 2013 Runtime Package for Windows Universal</Name>
     </SDKReference>
@@ -203,12 +208,15 @@
       <Name>Windows Mobile Extensions for the UWP</Name>
     </SDKReference>
   </ItemGroup>
+  <ItemGroup>
+    <AppxSystemBinary Include="FlatNotes.dll" />
+  </ItemGroup>
   <Import Project="..\FlatNotes.Shared\FlatNotes.Shared.projitems" Label="Shared" />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>

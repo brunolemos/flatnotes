@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="29428BrunoLemos.Keep" Publisher="CN=0B66D0B0-F691-4768-B3EE-FC3873EB0D73" Version="2.3.1.0" />
+  <Identity Name="29428BrunoLemos.Keep" Publisher="CN=0B66D0B0-F691-4768-B3EE-FC3873EB0D73" Version="2.5.1.0" />
   <mp:PhoneIdentity PhoneProductId="affe1546-b77f-4b51-abd9-d9ca7a01b415" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>Flat Notes</DisplayName>
@@ -14,8 +14,8 @@
     <Resource Language="x-generate" />
   </Resources>
   <Applications>
-    <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="FlatNotes.App">
-      <uap:VisualElements DisplayName="Flat Notes" Square150x150Logo="Assets\Tiles\Solid\Square150x150Logo.png" Square44x44Logo="Assets\Tiles\Solid\Square44x44Logo.png" Description="FlatNotes" BackgroundColor="transparent">
+    <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="FlatNotes">
+      <uap:VisualElements DisplayName="Flat Notes" Square150x150Logo="Assets\Tiles\Solid\Square150x150Logo.png" Square44x44Logo="Assets\Tiles\Solid\Square44x44Logo.png" Description="Flat Notes is the most beautiful notes app for Windows!" BackgroundColor="transparent">
         <uap:DefaultTile Wide310x150Logo="Assets\Tiles\Solid\Wide310x150Logo.png" ShortName="Flat Notes" Square310x310Logo="Assets\Tiles\Solid\Square310x310Logo.png" Square71x71Logo="Assets\Tiles\Solid\Square71x71Logo.png">
           <uap:ShowNameOnTiles>
             <uap:ShowOn Tile="square150x150Logo" />
@@ -24,6 +24,11 @@
           </uap:ShowNameOnTiles>
         </uap:DefaultTile>
         <uap:SplashScreen Image="Assets\SplashScreen.png" BackgroundColor="#e8e8e8" />
+        <uap:InitialRotationPreference>
+          <uap:Rotation Preference="portrait" />
+          <uap:Rotation Preference="landscape" />
+          <uap:Rotation Preference="landscapeFlipped" />
+        </uap:InitialRotationPreference>
       </uap:VisualElements>
     </Application>
   </Applications>
