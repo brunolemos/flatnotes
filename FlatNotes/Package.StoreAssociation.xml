@@ -203,6 +203,8 @@
     <Language Code="ky-kg" InMinimumRequirementSet="true" />
     <Language Code="lb" InMinimumRequirementSet="true" />
     <Language Code="lb-lu" InMinimumRequirementSet="true" />
+    <Language Code="lo" InMinimumRequirementSet="true" />
+    <Language Code="lo-la" InMinimumRequirementSet="true" />
     <Language Code="lt" InMinimumRequirementSet="true" />
     <Language Code="lt-lt" InMinimumRequirementSet="true" />
     <Language Code="lv" InMinimumRequirementSet="true" />
@@ -356,16 +358,17 @@
     <Language Code="zu-za" InMinimumRequirementSet="true" />
   </SupportedLocales>
   <ProductReservedInfo>
-    <MainPackageIdentityName>29428BrunoLemos.KeepBeta</MainPackageIdentityName>
+    <MainPackageIdentityName>29428BrunoLemos.Keep</MainPackageIdentityName>
     <ReservedNames>
-      <ReservedName>Flat Notes Beta</ReservedName>
-      <ReservedName>Google Keep Beta</ReservedName>
-      <ReservedName>Keep Notes Beta</ReservedName>
-      <ReservedName>Keep Beta</ReservedName>
+      <ReservedName>Flat Notes</ReservedName>
+      <ReservedName>Keep 8.1</ReservedName>
+      <ReservedName>Google Keep 8.1</ReservedName>
+      <ReservedName>Google Keep Alternative</ReservedName>
+      <ReservedName>#Keep</ReservedName>
     </ReservedNames>
   </ProductReservedInfo>
   <AccountPackageIdentityNames>
-    <MainPackageIdentityName>29428BrunoLemos.Keep</MainPackageIdentityName>
+    <MainPackageIdentityName>29428BrunoLemos.KeepBeta</MainPackageIdentityName>
   </AccountPackageIdentityNames>
-  <PackageInfoList LandingUrl="https://dev.windows.com/dashboard/Application?appId=9WZDNCRDD0XV" />
+  <PackageInfoList LandingUrl="https://dev.windows.com/dashboard/Application?appId=9WZDNCRDD0XX" />
 </StoreAssociation>

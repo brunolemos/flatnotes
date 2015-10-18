@@ -358,22 +358,38 @@
     <Language Code="zu-za" InMinimumRequirementSet="true" />
   </SupportedLocales>
   <ProductReservedInfo>
-    <MainPackageIdentityName>29428BrunoLemos.KeepBeta81</MainPackageIdentityName>
+    <MainPackageIdentityName>29428BrunoLemos.Keep</MainPackageIdentityName>
     <ReservedNames>
-      <ReservedName>Flat Notes Beta</ReservedName>
-      <ReservedName>Google Keep Beta</ReservedName>
-      <ReservedName>Keep Notes Beta</ReservedName>
-      <ReservedName>Keep Beta</ReservedName>
+      <ReservedName>Flat Notes</ReservedName>
+      <ReservedName>Keep 8.1</ReservedName>
+      <ReservedName>Google Keep 8.1</ReservedName>
+      <ReservedName>Google Keep Alternative</ReservedName>
+      <ReservedName>#Keep</ReservedName>
     </ReservedNames>
   </ProductReservedInfo>
   <AccountPackageIdentityNames>
-    <MainPackageIdentityName>29428BrunoLemos.Keep</MainPackageIdentityName>
+    <MainPackageIdentityName>29428BrunoLemos.KeepBeta</MainPackageIdentityName>
   </AccountPackageIdentityNames>
-  <PackageInfoList LandingUrl="https://dev.windows.com/dashboard/Application?appId=9WZDNCRDD0XV">
+  <PackageInfoList LandingUrl="https://dev.windows.com/dashboard/Application?appId=9WZDNCRDD0XX">
     <PackageInfo>
       <OsMinVersion>6.3.1.0</OsMinVersion>
       <PackageArchitecture>Arm</PackageArchitecture>
-      <PackageMaxArchitectureVersion>2.0.9.0</PackageMaxArchitectureVersion>
+      <PackageMaxArchitectureVersion>2.3.0.0</PackageMaxArchitectureVersion>
+    </PackageInfo>
+    <PackageInfo>
+      <OsMinVersion>6.3.1.0</OsMinVersion>
+      <PackageArchitecture>Neutral</PackageArchitecture>
+      <PackageMaxArchitectureVersion>2.3.0.0</PackageMaxArchitectureVersion>
+    </PackageInfo>
+    <PackageInfo>
+      <OsMinVersion>6.3.1.0</OsMinVersion>
+      <PackageArchitecture>Neutral</PackageArchitecture>
+      <PackageMaxArchitectureVersion>2.3.0.0</PackageMaxArchitectureVersion>
+    </PackageInfo>
+    <PackageInfo>
+      <OsMinVersion>6.3.1.0</OsMinVersion>
+      <PackageArchitecture>Neutral</PackageArchitecture>
+      <PackageMaxArchitectureVersion>2.3.0.0</PackageMaxArchitectureVersion>
     </PackageInfo>
   </PackageInfoList>
 </StoreAssociation>
