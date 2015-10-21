@@ -37,7 +37,9 @@ namespace FlatNotes
         public static bool IsBeta = Package.Current.Id.Name.Contains("Beta");
         public static string Name = IsBeta ? "Flat Notes Beta" : "Flat Notes";
         public static string Version = String.Format("{0}.{1}.{2}", Package.Current.Id.Version.Major, Package.Current.Id.Version.Minor, Package.Current.Id.Version.Build);
-        public static string PublishedMainAppId = "da5b3964-02d9-42c4-ab1d-5e58d1c06095";
+        public static bool IsWP81 = MainViewModel.Instance.IsMobile && MainViewModel.Instance.OSVersion == "8.1";
+        public static string OSName = IsWP81 ? "Windows Phone 8.1" : string.Format("Windows {0} {1}", MainViewModel.Instance.OSVersion, MainViewModel.Instance.IsMobile ? "Mobile" : "Desktop");
+        public static string PublishedMainAppId = IsWP81 ? "da5b3964-02d9-42c4-ab1d-5e58d1c06095" : "9wzdncrdd0xx";
 
         public static Frame RootFrame { get { if (rootFrame == null) rootFrame = CreateRootFrame(); return rootFrame; } }
         private static Frame rootFrame = null;

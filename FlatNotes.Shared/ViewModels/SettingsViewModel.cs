@@ -46,7 +46,9 @@ namespace FlatNotes.ViewModels
         public static async void RateApp()
         {
             App.TelemetryClient.TrackEvent("SendFeedback_SettingsViewModel");
-            await Launcher.LaunchUriAsync(new Uri("ms-windows-store:reviewapp?appid=" + CurrentApp.AppId));
+
+            var storeReviewUri = new Uri((App.IsWP81 ? "ms-windows-store://reviewapp/?AppId=" : "ms-windows-store://review/?ProductId=") + App.PublishedMainAppId);
+            await Launcher.LaunchUriAsync(storeReviewUri);
         }
 
 
@@ -54,12 +56,8 @@ namespace FlatNotes.ViewModels
         {
             App.TelemetryClient.TrackEvent("ContactSupport_SettingsViewModel");
 
-            string OSName = MainViewModel.Instance.IsMobile && MainViewModel.Instance.OSVersion == "8.1"
-                ? "Windows Phone 8.1"
-                : string.Format("Windows {0} {1}", MainViewModel.Instance.OSVersion, MainViewModel.Instance.IsMobile ? "Mobile" : "Desktop");
-
             string email = "flatnotes@brunolemos.org";
-            string subject = string.Format("Feedback - {0} v{1} ({2})", App.Name, App.Version, OSName);
+            string subject = string.Format("Feedback - {0} v{1} ({2})", App.Name, App.Version, App.OSName);
             string body = ResourceLoader.GetForCurrentView().GetString("YourMessageGoesHere");
 
 #if WINDOWS_PHONE_APP
