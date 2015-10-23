@@ -100,12 +100,6 @@
     <Content Include="$(MSBuildThisFileDirectory)Assets\Fonts\roboto-condensed-bold.ttf" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Fonts\roboto-slab-normal.ttf" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\StoreLogo.scale-100.png" />
-    <Content Include="$(MSBuildThisFileDirectory)Assets\StoreLogo.scale-125.png" />
-    <Content Include="$(MSBuildThisFileDirectory)Assets\StoreLogo.scale-140.png" />
-    <Content Include="$(MSBuildThisFileDirectory)Assets\StoreLogo.scale-150.png" />
-    <Content Include="$(MSBuildThisFileDirectory)Assets\StoreLogo.scale-240.png" />
-    <Content Include="$(MSBuildThisFileDirectory)Assets\StoreLogo.scale-200.png" />
-    <Content Include="$(MSBuildThisFileDirectory)Assets\StoreLogo.scale-400.png" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="$(MSBuildThisFileDirectory)Controls\NotePreview.xaml">

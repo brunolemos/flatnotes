@@ -199,6 +199,21 @@ namespace FlatNotes.Models
             if (images?.Count > 0) images.Clear();
         }
 
+        public void ReplaceWith(Note note)
+        {
+            ID = note.id;
+            Title = note.title;
+            Text = note.text;
+            Checklist = note.checklist;
+            IsChecklist = note.IsChecklist;
+            Images = note.images;
+            Color = note.color;
+            CreatedAt = note.createdAt;
+            UpdatedAt = note.updatedAt;
+            ArchivedAt = note.archivedAt;
+            DeletedAt = note.deletedAt;
+        }
+
         public bool ToggleChecklist()
         {
             if (!this.IsChecklist)

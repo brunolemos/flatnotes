@@ -45,7 +45,6 @@ namespace FlatNotes.Utils
             if(roamingDB == null) InitRoamingDB();
 
             ApplicationData.Current.DataChanged += OnRoamingDataChanged;
-            MergeRoamingWithLocalDB();
         }
 
         private static void InitLocalDB()
@@ -123,33 +122,38 @@ namespace FlatNotes.Utils
             foreach (var roamingNote in allRoamingNotes)
             {
                 var localNote = LocalDB.Find<Note>(roamingNote.ID);
-                bool changed = false;
 
-                //create or update local note
-                if (localNote == null || roamingNote.UpdatedAt > localNote.UpdatedAt)
+                //create local note
+                if (localNote == null)
                 {
-                    await CreateOrUpdateNote(roamingNote, false);
-                    changed = true;
+                    CreateNote(roamingNote, false);
+                    Debug.WriteLine("Roaming: Note created");
+                }
+
+                //archive local note
+                else if (roamingNote.IsArchived && !localNote.IsArchived && roamingNote.ArchivedAt > localNote.UpdatedAt)
+                {
+                    ArchiveNote(localNote, false);
+                    UpdateNote(roamingNote, false);
+                    localNote.ReplaceWith(roamingNote);
+                    Debug.WriteLine("Roaming: Note archived");
                 }
 
                 //delete local note
-                else if (localNote != null && roamingNote.DeletedAt != localNote.DeletedAt && roamingNote.DeletedAt > localNote.UpdatedAt)
+                else if (roamingNote.DeletedAt != localNote.DeletedAt && roamingNote.DeletedAt > localNote.UpdatedAt)
                 {
-                    LocalDB.InsertOrReplaceWithChildren(roamingNote);
-                    await RemoveNote(localNote, localNote.DeletedAt != null);
-                    changed = true;
+                    await RemoveNote(localNote, false);
+                    UpdateNote(roamingNote, false);
+                    localNote.ReplaceWith(roamingNote);
+                    Debug.WriteLine("Roaming: Note deleted");
                 }
 
-                //notify changes to view
-                if (changed) {
-                    Note note;
-
-                    if (localNote.IsArchived)
-                        note = ArchivedNotes.FirstOrDefault(x => x.ID == roamingNote.ID);
-                    else
-                        note = Notes.FirstOrDefault(x => x.ID == roamingNote.ID);
-
-                    if (note != null) note.NotifyChanges();
+                //update local note
+                else if (roamingNote.UpdatedAt > localNote.UpdatedAt)
+                {
+                    UpdateNote(roamingNote, false);
+                    localNote.ReplaceWith(roamingNote);
+                    Debug.WriteLine("Roaming: Note updated");
                 }
             }
         }
@@ -273,6 +277,8 @@ namespace FlatNotes.Utils
 
         public static bool ArchiveNote(Note note, bool reflectOnRoaming = true)
         {
+            //get original reference
+            if(notes != null) note = Notes.FirstOrDefault(x => x.ID == note.ID);
             if (note == null) return false;
 
             Debug.WriteLine("Archive note: " + note.Title);
@@ -302,6 +308,10 @@ namespace FlatNotes.Utils
 
         public static bool RestoreNote(Note note, bool reflectOnRoaming = true)
         {
+            LoadArchivedNotesIfNecessary();
+
+            //get original reference
+            if(notes != null) note = ArchivedNotes.FirstOrDefault(x => x.ID == note.ID);
             if (note == null) return false;
 
             Debug.WriteLine("Restore note: " + note.Title);
@@ -351,6 +361,20 @@ namespace FlatNotes.Utils
 
         public static async Task<bool> RemoveNote(Note note, bool reflectOnRoaming = true)
         {
+            //get original reference
+            if (notes != null)
+            {
+                if (note.IsArchived)
+                {
+                    LoadArchivedNotesIfNecessary();
+                    note = ArchivedNotes.FirstOrDefault(x => x.ID == note.ID);
+                }
+                else
+                {
+                    note = Notes.FirstOrDefault(x => x.ID == note.ID);
+                }
+            }
+
             if (note == null) return false;
 
             Debug.WriteLine("Remove note: " + note.Title);
