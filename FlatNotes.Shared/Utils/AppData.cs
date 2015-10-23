@@ -24,8 +24,11 @@ namespace FlatNotes.Utils
         public static event EventHandler<NoteIdEventArgs> NoteRemoved;
         public static event EventHandler<NoteColorEventArgs> NoteColorChanged;
 
-        public static SQLiteConnection DB { get { if (db == null) InitDB(); return db; } }
-        private static SQLiteConnection db;
+        public static SQLiteConnection LocalDB { get { if (localDB == null) InitLocalDB(); return localDB; } }
+        private static SQLiteConnection localDB;
+
+        public static SQLiteConnection RoamingDB { get { if (roamingDB == null) InitRoamingDB(); return roamingDB; } }
+        private static SQLiteConnection roamingDB;
 
         public static Notes Notes { get { if (notes == null) LoadNotesIfNecessary(); return notes; } private set { notes = value; } }
         private static Notes notes;
@@ -38,46 +41,107 @@ namespace FlatNotes.Utils
             //versioning -- migrate app data structure when necessary
             await Migration.Migration.Migrate(AppSettings.Instance.Version);
 
-            if(db == null)
-                InitDB();
+            if(localDB == null) InitLocalDB();
+            if(roamingDB == null) InitRoamingDB();
+
+            ApplicationData.Current.DataChanged += OnRoamingDataChanged;
+            MergeRoamingWithLocalDB();
         }
 
-        private static void InitDB()
+        private static void InitLocalDB()
         {
-            ConnectDB();
-            CreateTables();
+            ConnectLocalDB();
+            CreateTablesIfNotCreated(LocalDB);
         }
 
-        private static void ConnectDB()
+        private static void InitRoamingDB()
         {
-            var path = Path.Combine(ApplicationData.Current.LocalFolder.Path, "app.db");
-            db = new SQLiteConnection(new SQLite.Net.Platform.WinRT.SQLitePlatformWinRT(), path);
+            ConnectRoamingDB();
+            CreateTablesIfNotCreated(RoamingDB);
         }
 
-        private static void CreateTables()
+        private static void ConnectLocalDB()
         {
-            DB.Execute("PRAGMA foreign_keys = ON;");
+            var path = Path.Combine(ApplicationData.Current.LocalFolder.Path, AppSettings.DB_FILE_NAME);
+            localDB = new SQLiteConnection(new SQLite.Net.Platform.WinRT.SQLitePlatformWinRT(), path);
+        }
+
+        private static void ConnectRoamingDB() {
+            CreateRoamingDBWithLocalDataIfNotExists();
+
+            var path = Path.Combine(ApplicationData.Current.RoamingFolder.Path, AppSettings.DB_FILE_NAME);
+            roamingDB = new SQLiteConnection(new SQLite.Net.Platform.WinRT.SQLitePlatformWinRT(), path);
+        }
+
+        private static void CreateRoamingDBWithLocalDataIfNotExists()
+        {
+            Task.Run(async () =>
+            {
+                try
+                {
+                    var file = await ApplicationData.Current.LocalFolder.GetFileAsync(AppSettings.DB_FILE_NAME);
+                    await file.CopyAsync(ApplicationData.Current.RoamingFolder, AppSettings.DB_FILE_NAME, NameCollisionOption.FailIfExists);
+                }
+                catch (Exception)
+                {
+                }
+            }).Wait();
+        }
+
+        private static void CreateTablesIfNotCreated(SQLiteConnection db)
+        {
+            db.Execute("PRAGMA foreign_keys = ON;");
 
             //create just the primary keys / foreign keys due to sqlite limitation
-            DB.Execute(@"CREATE TABLE IF NOT EXISTS Note (ID varchar PRIMARY KEY NOT NULL)");
-            DB.Execute(@"CREATE TABLE IF NOT EXISTS ChecklistItem (ID varchar PRIMARY KEY NOT NULL, NoteId varchar REFERENCES Note (ID) ON DELETE CASCADE)");
-            DB.Execute(@"CREATE TABLE IF NOT EXISTS NoteImage (ID varchar PRIMARY KEY NOT NULL, NoteId varchar REFERENCES Note (ID) ON DELETE CASCADE)");
+            db.Execute(@"CREATE TABLE IF NOT EXISTS Note (ID varchar PRIMARY KEY NOT NULL)");
+            db.Execute(@"CREATE TABLE IF NOT EXISTS ChecklistItem (ID varchar PRIMARY KEY NOT NULL, NoteId varchar REFERENCES Note (ID) ON DELETE CASCADE)");
+            db.Execute(@"CREATE TABLE IF NOT EXISTS NoteImage (ID varchar PRIMARY KEY NOT NULL, NoteId varchar REFERENCES Note (ID) ON DELETE CASCADE)");
 
             //create indexes (another sqlite limitation)
-            DB.CreateIndex("ChecklistItem", "NoteId");
-            DB.CreateIndex("NoteImage", "NoteId");
+            db.CreateIndex("ChecklistItem", "NoteId");
+            db.CreateIndex("NoteImage", "NoteId");
 
             //create rest of the table (if not exists)
-            DB.CreateTable<ChecklistItem>();
-            DB.CreateTable<NoteImage>();
-            DB.CreateTable<Note>();
+            db.CreateTable<ChecklistItem>();
+            db.CreateTable<NoteImage>();
+            db.CreateTable<Note>();
+        }
+
+        private static void OnRoamingDataChanged(ApplicationData sender, object args)
+        {
+            Debug.WriteLine("OnRoamingDataChanged: {0}, {1}, {2}", sender, args, Newtonsoft.Json.JsonConvert.SerializeObject(args));
+            App.TelemetryClient.TrackEvent("OnRoamingDataChanged");
+
+            MergeRoamingWithLocalDB();
+        }
+
+        private static async void MergeRoamingWithLocalDB()
+        {
+            var allLocalNotes = LocalDB.GetAllWithChildren<Note>();
+            var allRoamingNotes = RoamingDB.GetAllWithChildren<Note>();
+
+            foreach (var roamingNote in allRoamingNotes)
+            {
+                var localNote = LocalDB.Find<Note>(roamingNote.ID);
+
+                //create or update local note
+                if (localNote == null || roamingNote.UpdatedAt > localNote.UpdatedAt)
+                    await CreateOrUpdateNote(roamingNote, false);
+
+                //delete local note
+                else if (localNote != null && roamingNote.DeletedAt != localNote.DeletedAt && roamingNote.DeletedAt > localNote.UpdatedAt)
+                {
+                    LocalDB.InsertOrReplaceWithChildren(roamingNote);
+                    await RemoveNote(localNote, localNote.DeletedAt != null);
+                }
+            }
         }
 
         public static void LoadNotesIfNecessary()
         {
             if (notes != null && notes.Count > 0) return;
 
-            notes = DB.GetAllWithChildren<Note>(x => x.IsArchived != true).OrderByDescending(x => x.Order).ThenByDescending(x => x.CreatedAt).ToList();
+            notes = LocalDB.GetAllWithChildren<Note>(x => x.IsArchived != true && x.DeletedAt == null).OrderByDescending(x => x.Order).ThenByDescending(x => x.CreatedAt).ToList();
             if (notes == null) notes = new Notes();
         }
 
@@ -85,7 +149,7 @@ namespace FlatNotes.Utils
         {
             if (archivedNotes != null && archivedNotes.Count > 0) return;
 
-            archivedNotes = DB.GetAllWithChildren<Note>(x => x.IsArchived == true).OrderByDescending(x => x.ArchivedAt).ToList();
+            archivedNotes = LocalDB.GetAllWithChildren<Note>(x => x.IsArchived == true && x.DeletedAt == null).OrderByDescending(x => x.ArchivedAt).ToList();
             if (archivedNotes == null) archivedNotes = new Notes();
         }
         
@@ -99,7 +163,7 @@ namespace FlatNotes.Utils
 
             try
             {
-                return DB.GetWithChildren<Note>(id);
+                return LocalDB.GetWithChildren<Note>(id);
             }
             catch (Exception)
             {
@@ -107,19 +171,19 @@ namespace FlatNotes.Utils
             }
         }
 
-        public static async Task<bool> CreateOrUpdateNote(Note note)
+        public static async Task<bool> CreateOrUpdateNote(Note note, bool reflectOnRoaming = true)
         {
             if (note == null) return false;
 
-            bool alreadyExists = DB.Find<Note>(note.ID) != null;
+            bool alreadyExists = LocalDB.Find<Note>(note.ID) != null;
             
             if (note.IsEmpty())
-                return await RemoveNote(note);
+                return await RemoveNote(note, reflectOnRoaming);
             else
-                return alreadyExists ? UpdateNote(note) : CreateNote(note);
+                return alreadyExists ? UpdateNote(note, reflectOnRoaming) : CreateNote(note, reflectOnRoaming);
         }
 
-        private static bool CreateNote(Note note)
+        private static bool CreateNote(Note note, bool reflectOnRoaming = true)
         {
             if (note == null || note.IsEmpty()) return false;
 
@@ -137,7 +201,8 @@ namespace FlatNotes.Utils
             note.Order = Notes.Count;
             AppData.Notes.Insert(0, note);
 
-            DB.InsertWithChildren(note);
+            LocalDB.InsertWithChildren(note);
+            if (reflectOnRoaming) RoamingDB.InsertWithChildren(note);
 
             var handler = NoteCreated;
             if (handler != null) handler(null, new NoteEventArgs(note));
@@ -148,7 +213,7 @@ namespace FlatNotes.Utils
             return true;
         }
 
-        private static bool UpdateNote(Note note)
+        private static bool UpdateNote(Note note, bool reflectOnRoaming = true)
         {
             if (note == null) return false;
 
@@ -160,12 +225,23 @@ namespace FlatNotes.Utils
             foreach (var item in note.Images) item.NoteId = note.ID;
 
             //DB.UpdateWithChildren(note);
-            bool success = DB.Update(note) == 1;
+            bool success = LocalDB.Update(note) == 1;
             if (!success) return false;
 
+            if(reflectOnRoaming) RoamingDB.Update(note);
+
             //update checklist items and note images
-            if (note.Checklist.Count > 0) DB.InsertOrReplaceAll(note.Checklist);
-            if (note.Images.Count > 0) DB.InsertOrReplaceAll(note.Images);
+            if (note.Checklist.Count > 0)
+            {
+                LocalDB.InsertOrReplaceAll(note.Checklist);
+                if (reflectOnRoaming) RoamingDB.InsertOrReplaceAll(note.Checklist);
+            }
+
+            if (note.Images.Count > 0)
+            {
+                LocalDB.InsertOrReplaceAll(note.Images);
+                if (reflectOnRoaming) RoamingDB.InsertOrReplaceAll(note.Images);
+            }
 
             note.Changed = false;
 
@@ -178,7 +254,7 @@ namespace FlatNotes.Utils
             return true;
         }
 
-        public static bool ArchiveNote(Note note)
+        public static bool ArchiveNote(Note note, bool reflectOnRoaming = true)
         {
             if (note == null) return false;
 
@@ -189,8 +265,10 @@ namespace FlatNotes.Utils
             note.IsArchived = true;
             note.TouchArchivedAt();
 
-            bool success = DB.Update(note) == 1;
+            bool success = LocalDB.Update(note) == 1;
             if (!success) return false;
+
+            if (reflectOnRoaming) RoamingDB.Update(note);
 
             AppData.Notes.Remove(note);
             AppData.ArchivedNotes.Insert(0, note);
@@ -205,7 +283,7 @@ namespace FlatNotes.Utils
             return true;
         }
 
-        public static bool RestoreNote(Note note)
+        public static bool RestoreNote(Note note, bool reflectOnRoaming = true)
         {
             if (note == null) return false;
 
@@ -215,8 +293,10 @@ namespace FlatNotes.Utils
             note.IsArchived = false;
             note.Order = Notes.Count;
 
-            bool success = DB.Update(note) == 1;
+            bool success = LocalDB.Update(note) == 1;
             if (!success) return false;
+
+            if (reflectOnRoaming) RoamingDB.Update(note);
 
             AppData.Notes.Insert(0, note);
             AppData.ArchivedNotes.Remove(note);
@@ -239,8 +319,9 @@ namespace FlatNotes.Utils
 
             note.Color = newColor;
 
-            bool success = DB.Update(note) == 1;
+            bool success = LocalDB.Update(note) == 1;
             if (!success) return false;
+            RoamingDB.Update(note);
 
             var handler = NoteColorChanged;
             if (handler != null) handler(null, new NoteColorEventArgs(note, newColor));
@@ -251,7 +332,7 @@ namespace FlatNotes.Utils
             return true;
         }
 
-        public static async Task<bool> RemoveNote(Note note)
+        public static async Task<bool> RemoveNote(Note note, bool reflectOnRoaming = true)
         {
             if (note == null) return false;
 
@@ -261,7 +342,15 @@ namespace FlatNotes.Utils
             //remove note images from disk
             await RemoveNoteImages(note.Images);
 
-            DB.Delete(note);
+            note.SoftDelete();
+
+            bool success = LocalDB.Update(note) == 1;
+            if (!success) return false;
+
+            if(reflectOnRoaming) RoamingDB.Update(note);
+
+            //LocalDB.Delete(note);
+            //RoamingDB.Delete(note);
 
             AppData.Notes.Remove(note);
             AppData.ArchivedNotes.Remove(note);
@@ -298,7 +387,10 @@ namespace FlatNotes.Utils
                 await file.DeleteAsync();
 
                 if (deleteFromDB)
-                    DB.Delete(noteImage);
+                {
+                    LocalDB.Delete(noteImage);
+                    RoamingDB.Delete(noteImage);
+                }
             }
             catch (Exception)
             {

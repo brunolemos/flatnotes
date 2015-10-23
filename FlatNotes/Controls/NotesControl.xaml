@@ -42,7 +42,7 @@
               AllowDrop="{x:Bind AllowDrop, Mode=OneWay}"  
               ReorderMode="{x:Bind ReorderMode, Mode=TwoWay}"  
               SelectionMode="None" 
-              Margin="0"
+              Margin="{Binding Margin, ElementName=Root}"
               IsItemClickEnabled="True" ItemClick="GridView_ItemClick" 
               DragItemsStarting="NotesGridView_DragItemsStarting" DragItemsCompleted="NotesGridView_DragItemsCompleted">
 

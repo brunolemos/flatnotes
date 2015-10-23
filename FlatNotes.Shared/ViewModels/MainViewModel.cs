@@ -25,7 +25,7 @@ namespace FlatNotes.ViewModels
         public RelayCommand OpenSettingsCommand { get; private set; }
 
         public Notes Notes { get { return notes; } set { notes = value; NotifyPropertyChanged("Notes"); } }
-        private Notes notes = AppData.Notes;
+        private Notes notes;
 
         public ListViewReorderMode ReorderMode {
             get { return reorderMode; }

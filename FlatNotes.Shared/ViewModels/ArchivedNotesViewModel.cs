@@ -15,7 +15,7 @@ namespace FlatNotes.ViewModels
         public RelayCommand OpenSettingsCommand { get; private set; }
 
         public Notes Notes { get { return notes; } set { notes = value; NotifyPropertyChanged("Notes"); } }
-        public Notes notes = AppData.ArchivedNotes;
+        public Notes notes;
 
         public int Columns { get { return IsSingleColumnEnabled ? 1 : -1; } }
         private bool IsSingleColumnEnabled { get { return AppSettings.Instance.IsSingleColumnEnabled; } set { AppSettings.Instance.IsSingleColumnEnabled = value; NotifyPropertyChanged("IsSingleColumnEnabled"); } }

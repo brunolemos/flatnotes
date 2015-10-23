@@ -11,6 +11,7 @@ namespace FlatNotes.Common
         protected ApplicationDataContainer localSettings { get { return ApplicationData.Current.LocalSettings; } }
         protected ApplicationDataContainer roamingSettings { get { return ApplicationData.Current.RoamingSettings; } }
         protected StorageFolder localFolder { get { return ApplicationData.Current.LocalFolder; } }
+        protected StorageFolder roamingFolder { get { return ApplicationData.Current.RoamingFolder; } }
 
         public abstract uint Version { get; }
 
@@ -58,11 +59,12 @@ namespace FlatNotes.Common
             }
         }
 
-        protected async Task<T> ReadFileOrDefault<T>(string fileName, T defaultValue)
+        protected async Task<T> ReadFileOrDefault<T>(string fileName, T defaultValue, bool useRoaming = false)
         {
             try
             {
-                StorageFile file = await localFolder.CreateFileAsync(fileName, CreationCollisionOption.OpenIfExists);
+                var folder = useRoaming ? roamingFolder : localFolder;
+                StorageFile file = await folder.CreateFileAsync(fileName, CreationCollisionOption.OpenIfExists);
                 string json = await FileIO.ReadTextAsync(file);
                 Debug.WriteLine("Content of {0} is {1}", fileName, json);
 
@@ -76,11 +78,12 @@ namespace FlatNotes.Common
             }
         }
 
-        protected async Task<bool> SaveFile<T>(string fileName, T value)
+        protected async Task<bool> SaveFile<T>(string fileName, T value, bool useRoaming = false)
         {
             try
             {
-                StorageFile file = await localFolder.CreateFileAsync(fileName, CreationCollisionOption.ReplaceExisting);
+                var folder = useRoaming ? roamingFolder : localFolder;
+                StorageFile file = await folder.CreateFileAsync(fileName, CreationCollisionOption.ReplaceExisting);
 
                 string json = JsonConvert.SerializeObject(value);
                 Debug.WriteLine("SaveFile {0} with {1}", fileName, json);

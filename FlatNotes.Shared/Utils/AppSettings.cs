@@ -3,6 +3,7 @@ using FlatNotes.Events;
 using FlatNotes.Models;
 using SQLiteNetExtensions.Extensions;
 using System;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
@@ -23,6 +24,8 @@ namespace FlatNotes.Utils
 
         public override uint Version { get { return VERSION; } }
         private const uint VERSION = 3;
+
+        public const string DB_FILE_NAME = "app.db";
 
         public StorageFolder ImagesFolder { get; private set; }
         private const string IMAGES_FOLDER_NAME = "Images";
@@ -95,7 +98,8 @@ namespace FlatNotes.Utils
                 }
 
                 //insert in db
-                AppData.DB.InsertOrReplaceAllWithChildren(allNotes);
+                AppData.LocalDB.InsertOrReplaceAllWithChildren(allNotes);
+                AppData.RoamingDB.InsertOrReplaceAllWithChildren(allNotes);
 
                 allNotes = null;
             }).Wait();
@@ -109,8 +113,8 @@ namespace FlatNotes.Utils
             Task.Run(async () =>
             {
                 //import notes
-                Notes notes = AppData.DB.GetAllWithChildren<Note>(x => x.IsArchived != true).OrderByDescending(x => x.Order).ToList();
-                Notes archivedNotes = AppData.DB.GetAllWithChildren<Note>(x => x.IsArchived == true).OrderByDescending(x => x.ArchivedAt).ToList();
+                Notes notes = AppData.LocalDB.GetAllWithChildren<Note>(x => x.IsArchived != true && x.DeletedAt == null).OrderByDescending(x => x.Order).ToList();
+                Notes archivedNotes = AppData.LocalDB.GetAllWithChildren<Note>(x => x.IsArchived == true && x.DeletedAt == null).OrderByDescending(x => x.ArchivedAt).ToList();
 
                 bool success = await Migration.Versions.v2.Utils.AppSettings.Instance.SaveNotes(notes);
                 success &= await Migration.Versions.v2.Utils.AppSettings.Instance.SaveArchivedNotes(archivedNotes);

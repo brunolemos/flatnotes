@@ -116,7 +116,8 @@ namespace FlatNotes.Views
                 pos--;
             }
 
-            AppData.DB.UpdateAll(viewModel.Notes);
+            AppData.LocalDB.UpdateAll(viewModel.Notes);
+            AppData.RoamingDB.UpdateAll(viewModel.Notes);
         }
 
 #if WINDOWS_PHONE_APP

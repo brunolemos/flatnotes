@@ -234,7 +234,10 @@ namespace FlatNotes.Views
                     var checklistItem = list[0] as ChecklistItem;
 
                     if (checklistItem != null)
-                        AppData.DB.Delete<ChecklistItem>(checklistItem.ID);
+                    {
+                        AppData.LocalDB.Delete<ChecklistItem>(checklistItem.ID);
+                        AppData.RoamingDB.Delete<ChecklistItem>(checklistItem.ID);
+                    }
                 }
                 catch (Exception)
                 {

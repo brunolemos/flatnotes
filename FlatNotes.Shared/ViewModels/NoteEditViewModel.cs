@@ -57,7 +57,7 @@ namespace FlatNotes.ViewModels
                 CurrentNoteBeingEdited = Note;
                 if (Note == null) return;
 
-                IsNewNote = AppData.DB.Find<Note>(Note.ID) == null;
+                IsNewNote = AppData.LocalDB.Find<Note>(Note.ID) == null;
                 Note.NotifyPropertyChanged("IsPinned");
                 Note.NotifyPropertyChanged("CanPin");
 
@@ -342,7 +342,7 @@ namespace FlatNotes.ViewModels
                 || e.PropertyName == "Color" || e.PropertyName == "UpdatedAt"))
                 return;
 
-            Debug.WriteLine("Note_PropertyChanged " + e.PropertyName);
+            //Debug.WriteLine("Note_PropertyChanged " + e.PropertyName);
             Note.Changed = true;
 
             if (e.PropertyName == "UpdatedAt") return;

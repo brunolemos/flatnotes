@@ -116,6 +116,10 @@ namespace FlatNotes.Models
         [DataMember(Name = "ArchivedAt")]
         private DateTime? archivedAt;
 
+        public DateTime? DeletedAt { get { return deletedAt; } protected set { deletedAt = value; NotifyPropertyChanged("DeletedAt"); } }
+        [DataMember(Name = "DeletedAt")]
+        private DateTime? deletedAt;
+
         [IgnoreDataMember]
         [Ignore]
         public bool IsPinned { get { return SecondaryTile.Exists(ID); } }
@@ -178,6 +182,21 @@ namespace FlatNotes.Models
         public void TouchArchivedAt()
         {
             ArchivedAt = DateTime.UtcNow;
+        }
+
+        public void SoftDelete()
+        {
+            DeletedAt = DateTime.UtcNow;
+            ClearContent();
+        }
+
+        public void ClearContent()
+        {
+            title = null;
+            text = null;
+
+            if (checklist?.Count > 0) checklist.Clear();
+            if (images?.Count > 0) images.Clear();
         }
 
         public bool ToggleChecklist()

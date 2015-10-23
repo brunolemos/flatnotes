@@ -144,7 +144,6 @@ namespace FlatNotes.Utils.Migration.Versions.v1.Models
 
         private void DisableChecklist()
         {
-            Debug.WriteLine("DisableChecklist " + Checklist.Count);
             this.isChecklist = false;
 
             Text = GetTextFromChecklist();

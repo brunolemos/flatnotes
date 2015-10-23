@@ -78,7 +78,7 @@
                         <Setter Target="NotesControl.ItemStretch" Value="True"/>
                         <Setter Target="NotesControl.ItemWidth" Value="160"/>
                         <Setter Target="NotesControl.Padding" Value="0"/>
-                        <Setter Target="NotesControl.Margin" Value="2"/>
+                        <Setter Target="NotesControl.Margin" Value="1"/>
                         <Setter Target="NotesControl.MaxItemWidth" Value="-1"/>
                     </VisualState.Setters>
                 </VisualState>

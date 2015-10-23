@@ -21,8 +21,9 @@
     <ApplicationInsightsResourceId>/subscriptions/0b3bf49d-6fe0-4921-aadd-eb466c243776/resourcegroups/FlatNotesGroup/providers/microsoft.insights/components/Flat Notes</ApplicationInsightsResourceId>
     <PackageCertificateThumbprint>986AD9CD770C6C7724FC0C6281C12E05DED1595A</PackageCertificateThumbprint>
     <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
-    <AppxBundle>Always</AppxBundle>
+    <AppxBundle>Never</AppxBundle>
     <AppxBundlePlatforms>x86|arm</AppxBundlePlatforms>
+    <AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
     <DebugSymbols>true</DebugSymbols>
@@ -117,7 +118,6 @@
   <ItemGroup>
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
-    <Content Include="Assets\StoreLogo.png" />
     <Content Include="Assets\Tiles\Solid\Square150x150Logo.scale-100.png" />
     <Content Include="Assets\Tiles\Solid\Square150x150Logo.scale-200.png" />
     <Content Include="Assets\Tiles\Solid\Square310x310Logo.scale-200.png" />

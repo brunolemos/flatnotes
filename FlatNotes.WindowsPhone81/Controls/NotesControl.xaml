@@ -21,7 +21,7 @@
               AllowDrop="{Binding ElementName=Root, Path=AllowDrop, Mode=OneWay}"  
               ReorderMode="{Binding ElementName=Root, Path=viewModel.ReorderMode, Mode=TwoWay}"  
               SelectionMode="None" 
-              Margin="0"
+              Margin="{Binding Margin, ElementName=Root}"
               IsItemClickEnabled="True" ItemClick="GridView_ItemClick" DragItemsStarting="NotesGridView_DragItemsStarting"
               DataContext="{Binding viewModel, ElementName=Root}"
               d:DataContext="{Binding Notes, Source={d:DesignData /SampleData/MainViewModelSampleData.xaml}}">
