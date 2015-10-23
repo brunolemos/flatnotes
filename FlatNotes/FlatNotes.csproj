@@ -21,7 +21,7 @@
     <ApplicationInsightsResourceId>/subscriptions/0b3bf49d-6fe0-4921-aadd-eb466c243776/resourcegroups/FlatNotesGroup/providers/microsoft.insights/components/Flat Notes</ApplicationInsightsResourceId>
     <PackageCertificateThumbprint>986AD9CD770C6C7724FC0C6281C12E05DED1595A</PackageCertificateThumbprint>
     <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
-    <AppxBundle>Never</AppxBundle>
+    <AppxBundle>Always</AppxBundle>
     <AppxBundlePlatforms>x86|arm</AppxBundlePlatforms>
     <AppxSymbolPackageEnabled>True</AppxSymbolPackageEnabled>
   </PropertyGroup>
