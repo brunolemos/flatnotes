@@ -123,16 +123,33 @@ namespace FlatNotes.Utils
             foreach (var roamingNote in allRoamingNotes)
             {
                 var localNote = LocalDB.Find<Note>(roamingNote.ID);
+                bool changed = false;
 
                 //create or update local note
                 if (localNote == null || roamingNote.UpdatedAt > localNote.UpdatedAt)
+                {
                     await CreateOrUpdateNote(roamingNote, false);
+                    changed = true;
+                }
 
                 //delete local note
                 else if (localNote != null && roamingNote.DeletedAt != localNote.DeletedAt && roamingNote.DeletedAt > localNote.UpdatedAt)
                 {
                     LocalDB.InsertOrReplaceWithChildren(roamingNote);
                     await RemoveNote(localNote, localNote.DeletedAt != null);
+                    changed = true;
+                }
+
+                //notify changes to view
+                if (changed) {
+                    Note note;
+
+                    if (localNote.IsArchived)
+                        note = ArchivedNotes.FirstOrDefault(x => x.ID == roamingNote.ID);
+                    else
+                        note = Notes.FirstOrDefault(x => x.ID == roamingNote.ID);
+
+                    if (note != null) note.NotifyChanges();
                 }
             }
         }
