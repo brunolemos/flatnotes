@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest" xmlns:m3="http://schemas.microsoft.com/appx/2014/manifest" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest">
-  <Identity Name="29428BrunoLemos.Keep" Publisher="CN=0B66D0B0-F691-4768-B3EE-FC3873EB0D73" Version="2.5.0.0" />
+  <Identity Name="29428BrunoLemos.Keep" Publisher="CN=0B66D0B0-F691-4768-B3EE-FC3873EB0D73" Version="2.6.0.0" />
   <mp:PhoneIdentity PhoneProductId="a5575b45-ec62-46d4-bae5-96b9f2615ff7" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>Flat Notes</DisplayName>
