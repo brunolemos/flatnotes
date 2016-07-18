@@ -1,0 +1,161 @@
+﻿<Page
+    x:Name="Root"
+    x:Class="FlatNotes.Views.NotesPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="using:FlatNotes.Controls"
+    xmlns:views="using:FlatNotes.Views"
+    mc:Ignorable="d"
+    NavigationCacheMode="Required"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    FontSize="{StaticResource AppDefaultFontSize}"
+    FontFamily="{StaticResource AppDefaultFontFamily}"
+    d:DataContext="{d:DesignData /SampleData/MainViewModelSampleData.xaml}">
+
+    <Grid x:Name="LayoutRoot">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid x:Name="ContentRoot" Grid.Row="2">
+            <Grid.Transitions>
+                <TransitionCollection>
+                    <EntranceThemeTransition FromHorizontalOffset="0" FromVerticalOffset="10"/>
+                </TransitionCollection>
+            </Grid.Transitions>
+
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{x:Bind viewModel.Notes.Count, Mode=OneWay, Converter={StaticResource PositiveIntToVisibilityConverter}, ConverterParameter=True}">
+                <Viewbox Width="150">
+                    <Canvas Width="100" Height="100" HorizontalAlignment="Center">
+                        <Rectangle Fill="{ThemeResource PhoneLowBrush}" Width="100" Height="70" StrokeThickness="0"/>
+                        <Rectangle Fill="{ThemeResource PhoneLowBrush}" Width="70" Height="30" StrokeThickness="0" Margin="0,70,0,0"/>
+                        <Polygon Fill="{ThemeResource PhoneLowBrush}" Points="0,0 30,0, 0,30" StrokeThickness="0" Margin="70,70,0,0" />
+                        <Polygon Fill="#07000000" Points="0,0 30,0, 0,30" StrokeThickness="0" Margin="70,70,0,0" />
+                    </Canvas>
+                </Viewbox>
+
+                <TextBlock x:Uid="EmptyNotesMessageTextBox" Margin="4,24" Text="Notes you add appear here" Foreground="{ThemeResource PhoneMidBrush}" FontSize="{StaticResource EmptyNotesMessageFontSize}" TextWrapping="Wrap" TextAlignment="Center"/>
+            </StackPanel>
+
+            <local:NotesControl x:Name="NotesControl" ItemsSource="{Binding}" Columns="{x:Bind viewModel.Columns, Mode=OneWay}" DataContext="{x:Bind viewModel.Notes, Mode=OneWay}" d:DataContext="{Binding Notes}" VerticalAlignment="Stretch" CanReorderItems="True" CanDragItems="True" AllowDrop="True" CanSwipeItems="True" IsNoteFlyoutEnabled="True" ItemClick="OnNoteClick" ItemsReordered="OnItemsReordered" FontSize="{x:Bind FontSize}"/>
+        </Grid>
+
+        <Grid x:Name="NoteQuickBox" Grid.Row="3" Background="{ThemeResource SystemControlBackgroundAltHighBrush}" CornerRadius="0" BorderThickness="1,0,1,2" BorderBrush="#10000000" HorizontalAlignment="Stretch">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Column="0" Background="Transparent" BorderThickness="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Click="{x:Bind viewModel.CreateTextNote}" ClickMode="Press">
+                <TextBlock x:Name="NewNoteTextBlock" x:Uid="NewNoteTextBlock" Text="New note..." Margin="4" Foreground="{ThemeResource ApplicationForegroundThemeBrush}" VerticalAlignment="Center" HorizontalAlignment="Left" TextAlignment="Left" Opacity="0.6"/>
+            </Button>
+            <AppBarButton Grid.Column="1" x:Uid="ChecklistAppBarButton" Label="Checklist" IsCompact="True" Command="{x:Bind viewModel.CreateChecklistNoteCommand}" Icon="List" ToolTipService.ToolTip="{Binding Label, RelativeSource={RelativeSource Mode=Self}}"/>
+            <AppBarButton Grid.Column="2" x:Uid="PhotoAppBarButton" Label="Image" IsCompact="True" Command="{x:Bind viewModel.CreateImageNoteCommand}" Icon="Camera" ToolTipService.ToolTip="{Binding Label, RelativeSource={RelativeSource Mode=Self}}"/>
+        </Grid>
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+
+                    <VisualState.Setters>
+                        <Setter Target="NoteQuickBox.Grid.Row" Value="3"/>
+                        <Setter Target="NoteQuickBox.Margin" Value="0"/>
+                        <Setter Target="NoteQuickBox.CornerRadius" Value="0"/>
+                        <Setter Target="NoteQuickBox.BorderThickness" Value="0"/>
+                        <Setter Target="NotesControl.ItemStretch" Value="True"/>
+                        <Setter Target="NotesControl.ItemWidth" Value="160"/>
+                        <Setter Target="NotesControl.Padding" Value="0"/>
+                        <Setter Target="NotesControl.Margin" Value="2"/>
+                        <Setter Target="NotesControl.MaxItemWidth" Value="-1"/>
+                        <Setter Target="NewNoteTextBlock.Margin" Value="0"/>
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="500" />
+                    </VisualState.StateTriggers>
+
+                    <VisualState.Setters>
+                        <Setter Target="NoteQuickBox.Grid.Row" Value="3"/>
+                        <Setter Target="NoteQuickBox.Margin" Value="0"/>
+                        <Setter Target="NoteQuickBox.CornerRadius" Value="0"/>
+                        <Setter Target="NoteQuickBox.BorderThickness" Value="0"/>
+                        <Setter Target="NotesControl.ItemStretch" Value="False"/>
+                        <Setter Target="NotesControl.ItemWidth" Value="220"/>
+                        <Setter Target="NotesControl.Padding" Value="12"/>
+                        <Setter Target="NotesControl.Margin" Value="2"/>
+                        <Setter Target="NotesControl.MaxItemWidth" Value="500"/>
+                        <Setter Target="NewNoteTextBlock.Margin" Value="12,4"/>
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="768" />
+                    </VisualState.StateTriggers>
+
+                    <VisualState.Setters>
+                        <Setter Target="NoteQuickBox.Grid.Row" Value="1"/>
+                        <Setter Target="NoteQuickBox.Margin" Value="15,15,15,0"/>
+                        <Setter Target="NoteQuickBox.CornerRadius" Value="2"/>
+                        <Setter Target="NoteQuickBox.MaxWidth" Value="500"/>
+                        <Setter Target="NotesControl.ItemStretch" Value="False"/>
+                        <Setter Target="NotesControl.ItemWidth" Value="260"/>
+                        <Setter Target="NotesControl.Padding" Value="12"/>
+                        <Setter Target="NotesControl.Margin" Value="4"/>
+                        <Setter Target="NotesControl.MaxItemWidth" Value="768"/>
+                        <Setter Target="NewNoteTextBlock.Margin" Value="12,4"/>
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="1024" />
+                    </VisualState.StateTriggers>
+
+                    <VisualState.Setters>
+                        <Setter Target="NoteQuickBox.Grid.Row" Value="1"/>
+                        <Setter Target="NoteQuickBox.Margin" Value="30,30,30,0"/>
+                        <Setter Target="NoteQuickBox.CornerRadius" Value="2"/>
+                        <Setter Target="NoteQuickBox.MaxWidth" Value="768"/>
+                        <Setter Target="NotesControl.ItemStretch" Value="False"/>
+                        <Setter Target="NotesControl.ItemWidth" Value="260"/>
+                        <Setter Target="NotesControl.Padding" Value="24,12"/>
+                        <Setter Target="NotesControl.Margin" Value="4"/>
+                        <Setter Target="NotesControl.MaxItemWidth" Value="1024"/>
+                        <Setter Target="NewNoteTextBlock.Margin" Value="12,4"/>
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="1500" />
+                    </VisualState.StateTriggers>
+
+                    <VisualState.Setters>
+                        <Setter Target="NoteQuickBox.Grid.Row" Value="1"/>
+                        <Setter Target="NoteQuickBox.Margin" Value="30,30,30,0"/>
+                        <Setter Target="NoteQuickBox.CornerRadius" Value="2"/>
+                        <Setter Target="NoteQuickBox.MaxWidth" Value="1024"/>
+                        <Setter Target="NotesControl.ItemStretch" Value="False"/>
+                        <Setter Target="NotesControl.ItemWidth" Value="300"/>
+                        <Setter Target="NotesControl.Padding" Value="48,12"/>
+                        <Setter Target="NotesControl.Margin" Value="4"/>
+                        <Setter Target="NotesControl.MaxItemWidth" Value="1200"/>
+                        <Setter Target="NewNoteTextBlock.Margin" Value="12,4"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+    </Grid>
+</Page>

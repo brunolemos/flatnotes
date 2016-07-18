@@ -3,10 +3,7 @@ using FlatNotes.Models;
 using FlatNotes.Utils;
 using FlatNotes.ViewModels;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -15,6 +12,9 @@ namespace FlatNotes.Views
 {
     public partial class MainPage : Page
     {
+        public static readonly DependencyProperty OpenSplitViewProperty = DependencyProperty.Register("OpenSplitView", typeof(bool), typeof(MainPage), new PropertyMetadata(false, OnOpenSplitViewPropertyChanged));
+        public bool OpenSplitView { get { return (bool)GetValue(OpenSplitViewProperty); } set { SetValue(OpenSplitViewProperty, (value as bool?) == true); } }
+
         public MainViewModel viewModel { get { return _viewModel; } }
         private static MainViewModel _viewModel = MainViewModel.Instance;
 
@@ -32,24 +32,13 @@ namespace FlatNotes.Views
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
 
-#if WINDOWS_PHONE_APP
-            Loaded += (s, e) => EnableReorderFeature();
-            Unloaded += (s, e) => DisableReorderFeature();
-#endif
+            this.SettingsPage.viewModel.CloseModal += CloseModal;
         }
-
-#if WINDOWS_PHONE_APP
-        partial void EnableReorderFeature();
-        partial void DisableReorderFeature();
-#endif
 
         private async void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
             App.ResetStatusBar();
             App.RootFrame.Background = this.Background;
-
-            if (viewModel.Notes == null || viewModel.Notes.Count <= 0) viewModel.Notes = AppData.Notes;
-            viewModel.ReorderMode = ListViewReorderMode.Disabled;
 
             //received a note via parameter (from secondary tile)
             if (RedirectToNote != null)
@@ -68,7 +57,6 @@ namespace FlatNotes.Views
         }
 
         #region NavigationHelper registration
-
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             //has parameters
@@ -86,45 +74,19 @@ namespace FlatNotes.Views
         {
             this.navigationHelper.OnNavigatedFrom(e);
         }
+        #endregion
 
-#endregion
-        
-        private async void OnNoteClick(object sender, ItemClickEventArgs e)
+        static void OnOpenSplitViewPropertyChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
         {
-            Note note = e.ClickedItem as Note;
-            if (note == null) return;
+            MainPage mainPage = obj as MainPage;
+            bool openSplitView = (e.NewValue as bool?) == true;
 
-            //this dispatcher fixes crash error (access violation on wp preview for developers)
-            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-            {
-                Frame.Navigate(typeof(NoteEditPage), note);
-            });
+            if (openSplitView) mainPage.ShowSplitViewOverlay.Begin();  else mainPage.HideSplitViewOverlay.Begin();
         }
 
-        private void OnItemsReordered(object sender, Events.ItemsReorderedEventArgs e)
+        private void CloseModal(object sender, EventArgs e)
         {
-            //System.Diagnostics.Debug.WriteLine("OnItemsReordered from {0} to {1}", e.OldItemIndex, e.NewItemIndex);
-            if (e.OldItemIndex < 0 || e.NewItemIndex < 0) return;
-            if (e.OldItemIndex > viewModel.Notes.Count || e.NewItemIndex > viewModel.Notes.Count) return;
-
-            viewModel.Notes.Move(e.OldItemIndex, e.NewItemIndex);
-
-            int pos = viewModel.Notes.Count - 1;
-            foreach (var note in viewModel.Notes)
-            {
-                note.Order = pos;
-                pos--;
-            }
-
-            AppData.LocalDB.UpdateAll(viewModel.Notes);
-            AppData.RoamingDB.UpdateAll(viewModel.Notes);
+            OpenSplitView = false;
         }
-
-#if WINDOWS_PHONE_APP
-        private void OnCreateNoteTapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
-        {
-            viewModel.CreateTextNote();
-        }
-#endif
     }
 }

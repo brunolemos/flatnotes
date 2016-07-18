@@ -263,7 +263,7 @@ namespace FlatNotes.ViewModels
             if (App.RootFrame.CanGoBack)
                 App.RootFrame.GoBack();
             else
-                App.RootFrame.Navigate(typeof(MainPage));
+                App.RootFrame.Navigate(typeof(NotesPage));
         }
 
         private bool CanArchiveNote()
@@ -298,7 +298,7 @@ namespace FlatNotes.ViewModels
             else if (Note.IsArchived)
                 App.RootFrame.Navigate(typeof(ArchivedNotesPage));
             else
-                App.RootFrame.Navigate(typeof(MainPage));
+                App.RootFrame.Navigate(typeof(NotesPage));
         }
 
         public async void DeleteNoteImage()

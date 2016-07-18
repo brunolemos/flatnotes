@@ -27,6 +27,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\NotesControl.xaml.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\IsMobileToGridRowConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\LocalizedResourcesConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\NullableBooleanToBooleanConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\StringFormatConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\MaxChecklistItemsConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\PositiveIntToVisibilityConverter.cs" />
@@ -84,12 +85,14 @@
     <Compile Include="$(MSBuildThisFileDirectory)Utils\TileManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ArchivedNotesViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\NotesControlViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ModalViewModelBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\SettingsViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ViewModelBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\NoteEditViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MainViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\ArchivedNotesPage.xaml.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\MainPage.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\NotesPage.xaml.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\NoteEditPage.xaml.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\Partials\NoteEditPage_KeyDownHandlers.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\SettingsPage.xaml.cs" />

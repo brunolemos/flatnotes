@@ -8,7 +8,7 @@ using Windows.UI.Xaml;
 
 namespace FlatNotes.ViewModels
 {
-    public class SettingsViewModel : ViewModelBase
+    public class SettingsViewModel : ModalViewModelBase
     {
         public static SettingsViewModel Instance { get { if (instance == null) instance = new SettingsViewModel(); return instance; } }
         private static SettingsViewModel instance = null;
