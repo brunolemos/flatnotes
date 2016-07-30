@@ -17,7 +17,7 @@
 
         <Storyboard x:Name="ShowSplitViewOverlay">
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="SplitViewContentOverlay">
-                <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="0.10">
+                <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="0.2">
                     <EasingDoubleKeyFrame.EasingFunction>
                         <QuadraticEase EasingMode="EaseOut"/>
                     </EasingDoubleKeyFrame.EasingFunction>
@@ -78,7 +78,7 @@
                 </Grid>
 
                 <Grid Grid.Row="1">
-                    <views:NotesPage x:Name="NotesPage"/>
+                    <views:NotesPage x:Name="NotesPage" NoteOpening="OnNoteOpening" NoteClosed="OnNoteClosed"/>
                     <Grid x:Name="SplitViewContentOverlay" Background="Black" Opacity="0" IsHitTestVisible="False"/>
                 </Grid>
             </Grid>

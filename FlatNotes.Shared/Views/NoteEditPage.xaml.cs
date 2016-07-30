@@ -44,10 +44,11 @@ namespace FlatNotes.Views
 
             //Navigation Helper
             this.navigationHelper = new NavigationHelper(this);
-            this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
-            this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
+            this.navigationHelper.LoadState += this.OnLoadState;
+            this.navigationHelper.SaveState += (s, e) => this.OnSaveState();
 
             this.Loaded += (s, e) => OnLoaded();
+            this.Unloaded += (s, e) => OnUnloaded();
 
 #if WINDOWS_PHONE_APP
             //Color Picker WP81
@@ -67,13 +68,19 @@ namespace FlatNotes.Views
                 NoteTitleTextBox.Focus(FocusState.Programmatic);
         }
 
-        private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
+        private void OnUnloaded()
+        {
+            while (Frame.CanGoBack) Frame.GoBack();
+            OnSaveState();
+        }
+
+        private void OnLoadState(object sender, LoadStateEventArgs e)
         {
             OnColorChanged();
             openImagePicker = false;
 
             viewModel.PropertyChanged += OnViewModelPropertyChanged;
-
+            
             if (e.NavigationParameter != null && e.NavigationParameter is Note)
             {
                 viewModel.Note = e.NavigationParameter as Note;
@@ -102,7 +109,7 @@ namespace FlatNotes.Views
             NoteColorPicker.NoteColorChanged += (s, _e) => { viewModel.Note.Color = _e.NoteColor; };
         }
 
-        private async void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
+        private void OnSaveState()
         {
             //App.RootFrame.Background = previousBackground;
 
@@ -117,19 +124,19 @@ namespace FlatNotes.Views
             viewModel.PropertyChanged -= OnViewModelPropertyChanged;
 
             //prevent from losing changes when navigating with textbox focused
-            this.CommandBar.Focus(FocusState.Programmatic);
-            this.CommandBar.IsOpen = false;
-            await Task.Delay(0200);
+            //this.CommandBar.Focus(FocusState.Programmatic);
+            //this.CommandBar.IsOpen = false;
+            //await Task.Delay(0200);
 
             //trim
             viewModel.Note.Trim();
 
             //always update live tile
-            await TileManager.UpdateNoteTileIfExists(viewModel.Note, AppSettings.Instance.TransparentNoteTile);
+            TileManager.UpdateNoteTileIfExists(viewModel.Note, AppSettings.Instance.TransparentNoteTile);
 
             //save or remove if empty
             if (viewModel.Note.Changed || viewModel.Note.IsEmpty())
-                await AppData.CreateOrUpdateNote(viewModel.Note);
+                AppData.CreateOrUpdateNote(viewModel.Note);
 
             //checklist changed (fix cache problem with converter)
             if (checklistChanged) viewModel.Note.NotifyChanges();
@@ -176,8 +183,8 @@ namespace FlatNotes.Views
         private void OnColorChanged()
         {
             if (viewModel.Note == null) return;
-            var statusBarColor = viewModel.Note.Color.Color.Color;//.Add(Color.FromArgb(0x10, 0, 0, 0));
-            App.ChangeStatusBarColor(statusBarColor, null, ElementTheme.Light);
+            //var statusBarColor = viewModel.Note.Color.Color.Color;//.Add(Color.FromArgb(0x10, 0, 0, 0));
+            //App.ChangeStatusBarColor(statusBarColor, null, ElementTheme.Light);
 
 #if WINDOWS_UWP
             try

@@ -24,6 +24,9 @@ namespace FlatNotes.ViewModels
         public RelayCommand OpenArchivedNotesCommand { get; private set; }
         public RelayCommand OpenSettingsCommand { get; private set; }
 
+        public Action<object> ShowNote { get { return showNote; } set { showNote = value; NotifyPropertyChanged("ShowNote"); } }
+        private Action<object> showNote;
+
         public Notes Notes { get { return notes; } set { notes = value; NotifyPropertyChanged("Notes"); } }
         private Notes notes;
 
@@ -62,19 +65,19 @@ namespace FlatNotes.ViewModels
         public void CreateTextNote()
         {
             App.TelemetryClient.TrackEvent("CreateNote_MainViewModel");
-            App.RootFrame.Navigate(typeof(NoteEditPage), new Note());
+            ShowNote(new Note());
         }
 
         private void CreateChecklistNote()
         {
             App.TelemetryClient.TrackEvent("CreateChecklistNote_MainViewModel");
-            App.RootFrame.Navigate(typeof(NoteEditPage), new Note(true));
+            ShowNote(new Note(true));
         }
 
         private void CreateImageNote()
         {
             App.TelemetryClient.TrackEvent("CreateImageNote_MainViewModel");
-            App.RootFrame.Navigate(typeof(NoteEditPage), new NoteImage());
+            ShowNote(new NoteImage());
         }
 
         private void ToggleSingleColumnView()

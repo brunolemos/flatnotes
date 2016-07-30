@@ -93,7 +93,7 @@ namespace FlatNotes.Models
         public Checklist Checklist { get { return checklist; } private set { checklist = value; NotifyPropertyChanged("Checklist"); } }
         [DataMember(Name = "Checklist")]
         private Checklist checklist { get { return _checklist; } set { replaceChecklist(value); } }
-        private Checklist _checklist = new List<ChecklistItem>();
+        private Checklist _checklist = new Checklist();
 
         [IgnoreDataMember]
         [Ignore]
@@ -130,6 +130,7 @@ namespace FlatNotes.Models
 
         public Note()
         {
+            Checklist.CollectionChanged += (s, e) => { NotifyPropertyChanged("Checklist"); };
         }
 
         public Note(bool isChecklist = false) : this()

@@ -83,7 +83,7 @@ namespace FlatNotes.Common
 #elif WINDOWS_UWP
                 bool hasHardwareBackButton = ApiInformation.IsTypePresent("Windows.Phone.UI.Input.HardwareButtons");
 
-                SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = this.GoBackCommand.CanExecute(null) ? AppViewBackButtonVisibility.Visible : AppViewBackButtonVisibility.Collapsed;
+                SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = App.RootFrame.CanGoBack ? AppViewBackButtonVisibility.Visible : AppViewBackButtonVisibility.Collapsed;
                 if (!hasHardwareBackButton)
                     SystemNavigationManager.GetForCurrentView().BackRequested += NavigationHelper_BackRequested;
 #endif

@@ -14,6 +14,12 @@
     FontFamily="{StaticResource AppDefaultFontFamily}"
     d:DataContext="{d:DesignData /SampleData/MainViewModelSampleData.xaml}">
 
+    <!--<FlyoutBase.AttachedFlyout>
+        <Flyout x:Name="NoteFlyout" Placement="Full" Opening="Flyout_Opening" Opened="Flyout_Opened" Closed="Flyout_Closed">
+            <Frame x:Name="NoteFrame"/>
+        </Flyout>
+    </FlyoutBase.AttachedFlyout>-->
+
     <Grid x:Name="LayoutRoot">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -46,17 +52,23 @@
         </Grid>
 
         <Grid x:Name="NoteQuickBox" Grid.Row="3" Background="{ThemeResource SystemControlBackgroundAltHighBrush}" CornerRadius="0" BorderThickness="1,0,1,2" BorderBrush="#10000000" HorizontalAlignment="Stretch">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
+            <Popup x:Name="NotePopup" IsLightDismissEnabled="True" Opened="NotePopup_Opened" Closed="NotePopup_Closed" HorizontalAlignment="Stretch">
+                <Frame MaxHeight="600" x:Name="NoteFrame" Width="{Binding ElementName=NoteQuickBox, Path=ActualWidth}"/>
+            </Popup>
 
-            <Button Grid.Column="0" Background="Transparent" BorderThickness="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Click="{x:Bind viewModel.CreateTextNote}" ClickMode="Press">
-                <TextBlock x:Name="NewNoteTextBlock" x:Uid="NewNoteTextBlock" Text="New note..." Margin="4" Foreground="{ThemeResource ApplicationForegroundThemeBrush}" VerticalAlignment="Center" HorizontalAlignment="Left" TextAlignment="Left" Opacity="0.6"/>
-            </Button>
-            <AppBarButton Grid.Column="1" x:Uid="ChecklistAppBarButton" Label="Checklist" IsCompact="True" Command="{x:Bind viewModel.CreateChecklistNoteCommand}" Icon="List" ToolTipService.ToolTip="{Binding Label, RelativeSource={RelativeSource Mode=Self}}"/>
-            <AppBarButton Grid.Column="2" x:Uid="PhotoAppBarButton" Label="Image" IsCompact="True" Command="{x:Bind viewModel.CreateImageNoteCommand}" Icon="Camera" ToolTipService.ToolTip="{Binding Label, RelativeSource={RelativeSource Mode=Self}}"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <Button Grid.Column="0" Background="Transparent" BorderThickness="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Click="{x:Bind viewModel.CreateTextNote}" ClickMode="Press">
+                    <TextBlock x:Name="NewNoteTextBlock" x:Uid="NewNoteTextBlock" Text="New note..." Margin="4" Foreground="{ThemeResource ApplicationForegroundThemeBrush}" VerticalAlignment="Center" HorizontalAlignment="Left" TextAlignment="Left" Opacity="0.6"/>
+                </Button>
+                <AppBarButton Grid.Column="1" x:Uid="ChecklistAppBarButton" Label="Checklist" IsCompact="True" Command="{x:Bind viewModel.CreateChecklistNoteCommand}" Icon="List" ToolTipService.ToolTip="{Binding Label, RelativeSource={RelativeSource Mode=Self}}"/>
+                <AppBarButton Grid.Column="2" x:Uid="PhotoAppBarButton" Label="Image" IsCompact="True" Command="{x:Bind viewModel.CreateImageNoteCommand}" Icon="Camera" ToolTipService.ToolTip="{Binding Label, RelativeSource={RelativeSource Mode=Self}}"/>
+            </Grid>
         </Grid>
 
         <VisualStateManager.VisualStateGroups>

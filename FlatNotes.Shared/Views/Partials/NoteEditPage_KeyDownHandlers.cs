@@ -180,7 +180,7 @@ namespace FlatNotes.Views
             if (e.Key == Windows.System.VirtualKey.Enter && !String.IsNullOrEmpty(text))
             {
                 viewModel.Note.Checklist.Add(new ChecklistItem(text));
-
+;
                 NewChecklistItemTextBox.Text = String.Empty;
             }
         }

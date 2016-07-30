@@ -1,4 +1,5 @@
 ﻿using FlatNotes.Common;
+using FlatNotes.Events;
 using FlatNotes.Models;
 using FlatNotes.Utils;
 using FlatNotes.ViewModels;
@@ -18,10 +19,16 @@ namespace FlatNotes.Views
 
         public NavigationHelper NavigationHelper { get { return this.navigationHelper; } }
         private NavigationHelper navigationHelper;
-        
+
+        public event EventHandler NoteOpening;
+        public event EventHandler NoteOpened;
+        public event EventHandler NoteClosed;
+
         public NotesPage()
         {
             this.InitializeComponent();
+
+            viewModel.ShowNote = ShowNoteContent;
 
             Loading += OnLoading;
 
@@ -50,7 +57,7 @@ namespace FlatNotes.Views
             //this dispatcher fixes crash error (access violation on wp preview for developers)
             await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
-                App.RootFrame.Navigate(typeof(NoteEditPage), note);
+                ShowNoteContent(note);
             });
         }
 
@@ -71,6 +78,33 @@ namespace FlatNotes.Views
 
             AppData.LocalDB.UpdateAll(viewModel.Notes);
             AppData.RoamingDB.UpdateAll(viewModel.Notes);
+        }
+
+        public void ShowNoteContent(object parameter)
+        {
+            NoteOpening?.Invoke(this, EventArgs.Empty);
+
+            NoteFrame.Navigate(typeof(NoteEditPage), parameter);
+            
+            NotePopup.IsOpen = true;
+            NoteOpened?.Invoke(this, new GenericEventArgs(parameter));
+        }
+
+        public void HideNoteContent(object parameter)
+        {
+            NotePopup.IsOpen = false;
+        }
+
+        private void NotePopup_Opened(object sender, object e)
+        {
+            NoteOpened?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void NotePopup_Closed(object sender, object e)
+        {
+            //while (NoteFrame.CanGoBack) NoteFrame.GoBack();
+
+            NoteClosed?.Invoke(this, EventArgs.Empty);
         }
 
 #if WINDOWS_PHONE_APP

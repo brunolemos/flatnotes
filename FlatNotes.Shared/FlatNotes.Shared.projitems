@@ -40,6 +40,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Events\ColumnsEventArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Events\IsSingleColumnEnabledEventArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Events\ItemsReorderedEventArgs.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Events\GenericEventArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Events\NoteIdEventArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Events\TransparentTileEventArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Events\ThemeEventArgs.cs" />

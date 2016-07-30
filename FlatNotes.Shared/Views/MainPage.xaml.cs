@@ -79,14 +79,24 @@ namespace FlatNotes.Views
         static void OnOpenSplitViewPropertyChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
         {
             MainPage mainPage = obj as MainPage;
-            bool openSplitView = (e.NewValue as bool?) == true;
+            bool showSplitViewOverlay = (e.NewValue as bool?) == true;
 
-            if (openSplitView) mainPage.ShowSplitViewOverlay.Begin();  else mainPage.HideSplitViewOverlay.Begin();
+            if (showSplitViewOverlay) mainPage.ShowSplitViewOverlay.Begin();  else mainPage.HideSplitViewOverlay.Begin();
         }
 
         private void CloseModal(object sender, EventArgs e)
         {
             OpenSplitView = false;
+        }
+
+        private void OnNoteOpening(object sender, EventArgs e)
+        {
+            ShowSplitViewOverlay.Begin();
+        }
+
+        private void OnNoteClosed(object sender, EventArgs e)
+        {
+            HideSplitViewOverlay.Begin();
         }
     }
 }
