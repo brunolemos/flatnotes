@@ -20,7 +20,7 @@ namespace FlatNotes.Views
 
         public NavigationHelper NavigationHelper { get { return this.navigationHelper; } }
         private NavigationHelper navigationHelper;
-
+        
         private Note RedirectToNote = null;
 
         public MainPage()
@@ -32,7 +32,7 @@ namespace FlatNotes.Views
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
 
-            this.SettingsPage.viewModel.CloseModal += CloseModal;
+            this.SettingsPage.viewModel.CloseModal += (s, e) => CloseModal();
         }
 
         private async void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
@@ -79,24 +79,31 @@ namespace FlatNotes.Views
         static void OnOpenSplitViewPropertyChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
         {
             MainPage mainPage = obj as MainPage;
-            bool showSplitViewOverlay = (e.NewValue as bool?) == true;
+            bool showContentOverlayAnimation = (e.NewValue as bool?) == true;
 
-            if (showSplitViewOverlay) mainPage.ShowSplitViewOverlay.Begin();  else mainPage.HideSplitViewOverlay.Begin();
+            if (showContentOverlayAnimation) mainPage.OpenModal(); else mainPage.CloseModal();
         }
 
-        private void CloseModal(object sender, EventArgs e)
+        private void OpenModal()
+        {
+            OpenSplitView = true;
+            ShowContentOverlayAnimation.Begin();
+        }
+
+        private void CloseModal()
         {
             OpenSplitView = false;
+            HideContentOverlayAnimation.Begin();
         }
 
         private void OnNoteOpening(object sender, EventArgs e)
         {
-            ShowSplitViewOverlay.Begin();
+            ShowContentOverlayAnimation.Begin();
         }
 
         private void OnNoteClosed(object sender, EventArgs e)
         {
-            HideSplitViewOverlay.Begin();
+            HideContentOverlayAnimation.Begin();
         }
     }
 }

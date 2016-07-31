@@ -1,5 +1,6 @@
 ﻿using FlatNotes.Common;
 using FlatNotes.Utils;
+using System;
 using Windows.Foundation.Metadata;
 
 namespace FlatNotes.ViewModels

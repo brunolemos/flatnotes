@@ -4,21 +4,26 @@ using FlatNotes.Models;
 using FlatNotes.Utils;
 using FlatNotes.ViewModels;
 using System;
-using System.Threading.Tasks;
+using Windows.Foundation;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Navigation;
 
 namespace FlatNotes.Views
 {
     public partial class NotesPage : Page
     {
+        public static readonly DependencyProperty IsPopupLightDismissEnabledProperty = DependencyProperty.Register("IsPopupLightDismissEnabled", typeof(bool), typeof(NotesPage), new PropertyMetadata(true));
+        public bool IsPopupLightDismissEnabled { get { return (bool)GetValue(IsPopupLightDismissEnabledProperty); } set { SetValue(IsPopupLightDismissEnabledProperty, value); } }
+
         public MainViewModel viewModel { get { return _viewModel; } }
         private static MainViewModel _viewModel = MainViewModel.Instance;
 
         public NavigationHelper NavigationHelper { get { return this.navigationHelper; } }
         private NavigationHelper navigationHelper;
+
+        public static event EventHandler EnableLightDismissReceived;
+        public static event EventHandler DisableLightDismissReceived;
 
         public event EventHandler NoteOpening;
         public event EventHandler NoteOpened;
@@ -28,7 +33,7 @@ namespace FlatNotes.Views
         {
             this.InitializeComponent();
 
-            viewModel.ShowNote = ShowNoteContent;
+            viewModel.ShowNote = OpenNote;
 
             Loading += OnLoading;
 
@@ -36,13 +41,16 @@ namespace FlatNotes.Views
             Loaded += (s, e) => EnableReorderFeature();
             Unloaded += (s, e) => DisableReorderFeature();
 #endif
+
+            EnableLightDismissReceived += (s, e) => { IsPopupLightDismissEnabled = true; };
+            DisableLightDismissReceived += (s, e) => { IsPopupLightDismissEnabled = false; };
         }
 
 #if WINDOWS_PHONE_APP
         partial void EnableReorderFeature();
         partial void DisableReorderFeature();
 #endif
-        
+
         private void OnLoading(FrameworkElement sender, object args)
         {
             viewModel.ReorderMode = ListViewReorderMode.Disabled;
@@ -57,7 +65,7 @@ namespace FlatNotes.Views
             //this dispatcher fixes crash error (access violation on wp preview for developers)
             await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
-                ShowNoteContent(note);
+                OpenNote(note);
             });
         }
 
@@ -80,9 +88,11 @@ namespace FlatNotes.Views
             AppData.RoamingDB.UpdateAll(viewModel.Notes);
         }
 
-        public void ShowNoteContent(object parameter)
+        public void OpenNote(object parameter)
         {
+            UpdateNotePopupSizeAndPosition();
             NoteOpening?.Invoke(this, EventArgs.Empty);
+            ShowPopupAnimation.Begin();
 
             NoteFrame.Navigate(typeof(NoteEditPage), parameter);
             
@@ -90,28 +100,58 @@ namespace FlatNotes.Views
             NoteOpened?.Invoke(this, new GenericEventArgs(parameter));
         }
 
-        public void HideNoteContent(object parameter)
+        public void CloseNote()
         {
             NotePopup.IsOpen = false;
         }
 
         private void NotePopup_Opened(object sender, object e)
         {
+            UpdateNotePopupSizeAndPosition();
             NoteOpened?.Invoke(this, EventArgs.Empty);
         }
 
         private void NotePopup_Closed(object sender, object e)
         {
-            //while (NoteFrame.CanGoBack) NoteFrame.GoBack();
-
             NoteClosed?.Invoke(this, EventArgs.Empty);
+
+            HidePopupAnimation.Completed += (s2, e2) => {
+                NotePopup.IsOpen = false;
+                while (NoteFrame.CanGoBack) NoteFrame.GoBack();
+            };
+
+            HidePopupAnimation.Begin();
         }
 
-        // needed because the ActualWidth property does not post updates when it changes
+        // needed because the ActualWidth and ActualHeight properties dont post updates when its changed
         // see: https://msdn.microsoft.com/en-us/library/windows/apps/windows.ui.xaml.frameworkelement.actualwidth
-        private void NoteQuickBox_SizeChanged(object sender, SizeChangedEventArgs e)
+        private void UpdateNotePopupSizeAndPosition()
         {
-            NoteFrame.Width = e.NewSize.Width;
+            if (ActualWidth < 500)
+            {
+                NotePopup.HorizontalOffset = 0;
+                NotePopup.VerticalOffset = 0;
+
+                NoteFrame.Width = ActualWidth;
+                NoteFrame.Height = ActualHeight;
+                NoteFrame.ClearValue(FrameworkElement.MaxHeightProperty);
+            }
+            else
+            {
+                var ttv = NoteQuickBox.TransformToVisual(Content);
+                Point point = ttv.TransformPoint(new Point(0, 0));
+
+                NotePopup.HorizontalOffset = point.X;
+                NotePopup.VerticalOffset = point.Y;
+
+                NoteFrame.Width = NoteQuickBox.ActualWidth;
+                NoteFrame.ClearValue(FrameworkElement.HeightProperty);
+
+                ttv = NoteQuickBox.TransformToVisual(ContentRoot);
+                point = ttv.TransformPoint(new Point(0, 0));
+
+                NoteFrame.MaxHeight = Math.Max(0, ContentRoot.ActualHeight - NotePopup.VerticalOffset - (2 * point.Y));
+            }
         }
 
 #if WINDOWS_PHONE_APP
@@ -120,5 +160,15 @@ namespace FlatNotes.Views
             viewModel.CreateTextNote();
         }
 #endif
+
+        public static void EnablePopupLightDismiss()
+        {
+            EnableLightDismissReceived?.Invoke(null, EventArgs.Empty);
+        }
+
+        public static void DisablePopupLightDismiss()
+        {
+            DisableLightDismissReceived?.Invoke(null, EventArgs.Empty);
+        }
     }
 }

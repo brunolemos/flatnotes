@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Resources;
+using Windows.Foundation;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -183,11 +184,12 @@ namespace FlatNotes.Views
         private void OnColorChanged()
         {
             if (viewModel.Note == null) return;
+
             //var statusBarColor = viewModel.Note.Color.Color.Color;//.Add(Color.FromArgb(0x10, 0, 0, 0));
             //App.ChangeStatusBarColor(statusBarColor, null, ElementTheme.Light);
 
 #if WINDOWS_UWP
-            try
+                try
             {
                 var style = new Style(typeof(FlyoutPresenter));
                 //style.Setters.Add(new Setter(FlyoutPresenter.BackgroundProperty, new Color().FromHex(viewModel.Note.Color.Color)));
@@ -223,15 +225,14 @@ namespace FlatNotes.Views
 
         private void Images_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            Debug.WriteLine("Images_CollectionChanged");
             viewModel.Note.Touch();
         }
 
         private void Checklist_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            Debug.WriteLine("Checklist_CollectionChanged");
             checklistChanged = true;
             viewModel.Note.Touch();
+            viewModel.Note.NotifyPropertyChanged("Checklist");
 
             if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Remove)
             {

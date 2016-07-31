@@ -133,6 +133,7 @@ namespace FlatNotes.ViewModels
 
         public async void OpenImagePicker()
         {
+            NotesPage.DisablePopupLightDismiss();
 
             FileOpenPicker picker = new FileOpenPicker();
             picker.ViewMode = PickerViewMode.Thumbnail;
@@ -161,6 +162,8 @@ namespace FlatNotes.ViewModels
 
         public async void HandleImageFromFilePicker(IReadOnlyList<StorageFile> files)
         {
+            NotesPage.EnablePopupLightDismiss();
+
             if (files == null || files.Count <= 0) return;
             bool error = false;
 
@@ -217,9 +220,15 @@ namespace FlatNotes.ViewModels
                 return;
             }
 
-            //save
-            bool success = await AppData.CreateOrUpdateNote(Note);
-            if (success) IsNewNote = false;
+            // update note with new image so we dont lose it if the user closes the app
+            if (!IsNewNote && !Note.IsEmpty())
+            {
+                try
+                {
+                    bool success = await AppData.CreateOrUpdateNote(Note);
+                    if (success) IsNewNote = false;
+                } catch(Exception e) { }
+            }
         }
 
         private void ToggleChecklist()

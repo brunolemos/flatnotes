@@ -15,8 +15,8 @@
     <Page.Resources>
         <converters:NullableBooleanToBooleanConverter x:Key="NullableBooleanToBooleanConverter"/>
 
-        <Storyboard x:Name="ShowSplitViewOverlay">
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="SplitViewContentOverlay">
+        <Storyboard x:Name="ShowContentOverlayAnimation">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="ContentOverlay">
                 <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="0.2">
                     <EasingDoubleKeyFrame.EasingFunction>
                         <QuadraticEase EasingMode="EaseOut"/>
@@ -33,11 +33,11 @@
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
 
-        <Storyboard x:Name="HideSplitViewOverlay">
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="SplitViewContentOverlay">
-                <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="0"/>
+        <Storyboard x:Name="HideContentOverlayAnimation">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="ContentOverlay">
+                <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="0"/>
             </DoubleAnimationUsingKeyFrames>
-            
+
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="CommandBarContent">
                 <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="1"/>
             </DoubleAnimationUsingKeyFrames>
@@ -45,7 +45,7 @@
     </Page.Resources>
 
     <Grid x:Name="LayoutRoot">
-        <SplitView x:Name="RightSplitView" Grid.Row="1" IsPaneOpen="{x:Bind OpenSplitView, Mode=TwoWay}" OpenPaneLength="320" PanePlacement="Right">
+        <SplitView x:Name="RightSplitView" IsPaneOpen="{x:Bind OpenSplitView, Mode=TwoWay}" OpenPaneLength="320" PanePlacement="Right">
             <SplitView.Pane>
                 <views:SettingsPage x:Name="SettingsPage" ShowCloseButton="True"/>
             </SplitView.Pane>
@@ -68,18 +68,18 @@
 
                         <Button Grid.Column="0" x:Uid="NotesPageNameButton" Content="Notes" Margin="4,0,0,0" FontWeight="Bold" IsTapEnabled="False" Background="Transparent" BorderThickness="0" VerticalAlignment="Stretch"/>
                         <Button Grid.Column="1" x:Uid="ArchivedNotesPageNameButton" Content="Archived notes" Background="Transparent" BorderThickness="0" VerticalAlignment="Stretch" Command="{x:Bind viewModel.OpenArchivedNotesCommand}"/>
-                        <AppBarButton Grid.Column="3" x:Uid="ToggleSingleColumnViewAppBarButton" x:Name="ToggleSingleColumnViewAppBarButton" Label="Toggle single column view" IsCompact="True" Command="{x:Bind viewModel.ToggleSingleColumnViewCommand}" ToolTipService.ToolTip="{Binding Label, RelativeSource={RelativeSource Mode=Self}}">
+                        <AppBarButton Grid.Column="3" x:Uid="ToggleSingleColumnViewAppBarButton" x:Name="ToggleSingleColumnViewAppBarButton" Label="Toggle single column view" IsCompact="True" Background="Transparent" Command="{x:Bind viewModel.ToggleSingleColumnViewCommand}" ToolTipService.ToolTip="{Binding Label, RelativeSource={RelativeSource Mode=Self}}">
                             <AppBarButton.Icon>
                                 <FontIcon Glyph="&#xE8A9;"/>
                             </AppBarButton.Icon>
                         </AppBarButton>
-                        <AppBarToggleButton Grid.Column="4" x:Uid="SettingsAppBarButton" Icon="Setting" Label="Settings" IsCompact="True" IsChecked="{x:Bind OpenSplitView, Mode=TwoWay, Converter={StaticResource NullableBooleanToBooleanConverter}}" ToolTipService.ToolTip="{Binding Label, RelativeSource={RelativeSource Mode=Self}}"/>
+                        <AppBarToggleButton Grid.Column="4" x:Uid="SettingsAppBarButton" Icon="Setting" Label="Settings" IsCompact="True" Background="Transparent" IsChecked="{x:Bind OpenSplitView, Mode=TwoWay, Converter={StaticResource NullableBooleanToBooleanConverter}}" ToolTipService.ToolTip="{Binding Label, RelativeSource={RelativeSource Mode=Self}}"/>
                     </Grid>
                 </Grid>
 
                 <Grid Grid.Row="1">
                     <views:NotesPage x:Name="NotesPage" NoteOpening="OnNoteOpening" NoteClosed="OnNoteClosed"/>
-                    <Grid x:Name="SplitViewContentOverlay" Background="Black" Opacity="0" IsHitTestVisible="False"/>
+                    <Grid x:Name="ContentOverlay" Background="Black" Opacity="0" IsHitTestVisible="False"/>
                 </Grid>
             </Grid>
         </SplitView>

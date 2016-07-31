@@ -375,13 +375,13 @@ namespace FlatNotes.Utils
                 }
             }
 
-            if (note == null) return false;
-
             Debug.WriteLine("Remove note: " + note.Title);
             //App.TelemetryClient.TrackEvent("NoteRemoved");
 
             //remove note images from disk
             await RemoveNoteImages(note.Images);
+
+            if (note == null) return false;
 
             note.SoftDelete();
 

@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:converters="using:FlatNotes.Converters"
     xmlns:local="using:FlatNotes.Controls"
     xmlns:views="using:FlatNotes.Views"
     mc:Ignorable="d"
@@ -13,6 +14,16 @@
     FontSize="{StaticResource AppDefaultFontSize}"
     FontFamily="{StaticResource AppDefaultFontFamily}"
     d:DataContext="{d:DesignData /SampleData/MainViewModelSampleData.xaml}">
+
+    <Page.Resources>
+        <Storyboard x:Name="ShowPopupAnimation">
+            <PopInThemeAnimation Storyboard.TargetName="NotePopup" FromHorizontalOffset="0" FromVerticalOffset="40"/>
+        </Storyboard>
+
+        <Storyboard x:Name="HidePopupAnimation">
+            <PopOutThemeAnimation Storyboard.TargetName="NotePopup"/>
+        </Storyboard>
+    </Page.Resources>
 
     <Grid x:Name="LayoutRoot">
         <Grid.RowDefinitions>
@@ -25,7 +36,7 @@
         <Grid x:Name="ContentRoot" Grid.Row="2">
             <Grid.Transitions>
                 <TransitionCollection>
-                    <EntranceThemeTransition FromHorizontalOffset="0" FromVerticalOffset="10"/>
+                    <EntranceThemeTransition FromHorizontalOffset="0" FromVerticalOffset="40"/>
                 </TransitionCollection>
             </Grid.Transitions>
 
@@ -45,11 +56,7 @@
             <local:NotesControl x:Name="NotesControl" ItemsSource="{Binding}" Columns="{x:Bind viewModel.Columns, Mode=OneWay}" DataContext="{x:Bind viewModel.Notes, Mode=OneWay}" d:DataContext="{Binding Notes}" VerticalAlignment="Stretch" CanReorderItems="True" CanDragItems="True" AllowDrop="True" CanSwipeItems="True" IsNoteFlyoutEnabled="True" ItemClick="OnNoteClick" ItemsReordered="OnItemsReordered" FontSize="{x:Bind FontSize}"/>
         </Grid>
 
-        <Grid x:Name="NoteQuickBox" Grid.Row="3" Background="{ThemeResource SystemControlBackgroundAltHighBrush}" CornerRadius="0" BorderThickness="1,0,1,2" BorderBrush="#10000000" HorizontalAlignment="Stretch" SizeChanged="NoteQuickBox_SizeChanged">
-            <Popup x:Name="NotePopup" IsLightDismissEnabled="True" Opened="NotePopup_Opened" Closed="NotePopup_Closed" HorizontalAlignment="Stretch">
-                <Frame MaxHeight="680" x:Name="NoteFrame" Width="{Binding ElementName=NoteQuickBox, Path=ActualWidth, Mode=OneWay}"/>
-            </Popup>
-
+        <Grid x:Name="NoteQuickBox" Grid.Row="3" Background="{ThemeResource SystemControlBackgroundAltHighBrush}" CornerRadius="0" BorderThickness="1,0,1,2" BorderBrush="#10000000" HorizontalAlignment="Stretch">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -64,6 +71,16 @@
                 <AppBarButton Grid.Column="2" x:Uid="PhotoAppBarButton" Label="Image" IsCompact="True" Command="{x:Bind viewModel.CreateImageNoteCommand}" Icon="Camera" ToolTipService.ToolTip="{Binding Label, RelativeSource={RelativeSource Mode=Self}}"/>
             </Grid>
         </Grid>
+
+        <Popup x:Name="NotePopup" Grid.Row="0" Grid.RowSpan="4" IsLightDismissEnabled="{x:Bind IsPopupLightDismissEnabled, Mode=OneWay}" Opened="NotePopup_Opened" Closed="NotePopup_Closed" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Popup.Transitions>
+                <TransitionCollection>
+                    <PopupThemeTransition FromHorizontalOffset="0" FromVerticalOffset="20"/>
+                </TransitionCollection>
+            </Popup.Transitions>
+
+            <Frame x:Name="NoteFrame"/>
+        </Popup>
 
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>

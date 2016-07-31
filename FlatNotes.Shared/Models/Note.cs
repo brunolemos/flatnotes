@@ -130,7 +130,6 @@ namespace FlatNotes.Models
 
         public Note()
         {
-            Checklist.CollectionChanged += (s, e) => { NotifyPropertyChanged("Checklist"); };
         }
 
         public Note(bool isChecklist = false) : this()
