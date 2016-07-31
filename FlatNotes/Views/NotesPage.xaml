@@ -14,12 +14,6 @@
     FontFamily="{StaticResource AppDefaultFontFamily}"
     d:DataContext="{d:DesignData /SampleData/MainViewModelSampleData.xaml}">
 
-    <!--<FlyoutBase.AttachedFlyout>
-        <Flyout x:Name="NoteFlyout" Placement="Full" Opening="Flyout_Opening" Opened="Flyout_Opened" Closed="Flyout_Closed">
-            <Frame x:Name="NoteFrame"/>
-        </Flyout>
-    </FlyoutBase.AttachedFlyout>-->
-
     <Grid x:Name="LayoutRoot">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -51,9 +45,9 @@
             <local:NotesControl x:Name="NotesControl" ItemsSource="{Binding}" Columns="{x:Bind viewModel.Columns, Mode=OneWay}" DataContext="{x:Bind viewModel.Notes, Mode=OneWay}" d:DataContext="{Binding Notes}" VerticalAlignment="Stretch" CanReorderItems="True" CanDragItems="True" AllowDrop="True" CanSwipeItems="True" IsNoteFlyoutEnabled="True" ItemClick="OnNoteClick" ItemsReordered="OnItemsReordered" FontSize="{x:Bind FontSize}"/>
         </Grid>
 
-        <Grid x:Name="NoteQuickBox" Grid.Row="3" Background="{ThemeResource SystemControlBackgroundAltHighBrush}" CornerRadius="0" BorderThickness="1,0,1,2" BorderBrush="#10000000" HorizontalAlignment="Stretch">
+        <Grid x:Name="NoteQuickBox" Grid.Row="3" Background="{ThemeResource SystemControlBackgroundAltHighBrush}" CornerRadius="0" BorderThickness="1,0,1,2" BorderBrush="#10000000" HorizontalAlignment="Stretch" SizeChanged="NoteQuickBox_SizeChanged">
             <Popup x:Name="NotePopup" IsLightDismissEnabled="True" Opened="NotePopup_Opened" Closed="NotePopup_Closed" HorizontalAlignment="Stretch">
-                <Frame MaxHeight="600" x:Name="NoteFrame" Width="{Binding ElementName=NoteQuickBox, Path=ActualWidth}"/>
+                <Frame MaxHeight="680" x:Name="NoteFrame" Width="{Binding ElementName=NoteQuickBox, Path=ActualWidth, Mode=OneWay}"/>
             </Popup>
 
             <Grid>

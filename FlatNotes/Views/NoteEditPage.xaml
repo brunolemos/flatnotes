@@ -51,7 +51,7 @@
             </MenuFlyout>
 
             <DataTemplate x:Key="NoteImagesListViewControlTemplate" x:DataType="Models:NoteImage">
-                <Grid x:Name="NoteImageContainer" Height="220" FlyoutBase.AttachedFlyout="{StaticResource NoteImageMenuFlyout}" Holding="NoteImageContainer_Holding" RightTapped="NoteImageContainer_RightTapped">
+                <Grid x:Name="NoteImageContainer" FlyoutBase.AttachedFlyout="{StaticResource NoteImageMenuFlyout}" Holding="NoteImageContainer_Holding" RightTapped="NoteImageContainer_RightTapped">
                     <Image MinHeight="220" Source="{x:Bind URL}" VerticalAlignment="Center" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
                 </Grid>
             </DataTemplate>
@@ -79,7 +79,7 @@
                         </TransitionCollection>
                     </StackPanel.ChildrenTransitions>
 
-                    <Grid MaxHeight="220" Margin="-4,-4,-4,0" Background="{StaticResource PhoneDarkLowBrush}" Visibility="{x:Bind viewModel.Note.Images.Count, Mode=OneWay, Converter={StaticResource PositiveIntToVisibilityConverter}}">
+                    <Grid Margin="-4,-4,-4,0" Background="{StaticResource PhoneDarkLowBrush}" Visibility="{x:Bind viewModel.Note.Images.Count, Mode=OneWay, Converter={StaticResource PositiveIntToVisibilityConverter}}">
                         <ListView x:Name="NoteImagesListView" ItemsSource="{Binding}" ItemTemplate="{StaticResource NoteImagesListViewControlTemplate}" SelectionMode="None" DataContext="{x:Bind viewModel.Note.Images, Mode=OneWay}" d:DataContext="{Binding Images}"/>
                     </Grid>
 

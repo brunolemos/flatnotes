@@ -107,6 +107,13 @@ namespace FlatNotes.Views
             NoteClosed?.Invoke(this, EventArgs.Empty);
         }
 
+        // needed because the ActualWidth property does not post updates when it changes
+        // see: https://msdn.microsoft.com/en-us/library/windows/apps/windows.ui.xaml.frameworkelement.actualwidth
+        private void NoteQuickBox_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            NoteFrame.Width = e.NewSize.Width;
+        }
+
 #if WINDOWS_PHONE_APP
         private void OnCreateNoteTapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
