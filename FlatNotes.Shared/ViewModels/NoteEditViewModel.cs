@@ -148,10 +148,10 @@ namespace FlatNotes.ViewModels
 #if WINDOWS_PHONE_APP
             await Task.Delay(0);
             //open
-            picker.PickSingleFileAndContinue();
+            picker.PickMultipleFilesAndContinue();
 #elif WINDOWS_UWP
-            var file = await picker.PickSingleFileAsync();
-            HandleImageFromFilePicker(file);
+            var files = await picker.PickMultipleFilesAsync();
+            HandleImageFromFilePicker(files);
 #endif
         }
 
@@ -170,10 +170,10 @@ namespace FlatNotes.ViewModels
             try
             {
                 //delete old images
-                await AppData.RemoveNoteImages(Note.Images);
+                //await AppData.RemoveNoteImages(Note.Images);
 
                 //clear image list
-                Note.Images.Clear();
+                //Note.Images.Clear();
 
                 //add new images
                 foreach (var file in files)
