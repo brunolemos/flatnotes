@@ -185,13 +185,23 @@ namespace FlatNotes.Views
 
         private void OnColorChanged()
         {
-            if (viewModel.Note == null) return;
+            if (viewModel.Note == null)
+            {
+                App.ResetStatusBar();
+                return;
+            }
 
-            //var statusBarColor = viewModel.Note.Color.Color.Color;//.Add(Color.FromArgb(0x10, 0, 0, 0));
-            //App.ChangeStatusBarColor(statusBarColor, null, ElementTheme.Light);
+            if (App.RootFrame.ActualWidth < 768)
+            {
+                var statusBarColor = viewModel.Note.Color.Color.Color;//.Add(Color.FromArgb(0x10, 0, 0, 0));
+                App.ChangeStatusBarColor(statusBarColor, null, ElementTheme.Light);
+            } else {
+                App.ResetStatusBar();
+            }
+           
 
 #if WINDOWS_UWP
-                try
+            try
             {
                 var style = new Style(typeof(FlyoutPresenter));
                 //style.Setters.Add(new Setter(FlyoutPresenter.BackgroundProperty, new Color().FromHex(viewModel.Note.Color.Color)));

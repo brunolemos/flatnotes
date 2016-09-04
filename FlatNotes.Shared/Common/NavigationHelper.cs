@@ -61,7 +61,7 @@ namespace FlatNotes.Common
     public class NavigationHelper : DependencyObject
     {
         private Page Page { get; set; }
-        private Frame Frame { get { return this.Page.Frame; } }
+        private Frame Frame { get { return this.Page.Frame == null ? App.RootFrame : this.Page.Frame; } }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="NavigationHelper"/> class.
@@ -83,7 +83,7 @@ namespace FlatNotes.Common
 #elif WINDOWS_UWP
                 bool hasHardwareBackButton = ApiInformation.IsTypePresent("Windows.Phone.UI.Input.HardwareButtons");
 
-                SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = App.RootFrame.CanGoBack ? AppViewBackButtonVisibility.Visible : AppViewBackButtonVisibility.Collapsed;
+                SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = this.Frame != null && this.Frame.CanGoBack ? AppViewBackButtonVisibility.Visible : AppViewBackButtonVisibility.Collapsed;
                 if (!hasHardwareBackButton)
                     SystemNavigationManager.GetForCurrentView().BackRequested += NavigationHelper_BackRequested;
 #endif

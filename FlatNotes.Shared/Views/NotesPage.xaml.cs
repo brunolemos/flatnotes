@@ -127,10 +127,10 @@ namespace FlatNotes.Views
         // see: https://msdn.microsoft.com/en-us/library/windows/apps/windows.ui.xaml.frameworkelement.actualwidth
         private void UpdateNotePopupSizeAndPosition()
         {
-            if (ActualWidth < 500)
+            if (ActualWidth < 768)
             {
                 NotePopup.HorizontalOffset = 0;
-                NotePopup.VerticalOffset = 0;
+                NotePopup.VerticalOffset = -48;
 
                 NoteFrame.Width = ActualWidth;
                 NoteFrame.Height = ActualHeight;

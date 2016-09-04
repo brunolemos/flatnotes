@@ -77,7 +77,7 @@
                     </Grid>
                 </Grid>
 
-                <Grid Grid.Row="1">
+                <Grid x:Name="NotesPageContainer" Grid.Row="1">
                     <views:NotesPage x:Name="NotesPage" NoteOpening="OnNoteOpening" NoteClosed="OnNoteClosed"/>
                     <Grid x:Name="ContentOverlay" Background="Black" Opacity="0" IsHitTestVisible="False"/>
                 </Grid>

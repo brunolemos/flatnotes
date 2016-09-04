@@ -4,6 +4,7 @@ using FlatNotes.Utils;
 using FlatNotes.ViewModels;
 using System;
 using System.Threading.Tasks;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -33,7 +34,10 @@ namespace FlatNotes.Views
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
 
             this.SettingsPage.viewModel.CloseModal += (s, e) => CloseModal();
-        }
+            
+            NotesPage.NoteOpened += (s, e) => SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
+            NotesPage.NoteClosed += (s, e) => { App.ResetStatusBar(); SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed; };
+            }
 
         private async void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
