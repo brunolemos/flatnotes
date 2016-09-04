@@ -19,11 +19,13 @@
     <Page.Resources>
         <ResourceDictionary>
             <Converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
-            <Converters:NullableToVisibilityConverter x:Key="NullableToVisibilityConverter"/>
             <Converters:FriendlyTimeConverter x:Key="FriendlyTimeConverter"/>
+            <Converters:NullableToVisibilityConverter x:Key="NullableToVisibilityConverter"/>
             <Converters:ReorderModeToVisibilityConverter x:Key="ReorderModeToVisibilityConverter"/>
             <Converters:ReorderModeToBooleanConverter x:Key="ReorderModeToBooleanConverter"/>
             <Converters:PositiveIntToVisibilityConverter x:Key="PositiveIntToVisibilityConverter"/>
+            <Converters:ZoomFactorToScrollBarVisibilityConverter x:Key="ZoomFactorToScrollBarVisibilityConverter"/>
+            <Converters:ZoomFactorToScrollModeConverter x:Key="ZoomFactorToScrollModeConverter"/>
             
             <DataTemplate x:Key="NoteChecklistListViewControlTemplate" x:DataType="Models:ChecklistItem">
                 <Grid>
@@ -50,10 +52,19 @@
                 <MenuFlyoutItem x:Uid="DeleteMenuFlyoutItem" Text="Delete" Click="DeleteNoteImageMenuFlyoutItem_Click"/>
             </MenuFlyout>
 
-            <DataTemplate x:Key="NoteImagesListViewControlTemplate" x:DataType="Models:NoteImage">
-                <Grid x:Name="NoteImageContainer" FlyoutBase.AttachedFlyout="{StaticResource NoteImageMenuFlyout}" Holding="NoteImageContainer_Holding" RightTapped="NoteImageContainer_RightTapped">
-                    <Image MinHeight="220" Source="{x:Bind URL}" VerticalAlignment="Center" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
-                </Grid>
+            <DataTemplate x:Key="NoteImageControlTemplate" x:DataType="Models:NoteImage">
+                <ScrollViewer 
+                    ZoomMode="Enabled" MinZoomFactor="1" MaxZoomFactor="5" DoubleTapped="ScrollViewer_DoubleTapped"
+                    HorizontalScrollMode="{Binding ZoomFactor, Converter={StaticResource ZoomFactorToScrollModeConverter}, Mode=OneWay, RelativeSource={RelativeSource Mode=Self}}" 
+                    VerticalScrollMode="{Binding ZoomFactor, Converter={StaticResource ZoomFactorToScrollModeConverter}, Mode=OneWay, RelativeSource={RelativeSource Mode=Self}}" 
+                    HorizontalScrollBarVisibility="{Binding ZoomFactor, Converter={StaticResource ZoomFactorToScrollBarVisibilityConverter}, Mode=OneWay, RelativeSource={RelativeSource Mode=Self}}" 
+                    VerticalScrollBarVisibility="{Binding ZoomFactor, Converter={StaticResource ZoomFactorToScrollBarVisibilityConverter}, Mode=OneWay, RelativeSource={RelativeSource Mode=Self}}" 
+                >
+                    <Grid x:Name="NoteImageContainer" FlyoutBase.AttachedFlyout="{StaticResource NoteImageMenuFlyout}" Holding="NoteImageContainer_Holding" RightTapped="NoteImageContainer_RightTapped">
+                        <Image MinHeight="220" MaxHeight="400" Source="{x:Bind URL}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill" Opacity="0.15"/>
+                        <Image MinHeight="220" MaxHeight="400" Source="{x:Bind URL}" VerticalAlignment="Center" HorizontalAlignment="Center" Stretch="Uniform"/>
+                    </Grid>
+                </ScrollViewer>
             </DataTemplate>
         </ResourceDictionary>
     </Page.Resources>
@@ -80,7 +91,7 @@
                     </StackPanel.ChildrenTransitions>
 
                     <Grid Margin="-4,-4,-4,0" Background="{StaticResource PhoneDarkLowBrush}" Visibility="{x:Bind viewModel.Note.Images.Count, Mode=OneWay, Converter={StaticResource PositiveIntToVisibilityConverter}}">
-                        <FlipView x:Name="NoteImagesListView" ItemsSource="{Binding}" ItemTemplate="{StaticResource NoteImagesListViewControlTemplate}" DataContext="{x:Bind viewModel.Note.Images, Mode=OneWay}" d:DataContext="{Binding Images}"/>
+                        <FlipView x:Name="NoteImagesFlipView" MaxHeight="400" ItemsSource="{Binding}" ItemTemplate="{StaticResource NoteImageControlTemplate}" DataContext="{x:Bind viewModel.Note.Images, Mode=OneWay}" d:DataContext="{Binding Images}" PointerWheelChanged="NoteImagesFlipView_PointerWheelChanged" DataContextChanged="NoteImagesFlipView_DataContextChanged" />
                     </Grid>
 
                     <TextBox x:Uid="TitleTextBox" x:Name="NoteTitleTextBox" PlaceholderText="Title" Text="{Binding ElementName=Root, Path=viewModel.Note.Title, Mode=TwoWay, TargetNullValue='', UpdateSourceTrigger=PropertyChanged}" Foreground="{StaticResource AppNoteForegroundBrush}" InputScope="Chat" Background="Transparent" BorderThickness="0" Margin="0" Padding="14" FontWeight="Bold" FontSize="16" FontFamily="{StaticResource NoteTitleFontFamily}" MaxLength="50" TextWrapping="NoWrap" KeyDown="NoteTitleTextBox_KeyDown" ScrollViewer.HorizontalScrollMode="Auto" ScrollViewer.VerticalScrollBarVisibility="Disabled"/>

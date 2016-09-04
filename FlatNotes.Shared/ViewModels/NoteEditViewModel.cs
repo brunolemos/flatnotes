@@ -106,6 +106,7 @@ namespace FlatNotes.ViewModels
         public string UpdatedAtFormatedString { get { return string.Format(LocalizedResources.UpdatedAtFormatString, friendlyTimeConverter.Convert(Note.UpdatedAt)); } }
         public string CreatedAtFormatedString { get { return string.Format(LocalizedResources.CreatedAtFormatString, friendlyTimeConverter.Convert(Note.CreatedAt)); } }
 
+
         public ListViewReorderMode ReorderMode
         {
             get { return reorderMode; }

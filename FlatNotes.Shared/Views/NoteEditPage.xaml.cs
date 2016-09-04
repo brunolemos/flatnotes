@@ -3,6 +3,7 @@ using FlatNotes.Models;
 using FlatNotes.Utils;
 using FlatNotes.ViewModels;
 using System;
+using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
@@ -226,6 +227,7 @@ namespace FlatNotes.Views
         private void Images_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             viewModel.Note.Touch();
+            viewModel.Note.NotifyPropertyChanged("Images");
         }
 
         private void Checklist_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
@@ -318,6 +320,58 @@ namespace FlatNotes.Views
         {
             if (element == null) return;
             Flyout.ShowAttachedFlyout(element);
+        }
+
+        // double tap to zoom
+        private async void ScrollViewer_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
+        {
+            var scrollViewer = sender as ScrollViewer;
+
+            var dispatcher = Window.Current.CoreWindow.Dispatcher;
+            await dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.High, () =>
+            {
+                var doubleTapPoint = e.GetPosition(scrollViewer);
+
+                if (scrollViewer.ZoomFactor > 1)
+                {
+                    scrollViewer.ChangeView(0, 0, 1.0F);
+                }
+                else
+                {
+                    Debug.WriteLine(doubleTapPoint.X + "x" + doubleTapPoint.Y);
+                    scrollViewer.ChangeView(doubleTapPoint.X, doubleTapPoint.Y, 2.0F);
+                    scrollViewer.ChangeView(doubleTapPoint.X, doubleTapPoint.Y, 2.0F);
+                }
+            });
+        }
+
+        // disable flipview from going to next item with mouse scroll
+        private void NoteImagesFlipView_PointerWheelChanged(object sender, PointerRoutedEventArgs e)
+        {
+            //e.Handled = true;
+        }
+
+        private void NoteImagesFlipView_DataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args)
+        {
+            //var flipView = sender as FlipView;
+            //var images = (NoteImages)args.NewValue;
+            //flipView.SelectedIndex = 0;
+
+            //images.CollectionChanged += (s, e) =>
+            //{
+            //    var lastIndex = (flipView.DataContext as NoteImages).Count - 1;
+
+            //    if (e.Action == NotifyCollectionChangedAction.Add )
+            //    {
+            //        flipView.SelectedIndex = lastIndex;
+            //    }
+            //    else if ((e.Action == NotifyCollectionChangedAction.Remove || e.Action == NotifyCollectionChangedAction.Reset))
+            //    {
+            //        var nextIndex = flipView.SelectedIndex + 1;
+            //        if (nextIndex > lastIndex) nextIndex = lastIndex;
+            //        flipView.SelectedIndex = nextIndex;
+            //    }
+            //};
         }
 
 #if WINDOWS_PHONE_APP

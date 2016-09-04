@@ -64,7 +64,12 @@
 
         <ListView.ItemTemplate>
             <DataTemplate x:DataType="models:Note">
-                <local:NotePreview Margin="{Binding Margin, ElementName=Root}" FontSize="{Binding FontSize, ElementName=Root}" Loaded="OnNoteLoaded" Holding="NotePreview_Holding" RightTapped="NotePreview_RightTapped" FlyoutBase.AttachedFlyout="{StaticResource NoteMenuFlyout}"/>
+                <local:NotePreview Margin="{Binding Margin, ElementName=Root}" 
+                                   FontSize="{Binding FontSize, ElementName=Root}" 
+                                   Loaded="OnNoteLoaded" 
+                                   Holding="NotePreview_Holding" 
+                                   RightTapped="NotePreview_RightTapped" 
+                                   FlyoutBase.AttachedFlyout="{StaticResource NoteMenuFlyout}"/>
             </DataTemplate>
         </ListView.ItemTemplate>
     </ListView>

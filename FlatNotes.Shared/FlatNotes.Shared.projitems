@@ -28,6 +28,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Converters\IsMobileToGridRowConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\LocalizedResourcesConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\NullableBooleanToBooleanConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\SliceNoteImagesConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\ZoomFactorToScrollModeConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\ZoomFactorToScrollBarVisibilityConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\StringFormatConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\MaxChecklistItemsConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\PositiveIntToVisibilityConverter.cs" />
@@ -132,5 +135,8 @@
     <PRIResource Include="$(MSBuildThisFileDirectory)Strings\es\Resources.resw" />
     <PRIResource Include="$(MSBuildThisFileDirectory)Strings\pt-BR\Resources.resw" />
     <PRIResource Include="$(MSBuildThisFileDirectory)Strings\zh-CN\Resources.resw" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)Controls\NotePreview.xaml" />
   </ItemGroup>
 </Project>
