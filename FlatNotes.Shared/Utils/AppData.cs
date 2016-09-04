@@ -80,9 +80,11 @@ namespace FlatNotes.Utils
                 {
                     var file = await ApplicationData.Current.LocalFolder.GetFileAsync(AppSettings.DB_FILE_NAME);
                     await file.CopyAsync(ApplicationData.Current.RoamingFolder, AppSettings.DB_FILE_NAME, NameCollisionOption.FailIfExists);
+                    Debug.WriteLine("Created local DB from remote.");
                 }
                 catch (Exception)
                 {
+                    Debug.WriteLine("Skipped creating local DB from remote.");
                 }
             }).Wait();
         }
@@ -364,14 +366,22 @@ namespace FlatNotes.Utils
             //get original reference
             if (notes != null)
             {
-                if (note.IsArchived)
+                try
                 {
-                    LoadArchivedNotesIfNecessary();
-                    note = ArchivedNotes.FirstOrDefault(x => x.ID == note.ID);
+                    if (note.IsArchived)
+                    {
+                        LoadArchivedNotesIfNecessary();
+                        note = ArchivedNotes.First(x => x.ID == note.ID);
+                    }
+                    else
+                    {
+                        note = Notes.First(x => x.ID == note.ID);
+                    }
                 }
-                else
+                catch (Exception)
                 {
-                    note = Notes.FirstOrDefault(x => x.ID == note.ID);
+                    Debug.WriteLine("Failed removing note.");
+                    return false;
                 }
             }
 

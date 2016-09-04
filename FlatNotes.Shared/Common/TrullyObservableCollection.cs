@@ -43,10 +43,14 @@ namespace FlatNotes.Common
 
             if(UpdateLayout)
             {
-                int index = IndexOf((T)sender);
-                this[index] = (T)sender;
+                try
+                {
+                    int index = IndexOf((T)sender);
+                    this[index] = (T)sender;
 
-                //OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+                    //OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+                }
+                catch (Exception) { }
             }
         }
     }

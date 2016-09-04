@@ -20,7 +20,7 @@
             <Converters:NullableToVisibilityConverter x:Key="NullableToVisibilityConverter"/>
             <Converters:MaxChecklistItemsConverter x:Key="MaxChecklistItemsConverter"/>
             <Converters:PositiveIntToVisibilityConverter x:Key="PositiveIntToVisibilityConverter"/>
-            <Converters:SliceNoteImagesConverter x:Key="SliceNoteImagesConverter"/>
+            <Converters:GetSelectedNoteImageConverter x:Key="GetSelectedNoteImageConverter"/>
             
             <Style x:Key="NotePreviewChecklistItem" TargetType="ListViewItem">
                 <Setter Property="Margin" Value="0"/>
@@ -50,11 +50,11 @@
                 </Grid>
             </DataTemplate>
             
-            <DataTemplate x:Key="NoteImagesListViewControlTemplate">
+            <!--<DataTemplate x:Key="NoteImagesListViewControlTemplate">
                 <Grid x:Name="NoteImageContainer">
                     <Image Source="{Binding URL}" Stretch="UniformToFill" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 </Grid>
-            </DataTemplate>
+            </DataTemplate>-->
         </ResourceDictionary>
     </UserControl.Resources>
 
@@ -63,7 +63,8 @@
             <StackPanel Margin="0" IsHitTestVisible="False">
                 <Grid Visibility="{Binding ElementName=NotePreviewRoot, Path=HideImage, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=True}">
                     <Grid Background="{StaticResource PhoneDarkLowBrush}" Visibility="{Binding Images.Count, Converter={StaticResource PositiveIntToVisibilityConverter}}">
-                        <ListView x:Name="NoteImagesListView" Margin="0" Padding="0" BorderThickness="0" ItemsSource="{Binding Images, Converter={StaticResource SliceNoteImagesConverter}, ConverterParameter=1}" ItemTemplate="{StaticResource NoteImagesListViewControlTemplate}" SelectionMode="None" IsTapEnabled="False" IsItemClickEnabled="False" HorizontalContentAlignment="Stretch" IsHitTestVisible="False" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.HorizontalScrollMode="Disabled"/>
+                        <!--<ListView x:Name="NoteImagesListView" Margin="0" Padding="0" BorderThickness="0" ItemsSource="{Binding Images, Converter={StaticResource SliceNoteImagesConverter}, ConverterParameter=1}" ItemTemplate="{StaticResource NoteImagesListViewControlTemplate}" SelectionMode="None" IsItemClickEnabled="False" IsTapEnabled="False" IsHitTestVisible="False" HorizontalContentAlignment="Stretch" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.HorizontalScrollMode="Disabled"/>-->
+                        <Image Source="{Binding URL}" DataContext="{Binding Images, Converter={StaticResource GetSelectedNoteImageConverter}}" Stretch="UniformToFill" HorizontalAlignment="Center" VerticalAlignment="Center" IsTapEnabled="False" IsHitTestVisible="False"/>
                     </Grid>
                 </Grid>
             

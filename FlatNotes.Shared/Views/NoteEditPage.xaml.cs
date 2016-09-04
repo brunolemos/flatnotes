@@ -5,6 +5,7 @@ using FlatNotes.ViewModels;
 using System;
 using System.Collections.Specialized;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Resources;
@@ -351,27 +352,64 @@ namespace FlatNotes.Views
             //e.Handled = true;
         }
 
-        private void NoteImagesFlipView_DataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args)
+        private void onImagesCollectionChanges(object sender, NotifyCollectionChangedEventArgs e)
         {
-            //var flipView = sender as FlipView;
-            //var images = (NoteImages)args.NewValue;
-            //flipView.SelectedIndex = 0;
+            var lastIndex = (NoteImagesFlipView.DataContext as NoteImages).Count - 1;
 
-            //images.CollectionChanged += (s, e) =>
-            //{
-            //    var lastIndex = (flipView.DataContext as NoteImages).Count - 1;
+            if (e.Action == NotifyCollectionChangedAction.Add)
+            {
+                NoteImagesFlipView.SelectedIndex = lastIndex;
+            }
+            else if ((e.Action == NotifyCollectionChangedAction.Remove || e.Action == NotifyCollectionChangedAction.Reset))
+            {
+                var nextIndex = NoteImagesFlipView.SelectedIndex + 1;
+                if (nextIndex > lastIndex) nextIndex = lastIndex;
+                NoteImagesFlipView.SelectedIndex = nextIndex;
+            }
 
-            //    if (e.Action == NotifyCollectionChangedAction.Add )
-            //    {
-            //        flipView.SelectedIndex = lastIndex;
-            //    }
-            //    else if ((e.Action == NotifyCollectionChangedAction.Remove || e.Action == NotifyCollectionChangedAction.Reset))
-            //    {
-            //        var nextIndex = flipView.SelectedIndex + 1;
-            //        if (nextIndex > lastIndex) nextIndex = lastIndex;
-            //        flipView.SelectedIndex = nextIndex;
-            //    }
-            //};
+            Debug.WriteLine("NoteImagesFlipView_DataContextChanged CollectionChanged" + NoteImagesFlipView.SelectedIndex);
+        }
+
+        private void NoteImagesFlipView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var flipView = sender as FlipView;
+
+            if (flipView.SelectedIndex < 0 || e.AddedItems.Count <= 0 || e.RemovedItems.Count <= 0) return;
+
+            var images = (NoteImages)flipView.DataContext;
+            for (var i = 0; i < images.Count; i++) images[i].IsSelected = flipView.SelectedIndex == i;
+
+            viewModel.Note.NotifyPropertyChanged("Images");
+            Debug.WriteLine("NoteImagesFlipView_SelectionChanged " + flipView.SelectedIndex + " ... " + e.OriginalSource);
+        }
+
+        private void NoteImagesFlipView_Loaded(object sender, RoutedEventArgs e)
+        {
+            Debug.WriteLine("NoteImagesFlipView_Loaded " + NoteImagesFlipView.SelectedIndex);
+            var flipView = sender as FlipView;
+            flipView.SelectionChanged += NoteImagesFlipView_SelectionChanged;
+            (flipView.DataContext as NoteImages).CollectionChanged += onImagesCollectionChanges;
+
+            loadSelectedNoteImage();
+            NoteImagesFlipView.Focus(FocusState.Pointer);
+        }
+
+        private void NoteImagesFlipView_Unloaded(object sender, RoutedEventArgs e)
+        {
+            Debug.WriteLine("NoteImagesFlipView_Unloaded " + NoteImagesFlipView.SelectedIndex);
+            var flipView = sender as FlipView;
+            flipView.SelectionChanged -= NoteImagesFlipView_SelectionChanged;
+            (flipView.DataContext as NoteImages).CollectionChanged -= onImagesCollectionChanges;
+        }
+
+        private void loadSelectedNoteImage()
+        {
+            var images = (NoteImages)NoteImagesFlipView.DataContext;
+            var selectedImage = images.FirstOrDefault((i) => i.IsSelected);
+            NoteImagesFlipView.SelectedIndex = images.Count > 0 ? images.IndexOf(selectedImage) : -1;
+
+
+            Debug.WriteLine("loadSelectedNoteImage " + images.IndexOf(selectedImage));
         }
 
 #if WINDOWS_PHONE_APP

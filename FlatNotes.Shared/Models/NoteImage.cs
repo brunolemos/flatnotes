@@ -73,6 +73,10 @@ namespace FlatNotes.Models
         [DataMember]
         public Double Proportion { get { return Height / Width; } }
 
+        public bool IsSelected { get { return isSelected; } set { isSelected = value; NotifyPropertyChanged("IsSelected"); } }
+        [DataMember(Name = "IsSelected")]
+        private bool isSelected = false;
+
         public DateTime CreatedAt { get { return createdAt; } private set { createdAt = value; } }
         [DataMember(Name = "CreatedAt")]
         private DateTime createdAt = DateTime.Now;
