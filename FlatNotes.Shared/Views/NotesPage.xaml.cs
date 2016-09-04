@@ -130,10 +130,10 @@ namespace FlatNotes.Views
             if (ActualWidth < 768)
             {
                 NotePopup.HorizontalOffset = 0;
-                NotePopup.VerticalOffset = -48;
+                NotePopup.VerticalOffset = -48;// CommandBar Height
 
                 NoteFrame.Width = ActualWidth;
-                NoteFrame.Height = ActualHeight;
+                NoteFrame.Height = ActualHeight - NotePopup.VerticalOffset;
                 NoteFrame.ClearValue(FrameworkElement.MaxHeightProperty);
             }
             else

@@ -46,7 +46,7 @@
                 </Grid>
             </DataTemplate>
 
-            <MenuFlyout x:Key="NoteImageMenuFlyout" Placement="Bottom">
+            <MenuFlyout x:Name="NoteImageMenuFlyout" x:Key="NoteImageMenuFlyout" Placement="Bottom">
                 <!--<MenuFlyoutItem x:Uid="SaveMenuFlyoutItem" Text="Save" IsEnabled="False"/>
                 <MenuFlyoutItem x:Uid="ShareMenuFlyoutItem" Text="Share" IsEnabled="False"/>-->
                 <MenuFlyoutItem x:Uid="DeleteMenuFlyoutItem" Text="Delete" Click="DeleteNoteImageMenuFlyoutItem_Click"/>

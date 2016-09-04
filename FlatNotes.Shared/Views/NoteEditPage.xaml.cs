@@ -204,7 +204,7 @@ namespace FlatNotes.Views
             try
             {
                 var style = new Style(typeof(FlyoutPresenter));
-                //style.Setters.Add(new Setter(FlyoutPresenter.BackgroundProperty, new Color().FromHex(viewModel.Note.Color.Color)));
+                style.Setters.Add(new Setter(FlyoutPresenter.BackgroundProperty, viewModel.Note.Color.DarkColor));
                 style.Setters.Add(new Setter(FlyoutPresenter.BorderThicknessProperty, new Thickness(0)));
 
                 ColorPickerAppBarToggleButton.Flyout.SetValue(Flyout.FlyoutPresenterStyleProperty, style);

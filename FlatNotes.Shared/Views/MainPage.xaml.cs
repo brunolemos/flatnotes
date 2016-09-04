@@ -37,7 +37,7 @@ namespace FlatNotes.Views
             
             NotesPage.NoteOpened += (s, e) => SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
             NotesPage.NoteClosed += (s, e) => { App.ResetStatusBar(); SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed; };
-            }
+        }
 
         private async void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {

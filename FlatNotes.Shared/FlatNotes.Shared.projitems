@@ -137,6 +137,10 @@
     <PRIResource Include="$(MSBuildThisFileDirectory)Strings\zh-CN\Resources.resw" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)App.xaml" />
     <None Include="$(MSBuildThisFileDirectory)Controls\NotePreview.xaml" />
+    <None Include="$(MSBuildThisFileDirectory)Resources\DefaultResourceDictionary.xaml" />
+    <None Include="$(MSBuildThisFileDirectory)Resources\Themes\DarkThemeResourceDictionary.xaml" />
+    <None Include="$(MSBuildThisFileDirectory)Resources\Themes\LightThemeResourceDictionary.xaml" />
   </ItemGroup>
 </Project>
