@@ -22,8 +22,22 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
+
+        <Grid x:Name="CommandBar" Grid.Row="0" Background="{StaticResource AppMainBrush}" RequestedTheme="Dark">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Column="0" x:Uid="SettingsPageNameButton" Content="Settings" Margin="4,0,0,0" FontWeight="Bold" IsTapEnabled="False" Background="Transparent" BorderThickness="0" VerticalAlignment="Stretch"/>
+            <AppBarButton Grid.Column="2" x:Uid="RateAppbarButton" Icon="OutlineStar" Label="Rate" IsCompact="True" Command="{x:Bind viewModel.RateAppCommand}" ToolTipService.ToolTip="{Binding Label, RelativeSource={RelativeSource Mode=Self}}"/>
+            <AppBarButton Grid.Column="3" x:Uid="SupportAppBarButton" Icon="Mail" Label="Support" IsCompact="True" Command="{x:Bind viewModel.ContactSupportCommand}" ToolTipService.ToolTip="{Binding Label, RelativeSource={RelativeSource Mode=Self}}"/>
+            <AppBarButton Grid.Column="4" x:Uid="CloseAppBarButton" Icon="Cancel" Label="Close" IsCompact="True" Command="{x:Bind viewModel.DispatchCloseModalEventCommand}" ToolTipService.ToolTip="{Binding Label, RelativeSource={RelativeSource Mode=Self}}" Visibility="{x:Bind ShowCloseButton, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+        </Grid>
 
         <Grid x:Name="ContentRoot" Grid.Row="1" Margin="12">
             <Grid.Transitions>
@@ -36,7 +50,7 @@
                 <StackPanel>
                     <Image Height="80" Source="ms-appx:///Assets/Logo.png" Margin="0,0,0,6" VerticalAlignment="Top" HorizontalAlignment="Center"/>
                     <TextBlock Text="{x:Bind viewModel.AppName}" Margin="0,0,0,24" Padding="0" HorizontalAlignment="Center" Style="{StaticResource SubheaderTextBlockStyle}" FontSize="24"/>
-                
+
                     <CheckBox x:Uid="ThemeCheckbox" Margin="0" Content="Dark theme" IsChecked="{x:Bind viewModel.IsDarkTheme, Mode=TwoWay}" IsThreeState="False"/>
                     <CheckBox x:Uid="AppDefaultTileBackgroundCheckbox" Margin="0" Content="Yellow background on app live tile" IsChecked="{x:Bind viewModel.IsSolidColorDefaultTile, Mode=TwoWay}" IsThreeState="False"/>
                     <CheckBox x:Uid="NoteTileBackgroundCheckbox" Margin="0" Content="Solid background on note live tile" IsChecked="{x:Bind viewModel.IsSolidColorNoteTile, Mode=TwoWay}" Visibility="{x:Bind viewModel.IsMobile, Converter={StaticResource BooleanToVisibilityConverter}}" IsThreeState="False"/>
@@ -54,22 +68,6 @@
                     <Button Margin="0,12" Content="Download Flat Notes" HorizontalAlignment="Left" Command="{x:Bind viewModel.DownloadAppCommand}" Visibility="{x:Bind viewModel.IsBeta, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                 </StackPanel>
             </ScrollViewer>
-        </Grid>
-
-
-        <Grid x:Name="CommandBar" Grid.Row="0" Background="{StaticResource AppMainBrush}" RequestedTheme="Dark">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-
-            <Button Grid.Column="0" x:Uid="SettingsPageNameButton" Content="Settings" Margin="4,0,0,0" FontWeight="Bold" IsTapEnabled="False" Background="Transparent" BorderThickness="0" VerticalAlignment="Stretch"/>
-            <AppBarButton Grid.Column="2" x:Uid="RateAppbarButton" Icon="OutlineStar" Label="Rate" IsCompact="True" Command="{x:Bind viewModel.RateAppCommand}" ToolTipService.ToolTip="{Binding Label, RelativeSource={RelativeSource Mode=Self}}"/>
-            <AppBarButton Grid.Column="3" x:Uid="SupportAppBarButton" Icon="Mail" Label="Support" IsCompact="True" Command="{x:Bind viewModel.ContactSupportCommand}" ToolTipService.ToolTip="{Binding Label, RelativeSource={RelativeSource Mode=Self}}"/>
-            <AppBarButton Grid.Column="4" x:Uid="CloseAppBarButton" Icon="Cancel" Label="Close" IsCompact="True" Command="{x:Bind viewModel.DispatchCloseModalEventCommand}" ToolTipService.ToolTip="{Binding Label, RelativeSource={RelativeSource Mode=Self}}" Visibility="{x:Bind ShowCloseButton, Converter={StaticResource BooleanToVisibilityConverter}}"/>
         </Grid>
     </Grid>
 </Page>
