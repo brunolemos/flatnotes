@@ -234,6 +234,9 @@
   <data name="SupportAppBarButton.Label" xml:space="preserve">
     <value>支持</value>
   </data>
+  <data name="CloseAppBarButton.Label" xml:space="preserve">
+    <value>关闭</value>
+  </data>
   <data name="Unpin" xml:space="preserve">
     <value>删除磁贴</value>
   </data>

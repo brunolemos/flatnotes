@@ -228,6 +228,9 @@ Algumas funcionalidades:
   <data name="SupportAppBarButton.Label" xml:space="preserve">
     <value>Suporte</value>
   </data>
+  <data name="CloseAppBarButton.Label" xml:space="preserve">
+    <value>Fechar</value>
+  </data>
   <data name="TextTextBox.PlaceholderText" xml:space="preserve">
     <value>Texto</value>
   </data>
