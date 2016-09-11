@@ -137,6 +137,8 @@ namespace FlatNotes
                     ContinuationManager.Continue(continuationEventArgs, RootFrame);
             }
 
+            ApplicationView.GetForCurrentView().SetDesiredBoundsMode(ApplicationViewBoundsMode.UseVisible);
+
             Window.Current.Activate();
         }
 

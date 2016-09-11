@@ -187,6 +187,7 @@ namespace FlatNotes.Utils
         public async Task<StorageFile> SaveImage(StorageFile file, string noteId, string noteImageId)
         {
             string newFileName = String.Format("{0}_{1}{2}", noteId, noteImageId, file.FileType);
+            System.Diagnostics.Debug.WriteLine(newFileName);
 
             return await file.CopyAsync(ImagesFolder, newFileName, NameCollisionOption.ReplaceExisting);
         }

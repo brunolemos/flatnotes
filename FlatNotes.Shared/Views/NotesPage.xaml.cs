@@ -132,7 +132,7 @@ namespace FlatNotes.Views
                 NotePopup.HorizontalOffset = 0;
                 NotePopup.VerticalOffset = -48;// CommandBar Height
 
-                NoteFrame.Width = ActualWidth;
+                NoteFrame.Width = ActualWidth - NotePopup.HorizontalOffset;
                 NoteFrame.Height = ActualHeight - NotePopup.VerticalOffset;
                 NoteFrame.ClearValue(FrameworkElement.MaxHeightProperty);
             }
@@ -150,7 +150,7 @@ namespace FlatNotes.Views
                 ttv = NoteQuickBox.TransformToVisual(ContentRoot);
                 point = ttv.TransformPoint(new Point(0, 0));
 
-                NoteFrame.MaxHeight = Math.Max(0, ContentRoot.ActualHeight - NotePopup.VerticalOffset - (2 * point.Y));
+                NoteFrame.MaxHeight = Math.Max(0, ContentRoot.ActualHeight - NotePopup.VerticalOffset - point.Y);
             }
         }
 
