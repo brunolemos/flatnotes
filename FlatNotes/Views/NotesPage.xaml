@@ -43,9 +43,7 @@
             </Grid.Transitions>
 
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{x:Bind viewModel.Notes.Count, Mode=OneWay, Converter={StaticResource PositiveIntToVisibilityConverter}, ConverterParameter=True}">
-
-                <MenuFlyoutPresenter Background="{ThemeResource FlyoutBackgroundThemeBrush}"/>
-                <Viewbox Width="150">
+                <Viewbox Width="140">
                     <Canvas Width="100" Height="100" HorizontalAlignment="Center">
                         <Rectangle Fill="{ThemeResource PhoneLowBrush}" Width="100" Height="70" StrokeThickness="0"/>
                         <Rectangle Fill="{ThemeResource PhoneLowBrush}" Width="70" Height="30" StrokeThickness="0" Margin="0,70,0,0"/>
@@ -54,14 +52,15 @@
                     </Canvas>
                 </Viewbox>
 
-                <TextBlock x:Uid="EmptyNotesMessageTextBox" Margin="4,24" Text="Notes you add appear here" Foreground="{ThemeResource PhoneMidBrush}" FontSize="{StaticResource EmptyNotesMessageFontSize}" TextWrapping="Wrap" TextAlignment="Center"/>
+                <TextBlock x:Uid="EmptyNotesMessageTextBox" Margin="4,24" Text="Notes you add appear here" Foreground="{ThemeResource PhoneMidBrush}" FontSize="{StaticResource EmptyNotesMessageFontSize}" TextWrapping="Wrap" TextAlignment="Center" Visibility="{x:Bind IsArchivedMode, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=True}"/>
+                <TextBlock x:Uid="EmptyArchivedNotesMessageTextBox" Margin="4,24" Text="Archived notes appear here" Foreground="{ThemeResource PhoneMidBrush}" FontSize="{StaticResource EmptyNotesMessageFontSize}" TextWrapping="Wrap" TextAlignment="Center" Visibility="{x:Bind IsArchivedMode, Converter={StaticResource BooleanToVisibilityConverter}}"/>
             </StackPanel>
 
             <local:NotesControl x:Name="NotesControl" ItemsSource="{Binding}" Columns="{x:Bind viewModel.Columns, Mode=OneWay}" DataContext="{x:Bind viewModel.Notes, Mode=OneWay}" d:DataContext="{Binding Notes}" VerticalAlignment="Stretch" CanReorderItems="True" CanDragItems="True" AllowDrop="True" CanSwipeItems="True" IsNoteFlyoutEnabled="True" ItemClick="OnNoteClick" ItemsReordered="OnItemsReordered" FontSize="{x:Bind FontSize}"/>
         </Grid>
 
         <Grid x:Name="NoteQuickBoxContainer" Grid.Row="3" HorizontalAlignment="Stretch">
-            <Grid x:Name="NoteQuickBox" Margin="0" Background="{ThemeResource SystemControlBackgroundAltHighBrush}" CornerRadius="0" BorderThickness="1,0,1,2" BorderBrush="#10000000" Visibility="{Binding ElementName=Root, Path=IsArchivedMode, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=True}">
+            <Grid x:Name="NoteQuickBox" Margin="0" Background="{ThemeResource SystemControlBackgroundAltHighBrush}" CornerRadius="0" BorderThickness="1,0,1,2" BorderBrush="#10000000" Visibility="{x:Bind IsArchivedMode, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=True}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
