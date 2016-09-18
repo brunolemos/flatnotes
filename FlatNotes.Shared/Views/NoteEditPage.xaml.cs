@@ -203,11 +203,21 @@ namespace FlatNotes.Views
 #if WINDOWS_UWP
             try
             {
+                //this.Resources["FlyoutBackgroundThemeBrush"] = viewModel.Note.Color.DarkColor;
+                this.Resources["MenuFlyoutItemBackground"] = viewModel.Note.Color.DarkColor;
+                this.Resources["MenuFlyoutPresenterBackground"] = viewModel.Note.Color.DarkColor;
+
                 var style = new Style(typeof(FlyoutPresenter));
                 style.Setters.Add(new Setter(FlyoutPresenter.BackgroundProperty, viewModel.Note.Color.DarkColor));
-                style.Setters.Add(new Setter(FlyoutPresenter.BorderThicknessProperty, new Thickness(0)));
-
+                style.Setters.Add(new Setter(FlyoutPresenter.BorderBrushProperty, viewModel.Note.Color.Color));
+                style.Setters.Add(new Setter(FlyoutPresenter.BorderThicknessProperty, new Thickness(1)));
                 ColorPickerAppBarToggleButton.Flyout.SetValue(Flyout.FlyoutPresenterStyleProperty, style);
+
+                var menuFlyoutStyle = new Style(typeof(MenuFlyoutPresenter));
+                menuFlyoutStyle.Setters.Add(new Setter(MenuFlyoutPresenter.BackgroundProperty, viewModel.Note.Color.DarkColor));
+                menuFlyoutStyle.Setters.Add(new Setter(MenuFlyoutPresenter.BorderBrushProperty, viewModel.Note.Color.Color));
+                menuFlyoutStyle.Setters.Add(new Setter(MenuFlyoutPresenter.BorderThicknessProperty, new Thickness(1)));
+                (this.Resources["NoteImageMenuFlyout"] as MenuFlyout).SetValue(MenuFlyout.MenuFlyoutPresenterStyleProperty, menuFlyoutStyle);
             }
             catch (Exception)
             {

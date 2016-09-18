@@ -12,7 +12,7 @@
     d:DesignWidth="400"
     Padding="0"
     Margin="2">
-    
+
     <UserControl.Resources>
         <MenuFlyout x:Key="NoteMenuFlyout">
             <MenuFlyoutItem x:Uid="RestoreMenuFlyoutItem" Text="Restore" Command="{x:Bind viewModel.RestoreNoteCommand}" CommandParameter="{Binding}" Visibility="{Binding IsArchived, Converter={StaticResource BooleanToVisibilityConverter}}"/>
@@ -21,14 +21,14 @@
             <MenuFlyoutItem x:Uid="PinToStartMenuFlyoutItem" Text="Pin to start" Command="{x:Bind viewModel.PinCommand}" CommandParameter="{Binding}" Visibility="{Binding CanPin, Converter={StaticResource BooleanToVisibilityConverter}}"/>
             <MenuFlyoutItem x:Uid="UnpinFromStartMenuFlyoutItem" Text="Unpin from start" Command="{x:Bind viewModel.UnpinCommand}" CommandParameter="{Binding}" Visibility="{Binding IsPinned, Converter={StaticResource BooleanToVisibilityConverter}}"/>
             <MenuFlyoutSubItem x:Uid="ChangeColorMenuFlyoutItem" Text="Change color">
-                <MenuFlyoutItem Background="{x:Bind viewModel.Colors[0].Color}" Click="OnChangeColorClick" CommandParameter="{x:Bind viewModel.Colors[0]}"/>
-                <MenuFlyoutItem Background="{x:Bind viewModel.Colors[1].Color}" Click="OnChangeColorClick" CommandParameter="{x:Bind viewModel.Colors[1]}"/>
-                <MenuFlyoutItem Background="{x:Bind viewModel.Colors[2].Color}" Click="OnChangeColorClick" CommandParameter="{x:Bind viewModel.Colors[2]}"/>
-                <MenuFlyoutItem Background="{x:Bind viewModel.Colors[3].Color}" Click="OnChangeColorClick" CommandParameter="{x:Bind viewModel.Colors[3]}"/>
-                <MenuFlyoutItem Background="{x:Bind viewModel.Colors[4].Color}" Click="OnChangeColorClick" CommandParameter="{x:Bind viewModel.Colors[4]}"/>
-                <MenuFlyoutItem Background="{x:Bind viewModel.Colors[5].Color}" Click="OnChangeColorClick" CommandParameter="{x:Bind viewModel.Colors[5]}"/>
-                <MenuFlyoutItem Background="{x:Bind viewModel.Colors[6].Color}" Click="OnChangeColorClick" CommandParameter="{x:Bind viewModel.Colors[6]}"/>
-                <MenuFlyoutItem Background="{x:Bind viewModel.Colors[7].Color}" Click="OnChangeColorClick" CommandParameter="{x:Bind viewModel.Colors[7]}"/>
+                <MenuFlyoutItem Background="{x:Bind viewModel.Colors[0].Color}" Click="OnChangeColorClick" CommandParameter="{x:Bind viewModel.Colors[0]}" Loaded="ColorMenuFlyoutItem_Loaded"/>
+                <MenuFlyoutItem Background="{x:Bind viewModel.Colors[1].Color}" Click="OnChangeColorClick" CommandParameter="{x:Bind viewModel.Colors[1]}" Loaded="ColorMenuFlyoutItem_Loaded"/>
+                <MenuFlyoutItem Background="{x:Bind viewModel.Colors[2].Color}" Click="OnChangeColorClick" CommandParameter="{x:Bind viewModel.Colors[2]}" Loaded="ColorMenuFlyoutItem_Loaded"/>
+                <MenuFlyoutItem Background="{x:Bind viewModel.Colors[3].Color}" Click="OnChangeColorClick" CommandParameter="{x:Bind viewModel.Colors[3]}" Loaded="ColorMenuFlyoutItem_Loaded"/>
+                <MenuFlyoutItem Background="{x:Bind viewModel.Colors[4].Color}" Click="OnChangeColorClick" CommandParameter="{x:Bind viewModel.Colors[4]}" Loaded="ColorMenuFlyoutItem_Loaded"/>
+                <MenuFlyoutItem Background="{x:Bind viewModel.Colors[5].Color}" Click="OnChangeColorClick" CommandParameter="{x:Bind viewModel.Colors[5]}" Loaded="ColorMenuFlyoutItem_Loaded"/>
+                <MenuFlyoutItem Background="{x:Bind viewModel.Colors[6].Color}" Click="OnChangeColorClick" CommandParameter="{x:Bind viewModel.Colors[6]}" Loaded="ColorMenuFlyoutItem_Loaded"/>
+                <MenuFlyoutItem Background="{x:Bind viewModel.Colors[7].Color}" Click="OnChangeColorClick" CommandParameter="{x:Bind viewModel.Colors[7]}" Loaded="ColorMenuFlyoutItem_Loaded"/>
             </MenuFlyoutSubItem>
             <!--<MenuFlyoutSeparator/>
             <MenuFlyoutItem x:Uid="ShareMenuFlyoutItem" Text="Share"/>-->

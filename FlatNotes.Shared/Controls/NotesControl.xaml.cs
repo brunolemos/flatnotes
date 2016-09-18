@@ -1,5 +1,6 @@
 ﻿using FlatNotes.Events;
 using FlatNotes.Models;
+using FlatNotes.Utils;
 using FlatNotes.ViewModels;
 using FlatNotes.Views;
 using System;
@@ -7,6 +8,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.DataTransfer;
+using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -189,6 +191,13 @@ namespace FlatNotes.Controls
 
             EnableSwipeForElement(element);
 #endif
+        }
+
+        private void ColorMenuFlyoutItem_Loaded(object sender, RoutedEventArgs e)
+        {
+            var menuFlyoutItem = sender as MenuFlyoutItem;
+            menuFlyoutItem.Resources["MenuFlyoutItemBackgroundPointerOver"] = (menuFlyoutItem.CommandParameter as NoteColor).Color.Color.Add(Color.FromArgb(0x20, 0x00, 0x00, 0x00));
+            menuFlyoutItem.Resources["MenuFlyoutItemBackgroundPressed"] = (menuFlyoutItem.CommandParameter as NoteColor).Color.Color.Add(Color.FromArgb(0x40, 0x00, 0x00, 0x00));
         }
 
 #if WINDOWS_PHONE_APP

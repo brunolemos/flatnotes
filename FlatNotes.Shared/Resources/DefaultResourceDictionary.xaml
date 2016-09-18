@@ -34,7 +34,9 @@
     
     <SolidColorBrush x:Key="AppNoteForegroundBrush" Color="#CC000000"/>
     <SolidColorBrush x:Key="AppNoteCommandBarForegroundThemeBrush" Color="{StaticResource AppMainForegroundColor}"/>
-            
+
+    <SolidColorBrush x:Key="TextControlBackgroundPointerOver" Color="Transparent"/>
+    <SolidColorBrush x:Key="TextControlBackgroundFocused" Color="Transparent"/>
     <SolidColorBrush x:Key="TextBoxFocusedBackgroundThemeBrush" Color="Transparent"/>
     <SolidColorBrush x:Key="TextBoxPlaceholderTextThemeBrush" Color="#70000000"/>
     <SolidColorBrush x:Key="TextBoxDisabledForegroundThemeBrush" Color="#70000000"/>

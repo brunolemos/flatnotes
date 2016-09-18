@@ -6,22 +6,30 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:local="using:FlatNotes.Controls"
+    xmlns:converters="using:FlatNotes.Converters"
     xmlns:models="using:FlatNotes.Models"
     mc:Ignorable="d"
     d:DesignHeight="200"
     d:DesignWidth="400">
 
     <UserControl.Resources>
-        <DataTemplate x:Key="NoteColorTemplate" x:DataType="models:NoteColor">
-            <Grid Background="{x:Bind Color}" BorderThickness="1" BorderBrush="#20000000"/>
+        <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+
+        <DataTemplate x:Key="NoteColorTemplate" x:Name="NoteColorTemplate">
+            <Grid Background="{Binding Item.Color}" BorderThickness="1" BorderBrush="#1A000000">
+                <Viewbox Height="14" Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
+                    <SymbolIcon Symbol="Accept" Foreground="{StaticResource AppNoteForegroundBrush}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Viewbox>
+            </Grid>
         </DataTemplate>
 
         <Style TargetType="ListViewItem">
             <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}" />
             <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}" />
+            <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="TabNavigation" Value="Local"/>
-            <Setter Property="IsHoldingEnabled" Value="True"/>
+            <Setter Property="IsHoldingEnabled" Value="False"/>
             <Setter Property="Margin" Value="0"/>
             <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
             <Setter Property="VerticalContentAlignment" Value="Stretch"/>
@@ -31,7 +39,7 @@
                         <ListViewItemPresenter
                     ContentTransitions="{TemplateBinding ContentTransitions}"
                     Padding="{TemplateBinding Padding}"
-                    SelectionCheckMarkVisualEnabled="True"
+                    SelectionCheckMarkVisualEnabled="False"
                     CheckHintBrush="{ThemeResource ListViewItemCheckHintThemeBrush}"
                     CheckSelectingBrush="{ThemeResource ListViewItemCheckSelectingThemeBrush}"
                     CheckBrush="{ThemeResource ListViewItemCheckThemeBrush}"
@@ -39,28 +47,34 @@
                     DragForeground="{ThemeResource ListViewItemDragForegroundThemeBrush}"
                     FocusBorderBrush="{ThemeResource ListViewItemFocusBorderThemeBrush}"
                     PlaceholderBackground="{ThemeResource ListViewItemPlaceholderBackgroundThemeBrush}"
-                    PointerOverBackground="{ThemeResource ListViewItemPointerOverBackgroundThemeBrush}"
-                    SelectedBorderThickness="{ThemeResource ListViewItemCompactSelectedBorderThemeThickness}"
-                    SelectedBackground="Transparent"
+                    PointerOverBackground="#10000000"
+                    BorderThickness="0"
+                    SelectedBorderThickness="0"
+                    SelectedBackground="#1A000000"
                     SelectedForeground="{ThemeResource ListViewItemSelectedForegroundThemeBrush}"
-                    SelectedPointerOverBackground="{ThemeResource ListViewItemSelectedPointerOverBackgroundThemeBrush}"
+                    SelectedPointerOverBackground="#1A000000"
                     SelectedPointerOverBorderBrush="{ThemeResource ListViewItemSelectedPointerOverBorderThemeBrush}"
                     DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}"
                     DragOpacity="{ThemeResource ListViewItemDragThemeOpacity}"
                     ReorderHintOffset="{ThemeResource ListViewItemReorderHintThemeOffset}"
                     HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                     VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                    PointerOverBackgroundMargin="1"
-                    ContentMargin="4" />
+                    PointerOverBackgroundMargin="0"
+                    ContentMargin="3"/>
                     </ControlTemplate>
+
                 </Setter.Value>
             </Setter>
         </Style>
     </UserControl.Resources>
 
-    <ListView x:Name="ColorPickerListView" Margin="4" 
-              SelectionMode="Single" ItemsSource="{x:Bind Colors}" 
+    <ListView x:Name="ColorPickerListView" 
+              Margin="3"
+              SelectionMode="Single" 
+              ItemsSource="{x:Bind Colors}" 
               ItemTemplate="{StaticResource NoteColorTemplate}"
               d:DataContext="{d:DesignData /SampleData/NoteColorsSampleData.xaml}" 
-              SelectedValue="{Binding SelectedNoteColor, ElementName=Root, Mode=TwoWay}"/>
+              SelectionChanged="ColorPickerListView_SelectionChanged"
+              Loaded="ColorPickerListView_Loaded">
+    </ListView>
 </UserControl>

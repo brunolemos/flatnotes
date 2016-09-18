@@ -41,6 +41,8 @@
             </Grid.Transitions>
 
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{x:Bind viewModel.Notes.Count, Mode=OneWay, Converter={StaticResource PositiveIntToVisibilityConverter}, ConverterParameter=True}">
+
+                <MenuFlyoutPresenter Background="{ThemeResource FlyoutBackgroundThemeBrush}"/>
                 <Viewbox Width="150">
                     <Canvas Width="100" Height="100" HorizontalAlignment="Center">
                         <Rectangle Fill="{ThemeResource PhoneLowBrush}" Width="100" Height="70" StrokeThickness="0"/>
@@ -65,6 +67,11 @@
                 </Grid.ColumnDefinitions>
 
                 <Button Grid.Column="0" Background="Transparent" BorderThickness="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Click="{x:Bind viewModel.CreateTextNote}" ClickMode="Press">
+                    <Button.Resources>
+                        <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="Transparent"/>
+                        <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="Transparent"/>
+                    </Button.Resources>
+                    
                     <TextBlock x:Name="NewNoteTextBlock" x:Uid="NewNoteTextBlock" Text="New note..." Margin="4" Foreground="{ThemeResource ApplicationForegroundThemeBrush}" VerticalAlignment="Center" HorizontalAlignment="Left" TextAlignment="Left" Opacity="0.6"/>
                 </Button>
                 <AppBarButton Grid.Column="1" x:Uid="ChecklistAppBarButton" Label="Checklist" IsCompact="True" Command="{x:Bind viewModel.CreateChecklistNoteCommand}" Icon="List" ToolTipService.ToolTip="{Binding Label, RelativeSource={RelativeSource Mode=Self}}"/>

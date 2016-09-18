@@ -5,9 +5,14 @@
     <x:Double x:Key="AppDefaultFontSize">14</x:Double>
     <x:Double x:Key="EmptyNotesMessageFontSize">22</x:Double>
 
+    <x:Double x:Key="TextControlPointerOverBackgroundThemeOpacity">0</x:Double>
+    <x:Double x:Key="TextControlBackgroundDisabledOpacity">0</x:Double>
+    <x:Double x:Key="TextControlBackgroundRestOpacity">0</x:Double>
+    <x:Double x:Key="TextControlBackgroundHoverOpacity">0</x:Double>
     <x:Double x:Key="TextControlBackgroundFocusedOpacity">0</x:Double>
     <x:Double x:Key="CheckBoxBorderThemeThickness">1</x:Double>
     <x:Double x:Key="CheckBoxCheckedStrokeThickness">1</x:Double>
+    <x:Double x:Key="CommandBarMaxHeight">48</x:Double>
 
     <Style TargetType="ContentPresenter">
         <Setter Property="FontSize" Value="{StaticResource AppDefaultFontSize}"/>
@@ -19,6 +24,22 @@
 
     <Style TargetType="Button">
         <Setter Property="FontSize" Value="{StaticResource AppDefaultFontSize}"/>
+    </Style>
+
+    <Style TargetType="CommandBar">
+        <Setter Property="MaxHeight" Value="{StaticResource CommandBarMaxHeight}"/>
+    </Style>
+
+    <Style TargetType="AppBar">
+        <Setter Property="MaxHeight" Value="{StaticResource CommandBarMaxHeight}"/>
+    </Style>
+
+    <Style TargetType="AppBarButton">
+        <Setter Property="MaxHeight" Value="{StaticResource CommandBarMaxHeight}"/>
+    </Style>
+
+    <Style TargetType="AppBarToggleButton">
+        <Setter Property="MaxHeight" Value="{StaticResource CommandBarMaxHeight}"/>
     </Style>
 
     <Style x:Key="CheckBoxWithoutContentStyle" TargetType="CheckBox">

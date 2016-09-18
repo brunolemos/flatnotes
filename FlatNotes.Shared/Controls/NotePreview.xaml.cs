@@ -1,6 +1,8 @@
 ﻿using FlatNotes.Models;
+using Windows.Foundation.Metadata;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media.Imaging;
 
 namespace FlatNotes.Controls
 {
