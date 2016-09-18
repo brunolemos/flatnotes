@@ -56,7 +56,7 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <Grid x:Name="CommandBar" Grid.Row="0" Background="{StaticResource AppMainBrush}" RequestedTheme="Dark">
+                <Grid x:Name="CommandBar" Grid.Row="0" Background="{x:Bind PageMainBackgroundBrush, Mode=OneWay}" RequestedTheme="Dark">
                     <Grid x:Name="CommandBarContent">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
@@ -66,19 +66,19 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
 
-                        <Button Grid.Column="0" x:Uid="NotesPageNameButton" Content="Notes" Margin="4,0,0,0" FontWeight="Bold" IsTapEnabled="False" Background="Transparent" BorderThickness="0" VerticalAlignment="Stretch"/>
-                        <Button Grid.Column="1" x:Uid="ArchivedNotesPageNameButton" Content="Archived notes" Background="Transparent" BorderThickness="0" VerticalAlignment="Stretch" Command="{x:Bind viewModel.OpenArchivedNotesCommand}"/>
-                        <AppBarButton Grid.Column="3" x:Uid="ToggleSingleColumnViewAppBarButton" x:Name="ToggleSingleColumnViewAppBarButton" Label="Toggle single column view" IsCompact="True" Background="Transparent" Command="{x:Bind viewModel.ToggleSingleColumnViewCommand}" ToolTipService.ToolTip="{Binding Label, RelativeSource={RelativeSource Mode=Self}}">
+                        <Button Grid.Column="0" x:Uid="NotesPageNameButton" x:Name="NotesPageNameButton" Content="Notes" Margin="4,0,0,0" FontWeight="Bold" IsHitTestVisible="{x:Bind IsArchivedMode, Converter={StaticResource NullableBooleanToBooleanConverter}}" Background="Transparent" BorderThickness="0" VerticalAlignment="Stretch" Command="{x:Bind viewModel.OpenNotesCommand}" Height="{StaticResource AppBarButtonCompactHeight}"/>
+                        <Button Grid.Column="1" x:Uid="ArchivedNotesPageNameButton" x:Name="ArchivedNotesPageNameButton" Content="Archived notes" IsHitTestVisible="{x:Bind IsArchivedMode, Converter={StaticResource NullableBooleanToBooleanConverter}, ConverterParameter=True}" Background="Transparent" BorderThickness="0" VerticalAlignment="Stretch" Command="{x:Bind viewModel.OpenArchivedNotesCommand}" Height="{StaticResource AppBarButtonCompactHeight}"/>
+                        <AppBarButton Grid.Column="3" x:Uid="ToggleSingleColumnViewAppBarButton" x:Name="ToggleSingleColumnViewAppBarButton" Label="Toggle single column view" IsCompact="True" Background="Transparent" Command="{x:Bind viewModel.ToggleSingleColumnViewCommand}" ToolTipService.ToolTip="{Binding Label, RelativeSource={RelativeSource Mode=Self}}" Height="{StaticResource AppBarButtonCompactHeight}">
                             <AppBarButton.Icon>
                                 <FontIcon Glyph="&#xE8A9;"/>
                             </AppBarButton.Icon>
                         </AppBarButton>
-                        <AppBarToggleButton Grid.Column="4" x:Uid="SettingsAppBarButton" Icon="Setting" Label="Settings" IsCompact="True" Background="Transparent" IsChecked="{x:Bind OpenSplitView, Mode=TwoWay, Converter={StaticResource NullableBooleanToBooleanConverter}}" ToolTipService.ToolTip="{Binding Label, RelativeSource={RelativeSource Mode=Self}}"/>
+                        <AppBarToggleButton Grid.Column="4" x:Uid="SettingsAppBarButton" Icon="Setting" Label="Settings" IsCompact="True" Background="Transparent" IsChecked="{x:Bind OpenSplitView, Mode=TwoWay, Converter={StaticResource NullableBooleanToBooleanConverter}}" ToolTipService.ToolTip="{Binding Label, RelativeSource={RelativeSource Mode=Self}}" Height="{StaticResource AppBarButtonCompactHeight}"/>
                     </Grid>
                 </Grid>
 
-                <Grid x:Name="NotesPageContainer" Grid.Row="1">
-                    <views:NotesPage x:Name="NotesPage" NoteOpening="OnNoteOpening" NoteClosed="OnNoteClosed"/>
+                <Grid x:Name="NotesPageContainer" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <views:NotesPage x:Name="notesPage" NoteOpening="OnNoteOpening" NoteClosed="OnNoteClosed" IsArchivedMode="{x:Bind IsArchivedMode, Mode=OneWay}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch"/>
                     <Grid x:Name="ContentOverlay" Background="Black" Opacity="0" IsHitTestVisible="False"/>
                 </Grid>
             </Grid>

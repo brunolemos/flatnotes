@@ -88,8 +88,11 @@ namespace FlatNotes.ViewModels
             }
             set {
                 if(note != null) note.PropertyChanged -= OnNotePropertyChanged;
-                note = value == null ? new Note() : value;
-                note.PropertyChanged += OnNotePropertyChanged;
+                if (value != null)
+                {
+                    note = value;
+                    note.PropertyChanged += OnNotePropertyChanged;
+                }
 
                 NotifyPropertyChanged("Note");
             }

@@ -86,8 +86,8 @@ namespace FlatNotes.Utils
             //update background
             await UpdateNoteTileBackgroundColor(note, transparentTile);
 
-            string contentWithoutTitle = note.GetContent(true, false, 3);
-            string contentWithTitle = note.GetContent(true, true, 3);
+            string contentWithoutTitle = note.GetContent(true, false, 150, 3);
+            string contentWithTitle = note.GetContent(true, true, 200, 3);
 
             var tileSquare71Content = TileContentFactory.CreateTileSquare71x71Image();
             tileSquare71Content.Image.Src = "ms-appx:///Assets/Tiles/Transparent/Square71x71Logo.png";

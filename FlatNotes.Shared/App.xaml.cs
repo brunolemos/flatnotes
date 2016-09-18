@@ -34,6 +34,7 @@ namespace FlatNotes
 
         public static ContinuationManager ContinuationManager { get; private set; }
 
+        public static Color MainColor = Color.FromArgb(0xff, 0xff, 0xbb, 0x00);
         public static bool IsBeta = Package.Current.Id.Name.Contains("Beta");
         public static string Name = IsBeta ? "Flat Notes Beta" : "Flat Notes";
         public static string Version = String.Format("{0}.{1}.{2}", Package.Current.Id.Version.Major, Package.Current.Id.Version.Minor, Package.Current.Id.Version.Build);
@@ -95,7 +96,7 @@ namespace FlatNotes
             {
                 // Create a Frame to act as the navigation context
                 rootFrame = new Frame();
-                rootFrame.CacheSize = 2; //1
+                rootFrame.CacheSize = 10;
             }
 
             Window.Current.Content = rootFrame;
@@ -236,27 +237,25 @@ namespace FlatNotes
 
         public static void ResetStatusBar()
         {
-            var mainColor = Color.FromArgb(0xff, 0xff, 0xbb, 0x00);
             //var mainDarkenColor = Color.FromArgb(0xff, 0xf9, 0x9f, 0x00);
-
             //var statusBarColor = mainColor.Add(Color.FromArgb(0x10, 255, 255, 255));
-            ChangeStatusBarColor(mainColor);
+            ChangeStatusBarColor(MainColor);
         }
 
-        public static void ChangeStatusBarColor(Color backgroundColor, Color? foregroundColor = null, ElementTheme? theme = ElementTheme.Dark)
+        public static void ChangeStatusBarColor(Color backgroundColor, Color? _foregroundColor = null, ElementTheme? theme = ElementTheme.Dark)
         {
             theme = theme ?? AppSettings.Instance.Theme;
             byte blackOrWhiteByte = theme == ElementTheme.Light ? (byte)0x00 : (byte)0xff;
 
-            if (foregroundColor == null)
-                foregroundColor = Color.FromArgb(0xD0, blackOrWhiteByte, blackOrWhiteByte, blackOrWhiteByte);
-
-            if (foregroundColor.Value.A < 0xff)
-                foregroundColor = backgroundColor.Add(foregroundColor.Value);
-
+            Color foregroundColor = _foregroundColor ?? Color.FromArgb(0xD0, blackOrWhiteByte, blackOrWhiteByte, blackOrWhiteByte);
+            if (foregroundColor.A < 0xff)
+            {
+                foregroundColor = backgroundColor.Add(foregroundColor);
+                foregroundColor.A = 0xff;
+            }
 
             Color backgroundHoverColor = backgroundColor.Add(Color.FromArgb(0x20, blackOrWhiteByte, blackOrWhiteByte, blackOrWhiteByte)); //10%
-            Color foregroundHoverColor = foregroundColor.Value;
+            Color foregroundHoverColor = foregroundColor;
             foregroundHoverColor.A = 0xff;
 
             Color backgroundPressedColor = backgroundHoverColor.Add(Color.FromArgb(0x20, blackOrWhiteByte, blackOrWhiteByte, blackOrWhiteByte)); //10%

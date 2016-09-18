@@ -16,6 +16,9 @@ namespace FlatNotes.Views
         public static readonly DependencyProperty IsPopupLightDismissEnabledProperty = DependencyProperty.Register("IsPopupLightDismissEnabled", typeof(bool), typeof(NotesPage), new PropertyMetadata(true));
         public bool IsPopupLightDismissEnabled { get { return (bool)GetValue(IsPopupLightDismissEnabledProperty); } set { SetValue(IsPopupLightDismissEnabledProperty, value); } }
 
+        public static readonly DependencyProperty IsArchivedModeProperty = DependencyProperty.Register("IsArchivedMode", typeof(bool), typeof(NotesPage), new PropertyMetadata(false));
+        public bool IsArchivedMode { get { return (bool)GetValue(IsArchivedModeProperty); } set { SetValue(IsArchivedModeProperty, (value as bool?) == true); } }
+
         public MainViewModel viewModel { get { return _viewModel; } }
         private static MainViewModel _viewModel = MainViewModel.Instance;
 
@@ -32,8 +35,6 @@ namespace FlatNotes.Views
         public NotesPage()
         {
             this.InitializeComponent();
-
-            viewModel.ShowNote = OpenNote;
 
             Loading += OnLoading;
 
@@ -54,7 +55,9 @@ namespace FlatNotes.Views
         private void OnLoading(FrameworkElement sender, object args)
         {
             viewModel.ReorderMode = ListViewReorderMode.Disabled;
-            if (viewModel.Notes == null || viewModel.Notes.Count <= 0) viewModel.Notes = AppData.Notes;
+
+            viewModel.ShowNote = OpenNote;
+            viewModel.Notes = IsArchivedMode ? AppData.ArchivedNotes : AppData.Notes;
         }
 
         private async void OnNoteClick(object sender, ItemClickEventArgs e)
@@ -63,7 +66,7 @@ namespace FlatNotes.Views
             if (note == null) return;
 
             //this dispatcher fixes crash error (access violation on wp preview for developers)
-            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            await Dispatcher.RunAsync(CoreDispatcherPriority.High, () =>
             {
                 OpenNote(note);
             });
@@ -90,18 +93,20 @@ namespace FlatNotes.Views
 
         public void OpenNote(object parameter)
         {
+            System.Diagnostics.Debug.WriteLine("OpenNote");
             UpdateNotePopupSizeAndPosition();
             NoteOpening?.Invoke(this, EventArgs.Empty);
             ShowPopupAnimation.Begin();
 
             NoteFrame.Navigate(typeof(NoteEditPage), parameter);
-            
+
             NotePopup.IsOpen = true;
             NoteOpened?.Invoke(this, new GenericEventArgs(parameter));
         }
 
         public void CloseNote()
         {
+            System.Diagnostics.Debug.WriteLine("CloseNote");
             NotePopup.IsOpen = false;
         }
 
@@ -114,40 +119,47 @@ namespace FlatNotes.Views
         private void NotePopup_Closed(object sender, object e)
         {
             NoteClosed?.Invoke(this, EventArgs.Empty);
-
-            HidePopupAnimation.Completed += (s2, e2) => {
-                NotePopup.IsOpen = false;
-                while (NoteFrame.CanGoBack) NoteFrame.GoBack();
-            };
+            
+            HidePopupAnimation.Completed -= HidePopupAnimation_Completed;
+            HidePopupAnimation.Completed += HidePopupAnimation_Completed;
 
             HidePopupAnimation.Begin();
+        }
+
+        private void HidePopupAnimation_Completed(object sender, object e)
+        {
+            NotePopup.IsOpen = false;
+            while (NoteFrame.CanGoBack) NoteFrame.GoBack();
         }
 
         // needed because the ActualWidth and ActualHeight properties dont post updates when its changed
         // see: https://msdn.microsoft.com/en-us/library/windows/apps/windows.ui.xaml.frameworkelement.actualwidth
         private void UpdateNotePopupSizeAndPosition()
         {
+            InvalidateArrange();
+            InvalidateMeasure();
+
             if (ActualWidth < 768)
             {
                 NotePopup.HorizontalOffset = 0;
                 NotePopup.VerticalOffset = -48;// CommandBar Height
 
-                NoteFrame.Width = ActualWidth - NotePopup.HorizontalOffset;
-                NoteFrame.Height = ActualHeight - NotePopup.VerticalOffset;
+                NoteFrame.Width = (ActualWidth <= 0 ? App.RootFrame.ActualWidth : ActualWidth) - NotePopup.HorizontalOffset;
+                NoteFrame.Height = (ActualHeight <= 0 ? App.RootFrame.ActualHeight : ActualHeight) - NotePopup.VerticalOffset;
                 NoteFrame.ClearValue(FrameworkElement.MaxHeightProperty);
             }
             else
             {
-                var ttv = NoteQuickBox.TransformToVisual(Content);
+                var ttv = NoteQuickBoxContainer.TransformToVisual(Content);
                 Point point = ttv.TransformPoint(new Point(0, 0));
 
                 NotePopup.HorizontalOffset = point.X;
                 NotePopup.VerticalOffset = point.Y;
 
-                NoteFrame.Width = NoteQuickBox.ActualWidth;
+                NoteFrame.Width = (NoteQuickBoxContainer.ActualWidth <= 0 ? App.RootFrame.ActualWidth : NoteQuickBoxContainer.ActualWidth);
                 NoteFrame.ClearValue(FrameworkElement.HeightProperty);
 
-                ttv = NoteQuickBox.TransformToVisual(ContentRoot);
+                ttv = NoteQuickBoxContainer.TransformToVisual(ContentRoot);
                 point = ttv.TransformPoint(new Point(0, 0));
 
                 NoteFrame.MaxHeight = Math.Max(0, ContentRoot.ActualHeight - NotePopup.VerticalOffset - point.Y);

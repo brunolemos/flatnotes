@@ -21,13 +21,14 @@ namespace FlatNotes.ViewModels
         public RelayCommand CreateChecklistNoteCommand { get; private set; }
         public RelayCommand CreateImageNoteCommand { get; private set; }
         public RelayCommand ToggleSingleColumnViewCommand { get; private set; }
+        public RelayCommand OpenNotesCommand { get; private set; }
         public RelayCommand OpenArchivedNotesCommand { get; private set; }
         public RelayCommand OpenSettingsCommand { get; private set; }
 
         public Action<object> ShowNote { get { return showNote; } set { showNote = value; NotifyPropertyChanged("ShowNote"); } }
         private Action<object> showNote;
 
-        public Notes Notes { get { return notes; } set { notes = value; NotifyPropertyChanged("Notes"); } }
+        public Notes Notes { get { return notes; } set { if (notes == value) return; notes = value; NotifyPropertyChanged("Notes"); } }
         private Notes notes;
 
         public ListViewReorderMode ReorderMode {
@@ -54,6 +55,7 @@ namespace FlatNotes.ViewModels
             CreateChecklistNoteCommand = new RelayCommand(CreateChecklistNote);
             CreateImageNoteCommand = new RelayCommand(CreateImageNote);
             ToggleSingleColumnViewCommand = new RelayCommand(ToggleSingleColumnView);
+            OpenNotesCommand = new RelayCommand(OpenNotesPage);
             OpenArchivedNotesCommand = new RelayCommand(OpenArchivedNotesPage);
             OpenSettingsCommand = new RelayCommand(OpenSettingsPage);
 
@@ -84,6 +86,17 @@ namespace FlatNotes.ViewModels
         {
             App.TelemetryClient.TrackEvent("ToggleSingleColumnView_MainViewModel");
             IsSingleColumnEnabled = !IsSingleColumnEnabled;
+        }
+
+        private void OpenNotesPage()
+        {
+            if (App.RootFrame.CanGoBack)
+            {
+                App.RootFrame.GoBack();
+                return;
+            }
+
+            App.RootFrame.Navigate(typeof(MainPage));
         }
 
         private void OpenArchivedNotesPage()

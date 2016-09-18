@@ -5,14 +5,16 @@ namespace FlatNotes.Converters
 {
     public sealed class NullableBooleanToBooleanConverter : IValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, string language)
+        public object Convert(object value, Type targetType, object invert, string language)
         {
-            return (value as bool?) == true;
+            bool boolValue = (value as bool?) == true;
+            return invert != null && invert.ToString() == Boolean.TrueString ? !boolValue : boolValue;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, string language)
+        public object ConvertBack(object value, Type targetType, object invert, string language)
         {
-            return (value as bool?) == true;
+            bool boolValue = (value as bool?) == true;
+            return invert != null && invert.ToString() == Boolean.TrueString ? !boolValue : boolValue;
         }
     }
 }

@@ -33,10 +33,10 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
-            <Button Grid.Column="0" x:Uid="SettingsPageNameButton" Content="Settings" Margin="4,0,0,0" FontWeight="Bold" IsTapEnabled="False" Background="Transparent" BorderThickness="0" VerticalAlignment="Stretch"/>
-            <AppBarButton Grid.Column="2" x:Uid="RateAppbarButton" Icon="OutlineStar" Label="Rate" IsCompact="True" Command="{x:Bind viewModel.RateAppCommand}" ToolTipService.ToolTip="{Binding Label, RelativeSource={RelativeSource Mode=Self}}"/>
-            <AppBarButton Grid.Column="3" x:Uid="SupportAppBarButton" Icon="Mail" Label="Support" IsCompact="True" Command="{x:Bind viewModel.ContactSupportCommand}" ToolTipService.ToolTip="{Binding Label, RelativeSource={RelativeSource Mode=Self}}"/>
-            <AppBarButton Grid.Column="4" x:Uid="CloseAppBarButton" Icon="Cancel" Label="Close" IsCompact="True" Command="{x:Bind viewModel.DispatchCloseModalEventCommand}" ToolTipService.ToolTip="{Binding Label, RelativeSource={RelativeSource Mode=Self}}" Visibility="{x:Bind ShowCloseButton, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+            <Button Grid.Column="0" x:Uid="SettingsPageNameButton" Content="Settings" Margin="0" FontWeight="Bold" IsTapEnabled="False" Background="Transparent" BorderThickness="0" VerticalAlignment="Stretch"/>
+            <AppBarButton Grid.Column="2" x:Uid="RateAppbarButton" Icon="OutlineStar" Label="Rate" IsCompact="True" Command="{x:Bind viewModel.RateAppCommand}" ToolTipService.ToolTip="{Binding Label, RelativeSource={RelativeSource Mode=Self}}" Height="{StaticResource AppBarButtonCompactHeight}"/>
+            <AppBarButton Grid.Column="3" x:Uid="SupportAppBarButton" Icon="Mail" Label="Support" IsCompact="True" Command="{x:Bind viewModel.ContactSupportCommand}" ToolTipService.ToolTip="{Binding Label, RelativeSource={RelativeSource Mode=Self}}" Height="{StaticResource AppBarButtonCompactHeight}"/>
+            <AppBarButton Grid.Column="4" x:Uid="CloseAppBarButton" Icon="Cancel" Label="Close" IsCompact="True" Command="{x:Bind viewModel.DispatchCloseModalEventCommand}" ToolTipService.ToolTip="{Binding Label, RelativeSource={RelativeSource Mode=Self}}" Visibility="{x:Bind ShowCloseButton, Converter={StaticResource BooleanToVisibilityConverter}}" Height="{StaticResource AppBarButtonCompactHeight}"/>
         </Grid>
 
         <Grid x:Name="ContentRoot" Grid.Row="1" Margin="12">

@@ -53,10 +53,12 @@
 
     <Style TargetType="AppBarButton">
         <Setter Property="Foreground" Value="{ThemeResource CommandBarForegroundThemeBrush}"/>
+        <!--<Setter Property="LabelPosition" Value="Collapsed"/>-->
     </Style>
 
     <Style TargetType="AppBarToggleButton">
         <Setter Property="Foreground" Value="{ThemeResource CommandBarForegroundThemeBrush}"/>
+        <!--<Setter Property="LabelPosition" Value="Collapsed"/>-->
     </Style>
 
     <!--<Style TargetType="FlyoutPresenter">

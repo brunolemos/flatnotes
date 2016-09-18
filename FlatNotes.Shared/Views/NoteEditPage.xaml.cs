@@ -73,7 +73,8 @@ namespace FlatNotes.Views
 
         private void OnUnloaded()
         {
-            while (Frame.CanGoBack) Frame.GoBack();
+            Debug.WriteLine("NoteEditPage OnUnloaded");
+            //while (Frame.CanGoBack) Frame.GoBack();
             OnSaveState();
         }
 
@@ -187,7 +188,7 @@ namespace FlatNotes.Views
         {
             if (viewModel.Note == null)
             {
-                App.ResetStatusBar();
+                //App.ResetStatusBar();
                 return;
             }
 
@@ -196,7 +197,7 @@ namespace FlatNotes.Views
                 var statusBarColor = viewModel.Note.Color.Color.Color;//.Add(Color.FromArgb(0x10, 0, 0, 0));
                 App.ChangeStatusBarColor(statusBarColor, null, ElementTheme.Light);
             } else {
-                App.ResetStatusBar();
+                //App.ResetStatusBar();
             }
            
 
@@ -278,7 +279,6 @@ namespace FlatNotes.Views
 
         private void Checklist_CollectionItemChanged(object sender, EventArgs e)
         {
-            Debug.WriteLine("Checklist_CollectionItemChanged");
             checklistChanged = true;
             viewModel.Note.Touch();
         }
@@ -386,8 +386,6 @@ namespace FlatNotes.Views
                 if (nextIndex > lastIndex) nextIndex = lastIndex;
                 NoteImagesFlipView.SelectedIndex = nextIndex;
             }
-
-            Debug.WriteLine("NoteImagesFlipView_DataContextChanged CollectionChanged" + NoteImagesFlipView.SelectedIndex);
         }
 
         private void NoteImagesFlipView_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -400,12 +398,10 @@ namespace FlatNotes.Views
             for (var i = 0; i < images.Count; i++) images[i].IsSelected = flipView.SelectedIndex == i;
 
             viewModel.Note.NotifyPropertyChanged("Images");
-            Debug.WriteLine("NoteImagesFlipView_SelectionChanged " + flipView.SelectedIndex + " ... " + e.OriginalSource);
         }
 
         private void NoteImagesFlipView_Loaded(object sender, RoutedEventArgs e)
         {
-            Debug.WriteLine("NoteImagesFlipView_Loaded " + NoteImagesFlipView.SelectedIndex);
             var flipView = sender as FlipView;
             flipView.SelectionChanged += NoteImagesFlipView_SelectionChanged;
             (flipView.DataContext as NoteImages).CollectionChanged += onImagesCollectionChanges;
@@ -416,7 +412,6 @@ namespace FlatNotes.Views
 
         private void NoteImagesFlipView_Unloaded(object sender, RoutedEventArgs e)
         {
-            Debug.WriteLine("NoteImagesFlipView_Unloaded " + NoteImagesFlipView.SelectedIndex);
             var flipView = sender as FlipView;
             flipView.SelectionChanged -= NoteImagesFlipView_SelectionChanged;
             (flipView.DataContext as NoteImages).CollectionChanged -= onImagesCollectionChanges;
@@ -427,9 +422,6 @@ namespace FlatNotes.Views
             var images = (NoteImages)NoteImagesFlipView.DataContext;
             var selectedImage = images.FirstOrDefault((i) => i.IsSelected);
             NoteImagesFlipView.SelectedIndex = images.Count > 0 ? images.IndexOf(selectedImage) : -1;
-
-
-            Debug.WriteLine("loadSelectedNoteImage " + images.IndexOf(selectedImage));
         }
 
 #if WINDOWS_PHONE_APP

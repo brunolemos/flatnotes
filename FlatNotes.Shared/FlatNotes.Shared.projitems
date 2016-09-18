@@ -77,6 +77,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Utils\Migration\Versions\v2\Models\NoteImage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\Migration\Versions\v2\Utils\AppData.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\Migration\Versions\v2\Utils\AppSettings.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\MainPageNavigationArgument.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\NavLink.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\Extensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\LocalizedResources.cs" />
