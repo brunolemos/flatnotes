@@ -66,9 +66,9 @@ namespace FlatNotes.Utils
             tile.VisualElements.ForegroundText = ForegroundText.Light;
             tile.VisualElements.BackgroundColor = transparentTile ? Colors.Transparent : note.Color.DarkColor.Color;
 
-            tile.VisualElements.ShowNameOnSquare150x150Logo = true;
-            tile.VisualElements.ShowNameOnWide310x150Logo = true;
-            tile.VisualElements.ShowNameOnSquare310x310Logo = true;
+            tile.VisualElements.ShowNameOnSquare150x150Logo = false;
+            tile.VisualElements.ShowNameOnWide310x150Logo = false;
+            tile.VisualElements.ShowNameOnSquare310x310Logo = false;
 
             tile.VisualElements.Square71x71Logo = new Uri("ms-appx:///Assets/Tiles/Transparent/Square71x71Logo.png");
             tile.VisualElements.Square150x150Logo = new Uri("ms-appx:///Assets/Tiles/Transparent/Square150x150Logo.png");
@@ -104,7 +104,7 @@ namespace FlatNotes.Utils
                 _tileSquare150Content.TextBodyWrap.Text = contentWithoutTitle;
                 _tileSquare150Content.Image.Src = note.Images[0].URL;
                 _tileSquare150Content.Square71x71Content = tileSquare71Content;
-                _tileSquare150Content.Branding = TileBranding.Name;
+                _tileSquare150Content.Branding = TileBranding.Logo;
             }
             else
             {
@@ -114,7 +114,7 @@ namespace FlatNotes.Utils
                 _tileSquare150Content.TextHeading.Text = note.Title;
                 _tileSquare150Content.TextBodyWrap.Text = contentWithoutTitle;
                 _tileSquare150Content.Square71x71Content = tileSquare71Content;
-                _tileSquare150Content.Branding = TileBranding.Name;
+                _tileSquare150Content.Branding = TileBranding.Logo;
             }
 
             IWide310x150TileNotificationContent tileWide310x150Content;
@@ -128,7 +128,7 @@ namespace FlatNotes.Utils
                 _tileWide310x150Content.TextBodyWrap.Text = contentWithoutTitle;
                 _tileWide310x150Content.Image.Src = note.Images[0].URL;
                 _tileWide310x150Content.Square150x150Content = tileSquare150Content;
-                _tileWide310x150Content.Branding = TileBranding.Name;
+                _tileWide310x150Content.Branding = TileBranding.Logo;
             }
             else
             {
@@ -138,7 +138,7 @@ namespace FlatNotes.Utils
                 _tileWide310x150Content.TextHeading.Text = note.Title;
                 _tileWide310x150Content.TextBodyWrap.Text = contentWithoutTitle;
                 _tileWide310x150Content.Square150x150Content = tileSquare150Content;
-                _tileWide310x150Content.Branding = TileBranding.Name;
+                _tileWide310x150Content.Branding = TileBranding.Logo;
             }
 
 #if WINDOWS_PHONE_APP
@@ -154,7 +154,7 @@ namespace FlatNotes.Utils
                 _tileSquare310Content.TextBodyWrap.Text = contentWithoutTitle;
                 _tileSquare310Content.Image.Src = note.Images[0].URL;
                 _tileSquare310Content.Wide310x150Content = tileWide310x150Content;
-                _tileSquare310Content.Branding = TileBranding.Name;
+                _tileSquare310Content.Branding = TileBranding.Logo;
             }
             else
             {
@@ -165,7 +165,7 @@ namespace FlatNotes.Utils
                 _tileSquare310Content.TextBodyWrap.Text = contentWithoutTitle;
                 _tileSquare310Content.Image.Src = "";
                 _tileSquare310Content.Wide310x150Content = tileWide310x150Content;
-                _tileSquare310Content.Branding = TileBranding.Name;
+                _tileSquare310Content.Branding = TileBranding.Logo;
             }
 
             biggerTile = tileSquare310Content;
