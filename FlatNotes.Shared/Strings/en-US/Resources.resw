@@ -291,4 +291,7 @@
   <data name="SettingsPageNameButton.Content" xml:space="preserve">
     <value>Settings</value>
   </data>
+  <data name="ReminderAppBarButton.Label" xml:space="preserve">
+    <value>Reminder</value>
+  </data>
 </root>

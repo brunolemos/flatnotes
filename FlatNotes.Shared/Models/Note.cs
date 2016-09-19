@@ -92,8 +92,14 @@ namespace FlatNotes.Models
         [Ignore]
         public Checklist Checklist { get { return checklist; } private set { checklist = value; NotifyPropertyChanged("Checklist"); } }
         [DataMember(Name = "Checklist")]
-        private Checklist checklist { get { return _checklist; } set { replaceChecklist(value); } }
+        private Checklist checklist { get { return _checklist; }
+            set { replaceChecklist(value); } }
         private Checklist _checklist = new Checklist();
+
+        [OneToOne]
+        [DataMember(Name = "Reminder")]
+        public Reminder Reminder { get { return reminder; } set { reminder = value != null ? value : new Reminder(); NotifyPropertyChanged("Reminder"); } }
+        private Reminder reminder = new Reminder();
 
         [IgnoreDataMember]
         [Ignore]
@@ -130,6 +136,7 @@ namespace FlatNotes.Models
 
         public Note()
         {
+            Reminder.NoteId = ID;
         }
 
         public Note(bool isChecklist = false) : this()
@@ -352,6 +359,8 @@ namespace FlatNotes.Models
 
             foreach (var item in note.Images)
                 item.NoteId = note.ID;
+
+            note.Reminder.ID = note.ID;
 
             return note;
         }

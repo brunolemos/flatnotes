@@ -12,13 +12,7 @@ namespace FlatNotes.Converters
             try
             {
                 var list = (NoteImages)value;
-
-                if (list.Count >= 1)
-                {
-                    var selected = list.FirstOrDefault((i) => i.IsSelected);
-                    var selectedIndex = list.IndexOf(selected);
-                    return selectedIndex >= 0 ? list[selectedIndex] : list[0];
-                }
+                if (list != null && list.Count >= 1) return list.GetSelectedNoteImageOrLast();
             }
             catch (Exception) { }
 

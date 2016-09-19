@@ -64,13 +64,11 @@ namespace FlatNotes
             this.UnhandledException += App_UnhandledException;
 
             AppSettings.Instance.ThemeChanged += (s, e) => { UpdateTheme(e.Theme); App.TelemetryClient.TrackMetric("Theme", AppSettings.Instance.Theme == ElementTheme.Light ? 1 : 2); };
-            AppSettings.Instance.TransparentTileChanged += (s, e) => TileManager.UpdateDefaultTile(e.TransparentTile);
-            AppSettings.Instance.TransparentNoteTileChanged += (s, e) => TileManager.UpdateAllNoteTilesBackgroundColor(e.TransparentTile);
+            AppSettings.Instance.TransparentTileChanged += (s, e) => NotificationsManager.UpdateDefaultTile(e.TransparentTile);
+            AppSettings.Instance.TransparentNoteTileChanged += (s, e) => NotificationsManager.UpdateAllNoteTilesBackgroundColor(e.TransparentTile);
             
             AppData.NotesSaved += (s, e) => SimulateStatusBarProgressComplete();
-            AppData.NoteArchived += (s, _e) => { TileManager.RemoveTileIfExists(_e.Note.ID); };
-            AppData.NoteRemoved += (s, _e) => { TileManager.RemoveTileIfExists(_e.NoteId); };
-            AppData.NoteColorChanged += async (s, _e) => { await TileManager.UpdateNoteTileBackgroundColor(_e.Note, AppSettings.Instance.TransparentNoteTile); };
+            AppData.NoteColorChanged += async (s, _e) => { await NotificationsManager.UpdateNoteTileBackgroundColor(_e.Note, AppSettings.Instance.TransparentNoteTile); };
         }
 
         private async void App_UnhandledException(object sender, UnhandledExceptionEventArgs e)
@@ -128,14 +126,13 @@ namespace FlatNotes
             base.OnActivated(e);
             await RestoreStatusAsync(e.PreviousExecutionState);
 
-            ContinuationManager = new ContinuationManager();
-
-            var continuationEventArgs = e as IContinuationActivatedEventArgs;
-            if (continuationEventArgs != null)
+            if (e is IContinuationActivatedEventArgs)
             {
-                // Call ContinuationManager to handle continuation activation
-                if (RootFrame != null)
-                    ContinuationManager.Continue(continuationEventArgs, RootFrame);
+                ContinuationManager = new ContinuationManager();
+                ContinuationManager.Continue(e as IContinuationActivatedEventArgs, RootFrame);
+            } else if (e.Kind == ActivationKind.ToastNotification)
+            {
+                RootFrame.Navigate(typeof(MainPage), (e as IToastNotificationActivatedEventArgs).Argument);
             }
 
             ApplicationView.GetForCurrentView().SetDesiredBoundsMode(ApplicationViewBoundsMode.UseVisible);
@@ -156,7 +153,7 @@ namespace FlatNotes
 #endif
 
             //update default live tile (because I renamed the image, it was showing empty for some users)
-            TileManager.UpdateDefaultTile(AppSettings.Instance.TransparentTile);
+            NotificationsManager.UpdateDefaultTile(AppSettings.Instance.TransparentTile);
 
             if (RootFrame.Content == null)
             {
@@ -200,7 +197,7 @@ namespace FlatNotes
             //update tile
             if (note != null)
             {
-                TileManager.UpdateNoteTileIfExists(note, AppSettings.Instance.TransparentNoteTile).ConfigureAwait(false);
+                NotificationsManager.UpdateNoteTileIfExists(note, AppSettings.Instance.TransparentNoteTile).ConfigureAwait(false);
                 
                 //save or remove if empty
                 if (note.Changed || note.IsEmpty())

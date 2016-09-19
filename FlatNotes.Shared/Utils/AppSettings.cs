@@ -95,6 +95,8 @@ namespace FlatNotes.Utils
                     if (note.Images != null && note.Images.Count > 0)
                         foreach (var noteImage in note.Images)
                             noteImage.NoteId = note.ID;
+
+                    note.Reminder.NoteId = note.ID;
                 }
 
                 //insert in db

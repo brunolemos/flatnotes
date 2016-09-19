@@ -61,7 +61,7 @@ namespace FlatNotes.Utils.Migration.Versions.v2.Models
 
         public DateTime CreatedAt { get { return createdAt; } private set { createdAt = value; } }
         [DataMember(Name = "CreatedAt")]
-        private DateTime createdAt = DateTime.Now;
+        private DateTime createdAt = DateTime.UtcNow;
 
         public NoteImage() { }
 

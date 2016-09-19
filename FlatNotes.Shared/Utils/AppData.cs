@@ -97,14 +97,17 @@ namespace FlatNotes.Utils
             db.Execute(@"CREATE TABLE IF NOT EXISTS Note (ID varchar PRIMARY KEY NOT NULL)");
             db.Execute(@"CREATE TABLE IF NOT EXISTS ChecklistItem (ID varchar PRIMARY KEY NOT NULL, NoteId varchar REFERENCES Note (ID) ON DELETE CASCADE)");
             db.Execute(@"CREATE TABLE IF NOT EXISTS NoteImage (ID varchar PRIMARY KEY NOT NULL, NoteId varchar REFERENCES Note (ID) ON DELETE CASCADE)");
+            db.Execute(@"CREATE TABLE IF NOT EXISTS Reminder (ID varchar PRIMARY KEY NOT NULL, NoteId varchar REFERENCES Note (ID) ON DELETE CASCADE)");
 
             //create indexes (another sqlite limitation)
             db.CreateIndex("ChecklistItem", "NoteId");
             db.CreateIndex("NoteImage", "NoteId");
+            db.CreateIndex("Reminder", "NoteId");
 
             //create rest of the table (if not exists)
             db.CreateTable<ChecklistItem>();
             db.CreateTable<NoteImage>();
+            db.CreateTable<Reminder>();
             db.CreateTable<Note>();
         }
 
@@ -216,6 +219,7 @@ namespace FlatNotes.Utils
             //associate with note
             foreach (var item in note.Checklist) item.NoteId = note.ID;
             foreach (var item in note.Images) item.NoteId = note.ID;
+            note.Reminder.NoteId = note.ID;
 
             if (note.CreatedAt == null) note.TouchCreatedAt();
             if (note.UpdatedAt == null) note.Touch();
@@ -223,6 +227,8 @@ namespace FlatNotes.Utils
             note.Changed = false;
             note.Order = Notes.Count;
             AppData.Notes.Insert(0, note);
+
+            NotificationsManager.TryCreateNoteReminder(note, note.Reminder.Date);
 
             LocalDB.InsertWithChildren(note);
             if (reflectOnRoaming) RoamingDB.InsertWithChildren(note);
@@ -246,6 +252,9 @@ namespace FlatNotes.Utils
             //associate with note
             foreach (var item in note.Checklist) item.NoteId = note.ID;
             foreach (var item in note.Images) item.NoteId = note.ID;
+            note.Reminder.NoteId = note.ID;
+
+            NotificationsManager.TryCreateNoteReminder(note, note.Reminder.Date);
 
             //DB.UpdateWithChildren(note);
             bool success = LocalDB.Update(note) == 1;
@@ -264,6 +273,12 @@ namespace FlatNotes.Utils
             {
                 LocalDB.InsertOrReplaceAll(note.Images);
                 if (reflectOnRoaming) RoamingDB.InsertOrReplaceAll(note.Images);
+            }
+
+            if (note.Reminder != null)
+            {
+                LocalDB.InsertOrReplace(note.Reminder);
+                if (reflectOnRoaming) RoamingDB.InsertOrReplace(note.Reminder);
             }
 
             note.Changed = false;
@@ -289,6 +304,9 @@ namespace FlatNotes.Utils
             LoadArchivedNotesIfNecessary();
             note.IsArchived = true;
             note.TouchArchivedAt();
+
+            RemoveNoteReminders(note);
+            NotificationsManager.RemoveTileIfExists(note.ID);
 
             bool success = LocalDB.Update(note) == 1;
             if (!success) return false;
@@ -329,6 +347,8 @@ namespace FlatNotes.Utils
 
             AppData.Notes.Insert(0, note);
             AppData.ArchivedNotes.Remove(note);
+
+            NotificationsManager.TryCreateNoteReminder(note, note.Reminder.Date);
 
             var handler = NoteRestored;
             if (handler != null) handler(null, new NoteEventArgs(note));
@@ -390,6 +410,8 @@ namespace FlatNotes.Utils
 
             //remove note images from disk
             await RemoveNoteImages(note.Images);
+            RemoveNoteReminders(note);
+            NotificationsManager.RemoveTileIfExists(note.ID);
 
             if (note == null) return false;
 
@@ -413,6 +435,17 @@ namespace FlatNotes.Utils
             if (handler2 != null) handler2(null, EventArgs.Empty);
 
             return true;
+        }
+
+        public static void RemoveNoteReminders(Note note, bool reflectOnRoaming = true)
+        {
+            if (note == null || note.Reminder == null) return;
+
+            LocalDB.Delete(note.Reminder);
+            if (reflectOnRoaming) RoamingDB.Delete(note.Reminder);
+
+            NotificationsManager.RemoveScheduledToastsIfExists(note);
+            note.Reminder = new Reminder();
         }
 
         public static async Task<bool> RemoveNoteImages(IList<NoteImage> noteImages, bool deleteFromDB = true)

@@ -1,5 +1,8 @@
 ﻿using FlatNotes.Models;
+using NotificationsExtensions;
 using NotificationsExtensions.TileContent;
+using NotificationsExtensions.Tiles;
+using NotificationsExtensions.Toasts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +16,7 @@ namespace FlatNotes.Utils
 {
     //NotificationsExtensions: https://msdn.microsoft.com/en-us/library/windows/apps/xaml/dn642158.aspx
     //Tile Template Catalog: https://msdn.microsoft.com/en-us/library/windows/apps/xaml/hh761491.aspx
-    public static class TileManager
+    public static class NotificationsManager
     {
         public static void UpdateDefaultTile(bool transparentTile = false)
         {
@@ -104,7 +107,7 @@ namespace FlatNotes.Utils
                 _tileSquare150Content.TextBodyWrap.Text = contentWithoutTitle;
                 _tileSquare150Content.Image.Src = note.Images[0].URL;
                 _tileSquare150Content.Square71x71Content = tileSquare71Content;
-                _tileSquare150Content.Branding = TileBranding.Logo;
+                _tileSquare150Content.Branding = NotificationsExtensions.TileContent.TileBranding.Logo;
             }
             else
             {
@@ -114,7 +117,7 @@ namespace FlatNotes.Utils
                 _tileSquare150Content.TextHeading.Text = note.Title;
                 _tileSquare150Content.TextBodyWrap.Text = contentWithoutTitle;
                 _tileSquare150Content.Square71x71Content = tileSquare71Content;
-                _tileSquare150Content.Branding = TileBranding.Logo;
+                _tileSquare150Content.Branding = NotificationsExtensions.TileContent.TileBranding.Logo;
             }
 
             IWide310x150TileNotificationContent tileWide310x150Content;
@@ -128,7 +131,7 @@ namespace FlatNotes.Utils
                 _tileWide310x150Content.TextBodyWrap.Text = contentWithoutTitle;
                 _tileWide310x150Content.Image.Src = note.Images[0].URL;
                 _tileWide310x150Content.Square150x150Content = tileSquare150Content;
-                _tileWide310x150Content.Branding = TileBranding.Logo;
+                _tileWide310x150Content.Branding = NotificationsExtensions.TileContent.TileBranding.Logo;
             }
             else
             {
@@ -138,7 +141,7 @@ namespace FlatNotes.Utils
                 _tileWide310x150Content.TextHeading.Text = note.Title;
                 _tileWide310x150Content.TextBodyWrap.Text = contentWithoutTitle;
                 _tileWide310x150Content.Square150x150Content = tileSquare150Content;
-                _tileWide310x150Content.Branding = TileBranding.Logo;
+                _tileWide310x150Content.Branding = NotificationsExtensions.TileContent.TileBranding.Logo;
             }
 
 #if WINDOWS_PHONE_APP
@@ -154,7 +157,7 @@ namespace FlatNotes.Utils
                 _tileSquare310Content.TextBodyWrap.Text = contentWithoutTitle;
                 _tileSquare310Content.Image.Src = note.Images[0].URL;
                 _tileSquare310Content.Wide310x150Content = tileWide310x150Content;
-                _tileSquare310Content.Branding = TileBranding.Logo;
+                _tileSquare310Content.Branding = NotificationsExtensions.TileContent.TileBranding.Logo;
             }
             else
             {
@@ -165,7 +168,7 @@ namespace FlatNotes.Utils
                 _tileSquare310Content.TextBodyWrap.Text = contentWithoutTitle;
                 _tileSquare310Content.Image.Src = "";
                 _tileSquare310Content.Wide310x150Content = tileWide310x150Content;
-                _tileSquare310Content.Branding = TileBranding.Logo;
+                _tileSquare310Content.Branding = NotificationsExtensions.TileContent.TileBranding.Logo;
             }
 
             biggerTile = tileSquare310Content;
@@ -251,6 +254,80 @@ namespace FlatNotes.Utils
         private static string GenerateNavigationArgumentFromNote(Note note)
         {
             return String.Format("?noteId={0}", note.ID);
+        }
+
+        public static bool TryCreateNoteReminder(Note note, DateTimeOffset? date)
+        {
+            RemoveScheduledToastsIfExists(note, false);
+
+            if (note.IsEmpty() || date == null || !date.HasValue || date.Value == null || date.Value < DateTimeOffset.Now) return false;
+            System.Diagnostics.Debug.WriteLine("Creating Reminder for noteId={0} date={1}", note.ID, date);
+
+            var toastContent = new ToastContent()
+            {
+                Scenario = ToastScenario.Reminder,
+                Launch = GenerateNavigationArgumentFromNote(note),
+                Actions = new ToastActionsSnoozeAndDismiss(),
+                Visual = new ToastVisual()
+                {
+                    BindingGeneric = new ToastBindingGeneric()
+                }
+            };
+
+            var title = note.Title;
+            var text = note.GetContent(true, false, 200, 3);
+            var imageURL = note.Images.Count > 0 ? note.Images.GetSelectedNoteImageOrLast().URL : null;
+
+            if (!String.IsNullOrEmpty(title)) toastContent.Visual.BindingGeneric.Children.Add(new AdaptiveText() { Text = title });
+            if (!String.IsNullOrEmpty(text)) toastContent.Visual.BindingGeneric.Children.Add(new AdaptiveText() { Text = text });
+            if (!String.IsNullOrEmpty(imageURL)) toastContent.Visual.BindingGeneric.Children.Add(new AdaptiveImage() { Source = imageURL });
+            
+            try
+            {
+                note.Reminder.NoteId = note.ID;
+                var toastId = Reminder.NoteIdToReminderID(note.ID);
+
+                // Create the toast notification object.
+                var toast = new ScheduledToastNotification(toastContent.GetXml(), date.Value);
+                toast.NotificationMirroring = NotificationMirroring.Allowed;
+                toast.Id = toastId;
+                toast.Tag = toastId;
+                toast.RemoteId = toastId;
+
+                // Add to the schedule.
+                ToastNotificationManager.CreateToastNotifier().AddToSchedule(toast);
+                note.Reminder.IsActive = true;
+                note.Reminder.Date = date;
+
+                return true;
+            } catch(Exception)
+            {
+                note.Reminder.IsActive = false;
+                return false;
+            }
+        }
+
+        public static void RemoveScheduledToastsIfExists(Note note, bool removeDateAndSetInactive = true)
+        {
+            note.Reminder.NoteId = note.ID;
+
+            var toastNotifier = ToastNotificationManager.CreateToastNotifier();
+            var allToastsScheduled = toastNotifier.GetScheduledToastNotifications().ToList();
+
+            var toastId = Reminder.NoteIdToReminderID(note.ID);
+            var toastsToRemove = allToastsScheduled.Where((t) => t.Id == toastId || t.Id == note.Reminder.ID).ToList();
+
+            if (toastsToRemove.Count <= 0) return;
+
+            System.Diagnostics.Debug.WriteLine("Removing {0} scheduled toast notifications from a total of {1}", toastsToRemove.Count, allToastsScheduled.Count);
+            foreach (var toast in toastsToRemove)
+                toastNotifier.RemoveFromSchedule(toast);
+
+            if (removeDateAndSetInactive)
+            {
+                note.Reminder.IsActive = false;
+                note.Reminder.Date = null;
+            }
         }
     }
 }

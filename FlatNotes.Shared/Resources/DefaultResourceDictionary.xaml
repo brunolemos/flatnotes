@@ -37,6 +37,7 @@
 
     <SolidColorBrush x:Key="TextControlBackgroundPointerOver" Color="Transparent"/>
     <SolidColorBrush x:Key="TextControlBackgroundFocused" Color="Transparent"/>
+    <SolidColorBrush x:Key="TextControlForegroundPointerOver" Color="Black"/>
     <SolidColorBrush x:Key="TextBoxFocusedBackgroundThemeBrush" Color="Transparent"/>
     <SolidColorBrush x:Key="TextBoxPlaceholderTextThemeBrush" Color="#70000000"/>
     <SolidColorBrush x:Key="TextBoxDisabledForegroundThemeBrush" Color="#70000000"/>

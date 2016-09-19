@@ -100,7 +100,7 @@ namespace FlatNotes.ViewModels
             NoteEditViewModel.CurrentNoteBeingEdited = note;
 #endif
 
-            await TileManager.CreateOrUpdateNoteTile(note, AppSettings.Instance.TransparentNoteTile);
+            await NotificationsManager.CreateOrUpdateNoteTile(note, AppSettings.Instance.TransparentNoteTile);
             note.NotifyPropertyChanged("IsPinned");
             note.NotifyPropertyChanged("CanPin");
         }
@@ -110,7 +110,7 @@ namespace FlatNotes.ViewModels
             if (note == null) return;
             App.TelemetryClient.TrackEvent("Unpin_NoteNotesControlViewModel");
 
-            TileManager.RemoveTileIfExists(note.ID);
+            NotificationsManager.RemoveTileIfExists(note.ID);
             note.NotifyPropertyChanged("IsPinned");
 
             await Task.Delay(0500);

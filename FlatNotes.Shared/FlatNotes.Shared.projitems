@@ -55,6 +55,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\Checklist.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Note.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\NoteColor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Reminder.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\NoteImage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\AppData.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\AppSettings.cs" />
@@ -90,7 +91,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Utils\Migration\Versions\v1\Models\Device.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\Migration\Versions\v1\Models\User.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\Migration\Versions\v1\Models\UserPreferences.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Utils\TileManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\NotificationsManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ArchivedNotesViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\NotesControlViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ModalViewModelBase.cs" />
@@ -146,5 +147,9 @@
     <None Include="$(MSBuildThisFileDirectory)Resources\DefaultResourceDictionary.xaml" />
     <None Include="$(MSBuildThisFileDirectory)Resources\Themes\DarkThemeResourceDictionary.xaml" />
     <None Include="$(MSBuildThisFileDirectory)Resources\Themes\LightThemeResourceDictionary.xaml" />
+    <None Include="$(MSBuildThisFileDirectory)Strings\en-US\Resources.resw" />
+    <None Include="$(MSBuildThisFileDirectory)Strings\es\Resources.resw" />
+    <None Include="$(MSBuildThisFileDirectory)Strings\pt-BR\Resources.resw" />
+    <None Include="$(MSBuildThisFileDirectory)Strings\zh-CN\Resources.resw" />
   </ItemGroup>
 </Project>

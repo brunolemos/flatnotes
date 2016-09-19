@@ -60,7 +60,12 @@
 
     <Border x:Name="NoteContainer" Margin="{Binding Margin, ElementName=NotePreviewRoot}" RequestedTheme="Light" CacheMode="BitmapCache" BorderThickness="1,0,1,2" BorderBrush="#10000000">
         <Grid Background="{Binding ElementName=NotePreviewRoot, Path=Background}">
-            <StackPanel Margin="0" IsHitTestVisible="False">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            
+            <StackPanel Grid.Row="0" Margin="0" IsHitTestVisible="False">
                 <Grid Visibility="{Binding ElementName=NotePreviewRoot, Path=HideImage, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=True}">
                     <Grid Background="{StaticResource PhoneDarkLowBrush}" Visibility="{Binding Images.Count, Converter={StaticResource PositiveIntToVisibilityConverter}}">
                         <!--<ListView x:Name="NoteImagesListView" Margin="0" Padding="0" BorderThickness="0" ItemsSource="{Binding Images, Converter={StaticResource SliceNoteImagesConverter}, ConverterParameter=1}" ItemTemplate="{StaticResource NoteImagesListViewControlTemplate}" SelectionMode="None" IsItemClickEnabled="False" IsTapEnabled="False" IsHitTestVisible="False" HorizontalContentAlignment="Stretch" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.HorizontalScrollMode="Disabled"/>-->
@@ -90,8 +95,21 @@
                     </StackPanel>
                 </StackPanel>
             </StackPanel>
-            
-            <Grid Background="Transparent"/>
+
+            <Grid Grid.Row="1" Visibility="{Binding Reminder, Mode=OneWay, Converter={StaticResource NullableToVisibilityConverter}}">
+                <!--<Grid Visibility="{Binding Reminder.IsActive, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">-->
+                    <Grid Margin="12,0" BorderThickness="0,1,0,0" BorderBrush="#0A000000" Visibility="{Binding Reminder.FormatedString, Mode=OneWay, Converter={StaticResource NullableToVisibilityConverter}}">
+                        <StackPanel Margin="0,4,0,8" Orientation="Horizontal" VerticalAlignment="Center">
+                            <Viewbox Height="14" Margin="0,0,4,0" VerticalAlignment="Center">
+                                <SymbolIcon Symbol="Clock" Foreground="{StaticResource PhoneDarkMidBrush}"/>
+                            </Viewbox>
+                            <TextBlock Margin="0,0,4,0" Text="{Binding Reminder.FormatedString, Mode=OneWay}" Foreground="{StaticResource PhoneDarkMidBrush}" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Grid>
+                <!--</Grid>-->
+            </Grid>
+
+            <Grid Grid.RowSpan="2" Background="Transparent"/>
         </Grid>
     </Border>
 </UserControl>

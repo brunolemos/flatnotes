@@ -358,6 +358,15 @@
           "lib/portable-wpa81+win81/NotificationsExtensions.winmd": {}
         }
       },
+      "NotificationsExtensions.Win10/14332.0.2": {
+        "type": "package",
+        "compile": {
+          "lib/uap10.0/NotificationsExtensions.Win10.dll": {}
+        },
+        "runtime": {
+          "lib/uap10.0/NotificationsExtensions.Win10.dll": {}
+        }
+      },
       "runtime.native.System.IO.Compression/4.1.0": {
         "type": "package",
         "dependencies": {
@@ -2551,6 +2560,15 @@
         },
         "runtime": {
           "lib/portable-wpa81+win81/NotificationsExtensions.winmd": {}
+        }
+      },
+      "NotificationsExtensions.Win10/14332.0.2": {
+        "type": "package",
+        "compile": {
+          "lib/uap10.0/NotificationsExtensions.Win10.dll": {}
+        },
+        "runtime": {
+          "lib/uap10.0/NotificationsExtensions.Win10.dll": {}
         }
       },
       "runtime.any.System.Collections/4.0.11": {
@@ -4907,6 +4925,15 @@
         },
         "runtime": {
           "lib/portable-wpa81+win81/NotificationsExtensions.winmd": {}
+        }
+      },
+      "NotificationsExtensions.Win10/14332.0.2": {
+        "type": "package",
+        "compile": {
+          "lib/uap10.0/NotificationsExtensions.Win10.dll": {}
+        },
+        "runtime": {
+          "lib/uap10.0/NotificationsExtensions.Win10.dll": {}
         }
       },
       "runtime.aot.System.Collections/4.0.10": {
@@ -7305,6 +7332,15 @@
           "lib/portable-wpa81+win81/NotificationsExtensions.winmd": {}
         }
       },
+      "NotificationsExtensions.Win10/14332.0.2": {
+        "type": "package",
+        "compile": {
+          "lib/uap10.0/NotificationsExtensions.Win10.dll": {}
+        },
+        "runtime": {
+          "lib/uap10.0/NotificationsExtensions.Win10.dll": {}
+        }
+      },
       "runtime.any.System.Collections/4.0.11": {
         "type": "package",
         "dependencies": {
@@ -9668,6 +9704,15 @@
         },
         "runtime": {
           "lib/portable-wpa81+win81/NotificationsExtensions.winmd": {}
+        }
+      },
+      "NotificationsExtensions.Win10/14332.0.2": {
+        "type": "package",
+        "compile": {
+          "lib/uap10.0/NotificationsExtensions.Win10.dll": {}
+        },
+        "runtime": {
+          "lib/uap10.0/NotificationsExtensions.Win10.dll": {}
         }
       },
       "runtime.aot.System.Collections/4.0.10": {
@@ -12072,6 +12117,15 @@
           "lib/portable-wpa81+win81/NotificationsExtensions.winmd": {}
         }
       },
+      "NotificationsExtensions.Win10/14332.0.2": {
+        "type": "package",
+        "compile": {
+          "lib/uap10.0/NotificationsExtensions.Win10.dll": {}
+        },
+        "runtime": {
+          "lib/uap10.0/NotificationsExtensions.Win10.dll": {}
+        }
+      },
       "runtime.any.System.Collections/4.0.11": {
         "type": "package",
         "dependencies": {
@@ -14435,6 +14489,15 @@
         },
         "runtime": {
           "lib/portable-wpa81+win81/NotificationsExtensions.winmd": {}
+        }
+      },
+      "NotificationsExtensions.Win10/14332.0.2": {
+        "type": "package",
+        "compile": {
+          "lib/uap10.0/NotificationsExtensions.Win10.dll": {}
+        },
+        "runtime": {
+          "lib/uap10.0/NotificationsExtensions.Win10.dll": {}
         }
       },
       "runtime.aot.System.Collections/4.0.10": {
@@ -16899,13 +16962,34 @@
     },
     "NotificationsExtensions/1.0.0": {
       "sha512": "Xae9eltquOiBk+XxgsPLB3heTs8zOLpjy2Af/7u8WBM3WwDgNt5zXGh0dzgdczAzmF/GeZiyQr//SfOoQBIRbQ==",
-      "type": "Package",
+      "type": "package",
       "files": [
+        "NotificationsExtensions.1.0.0.nupkg.sha512",
         "NotificationsExtensions.nuspec",
-        "[Content_Types].xml",
-        "_rels/.rels",
-        "lib/portable-wpa81+win81/NotificationsExtensions.winmd",
-        "package/services/metadata/core-properties/f0fb5871d757491abc2d64580f6b9cfe.psmdcp"
+        "lib/portable-wpa81+win81/NotificationsExtensions.winmd"
+      ]
+    },
+    "NotificationsExtensions.Win10/14332.0.2": {
+      "sha512": "UN5yNMpYIs06ULFSGkNYINN/ZtqK19wt3IbotUvH7rlGPVOcbvNvM2Jzxs9wZAolX97L5/Y4u+6twFP0oeXk2A==",
+      "type": "package",
+      "files": [
+        "NotificationsExtensions.Win10.14332.0.2.nupkg.sha512",
+        "NotificationsExtensions.Win10.nuspec",
+        "build/native/NotificationsExtensions.Win10.targets",
+        "lib/dotnet/NotificationsExtensions.Win10.dll",
+        "lib/dotnet/NotificationsExtensions.Win10.pdb",
+        "lib/dotnet/NotificationsExtensions.Win10.xml",
+        "lib/native/NotificationsExtensions.pdb",
+        "lib/native/NotificationsExtensions.pri",
+        "lib/native/NotificationsExtensions.winmd",
+        "lib/native/NotificationsExtensions.winmd.xml",
+        "lib/native/NotificationsExtensions.xml",
+        "lib/portable-net45+sl50+win+wpa81+wp80/NotificationsExtensions.Win10.dll",
+        "lib/portable-net45+sl50+win+wpa81+wp80/NotificationsExtensions.Win10.pdb",
+        "lib/portable-net45+sl50+win+wpa81+wp80/NotificationsExtensions.Win10.xml",
+        "lib/uap10.0/NotificationsExtensions.Win10.XML",
+        "lib/uap10.0/NotificationsExtensions.Win10.dll",
+        "lib/uap10.0/NotificationsExtensions.Win10.pdb"
       ]
     },
     "runtime.any.System.Collections/4.0.11": {
@@ -22688,6 +22772,7 @@
       "Microsoft.NETCore.UniversalWindowsPlatform >= 5.2.2",
       "Newtonsoft.Json >= 9.0.1",
       "NotificationsExtensions >= 1.0.0",
+      "NotificationsExtensions.Win10 >= 14332.0.2",
       "SQLite.Net-PCL >= 3.1.1",
       "SQLiteNetExtensions >= 1.3.0"
     ],

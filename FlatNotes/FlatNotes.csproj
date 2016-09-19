@@ -146,6 +146,9 @@
     <Compile Include="Controls\NoteColorPicker.xaml.cs">
       <DependentUpon>NoteColorPicker.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ReminderPicker.xaml.cs">
+      <DependentUpon>ReminderPicker.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Views\IgnoreMe.xaml.cs">
       <DependentUpon>IgnoreMe.xaml</DependentUpon>
@@ -218,6 +221,10 @@
     <Page Include="Controls\NotesControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\ReminderPicker.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Resources\CustomResourceDictionary.xaml">
       <Generator>MSBuild:Compile</Generator>

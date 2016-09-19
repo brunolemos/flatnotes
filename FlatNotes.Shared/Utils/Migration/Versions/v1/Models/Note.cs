@@ -108,7 +108,7 @@ namespace FlatNotes.Utils.Migration.Versions.v1.Models
 
         public void Touch()
         {
-            UpdatedAt = DateTime.Now;
+            UpdatedAt = DateTime.UtcNow;
         }
 
 

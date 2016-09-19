@@ -1,4 +1,5 @@
 using FlatNotes.Common;
+using FlatNotes.Controls;
 using FlatNotes.Converters;
 using FlatNotes.Models;
 using FlatNotes.Utils;
@@ -27,6 +28,8 @@ namespace FlatNotes.ViewModels
 
         public RelayCommand OpenImagePickerCommand { get; private set; }
         public RelayCommand ToggleChecklistCommand { get; private set; }
+        public RelayCommand CreateNoteReminderCommand { get; private set; }
+        public RelayCommand RemoveNoteReminderCommand { get; private set; }
         public RelayCommand PinCommand { get; private set; }
         public RelayCommand UnpinCommand { get; private set; }
         public RelayCommand ArchiveNoteCommand { get; private set; }
@@ -38,6 +41,8 @@ namespace FlatNotes.ViewModels
         {
             OpenImagePickerCommand = new RelayCommand(_OpenImagePicker);
             ToggleChecklistCommand = new RelayCommand(ToggleChecklist);
+            CreateNoteReminderCommand = new RelayCommand(CreateNoteReminder);
+            RemoveNoteReminderCommand = new RelayCommand(RemoveNoteReminder);
             PinCommand = new RelayCommand(Pin);
             UnpinCommand = new RelayCommand(Unpin);
             ArchiveNoteCommand = new RelayCommand(ArchiveNote, CanArchiveNote);
@@ -61,6 +66,7 @@ namespace FlatNotes.ViewModels
                 Note.NotifyPropertyChanged("IsPinned");
                 Note.NotifyPropertyChanged("CanPin");
 
+                NotifyPropertyChanged("ReminderFormatedString");
                 NotifyPropertyChanged("ArchivedAtFormatedString");
                 NotifyPropertyChanged("UpdatedAtFormatedString");
                 NotifyPropertyChanged("CreatedAtFormatedString");
@@ -75,7 +81,7 @@ namespace FlatNotes.ViewModels
 
             Note.Changed = false;
 
-            await TileManager.UpdateNoteTileIfExists(Note, AppSettings.Instance.TransparentNoteTile);
+            await NotificationsManager.UpdateNoteTileIfExists(Note, AppSettings.Instance.TransparentNoteTile);
         }
 
         public static Note CurrentNoteBeingEdited { get; set; }
@@ -105,10 +111,10 @@ namespace FlatNotes.ViewModels
         public NoteImage TempNoteImage { get { return tempNoteImage; } set { tempNoteImage = value; } }
         private static NoteImage tempNoteImage = null;
 
+        public string ReminderFormatedString { get { return Note.Reminder.FormatedString; } }
         public string ArchivedAtFormatedString { get { return string.Format(LocalizedResources.ArchivedAtFormatString, friendlyTimeConverter.Convert(Note.ArchivedAt)); } }
         public string UpdatedAtFormatedString { get { return string.Format(LocalizedResources.UpdatedAtFormatString, friendlyTimeConverter.Convert(Note.UpdatedAt)); } }
         public string CreatedAtFormatedString { get { return string.Format(LocalizedResources.CreatedAtFormatString, friendlyTimeConverter.Convert(Note.CreatedAt)); } }
-
 
         public ListViewReorderMode ReorderMode
         {
@@ -241,16 +247,32 @@ namespace FlatNotes.ViewModels
             Note.ToggleChecklist();
         }
 
+        private void CreateNoteReminder()
+        {
+            App.TelemetryClient.TrackEvent("CreateNoteReminder_EditViewModel");
+
+            if (!IsNewNote && !Note.IsEmpty() && Note.Reminder.Date.HasValue)
+                NotificationsManager.TryCreateNoteReminder(Note, Note.Reminder.Date);
+
+            Note.NotifyPropertyChanged("Reminder");
+        }
+
+        private void RemoveNoteReminder()
+        {
+            App.TelemetryClient.TrackEvent("RemoveNoteReminder_EditViewModel");
+
+            NotificationsManager.RemoveScheduledToastsIfExists(Note);
+            Note.NotifyPropertyChanged("Reminder");
+        }
+
         private async void Pin()
         {
             App.TelemetryClient.TrackEvent("Pin_EditViewModel");
 
             if (Note.IsEmpty()) return;
+            if (IsNewNote) await AppData.CreateOrUpdateNote(Note);
 
-            if (IsNewNote)
-                await AppData.CreateOrUpdateNote(Note);
-
-            await TileManager.CreateOrUpdateNoteTile(Note, AppSettings.Instance.TransparentNoteTile);
+            await NotificationsManager.CreateOrUpdateNoteTile(Note, AppSettings.Instance.TransparentNoteTile);
             Note.NotifyPropertyChanged("IsPinned");
             Note.NotifyPropertyChanged("CanPin");
         }
@@ -259,7 +281,7 @@ namespace FlatNotes.ViewModels
         {
             App.TelemetryClient.TrackEvent("Unpin_NoteEditViewModel");
 
-            TileManager.RemoveTileIfExists(Note.ID);
+            NotificationsManager.RemoveTileIfExists(Note.ID);
             Note.NotifyPropertyChanged("IsPinned");
 
             await Task.Delay(0500);
@@ -332,6 +354,10 @@ namespace FlatNotes.ViewModels
         {
             switch (e.PropertyName)
             {
+                case "Reminder":
+                    NotifyPropertyChanged("ReminderFormatedString");
+                    break;
+
                 case "ArchivedAt":
                     NotifyPropertyChanged("ArchivedAtFormatedString");
                     break;
@@ -352,12 +378,13 @@ namespace FlatNotes.ViewModels
             if (!(e.PropertyName == "IsChecklist"
                 || e.PropertyName == "Title" || e.PropertyName == "Text"
                 || e.PropertyName == "Checklist" || e.PropertyName == "Images"
-                || e.PropertyName == "Color" || e.PropertyName == "UpdatedAt"))
+                || e.PropertyName == "Color" || e.PropertyName == "UpdatedAt"
+                || e.PropertyName == "Reminder"))
                 return;
 
-            //Debug.WriteLine("Note_PropertyChanged " + e.PropertyName);
             Note.Changed = true;
 
+            //Debug.WriteLine("Note_PropertyChanged " + e.PropertyName);
             if (e.PropertyName == "UpdatedAt") return;
             Note.Touch();
         }

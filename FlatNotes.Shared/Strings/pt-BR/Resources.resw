@@ -297,4 +297,7 @@ Algumas funcionalidades:
   <data name="SettingsPageNameButton.Content" xml:space="preserve">
     <value>Configurações</value>
   </data>
+  <data name="ReminderAppBarButton.Label" xml:space="preserve">
+    <value>Lembrete</value>
+  </data>
 </root>

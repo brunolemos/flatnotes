@@ -132,13 +132,13 @@ namespace FlatNotes.Views
                 {
                     var parameters = e.Parameter as MainPageNavigationArgument;
                     IsArchivedMode = parameters.IsArchivedMode;
-                    if (!String.IsNullOrEmpty(parameters.NoteId)) RedirectToNote = e.NavigationMode == NavigationMode.New ? TileManager.TryToGetNoteFromNavigationArgument(parameters.NoteId) : null;
+                    if (!String.IsNullOrEmpty(parameters.NoteId)) RedirectToNote = e.NavigationMode == NavigationMode.New ? NotificationsManager.TryToGetNoteFromNavigationArgument(parameters.NoteId) : null;
                 }
                 else
                 {
                     //fallback to default navigation parameter handler (e.g: live tile will send ?noteId=xxx as a string)
                     //note parameter
-                    RedirectToNote = e.NavigationMode == NavigationMode.New ? TileManager.TryToGetNoteFromNavigationArgument(e.Parameter.ToString()) : null;
+                    RedirectToNote = e.NavigationMode == NavigationMode.New ? NotificationsManager.TryToGetNoteFromNavigationArgument(e.Parameter.ToString()) : null;
                 }
             }
 

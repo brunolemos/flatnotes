@@ -21,6 +21,7 @@
             <Converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
             <Converters:FriendlyTimeConverter x:Key="FriendlyTimeConverter"/>
             <Converters:NullableToVisibilityConverter x:Key="NullableToVisibilityConverter"/>
+            <Converters:NullableBooleanToBooleanConverter x:Key="NullableBooleanToBooleanConverter"/>
             <Converters:ReorderModeToVisibilityConverter x:Key="ReorderModeToVisibilityConverter"/>
             <Converters:ReorderModeToBooleanConverter x:Key="ReorderModeToBooleanConverter"/>
             <Converters:PositiveIntToVisibilityConverter x:Key="PositiveIntToVisibilityConverter"/>
@@ -76,7 +77,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0" Grid.RowSpan="2" x:Name="ContentRoot" RequestedTheme="Light">
+        <Grid Grid.Row="0" Grid.RowSpan="2" x:Name="ContentRoot">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
@@ -128,44 +129,76 @@
                 </StackPanel>
             </ScrollViewer>
 
-            <ScrollViewer Grid.Row="1" Margin="0,14,0,0" Height="36">
-                <!-- Visibility="{x:Bind viewModel.Note.IsNewNote, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=True}"-->
-                <StackPanel Margin="14,8,14,0">
-                    <StackPanel.ChildrenTransitions>
-                        <TransitionCollection>
-                            <EntranceThemeTransition FromHorizontalOffset="0" FromVerticalOffset="10" IsStaggeringEnabled="True" />
-                        </TransitionCollection>
-                    </StackPanel.ChildrenTransitions>
+            <Grid Grid.Row="1" BorderThickness="0,1,0,0" BorderBrush="#0A000000">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                
+                <Grid Grid.Column="0" Visibility="{x:Bind viewModel.Note.Reminder, Mode=OneWay, Converter={StaticResource NullableToVisibilityConverter}}">
+                    <Grid Margin="14,0" Visibility="{x:Bind viewModel.ReminderFormatedString, Mode=OneWay, Converter={StaticResource NullableToVisibilityConverter}}">
+                        <StackPanel Orientation="Horizontal" Margin="0,8" VerticalAlignment="Center">
+                            <Viewbox Height="14" Margin="0,0,4,0" VerticalAlignment="Center">
+                                <SymbolIcon Symbol="Clock" Foreground="{StaticResource PhoneDarkMidBrush}"/>
+                            </Viewbox>
+                            <TextBlock Margin="0,0,4,0" Text="{x:Bind viewModel.ReminderFormatedString, Mode=OneWay}" Foreground="{StaticResource PhoneDarkMidBrush}" VerticalAlignment="Center"/>
+                            <Button Margin="4,0" Padding="0" BorderThickness="0" Command="{x:Bind viewModel.RemoveNoteReminderCommand}" Foreground="{StaticResource PhoneDarkMidBrush}" VerticalAlignment="Center">
+                                <Button.Resources>
+                                    <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="#ea5f39"/>
+                                    <SolidColorBrush x:Key="ButtonForegroundPressed" Color="#ea5f39"/>
+                                </Button.Resources>
 
-                    <Grid Visibility="{x:Bind viewModel.Note.IsArchived, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                <Viewbox Height="12">
+                                    <SymbolIcon Symbol="Delete"/>
+                                </Viewbox>
+                            </Button>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
 
-                        <Grid Margin="0,0,0,8" Visibility="{x:Bind viewModel.Note.ArchivedAt, Mode=OneWay, Converter={StaticResource NullableToVisibilityConverter}}">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
+                <ScrollViewer Grid.Column="2" MaxHeight="36" VerticalScrollBarVisibility="Auto">
+                    <!-- Visibility="{x:Bind viewModel.Note.IsNewNote, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=True}"-->
+                    <StackPanel Margin="14,0">
+                        <StackPanel.ChildrenTransitions>
+                            <TransitionCollection>
+                                <EntranceThemeTransition FromHorizontalOffset="0" FromVerticalOffset="10" IsStaggeringEnabled="True" />
+                            </TransitionCollection>
+                        </StackPanel.ChildrenTransitions>
 
-                            <TextBlock Margin="0,0,8,0" Text="{x:Bind viewModel.ArchivedAtFormatedString, Mode=OneWay}" Foreground="{StaticResource PhoneDarkMidBrush}" TextAlignment="Right"/>
+                        <Grid Visibility="{x:Bind viewModel.Note.IsArchived, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <Grid Margin="0,8,0,0" Visibility="{x:Bind viewModel.Note.ArchivedAt, Mode=OneWay, Converter={StaticResource NullableToVisibilityConverter}}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
 
-                            <TextBlock Grid.Column="1" Text="↓" Foreground="{StaticResource PhoneDarkMidBrush}"/>
+                                <TextBlock Margin="0,0,8,0" Text="{x:Bind viewModel.ArchivedAtFormatedString, Mode=OneWay}" Foreground="{StaticResource PhoneDarkMidBrush}" TextAlignment="Right"/>
+
+                                <TextBlock Grid.Column="1" Text="↓" Foreground="{StaticResource PhoneDarkMidBrush}"/>
+                            </Grid>
                         </Grid>
-                    </Grid>
 
-                    <Grid Margin="0,0,0,8" Visibility="{x:Bind viewModel.Note.UpdatedAt, Mode=OneWay, Converter={StaticResource NullableToVisibilityConverter}}">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
+                        <StackPanel Visibility="{x:Bind viewModel.Note.UpdatedAt, Mode=OneWay, Converter={StaticResource NullableToVisibilityConverter}}">
+                            <Grid Margin="0,8,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
 
-                        <TextBlock Foreground="{StaticResource PhoneDarkMidBrush}" Margin="0,0,8,0" Text="{x:Bind viewModel.UpdatedAtFormatedString, Mode=OneWay}" Visibility="{x:Bind viewModel.Note.Changed, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=True}" TextAlignment="Right"/>
-                        <TextBlock x:Uid="PendingChangesTextBlock" Margin="0,0,8,0" Text="pending update" FontStyle="Italic" Foreground="{StaticResource PhoneDarkMidBrush}" Visibility="{x:Bind viewModel.Note.Changed, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" TextAlignment="Right"/>
+                                <TextBlock Foreground="{StaticResource PhoneDarkMidBrush}" Margin="0,0,8,0" Text="{x:Bind viewModel.UpdatedAtFormatedString, Mode=OneWay}" Visibility="{x:Bind viewModel.Note.Changed, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=True}" TextAlignment="Right"/>
+                                <TextBlock x:Uid="PendingChangesTextBlock" Margin="0,0,8,0" Text="pending changes" FontStyle="Italic" Foreground="{StaticResource PhoneDarkMidBrush}" Visibility="{x:Bind viewModel.Note.Changed, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" TextAlignment="Right"/>
 
-                        <TextBlock Grid.Column="1" Text="↓" Foreground="{StaticResource PhoneDarkMidBrush}" Visibility="{x:Bind viewModel.Note.CreatedAt, Mode=OneWay, Converter={StaticResource NullableToVisibilityConverter}}"/>
-                    </Grid>
+                                <TextBlock Grid.Column="1" Text="↓" Foreground="{StaticResource PhoneDarkMidBrush}" Visibility="{x:Bind viewModel.Note.CreatedAt, Mode=OneWay, Converter={StaticResource NullableToVisibilityConverter}}"/>
+                            </Grid>
 
-                    <TextBlock Margin="0,0,8,8" Foreground="{StaticResource PhoneDarkMidBrush}" Visibility="{x:Bind viewModel.Note.CreatedAt, Mode=OneWay, Converter={StaticResource NullableToVisibilityConverter}}" Text="{x:Bind viewModel.CreatedAtFormatedString, Mode=OneWay}" TextAlignment="Right"/>
-                </StackPanel>
-            </ScrollViewer>
+                            <TextBlock Margin="0,0,8,10" Text=" " Foreground="Transparent" Visibility="{x:Bind viewModel.Note.CreatedAt, Mode=OneWay, Converter={StaticResource NullableToVisibilityConverter}, ConverterParameter=True}"/>
+                        </StackPanel>
+
+                        <TextBlock Margin="0,8,8,10" Foreground="{StaticResource PhoneDarkMidBrush}" Visibility="{x:Bind viewModel.Note.CreatedAt, Mode=OneWay, Converter={StaticResource NullableToVisibilityConverter}}" Text="{x:Bind viewModel.CreatedAtFormatedString, Mode=OneWay}" TextAlignment="Right"/>
+                    </StackPanel>
+                </ScrollViewer>
+            </Grid>
         </Grid>
 
         <CommandBar x:Name="CommandBar" Grid.Row="{x:Bind viewModel.IsMobile, Converter={StaticResource IsMobileToGridRowConverter}}" Background="{x:Bind viewModel.Note.Color.Color, Mode=OneWay}" RequestedTheme="Light" HorizontalAlignment="Right">
@@ -184,7 +217,14 @@
 
                 <AppBarButton x:Uid="PhotoAppBarButton" Icon="Camera" Label="Photo" Command="{x:Bind viewModel.OpenImagePickerCommand}" ToolTipService.ToolTip="{Binding Label, RelativeSource={RelativeSource Mode=Self}}"/>
                 <!--<AppBarButton x:Uid="AudioAppBarButton" Icon="Microphone" Label="Audio" IsEnabled="False" ToolTipService.ToolTip="{Binding Label, RelativeSource={RelativeSource Mode=Self}}"/>-->
-                <AppBarButton x:Name="TogglePinAppBarButton" Icon="Pin" Label="Pin to start" Command="{x:Bind viewModel.PinCommand}" Visibility="{x:Bind viewModel.Note.IsArchived, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=True}" ToolTipService.ToolTip="{Binding Label, RelativeSource={RelativeSource Mode=Self}}"/>
+                <AppBarButton x:Name="TogglePinAppBarButton" Icon="Pin" Label="Pin to start" Command="{x:Bind viewModel.PinCommand}" IsEnabled="{x:Bind viewModel.IsNewNote, Mode=OneWay, Converter={StaticResource NullableBooleanToBooleanConverter}, ConverterParameter=True}" Visibility="{x:Bind viewModel.Note.IsArchived, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=True}" ToolTipService.ToolTip="{Binding Label, RelativeSource={RelativeSource Mode=Self}}"/>
+                <AppBarButton x:Uid="ReminderAppBarButton" x:Name="ReminderAppBarButton" Icon="Clock" Label="Reminder" Visibility="{x:Bind viewModel.Note.IsArchived, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=True}" ToolTipService.ToolTip="{Binding Label, RelativeSource={RelativeSource Mode=Self}}">
+                    <AppBarButton.Flyout>
+                        <Flyout>
+                            <local:ReminderPicker Reminder="{x:Bind viewModel.Note.Reminder, Mode=OneWay}" Saved="ReminderPicker_Saved" Canceled="ReminderPicker_Canceled" />
+                        </Flyout>
+                    </AppBarButton.Flyout>
+                </AppBarButton>
             </CommandBar.PrimaryCommands>
 
             <CommandBar.SecondaryCommands>

@@ -25,15 +25,15 @@ namespace FlatNotes.Utils.Migration.Versions.v1.Models
 
         public DateTime? CreatedAt { get { return createdAt; } private set { createdAt = value; } }
         [DataMember(Name = "CreatedAt")]
-        private DateTime? createdAt = DateTime.Now;
+        private DateTime? createdAt = DateTime.UtcNow;
 
         public DateTime? UpdatedAt { get { return updatedAt; } set { updatedAt = value; } }
         [DataMember(Name = "UpdatedAt")]
-        private DateTime? updatedAt = DateTime.Now;
+        private DateTime? updatedAt = DateTime.UtcNow;
 
         public void Touch()
         {
-            UpdatedAt = DateTime.Now;
+            UpdatedAt = DateTime.UtcNow;
         }
 
         public Device() { }

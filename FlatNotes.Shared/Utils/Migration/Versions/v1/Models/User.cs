@@ -42,13 +42,13 @@ namespace FlatNotes.Utils.Migration.Versions.v1.Models
         private UserPreferences preferences = new UserPreferences();
 
         [DataMember]
-        public DateTime CreatedAt = DateTime.Now;
+        public DateTime CreatedAt = DateTime.UtcNow;
 
         [DataMember]
         public DateTime UpdatedAt;
 
         [DataMember]
-        public DateTime LastSeenAt = DateTime.Now;
+        public DateTime LastSeenAt = DateTime.UtcNow;
 
         public User() {
             //PropertyChanged += User_PropertyChanged;
@@ -65,7 +65,7 @@ namespace FlatNotes.Utils.Migration.Versions.v1.Models
 
         public void Touch()
         {
-            UpdatedAt = DateTime.Now;
+            UpdatedAt = DateTime.UtcNow;
         }
 
         //private void replaceDevices(Devices list)

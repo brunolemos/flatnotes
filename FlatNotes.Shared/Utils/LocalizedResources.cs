@@ -9,6 +9,7 @@ namespace FlatNotes.Utils
 
         private ResourceLoader resourceLoader = new ResourceLoader();
 
+        public string Reminder { get { return resourceLoader.GetString("ReminderAppBarButton.Label"); } }
         public string ArchivedAtFormatString { get { return resourceLoader.GetString("ArchivedAtFormatString"); } }
         public string UpdatedAtFormatString { get { return resourceLoader.GetString("UpdatedAtFormatString"); } }
         public string CreatedAtFormatString { get { return resourceLoader.GetString("CreatedAtFormatString"); } }

@@ -3,6 +3,7 @@ using SQLiteNetExtensions.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Runtime.Serialization;
 using Windows.Foundation;
 
@@ -45,6 +46,18 @@ namespace FlatNotes.Models
 
             return noteImages;
         }
+
+        public NoteImage GetSelectedNoteImageOrLast()
+        {
+            if (Items.Count <= 0) return null;
+           try
+            {
+               var selected = Items.LastOrDefault((ni) => ni.IsSelected);
+                if (Items.IndexOf(selected) >= 0) return selected;
+            } catch (Exception) { }
+
+            return Items[0];
+        }
     }
 
     [DataContract]
@@ -79,7 +92,7 @@ namespace FlatNotes.Models
 
         public DateTime CreatedAt { get { return createdAt; } private set { createdAt = value; } }
         [DataMember(Name = "CreatedAt")]
-        private DateTime createdAt = DateTime.Now;
+        private DateTime createdAt = DateTime.UtcNow;
 
         public NoteImage() { }
 

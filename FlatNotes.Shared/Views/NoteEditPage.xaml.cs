@@ -136,7 +136,7 @@ namespace FlatNotes.Views
             viewModel.Note.Trim();
 
             //always update live tile
-            TileManager.UpdateNoteTileIfExists(viewModel.Note, AppSettings.Instance.TransparentNoteTile);
+            NotificationsManager.UpdateNoteTileIfExists(viewModel.Note, AppSettings.Instance.TransparentNoteTile);
 
             //save or remove if empty
             if (viewModel.Note.Changed || viewModel.Note.IsEmpty())
@@ -201,29 +201,29 @@ namespace FlatNotes.Views
             }
            
 
-#if WINDOWS_UWP
-            try
-            {
-                //this.Resources["FlyoutBackgroundThemeBrush"] = viewModel.Note.Color.DarkColor;
-                this.Resources["MenuFlyoutItemBackground"] = viewModel.Note.Color.DarkColor;
-                this.Resources["MenuFlyoutPresenterBackground"] = viewModel.Note.Color.DarkColor;
+//#if WINDOWS_UWP
+//            try
+//            {
+//                //this.Resources["FlyoutBackgroundThemeBrush"] = viewModel.Note.Color.DarkColor;
+//                this.Resources["MenuFlyoutItemBackground"] = viewModel.Note.Color.DarkColor;
+//                this.Resources["MenuFlyoutPresenterBackground"] = viewModel.Note.Color.DarkColor;
 
-                var style = new Style(typeof(FlyoutPresenter));
-                style.Setters.Add(new Setter(FlyoutPresenter.BackgroundProperty, viewModel.Note.Color.DarkColor));
-                style.Setters.Add(new Setter(FlyoutPresenter.BorderBrushProperty, viewModel.Note.Color.Color));
-                style.Setters.Add(new Setter(FlyoutPresenter.BorderThicknessProperty, new Thickness(1)));
-                ColorPickerAppBarToggleButton.Flyout.SetValue(Flyout.FlyoutPresenterStyleProperty, style);
+//                var style = new Style(typeof(FlyoutPresenter));
+//                style.Setters.Add(new Setter(FlyoutPresenter.BackgroundProperty, viewModel.Note.Color.DarkColor));
+//                style.Setters.Add(new Setter(FlyoutPresenter.BorderBrushProperty, viewModel.Note.Color.Color));
+//                style.Setters.Add(new Setter(FlyoutPresenter.BorderThicknessProperty, new Thickness(1)));
+//                ColorPickerAppBarToggleButton.Flyout.SetValue(Flyout.FlyoutPresenterStyleProperty, style);
 
-                var menuFlyoutStyle = new Style(typeof(MenuFlyoutPresenter));
-                menuFlyoutStyle.Setters.Add(new Setter(MenuFlyoutPresenter.BackgroundProperty, viewModel.Note.Color.DarkColor));
-                menuFlyoutStyle.Setters.Add(new Setter(MenuFlyoutPresenter.BorderBrushProperty, viewModel.Note.Color.Color));
-                menuFlyoutStyle.Setters.Add(new Setter(MenuFlyoutPresenter.BorderThicknessProperty, new Thickness(1)));
-                (this.Resources["NoteImageMenuFlyout"] as MenuFlyout).SetValue(MenuFlyout.MenuFlyoutPresenterStyleProperty, menuFlyoutStyle);
-            }
-            catch (Exception)
-            {
-            }
-#endif
+//                var menuFlyoutStyle = new Style(typeof(MenuFlyoutPresenter));
+//                menuFlyoutStyle.Setters.Add(new Setter(MenuFlyoutPresenter.BackgroundProperty, viewModel.Note.Color.DarkColor));
+//                menuFlyoutStyle.Setters.Add(new Setter(MenuFlyoutPresenter.BorderBrushProperty, viewModel.Note.Color.Color));
+//                menuFlyoutStyle.Setters.Add(new Setter(MenuFlyoutPresenter.BorderThicknessProperty, new Thickness(1)));
+//                (this.Resources["NoteImageMenuFlyout"] as MenuFlyout).SetValue(MenuFlyout.MenuFlyoutPresenterStyleProperty, menuFlyoutStyle);
+//            }
+//            catch (Exception)
+//            {
+//            }
+//#endif
         }
 
         private void UpdateIsPinnedStatus(bool? forceStatus = null)
@@ -422,6 +422,17 @@ namespace FlatNotes.Views
             var images = (NoteImages)NoteImagesFlipView.DataContext;
             var selectedImage = images.FirstOrDefault((i) => i.IsSelected);
             NoteImagesFlipView.SelectedIndex = images.Count > 0 ? images.IndexOf(selectedImage) : -1;
+        }
+
+        private void ReminderPicker_Saved(object sender, EventArgs e)
+        {
+            ReminderAppBarButton.Flyout.Hide();
+            viewModel.CreateNoteReminderCommand.Execute(sender);
+        }
+
+        private void ReminderPicker_Canceled(object sender, EventArgs e)
+        {
+            ReminderAppBarButton.Flyout.Hide();
         }
 
 #if WINDOWS_PHONE_APP
