@@ -8,7 +8,6 @@ namespace FlatNotes.Controls
     public sealed partial class ReminderPicker : UserControl
     {
         public static readonly DependencyProperty ReminderProperty = DependencyProperty.Register("Reminder", typeof(Reminder), typeof(ReminderPicker), new PropertyMetadata(new Reminder(), OnReminderPropertyChanged));
-
         public Reminder Reminder { get { return (Reminder)GetValue(ReminderProperty); } set { SetValue(ReminderProperty, value != null ? value : new Reminder()); } }
 
         public Reminder TemporaryReminder { get; set; }
@@ -20,7 +19,7 @@ namespace FlatNotes.Controls
         {
             this.InitializeComponent();
             Loaded += (s, e) => updateValues();
-            Unloaded += (s, e) => { Reminder = new Reminder(); TemporaryReminder = null; };
+            //Unloaded += (s, e) => { Reminder = new Reminder(); TemporaryReminder = null; };
         }
 
         private static void OnReminderPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -33,60 +32,65 @@ namespace FlatNotes.Controls
 
         private void updateValues()
         {
-            //if (Reminder == null)  Reminder = new Reminder();
-
-            if (Reminder.Date.HasValue && Reminder.Date.Value != null)
-                TemporaryReminder = new Reminder(Reminder.Date.Value);
-            else
-                TemporaryReminder = new Reminder(DateTimeOffset.Now.AddMinutes(1));
-
             calendarDatePicker.MinDate = DateTimeOffset.Now;
 
+            if (Reminder == null) Reminder = new Reminder();
+
+            if (Reminder?.Date != null && Reminder.Date.HasValue && Reminder.Date.Value != null)
+                TemporaryReminder = new Reminder(Reminder.Date.Value);
+
+            if (!(TemporaryReminder?.Date != null && TemporaryReminder.Date.HasValue && TemporaryReminder.Date.Value != null))
+                TemporaryReminder = new Reminder(DateTimeOffset.Now.AddMinutes(10));
+
             calendarDatePicker.Date = TemporaryReminder.Date.Value;
-            //datePicker.Date = TemporaryReminder.Date.Value;
             timePicker.Time = TemporaryReminder.Date.Value.TimeOfDay;
         }
 
         private bool updateCanSave()
         {
-            AcceptButton.IsEnabled = TemporaryReminder.Date.HasValue && TemporaryReminder.Date.Value > DateTimeOffset.Now;
+            AcceptButton.IsEnabled = TemporaryReminder?.Date != null && TemporaryReminder.Date.Value > DateTimeOffset.Now;
             return AcceptButton.IsEnabled;
         }
 
-        private void calendarDatePicker_DateChanged(CalendarDatePicker sender, CalendarDatePickerDateChangedEventArgs args)
+        private void calendarDatePicker_DateChanged(CalendarDatePicker sender, CalendarDatePickerDateChangedEventArgs e)
         {
-            TemporaryReminder.Date = args.NewDate?.Date + timePicker.Time;
+            System.Diagnostics.Debug.WriteLine("calendarDatePicker_DateChanged {0}", e.NewDate?.Date + timePicker.Time);
+
+            TemporaryReminder.Date = e.NewDate?.Date + timePicker.Time;
             updateCanSave();
         }
 
-        //private void datePicker_DateChanged(object sender, DatePickerValueChangedEventArgs e)
-        //{
-        //    TemporaryReminder.Date = e.NewDate.Date + timePicker.Time;
-        //    updateCanSave();
-        //}
-
         private void timePicker_TimeChanged(object sender, TimePickerValueChangedEventArgs e)
         {
+            System.Diagnostics.Debug.WriteLine("timePicker_TimeChanged {0}", calendarDatePicker.Date?.Date + e.NewTime);
+
             TemporaryReminder.Date = calendarDatePicker.Date?.Date + e.NewTime;
             updateCanSave();
         }
 
-        //private void TomorrowButton_Click(object sender, RoutedEventArgs e)
-        //{
-        //    calendarDatePicker.Date = DateTimeOffset.Now.AddDays(1).Date;
-        //    timePicker.Time = new TimeSpan(8, 0, 0);
-        //}
+        private void NowButton_Click(object sender, RoutedEventArgs e)
+        {
+            calendarDatePicker.Date = DateTimeOffset.Now.AddMinutes(1);
+            timePicker.Time = calendarDatePicker.Date.Value.TimeOfDay;
+        }
 
-        //private void NextWeekButton_Click(object sender, RoutedEventArgs e)
-        //{
-        //    calendarDatePicker.Date = DateTimeOffset.Now.AddDays(7).Date;
-        //    timePicker.Time = new TimeSpan(8, 0, 0);
-        //}
+        private void TomorrowButton_Click(object sender, RoutedEventArgs e)
+        {
+            calendarDatePicker.Date = DateTimeOffset.Now.AddDays(1).Date;
+            timePicker.Time = new TimeSpan(8, 0, 0);
+        }
+
+        private void NextWeekButton_Click(object sender, RoutedEventArgs e)
+        {
+            calendarDatePicker.Date = DateTimeOffset.Now.AddDays(7).Date;
+            timePicker.Time = new TimeSpan(8, 0, 0);
+        }
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
             if (!updateCanSave()) return;
 
+            System.Diagnostics.Debug.WriteLine("Saving new date {0}", TemporaryReminder.Date);
             Reminder.Date = TemporaryReminder.Date;
             Saved?.Invoke(this, EventArgs.Empty);
         }

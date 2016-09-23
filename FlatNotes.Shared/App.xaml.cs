@@ -258,36 +258,35 @@ namespace FlatNotes
             Color backgroundPressedColor = backgroundHoverColor.Add(Color.FromArgb(0x20, blackOrWhiteByte, blackOrWhiteByte, blackOrWhiteByte)); //10%
             Color foregroundPressedColor = foregroundHoverColor;
 
-#if WINDOWS_UWP
-            var titleBar = ApplicationView.GetForCurrentView().TitleBar;
-
-            titleBar.BackgroundColor = backgroundColor;
-            titleBar.ForegroundColor = foregroundColor;
-
-            titleBar.InactiveBackgroundColor = backgroundColor;
-            titleBar.InactiveForegroundColor = foregroundColor;
-
-            titleBar.ButtonBackgroundColor = backgroundColor;
-            titleBar.ButtonForegroundColor = foregroundColor;
-
-            titleBar.ButtonInactiveBackgroundColor = backgroundColor;
-            titleBar.ButtonInactiveForegroundColor = foregroundColor;
-
-            titleBar.ButtonHoverBackgroundColor = backgroundHoverColor;
-            titleBar.ButtonHoverForegroundColor = foregroundHoverColor;
-
-            titleBar.ButtonPressedBackgroundColor = backgroundPressedColor;
-            titleBar.ButtonPressedForegroundColor = foregroundPressedColor;
 
             bool hasStatusBar = Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar");
-            if (!hasStatusBar) return;
-#endif
+            if (hasStatusBar)
+            {
+                StatusBar.GetForCurrentView().BackgroundOpacity = backgroundColor.A;
+                StatusBar.GetForCurrentView().BackgroundColor = backgroundColor;
+                StatusBar.GetForCurrentView().ForegroundColor = foregroundColor;
+            }
 
-            StatusBar.GetForCurrentView().BackgroundOpacity = backgroundColor.A;
-            StatusBar.GetForCurrentView().BackgroundColor = backgroundColor;
-            StatusBar.GetForCurrentView().ForegroundColor = foregroundColor;
+#if WINDOWS_UWP
+            var titleBar = ApplicationView.GetForCurrentView().TitleBar;
+            System.Diagnostics.Debug.WriteLine("StatuBar background={0}, foreground={1}", backgroundColor, foregroundColor);
+
+            titleBar.ForegroundColor = foregroundColor;
+            titleBar.ButtonForegroundColor = foregroundColor;
+            titleBar.InactiveForegroundColor = foregroundColor;
+            titleBar.ButtonInactiveForegroundColor = foregroundColor;
+            titleBar.ButtonHoverForegroundColor = foregroundHoverColor;
+            titleBar.ButtonPressedForegroundColor = foregroundPressedColor;
+
+            titleBar.BackgroundColor = backgroundColor;
+            titleBar.InactiveBackgroundColor = backgroundColor;
+            titleBar.ButtonBackgroundColor = backgroundColor;
+            titleBar.ButtonInactiveBackgroundColor = backgroundColor;
+            titleBar.ButtonHoverBackgroundColor = backgroundHoverColor;
+            titleBar.ButtonPressedBackgroundColor = backgroundPressedColor;
+#endif
         }
-        
+
         public static async void SimulateStatusBarProgressComplete()
         {
 #if WINDOWS_UWP

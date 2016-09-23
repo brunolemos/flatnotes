@@ -13,7 +13,13 @@
         <!--<DatePicker x:Name="datePicker" Margin="0,4" DateChanged="datePicker_DateChanged" HorizontalAlignment="Stretch"/>-->
         <TimePicker x:Name="timePicker" Margin="0,4" TimeChanged="timePicker_TimeChanged" HorizontalAlignment="Stretch"/>
 
-        <!--<Button Margin="0,4" FontSize="12" Click="TomorrowButton_Click" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
+        <Button Margin="0,4" FontSize="12" Click="NowButton_Click" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
+            <Grid Margin="0,4">
+                <TextBlock x:Uid="NowReminder" Text="Now" HorizontalAlignment="Left"/>
+            </Grid>
+        </Button>
+        
+        <Button Margin="0,4" FontSize="12" Click="TomorrowButton_Click" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
             <Grid Margin="0,4">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -21,7 +27,7 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Grid.Column="0" Text="Tomorrow" HorizontalAlignment="Left"/>
+                <TextBlock Grid.Column="0" x:Uid="TomorrowReminder" Text="Tomorrow" HorizontalAlignment="Left"/>
                 <TextBlock Grid.Column="2" Text="8:00 AM" HorizontalAlignment="Right"/>
             </Grid>
         </Button>
@@ -34,10 +40,10 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Grid.Column="0" Text="Next week" HorizontalAlignment="Left"/>
+                <TextBlock Grid.Column="0" x:Uid="NextWeekReminder" Text="Next week" HorizontalAlignment="Left"/>
                 <TextBlock Grid.Column="2" Text="8:00 AM" HorizontalAlignment="Right"/>
             </Grid>
-        </Button>-->
+        </Button>
 
         <Grid Margin="0,4">
             <Grid.ColumnDefinitions>

@@ -254,7 +254,7 @@ namespace FlatNotes.Utils
             foreach (var item in note.Images) item.NoteId = note.ID;
             note.Reminder.NoteId = note.ID;
 
-            NotificationsManager.TryCreateNoteReminder(note, note.Reminder.Date);
+            //NotificationsManager.TryCreateNoteReminder(note, note.Reminder.Date);
 
             //DB.UpdateWithChildren(note);
             bool success = LocalDB.Update(note) == 1;

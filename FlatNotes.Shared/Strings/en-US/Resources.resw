@@ -294,4 +294,13 @@
   <data name="ReminderAppBarButton.Label" xml:space="preserve">
     <value>Reminder</value>
   </data>
+  <data name="NextWeekReminder.Text" xml:space="preserve">
+    <value>Next week</value>
+  </data>
+  <data name="NowReminder.Text" xml:space="preserve">
+    <value>Now</value>
+  </data>
+  <data name="TomorrowReminder.Text" xml:space="preserve">
+    <value>Tomorrow</value>
+  </data>
 </root>

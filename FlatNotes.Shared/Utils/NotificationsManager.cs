@@ -258,7 +258,7 @@ namespace FlatNotes.Utils
 
         public static bool TryCreateNoteReminder(Note note, DateTimeOffset? date)
         {
-            RemoveScheduledToastsIfExists(note, false);
+            RemoveScheduledToastsIfExists(note, date == null || !date.HasValue || date.Value == null || date.Value < DateTimeOffset.Now);
 
             if (note.IsEmpty() || date == null || !date.HasValue || date.Value == null || date.Value < DateTimeOffset.Now) return false;
             System.Diagnostics.Debug.WriteLine("Creating Reminder for noteId={0} date={1}", note.ID, date);
@@ -316,8 +316,6 @@ namespace FlatNotes.Utils
 
             var toastId = Reminder.NoteIdToReminderID(note.ID);
             var toastsToRemove = allToastsScheduled.Where((t) => t.Id == toastId || t.Id == note.Reminder.ID).ToList();
-
-            if (toastsToRemove.Count <= 0) return;
 
             System.Diagnostics.Debug.WriteLine("Removing {0} scheduled toast notifications from a total of {1}", toastsToRemove.Count, allToastsScheduled.Count);
             foreach (var toast in toastsToRemove)

@@ -300,4 +300,13 @@ Algumas funcionalidades:
   <data name="ReminderAppBarButton.Label" xml:space="preserve">
     <value>Lembrete</value>
   </data>
+  <data name="NextWeekReminder.Text" xml:space="preserve">
+    <value>Próxima semana</value>
+  </data>
+  <data name="NowReminder.Text" xml:space="preserve">
+    <value>Agora</value>
+  </data>
+  <data name="TomorrowReminder.Text" xml:space="preserve">
+    <value>Amanhã</value>
+  </data>
 </root>

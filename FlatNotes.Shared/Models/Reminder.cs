@@ -33,15 +33,24 @@ namespace FlatNotes.Models
         [DataMember(Name = "UpdatedAt")]
         private DateTime updatedAt = DateTime.UtcNow;
 
-        public string FormatedString { get { return Date.HasValue != true ? "" : Date.Value.ToLocalTime().ToString("MMMM dd, yyyy HH:mm"); } }
+        public string FormatedString { get { return date?.DateTime == null ? "" : date?.LocalDateTime.ToString("MMMM dd, yyyy HH:mm"); } }
+
+        public void ResetIfIsPastDate()
+        {
+           if (date == null || !date.HasValue || (date.Value.ToLocalTime() < DateTimeOffset.Now))
+            {
+                System.Diagnostics.Debug.WriteLine("Date {0} < {1}", date, DateTimeOffset.Now);
+                isActive = false;
+                date = null;
+            }
+        }
 
         public Reminder() {
-            if (IsActive && (!Date.HasValue || (Date.Value < DateTimeOffset.Now))) IsActive = false;
         }
 
         public Reminder(DateTimeOffset? date = null) : this()
         {
-            if (date.HasValue && date.Value != null) this.Date = date.Value.ToLocalTime();
+            if (date != null && date.HasValue && date.Value != null) this.Date = date.Value.ToLocalTime();
         }
         
         public void Touch()
