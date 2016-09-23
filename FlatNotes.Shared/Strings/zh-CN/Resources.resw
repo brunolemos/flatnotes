@@ -117,11 +117,41 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AppDefaultTileBackgroundCheckbox.Content" xml:space="preserve">
+    <value>黄色动态磁贴</value>
+  </data>
+  <data name="AppDescription" xml:space="preserve">
+    <value>Flat Notes是Windows上最赞的记事App!</value>
+  </data>
+  <data name="AppVersionTextBlock.Text" xml:space="preserve">
+    <value>版本：</value>
+  </data>
+  <data name="ArchiveAppBarButton.Label" xml:space="preserve">
+    <value>已归档</value>
+  </data>
+  <data name="ArchivedAtFormatString" xml:space="preserve">
+    <value>归档于{0}</value>
+  </data>
+  <data name="ArchivedNotesAppBarButton.Label" xml:space="preserve">
+    <value>已归档记事</value>
+  </data>
+  <data name="ArchivedNotesPageNameButton.Content" xml:space="preserve">
+    <value>已归档</value>
+  </data>
+  <data name="ArchiveMenuFlyoutItem.Text" xml:space="preserve">
+    <value>归档</value>
+  </data>
   <data name="AudioAppBarButton.Label" xml:space="preserve">
     <value>音频</value>
   </data>
-  <data name="PhotoAppBarButton.Label" xml:space="preserve">
-    <value>图片</value>
+  <data name="ChangeColorMenuFlyoutItem.Text" xml:space="preserve">
+    <value>选择颜色</value>
+  </data>
+  <data name="ChecklistAppBarButton.Label" xml:space="preserve">
+    <value>新建列表</value>
+  </data>
+  <data name="CloseAppBarButton.Label 关闭" xml:space="preserve">
+    <value />
   </data>
   <data name="ColorAppBarButton.Label" xml:space="preserve">
     <value>颜色</value>
@@ -132,14 +162,47 @@
   <data name="DeleteAppBarButton.Label" xml:space="preserve">
     <value>删除</value>
   </data>
-  <data name="PendingChangesTextBlock.Text" xml:space="preserve">
-    <value>变更未处理</value>
+  <data name="DeleteMenuFlyoutItem.Text" xml:space="preserve">
+    <value>删除</value>
+  </data>
+  <data name="DevelopedByTextBlock.Text" xml:space="preserve">
+    <value>开发者：</value>
+  </data>
+  <data name="EmptyArchivedNotesMessageTextBox.Text" xml:space="preserve">
+    <value>已归档的记事将会出现在这里</value>
+  </data>
+  <data name="EmptyNotesMessageTextBox.Text" xml:space="preserve">
+    <value>你添加的记事将会出现在这里</value>
   </data>
   <data name="NewItemTextBox.PlaceholderText" xml:space="preserve">
-    <value>新建项目</value>
+    <value>添加</value>
+  </data>
+  <data name="NewNoteTextBlock.Text" xml:space="preserve">
+    <value>添加记事...</value>
+  </data>
+  <data name="NextWeekReminder.Text" xml:space="preserve">
+    <value>下周</value>
+  </data>
+  <data name="NotesPageNameButton.Content" xml:space="preserve">
+    <value>记事</value>
+  </data>
+  <data name="NoteTileBackgroundCheckbox.Content" xml:space="preserve">
+    <value>不透明的笔记磁贴</value>
+  </data>
+  <data name="NowReminder.Text" xml:space="preserve">
+    <value>现在</value>
+  </data>
+  <data name="PendingChangesTextBlock.Text" xml:space="preserve">
+    <value>尚未保存</value>
+  </data>
+  <data name="PhotoAppBarButton.Label" xml:space="preserve">
+    <value>图片</value>
   </data>
   <data name="Pin" xml:space="preserve">
-    <value>创建磁贴</value>
+    <value>固定到“开始屏幕”</value>
+  </data>
+  <data name="PinToStartMenuFlyoutItem.Text" xml:space="preserve">
+    <value>固定到“开始屏幕”</value>
   </data>
   <data name="PrettyDate_AMinuteAgo" xml:space="preserve">
     <value>一分钟前</value>
@@ -180,86 +243,14 @@
   <data name="PrettyDate_Yesterday" xml:space="preserve">
     <value>昨天</value>
   </data>
-  <data name="SettingsAppBarButton.Label" xml:space="preserve">
-    <value>设置</value>
+  <data name="RateAppBarButton.Label" xml:space="preserve">
+    <value>评分</value>
   </data>
-  <data name="ShareAppBarButton.Label" xml:space="preserve">
-    <value>共享</value>
-  </data>
-  <data name="TextTextBox.PlaceholderText" xml:space="preserve">
-    <value>文本</value>
-  </data>
-  <data name="TitleTextBox.PlaceholderText" xml:space="preserve">
-    <value>标题</value>
-  </data>
-  <data name="ToggleChecklistAppBarButton.Label" xml:space="preserve">
-    <value>转换为清单</value>
-  </data>
-  <data name="UpdatedAtFormatString" xml:space="preserve">
-    <value>更新于{0}</value>
-  </data>
-  <data name="ArchiveAppBarButton.Label" xml:space="preserve">
-    <value>存档</value>
-  </data>
-  <data name="ArchivedNotesAppBarButton.Label" xml:space="preserve">
-    <value>已存档笔记</value>
-  </data>
-  <data name="EmptyNotesMessageTextBox.Text" xml:space="preserve">
-    <value>你添加的笔记将会出现在这里</value>
-  </data>
-  <data name="EmptyArchivedNotesMessageTextBox.Text" xml:space="preserve">
-    <value>存档的笔记将会出现在这里</value>
+  <data name="ReminderAppBarButton.Label" xml:space="preserve">
+    <value>提醒</value>
   </data>
   <data name="RestoreAppBarButton.Label" xml:space="preserve">
     <value>还原</value>
-  </data>
-  <data name="ArchivedAtFormatString" xml:space="preserve">
-    <value>存档于{0}</value>
-  </data>
-  <data name="YourMessageGoesHere" xml:space="preserve">
-    <value>[在这里输入消息]</value>
-  </data>
-  <data name="ThemeCheckbox.Content" xml:space="preserve">
-    <value>黑暗的主题</value>
-  </data>
-  <data name="AppVersionTextBlock.Text" xml:space="preserve">
-    <value>版本号</value>
-  </data>
-  <data name="DevelopedByTextBlock.Text" xml:space="preserve">
-    <value>开发者：</value>
-  </data>
-  <data name="RateAppBarButton.Label" xml:space="preserve">
-    <value>喜欢</value>
-  </data>
-  <data name="SupportAppBarButton.Label" xml:space="preserve">
-    <value>支持</value>
-  </data>
-  <data name="CloseAppBarButton.Label" xml:space="preserve">
-    <value>关闭</value>
-  </data>
-  <data name="Unpin" xml:space="preserve">
-    <value>删除磁贴</value>
-  </data>
-  <data name="ChecklistAppBarButton.Label" xml:space="preserve">
-    <value>清单</value>
-  </data>
-  <data name="AppDescription" xml:space="preserve">
-    <value>Flat Notes是Windows Phone上最赞的笔记APP!</value>
-  </data>
-  <data name="ToggleSingleColumnViewAppBarButton.Label" xml:space="preserve">
-    <value>切换单列视图</value>
-  </data>
-  <data name="ArchiveMenuFlyoutItem.Text" xml:space="preserve">
-    <value>存档</value>
-  </data>
-  <data name="ChangeColorMenuFlyoutItem.Text" xml:space="preserve">
-    <value>改變顏色</value>
-  </data>
-  <data name="DeleteMenuFlyoutItem.Text" xml:space="preserve">
-    <value>删除</value>
-  </data>
-  <data name="PinToStartMenuFlyoutItem.Text" xml:space="preserve">
-    <value>创建磁贴</value>
   </data>
   <data name="RestoreMenuFlyoutItem.Text" xml:space="preserve">
     <value>还原</value>
@@ -267,40 +258,49 @@
   <data name="SaveMenuFlyoutItem.Text" xml:space="preserve">
     <value>保存</value>
   </data>
-  <data name="ShareMenuFlyoutItem.Text" xml:space="preserve">
-    <value>共享</value>
-  </data>
-  <data name="UnpinFromStartMenuFlyoutItem.Text" xml:space="preserve">
-    <value>删除磁贴</value>
-  </data>
-  <data name="AppDefaultTileBackgroundCheckbox.Content" xml:space="preserve">
-    <value>在现场瓷砖图案黄色背景</value>
-  </data>
-  <data name="NoteTileBackgroundCheckbox.Content" xml:space="preserve">
-    <value>在现场的瓷砖笔记坚实的背景</value>
-  </data>
-  <data name="ArchivedNotesPageNameButton.Content" xml:space="preserve">
-    <value>存档</value>
-  </data>
-  <data name="NewNoteTextBlock.Text" xml:space="preserve">
-    <value>新笔记...</value>
-  </data>
-  <data name="NotesPageNameButton.Content" xml:space="preserve">
-    <value>票据</value>
+  <data name="SettingsAppBarButton.Label" xml:space="preserve">
+    <value>设置</value>
   </data>
   <data name="SettingsPageNameButton.Content" xml:space="preserve">
     <value>设置</value>
   </data>
-  <data name="ReminderAppBarButton.Label" xml:space="preserve">
-    <value>提醒</value>
+  <data name="ShareAppBarButton.Label" xml:space="preserve">
+    <value>共享</value>
   </data>
-  <data name="NextWeekReminder.Text" xml:space="preserve">
-    <value>下周</value>
+  <data name="ShareMenuFlyoutItem.Text" xml:space="preserve">
+    <value>共享</value>
   </data>
-  <data name="NowReminder.Text" xml:space="preserve">
-    <value>现在</value>
+  <data name="SupportAppBarButton.Label" xml:space="preserve">
+    <value>反馈</value>
+  </data>
+  <data name="TextTextBox.PlaceholderText" xml:space="preserve">
+    <value>内容</value>
+  </data>
+  <data name="ThemeCheckbox.Content" xml:space="preserve">
+    <value>暗色主题</value>
+  </data>
+  <data name="TitleTextBox.PlaceholderText" xml:space="preserve">
+    <value>标题</value>
+  </data>
+  <data name="ToggleChecklistAppBarButton.Label" xml:space="preserve">
+    <value>转换为列表</value>
+  </data>
+  <data name="ToggleSingleColumnViewAppBarButton.Label" xml:space="preserve">
+    <value>切换视图</value>
   </data>
   <data name="TomorrowReminder.Text" xml:space="preserve">
     <value>明天</value>
+  </data>
+  <data name="Unpin" xml:space="preserve">
+    <value>删除磁贴</value>
+  </data>
+  <data name="UnpinFromStartMenuFlyoutItem.Text" xml:space="preserve">
+    <value>取消固定</value>
+  </data>
+  <data name="UpdatedAtFormatString" xml:space="preserve">
+    <value>最后更新{0}</value>
+  </data>
+  <data name="YourMessageGoesHere" xml:space="preserve">
+    <value>[在这里输入消息]</value>
   </data>
 </root>
