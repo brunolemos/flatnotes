@@ -6,7 +6,7 @@ using Windows.UI.Xaml.Navigation;
 
 namespace FlatNotes.Views
 {
-    public sealed partial class SettingsPage : Page
+    public sealed partial class SettingsPage : UserControl
     {
         public static readonly DependencyProperty ShowCloseButtonProperty = DependencyProperty.Register("ShowCloseButton", typeof(bool), typeof(SettingsPage), new PropertyMetadata(false));
         public bool ShowCloseButton { get { return (bool)GetValue(ShowCloseButtonProperty); } set { SetValue(ShowCloseButtonProperty, (value as bool?) == true); } }
@@ -14,41 +14,11 @@ namespace FlatNotes.Views
         public SettingsViewModel viewModel { get { return _viewModel; } }
         private static SettingsViewModel _viewModel = SettingsViewModel.Instance;
 
-        public NavigationHelper NavigationHelper { get { return this.navigationHelper; } }
-        private NavigationHelper navigationHelper;
-
         public SettingsPage()
         {
             this.InitializeComponent();
-
-            //Navigation Helper
-            this.navigationHelper = new NavigationHelper(this);
-            this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
-            this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
+            Loaded += (s, e) => App.ResetStatusBar();
         }
-
-        private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
-        {
-            App.ResetStatusBar();
-        }
-
-        private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
-        {
-        }
-
-        #region NavigationHelper registration
-
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            this.navigationHelper.OnNavigatedTo(e);
-        }
-
-        protected override void OnNavigatedFrom(NavigationEventArgs e)
-        {
-            this.navigationHelper.OnNavigatedFrom(e);
-        }
-
-        #endregion
 
 #if WINDOWS_PHONE_APP
         private void DeveloperTwitterHyperlink_OnClick(Windows.UI.Xaml.Documents.Hyperlink sender, Windows.UI.Xaml.Documents.HyperlinkClickEventArgs args)

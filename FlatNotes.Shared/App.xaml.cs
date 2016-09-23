@@ -136,7 +136,6 @@ namespace FlatNotes
             }
 
             ApplicationView.GetForCurrentView().SetDesiredBoundsMode(ApplicationViewBoundsMode.UseVisible);
-
             Window.Current.Activate();
         }
 
@@ -148,8 +147,8 @@ namespace FlatNotes
 
 #if WINDOWS_UWP
             ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size(320, 500));
-            ApplicationView.PreferredLaunchViewSize = new Size(380, 620);
-            ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.Auto;
+            //ApplicationView.PreferredLaunchViewSize = new Size(380, 620);
+            //ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.Auto;
 #endif
 
             //update default live tile (because I renamed the image, it was showing empty for some users)
@@ -179,7 +178,10 @@ namespace FlatNotes
                 RootFrame.Navigate(typeof(MainPage), e.Arguments);
             }
 
+            ApplicationView.GetForCurrentView().SetDesiredBoundsMode(ApplicationViewBoundsMode.UseVisible);
             Window.Current.Activate();
+
+            System.Diagnostics.Debug.WriteLine("IsMobile={0}", Windows.Foundation.Metadata.ApiInformation.IsApiContractPresent("Windows.Phone.PhoneContract", 1));
         }
 
         private void RootFrame_FirstNavigated(object sender, NavigationEventArgs e)

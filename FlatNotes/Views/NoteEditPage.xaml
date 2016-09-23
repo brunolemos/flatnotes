@@ -201,7 +201,7 @@
             </Grid>
         </Grid>
 
-        <CommandBar x:Name="CommandBar" Grid.Row="{x:Bind viewModel.IsMobile, Converter={StaticResource IsMobileToGridRowConverter}}" Background="{x:Bind viewModel.Note.Color.Color, Mode=OneWay}" RequestedTheme="Light" HorizontalAlignment="Right">
+        <CommandBar x:Name="CommandBar" Grid.Row="{x:Bind viewModel.IsMobile, Converter={StaticResource IsMobileToGridRowConverter}}" Background="{x:Bind viewModel.Note.Color.Color, Mode=OneWay}" RequestedTheme="Light" HorizontalAlignment="Stretch">
             <CommandBar.PrimaryCommands>
                 <AppBarButton x:Uid="ColorAppBarButton" x:Name="ColorPickerAppBarToggleButton" Label="Color" ToolTipService.ToolTip="{Binding Label, RelativeSource={RelativeSource Mode=Self}}">
                     <AppBarButton.Icon>
@@ -240,7 +240,7 @@
             </CommandBar.SecondaryCommands>
         </CommandBar>
 
-        <!--<VisualStateManager.VisualStateGroups>
+        <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
                 <VisualState>
                     <VisualState.StateTriggers>
@@ -248,7 +248,7 @@
                     </VisualState.StateTriggers>
 
                     <VisualState.Setters>
-                        <Setter Target="ContentRoot.Margin" Value="0"/>
+                        <Setter Target="CommandBar.HorizontalAlignment" Value="Stretch"/>
                     </VisualState.Setters>
                 </VisualState>
 
@@ -258,30 +258,10 @@
                     </VisualState.StateTriggers>
 
                     <VisualState.Setters>
-                        <Setter Target="ContentRoot.Margin" Value="14"/>
-                    </VisualState.Setters>
-                </VisualState>
-
-                <VisualState>
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="1200" />
-                    </VisualState.StateTriggers>
-
-                    <VisualState.Setters>
-                        <Setter Target="ContentRoot.Margin" Value="80,24"/>
-                    </VisualState.Setters>
-                </VisualState>
-
-                <VisualState>
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="1500" />
-                    </VisualState.StateTriggers>
-
-                    <VisualState.Setters>
-                        <Setter Target="ContentRoot.Margin" Value="120,24"/>
+                        <Setter Target="CommandBar.HorizontalAlignment" Value="Right"/>
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
-        </VisualStateManager.VisualStateGroups>-->
+        </VisualStateManager.VisualStateGroups>
     </Grid>
 </Page>

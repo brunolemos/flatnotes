@@ -11,7 +11,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace FlatNotes.Views
 {
-    public partial class NotesPage : Page
+    public partial class NotesPage : UserControl
     {
         public static readonly DependencyProperty IsPopupLightDismissEnabledProperty = DependencyProperty.Register("IsPopupLightDismissEnabled", typeof(bool), typeof(NotesPage), new PropertyMetadata(true));
         public bool IsPopupLightDismissEnabled { get { return (bool)GetValue(IsPopupLightDismissEnabledProperty); } set { SetValue(IsPopupLightDismissEnabledProperty, value); } }

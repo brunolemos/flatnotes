@@ -150,8 +150,8 @@
   <data name="ChecklistAppBarButton.Label" xml:space="preserve">
     <value>新建列表</value>
   </data>
-  <data name="CloseAppBarButton.Label 关闭" xml:space="preserve">
-    <value />
+  <data name="CloseAppBarButton.Label" xml:space="preserve">
+    <value>关闭</value>
   </data>
   <data name="ColorAppBarButton.Label" xml:space="preserve">
     <value>颜色</value>

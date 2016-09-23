@@ -391,11 +391,13 @@ namespace FlatNotes.Utils
                     if (note.IsArchived)
                     {
                         LoadArchivedNotesIfNecessary();
-                        note = ArchivedNotes.First(x => x.ID == note.ID);
+                        note = ArchivedNotes.FirstOrDefault(x => x.ID == note.ID);
+                        if (ArchivedNotes.IndexOf(note) < 0) note = null;
                     }
                     else
                     {
-                        note = Notes.First(x => x.ID == note.ID);
+                        note = Notes.FirstOrDefault(x => x.ID == note.ID);
+                        if (Notes.IndexOf(note) < 0) note = null;
                     }
                 }
                 catch (Exception)

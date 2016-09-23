@@ -5,12 +5,12 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:converters="using:FlatNotes.Converters"
-    xmlns:views="using:FlatNotes.Views"
+    xmlns:local="using:FlatNotes.Controls"
     mc:Ignorable="d"
     NavigationCacheMode="Required"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     FontSize="{StaticResource AppDefaultFontSize}"
     FontFamily="{StaticResource AppDefaultFontFamily}">
 
-    <views:MainPage x:Name="mainPage" IsArchivedMode="True"/>
+    <local:MainPageUserControl x:Name="mainPage" IsArchivedMode="True" Margin="0" Padding="0"/>
 </Page>

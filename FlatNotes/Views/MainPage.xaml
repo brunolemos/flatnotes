@@ -5,83 +5,12 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:converters="using:FlatNotes.Converters"
-    xmlns:views="using:FlatNotes.Views"
+    xmlns:local="using:FlatNotes.Controls"
     mc:Ignorable="d"
     NavigationCacheMode="Required"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     FontSize="{StaticResource AppDefaultFontSize}"
     FontFamily="{StaticResource AppDefaultFontFamily}">
 
-    <Page.Resources>
-        <converters:NullableBooleanToBooleanConverter x:Key="NullableBooleanToBooleanConverter"/>
-
-        <Storyboard x:Name="ShowContentOverlayAnimation">
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="ContentOverlay">
-                <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="0.2">
-                    <EasingDoubleKeyFrame.EasingFunction>
-                        <QuadraticEase EasingMode="EaseOut"/>
-                    </EasingDoubleKeyFrame.EasingFunction>
-                </EasingDoubleKeyFrame>
-            </DoubleAnimationUsingKeyFrames>
-
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="CommandBarContent">
-                <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="0.40">
-                    <EasingDoubleKeyFrame.EasingFunction>
-                        <QuadraticEase EasingMode="EaseOut"/>
-                    </EasingDoubleKeyFrame.EasingFunction>
-                </EasingDoubleKeyFrame>
-            </DoubleAnimationUsingKeyFrames>
-        </Storyboard>
-
-        <Storyboard x:Name="HideContentOverlayAnimation">
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="ContentOverlay">
-                <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="0"/>
-            </DoubleAnimationUsingKeyFrames>
-
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="CommandBarContent">
-                <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="1"/>
-            </DoubleAnimationUsingKeyFrames>
-        </Storyboard>
-    </Page.Resources>
-
-    <Grid x:Name="LayoutRoot">
-        <SplitView x:Name="RightSplitView" IsPaneOpen="{x:Bind OpenSplitView, Mode=TwoWay}" OpenPaneLength="320" Margin="0" Padding="0" PanePlacement="Right">
-            <SplitView.Pane>
-                <views:SettingsPage x:Name="SettingsPage" ShowCloseButton="True"/>
-            </SplitView.Pane>
-
-            <Grid x:Name="ContentRoot">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-
-                <Grid x:Name="CommandBar" Grid.Row="0" Background="{x:Bind PageMainBackgroundBrush, Mode=OneWay}" RequestedTheme="Dark">
-                    <Grid x:Name="CommandBarContent">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-
-                        <Button Grid.Column="0" x:Uid="NotesPageNameButton" x:Name="NotesPageNameButton" Content="Notes" Margin="4,0,0,0" FontWeight="Bold" IsHitTestVisible="{x:Bind IsArchivedMode, Converter={StaticResource NullableBooleanToBooleanConverter}}" Background="Transparent" BorderThickness="0" VerticalAlignment="Stretch" Command="{x:Bind viewModel.OpenNotesCommand}" Height="{StaticResource AppBarButtonCompactHeight}"/>
-                        <Button Grid.Column="1" x:Uid="ArchivedNotesPageNameButton" x:Name="ArchivedNotesPageNameButton" Content="Archived notes" IsHitTestVisible="{x:Bind IsArchivedMode, Converter={StaticResource NullableBooleanToBooleanConverter}, ConverterParameter=True}" Background="Transparent" BorderThickness="0" VerticalAlignment="Stretch" Command="{x:Bind viewModel.OpenArchivedNotesCommand}" Height="{StaticResource AppBarButtonCompactHeight}"/>
-                        <AppBarButton Grid.Column="3" x:Uid="ToggleSingleColumnViewAppBarButton" x:Name="ToggleSingleColumnViewAppBarButton" Label="Toggle single column view" IsCompact="True" Background="Transparent" Command="{x:Bind viewModel.ToggleSingleColumnViewCommand}" ToolTipService.ToolTip="{Binding Label, RelativeSource={RelativeSource Mode=Self}}" Height="{StaticResource AppBarButtonCompactHeight}">
-                            <AppBarButton.Icon>
-                                <FontIcon Glyph="&#xE8A9;"/>
-                            </AppBarButton.Icon>
-                        </AppBarButton>
-                        <AppBarToggleButton Grid.Column="4" x:Uid="SettingsAppBarButton" Icon="Setting" Label="Settings" IsCompact="True" Background="Transparent" IsChecked="{x:Bind OpenSplitView, Mode=TwoWay, Converter={StaticResource NullableBooleanToBooleanConverter}}" ToolTipService.ToolTip="{Binding Label, RelativeSource={RelativeSource Mode=Self}}" Height="{StaticResource AppBarButtonCompactHeight}"/>
-                    </Grid>
-                </Grid>
-
-                <Grid x:Name="NotesPageContainer" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                    <views:NotesPage x:Name="notesPage" NoteOpening="OnNoteOpening" NoteClosed="OnNoteClosed" IsArchivedMode="{x:Bind IsArchivedMode, Mode=OneWay}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch"/>
-                    <Grid x:Name="ContentOverlay" Background="Black" Opacity="0" IsHitTestVisible="False"/>
-                </Grid>
-            </Grid>
-        </SplitView>
-    </Grid>
+    <local:MainPageUserControl x:Name="mainPage" IsArchivedMode="False" Margin="0" Padding="0" RedirectToNote="{x:Bind RedirectToNote}"/>
 </Page>

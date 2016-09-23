@@ -1,4 +1,4 @@
-﻿<Page
+﻿<UserControl
     x:Name="Root"
     x:Class="FlatNotes.Views.NotesPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -9,13 +9,12 @@
     xmlns:local="using:FlatNotes.Controls"
     xmlns:views="using:FlatNotes.Views"
     mc:Ignorable="d"
-    NavigationCacheMode="Required"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     FontSize="{StaticResource AppDefaultFontSize}"
     FontFamily="{StaticResource AppDefaultFontFamily}"
     d:DataContext="{d:DesignData /SampleData/MainViewModelSampleData.xaml}">
 
-    <Page.Resources>
+    <UserControl.Resources>
         <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
 
         <Storyboard x:Name="ShowPopupAnimation">
@@ -25,7 +24,7 @@
         <Storyboard x:Name="HidePopupAnimation">
             <PopOutThemeAnimation Storyboard.TargetName="NotePopup"/>
         </Storyboard>
-    </Page.Resources>
+    </UserControl.Resources>
 
     <Grid x:Name="LayoutRoot">
         <Grid.RowDefinitions>
@@ -103,7 +102,7 @@
                         <Setter Target="NoteQuickBox.CornerRadius" Value="0"/>
                         <Setter Target="NoteQuickBox.BorderThickness" Value="0"/>
                         <Setter Target="NotesControl.ItemStretch" Value="True"/>
-                        <Setter Target="NotesControl.ItemWidth" Value="160"/>
+                        <Setter Target="NotesControl.ItemWidth" Value="140"/>
                         <Setter Target="NotesControl.Padding" Value="0"/>
                         <Setter Target="NotesControl.Margin" Value="2"/>
                         <Setter Target="NotesControl.MaxItemWidth" Value="-1"/>
@@ -189,4 +188,4 @@
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
     </Grid>
-</Page>
+</UserControl>
