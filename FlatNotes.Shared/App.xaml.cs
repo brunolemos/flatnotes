@@ -47,6 +47,9 @@ namespace FlatNotes
 
         public App()
         {
+            this.UnhandledException += App_UnhandledException;
+            this.Suspending += this.OnSuspending;
+
 #if DEBUG
             //disable application insights on debug
             TelemetryConfiguration.Active.DisableTelemetry = true;
@@ -58,30 +61,30 @@ namespace FlatNotes
             //application insights has always to be initialized
             TelemetryClient = new TelemetryClient();
 
-            this.InitializeComponent();
-
-            this.Suspending += this.OnSuspending;
-            this.UnhandledException += App_UnhandledException;
-
             AppSettings.Instance.ThemeChanged += (s, e) => { UpdateTheme(e.Theme); App.TelemetryClient.TrackMetric("Theme", AppSettings.Instance.Theme == ElementTheme.Light ? 1 : 2); };
             AppSettings.Instance.TransparentTileChanged += (s, e) => NotificationsManager.UpdateDefaultTile(e.TransparentTile);
             AppSettings.Instance.TransparentNoteTileChanged += (s, e) => NotificationsManager.UpdateAllNoteTilesBackgroundColor(e.TransparentTile);
             
             AppData.NotesSaved += (s, e) => SimulateStatusBarProgressComplete();
             AppData.NoteColorChanged += async (s, _e) => { await NotificationsManager.UpdateNoteTileBackgroundColor(_e.Note, AppSettings.Instance.TransparentNoteTile); };
+
+
+            this.InitializeComponent();
         }
 
         private async void App_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-            //App.TelemetryClient.TrackException(e.Exception);
+            if (e.Handled) return;
 
-            if (!e.Handled)
+            App.TelemetryClient.TrackException(e.Exception);
+
+            e.Handled = true;
+            CoreDispatcher dispatcher = CoreApplication.MainView.CoreWindow.Dispatcher;
+            await dispatcher.RunAsync(CoreDispatcherPriority.High, async () =>
             {
-                //e.Handled = true;
                 await new MessageDialog(e.Message, "Fatal error").ShowAsync();
-
                 App.Current.Exit();
-            }
+            });
         }
 
         private static Frame CreateRootFrame()
