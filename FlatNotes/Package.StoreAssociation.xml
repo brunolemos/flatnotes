@@ -368,7 +368,8 @@
     </ReservedNames>
   </ProductReservedInfo>
   <AccountPackageIdentityNames>
+    <MainPackageIdentityName>29428BrunoLemos.EasyCarros</MainPackageIdentityName>
     <MainPackageIdentityName>29428BrunoLemos.KeepBeta</MainPackageIdentityName>
   </AccountPackageIdentityNames>
-  <PackageInfoList LandingUrl="https://dev.windows.com/dashboard/Application?appId=9WZDNCRDD0XX" />
+  <PackageInfoList LandingUrl="https://developer.microsoft.com/dashboard/Application?appId=9WZDNCRDD0XX" />
 </StoreAssociation>

@@ -1,5 +1,6 @@
 ﻿using FlatNotes.Common;
 using FlatNotes.Utils;
+using FlatNotes.Views;
 using System;
 using Windows.Foundation.Metadata;
 
@@ -7,6 +8,8 @@ namespace FlatNotes.ViewModels
 {
     public class ViewModelBase : Notifiable
     {
+        public static event EventHandler CloseNoteEvent;
+
         public bool IsLoaded { get { return isLoaded; } set { isLoaded = value; NotifyPropertyChanged("IsLoaded"); } }
         private bool isLoaded = false;
 
@@ -23,5 +26,34 @@ namespace FlatNotes.ViewModels
         public string OSVersion { get { return "10"; } }
 #endif
         public bool IsDesktop { get { return !IsMobile; } }
+
+        public void CloseNote()
+        {
+            CloseNoteEvent?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void OpenNotesPage()
+        {
+            if (App.RootFrame.CanGoBack)
+            {
+                App.RootFrame.GoBack();
+                return;
+            }
+
+            CloseNote();
+            App.RootFrame.Navigate(typeof(MainPage));
+        }
+
+        public void OpenArchivedNotesPage()
+        {
+            CloseNote();
+            App.RootFrame.Navigate(typeof(ArchivedNotesPage));
+        }
+
+        public void OpenSettingsPage()
+        {
+            CloseNote();
+            App.RootFrame.Navigate(typeof(SettingsPage));
+        }
     }
 }

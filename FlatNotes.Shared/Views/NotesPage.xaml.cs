@@ -45,6 +45,8 @@ namespace FlatNotes.Views
 
             EnableLightDismissReceived += (s, e) => { IsPopupLightDismissEnabled = true; };
             DisableLightDismissReceived += (s, e) => { IsPopupLightDismissEnabled = false; };
+
+            ViewModelBase.CloseNoteEvent += (s, e) => CloseNote();
         }
 
 #if WINDOWS_PHONE_APP

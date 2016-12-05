@@ -1,10 +1,7 @@
 using FlatNotes.Common;
 using FlatNotes.Models;
 using FlatNotes.Utils;
-using FlatNotes.Views;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using Windows.UI.Xaml.Controls;
 
 namespace FlatNotes.ViewModels
@@ -86,27 +83,6 @@ namespace FlatNotes.ViewModels
         {
             App.TelemetryClient.TrackEvent("ToggleSingleColumnView_MainViewModel");
             IsSingleColumnEnabled = !IsSingleColumnEnabled;
-        }
-
-        private void OpenNotesPage()
-        {
-            if (App.RootFrame.CanGoBack)
-            {
-                App.RootFrame.GoBack();
-                return;
-            }
-
-            App.RootFrame.Navigate(typeof(MainPage));
-        }
-
-        private void OpenArchivedNotesPage()
-        {
-            App.RootFrame.Navigate(typeof(ArchivedNotesPage));
-        }
-
-        private void OpenSettingsPage()
-        {
-            App.RootFrame.Navigate(typeof(SettingsPage));
         }
 
         #endregion

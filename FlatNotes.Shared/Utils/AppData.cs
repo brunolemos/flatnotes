@@ -383,6 +383,10 @@ namespace FlatNotes.Utils
 
         public static async Task<bool> RemoveNote(Note note, bool reflectOnRoaming = true)
         {
+            if (note == null) return false;
+
+            Note noteFound = null;
+
             //get original reference
             if (notes != null)
             {
@@ -391,13 +395,13 @@ namespace FlatNotes.Utils
                     if (note.IsArchived)
                     {
                         LoadArchivedNotesIfNecessary();
-                        note = ArchivedNotes.FirstOrDefault(x => x.ID == note.ID);
-                        if (ArchivedNotes.IndexOf(note) < 0) note = null;
+                        noteFound = ArchivedNotes.FirstOrDefault(x => x.ID == note.ID);
+                        if (ArchivedNotes.IndexOf(noteFound) < 0) noteFound = null;
                     }
                     else
                     {
-                        note = Notes.FirstOrDefault(x => x.ID == note.ID);
-                        if (Notes.IndexOf(note) < 0) note = null;
+                        noteFound = Notes.FirstOrDefault(x => x.ID == note.ID);
+                        if (Notes.IndexOf(note) < 0) noteFound = null;
                     }
                 }
                 catch (Exception)
@@ -415,23 +419,23 @@ namespace FlatNotes.Utils
             RemoveNoteReminders(note);
             NotificationsManager.RemoveTileIfExists(note.ID);
 
-            if (note == null) return false;
+            if (noteFound == null) return false;
 
-            note.SoftDelete();
+            noteFound.SoftDelete();
 
-            bool success = LocalDB.Update(note) == 1;
+            bool success = LocalDB.Update(noteFound) == 1;
             if (!success) return false;
 
-            if(reflectOnRoaming) RoamingDB.Update(note);
+            if(reflectOnRoaming) RoamingDB.Update(noteFound);
 
-            //LocalDB.Delete(note);
-            //RoamingDB.Delete(note);
+            //LocalDB.Delete(noteFound);
+            //RoamingDB.Delete(noteFound);
 
-            AppData.Notes.Remove(note);
-            AppData.ArchivedNotes.Remove(note);
+            AppData.Notes.Remove(noteFound);
+            AppData.ArchivedNotes.Remove(noteFound);
 
             var handler = NoteRemoved;
-            if (handler != null) handler(null, new NoteIdEventArgs(note.ID));
+            if (handler != null) handler(null, new NoteIdEventArgs(noteFound.ID));
 
             var handler2 = NotesSaved;
             if (handler2 != null) handler2(null, EventArgs.Empty);
@@ -468,7 +472,7 @@ namespace FlatNotes.Utils
 
             try
             {
-                Debug.WriteLine("Delete {0}", noteImage.URL);
+                Debug.WriteLine("Delete " + noteImage.URL);
                 var file = await StorageFile.GetFileFromPathAsync(noteImage.URL);
                 await file.DeleteAsync();
 
