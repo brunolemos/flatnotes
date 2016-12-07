@@ -184,7 +184,7 @@ namespace FlatNotes
             ApplicationView.GetForCurrentView().SetDesiredBoundsMode(ApplicationViewBoundsMode.UseVisible);
             Window.Current.Activate();
 
-            System.Diagnostics.Debug.WriteLine("IsMobile={0}", Windows.Foundation.Metadata.ApiInformation.IsApiContractPresent("Windows.Phone.PhoneContract", 1));
+            //System.Diagnostics.Debug.WriteLine("IsMobile={0}", Windows.Foundation.Metadata.ApiInformation.IsApiContractPresent("Windows.Phone.PhoneContract", 1));
         }
 
         private void RootFrame_FirstNavigated(object sender, NavigationEventArgs e)
@@ -221,7 +221,7 @@ namespace FlatNotes
             await dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
             {
                 RootFrame.RequestedTheme = theme;
-                ResetStatusBar();
+                //ResetStatusBar();
             });
         }
 
@@ -274,7 +274,7 @@ namespace FlatNotes
 
 #if WINDOWS_UWP
             var titleBar = ApplicationView.GetForCurrentView().TitleBar;
-            System.Diagnostics.Debug.WriteLine("StatuBar background={0}, foreground={1}", backgroundColor, foregroundColor);
+            //System.Diagnostics.Debug.WriteLine("StatuBar background={0}, foreground={1}", backgroundColor, foregroundColor);
 
             titleBar.ForegroundColor = foregroundColor;
             titleBar.ButtonForegroundColor = foregroundColor;

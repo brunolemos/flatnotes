@@ -170,7 +170,7 @@ namespace FlatNotes.Utils.Migration.Versions.v2.Models
                 || e.PropertyName == "Checklist" || e.PropertyName == "Images"
                 || e.PropertyName == "Color" || e.PropertyName == "UpdatedAt")) return;
 
-            Debug.WriteLine("Note_PropertyChanged " + e.PropertyName);
+            //Debug.WriteLine("Note_PropertyChanged " + e.PropertyName);
             Changed = true;
 
             if (e.PropertyName == "UpdatedAt") return;

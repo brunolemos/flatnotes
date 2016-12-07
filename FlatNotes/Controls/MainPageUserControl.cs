@@ -57,6 +57,7 @@ namespace FlatNotes.Controls
 
             notesPage.NoteOpened += NotesPage_NoteOpened;
             notesPage.NoteClosed += NotesPage_NoteClosed;
+            NoteEditPage.NoteUnloaded += NoteEditPage_NoteUnloaded;
             this.SettingsPage.viewModel.CloseModal += ViewModel_CloseModal;
 
             //received a note via parameter (from secondary tile)
@@ -78,6 +79,7 @@ namespace FlatNotes.Controls
 
             notesPage.NoteOpened -= NotesPage_NoteOpened;
             notesPage.NoteClosed -= NotesPage_NoteClosed;
+            NoteEditPage.NoteUnloaded -= NoteEditPage_NoteUnloaded;
             this.SettingsPage.viewModel.CloseModal -= ViewModel_CloseModal;
         }
 
@@ -87,6 +89,10 @@ namespace FlatNotes.Controls
         }
 
         private void NotesPage_NoteClosed(object sender, EventArgs e)
+        {
+        }
+
+        private void NoteEditPage_NoteUnloaded(object sender, EventArgs e)
         {
             UpdateStatusBarAndCommandBarColors();
             if (!App.RootFrame.CanGoBack) SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;

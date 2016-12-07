@@ -11,7 +11,7 @@ namespace FlatNotes.Controls
         protected override DataTemplate SelectTemplateCore(object item, DependencyObject container)
         {
             var listViewItem = container as ListViewItem;
-            System.Diagnostics.Debug.WriteLine("listViewItem", listViewItem.IsSelected);
+            //System.Diagnostics.Debug.WriteLine("listViewItem", listViewItem.IsSelected);
             return listViewItem != null && listViewItem.IsSelected ? SelectedItemTemplate : DefaultItemTemplate;
         }
     }

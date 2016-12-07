@@ -23,7 +23,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Grid x:Name="CommandBar" Grid.Row="0" Background="{StaticResource AppMainBrush}" RequestedTheme="Dark" Margin="0" Padding="0" Height="{StaticResource AppBarButtonCompactHeight}">
+        <Grid x:Name="CommandBar" Grid.Row="0" Background="{x:Bind CommandBarBackground}" RequestedTheme="Dark" Margin="0" Padding="0" Height="{StaticResource AppBarButtonCompactHeight}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>

@@ -46,7 +46,7 @@
     <Grid x:Name="LayoutRoot">
         <SplitView x:Name="RightSplitView" IsPaneOpen="{x:Bind OpenSplitView, Mode=TwoWay}" OpenPaneLength="320" Margin="0" Padding="0" PanePlacement="Right">
             <SplitView.Pane>
-                <views:SettingsPage x:Name="SettingsPage" ShowCloseButton="True" Margin="0" Padding="0"/>
+                <views:SettingsPage x:Name="SettingsPage" ShowCloseButton="True" Margin="0" Padding="0" CommandBarBackground="{x:Bind PageMainBackgroundBrush, Mode=OneWay}"/>
             </SplitView.Pane>
 
             <Grid x:Name="ContentRoot">

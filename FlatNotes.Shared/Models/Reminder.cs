@@ -39,7 +39,7 @@ namespace FlatNotes.Models
         {
            if (date == null || !date.HasValue || (date.Value.ToLocalTime() < DateTimeOffset.Now))
             {
-                System.Diagnostics.Debug.WriteLine("Date {0} < {1}", date, DateTimeOffset.Now);
+                //System.Diagnostics.Debug.WriteLine("Date {0} < {1}", date, DateTimeOffset.Now);
                 isActive = false;
                 date = null;
             }

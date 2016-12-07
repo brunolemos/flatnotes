@@ -36,7 +36,8 @@ namespace FlatNotes.ViewModels
         {
             if (App.RootFrame.CanGoBack)
             {
-                App.RootFrame.GoBack();
+                while (App.RootFrame.CanGoBack) App.RootFrame.GoBack();
+                App.RootFrame.BackStack.Clear();
                 return;
             }
 

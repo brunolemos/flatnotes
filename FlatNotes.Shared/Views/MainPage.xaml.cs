@@ -45,7 +45,7 @@ namespace FlatNotes.Views
         #region NavigationHelper registration
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            App.ResetStatusBar();
+            //App.ResetStatusBar();
 
             //has parameters
             if (e.Parameter != null && !String.IsNullOrEmpty(e.Parameter.ToString()))

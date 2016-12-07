@@ -95,11 +95,12 @@ namespace FlatNotes.Views
 
         public void OpenNote(object parameter)
         {
-            System.Diagnostics.Debug.WriteLine("OpenNote");
             UpdateNotePopupSizeAndPosition();
             NoteOpening?.Invoke(this, EventArgs.Empty);
             ShowPopupAnimation.Begin();
 
+            while (NoteFrame.CanGoBack) NoteFrame.GoBack();
+            NoteFrame.BackStack.Clear();
             NoteFrame.Navigate(typeof(NoteEditPage), parameter);
 
             NotePopup.IsOpen = true;
@@ -108,7 +109,6 @@ namespace FlatNotes.Views
 
         public void CloseNote()
         {
-            System.Diagnostics.Debug.WriteLine("CloseNote");
             NotePopup.IsOpen = false;
         }
 
@@ -130,8 +130,9 @@ namespace FlatNotes.Views
 
         private void HidePopupAnimation_Completed(object sender, object e)
         {
-            NotePopup.IsOpen = false;
             while (NoteFrame.CanGoBack) NoteFrame.GoBack();
+            NoteFrame.BackStack.Clear();
+            NotePopup.IsOpen = false;
         }
 
         // needed because the ActualWidth and ActualHeight properties dont post updates when its changed

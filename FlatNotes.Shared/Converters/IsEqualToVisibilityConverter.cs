@@ -16,7 +16,7 @@ namespace FlatNotes.Converters
             bool isEqual = obj1?.Equals(ValueToCompare) == true;
             bool isVisible = invert != null && invert.ToString() == Boolean.TrueString ? !isEqual : isEqual;
 
-            Debug.WriteLine("Comparing obj1:{0} obj2:{1} isEqual:{2}", obj1?.ToString(), ValueToCompare?.ToString(), isEqual);
+            //Debug.WriteLine("Comparing obj1:{0} obj2:{1} isEqual:{2}", obj1?.ToString(), ValueToCompare?.ToString(), isEqual);
 
             return isEqual ? Visibility.Visible : Visibility.Collapsed;
         }

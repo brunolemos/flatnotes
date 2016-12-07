@@ -26,6 +26,8 @@ namespace FlatNotes.Views
     public sealed partial class NoteEditPage : Page
 #endif
     {
+        public static event EventHandler NoteUnloaded;
+
         public NoteEditViewModel viewModel { get { return _viewModel; } }
         private static NoteEditViewModel _viewModel = NoteEditViewModel.Instance;
 
@@ -73,9 +75,9 @@ namespace FlatNotes.Views
 
         private void OnUnloaded()
         {
-            Debug.WriteLine("NoteEditPage OnUnloaded");
-            //while (Frame.CanGoBack) Frame.GoBack();
-            OnSaveState();
+            while (Frame.CanGoBack) Frame.GoBack();
+            Frame.BackStack.Clear();
+            NoteUnloaded?.Invoke(this, EventArgs.Empty);
         }
 
         private void OnLoadState(object sender, LoadStateEventArgs e)
@@ -117,15 +119,19 @@ namespace FlatNotes.Views
         {
             //App.RootFrame.Background = previousBackground;
 
+            viewModel.PropertyChanged -= OnViewModelPropertyChanged;
+
+            var note = viewModel.Note;
+            viewModel.Note = null;
+
             //deleted
-            if (viewModel.Note == null) return;
+            if (note == null) return;
 
             //remove change binding
-            viewModel.Note.Images.CollectionChanged -= Images_CollectionChanged;
-            viewModel.Note.Checklist.CollectionChanged -= Checklist_CollectionChanged;
-            viewModel.Note.Checklist.CollectionItemChanged -= Checklist_CollectionItemChanged;
-            viewModel.Note.PropertyChanged -= OnNotePropertyChanged;
-            viewModel.PropertyChanged -= OnViewModelPropertyChanged;
+            note.Images.CollectionChanged -= Images_CollectionChanged;
+            note.Checklist.CollectionChanged -= Checklist_CollectionChanged;
+            note.Checklist.CollectionItemChanged -= Checklist_CollectionItemChanged;
+            note.PropertyChanged -= OnNotePropertyChanged;
 
             //prevent from losing changes when navigating with textbox focused
             //this.CommandBar.Focus(FocusState.Programmatic);
@@ -133,20 +139,20 @@ namespace FlatNotes.Views
             //await Task.Delay(0200);
 
             //trim
-            viewModel.Note.Trim();
+            note.Trim();
 
             //always update live tile
-            NotificationsManager.UpdateNoteTileIfExists(viewModel.Note, AppSettings.Instance.TransparentNoteTile);
+            NotificationsManager.UpdateNoteTileIfExists(note, AppSettings.Instance.TransparentNoteTile);
 
             //save or remove if empty
-            if (viewModel.Note.Changed || viewModel.Note.IsEmpty())
-                AppData.CreateOrUpdateNote(viewModel.Note);
+            if (note.Changed || note.IsEmpty())
+                AppData.CreateOrUpdateNote(note);
 
             //checklist changed (fix cache problem with converter)
-            if (checklistChanged) viewModel.Note.NotifyChanges();
+            if (checklistChanged) note.NotifyChanges();
 
             NoteEditViewModel.CurrentNoteBeingEdited = null;
-            viewModel.Note = null;
+            note = null;
         }
 
         #region NavigationHelper registration
@@ -359,7 +365,7 @@ namespace FlatNotes.Views
                 }
                 else
                 {
-                    Debug.WriteLine(doubleTapPoint.X + "x" + doubleTapPoint.Y);
+                    //Debug.WriteLine(doubleTapPoint.X + "x" + doubleTapPoint.Y);
                     scrollViewer.ChangeView(doubleTapPoint.X, doubleTapPoint.Y, 2.0F);
                     scrollViewer.ChangeView(doubleTapPoint.X, doubleTapPoint.Y, 2.0F);
                 }

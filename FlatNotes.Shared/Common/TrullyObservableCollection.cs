@@ -36,7 +36,7 @@ namespace FlatNotes.Common
 
         private void OnItemPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            Debug.WriteLine("OnItemPropertyChanged " + e.PropertyName);
+            //Debug.WriteLine("OnItemPropertyChanged " + e.PropertyName);
             
             var handler = CollectionItemChanged;
             if(handler != null) handler(sender, e);
