@@ -102,7 +102,7 @@
                         <Setter Target="NoteQuickBox.CornerRadius" Value="0"/>
                         <Setter Target="NoteQuickBox.BorderThickness" Value="0"/>
                         <Setter Target="NotesControl.ItemStretch" Value="True"/>
-                        <Setter Target="NotesControl.ItemWidth" Value="140"/>
+                        <Setter Target="NotesControl.ItemWidth" Value="130"/>
                         <Setter Target="NotesControl.Padding" Value="0"/>
                         <Setter Target="NotesControl.Margin" Value="2"/>
                         <Setter Target="NotesControl.MaxItemWidth" Value="-1"/>

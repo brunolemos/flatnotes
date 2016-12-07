@@ -17,7 +17,7 @@ namespace FlatNotes.Controls
 
         private int[] childrenColumns;
         private Size[] childrenSizes;
-        private double itemWidth = 160;
+        private double itemWidth = 130;
         private int columns = -1;
 
         List<UIElement> elements;

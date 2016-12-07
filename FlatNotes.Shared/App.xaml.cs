@@ -129,6 +129,8 @@ namespace FlatNotes
             base.OnActivated(e);
             await RestoreStatusAsync(e.PreviousExecutionState);
 
+            ApplicationView.GetForCurrentView().SetDesiredBoundsMode(ApplicationViewBoundsMode.UseVisible);
+
             if (e is IContinuationActivatedEventArgs)
             {
                 ContinuationManager = new ContinuationManager();
@@ -138,7 +140,6 @@ namespace FlatNotes
                 RootFrame.Navigate(typeof(MainPage), (e as IToastNotificationActivatedEventArgs).Argument);
             }
 
-            ApplicationView.GetForCurrentView().SetDesiredBoundsMode(ApplicationViewBoundsMode.UseVisible);
             Window.Current.Activate();
         }
 
@@ -147,6 +148,8 @@ namespace FlatNotes
             //user theme
             UpdateTheme(AppSettings.Instance.Theme);
             //HideStatusBar();
+
+            ApplicationView.GetForCurrentView().SetDesiredBoundsMode(ApplicationViewBoundsMode.UseVisible);
 
 #if WINDOWS_UWP
             ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size(320, 500));
@@ -181,7 +184,6 @@ namespace FlatNotes
                 RootFrame.Navigate(typeof(MainPage), e.Arguments);
             }
 
-            ApplicationView.GetForCurrentView().SetDesiredBoundsMode(ApplicationViewBoundsMode.UseVisible);
             Window.Current.Activate();
 
             //System.Diagnostics.Debug.WriteLine("IsMobile={0}", Windows.Foundation.Metadata.ApiInformation.IsApiContractPresent("Windows.Phone.PhoneContract", 1));

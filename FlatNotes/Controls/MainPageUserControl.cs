@@ -44,6 +44,16 @@ namespace FlatNotes.Controls
             Loading += MainPageUserControl_Loading;
             Loaded += MainPageUserControl_Loaded;
             Unloaded += (s, e) => OnUnloaded();
+            SizeChanged += MainPageUserControl_SizeChanged;
+        }
+
+        private void MainPageUserControl_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            //System.Diagnostics.Debug.WriteLine("MainPageUserControl_SizeChanged " + e.NewSize.Width);
+            if (e.NewSize.Width <= 400)
+                RightSplitView.OpenPaneLength = e.NewSize.Width;
+            else
+                RightSplitView.OpenPaneLength = 320;
         }
 
         private void MainPageUserControl_Loading(FrameworkElement sender, object args)

@@ -33,7 +33,7 @@ namespace FlatNotes.Models
         [DataMember(Name = "UpdatedAt")]
         private DateTime updatedAt = DateTime.UtcNow;
 
-        public string FormatedString { get { return date?.DateTime == null ? "" : date?.LocalDateTime.ToString("MMMM dd, yyyy HH:mm"); } }
+        public string FormatedString { get { return date?.DateTime == null ? "" : date?.LocalDateTime.ToString("MMM dd, yyyy HH:mm"); } }
 
         public void ResetIfIsPastDate()
         {
