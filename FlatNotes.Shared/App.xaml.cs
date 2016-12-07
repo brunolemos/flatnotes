@@ -150,8 +150,8 @@ namespace FlatNotes
 
 #if WINDOWS_UWP
             ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size(320, 500));
-            //ApplicationView.PreferredLaunchViewSize = new Size(380, 620);
-            //ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.Auto;
+            ApplicationView.PreferredLaunchViewSize = new Size(380, 620);
+            ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.Auto;
 #endif
 
             //update default live tile (because I renamed the image, it was showing empty for some users)
