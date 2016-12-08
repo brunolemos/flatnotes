@@ -47,6 +47,9 @@ namespace FlatNotes.Views
         {
             this.InitializeComponent();
 
+            App.RootFrame.SizeChanged += (s, e) => OnWindowSizeChanged(e.NewSize);
+            OnWindowSizeChanged(App.RootFrame.RenderSize);
+
             //Navigation Helper
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += this.OnLoadState;
@@ -439,6 +442,21 @@ namespace FlatNotes.Views
         private void ReminderPicker_Canceled(object sender, EventArgs e)
         {
             ReminderAppBarButton.Flyout.Hide();
+        }
+
+        private void OnWindowSizeChanged(Size NewSize)
+        {
+            //Debug.WriteLine("NoteEditPage OnWindowSizeChanged " + NewSize.Width);
+            if (NewSize.Width >= 768)
+            {
+                Grid.SetRow(this.CommandBar, 0);
+                this.CommandBar.HorizontalAlignment = HorizontalAlignment.Right;
+            }
+            else
+            {
+                Grid.SetRow(this.CommandBar, 2);
+                this.CommandBar.HorizontalAlignment = HorizontalAlignment.Stretch;
+            }
         }
 
 #if WINDOWS_PHONE_APP

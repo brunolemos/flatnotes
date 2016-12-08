@@ -201,7 +201,7 @@
             </Grid>
         </Grid>
 
-        <CommandBar x:Name="CommandBar" Grid.Row="{x:Bind viewModel.IsMobile, Converter={StaticResource IsMobileToGridRowConverter}}" Background="{x:Bind viewModel.Note.Color.Color, Mode=OneWay}" RequestedTheme="Light" HorizontalAlignment="Stretch">
+        <CommandBar x:Name="CommandBar" Grid.Row="2" Background="{x:Bind viewModel.Note.Color.Color, Mode=OneWay}" RequestedTheme="Light" HorizontalAlignment="Stretch">
             <CommandBar.PrimaryCommands>
                 <AppBarButton x:Uid="ColorAppBarButton" x:Name="ColorPickerAppBarToggleButton" Label="Color" ToolTipService.ToolTip="{Binding Label, RelativeSource={RelativeSource Mode=Self}}">
                     <AppBarButton.Icon>
@@ -239,29 +239,5 @@
                 </AppBarButton>-->
             </CommandBar.SecondaryCommands>
         </CommandBar>
-
-        <VisualStateManager.VisualStateGroups>
-            <VisualStateGroup>
-                <VisualState>
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="0" />
-                    </VisualState.StateTriggers>
-
-                    <VisualState.Setters>
-                        <Setter Target="CommandBar.HorizontalAlignment" Value="Stretch"/>
-                    </VisualState.Setters>
-                </VisualState>
-
-                <VisualState>
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="600" />
-                    </VisualState.StateTriggers>
-
-                    <VisualState.Setters>
-                        <Setter Target="CommandBar.HorizontalAlignment" Value="Right"/>
-                    </VisualState.Setters>
-                </VisualState>
-            </VisualStateGroup>
-        </VisualStateManager.VisualStateGroups>
     </Grid>
 </Page>
