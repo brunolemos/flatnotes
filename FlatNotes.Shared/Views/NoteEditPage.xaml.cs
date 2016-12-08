@@ -4,13 +4,10 @@ using FlatNotes.Utils;
 using FlatNotes.ViewModels;
 using System;
 using System.Collections.Specialized;
-using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
-using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Resources;
 using Windows.Foundation;
-using Windows.UI;
+using Windows.Foundation.Metadata;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -37,6 +34,7 @@ namespace FlatNotes.Views
         private static Brush previousBackground;
         private bool checklistChanged = false;
         private bool openImagePicker = false;
+        private bool clickedOnReminderSaveOrCancelButtons = false;
 
 #if WINDOWS_PHONE_APP
         partial void EnableSwipeFeature(FrameworkElement element, FrameworkElement referenceFrame);
@@ -74,6 +72,12 @@ namespace FlatNotes.Views
 
             if (viewModel.Note.IsEmpty() && !openImagePicker)
                 NoteTitleTextBox.Focus(FocusState.Programmatic);
+
+            if (ApiInformation.IsTypePresent("FlyoutBaseClosingEventArgs"))
+            {
+                Flyout.GetAttachedFlyout(ReminderAppBarButton).Closing += Flyout_Closing;
+                Flyout.GetAttachedFlyout(ReminderAppBarButton).Closed += Flyout_Closed;
+            }
         }
 
         private void OnUnloaded()
@@ -81,6 +85,13 @@ namespace FlatNotes.Views
             while (Frame.CanGoBack) Frame.GoBack();
             Frame.BackStack.Clear();
             NoteUnloaded?.Invoke(this, EventArgs.Empty);
+            OnSaveState();
+
+            if (ApiInformation.IsTypePresent("FlyoutBaseClosingEventArgs"))
+            {
+                Flyout.GetAttachedFlyout(ReminderAppBarButton).Closing -= Flyout_Closing;
+                Flyout.GetAttachedFlyout(ReminderAppBarButton).Closed -= Flyout_Closed;
+            }
         }
 
         private void OnLoadState(object sender, LoadStateEventArgs e)
@@ -435,12 +446,14 @@ namespace FlatNotes.Views
 
         private void ReminderPicker_Saved(object sender, EventArgs e)
         {
+            clickedOnReminderSaveOrCancelButtons = true;
             ReminderAppBarButton.Flyout.Hide();
             viewModel.CreateNoteReminderCommand.Execute(sender);
         }
 
         private void ReminderPicker_Canceled(object sender, EventArgs e)
         {
+            clickedOnReminderSaveOrCancelButtons = true;
             ReminderAppBarButton.Flyout.Hide();
         }
 
@@ -458,6 +471,20 @@ namespace FlatNotes.Views
                 this.CommandBar.HorizontalAlignment = HorizontalAlignment.Stretch;
             }
         }
+
+        // apenas a partir da build 14393
+        private void Flyout_Closing(FlyoutBase sender, FlyoutBaseClosingEventArgs args)
+        {
+            // gambiarra
+            if (!clickedOnReminderSaveOrCancelButtons) args.Cancel = true;
+        }
+
+        private void Flyout_Closed(object sender, object e)
+        {
+            // reset the gambiarra
+            clickedOnReminderSaveOrCancelButtons = false;
+        }
+
 
 #if WINDOWS_PHONE_APP
         public void ContinueFileOpenPicker(FileOpenPickerContinuationEventArgs args)

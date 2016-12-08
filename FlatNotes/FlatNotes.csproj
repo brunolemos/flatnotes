@@ -12,7 +12,7 @@
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion>10.0.14393.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.10240.0</TargetPlatformMinVersion>
+    <TargetPlatformMinVersion>10.0.14393.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <EnableDotNetNativeCompatibleProfile>true</EnableDotNetNativeCompatibleProfile>
     <FileAlignment>512</FileAlignment>
@@ -20,8 +20,8 @@
     <PackageCertificateKeyFile>FlatNotes_TemporaryKey.pfx</PackageCertificateKeyFile>
     <ApplicationInsightsResourceId>/subscriptions/0b3bf49d-6fe0-4921-aadd-eb466c243776/resourcegroups/FlatNotesGroup/providers/microsoft.insights/components/Flat Notes</ApplicationInsightsResourceId>
     <PackageCertificateThumbprint>1389CC0C00081AB584DF4B70F4791E02F024C305</PackageCertificateThumbprint>
-    <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
-    <AppxBundle>Auto</AppxBundle>
+    <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
+    <AppxBundle>Always</AppxBundle>
     <AppxBundlePlatforms>arm</AppxBundlePlatforms>
     <AppxSymbolPackageEnabled>True</AppxSymbolPackageEnabled>
   </PropertyGroup>

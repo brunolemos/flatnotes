@@ -100,6 +100,8 @@ namespace FlatNotes.Controls
 
         private void NotesPage_NoteClosed(object sender, EventArgs e)
         {
+            UpdateStatusBarAndCommandBarColors();
+            if (!App.RootFrame.CanGoBack) SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
         }
 
         private void NoteEditPage_NoteUnloaded(object sender, EventArgs e)

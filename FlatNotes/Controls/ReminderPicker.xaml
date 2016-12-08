@@ -8,61 +8,73 @@
     mc:Ignorable="d"
     d:DesignHeight="500">
 
-    <StackPanel Margin="0,8">
-        <CalendarDatePicker x:Name="calendarDatePicker" Margin="0,4" DateChanged="calendarDatePicker_DateChanged" HorizontalAlignment="Stretch"/>
-        <!--<DatePicker x:Name="datePicker" Margin="0,4" DateChanged="datePicker_DateChanged" HorizontalAlignment="Stretch"/>-->
-        <TimePicker x:Name="timePicker" Margin="0,4" TimeChanged="timePicker_TimeChanged" HorizontalAlignment="Stretch"/>
-
-        <Button Margin="0,4" FontSize="12" Click="NowButton_Click" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
-            <Grid Margin="0,4">
-                <TextBlock x:Uid="NowReminder" Text="Now" HorizontalAlignment="Left"/>
-            </Grid>
-        </Button>
+    <Grid Margin="0,8">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
         
-        <Button Margin="0,4" FontSize="12" Click="TomorrowButton_Click" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
+        <StackPanel Grid.Row="0">
+            <CalendarDatePicker x:Name="calendarDatePicker" Margin="0,4" DateChanged="calendarDatePicker_DateChanged" HorizontalAlignment="Stretch"/>
+            <!--<DatePicker x:Name="datePicker" Margin="0,4" DateChanged="datePicker_DateChanged" HorizontalAlignment="Stretch"/>-->
+            <TimePicker x:Name="timePicker" Margin="0,4" TimeChanged="timePicker_TimeChanged" HorizontalAlignment="Stretch" />
+
+            <Button Margin="0,4" FontSize="12" Click="NowButton_Click" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
+                <Grid Margin="0,4">
+                    <TextBlock x:Uid="NowReminder" Text="Now" HorizontalAlignment="Left"/>
+                </Grid>
+            </Button>
+        
+            <Button Margin="0,4" FontSize="12" Click="TomorrowButton_Click" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
+                <Grid Margin="0,4">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="8"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" x:Uid="TomorrowReminder" Text="Tomorrow" HorizontalAlignment="Left"/>
+                    <TextBlock Grid.Column="2" Text="8:00 AM" HorizontalAlignment="Right"/>
+                </Grid>
+            </Button>
+
+            <Button Margin="0,4" FontSize="12" Click="NextWeekButton_Click" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
+                <Grid Margin="0,4">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="8"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" x:Uid="NextWeekReminder" Text="Next week" HorizontalAlignment="Left"/>
+                    <TextBlock Grid.Column="2" Text="8:00 AM" HorizontalAlignment="Right"/>
+                </Grid>
+            </Button>
+        </StackPanel>
+
+        <Grid Grid.Row="1" />
+
+        <StackPanel Grid.Row="2">
             <Grid Margin="0,4">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="8"/>
+                    <ColumnDefinition Width="1"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Grid.Column="0" x:Uid="TomorrowReminder" Text="Tomorrow" HorizontalAlignment="Left"/>
-                <TextBlock Grid.Column="2" Text="8:00 AM" HorizontalAlignment="Right"/>
+                <Button x:Name="AcceptButton" Grid.Column="0" Click="SaveButton_Click" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center">
+                    <Viewbox Height="16">
+                        <SymbolIcon Symbol="Accept"/>
+                    </Viewbox>
+                </Button>
+
+                <Button Grid.Column="2" Click="CancelButton_Click" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center">
+                    <Viewbox Height="16">
+                        <SymbolIcon Symbol="Cancel"/>
+                    </Viewbox>
+                </Button>
             </Grid>
-        </Button>
-
-        <Button Margin="0,4" FontSize="12" Click="NextWeekButton_Click" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
-            <Grid Margin="0,4">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="8"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-
-                <TextBlock Grid.Column="0" x:Uid="NextWeekReminder" Text="Next week" HorizontalAlignment="Left"/>
-                <TextBlock Grid.Column="2" Text="8:00 AM" HorizontalAlignment="Right"/>
-            </Grid>
-        </Button>
-
-        <Grid Margin="0,4">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="1"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-
-            <Button x:Name="AcceptButton" Grid.Column="0" Click="SaveButton_Click" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center">
-                <Viewbox Height="16">
-                    <SymbolIcon Symbol="Accept"/>
-                </Viewbox>
-            </Button>
-
-            <Button Grid.Column="2" Click="CancelButton_Click" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center">
-                <Viewbox Height="16">
-                    <SymbolIcon Symbol="Cancel"/>
-                </Viewbox>
-            </Button>
-        </Grid>
-    </StackPanel>
+        </StackPanel>
+    </Grid>
 </UserControl>

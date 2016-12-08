@@ -79,6 +79,7 @@ namespace FlatNotes
             App.TelemetryClient.TrackException(e.Exception);
 
             e.Handled = true;
+
             CoreDispatcher dispatcher = CoreApplication.MainView.CoreWindow.Dispatcher;
             await dispatcher.RunAsync(CoreDispatcherPriority.High, async () =>
             {
