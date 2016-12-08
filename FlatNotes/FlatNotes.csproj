@@ -19,10 +19,10 @@
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <PackageCertificateKeyFile>FlatNotes_TemporaryKey.pfx</PackageCertificateKeyFile>
     <ApplicationInsightsResourceId>/subscriptions/0b3bf49d-6fe0-4921-aadd-eb466c243776/resourcegroups/FlatNotesGroup/providers/microsoft.insights/components/Flat Notes</ApplicationInsightsResourceId>
-    <PackageCertificateThumbprint>1389CC0C00081AB584DF4B70F4791E02F024C305</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>36D41CCF9E4FF328A14E87C0A10AA7A178344141</PackageCertificateThumbprint>
     <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
     <AppxBundle>Always</AppxBundle>
-    <AppxBundlePlatforms>arm</AppxBundlePlatforms>
+    <AppxBundlePlatforms>x86|x64|arm</AppxBundlePlatforms>
     <AppxSymbolPackageEnabled>True</AppxSymbolPackageEnabled>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
